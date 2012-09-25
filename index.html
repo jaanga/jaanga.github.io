@@ -2,68 +2,63 @@
 <html lang="en">
 <head>
 <title>jaanga.github.com</title>
+<meta name="author" content="Theo Armour">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<meta name="author" content="Theo Armour">
 </head>
 <body>
 <script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
 <script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
 <script type='text/javascript'>
-	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-	
-	// document.body.style.backgroundColor = '#888';
-	document.body.style.backgroundImage = '-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000))';
+
+	document.body.style.backgroundColor = '#888';
+	// document.body.style.backgroundImage = '-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000))';
+	document.body.style.backgroundImage = '-moz-radial-gradient(40% 40%, farthest-side, red, #000)';
 	document.body.style.backgroundImage = '-webkit-gradient(radial, 430 50, 0, 430 50, 387, from(red), to(#000))';
-	document.body.style.font = 'bold 12pt monospace';
+	document.body.style.font = 'bold 13pt monospace';
 	document.body.style.overflow = 'hidden';
+	
 	
 	container = document.createElement( 'div' );
 	document.body.appendChild( container );
 
 	var jaanga = document.createElement( 'div' );
-	document.body.appendChild( jaanga );
-
+	jaanga.style.backgroundImage = '-moz-linear-gradient(top,  #DCDCDC,  #64889A)';
 	jaanga.style.backgroundImage = '-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000))';
 	jaanga.style.backgroundColor = '#ddd';
 	jaanga.style.borderRadius = '10px';
 	jaanga.style.boxShadow = '10px 10px 5px #444';
-	jaanga.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	jaanga.style.color = '#000';
 	jaanga.style.left = '10%';
 	jaanga.style.opacity = '0.85';	
 	jaanga.style.padding = '15px';
 	jaanga.style.position = 'absolute';
-	jaanga.style.textDecoration = 'none';
+	jaanga.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	jaanga.style.top = '10%';
+	jaanga.style.webkitTransform = jaanga.style.MozTransform ='rotate(-7deg)' 
 	jaanga.style.width = '300px';
-	jaanga.style.MozTransform = 'rotate(-7deg)';
-	jaanga.style.webkitTransform = 'rotate(-7deg)';
-	jaanga.innerHTML='<h1>jaanga</h1><p>dedicated to the visualization of huge numbers of numbers</p><p>see also <a href="http://jaanga.com" target="_blank">jaanga.com</a></p>';
-	
+	jaanga.innerHTML='<h1>jaanga</h1><p>dedicated to the visualization of huge amounts of numbers</p>' +
+	'<p>source code <a href="http://github.com/jaanga" target="_blank">github.com/jaanga</a></p>' +
+	'<p>see also <a href="http://jaanga.com" target="_blank">jaanga.com</a></p>';
+	document.body.appendChild( jaanga );
 	
 	var zeeBar = document.createElement( 'div' );
-	document.body.appendChild( zeeBar );
-
 	zeeBar.style.backgroundColor = '#ddd';
 	zeeBar.style.borderRadius = '10px';
 	zeeBar.style.boxShadow = '10px 10px 5px #444';
-	zeeBar.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	zeeBar.style.color = '#000';
 	zeeBar.style.left = '25%';
 	zeeBar.style.opacity = '0.85';	
 	zeeBar.style.padding = '15px';
 	zeeBar.style.position = 'absolute';
-	zeeBar.style.textDecoration = 'none';
+	zeeBar.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	zeeBar.style.top = '28%';
+	zeeBar.style.webkitTransform = zeeBar.style.MozTransform = 'rotate(10deg)';
 	zeeBar.style.width = '300px';
-	zeeBar.style.MozTransform = 'rotate(10deg)';
-	zeeBar.style.webkitTransform = 'rotate(10deg)';
 	zeeBar.innerHTML='<h1>zeeBar</h1><p>3D user experience</p><p><a href="zeebar">zeebar</a>';
+	document.body.appendChild( zeeBar );
 	
 	var brainOfRichard = document.createElement( 'div' );
-	document.body.appendChild( brainOfRichard );
-
 	brainOfRichard.style.backgroundColor = '#ddd';
 	brainOfRichard.style.borderRadius = '10px';
 	brainOfRichard.style.boxShadow = '10px 10px 5px #444';
@@ -73,41 +68,58 @@
 	brainOfRichard.style.opacity = '0.85';	
 	brainOfRichard.style.padding = '15px';
 	brainOfRichard.style.position = 'absolute';
-	brainOfRichard.style.textDecoration = 'none';
 	brainOfRichard.style.top = '10%';
+	brainOfRichard.style.webkitTransform = brainOfRichard.style.MozTransform = 'rotate(-7deg)';
 	brainOfRichard.style.width = '300px';
-	brainOfRichard.style.MozTransform = 'rotate(-7deg)';
-	brainOfRichard.style.webkitTransform = 'rotate(-7deg)';
 	brainOfRichard.innerHTML='<h1>Brain of Richard</h1><p>3D compilations of 2D brain scans</p><p><a href="brainofrichard">brainOfRichard</a>';	
+	document.body.appendChild( brainOfRichard );
 	
+	var weB3D = document.createElement( 'div' );
+	weB3D.style.backgroundColor = '#ddd';
+	weB3D.style.borderRadius = '10px';
+	weB3D.style.boxShadow = '10px 10px 5px #444';
+	weB3D.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
+	weB3D.style.color = '#000';
+	weB3D.style.left = '12%';
+	weB3D.style.opacity = '0.85';	
+	weB3D.style.padding = '15px';
+	weB3D.style.position = 'absolute';
+	weB3D.style.top = '60%';
+	weB3D.style.webkitTransform = weB3D.style.MozTransform = 'rotate(3deg)';
+	weB3D.style.width = '350px';
+	weB3D.innerHTML='<h1>Jaanga weB3D R4</h1><p>3D animation DataVis<br>of realtime BigData</p><p>Coming here soon...</p>';	
+	document.body.appendChild( weB3D );	
 
 	var threejs = document.createElement( 'div' );
-	document.body.appendChild( threejs );
-
 	threejs.style.backgroundColor = '#ddd';
+	threejs.style.backgroundImage = '-moz-linear-gradient(top,  #DCDCDC,  #64889A)';
+	threejs.style.backgroundImage = '-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#440))';
 	threejs.style.borderRadius = '10px';
 	threejs.style.boxShadow = '10px 10px 5px #444';
-	threejs.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	threejs.style.color = '#000';
 	threejs.style.height = '800px';
 	threejs.style.left = '50%';
 	threejs.style.opacity = '0.85';	
 	threejs.style.padding = '15px';
 	threejs.style.position = 'absolute';
-	threejs.style.textDecoration = 'none';
+	threejs.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	threejs.style.top = '35%';
+	threejs.style.webkitTransform = threejs.style.MozTransform = 'rotate(10deg)';
 	threejs.style.width = '500px';
-	threejs.style.MozTransform = 'rotate(10deg)';
-	threejs.style.webkitTransform = 'rotate(10deg)';
-	threejs.innerHTML='<h1>three.js</h1><p>JavaScript 3D Library</p><p><a href="https://github.com/mrdoob/three.js" target="_blank">https://github.com/mrdoob/three.js</a>';	
-
+	threejs.innerHTML='<h1>three.js</h1><p>JavaScript 3D Library used in these apps</p>' + 
+	'<p><a href="https://github.com/mrdoob/three.js" target="_blank">https://github.com/mrdoob/three.js</a><p>' +
+	'<p>If you can see the spinning cube below, all our apps should operate properly...</p>' ;	
+	document.body.appendChild( threejs );
+	
 	var camera, scene, renderer;
     var geometry, material, mesh;
 
     init();
     animate();
-
+	
     function init() {
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage( {parent: threejs} );
+		
         camera = new THREE.PerspectiveCamera( 50, 1, 1, 10000 );
         camera.position.z = 500;
         scene = new THREE.Scene();
@@ -115,22 +127,20 @@
         material = new THREE.MeshNormalMaterial( { color: 0xff0000, wireframe: false } );
         mesh = new THREE.Mesh( geometry, material );
         scene.add( mesh );
-        //renderer = new THREE.WebGLRenderer();
-        //renderer.setSize( window.innerWidth, window.innerHeight );
-        //document.appendChild( renderer.domElement );
 		
 		renderer = new THREE.WebGLRenderer( {antialias: true } );
-        // renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.setSize( 500, 500 );
         threejs.appendChild( renderer.domElement );
     }
-
+	
     function animate() {
         requestAnimationFrame( animate );
         mesh.rotation.x += 0.01;
         mesh.rotation.y += 0.02;
         renderer.render( scene, camera );
     }
+	
+		
 </script>
 </body>
 </html>
