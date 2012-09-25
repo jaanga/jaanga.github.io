@@ -12,7 +12,9 @@
 <script type='text/javascript'>
 	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 	
-	document.body.style.backgroundColor = '#888';
+	// document.body.style.backgroundColor = '#888';
+	document.body.style.backgroundImage = '-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000))';
+	document.body.style.backgroundImage = '-webkit-gradient(radial, 430 50, 0, 430 50, 387, from(red), to(#000))';
 	document.body.style.font = 'bold 12pt monospace';
 	document.body.style.overflow = 'hidden';
 	
@@ -22,6 +24,7 @@
 	var jaanga = document.createElement( 'div' );
 	document.body.appendChild( jaanga );
 
+	jaanga.style.backgroundImage = '-webkit-gradient(linear, left top, left bottom, from(#ccc), to(#000))';
 	jaanga.style.backgroundColor = '#ddd';
 	jaanga.style.borderRadius = '10px';
 	jaanga.style.boxShadow = '10px 10px 5px #444';
