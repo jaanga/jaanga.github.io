@@ -9,6 +9,7 @@
 <body>
 <script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
 <script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
+
 <script type='text/javascript'>
 
 	document.body.style.backgroundColor = '#888';
@@ -71,7 +72,7 @@
 	brainOfRichard.style.top = '10%';
 	brainOfRichard.style.webkitTransform = brainOfRichard.style.MozTransform = 'rotate(-7deg)';
 	brainOfRichard.style.width = '300px';
-	brainOfRichard.innerHTML='<h1>Brain of Richard</h1><p>3D compilations of 2D brain scans</p><p><a href="brainofrichard">brainOfRichard</a>';	
+	brainOfRichard.innerHTML='<h1>Brain of Richard</h1><p>3D compilations of 2D brain scans - now with veggies!?!</p><p><a href="brainofrichard">brainOfRichard</a>';	
 	document.body.appendChild( brainOfRichard );
 	
 	var weB3D = document.createElement( 'div' );
@@ -110,6 +111,23 @@
 	'<p><a href="https://github.com/mrdoob/three.js" target="_blank">https://github.com/mrdoob/three.js</a><p>' +
 	'<p>If you can see the spinning cube below, all our apps should operate properly...</p>' ;	
 	document.body.appendChild( threejs );
+	
+	var tweets = document.createElement( 'div' );
+	document.body.appendChild( tweets );
+	tweets.style.backgroundColor = '#ddd';
+	tweets.style.borderRadius = '10px';
+	tweets.style.boxShadow = '10px 10px 5px #444';
+	tweets.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
+	tweets.style.color = '#000';
+	tweets.style.right = '12%';
+	tweets.style.opacity = '0.85';	
+	tweets.style.padding = '15px';
+	tweets.style.position = 'absolute';
+	tweets.style.top = '10%';
+	// tweets.style.webkitTransform = tweets.style.MozTransform = 'rotate(3deg)';
+	// tweets.style.width = '350px';
+	tweets.innerHTML='<a class="twitter-timeline" href="https://twitter.com/ta" data-widget-id="257222454114656257" target="_blank">Tweets by @ta</a>'
+
 	
 	var camera, scene, renderer;
     var geometry, material, mesh;
