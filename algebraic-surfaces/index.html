@@ -70,7 +70,7 @@ a {text-decoration: none;}
     'x*x*x*y + x*z*z*z + y*y*y*y*z + z*z*z + 7*z*z + 5*z', // Columpius
     'x*x*x*x*x*x+y*y*y*y*y*y+z*z*z*z*z*z-1', // cube
     '3*x*x*x+3*y*y*y+z*z-1', //dattel
-    '(x*x - y*y)*(x*x - y*y)*(x*x - y*y) - (z*z-y*y)*(z*z-y*y)', //daisy
+    '(x*x - y*y*y)*(x*x - y*y*y) - (z*z-y*y)*(z*z-y*y)*(z*z-y*y)', //daisy
     'x*x + y*y +z*z*z - z*z', // ding dong
     'x*x + y*y+z*z+ 1000*( x*x + y*y)*(x*x+z*z)*(y*y+z*z) - 1', // distel
     'x*x*x*y + x*z*z*z + y*y*y*z + z*z*z + 5*z', // Durchblick
@@ -91,7 +91,23 @@ a {text-decoration: none;}
     'x*x*y*z + x*y*y + y*y*y *y*y*y*z - x*x*z*z', // solitude
     '(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1) - x*x*z*z*z-9/80*y*y*z*z*z', // Suss
     'x*x*x*x - x*x  - y*y*z*z', // Tanz
-    
+    '256*z*z*z - 128*x*x*z*z + 16*x*x*x*x*z + 144*x*y*y*z - 4*x*x*x*y*y - 27*y*y*y*y', // taube
+    '', // Quaste
+    '(y*y*y - x*x - z*z)*(y*y*y - x*x - z*z)*(y*y*y - x*x - z*z) - 27*x*x*y*y*y*z*z', // Spitz
+    'x*x*x*z + x*x + y*z*z*z + z*z*z*z - 3*x*y*z', //Tobel
+    'x*x - x*x*x + y*y + y*y*y*y + z*z*z - z*z*z*z', // vis a vis
+    'x*x*x - y*(1 - z*z)*(1 - z*z)', // Wedelin
+    '-x*x + y*y*y*y + z*z*z*z - x*y*z - 100', // Windkanal
+    'x*x*x*x + z*z*z - y*z*z', // Xano
+    'x*x + z*z + y*y*y*(y - 1)*(y - 1)*(y - 1)', // Zitrus
+    '', // Croissant
+    'x*x*x*x - 3*x*x + y*y + z*z*z', // Dromedar
+    'x*y*z + y*z + 2*z*z*z*z*z', // Zeppelin
+    'x*y*z + y*z + 2*z*z*z*z*z', // Zweilach
+    'x*x + y*y*y*y + y*y*y*z*z', // Michaelangelo
+    'x*x*y*y + y*y*z*z + x*x*z*z + 100*(x*x + y*y + z*z - 1)*(x*x + y*y + z*z - 1)*(x*x + y*y + z*z - 1)', // Stern
+    '', // Mobius
+    'x*x + y*y + z*z - 1', // Sphare
     ];
     
     var splash = document.createElement( 'div' );
@@ -101,9 +117,9 @@ a {text-decoration: none;}
     var splashText = '<h2 style="margin:0 0 auto 0;padding:0;text-align:right;"><a href="#" title="Click to close" onClick="toggleSplash()" style="color:#888;text-decoration:none;">[X]<\/a><\/h2>' +
     '<h1 style="margin:0;padding:0">Algebraic Surfaces<\/h1>' +
     '<div style="height: 85%;overflow:scroll;">' +
-    '<p>Use your pointing device to zoom and rotate. <a href="#" onClick="toggleSpin()"><b>Toggle spin</b></a>.</p>' +
+    '<p>Click on any equation. Use pointing device to zoom and rotate. <a href="#" onClick="toggleSpin()"><b>Toggle spin</b></a>.</p>' +
     '<p>Formulas and names courtesy of <a href="http://homepage.univie.ac.at/herwig.hauser/bildergalerie/gallery.html" target="_blank"><b>Herwig Hauser</b></a>.</p>' +
-    '<p><i>2013-01-12 ~ equations from Calyx to Tanz are now operational.</i></p>' +
+    '<p><i>2013-01-13 ~ equations from Calyx to Sph&auml;re are now operational.</i></p>' +
 /*    
     '<p><a href="#" onClick="plotIt(\'x*x + y*y*z*z*z - z*z*z*z\')">Calyx:<br>x^2 + y^2z^3 - z^4</a><\/p>' +
     '<p><a style="text-decoration:none;" href="#" onClick="plotIt(\'x*x + y*y*z*z*z - z*z*z*z\')"><span class = "name" >Calyx</span><br><span class = "equation" > x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup>  = z<sup>4</sup> </span></a><\/p>' +
@@ -122,49 +138,49 @@ a {text-decoration: none;}
     '<p><a href="#" onClick="plotIt(\'x*x*x*y + x*z*z*z + y*y*y*y*z + z*z*z + 7*z*z + 5*z \')">Columpius: x^3y+xz^3+y^4z+z^3+7z^2+5z<a><\/p>' +
 */
     
-    '<p><a href="#" onClick="plotIt( equations[0], -2, 2, 5)">Calyx:<br>x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup> = z<sup>4</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[0], -5, 5, 2)">Calyx:<br>x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup> = z<sup>4</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[1])">Calypso:<br>x<sup>2</sup>+y<sup>2</sup>z = z<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[2])">Columpius:<br>x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+7z<sup>2</sup>+5z=0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[2], -3, 3, 5)">Columpius:<br>x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+7z<sup>2</sup>+5z=0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[3], -2, 2, 8 )">Cube:<br>x<sup>6</sup>+y<sup>6</sup>+z<sup>6</sup>=1 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[4], -2, 2, 8 )">Dattel:<br>3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[5] )">Daisy:<br>(x<sup>2</sup> - y<sup>3</sup>)<sup>2</sup>=(z<sup>2</sup>-y<sup>2</sup>)<sup>3</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[5], -0.5, 0.5, 8 )">Daisy:<br>(x<sup>2</sup> - y<sup>3</sup>)<sup>2</sup>=(z<sup>2</sup>-y<sup>2</sup>)<sup>3</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[6], -2, 2, 8 )">Dingdong:<br>x<sup>2</sup> +y<sup>2</sup> +z<sup>3</sup> = z<sup>2</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[7], -0.8, 0.8, 20 )">Distel:<br>x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+1000 (x<sup>2</sup>+y<sup>2</sup>)(x<sup>2</sup>+z<sup>2</sup>)(y<sup>2</sup>+z<sup>2</sup>)=1 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[8] )">Durchblick:<br>x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+5z = 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[9] )">Eist&uuml;te:<br>(x<sup>2</sup>+y<sup>2</sup>)<sup>3</sup> = 4x<sup>2</sup>y<sup>2</sup>(z<sup>2</sup>+1) </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[8], -5, 5, 3 )">Durchblick:<br>x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+5z = 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[9], -2, 2, 5 )">Eist&uuml;te:<br>(x<sup>2</sup>+y<sup>2</sup>)<sup>3</sup> = 4x<sup>2</sup>y<sup>2</sup>(z<sup>2</sup>+1) </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[10], -5.5, 5.5, 2 )">Eve:<br>5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup> + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[11] )">Flirt:<br>x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-10z<sup>4</sup>=0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[11], -1, 1, 8 )">Flirt:<br>x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-10z<sup>4</sup>=0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[12] )">Geisha:<br>x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup> = y<sup>3</sup>z + y<sup>3</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[13] )">Harlekin:<br>x<sup>3</sup>z + 10x<sup>2</sup>y + xy<sup>2</sup> + yz<sup>2</sup> = z<sup>3</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[14] )">Helix:<br>6x<sup>2</sup> - 2x<sup>4</sup> = y<sup>2</sup>z<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[15] )">Herz:<br>y<sup>2</sup>+z<sup>3</sup>-z<sup>4</sup>-x<sup>2</sup>z<sup>2</sup> = 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[16] )">Himmel und H&ouml;lle:<br>x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[17] )">Kolibri:<br>x<sup>3</sup> + x<sup>2</sup>z<sup>2</sup> - y<sup>2</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[14], -2, 2, 8 )">Helix:<br>6x<sup>2</sup> - 2x<sup>4</sup> = y<sup>2</sup>z<sup>2</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[15], -1, 1, 8 )">Herz:<br>y<sup>2</sup>+z<sup>3</sup>-z<sup>4</sup>-x<sup>2</sup>z<sup>2</sup> = 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[16], -1.5, 1.5, 8 )">Himmel und H&ouml;lle:<br>x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[17], -2, 2, 8 )">Kolibri:<br>x<sup>3</sup> + x<sup>2</sup>z<sup>2</sup> - y<sup>2</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[18], -1, 1, 8 )">Leopold:<br>x<sup>2</sup>y<sup>2</sup>z<sup>2</sup>+3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[19], -2, 2, 8 )">Octdong:<br>x<sup>2</sup> + y<sup>2</sup> + z<sup>4</sup> = z<sup>2</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[20], -2, 2, 8 )">Plop:<br>x<sup>2</sup> + (z+y<sup>2</sup>)<sup>3</sup> = 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[21] )">Seepferdchen:<br>(x<sup>2</sup>-y<sup>3</sup>)<sup>2</sup>=(x+y<sup>2</sup>)z<sup>3</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[22] )">Sofa:<br>x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> = 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[23] )">Solitude:<br>x<sup>2</sup>yz +xy<sup>2</sup>+y<sup>3</sup>+y<sup>3</sup>z=x<sup>2</sup>z<sup>2</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[21], -2, 2, 8  )">Seepferdchen:<br>(x<sup>2</sup>-y<sup>3</sup>)<sup>2</sup>=(x+y<sup>2</sup>)z<sup>3</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[22], -2, 2, 8  )">Sofa:<br>x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> = 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[23], -6, 6, 5  )">Solitude:<br>x<sup>2</sup>yz +xy<sup>2</sup>+y<sup>3</sup>+y<sup>3</sup>z=x<sup>2</sup>z<sup>2</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[24], -2, 2, 8 )">S&uuml;ss:<br>(x<sup>2</sup>+9/4y<sup>2</sup>+z<sup>2</sup>-1)<sup>3</sup> - x<sup>2</sup>z<sup>3</sup>-9/80y<sup>2</sup>z<sup>3</sup>=0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[25] )">Tanz:<br>x<sup>4</sup>-x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0</a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[25] )">Taube:<br>256z<sup>3</sup>-128x<sup>2</sup>z<sup>2</sup>+16x<sup>4</sup>z+144xy<sup>2</sup>z - 4x<sup>3</sup>y<sup>2</sup>-27y<sup>4</sup> =0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[27] )">Quaste:<br></a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[28] )">Spitz:<br>(y<sup>3</sup>-x<sup>2</sup>-z<sup>2</sup>)<sup>3</sup> = 27x<sup>2</sup>y<sup>3</sup>z<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[29] )">Tobel:<br>x<sup>3</sup> z + x<sup>2</sup> + yz<sup>3</sup> + z<sup>4</sup> = 3xyz</a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[30] )">Vis a vis:<br>x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-z<sup>4</sup>=0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[31] )">Wedeln:<br>x<sup>3</sup> = y (1-z<sup>2</sup>)<sup>2</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[27] )">Quaste:<br>???</a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[28], -2, 2, 8 )">Spitz:<br>(y<sup>3</sup>-x<sup>2</sup>-z<sup>2</sup>)<sup>3</sup> = 27x<sup>2</sup>y<sup>3</sup>z<sup>2</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[29], -1.5, 1.5, 8 )">Tobel:<br>x<sup>3</sup> z + x<sup>2</sup> + yz<sup>3</sup> + z<sup>4</sup> = 3xyz</a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[30], -1.5, 1.5, 8 )">Vis a vis:<br>x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-z<sup>4</sup>=0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[31], -2, 2, 5 )">Wedeln:<br>x<sup>3</sup> = y (1-z<sup>2</sup>)<sup>2</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[32] )">Windkanal:<br>- x<sup>2</sup> + y<sup>4</sup> + z<sup>4</sup> - xyz = 100 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[33] )">Xano:<br>x<sup>4</sup> +z<sup>3</sup> = yz<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[34] )">Zitrus:<br>x<sup>2</sup>+z<sup>2</sup> = y<sup>3</sup>(y-1)<sup>3</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[35] )">Croissant</a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[36] )">Dromedar:<br>x<sup>4</sup> - 3x<sup>2</sup> + y<sup>2</sup>+z<sup>3</sup> = 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[37] )">Zeppelin:<br>xyz+yz+2z<sup>5</sup>= 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[34], -2, 2, 8 )">Zitrus:<br>x<sup>2</sup>+z<sup>2</sup> = y<sup>3</sup>(y-1)<sup>3</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[35] )">Croissant:<br>???</a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[36], -2, 2, 8 )">Dromedar:<br>x<sup>4</sup> - 3x<sup>2</sup> + y<sup>2</sup>+z<sup>3</sup> = 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[37], -1.25, 1.25, 10 )">Zeppelin:<br>xyz+yz+2z<sup>5</sup>= 0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[38] )">Zweiloch:<br>xyz+yz+2z<sup>5</sup>= 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[39] )">Michelangelo:<br>x<sup>2</sup>+y<sup>4</sup>+y<sup>3</sup>z<sup>2</sup>=0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[40] )">Stern:<br>x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>z<sup>2</sup> + x<sup>2</sup>z<sup>2</sup> + 100 ( x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> - 1)<sup>3</sup> = 0 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[41] )">M&ouml;bius:<br></a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[42] )">Sph&auml;re:<br>x<sup>2</sup> + y<sup>2</sup>+ z<sup>2</sup> = 1 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[39], -2, 2, 8 )">Michelangelo:<br>x<sup>2</sup>+y<sup>4</sup>+y<sup>3</sup>z<sup>2</sup>=0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[40], -0.85, 0.85, 8 )">Stern:<br>x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>z<sup>2</sup> + x<sup>2</sup>z<sup>2</sup> + 100 ( x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> - 1)<sup>3</sup> = 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[41] )">M&ouml;bius:<br>???</a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[42], -2, 2, 8 )">Sph&auml;re:<br>x<sup>2</sup> + y<sup>2</sup>+ z<sup>2</sup> = 1 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[43] )">Limao:<br>x<sup>2</sup>-y<sup>3</sup>z<sup>3</sup> = 0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[44] )">Torus:<br>(x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+R<sup>2</sup>-r<sup>2</sup>)<sup>2</sup> = R<sup>2</sup>(x<sup>2</sup>+y<sup>2</sup>) </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[45] )">Whitney:<br>x<sup>2</sup>-y<sup>2</sup>z=0 </a><\/p>' +
