@@ -1,0 +1,410 @@
+
+<!-- row 1  -->
+
+<!-- Calyx -->
+
+<span class = "name" >Calyx</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup>  = z<sup>4</sup> </span>
+
+<!-- Calypso -->
+
+<span class = "name" >Calypso</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>z  = z<sup>2</sup> </span>
+
+<!-- Columpius -->
+
+<span class = "name" >Columpius</span>
+<span class = "equation" > x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+7z<sup>2</sup>+5z=0 </span>
+
+<!-- Cube -->
+
+<span class = "name" >Cube</span>
+<span class = "equation" > x<sup>6</sup>+y<sup>6</sup>+z<sup>6</sup>=1 </span>
+
+<!-- row 2  -->
+
+<!-- Dattel -->
+
+<span class = "name" >Dattel</span>
+<span class = "equation" > 3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1 </span>
+
+<td align='center' >
+
+<!-- Daisy -->
+
+<span class = "name" >Daisy</span>
+<span class = "equation" > (x<sup>2</sup> - y<sup>3</sup>)<sup>2</sup>=(z<sup>2</sup>-y<sup>2</sup>)<sup>3</sup> </span>
+
+<!-- Dingdong -->
+
+<span class = "name" >Dingdong</span>
+<span class = "equation" > x<sup>2</sup>  +y<sup>2</sup> +z<sup>3</sup> = z<sup>2</sup>  </span>
+
+<!-- Distel -->
+
+<span class = "name" >Distel</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+1000 (x<sup>2</sup>+y<sup>2</sup>)(x<sup>2</sup>+z<sup>2</sup>)(y<sup>2</sup>+z<sup>2</sup>)=1  </span>
+
+<!-- row 3  -->
+
+<!-- Durchblick -->
+
+<span class = "name" >Durchblick</span>
+<span class = "equation" > x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+5z =  0  </span>
+
+<!-- Eistuete -->
+
+<span class = "name" >Eist&uuml;te</span>
+<span class = "equation" > (x<sup>2</sup>+y<sup>2</sup>)<sup>3</sup> = 4x<sup>2</sup>y<sup>2</sup>(z<sup>2</sup>+1)  </span>
+
+<!-- Eve -->
+
+<span class = "name" >Eve</span>
+
+<span class = "equation" > 5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup>  + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup> </span>
+
+<!-- Flirt -->
+
+<span class = "name" >Flirt</span>
+
+<span class = "equation" >  x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-10z<sup>4</sup>=0 </span>
+
+<!-- row 4 -->
+
+<!-- Geisha -->
+
+<span class = "name" >Geisha</span>
+
+<span class = "equation" >   x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup>  =  y<sup>3</sup>z +  y<sup>3</sup> </span>
+
+<!-- Harlekin -->
+
+<span class = "name" >Harlekin</span>
+<span class = "equation" >    x<sup>3</sup>z  +  10x<sup>2</sup>y  +  xy<sup>2</sup>  + yz<sup>2</sup>  = z<sup>3</sup> </span>
+
+<!-- Helix -->
+
+<span class = "name" >Helix</span>
+<span class = "equation" >    6x<sup>2</sup> - 2x<sup>4</sup> = y<sup>2</sup>z<sup>2</sup> </span>
+
+<!-- Herz -->
+
+<span class = "name" >Herz</span>
+<span class = "equation" >    y<sup>2</sup>+z<sup>3</sup>-z<sup>4</sup>-x<sup>2</sup>z<sup>2</sup> = 0 </span>
+
+<!-- row 5 -->
+
+<!-- Himmel und Hoelle -->
+
+<span class = "name" >Himmel und H&ouml;lle</span>
+<span class = "equation" >    x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0 </span>
+
+<!-- Kolibri -->
+
+<span class = "name" >Kolibri</span>
+<span class = "equation" >    x<sup>3</sup> + x<sup>2</sup>z<sup>2</sup> - y<sup>2</sup> </span>
+
+<!-- Leopold -->
+
+<span class = "name" >Leopold</span>
+<span class = "equation" >   x<sup>2</sup>y<sup>2</sup>z<sup>2</sup>+3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1 </span>
+
+<!-- Octdong -->
+
+<span class = "name" >Octdong</span>
+<span class = "equation" > x<sup>2</sup> + y<sup>2</sup> + z<sup>4</sup> = z<sup>2</sup> </span>
+
+<!-- row 6 -->
+
+<!-- Plop -->
+
+<span class = "name" >Plop</span>
+<span class = "equation" >     x<sup>2</sup> + (z+y<sup>2</sup>)<sup>3</sup> = 0 </span>
+
+<!-- Seepferdchen -->
+
+<span class = "name" >Seepferdchen</span>
+<span class = "equation" >     (x<sup>2</sup>-y<sup>3</sup>)<sup>2</sup>=(x+y<sup>2</sup>)z<sup>3</sup> </span>
+
+<!-- Sofa -->
+
+<span class = "name" >Sofa</span>
+<span class = "equation" >     x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> = 0 </span>
+
+<!-- Solitude -->
+
+<span class = "name" >Solitude</span>
+<span class = "equation" >      x<sup>2</sup>yz +xy<sup>2</sup>+y<sup>3</sup>+y<sup>3</sup>z=x<sup>2</sup>z<sup>2</sup> </span>
+
+<!-- row 7 -->
+
+<!-- Suess -->
+
+<span class = "name" >S&uuml;ss</span>
+<span class = "equation" > (x<sup>2</sup>+9/4y<sup>2</sup>+z<sup>2</sup>-1)<sup>3</sup> - x<sup>2</sup>z<sup>3</sup>-9/80y<sup>2</sup>z<sup>3</sup>=0 </span>
+
+<!-- Tanz -->
+
+<span class = "name" >Tanz</span>
+<span class = "equation" > x<sup>4</sup>-x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0</span>
+
+<!-- Taube -->
+
+<span class = "name" >Taube</span>
+<span class = "equation" > 256z<sup>3</sup>-128x<sup>2</sup>z<sup>2</sup>+16x<sup>4</sup>z+144xy<sup>2</sup>z - 4x<sup>3</sup>y<sup>2</sup>-27y<sup>4</sup> =0 </span>
+
+<!-- Quaste -->
+
+<span class = "name" >Quaste</span>
+<span class = "equation" >  </span>
+
+<!-- row 8 -->
+
+<!-- Spitz -->
+
+<span class = "name" >Spitz</span>
+<span class = "equation" > (y<sup>3</sup>-x<sup>2</sup>-z<sup>2</sup>)<sup>3</sup> = 27x<sup>2</sup>y<sup>3</sup>z<sup>2</sup> </span>
+
+<!-- Tobel -->
+
+<span class = "name" >Tobel</span>
+<span class = "equation" >  x<sup>3</sup> z + x<sup>2</sup> + yz<sup>3</sup> + z<sup>4</sup>  =  3xyz</span>
+
+<!-- Vis a vis -->
+
+<span class = "name" >Vis a vis</span>
+<span class = "equation" >  x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-z<sup>4</sup>=0 </span>
+
+<!-- Wedeln -->
+
+<span class = "name" >Wedeln</span>
+<span class = "equation" > x<sup>3</sup>   =  y (1-z<sup>2</sup>)<sup>2</sup> </span>
+
+<!-- row 9 -->
+
+<!-- Windkanal -->
+
+<span class = "name" >Windkanal</span>
+<span class = "equation" > - x<sup>2</sup> + y<sup>4</sup> + z<sup>4</sup> - xyz = 100 </span>
+
+<!-- Xano -->
+
+<span class = "name" >Xano</span>
+<span class = "equation" > x<sup>4</sup> +z<sup>3</sup> = yz<sup>2</sup>  </span>
+
+<!-- Zitrus -->
+
+<span class = "name" >Zitrus</span>
+<span class = "equation" > x<sup>2</sup>+z<sup>2</sup> = y<sup>3</sup>(y-1)<sup>3</sup> </span>
+
+<!-- Croissant -->
+
+<span class = "name" >Croissant</span>
+<span class = "equation" ></span>
+
+<!-- row 10 -->
+
+<!-- Dromedar -->
+
+<span class = "name" >Dromedar</span>
+<span class = "equation" > x<sup>4</sup> - 3x<sup>2</sup> +  y<sup>2</sup>+z<sup>3</sup> = 0 </span>
+
+<!-- Zeppelin -->
+
+<span class = "name" >Zeppelin</span>
+<span class = "equation" > xyz+yz+2z<sup>5</sup>= 0 </span>
+
+<!-- Zweiloch -->
+
+<span class = "name" >Zweiloch</span>
+<span class = "equation" > xyz+yz+2z<sup>5</sup>= 0 </span>
+
+<!-- Michelangelo -->
+
+<span class = "name" >Michelangelo</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>4</sup>+y<sup>3</sup>z<sup>2</sup>=0 </span>
+
+<!-- row 11 -->
+
+<!-- Stern -->
+
+<span class = "name" >Stern</span>
+<span class = "equation" > x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>z<sup>2</sup> + x<sup>2</sup>z<sup>2</sup> +
+100 ( x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> - 1)<sup>3</sup> = 0 </span>
+
+<!-- Moebius -->
+
+<span class = "name" >M&ouml;bius</span>
+<span class = "equation" >    </span>
+
+<!-- Sphaere -->
+
+<span class = "name" >Sph&auml;re</span>
+<span class = "equation" > x<sup>2</sup> + y<sup>2</sup>+ z<sup>2</sup> = 1   </span>
+
+<!-- Limao -->
+
+<span class = "name" >Limao</span>
+<span class = "equation" > x<sup>2</sup>-y<sup>3</sup>z<sup>3</sup> = 0   </span>
+
+<!-- row 12  -->
+
+<!-- Torus -->
+
+<span class = "name" >Torus</span>
+<span class = "equation" > (x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+R<sup>2</sup>-r<sup>2</sup>)<sup>2</sup> = R<sup>2</sup>(x<sup>2</sup>+y<sup>2</sup>)   </span>
+
+<!-- Whitney -->
+
+<span class = "name" >Whitney</span>
+<span class = "equation" > x<sup>2</sup>-y<sup>2</sup>z=0   </span>
+
+<!-- Buggle -->
+
+<span class = "name" >Buggle</span>
+<span class = "equation" > x<sup>4</sup>y<sup>2</sup>+y<sup>4</sup>x<sup>2</sup>-x<sup>2</sup>y<sup>2</sup>+z<sup>6</sup>=0   </span>
+
+<!-- Zylinder -->
+
+<span class = "name" >Zylinder</span>
+<span class = "equation" > y<sup>2</sup> + z<sup>2</sup> = 1  </span>
+
+<!-- row 13  -->
+
+<!-- Diabolo -->
+
+<span class = "name" >Diabolo</span>
+<span class = "equation" > x<sup>2</sup> = (y<sup> 2</sup>+ z<sup>2</sup>)<sup>2</sup>  </span>
+
+<!-- Dullo -->
+
+<span class = "name" >Dullo</span>
+<span class = "equation" > (x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>)<sup>2</sup>-(x<sup>2</sup>+y<sup>2</sup>) = 0 </span>
+
+<!-- Miau -->
+
+<span class = "name" >Miau</span>
+<span class = "equation" > x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup>  + 2 y<sup>3</sup>z + 3 y<sup>3</sup>  = 0 </span>
+
+<!-- Trichter -->
+
+<span class = "name" >Trichter</span>
+<span class = "equation" > x<sup>2</sup> + z<sup>3</sup> = y<sup>2</sup>z<sup>2</sup> </span>
+
+<!-- row 14 -->
+
+<!-- Nepali -->
+
+<span class = "name" >Nepali</span>
+<span class = "equation" > (xy-z<sup>3</sup>-1)<sup>2</sup> + (x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup> = 0 </span>
+
+<!-- Pilzchen -->
+
+<span class = "name" >Pilzchen</span>
+<span class = "equation" > (z<sup>3</sup> - 1)<sup>2</sup> + (x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup>=0 </span>
+
+<!-- Subway -->
+
+<span class = "name" >Subway</span>
+<span class = "equation" > x<sup>2</sup>y<sup>2</sup> =  (z<sup>2</sup>-1)<sup>3</sup> </span>
+
+<!-- Posterzipf -->
+
+<span class = "name" >Polsterzipf</span>
+<span class = "equation" > (x<sup>3</sup>-1)<sup>2</sup> + (y<sup>3</sup>-1)<sup>2</sup>+ (z<sup>2</sup>-1)<sup>3</sup> = 0  </span>
+
+<!-- row 15 -->
+
+<!-- Crixxi -->
+
+<span class = "name" >Crixxi</span>
+<span class = "equation" > (y<sup>2</sup>+z<sup>2</sup>-1)<sup>2</sup> +(x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup> = 0  </span>
+
+<!-- Berg -->
+
+<span class = "name" >Berg</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>z<sup>2</sup>+z<sup>3</sup> = 0  </span>
+
+<!-- Gupf -->
+
+<span class = "name" >Gupf</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>+z=0 </span>
+
+<!-- Kegel -->
+
+<span class = "name" >Kegel</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>=0 </span>
+
+<!-- row 16 -->
+
+<!-- Wigwam -->
+
+<span class = "name" >Wigwam</span>
+<span class = "equation" >  x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup>=0 </span>
+
+<!-- Tuelle -->
+
+<span class = "name" >Tuelle</span>
+<span class = "equation" >  yz(x<sup>2</sup>+y-z) = 0</span>
+
+<!-- Pipe -->
+
+<span class = "name" >Pipe</span>
+<span class = "equation" >  x<sup>2</sup>-z=0</span>
+
+<!-- Fanfare -->
+
+<span class = "name" >Fanfare</span>
+<span class = "equation" >  -x<sup>3</sup>+z<sup>2</sup>+y<sup>2</sup>=0 </span>
+
+<!-- row 17 -->
+
+<!-- Kreuz -->
+
+<span class = "name" >Kreuz</span>
+<span class = "equation" > xyz=0 </span>
+
+<!-- Spindel -->
+
+<span class = "name" >Spindel</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>= 1 </span>
+
+<!-- Twilight -->
+
+<span class = "name" >Twilight</span>
+<span class = "equation" > (z<sup>3</sup>-2)<sup>2</sup> +(x<sup>2</sup>+y<sup>2</sup>-3)<sup>3</sup>  =0  </span>
+
+<!-- Ufo -->
+
+<span class = "name" >Ufo</span>
+<span class = "equation" > z<sup>2</sup>-x<sup>2</sup>-y<sup>2</sup> = 1 </span>
+
+<!-- row 18 -->
+
+<!-- Wendel -->
+
+<span class = "name" >Wendel</span>
+<span class = "equation" > </span>
+
+<!-- Zeck -->
+
+<span class = "name" >Zeck</span>
+<span class = "equation" > x<sup>2</sup>+y<sup>2</sup>-z<sup>3</sup>(1-z) = 0 </span>
+
+<!-- Sattel -->
+
+<span class = "name" >Sattel</span>
+<span class = "equation" >  x<sup>2</sup>+y<sup>2</sup>z+z<sup>3</sup>=0 </span>
+
+<!-- Schneeflocke -->
+
+<span class = "name" >Schneeflocke</span>
+<span class = "equation" >  x<sup>3</sup>+y<sup>2</sup>z<sup>3</sup>+yz<sup>4</sup>=0 </span>
+
+<!-- row 19 -->
+
+<!-- Cylinder -->
+
+<span class = "name" >Cylinder</span>
+<span class = "equation" > x<sup>2</sup> + y<sup>2</sup> = 1 </span>
+
