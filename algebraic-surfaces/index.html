@@ -25,11 +25,11 @@ a {text-decoration: none;}
 <script src="MarchingCubesData.js"></script>
 
 <script>
-	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+  if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
   
   document.body.style.cssText = 'background-color: #000; font: 12pt monospace; margin: 0; overflow: hidden; text-align: center';
   document.body.style.backgroundImage = '-moz-radial-gradient(40% 40%, farthest-side, red, #000)';
-	document.body.style.backgroundImage = '-webkit-gradient(radial, 430 50, 0, 430 50, 987, from(#800), to(#010))';
+  document.body.style.backgroundImage = '-webkit-gradient(radial, 430 50, 0, 430 50, 987, from(#800), to(#010))';
 
   var renderer, scene, camera, controls, stats;
   var light, geometry, material, mesh;
@@ -44,7 +44,7 @@ a {text-decoration: none;}
   init();
   plotIt( val );
   animate();
-		
+  
   function init() {
     renderer = new THREE.WebGLRenderer( {  antialias: true } );
     renderer.setSize( window.innerWidth, window.innerHeight );
@@ -61,7 +61,6 @@ a {text-decoration: none;}
     document.body.appendChild( stats.domElement );    
     scene.add( new THREE.AxisHelper( 20 ) );
 
-    // LIGHT
     light = new THREE.PointLight(0xffffff);
     light.position.set(0,10,0);
     scene.add(light);
@@ -83,6 +82,15 @@ a {text-decoration: none;}
     '6*x*x + 2*x*x*x*x - y*y*z*z', //helix
     'y*y + z*z*z - z*z*z*z - x*x*z*z', // herz
     'x*x - y*y*z*z', // Himmel und Holle
+    'x*x*x + x*x*z*z - y*y', // kolobri
+    'x*x*y*y*z*z + 3*x*x + 3*y*y + z*z - 1', // leopold
+    'x*x + y*y + z*z*z*z - z*z', // Octdong
+    'x*x + (z + y*y)*(z + y*y)*(z + y*y)', //plop
+    '(x*x - y*y)*(x*x - y*y) - (x*x + y*y)* z*z*z', //Seepferdchen
+    'x*x + y*y*y + z*z*z*z*z', // sofa
+    'x*x*y*z + x*y*y + y*y*y *y*y*y*z - x*x*z*z', // solitude
+    '(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1) - x*x*z*z*z-9/80*y*y*z*z*z', // Suss
+    'x*x*x*x - x*x  - y*y*z*z', // Tanz
     
     ];
     
@@ -95,7 +103,7 @@ a {text-decoration: none;}
     '<div style="height: 85%;overflow:scroll;">' +
     '<p>Use your pointing device to zoom and rotate. <a href="#" onClick="toggleSpin()"><b>Toggle spin</b></a>.</p>' +
     '<p>Formulas and names courtesy of <a href="http://homepage.univie.ac.at/herwig.hauser/bildergalerie/gallery.html" target="_blank"><b>Herwig Hauser</b></a>.</p>' +
-    '<p><i>2013-01-12 ~ equations from Calyx to Himmel und Hille are now operational.</i></p>' +
+    '<p><i>2013-01-12 ~ equations from Calyx to Tanz are now operational.</i></p>' +
 /*    
     '<p><a href="#" onClick="plotIt(\'x*x + y*y*z*z*z - z*z*z*z\')">Calyx:<br>x^2 + y^2z^3 - z^4</a><\/p>' +
     '<p><a style="text-decoration:none;" href="#" onClick="plotIt(\'x*x + y*y*z*z*z - z*z*z*z\')"><span class = "name" >Calyx</span><br><span class = "equation" > x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup>  = z<sup>4</sup> </span></a><\/p>' +
@@ -132,13 +140,13 @@ a {text-decoration: none;}
     '<p><a href="#" onClick="plotIt( equations[15] )">Herz:<br>y<sup>2</sup>+z<sup>3</sup>-z<sup>4</sup>-x<sup>2</sup>z<sup>2</sup> = 0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[16] )">Himmel und H&ouml;lle:<br>x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[17] )">Kolibri:<br>x<sup>3</sup> + x<sup>2</sup>z<sup>2</sup> - y<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[18] )">Leopold:<br>x<sup>2</sup>y<sup>2</sup>z<sup>2</sup>+3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1 </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[19] )">Octdong:<br>x<sup>2</sup> + y<sup>2</sup> + z<sup>4</sup> = z<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[20] )">Plop:<br>x<sup>2</sup> + (z+y<sup>2</sup>)<sup>3</sup> = 0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[18], -1, 1, 8 )">Leopold:<br>x<sup>2</sup>y<sup>2</sup>z<sup>2</sup>+3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[19], -2, 2, 8 )">Octdong:<br>x<sup>2</sup> + y<sup>2</sup> + z<sup>4</sup> = z<sup>2</sup> </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[20], -2, 2, 8 )">Plop:<br>x<sup>2</sup> + (z+y<sup>2</sup>)<sup>3</sup> = 0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[21] )">Seepferdchen:<br>(x<sup>2</sup>-y<sup>3</sup>)<sup>2</sup>=(x+y<sup>2</sup>)z<sup>3</sup> </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[22] )">Sofa:<br>x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> = 0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[23] )">Solitude:<br>x<sup>2</sup>yz +xy<sup>2</sup>+y<sup>3</sup>+y<sup>3</sup>z=x<sup>2</sup>z<sup>2</sup> </a><\/p>' +
-    '<p><a href="#" onClick="plotIt( equations[24] )">S&uuml;ss:<br>(x<sup>2</sup>+9/4y<sup>2</sup>+z<sup>2</sup>-1)<sup>3</sup> - x<sup>2</sup>z<sup>3</sup>-9/80y<sup>2</sup>z<sup>3</sup>=0 </a><\/p>' +
+    '<p><a href="#" onClick="plotIt( equations[24], -2, 2, 8 )">S&uuml;ss:<br>(x<sup>2</sup>+9/4y<sup>2</sup>+z<sup>2</sup>-1)<sup>3</sup> - x<sup>2</sup>z<sup>3</sup>-9/80y<sup>2</sup>z<sup>3</sup>=0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[25] )">Tanz:<br>x<sup>4</sup>-x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0</a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[25] )">Taube:<br>256z<sup>3</sup>-128x<sup>2</sup>z<sup>2</sup>+16x<sup>4</sup>z+144xy<sup>2</sup>z - 4x<sup>3</sup>y<sup>2</sup>-27y<sup>4</sup> =0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[27] )">Quaste:<br></a><\/p>' +
@@ -188,7 +196,7 @@ a {text-decoration: none;}
     '<p><a href="#" onClick="plotIt( equations[71] )">Schneeflocke:<br>x<sup>3</sup>+y<sup>2</sup>z<sup>3</sup>+yz<sup>4</sup>=0 </a><\/p>' +
     '<p><a href="#" onClick="plotIt( equations[72] )">Cylinder:<br>x<sup>2</sup> + y<sup>2</sup> = 1 </a><\/p>' +
     
-    '<hr><p>Marching cubes routines courtesy of <a href="http://stemkoski.github.com/Three.js/Marching-Cubes.html" target="_blank">stemkoski</a> and Paul Bourke.</p>' +
+    '<hr><p><a href=http://en.wikipedia.org/wiki/Marching_cubes" target="_blank">Marching cubes</a> routines courtesy of <a href="http://stemkoski.github.com/Three.js/Marching-Cubes.html" target="_blank">stemkoski</a> and Paul Bourke.</p>' +
     '<p>Method of turning string into a formula courtesy of <a href="http://nooshu.com/antimatter-3d-graph-plotter-and-a-little-animation" target="_blank">Nooshu</a> and AntiMatter15.</p>' +
     '<p>And none of this would be possible without <a href="https://github.com/mrdoob/three.js" target="_blank">Mr.Doob</a>.</p>' +
     // '<hr><p><a href="#" onClick="toggleSpin()">Toggle spin</a></p>';
@@ -199,51 +207,50 @@ a {text-decoration: none;}
     //txt.style.cssText = 'text-decoration: none';
   }
 
-function plotIt( val, axisMin, axisMax, scale) { 
-  if( mesh ) { scene.remove(mesh) };
-  
+  function plotIt( val, axisMin, axisMax, scale) { 
+    if( mesh ) { scene.remove(mesh) };
+    
     // custom global variables
-  var points = [];
-	// number of cubes along a side
-	var size = 70;
-	// far !== undefined ? far : 2000;
-	var axisMin = axisMin !== undefined ? axisMin : -10;
-	var axisMax =  axisMax !== undefined ? axisMax : 10;
-  var scale = scale !== undefined ? scale : 1;
-	var axisRange = axisMax - axisMin;
-	var PC = new Function('x','y','z','return '+ unescape( val ));
-  var values = [];
-  
-	// Generate a list of 3D points and values at those points
-	for (var k = 0; k < size; k++)
-	for (var j = 0; j < size; j++)
-	for (var i = 0; i < size; i++)
-	{
-		// actual values
-		var x = axisMin + axisRange * i / (size - 1);
-		var y = axisMin + axisRange * j / (size - 1);
-		var z = axisMin + axisRange * k / (size - 1);
-		points.push( new THREE.Vector3(x,y,z) );
-        
-    var value = PC(x,y,z);
-	  values.push( value );
-	}
-	 
-	// Marching Cubes Algorithm
-	
-	var size2 = size * size;
+    var points = [];
+    // number of cubes along a side
+    var size = 70;
+    // far !== undefined ? far : 2000;
+    var axisMin = axisMin !== undefined ? axisMin : -10;
+    var axisMax =  axisMax !== undefined ? axisMax : 10;
+    var scale = scale !== undefined ? scale : 1;
+    var axisRange = axisMax - axisMin;
+    var PC = new Function('x','y','z','return '+ unescape( val ));
+    var values = [];
+    
+    // Generate a list of 3D points and values at those points
+    for (var k = 0; k < size; k++)
+    for (var j = 0; j < size; j++)
+    for (var i = 0; i < size; i++) {
+      // actual values
+      var x = axisMin + axisRange * i / (size - 1);
+      var y = axisMin + axisRange * j / (size - 1);
+      var z = axisMin + axisRange * k / (size - 1);
+      points.push( new THREE.Vector3(x,y,z) );
 
-	// Vertices may occur along edges of cube, when the values at the edge's endpoints
-	// straddle the isolevel value.
-	// Actual position along edge weighted according to function values.
-	var vlist = new Array(12);
-	
-	var geometry = new THREE.Geometry();
-	var vertexIndex = 0;
-	
-	for (var z = 0; z < size - 1; z++)
-	for (var y = 0; y < size - 1; y++)
-	for (var x = 0; x < size - 1; x++) {
+      var value = PC(x,y,z);
+      values.push( value );
+    }
+
+    // Marching Cubes Algorithm
+
+    var size2 = size * size;
+
+    // Vertices may occur along edges of cube, when the values at the edge's endpoints
+    // straddle the isolevel value.
+    // Actual position along edge weighted according to function values.
+    var vlist = new Array(12);
+
+    var geometry = new THREE.Geometry();
+    var vertexIndex = 0;
+
+    for (var z = 0; z < size - 1; z++)
+    for (var y = 0; y < size - 1; y++)
+    for (var x = 0; x < size - 1; x++) {
 		// index of base point, and also adjacent points on cube
 		var p    = x + size * y + size2 * z,
 			px   = p   + 1,
@@ -362,8 +369,7 @@ function plotIt( val, axisMin, axisMax, scale) {
 		 
 		// the while loop should run at most 5 times,
 		// since the 16th entry in each row is a -1.
-		while ( THREE.triTable[ cubeindex + i ] != -1 ) 
-		{
+		while ( THREE.triTable[ cubeindex + i ] != -1 ) {
 			var index1 = THREE.triTable[cubeindex + i];
 			var index2 = THREE.triTable[cubeindex + i + 1];
 			var index3 = THREE.triTable[cubeindex + i + 2];
@@ -381,14 +387,14 @@ function plotIt( val, axisMin, axisMax, scale) {
 			i += 3;
 		}
 	}
-	 
-	geometry.computeFaceNormals();
-  material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
-	mesh = new THREE.Mesh( geometry, material );
-  
-  mesh.scale.set(scale, scale, scale);
-	scene.add(mesh);
-}
+   
+    geometry.computeFaceNormals();
+    material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
+    mesh = new THREE.Mesh( geometry, material );
+
+    mesh.scale.set(scale, scale, scale);
+    scene.add(mesh);
+  }
 
   function animate() {
     requestAnimationFrame( animate );
@@ -405,13 +411,13 @@ function plotIt( val, axisMin, axisMax, scale) {
     stats.update();  
   }
 
- 	function toggleSplash() {
-		if ( splash.style.display === 'block' ) {
-			splash.style.display = 'none';
-		} else {
-			splash.style.display = 'block';
-		}		
-	};	
+  function toggleSplash() {
+    if ( splash.style.display === 'block' ) {
+      splash.style.display = 'none';
+    } else {
+      splash.style.display = 'block';
+    }
+  };
   
   function toggleSpin() {
     if (spin === true ) {
