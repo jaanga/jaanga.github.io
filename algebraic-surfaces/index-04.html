@@ -9,12 +9,12 @@ a {font-weight: 800; text-decoration: none;}
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 </head>
 <body>
-
 <script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
 <script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
 <script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
 <script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
 <script src='http://mrdoob.github.com/three.js/examples/js/libs/dat.gui.min.js'></script>
+
 <!--
 <script src="https://raw.github.com/mrdoob/three.js/r54/build/three.min.js"></script>
 <script src="https://raw.github.com/mrdoob/three.js/r54/examples/js/controls/TrackballControls.js"></script>
@@ -28,6 +28,7 @@ a {font-weight: 800; text-decoration: none;}
 -->
 <!-- Contains Lookup Tables for the Marching Cubes Algorithm -->
 <script src="MarchingCubesData.js"></script>
+
 <script>
   if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
   
@@ -47,85 +48,86 @@ a {font-weight: 800; text-decoration: none;}
   
   var pow = Math.pow;
   var surf = [];
-  surf[0] = ['Stemkoski (default)','x*x + y*y - z*z - 70', 0, 0, 0, 'x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>-70'];
-  surf[1] = ['Calyx','x*x + y*y*z*z*z - z*z*z*z', -5, 5, 2,'x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup> = z<sup>4</sup>'];
-  surf[2] = ['Calypso','x*x+y*y*z - z*z', 0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>z = z<sup>2</sup> </a>'];
-  surf[3] = ['Columpius','x*x*x*y + x*z*z*z + y*y*y*y*z + z*z*z + 7*z*z + 5*z', -3, 3, 5,'x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+7z<sup>2</sup>+5z=0 ']; // Columpius
+  surf[0] = ['Stemkoski (default)','x*x + y*y - z*z - 70', '', 'x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>-70'];
+  surf[1] = ['Calyx','x*x + y*y*z*z*z - z*z*z*z', ', -5, 5, 2','x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup> = z<sup>4</sup>'];
+  surf[2] = ['Calypso','x*x+y*y*z - z*z', '','x<sup>2</sup>+y<sup>2</sup>z = z<sup>2</sup> </a>'];
+  surf[3] = ['Columpius','x*x*x*y + x*z*z*z + y*y*y*y*z + z*z*z + 7*z*z + 5*z', ', -3, 3, 5','x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+7z<sup>2</sup>+5z=0 ']; // Columpius
   // http://gauravtiwari.org/2011/03/05/curves/columpius/
   // http://m.wolframalpha.com/input/?i=columpius+surface&lk=1&a=ClashPrefs_*Surface.ColumpiusSurface-
-  surf[4] = ['Cube','x*x*x*x*x*x+y*y*y*y*y*y+z*z*z*z*z*z-1', -2, 2, 8,'x<sup>6</sup>+y<sup>6</sup>+z<sup>6</sup>=1']; // cube
-  surf[5] = ['Dattel','3*x*x*x+3*y*y*y+z*z-1', -2, 2, 8,'3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1']; //dattel
-  surf[6] = ['Daisy','(x*x - y*y*y)*(x*x - y*y*y) - pow( (z*z-y*y),3)', -0.5, 0.5, 12, '(x<sup>2</sup> - y<sup>3</sup>)<sup>2</sup>=(z<sup>2</sup>-y<sup>2</sup>)<sup>3</sup>']; //daisy
-  surf[7] = ['DingDong','x*x + y*y +z*z*z - z*z', -2, 2, 8,'x<sup>2</sup> +y<sup>2</sup> +z<sup>3</sup> = z<sup>2</sup>']; // ding dong
-  surf[8] = ['Distel','x*x + y*y+z*z+ 1000*( x*x + y*y)*(x*x+z*z)*(y*y+z*z) - 1', -0.8, 0.8, 20,'x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+1000(x<sup>2</sup>+y<sup>2</sup>)(x<sup>2</sup>+z<sup>2</sup>)(y<sup>2</sup>+z<sup>2</sup>)=1']; // distel
-  surf[9] = ['Durchblick','x*x*x*y + x*z*z*z + y*y*y*z + z*z*z + 5*z', -5, 5, 3,'x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+5z = 0']; // Durchblick
-  surf[10] = ['Eist&uuml;te','pow((x*x+y*y),3) - 4*x*x*y*y*(z*z + 1)', -2, 2, 5,'(x<sup>2</sup>+y<sup>2</sup>)<sup>3</sup> = 4x<sup>2</sup>y<sup>2</sup>(z<sup>2</sup>+1)']; // Eistute
-  surf[11] = ['Eve','5*x*x + 2*x*z*z + 5*y*y*y*y*y*y + 15*y*y*y*y + 5*z*z - 15*y*y*y*y*y - 5*y*y*y', -5.5, 5.5, 2,'5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup> + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup>']; // eve
-  surf[12] = ['Flirt','x*x-x*x*x+y*y+y*y*y*y+z*z*z-10*z*z*z*z', -1, 1, 8,'x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-10z<sup>4</sup>=0']; //flirt
-  surf[13] = ['Geisha','x*x*y*z + x*x*z*z - y*y*y*z - y*y*y', 0, 0, 0,'x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup> = y<sup>3</sup>z + y<sup>3</sup>']; // geisha
-  surf[14] = ['Harlekin','x*x*x*z + 10*x*x*y + x*y*y + y*z*z - z*z*z', 0, 0, 0, 'x<sup>3</sup>z + 10x<sup>2</sup>y + xy<sup>2</sup> + yz<sup>2</sup> = z<sup>3</sup>']; //harlequin
-  surf[15] = ['Helix','6*x*x + 2*x*x*x*x - y*y*z*z', -2, 2, 8,'6x<sup>2</sup> - 2x<sup>4</sup> = y<sup>2</sup>z<sup>2</sup>']; //helix
-  surf[16] = ['Herz','y*y + z*z*z - z*z*z*z - x*x*z*z', -1, 1, 8,'y<sup>2</sup>+z<sup>3</sup>-z<sup>4</sup>-x<sup>2</sup>z<sup>2</sup> = 0']; // herz
-  surf[17] = ['Himmel und H&ouml;lle','x*x - y*y*z*z', -1.5, 1.5, 8,'x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0']; // Himmel und Holle
-  surf[18] = ['Kolobri','x*x*x + x*x*z*z - y*y', -2, 2, 8,'x<sup>3</sup> + x<sup>2</sup>z<sup>2</sup> - y<sup>2</sup>']; // kolobri
-  surf[19] = ['Leopold','x*x*y*y*z*z + 3*x*x + 3*y*y + z*z - 1', -1, 1, 8,'x<sup>2</sup>y<sup>2</sup>z<sup>2</sup>+3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1']; // leopold
-  surf[20] = ['Octdong','x*x + y*y + z*z*z*z - z*z', -2, 2, 8,'x<sup>2</sup> + y<sup>2</sup> + z<sup>4</sup> = z<sup>2</sup>']; // Octdong
-  surf[21] = ['Plop','x*x + pow((z + y*y),3)', -2, 2, 8,'x<sup>2</sup> + (z+y<sup>2</sup>)<sup>3</sup> = 0']; //plop
-  surf[22] = ['Seepferdchen','pow((x*x - y*y),2) - (x*x + y*y)* z*z*z', -2, 2, 8,'(x<sup>2</sup>-y<sup>3</sup>)<sup>2</sup>=(x+y<sup>2</sup>)z<sup>3</sup>']; //Seepferdchen
-  surf[23] = ['Sofa','x*x + y*y*y + z*z*z*z*z', -2, 2, 8,'x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> = 0']; // sofa
-  surf[24] = ['Solitude','x*x*y*z + x*y*y + y*y*y *y*y*y*z - x*x*z*z', -6, 6, 3, 'x<sup>2</sup>yz +xy<sup>2</sup>+y<sup>3</sup>+y<sup>3</sup>z=x<sup>2</sup>z<sup>2</sup>']; // solitude
-  surf[25] = ['S&uuml;ss','(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1) - x*x*z*z*z-9/80*y*y*z*z*z', -2, 2, 8 ,'(x<sup>2</sup>+9/4y<sup>2</sup>+z<sup>2</sup>-1)<sup>3</sup> - x<sup>2</sup>z<sup>3</sup>-9/80y<sup>2</sup>z<sup>3</sup>=0']; // Suss
-  surf[26] = ['Tanz','x*x*x*x - x*x  - y*y*z*z', 0, 0, 0,'x<sup>4</sup>-x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0']; // Tanz
-  surf[27] = ['Taube','256*z*z*z - 128*x*x*z*z + 16*x*x*x*x*z + 144*x*y*y*z - 4*x*x*x*y*y - 27*y*y*y*y', 0, 0, 0,'256z<sup>3</sup>-128x<sup>2</sup>z<sup>2</sup>+16x<sup>4</sup>z+144xy<sup>2</sup>z - 4x<sup>3</sup>y<sup>2</sup>-27y<sup>4</sup> =0']; // taube
-  surf[28] = ['Quaste','','','???']; // Quaste
-  surf[29] = ['Spitz','pow((y*y*y - x*x - z*z),3) - 27*x*x*y*y*y*z*z', -2, 2, 8,'(y<sup>3</sup>-x<sup>2</sup>-z<sup>2</sup>)<sup>3</sup> = 27x<sup>2</sup>y<sup>3</sup>z<sup>2</sup>']; // Spitz
-  surf[30] = ['Tobel','x*x*x*z + x*x + y*z*z*z + z*z*z*z - 3*x*y*z', -1.5, 1.5, 8,'x<sup>3</sup> z + x<sup>2</sup> + yz<sup>3</sup> + z<sup>4</sup> = 3xyz']; //Tobel
-  surf[31] = ['Vis a viss','x*x - x*x*x + y*y + y*y*y*y + z*z*z - z*z*z*z', -1.5, 1.5, 8,'x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-z<sup>4</sup>=0']; // vis a vis
-  surf[32] = ['Wedeln','x*x*x - pow(y*(1 - z*z),2)', -2, 2, 5,'x<sup>3</sup> = y (1-z<sup>2</sup>)<sup>2</sup>']; // Wedeln
-  surf[33] = ['Windkanal','-x*x + y*y*y*y + z*z*z*z - x*y*z - 100', 0, 0, 0,'- x<sup>2</sup> + y<sup>4</sup> + z<sup>4</sup> - xyz = 100']; // Windkanal
-  surf[34] = ['Xano','x*x*x*x + z*z*z - y*z*z', 0, 0, 0,'x<sup>4</sup> +z<sup>3</sup> = yz<sup>2</sup>']; // Xano
-  surf[35] = ['Zitrus','x*x + z*z + y*y*y*pow((y - 1),3)', -2, 2, 8 ,'x<sup>2</sup>+z<sup>2</sup> = y<sup>3</sup>(y-1)<sup>3</sup>']; // Zitrus
+  surf[4] = ['Cube','x*x*x*x*x*x+y*y*y*y*y*y+z*z*z*z*z*z-1', ', -2, 2, 8','x<sup>6</sup>+y<sup>6</sup>+z<sup>6</sup>=1']; // cube
+  surf[5] = ['Dattel','3*x*x*x+3*y*y*y+z*z-1', ', -2, 2, 8','3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1']; //dattel
+  // surf[6] = ['Daisy','(x*x - y*y*y)*(x*x - y*y*y) - (z*z-y*y)*(z*z-y*y)*(z*z-y*y)', ', -0.5, 0.5, 12', '(x<sup>2</sup> - y<sup>3</sup>)<sup>2</sup>=(z<sup>2</sup>-y<sup>2</sup>)<sup>3</sup>']; //daisy
+  surf[6] = ['Daisy','(x*x - y*y*y)*(x*x - y*y*y) - pow( (z*z-y*y),3)', ', -0.5, 0.5, 12', '(x<sup>2</sup> - y<sup>3</sup>)<sup>2</sup>=(z<sup>2</sup>-y<sup>2</sup>)<sup>3</sup>']; //daisy
+  surf[7] = ['DingDong','x*x + y*y +z*z*z - z*z', ', -2, 2, 8','x<sup>2</sup> +y<sup>2</sup> +z<sup>3</sup> = z<sup>2</sup>']; // ding dong
+  surf[8] = ['Distel','x*x + y*y+z*z+ 1000*( x*x + y*y)*(x*x+z*z)*(y*y+z*z) - 1', ', -0.8, 0.8, 20','x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+1000(x<sup>2</sup>+y<sup>2</sup>)(x<sup>2</sup>+z<sup>2</sup>)(y<sup>2</sup>+z<sup>2</sup>)=1']; // distel
+  surf[9] = ['Durchblick','x*x*x*y + x*z*z*z + y*y*y*z + z*z*z + 5*z', ', -5, 5, 3','x<sup>3</sup>y+xz<sup>3</sup>+y<sup>3</sup>z+z<sup>3</sup>+5z = 0']; // Durchblick
+  surf[10] = ['Eist&uuml;te','pow((x*x+y*y),3) - 4*x*x*y*y*(z*z + 1)', ', -2, 2, 5','(x<sup>2</sup>+y<sup>2</sup>)<sup>3</sup> = 4x<sup>2</sup>y<sup>2</sup>(z<sup>2</sup>+1)']; // Eistute
+  surf[11] = ['Eve','5*x*x + 2*x*z*z + 5*y*y*y*y*y*y + 15*y*y*y*y + 5*z*z - 15*y*y*y*y*y - 5*y*y*y', ', -5.5, 5.5, 2','5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup> + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup>']; // eve
+  surf[12] = ['Flirt','x*x-x*x*x+y*y+y*y*y*y+z*z*z-10*z*z*z*z', ', -1, 1, 8','x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-10z<sup>4</sup>=0']; //flirt
+  surf[13] = ['Geisha','x*x*y*z + x*x*z*z - y*y*y*z - y*y*y', '','x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup> = y<sup>3</sup>z + y<sup>3</sup>']; // geisha
+  surf[14] = ['Harlekin','x*x*x*z + 10*x*x*y + x*y*y + y*z*z - z*z*z', '','x<sup>3</sup>z + 10x<sup>2</sup>y + xy<sup>2</sup> + yz<sup>2</sup> = z<sup>3</sup>']; //harlequin
+  surf[15] = ['Helix','6*x*x + 2*x*x*x*x - y*y*z*z', ', -2, 2, 8','6x<sup>2</sup> - 2x<sup>4</sup> = y<sup>2</sup>z<sup>2</sup>']; //helix
+  surf[16] = ['Herz','y*y + z*z*z - z*z*z*z - x*x*z*z', ', -1, 1, 8','y<sup>2</sup>+z<sup>3</sup>-z<sup>4</sup>-x<sup>2</sup>z<sup>2</sup> = 0']; // herz
+  surf[17] = ['Himmel und H&ouml;lle','x*x - y*y*z*z', ', -1.5, 1.5, 8','x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0']; // Himmel und Holle
+  surf[18] = ['Kolobri','x*x*x + x*x*z*z - y*y', ', -2, 2, 8','x<sup>3</sup> + x<sup>2</sup>z<sup>2</sup> - y<sup>2</sup>']; // kolobri
+  surf[19] = ['Leopold','x*x*y*y*z*z + 3*x*x + 3*y*y + z*z - 1', ', -1, 1, 8','x<sup>2</sup>y<sup>2</sup>z<sup>2</sup>+3x<sup>2</sup>+3y<sup>2</sup>+z<sup>2</sup>=1']; // leopold
+  surf[20] = ['Octdong','x*x + y*y + z*z*z*z - z*z', ', -2, 2, 8','x<sup>2</sup> + y<sup>2</sup> + z<sup>4</sup> = z<sup>2</sup>']; // Octdong
+  surf[21] = ['Plop','x*x + pow((z + y*y),3)', ', -2, 2, 8','x<sup>2</sup> + (z+y<sup>2</sup>)<sup>3</sup> = 0']; //plop
+  surf[22] = ['Seepferdchen','pow((x*x - y*y),2) - (x*x + y*y)* z*z*z', ', -2, 2, 8','(x<sup>2</sup>-y<sup>3</sup>)<sup>2</sup>=(x+y<sup>2</sup>)z<sup>3</sup>']; //Seepferdchen
+  surf[23] = ['Sofa','x*x + y*y*y + z*z*z*z*z', ', -2, 2, 8','x<sup>2</sup>+y<sup>3</sup>+z<sup>5</sup> = 0']; // sofa
+  surf[24] = ['Solitude','x*x*y*z + x*y*y + y*y*y *y*y*y*z - x*x*z*z', ', -6, 6, 3', 'x<sup>2</sup>yz +xy<sup>2</sup>+y<sup>3</sup>+y<sup>3</sup>z=x<sup>2</sup>z<sup>2</sup>']; // solitude
+  surf[25] = ['S&uuml;ss','(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1)*(x*x+9/4*y*y+z*z-1) - x*x*z*z*z-9/80*y*y*z*z*z', ', -2, 2, 8 ','(x<sup>2</sup>+9/4y<sup>2</sup>+z<sup>2</sup>-1)<sup>3</sup> - x<sup>2</sup>z<sup>3</sup>-9/80y<sup>2</sup>z<sup>3</sup>=0']; // Suss
+  surf[26] = ['Tanz','x*x*x*x - x*x  - y*y*z*z', '','x<sup>4</sup>-x<sup>2</sup>-y<sup>2</sup>z<sup>2</sup>=0']; // Tanz
+  surf[27] = ['Taube','256*z*z*z - 128*x*x*z*z + 16*x*x*x*x*z + 144*x*y*y*z - 4*x*x*x*y*y - 27*y*y*y*y', '','256z<sup>3</sup>-128x<sup>2</sup>z<sup>2</sup>+16x<sup>4</sup>z+144xy<sup>2</sup>z - 4x<sup>3</sup>y<sup>2</sup>-27y<sup>4</sup> =0']; // taube
+  surf[28] = ['Quaste','', '','???']; // Quaste
+  surf[29] = ['Spitz','pow((y*y*y - x*x - z*z),3) - 27*x*x*y*y*y*z*z', ', -2, 2, 8 ','(y<sup>3</sup>-x<sup>2</sup>-z<sup>2</sup>)<sup>3</sup> = 27x<sup>2</sup>y<sup>3</sup>z<sup>2</sup>']; // Spitz
+  surf[30] = ['Tobel','x*x*x*z + x*x + y*z*z*z + z*z*z*z - 3*x*y*z', ', -1.5, 1.5, 8','x<sup>3</sup> z + x<sup>2</sup> + yz<sup>3</sup> + z<sup>4</sup> = 3xyz']; //Tobel
+  surf[31] = ['Vis a viss','x*x - x*x*x + y*y + y*y*y*y + z*z*z - z*z*z*z', ', -1.5, 1.5, 8','x<sup>2</sup>-x<sup>3</sup>+y<sup>2</sup>+y<sup>4</sup>+z<sup>3</sup>-z<sup>4</sup>=0']; // vis a vis
+  surf[32] = ['Wedeln','x*x*x - pow(y*(1 - z*z),2)', ', -2, 2, 5','x<sup>3</sup> = y (1-z<sup>2</sup>)<sup>2</sup>']; // Wedeln
+  surf[33] = ['Windkanal','-x*x + y*y*y*y + z*z*z*z - x*y*z - 100', '','- x<sup>2</sup> + y<sup>4</sup> + z<sup>4</sup> - xyz = 100']; // Windkanal
+  surf[34] = ['Xano','x*x*x*x + z*z*z - y*z*z', '','x<sup>4</sup> +z<sup>3</sup> = yz<sup>2</sup>']; // Xano
+  surf[35] = ['Zitrus','x*x + z*z + y*y*y*pow((y - 1),3)', ', -2, 2, 8 ','x<sup>2</sup>+z<sup>2</sup> = y<sup>3</sup>(y-1)<sup>3</sup>']; // Zitrus
   surf[36] = ['Croissant','', '','???']; // Croissant
-  surf[37] = ['Dromedar','x*x*x*x - 3*x*x + y*y + z*z*z', -2, 2, 8,'x<sup>4</sup> - 3x<sup>2</sup> + y<sup>2</sup>+z<sup>3</sup> = 0']; // Dromedar
-  surf[38] = ['Zeppelin','x*y*z + y*z + 2*z*z*z*z*z', -1.25, 1.25, 10,'xyz+yz+2z<sup>5</sup>= 0']; // Zeppelin
-  surf[39] = ['Zweiloch','x*y*z + y*z + 2*z*z*z*z*z', 0, 0, 0,'xyz+yz+2z<sup>5</sup>= 0']; // Zweilach
-  surf[40] = ['Michaelangelo','x*x + y*y*y*y + y*y*y*z*z', -2, 2, 8,'x<sup>2</sup>+y<sup>4</sup>+y<sup>3</sup>z<sup>2</sup>=0']; // Michaelangelo
-  surf[41] = ['Stern','x*x*y*y + y*y*z*z + x*x*z*z + 100*(x*x + y*y + z*z - 1)*(x*x + y*y + z*z - 1)*(x*x + y*y + z*z - 1)', -0.85, 0.85, 8,'x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>z<sup>2</sup> + x<sup>2</sup>z<sup>2</sup> + 100 ( x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> - 1)<sup>3</sup> = 0']; // Stern
+  surf[37] = ['Dromedar','x*x*x*x - 3*x*x + y*y + z*z*z', ', -2, 2, 8 ','x<sup>4</sup> - 3x<sup>2</sup> + y<sup>2</sup>+z<sup>3</sup> = 0']; // Dromedar
+  surf[38] = ['Zeppelin','x*y*z + y*z + 2*z*z*z*z*z', ', -1.25, 1.25, 10','xyz+yz+2z<sup>5</sup>= 0']; // Zeppelin
+  surf[39] = ['Zweiloch','x*y*z + y*z + 2*z*z*z*z*z', '','xyz+yz+2z<sup>5</sup>= 0']; // Zweilach
+  surf[40] = ['Michaelangelo','x*x + y*y*y*y + y*y*y*z*z', ', -2, 2, 8','x<sup>2</sup>+y<sup>4</sup>+y<sup>3</sup>z<sup>2</sup>=0']; // Michaelangelo
+  surf[41] = ['Stern','x*x*y*y + y*y*z*z + x*x*z*z + 100*(x*x + y*y + z*z - 1)*(x*x + y*y + z*z - 1)*(x*x + y*y + z*z - 1)', ', -0.85, 0.85, 8','x<sup>2</sup>y<sup>2</sup> + y<sup>2</sup>z<sup>2</sup> + x<sup>2</sup>z<sup>2</sup> + 100 ( x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> - 1)<sup>3</sup> = 0']; // Stern
   surf[42] = ['M&ouml;bius','', '','???']; // Mobius
-  surf[43] = ['Sph&auml;re','x*x + y*y + z*z - 1', -2, 2, 8,'x<sup>2</sup> + y<sup>2</sup>+ z<sup>2</sup> = 1']; // Sphare
-  surf[44] = ['Limao','x*x - y*y*y*z*z*z',0, 0, 0,'x<sup>2</sup>-y<sup>3</sup>z<sup>3</sup> = 0'];
-  surf[45] = ['Torus','pow((x*x + y*y + z*z + 2 - 1),2) - 2*(x*x + y*y)',0, 0, 0,'(x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+R<sup>2</sup>-r<sup>2</sup>)<sup>2</sup> = R<sup>2</sup>(x<sup>2</sup>+y<sup>2</sup>)'];
-  surf[46] = ['Whitney','x*x - y*y*z',0, 0, 0,'x<sup>2</sup>-y<sup>2</sup>z=0'];
-  surf[47] = ['Buggle','x*x*x*x*y*y + y*y*y*y*x*x - x*x*y*y + z*z*z*z*z*z',0, 0, 0,'x<sup>4</sup>y<sup>2</sup>+y<sup>4</sup>x<sup>2</sup>-x<sup>2</sup>y<sup>2</sup>+z<sup>6</sup>=0'];
-  surf[48] = ['Zylinder','y*y + z*z - 1',0, 0, 0,'y<sup>2</sup> + z<sup>2</sup> = 1'];
-  surf[49] = ['Diabolo','x*x - pow((y*y + z*z),2)',0, 0, 0,'x<sup>2</sup> = (y<sup> 2</sup>+ z<sup>2</sup>)<sup>2</sup>'];
-  surf[50] = ['Dullo','pow((x*x + y*y + z*z),2) - (x*x + y*y)',0, 0, 0,'(x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>)<sup>2</sup>-(x<sup>2</sup>+y<sup>2</sup>) = 0'];
-  surf[51] = ['Miau','x*x*y*z + x*x*z*z + 2*y*y*y*z + 3*y*y*y',0, 0, 0,'x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup>  + 2 y<sup>3</sup>z + 3 y<sup>3</sup>  = 0'];
-  surf[52] = ['Trichter','x*x + z*z*z - y*y*z*z',0, 0, 0,'  x<sup>2</sup> + z<sup>3</sup> = y<sup>2</sup>z<sup>2</sup> '];
-  surf[53] = ['Nepali','pow((x*y - z*z*z - 1),2) + (x*x + y*y - 1)*(x*x + y*y - 1)*(x*x + y*y - 1)',0, 0, 0, '(xy-z<sup>3</sup>-1)<sup>2</sup> + (x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup> = 0'];
-  surf[54] = ['Pilzchen','pow((z*z*z - 1), 2) + pow((x*x + y*y - 1),3)',0, 0, 0,'(z<sup>3</sup> - 1)<sup>2</sup> + (x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup>=0 '];
-  surf[55] = ['Subway','x*x*y*y - pow((z*z - 1),3)',0, 0, 0,'x<sup>2</sup>y<sup>2</sup> = (z<sup>2</sup>-1)<sup>3</sup>'];
-  surf[56] = ['Polsterzipf','(x*x*x - 1)*(x*x*x - 1) + (y*y*y - 1)*(y*y*y - 1) + (z*z - 1)*(z*z - 1)*(z*z - 1)',0, 0, 0, '(x<sup>3</sup>-1)<sup>2</sup>]; (y<sup>3</sup>-1)<sup>2</sup>+ (z<sup>2</sup>-1)<sup>3</sup> = 0'];
-  surf[57] = ['Crixxi','(y*y + z*z - 1)*(y*y + z*z - 1) + (x*x + y*y - 1)*(x*x + y*y - 1)*(x*x + y*y - 1)',0, 0, 0,' (y<sup>2</sup>+z<sup>2</sup>-1)<sup>2</sup> +(x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup> = 0'];
-  surf[58] = ['Berg','x*x + y*y*z*z + z*z*z',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>z<sup>2</sup>+z<sup>3</sup> = 0'];
-  surf[59] = ['Gupf','x*x + y*y + z',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>+z=0'];
-  surf[60] = ['Kegel','x*x + y*y - z*z',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>=0'];
-  surf[61] = ['Wigwam','x*x + y*y*z*z*z',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup>=0'];
-  surf[62] = ['Tuelle','y*z*(x*x + y - z)',0, 0, 0,'yz(x<sup>2</sup>+y-z) = 0</a><\/p>'];
-  surf[63] = ['Pipe','x*x - z',0, 0, 0,'x<sup>2</sup>-z=0</a><\/p>'];
-  surf[64] = ['Fanfare','-x*x*x + z*z + y*y',0, 0, 0,'-x<sup>3</sup>+z<sup>2</sup>+y<sup>2</sup>=0'];
-  surf[65] = ['Kreuz','x * y * z',0, 0, 0,'xyz=0'];
-  surf[66] = ['Spindel','x*x + y*y - z*z - 1',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>= 1'];
-  surf[67] = ['Twilight','(z*z*z - 2)*(z*z*z - 2) + (x*x + y*y - 3)*(x*x + y*y - 3)*(x*x + y*y - 3)',0, 0, 0,' (z<sup>3</sup>-2)<sup>2</sup> +(x<sup>2</sup>+y<sup>2</sup>-3)<sup>3</sup>  =0  '];
-  surf[68] = ['Ufo','z*z - x*x - y*y - 1',0, 0, 0,'z<sup>2</sup>-x<sup>2</sup>-y<sup>2</sup> = 1'];
+  surf[43] = ['Sph&auml;re','x*x + y*y + z*z - 1', ', -2, 2, 8','x<sup>2</sup> + y<sup>2</sup>+ z<sup>2</sup> = 1']; // Sphare
+  surf[44] = ['Limao','x*x - y*y*y*z*z*z','','x<sup>2</sup>-y<sup>3</sup>z<sup>3</sup> = 0'];
+  surf[45] = ['Torus','pow((x*x + y*y + z*z + 2 - 1),2) - 2*(x*x + y*y)','','(x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>+R<sup>2</sup>-r<sup>2</sup>)<sup>2</sup> = R<sup>2</sup>(x<sup>2</sup>+y<sup>2</sup>)'];
+  surf[46] = ['Whitney','x*x - y*y*z','','x<sup>2</sup>-y<sup>2</sup>z=0'];
+  surf[47] = ['Buggle','x*x*x*x*y*y + y*y*y*y*x*x - x*x*y*y + z*z*z*z*z*z','','x<sup>4</sup>y<sup>2</sup>+y<sup>4</sup>x<sup>2</sup>-x<sup>2</sup>y<sup>2</sup>+z<sup>6</sup>=0'];
+  surf[48] = ['Zylinder','y*y + z*z - 1','','y<sup>2</sup> + z<sup>2</sup> = 1'];
+  surf[49] = ['Diabolo','x*x - pow((y*y + z*z),2)','','x<sup>2</sup> = (y<sup> 2</sup>+ z<sup>2</sup>)<sup>2</sup>'];
+  surf[50] = ['Dullo','pow((x*x + y*y + z*z),2) - (x*x + y*y)','','(x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>)<sup>2</sup>-(x<sup>2</sup>+y<sup>2</sup>) = 0'];
+  surf[51] = ['Miau','x*x*y*z + x*x*z*z + 2*y*y*y*z + 3*y*y*y','','x<sup>2</sup>yz + x<sup>2</sup>z<sup>2</sup>  + 2 y<sup>3</sup>z + 3 y<sup>3</sup>  = 0'];
+  surf[52] = ['Trichter','x*x + z*z*z - y*y*z*z','','  x<sup>2</sup> + z<sup>3</sup> = y<sup>2</sup>z<sup>2</sup> '];
+  surf[53] = ['Nepali','pow((x*y - z*z*z - 1),2) + (x*x + y*y - 1)*(x*x + y*y - 1)*(x*x + y*y - 1)','', '(xy-z<sup>3</sup>-1)<sup>2</sup> + (x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup> = 0'];
+  surf[54] = ['Pilzchen','pow((z*z*z - 1), 2) + pow((x*x + y*y - 1),3)','','(z<sup>3</sup> - 1)<sup>2</sup> + (x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup>=0 '];
+  surf[55] = ['Subway','x*x*y*y - pow((z*z - 1),3)','','x<sup>2</sup>y<sup>2</sup> = (z<sup>2</sup>-1)<sup>3</sup>'];
+  surf[56] = ['Polsterzipf','(x*x*x - 1)*(x*x*x - 1) + (y*y*y - 1)*(y*y*y - 1) + (z*z - 1)*(z*z - 1)*(z*z - 1)','', '(x<sup>3</sup>-1)<sup>2</sup>]; (y<sup>3</sup>-1)<sup>2</sup>+ (z<sup>2</sup>-1)<sup>3</sup> = 0'];
+  surf[57] = ['Crixxi','(y*y + z*z - 1)*(y*y + z*z - 1) + (x*x + y*y - 1)*(x*x + y*y - 1)*(x*x + y*y - 1)','',' (y<sup>2</sup>+z<sup>2</sup>-1)<sup>2</sup> +(x<sup>2</sup>+y<sup>2</sup>-1)<sup>3</sup> = 0'];
+  surf[58] = ['Berg','x*x + y*y*z*z + z*z*z','','x<sup>2</sup>+y<sup>2</sup>z<sup>2</sup>+z<sup>3</sup> = 0'];
+  surf[59] = ['Gupf','x*x + y*y + z','','x<sup>2</sup>+y<sup>2</sup>+z=0'];
+  surf[60] = ['Kegel','x*x + y*y - z*z','','x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>=0'];
+  surf[61] = ['Wigwam','x*x + y*y*z*z*z','','x<sup>2</sup>+y<sup>2</sup>z<sup>3</sup>=0'];
+  surf[62] = ['Tuelle','y*z*(x*x + y - z)','','yz(x<sup>2</sup>+y-z) = 0</a><\/p>'];
+  surf[63] = ['Pipe','x*x - z','','x<sup>2</sup>-z=0</a><\/p>'];
+  surf[64] = ['Fanfare','-x*x*x + z*z + y*y','','-x<sup>3</sup>+z<sup>2</sup>+y<sup>2</sup>=0'];
+  surf[65] = ['Kreuz','x * y * z','','xyz=0'];
+  surf[66] = ['Spindel','x*x + y*y - z*z - 1','','x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>= 1'];
+  surf[67] = ['Twilight','(z*z*z - 2)*(z*z*z - 2) + (x*x + y*y - 3)*(x*x + y*y - 3)*(x*x + y*y - 3)','',' (z<sup>3</sup>-2)<sup>2</sup> +(x<sup>2</sup>+y<sup>2</sup>-3)<sup>3</sup>  =0  '];
+  surf[68] = ['Ufo','z*z - x*x - y*y - 1','','z<sup>2</sup>-x<sup>2</sup>-y<sup>2</sup> = 1'];
   surf[69] = ['Wendel','','','???'];
-  surf[70] = ['Zeck','x*x + y*y - z*z*z*(1-z)',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>-z<sup>3</sup>(1-z) = 0'];
-  surf[71] = ['Sattel','x*x + y*y*z + z*z*z',0, 0, 0,'x<sup>2</sup>+y<sup>2</sup>z+z<sup>3</sup>=0'];
-  surf[72] = ['Schneeflocke','x*x* + y*y*z*z*z  + y*z*z*z*z',0, 0, 0,'x<sup>3</sup>+y<sup>2</sup>z<sup>3</sup>+yz<sup>4</sup>=0'];
+  surf[70] = ['Zeck','x*x + y*y - z*z*z*(1-z)','','x<sup>2</sup>+y<sup>2</sup>-z<sup>3</sup>(1-z) = 0'];
+  surf[71] = ['Sattel','x*x + y*y*z + z*z*z','','x<sup>2</sup>+y<sup>2</sup>z+z<sup>3</sup>=0'];
+  surf[72] = ['Schneeflocke','x*x* + y*y*z*z*z  + y*z*z*z*z','','x<sup>3</sup>+y<sup>2</sup>z<sup>3</sup>+yz<sup>4</sup>=0'];
   surf[73] = ['Cylinder','x*x + y*y - 1',', -2, 2, 8','x<sup>2</sup> + y<sup>2</sup> = 1'];
 
   init();
-  plotIt( 0, 0, 0, 0  );
+  plotIt( 0 );
   animate();
   
   function init() {
@@ -160,7 +162,7 @@ a {font-weight: 800; text-decoration: none;}
     '<p>Formulas and names courtesy of <a href="http://homepage.univie.ac.at/herwig.hauser/bildergalerie/gallery.html" target="_blank"><b>Herwig Hauser</b></a>.</p>';
   
     for (var i = 0; i < 74; i++) {
-      splashText += '<p><a href="#" onClick="plotIt(' + i + ',' + surf[i][2] + ',' + surf[i][3] + ',' + surf[i][4]  + ')">' + surf[i][0] + ':<br>' + surf[i][5] + '<\/a><\/p>';
+      splashText += '<p><a href="#" onClick="plotIt(' + i + surf[i][2] + ')">' + surf[i][0] + ':<br>' + surf[i][3] + '<\/a><\/p>';
     }
 
     splashText += 
@@ -173,17 +175,17 @@ a {font-weight: 800; text-decoration: none;}
   }
 
   function plotIt( val, axisMin, axisMax, scale) { 
-//console.log(val, axisMin, axisMax, scale);
+  console.log(val, axisMin, axisMax, scale);
     if( mesh ) { scene.remove(mesh) };
-    info.innerHTML = surf[val][0] + ' ~ ' + surf[val][5];
+    // info.innerHTML = surf[val][0] + ' ~ ' + surf[val][3];
     // custom global variables
     var points = [];
     // number of cubes along a side
     var size = 70;
     // far !== undefined ? far : 2000;
-    var axisMin = axisMin !== 0 ? axisMin : -10;
-    var axisMax =  axisMax !== 0 ? axisMax : 10;
-    var scale = scale !== 0 ? scale : 1;
+    var axisMin = axisMin !== undefined ? axisMin : -10;
+    var axisMax =  axisMax !== undefined ? axisMax : 10;
+    var scale = scale !== undefined ? scale : 1;
     var axisRange = axisMax - axisMin;
     var PC = new Function('x','y','z','return '+ unescape( surf[val][1] ));
     var values = [];
@@ -376,7 +378,7 @@ a {font-weight: 800; text-decoration: none;}
       mesh.rotation.y += 0.02;
     }
     if ( player && (clock.getElapsedTime() - start > 3) ) {
-      plotIt(cnt, surf[cnt][2], surf[cnt][3], surf[cnt][4] );
+      plotIt(cnt);
       cnt++;
       if (cnt > 73) {cnt = 0;}
       start = clock.getElapsedTime();
