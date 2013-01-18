@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>parser</title>
+<meta charset="utf-8">
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<!-- http://silentmatt.com/javascript-expression-evaluator/ -->
+<script src="parser.js"></script>
+<script type='text/javascript'>
+document.body.style.font = 'bold 12pt monospace';
+var input = document.createElement( 'div' );
+document.body.appendChild( input );
+input.innerHTML = '<p>parser</p>' +
+'<p>Source via Stemkoski: <a href=:http://silentmatt.com/javascript-expression-evaluator/" target="_blank">JavaScript Expression Evaluator</a></p>' +
+'<p><textarea id="input" rows="3" cols="50" autofocus="autofocus">(x^2 + y^2 + z^2)^2 - 3*(x^2 + z^2)*y</textarea></p>' +
+'x <input type="text" id="x" size="1" value="1"><br>' +
+'y <input type="text" id="y" size="1" value="1"><br>' +
+'z <input type="text" id="z" size="1" value="1"><br>' +
+'<p><a href="#" onclick="parseIt()">parseIt</a></p>';
+
+var output = document.createElement( 'div' );
+document.body.appendChild( output );
+output.innerHTML = '<p id="output">output will arrive here...</p>';
+
+function parseIt() {
+  var input = document.getElementById('input').value;
+  var x = document.getElementById('x').value;
+  var y = document.getElementById('y').value;
+  var z = document.getElementById('z').value;
+  var xFunc = Parser.parse(input).toJSFunction( ['x','y','z'] );
+  var output = document.getElementById('output');
+  output.innerHTML = 'text: ' + xFunc(x, y, z) + '<p>' +
+  '<p>' + xFunc + '</p>';
+}
+</script>
+</body>
+</html>
