@@ -180,9 +180,10 @@ a {font-weight: 800; text-decoration: none;}
     
     '<div style="height: 65%;overflow:scroll;">' +
     '<p>Click on any equation. Use pointing device to zoom and rotate. </p>' +
+    '<p><a href="#" onClick="menuData(0, 1)">' + surf[0][0] + ':<br>&raquo; ' + surf[0][5] + '<\/a><\/p>' +
     '<p>Following formulas and names courtesy of &raquo;<a href="http://homepage.univie.ac.at/herwig.hauser/bildergalerie/gallery.html" target="_blank"><b>Herwig Hauser</b></a>.</p>';
 
-    for (var i = 0; i < 74; i++) {
+    for (var i = 1; i < 74; i++) {
       var s = surf[i];
       splashText += '<p><a href="#" onClick="menuData(' + i + ', 1)">' + s[0] + ':<br>&raquo; ' + s[5] + '<\/a><\/p>';
     }
