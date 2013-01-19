@@ -167,9 +167,12 @@ a {font-weight: 800; text-decoration: none;}
     document.body.appendChild( splash );
     splash.style.cssText = 'background-color: #ddd; border-radius: 10px; box-shadow: 10px 10px 5px #444; color: #000; display: block; right:20px; opacity: 0.85';
     splash.style.cssText += 'height: 80%; margin: 0; padding: 0 10px 0px 10px; position: absolute; text-align: left; top: 20px; width: 370px';
-    var splashText = '<h2 style="margin:0 0 auto 0;padding:0;text-align:right;"><a href="#" title="Click to close" onClick="toggleSplash()" style="color:#888;text-decoration:none;">[X]<\/a><\/h2>' +
+    var splashText = '<h2 style="margin:0 0 auto 0;padding:0;text-align:right;">' +
+    '<a href="#" title="Click to close" onClick="toggleSplash()" style="color:#888;text-decoration:none;">[X]<\/a><\/h2>' +
     '<h1 style="margin:0;padding:0">Algebraic Surfaces<\/h1>' +
-    '<hr><p style="margin:0;padding:0"><a href="#" onClick="toggleSpin()">&raquo;Toggle spin</a>. <a href="#" onClick="togglePlayer()">&raquo;Toggle player</a>.</p>' +
+    '<hr><p style="margin:0;padding:0">' +
+    '<a href="#" onClick="toggleSpin()">&raquo;Toggle spin</a> ' + // <input type="text" id="spn" size="1" value="5"> ' +
+    '<a href="#" onClick="togglePlayer()">&raquo;Toggle play</a> <input type="text" id="play" size="1" title="length of display in seconds" value="5"></p>' +
     '<form><textarea id="input" cols="43"  autofocus="autofocus"></textarea>' +
     'Axis: min <input type="text" id="axMin" name="AxisMin" size="2" value="-10"> max <input type="text" id="axMax" size="2" value="10">'+
     ' Scale <input type="text" id="scale" size="1" value="1">' +
@@ -202,7 +205,7 @@ a {font-weight: 800; text-decoration: none;}
   }
 
   var name, data;
-  
+ 
   function menuData(i) {
     var text = document.getElementById('input');
     var axMin = document.getElementById('axMin');
@@ -231,25 +234,27 @@ a {font-weight: 800; text-decoration: none;}
   }
   
   function cleanData(data) {
-    return Parser.parse(data).toJSFunction( ['x','y','z'] ); 
-// console.log('data: ', data);       
+    return Parser.parse(data).toJSFunction( ['x','y','z'] );      
   }
   
   function animate() {
     requestAnimationFrame( animate );
-    render();		
+    render();
   }
 
   var start = clock.getElapsedTime();
+  var spinSpeed = 0.01; // parseFloat(document.getElementById('spn').value);
+  var play = document.getElementById('play').value;
   var cnt = 1;
+console.log(cnt, spinSpeed, spin); 
   
   function render() {
     if (spin === true) {
-      mesh.rotation.x += 0.01;
+      mesh.rotation.x += 0.01; // spinSpeed; // doesn't work at start up - after OK - strange
       mesh.rotation.y += 0.02;
+      // spinSpeed = parseFloat(document.getElementById('spin').value);
     }
-    if ( player && (clock.getElapsedTime() - start > 5) ) {
-// console.log(cnt);   
+    if ( player && (clock.getElapsedTime() - start > play) ) {
       if (surf[cnt][1] !== '') {
         data = cleanData(surf[cnt][1]);
         plotIt(surf[cnt][0], data, surf[cnt][2], surf[cnt][3], surf[cnt][4], surf[cnt][5] );
@@ -260,6 +265,7 @@ a {font-weight: 800; text-decoration: none;}
       if (cnt > 73 && cnt < 80) {cnt = 80;}
       
       start = clock.getElapsedTime();
+      play = document.getElementById('play').value;
     }
     renderer.render( scene, camera );
     controls.update();
