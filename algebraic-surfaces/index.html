@@ -45,6 +45,8 @@ a {font-weight: 800; text-decoration: none;}
   var clock = new THREE.Clock();
   
   var spin = true, player = false;
+  var spinSpeed = 3; // parseFloat(document.getElementById('spn').value);
+  var playDelay = 5; // document.getElementById('play').value;
   
   var surf = [];
   // surf[] = ['','',0,0,0,''];
@@ -127,8 +129,8 @@ a {font-weight: 800; text-decoration: none;}
   surf[73] = ['Cylinder','x^2 + y^2 - 1', -2, 2, 8,'x<sup>2</sup> + y<sup>2</sup> = 1'];
 
   // http://jalape.no/math/surfaces.htm
-  surf[80] = ['Cylinder 1','x^3 - x^2 + y^2',-1,1,10,''];
-  surf[81] = ['Cylinder 3',' x^4 + y^4 + 2*x^2*y^2 + 3*x^2*y - y^3',-1,1,10,''];
+  surf[80] = ['Cylinder 1','x^3 - x^2 + y^2',-1,1,10,'x^3 - x^2 + y^2'];
+  surf[81] = ['Cylinder 3',' x^4 + y^4 + 2*x^2*y^2 + 3*x^2*y - y^3',-1,1,10,'x^4 + y^4 + 2*x^2*y^2 + 3*x^2*y - y^3'];
   surf[82] = ['Bifolia','(x^2 + y^2 + z^2)^2 - 3*(x^2 + z^2)*y',-1,1,10,''];
   surf[83] = ['Boy Surface (broken)','64*(1-z)^3 * z^3-48*(1-z)^2 * z^2*(3*x^2+3*y^2+2*z^2) + 12*(1-z)*z*(27*(x^2+y^2)^2 - 24*z^2*(x^2+y^2) + 36*1.414*y*z*(y^2-3*x^2)+4*z^4)+ (9*x^2+9*y^2-2*z^2)*(-81*(x^2+y^2)^2 - 72*z^2*(x^2+y^2)+ 108*1.414*x*z*(x^2-3*y^2)+4*z^4)',-3,3,5,''];    
   surf[84] = ['Cassini','(x^2 + y^2 + z^2 + 0.45*0.45)^2 - (16*0.45)*(16*0.45)*(x^2 + z^2) - 0.25 ',0,0,0,''];
@@ -139,6 +141,7 @@ a {font-weight: 800; text-decoration: none;}
   surf[89] = ['Cubic saddle','x^3 - y^3 - z',0,0,0,''];
   surf[90] = ['Cushion','z^2*x^2 - z^4 - 2*z*x^2 + 2*z^3 + x^2 - z^2 - (x^2 - z)^2 - y^4 - 2*x^2*y^2 - y^2*z^2 + 2*y^2*z + y^2',-2,2,10,''];  
 
+    
   init();
   menuData(0);
   animate();
@@ -167,12 +170,12 @@ a {font-weight: 800; text-decoration: none;}
     document.body.appendChild( splash );
     splash.style.cssText = 'background-color: #ddd; border-radius: 10px; box-shadow: 10px 10px 5px #444; color: #000; display: block; right:20px; opacity: 0.85';
     splash.style.cssText += 'height: 80%; margin: 0; padding: 0 10px 0px 10px; position: absolute; text-align: left; top: 20px; width: 370px';
-    var splashText = '<h2 style="margin:0 0 auto 0;padding:0;text-align:right;">' +
+    var splashText = '<h2 style="margin:0 0 auto 0;padding:0; text-align:right;">' +
     '<a href="#" title="Click to close" onClick="toggleSplash()" style="color:#888;text-decoration:none;">[X]<\/a><\/h2>' +
     '<h1 style="margin:0;padding:0">Algebraic Surfaces<\/h1>' +
     '<hr><p style="margin:0;padding:0">' +
-    '<a href="#" onClick="toggleSpin()">&raquo;Toggle spin</a> ' + // <input type="text" id="spn" size="1" value="5"> ' +
-    '<a href="#" onClick="togglePlayer()">&raquo;Toggle play</a> <input type="text" id="play" size="1" title="length of display in seconds" value="5"></p>' +
+    '<a href="#" onClick="toggleSpin()">&raquo;Toggle spin</a> <input type="text" id="spin" size="1" value="' + spinSpeed + '"> ' +
+    '<a href="#" onClick="togglePlayer()">&raquo;Toggle play</a> <input type="text" id="play" size="1" title="length of display in seconds" value="' + playDelay + '"></p>' +
     '<form><textarea id="input" cols="43"  autofocus="autofocus"></textarea>' +
     'Axis: min <input type="text" id="axMin" name="AxisMin" size="2" value="-10"> max <input type="text" id="axMax" size="2" value="10">'+
     ' Scale <input type="text" id="scale" size="1" value="1">' +
@@ -190,9 +193,9 @@ a {font-weight: 800; text-decoration: none;}
     
     splashText += '<hr><p>Following formulas and names courtesy of &raquo;<a href="http://jalape.no/math/surfaces.htm" target="_blank">jalape.no</a></p>';
     
-    for (var i = 80, l = 11; i < l; i++) {
-      var s = surf2[i];
-      splashText += '<p><a href="#" onClick="menuData(' + i + ')">' + s[0] + ':<br>&raquo; ' + s[1] + '<\/a><\/p>';
+    for (var i = 80; i < 91; i++) {  
+      var s = surf[i];
+      splashText += '<p>' + i + '. <a href="#" onClick="menuData(' + i + ')">' + s[0] + ':<br>&raquo; ' + s[1] + '<\/a><\/p>';
     }
 
     splashText += 
@@ -243,18 +246,18 @@ a {font-weight: 800; text-decoration: none;}
   }
 
   var start = clock.getElapsedTime();
-  var spinSpeed = 0.01; // parseFloat(document.getElementById('spn').value);
-  var play = document.getElementById('play').value;
   var cnt = 1;
-// console.log(cnt, spinSpeed, spin); 
   
   function render() {
     if (spin === true) {
-      mesh.rotation.x += 0.01; // spinSpeed; // doesn't work at start up - after OK - strange
-      mesh.rotation.y += 0.02;
-      // spinSpeed = parseFloat(document.getElementById('spin').value);
+    
+      spinSpeed = parseFloat(document.getElementById('spin').value)
+      if (spinSpeed) {
+        mesh.rotation.x += 0.001 * spinSpeed;
+        mesh.rotation.y += 0.003 * spinSpeed;
+      }
     }
-    if ( player && (clock.getElapsedTime() - start > play) ) {
+    if ( player && (clock.getElapsedTime() - start > playDelay) ) {
       if (surf[cnt][1] !== '') {
         data = cleanData(surf[cnt][1]);
         plotIt(surf[cnt][0], data, surf[cnt][2], surf[cnt][3], surf[cnt][4], surf[cnt][5] );
@@ -265,7 +268,7 @@ a {font-weight: 800; text-decoration: none;}
       if (cnt > 73 && cnt < 80) {cnt = 80;}
       
       start = clock.getElapsedTime();
-      play = document.getElementById('play').value;
+      playDelay = document.getElementById('play').value;
     }
     renderer.render( scene, camera );
     controls.update();

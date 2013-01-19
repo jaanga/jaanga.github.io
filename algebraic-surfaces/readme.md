@@ -1,8 +1,18 @@
+Algebraic Surfaces
+==================
 
 The demo is visible at:  
 http://jaanga.github.com/algebraic-surfaces/
 
+Demo - 'cookbook' recipe - parser using Silent Matt's work via Stemkoski for converting text to a JavaScript function: 
+http://jaanga.github.com/algebraic-surfaces/parser.html
+
 ### Change Log
+
+2013-01-19 ~ Theo
+* added link to parser in Read Me
+* fixed error that was preventing Jalape's equations from displaying in menu.
+* solved issues with spinSpeed. Now enabled.
 
 2013-01-18 ~ Theo
 * Added this change log
