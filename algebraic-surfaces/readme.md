@@ -9,6 +9,15 @@ http://jaanga.github.com/algebraic-surfaces/parser.html
 
 ### Change Log
 
+2013-01-20 ~ Theo
+* Rebuilt user interface
+* onscreen feedback shows current material
+* Sections open and close
+* Can hide or display menu panel
+* added help display
+* added materials, textures and shaders
+* fixed issue with spin toggle
+
 2013-01-19 ~ Theo
 * added link to parser in Read Me
 * fixed error that was preventing Jalape's equations from displaying in menu.

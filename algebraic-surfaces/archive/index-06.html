@@ -3,8 +3,7 @@
 <head>
 <style>
 a {font-weight: 800; text-decoration: none;}
-/* a:before {content: '»'; } */
-a {color: #a44; text-decoration: none;}
+a:before {content: '»'; }
 </style>
 <title>Algebraic Surfaces using Marching Cubes</title>
 <meta charset="utf-8">
@@ -17,13 +16,6 @@ a {color: #a44; text-decoration: none;}
 <script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
 <script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
 <script src='http://mrdoob.github.com/three.js/examples/js/libs/dat.gui.min.js'></script>
-
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/CopyShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/FXAAShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/HorizontalTiltShiftShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/VerticalTiltShiftShader.js"></script>
-
-<script src="http://mrdoob.github.com/three.js/examples/js/ShaderToon.js"></script>
 <!--
 <script src="https://raw.github.com/mrdoob/three.js/r54/build/three.min.js"></script>
 <script src="https://raw.github.com/mrdoob/three.js/r54/examples/js/controls/TrackballControls.js"></script>
@@ -38,46 +30,29 @@ a {color: #a44; text-decoration: none;}
 <script src="parser.js"></script>
 <!-- Contains Lookup Tables for the Marching Cubes Algorithm -->
 <script src="MarchingCubesData.js"></script>
-<script src="list.js"></script>
 <script>
   if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
   
-  document.body.style.cssText = 'background-color: #000; font: 12pt monospace; margin: 0; overflow: hidden; text-align: left; width: 600px;';
+  document.body.style.cssText = 'background-color: #000; font: 12pt monospace; margin: 0; overflow: hidden; text-align: center';
   document.body.style.backgroundImage = '-moz-radial-gradient(40% 40%, farthest-side, red, #000)';
   document.body.style.backgroundImage = '-webkit-gradient(radial, 430 50, 0, 430 50, 987, from(#800), to(#010))';
   
   var info = document.createElement( 'div' );
   document.body.appendChild( info );
-  info.style.cssText = 'color: #fff; left: 100px; padding: 5px; position: absolute; top: 0px; width: 100%';
-  info.style.innerHTML = 'Surface';
+  info.style.cssText = 'top: 0px; color: #fff; padding: 5px; position: absolute; width: 100%';
   
-  var infoMaterial = document.createElement( 'div' );
-  document.body.appendChild( infoMaterial );
-  infoMaterial.style.cssText = 'color: #fff; left: 100px; padding: 5px; position: absolute; top: 20px; width: 100%';
-  infoMaterial.innerHTML = 'Material'; 
-
-/*  
   var materialsMenu = document.createElement( 'div' );
   document.body.appendChild( materialsMenu );
-  materialsMenu.style.cssText = 'top: 40px; color: #fff; position: absolute; width: 80%';
+  materialsMenu.style.cssText = 'top: 20px; color: #fff; padding: 5px; position: absolute; width: 100%';
   materialsMenu.innerHTML = 'Materials: ';  
-*/
-  
-  var sidebar, sidebarVisible = true;
-  var helpbar, helpVisible = false;
 
   var renderer, scene, camera, controls, stats;
-  var geometry, material, materials, mesh;
-  var light, pointLight, ambientLight;
-  
+  var light, geometry, material, materials, mesh;
   var clock = new THREE.Clock();
   
   var spin = true, player = false;
-  var spinSpeed = 3;
-  var playDelay = 5;
-
-  var selectedMaterial = 'normal~transparent*';
-  var selectedSurface = 0;
+  var spinSpeed = 3; // parseFloat(document.getElementById('spn').value);
+  var playDelay = 5; // document.getElementById('play').value;
   
   var surf = [];
   // surf[] = ['','',0,0,0,''];
@@ -172,8 +147,10 @@ a {color: #a44; text-decoration: none;}
   surf[89] = ['Cubic saddle','x^3 - y^3 - z',0,0,0,''];
   surf[90] = ['Cushion','z^2*x^2 - z^4 - 2*z*x^2 + 2*z^3 + x^2 - z^2 - (x^2 - z)^2 - y^4 - 2*x^2*y^2 - y^2*z^2 + 2*y^2*z + y^2',-2,2,10,''];  
 
-
+    
   init();
+  initMaterials();
+  menuData(0);
   animate();
   
   function init() {
@@ -190,113 +167,105 @@ a {color: #a44; text-decoration: none;}
     stats = new Stats();
     stats.domElement.style.cssText = 'position: absolute; top: 0px; zIndex: 100; ';
     document.body.appendChild( stats.domElement );    
-    
     scene.add( new THREE.AxisHelper( 20 ) );
 
-    light = new THREE.DirectionalLight( 0xffffff );
-    light.position.set( 0.5, 0.5, 1 );
-    scene.add( light );
+    light = new THREE.PointLight(0xffffff);
+    light.position.set(0,10,0);
+    scene.add(light);
 
-    pointLight = new THREE.PointLight( 0xff3300 );
-    pointLight.position.set( 0, 0, 100 );
-    scene.add( pointLight );
+    var splash = document.createElement( 'div' );
+    document.body.appendChild( splash );
+    splash.style.cssText = 'background-color: #ddd; border-radius: 10px; box-shadow: 10px 10px 5px #444; color: #000; display: block; right:20px;';
+    splash.style.cssText += 'height: 80%; margin: 0;  opacity: 0.85; padding: 0 10px 0px 10px; position: absolute; text-align: left; top: 20px; width: 370px';
+    var splashText = '<h2 style="margin:0 0 auto 0;padding:0; text-align:right;">' +
+    '<a href="#" title="Click to close" onClick="toggleSplash()" style="color:#888;text-decoration:none;">[X]<\/a><\/h2>' +
+    
+    '<h1 style="margin:0;padding:0">Algebraic Surfaces<\/h1>' +
+    '<hr><p style="margin:0;padding:0">' +
+    '<a href="#" onClick="toggleSpin()">Toggle spin</a> <input type="text" id="spin" size="1" value="' + spinSpeed + '"> ' +
+    '<a href="#" onClick="togglePlayer()">Toggle play</a> <input type="text" id="play" size="1" title="length of display in seconds" value="' + playDelay + '"></p>' +
+    '<form><textarea id="input" cols="43"  autofocus="autofocus"></textarea>' +
+    'Axis: min <input type="text" id="axMin" name="AxisMin" size="2" value="-10"> max <input type="text" id="axMax" size="2" value="10">'+
+    ' Scale <input type="text" id="scale" size="1" value="1">' +
+    '<br /><a href="#" onClick="grabData()" accesskey="U">Update visual</a></form><hr>' +
+    
+    '<div style="height: 70%; overflow:scroll;">' +
+    '<p>Click on any equation. Use pointing device to zoom and rotate. </p>' +
+    '<p><a href="#" onClick="menuData(0, 1)">' + surf[0][0] + ':<br> ' + surf[0][5] + '<\/a><\/p>' +
+    '<p>Following formulas and names courtesy of <a href="http://homepage.univie.ac.at/herwig.hauser/bildergalerie/gallery.html" target="_blank"><b>Herwig Hauser</b></a>.</p>';
 
-    ambientLight = new THREE.AmbientLight( 0x080808 );
-    scene.add( ambientLight );
-      
-    generateMaterials();
-      
-    sidebar = document.createElement( 'div' );
-    document.body.appendChild( sidebar );
-    sidebar.style.cssText = 'background-color: #ddd;' +
-      'overflow: auto; margin: 0; opacity: 0.9; padding: 0 5px 10px 10px; position: fixed;' +
-      'height: 100%; right: 0px; top: 0px; width: 370px; z-index: 1;'; 
-      
-    var sidebarText = 
-      '<h3 style="margin: 0; text-align:right">' +
-      '<a href="#" onclick="toggleMenu()">[X]</a></h3>' +
-      '<div id ="content">' +
-      '<h1 style="margin: 0;">Algebraic Surfaces</h1>' +
-    
-      '<a href="#" onClick="toggleSpin()">Toggle spin</a> <input type="text" id="spin" size="1" value="' + 
-      spinSpeed + '"> ' +
-      '<a href="#" onClick="togglePlayer()">Toggle play</a> <input type="text" id="play" size="1" title="length of display in seconds" value="' + 
-      playDelay + '">' +
-      '<form><textarea id="input" cols="40"  autofocus="autofocus"></textarea>' +
-      'Axis: min <input type="text" id="axMin" name="AxisMin" size="1" value="-10"> max <input type="text" id="axMax" size="1" value="10">'+
-      ' Scale <input type="text" id="scale" size="1" value="1">' +
-      '<br /><a href="#" onClick="grabData()" accesskey="U">Update visual</a>' +
-      ' &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;<a href="#" onclick="toggleHelp()">&raquo; Help &laquo;</a></form><hr>' +
-      
-      '<h2 id="h0" onclick="showText(0)">- | Hauser\'s Surfaces</h2>' +
-      '<div id="d0">' +
-      '<p>Click on any equation. Use pointing device to zoom and rotate. </p>' +
-      '<p><a href="#" onClick="menuData(0, 1)">' + surf[0][0] + ':<br> ' + surf[0][5] + '<\/a><\/p>' +
-      '<p>Following formulas and names courtesy of ' +
-      '<a href="http://homepage.univie.ac.at/herwig.hauser/bildergalerie/gallery.html" target="_blank">Herwig Hauser</a>.</p>';
-    
     for (var i = 1; i < 74; i++) {
       var s = surf[i];
-      sidebarText += '<p><a href="#" onClick="menuData(' + i + ')"> ' + i + '. ' + s[0] + ':<br> ' + s[5] + '<\/a><\/p>';
+      splashText += '<p><a href="#" onClick="menuData(' + i + ')"> ' + i + '. ' + s[0] + ':<br> ' + s[5] + '<\/a><\/p>';
     }
     
-    sidebarText += '<hr></div><h2 id="h1" onclick="showText(1)">- |Jalape\'s Surfaces</h2>' +
-      '<div id="d1">' +
-      '<p>Following formulas and names courtesy of <a href="http://jalape.no/math/surfaces.htm" target="_blank">jalape.no</a></p>';
+    splashText += '<hr><p>Following formulas and names courtesy of <a href="http://jalape.no/math/surfaces.htm" target="_blank">jalape.no</a></p>';
     
     for (var i = 80; i < 91; i++) {  
       var s = surf[i];
-      sidebarText += '<p>' + i + '. <a href="#" onClick="menuData(' + i + ')">' + s[0] + ':<br> ' + s[1] + '<\/a><\/p>';
+      splashText += '<p>' + i + '. <a href="#" onClick="menuData(' + i + ')">' + s[0] + ':<br> ' + s[1] + '<\/a><\/p>';
     }
 
-    sidebarText += '<hr></div><h2 id="h2" onclick="showText(2)">- | Materials</h2>' +
-      '<div id="d2">' +
-      '<p>Materials, textures and shders. Nice ones have asterisks. This is a new feature. There\'s a lot more work to be done here.</p>';
-     
-    for ( var mm in mmaterials ) {
-      sidebarText += '<p><a href="#" id="' + mm + '" onclick="selectMaterial(\'' + mm + '\');" style="">' + mm +'</a></p>';
-    }
-    sidebarText += 
-      '<hr></div>' +
-      '<h2 id="h3" onclick="showText(3)">- |Credits</h2>' +
-      '<div id="d3">' +
-      '<p><a href="http://en.wikipedia.org/wiki/Marching_cubes" target="_blank">Marching cubes</a> routines courtesy of <a href="http://stemkoski.github.com/Three.js/Marching-Cubes.html" target="_blank">stemkoski</a> and Paul Bourke.</p>' +
-      '<p>Text parsing into JavaScript courtesy of <a href="http://silentmatt.com/javascript-expression-evaluator/" target="_blank">Silent Matt</a>.</p>' +
-      '<p>Method of turning string into a formula courtesy of <a href="http://nooshu.com/antimatter-3d-graph-plotter-and-a-little-animation" target="_blank">Nooshu</a> and AntiMatter15.</p>' +
-      '<p>And none of this would be possible without <a href="https://github.com/mrdoob/three.js" target="_blank">Mr.Doob</a>.</p>' +
-      '<p><a href="https://github.com/jaanga/jaanga.github.com/tree/master/algebraic-surfaces" target="_blank">Source code on GitHub</p>' +
-      '</div></div>';
-    
-    sidebar.innerHTML  += sidebarText;
-    
-    helpbar = document.createElement( 'div' );
-    document.body.appendChild( helpbar );
-    helpbar.style.cssText = 'background-color: #eee; border-radius: 10px; box-shadow: 10px 10px 5px #444; display: none; height: 200px%; overflow: auto; ' +
-      'padding: 5px 5px 5px 15px; opacity: 0.9; position: fixed; top: 200px; width: 400px; z-index: 200; right: 100px'; 
-    helpbar.innerHTML = '<div onclick="toggleHelp()"><h3>Help</h3><p>Edit the formula by entering text in the area above.</p>' +
-      '<p>Currently, the variables supported are: x,y,z.</p>' +
-      '<p>The following conventions are supported:</p>' +
-      '<p>Operators: +: add, -: sub, *: mul, /: div, %: mod, ^: power, ,: append, ||: concat,</p>' +
-      '<p>Functions: sin, cos, tan, asin, acos, atan, sqrt, log, abs, ceil, floor, round, neg, exp, ' +
-      'random, fac, min, max, pyt, pow, atan2</p>' +
-			'<p>Constants: E: Math.E, PI: Math.PI</p>' +
-      '<hr>' +
-      '<p>You can click on the section titles to open and close them.</p><div>';
-    
-    // initMaterials();
-    selectMaterial(selectedMaterial);
+    splashText += 
+    '<hr><p><a href="http://en.wikipedia.org/wiki/Marching_cubes" target="_blank">Marching cubes</a> routines courtesy of <a href="http://stemkoski.github.com/Three.js/Marching-Cubes.html" target="_blank">stemkoski</a> and Paul Bourke.</p>' +
+    '<p>Method of turning string into a formula courtesy of <a href="http://nooshu.com/antimatter-3d-graph-plotter-and-a-little-animation" target="_blank">Nooshu</a> and AntiMatter15.</p>' +
+    '<p>And none of this would be possible without <a href="https://github.com/mrdoob/three.js" target="_blank">Mr.Doob</a>.</p>' +
+    '<p><a href="https://github.com/jaanga/jaanga.github.com/tree/master/algebraic-surfaces" target="_blank">Source code on GitHub</p>' +
+    '</div>';
+    splash.innerHTML = splashText;
   }
   
-  function selectMaterial(m) {
-    document.getElementById(selectedMaterial).style.fontWeight = '400';
-    material = mmaterials[m].m;    
-    document.getElementById(m).style.fontWeight = '600';
-    selectedMaterial = m;
-// console.log('sel menu: ', material, m ); 
-   infoMaterial.innerHTML = 'Material: ' + (mmaterials[m].d);
-    menuData(selectedSurface);
-  }  
+  function initMaterials() {
+    var texture1 = new THREE.Texture( generateTexture( 0, 0.5, 1 ), new THREE.UVMapping() );
+    var texture2 = new THREE.Texture( generateTexture( 0, 1, 0 ), new THREE.SphericalReflectionMapping() );
+    var texture3 = THREE.ImageUtils.loadTexture( '../textures/land_ocean_ice_cloud_2048.jpg' )
+
+    texture1.needsUpdate = true;
+    texture2.needsUpdate = true;
+    
+    materials = [
+      new THREE.MeshNormalMaterial(),
+      new THREE.MeshNormalMaterial( {shading: THREE.FlatShading } ),
+      new THREE.MeshNormalMaterial( {shading: THREE.SmoothShading } ),
+      new THREE.MeshNormalMaterial( {wireframe: true, wireframeLinewidth: 5 } ),
+      
+      new THREE.MeshBasicMaterial( { color: 0xe0e0e0 }),
+      new THREE.MeshBasicMaterial( { color: 0xffaa00 } ),
+      new THREE.MeshBasicMaterial( { color: 0x00ffff, wireframe: true, wireframeLinewidth: 5 } ),
+      new THREE.MeshBasicMaterial( { color: 0xff0000, blending: THREE.AdditiveBlending } ),
+      new THREE.MeshBasicMaterial( { color: 0x00ff00, blending: THREE.AdditiveBlending, opacity: 0.8, transparent: true, depthWrite: false } ),
+      new THREE.MeshBasicMaterial( { color: 0x00ff00, blending: THREE.SubtractiveBlending, opacity: 0.8} ),
+      
+      new THREE.MeshBasicMaterial( { map: texture1, fog: false } ),
+      new THREE.MeshBasicMaterial( { map: texture2 } ),
+      new THREE.MeshBasicMaterial( { map: texture3, tansparent: true } ),
+      new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '../textures/land_ocean_ice_cloud_2048.jpg' ) } ),  
+      new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '../textures/cynthia-draw-lightning.jpg' ) } ),
+      // new THREE.MeshBasicMaterial( { envMap: THREE.ImageUtils.loadTexture( '../textures/envmap.png', new THREE.SphericalReflectionMapping() ), overdraw: true } ),
+      // new THREE.MeshBasicMaterial( { envMap: THREE.ImageUtils.loadTexture( '../textures/cynthia-draw-lightning.jpg', new THREE.SphericalReflectionMapping() ), overdraw: true } ),
+      
+      new THREE.MeshLambertMaterial( { ambient: 0x000066, color: 0xff00ff, shading: THREE.FlatShading, overdraw: true } ),
+      new THREE.MeshLambertMaterial( { ambient: 0x000066, color: 0xffffff, shading: THREE.SmoothShading, overdraw: true } ),
+      new THREE.MeshLambertMaterial( { ambient: 0x030303, color: 0xffffff, transparent: true } ),
+      new THREE.MeshLambertMaterial( { map: THREE.ImageUtils.loadTexture( '../textures/land_ocean_ice_cloud_2048.jpg'), shading: THREE.FlatShading, transparent: true   } ),
+      
+      new THREE.MeshLambertMaterial( { map: texture3 } ),
+      new THREE.MeshLambertMaterial( { ambient: 0x030303, color: 0xdddddd, shading: THREE.FlatShading, overdraw: true} ),
+      new THREE.MeshLambertMaterial( { ambient: 0x888800, color: 0xdddddd, shading: THREE.SmoothShading, overdraw: true } ),
+      
+      new THREE.MeshPhongMaterial( { ambient: 0x888800, color: 0xdd00ff, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ),
+      new THREE.MeshPhongMaterial( { ambient: 0x030303, color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.SmoothShading } ),
+      
+      new THREE.MeshDepthMaterial(  )
+      // new THREE.ShaderMaterial( { uniforms: uniforms, vertexShader: vertexShader, fragmentShader: fragmentShader, transparent: true } ),
+    ];
+
+    for (var i = 0, l = materials.length; i < l; i++) {
+      materialsMenu.innerHTML += '<a href="#" id="m' + i + '" onclick="buildIt(' + i + ');" style="color:#fff;">m' + i +'</a> ';
+    }
   
+  }
+
   var name, data;
  
   function menuData(i) {
@@ -312,8 +281,7 @@ a {color: #a44; text-decoration: none;}
     axMin.value = surf[i][2];
     axMax.value = surf[i][3];
     scale.value = surf[i][4];
-    info.innerHTML = 'Surface: ' + name + ' ~ ' + surf[i][1];
-    selectedSurface = i;
+    info.innerHTML = name + ' ~ ' + surf[i][1];
   }
   
   function grabData() {
@@ -366,6 +334,14 @@ a {color: #a44; text-decoration: none;}
     stats.update();  
   }
 
+  function toggleSplash() {
+    if ( splash.style.display === 'block' ) {
+      splash.style.display = 'none';
+    } else {
+      splash.style.display = 'block';
+    }
+  };
+
   function toggleSpin() {
     if (spin === true ) {
       spin = false;
@@ -381,46 +357,7 @@ a {color: #a44; text-decoration: none;}
       player = true;
     }
   }
-var d;
-  function toggleMenu() {
-    d = document.getElementById('content');
-    if (sidebarVisible) {
-      d.style.display = 'none';
-      info.style.display = 'none';
-      infoMaterial.style.display = 'none';
-      sidebar.style.backgroundColor = 'transparent';
-      sidebarVisible = false;
-    } else {
-      d.style.display = 'block';
-      info.style.display = 'block';
-      infoMaterial.style.display = 'block';
-      sidebar.style.backgroundColor = '#ddd';
-      sidebarVisible = true;
-    }
-    console.log(d, sidebarVisible);
-  }
-  
-  function toggleHelp() {
-    if (helpVisible) {
-      helpbar.style.display = 'none';
-      helpVisible = false;
-    } else {
-      helpbar.style.display = 'block';
-      helpVisible = true;
-    }
-  }  
-  var headerText = ['Hauser\'s Surfaces','Jalape\'s Surfaces', 'Materials', 'Credits']; 
-  function showText(i) {
-    var t = document.getElementById('d' + i);
-    var h = document.getElementById('h' + i);
-    if (t.style.display == '' || t.style.display == 'block' ) {
-      t.style.display = 'none';
-      h.innerHTML = ' + | ' + headerText[i];
-    } else {
-      t.style.display = 'block';
-      h.innerHTML = ' - | ' + headerText[i];
-    }
-  }  
+
   
   function plotIt( name, func, axiMin, axiMax, scal, text) { 
     if( mesh ) { 
@@ -602,16 +539,36 @@ var d;
       }
     }  
     geometry.computeFaceNormals();
-    // material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
-    // color = Math.random() * 0xffffff;
-    // material = new THREE.MeshPhongMaterial( {color: color, ambient: color, shading: THREE.SmoothShading, side: THREE.DoubleSide, opacity: 0.9, transparent: true } );
-    // material = materials[selectedMaterial];
+    material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
+    //color = Math.random() * 0xffffff;
+    //material = new THREE.MeshPhongMaterial( {color: color, ambient: color, shading: THREE.SmoothShading, side: THREE.DoubleSide, opacity: 0.9, transparent: true } );
     mesh = new THREE.Mesh( geometry, material );
     mesh.scale.set(scale, scale, scale);
     scene.add(mesh);
     
     scene.remove( oldMesh);
   }
+  
+  function generateTexture( r, g, b ) {
+    var canvas = document.createElement( 'canvas' );
+    canvas.width = 256;
+    canvas.height = 256;
+    var context = canvas.getContext( '2d' );
+    var image = context.getImageData( 0, 0, 256, 256 );
+    var x = 0, y = 0, p;
+    for ( var i = 0, j = 0, l = image.data.length; i < l; i += 4, j ++ ) {
+      x = j % 256;
+      y = x == 0 ? y + 1 : y;
+      p = Math.floor( x ^ y );
+
+      image.data[ i ] = ~~ p * r;
+      image.data[ i + 1 ] = ~~ p * g;
+      image.data[ i + 2 ] = ~~ p * b;
+      image.data[ i + 3 ] = 255;
+    }
+    context.putImageData( image, 0, 0 );
+    return canvas;
+  }   
 </script>
 </body>
 </html>
