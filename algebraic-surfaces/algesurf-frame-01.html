@@ -1,0 +1,37 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<title>jaanga algesurf</title>
+<meta charset="utf-8">
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script type='text/javascript'>
+document.body.style.cssText = 'font: bold 12pt monospace; margin: 0 auto; text-align: center; width: 700px;';
+
+var info = document.createElement( 'div' );
+document.body.appendChild( info );
+info.innerHTML='<h1>jaanga algesurf API demo</h1>';
+
+var f1 = document.createElement( 'iframe' );
+info.appendChild( f1 );
+f1.style.cssText = 'height: 300px; margin: 10px; width: 300px;';
+f1.src = './algesurf-api.html?equation=x^2 + y^2 - z^2 - 70&material=shiny&min=-10&max=10&height=300&width=300&scale=3';
+
+var f2 = document.createElement( 'iframe' );
+info.appendChild( f2 );
+f2.style.cssText = 'height: 300px; margin: 10px; width: 300px;';
+f2.src = './algesurf-api.html?equation=x^6 + y^6 + z^6 - 1&material=shiny&min=-1&max=1&height=300&width=300&scale=30';
+
+var f3 = document.createElement( 'iframe' );
+info.appendChild( f3 );
+f3.style.cssText = 'height: 300px; margin: 10px; width: 300px;';
+f3.src = './algesurf-api.html?equation=x^3 *y+x*z^3 + y^3*z + z^3 + 7*z^2 + 5*z&material=shiny&min=-3&max=3&height=300&width=300&scale=10';
+
+var f4 = document.createElement( 'iframe' );
+info.appendChild( f4 );
+f4.style.cssText = 'height: 300px; margin: 10px; width: 300px;';
+f4.src = './algesurf-api.html?equation=y*z*(x^2+y-z)&material=shiny&min=-3&max=3&height=300&width=300&scale=10';
+</script>
+</body>
+</html>
