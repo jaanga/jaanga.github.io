@@ -1,25 +1,3 @@
-﻿<!doctype html>
-<html lang='en'>
-<head>
-<title></title>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
-</head>
-<body>
-
-<script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
-<!--
-<script src='../../three.js/build/three.min.js'></script>
-<script src='../../three.js/examples/js/controls/TrackballControls.js'></script>
-<script src='../../three.js/examples/js/Detector.js'></script>
-<script src='../../three.js/examples/js/libs/stats.min.js'></script>
--->
-<script src="parser.js"></script>
-<script src="MarchingCubesData.js"></script>
-<script type='text/javascript'>
   if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
   
   var renderer, scene, camera, controls, light, stats;
@@ -43,8 +21,9 @@
             vars[kvp[0].trim()] = kvp[1].trim();
         }
     }
- 
+ // console.log(vars);    
     var height = vars['height'] !== undefined ? vars['height'] : 300;
+    var width = vars['width'];
     var width = vars['width'] !== undefined ? vars['width'] : 300;
   
     // renderer = new THREE.WebGLRenderer( { clearColor: 0xffffff, clearAlpha: 1, antialias: true } );
@@ -52,12 +31,12 @@
     renderer.setSize( width, height );
     //renderer.shadowMapEnabled = true;
     //renderer.shadowMapSoft = true;
-    renderer.domElement.style.cssText = 'border: 1px solid black; margin: 0;';
+    renderer.domElement.style.cssText = 'border: 2px solid red; margin: 0;';
     document.body.appendChild( renderer.domElement );
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera( 40, width / height, 1, 200 );
+    camera = new THREE.PerspectiveCamera( 40, width / height, 1, 500 );
     camera.position.set( 100, 100, -100 );
 
     controls = new THREE.TrackballControls( camera, renderer.domElement );
@@ -101,8 +80,9 @@
     light.shadowMapHeight = 2048;
     scene.add( light );
 */
-
-    var jsFunction = Parser.parse(vars['equation']).toJSFunction( ['x','y','z'] );
+	var eqn = vars['equation'] !== undefined ? vars['height'] : 'x^2 + y^2 - z^2 - 70';
+    var jsFunction = Parser.parse(eqn).toJSFunction( ['x','y','z'] );
+	
     material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
     plotIt( jsFunction, material, vars['min'], vars['max'], vars['scale'] );
   }
@@ -306,6 +286,3 @@
     mesh.scale.set(scale, scale, scale);
     scene.add(mesh);
   }  
-</script>
-</body>
-</html>

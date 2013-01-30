@@ -1,0 +1,152 @@
+﻿<!doctype html>
+<html lang='en'>
+<head>
+<title></title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+<script src="../../list.js"></script>
+<!--
+<script src="../../page.js"></script>
+-->
+<link type="text/css" rel="stylesheet" href="../../page.css" />
+</head>
+<body>
+
+<script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
+
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/CopyShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/FXAAShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/HorizontalTiltShiftShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/VerticalTiltShiftShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/ShaderToon.js"></script>
+
+<!--
+<script src='../../three.js/build/three.min.js'></script>
+<script src='../../three.js/examples/js/controls/TrackballControls.js'></script>
+<script src='../../three.js/examples/js/Detector.js'></script>
+<script src='../../three.js/examples/js/libs/stats.min.js'></script>
+-->
+<script src='../parser.js'></script>
+<script src='../MarchingCubesData.js'></script>
+<script src='../generateGeometry.js'></script>
+<script src='../materials.js'></script>
+<script src='../surfaces.js'></script>
+<script type='text/javascript'>
+	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+
+	var renderer, scene, camera, controls;
+	var geometry, material, mesh;
+	var clock = new THREE.Clock();
+
+	var materials;
+	var light, pointLight, ambientLight;
+
+	var surf, keys, info;
+	var spin = 2;
+	var play = 5;
+	var background;
+	var start = clock.getElapsedTime();
+	var cnt = 1;
+
+	var info, info2;
+	// var txt = info.innerHTML = '<h1>' + surf.ttl + '</h1><h2>' + surf.htm + '<br>min: ' + surf.min + '<br>max: ' + surf.max + '<br>scale: ' + surf.scl + '</h2>';  
+
+	init();
+	animate();	
+	
+	function init() {
+		document.body.style.cssText = 'margin: 0; overflow: hidden; padding: 0;';
+
+		keys = Object.keys(surfaces);    
+		surf = surfaces[keys[0]];
+
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 500 );
+		camera.position.set( 20, 20, 20 );
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+		light = new THREE.DirectionalLight( 0xffffff );
+		light.position.set( 0.5, 0.5, 1 );
+		scene.add( light );
+
+		pointLight = new THREE.PointLight( 0xff3300 );
+		pointLight.position.set( 0, 0, 100 );
+		scene.add( pointLight );
+
+		ambientLight = new THREE.AmbientLight( 0x080808 );
+		scene.add( ambientLight );
+		
+		var jsFunction = Parser.parse( surf['eqn'] ).toJSFunction( ['x','y','z'] );
+		generateGeometry( jsFunction, surf['min'], surf['max']);
+		material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.multiplyScalar( surf['scl'] );
+		scene.add(mesh);
+
+		var sheet = document.createElement('style')
+		sheet.innerHTML = 'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
+			'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' ;
+		document.body.appendChild(sheet);	
+		
+		info = document.createElement( 'div' ); 	
+		document.body.appendChild( info ); 	
+		info.style.cssText = 'position: fixed; top: 20px; left: 20px;'; 
+		info.innerHTML = '<h1>' + surf['ttl'] + '</h1><h2>equation: ' + surf['htm'] + '<br>min: ' + surf['min'] + '<br>max: ' + surf['max'] + '<br>scale: ' + surf['scl'] + '</h2>'; 
+		
+		info2 = '<a href="#" title="View the full API call..." target="_blank">api call</a>' +
+			'<br><a href="#" onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >camera reset</a>' +
+			'<br>spin<br><input type="range" name="spin" min="0" max="5" onchange="spin=this.value;" step="0.5" value="2" >' +
+			'<br>play time<br><input type="range" name="play" min="0" max="10" onchange="play=this.value;" step="1" value="3" >' +
+			'<br>background color<br><input type="range" name="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade">';
+	
+		generateMaterials();
+		info2 += '<h3 style="margin:5px 0 0 0;">Materials</h3>';		
+		for ( var m in materials ) {
+		  info2 += '<a href="#" id="' + m + '" onclick="selectMaterial(\'' + m + '\');" style="">' + m +'</a><br>';
+		}
+		info.innerHTML += info2;
+	}
+
+	function updateBackground(i) {
+		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
+		document.body.style.cssText += 'background-color: #' + col[i] + col[i] + col[i] + ';';
+		background = i;
+	}
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update();
+		scene.children[4].rotation.x = Date.now() * 0.000025 * spin;
+		scene.children[4].rotation.y = Date.now() * 0.0005 * spin;
+		if ( play > 0 && (clock.getElapsedTime() - start > play) ) {
+			if( mesh ) { 
+				var oldMesh = mesh;
+			}
+			surf = surfaces[keys[cnt]];
+			if ( surf['eqn'] ) {
+				var jsFunction = Parser.parse(surf['eqn']).toJSFunction( ['x','y','z'] );
+				generateGeometry( jsFunction, surf['min'], surf['max']);
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.scale.multiplyScalar( surf['scl'] );
+				scene.add(mesh);
+				info.innerHTML = '<h1>' + surf['ttl'] + '</h1><h2>equation: ' + surf['htm'] + '<br>min: ' + surf['min'] + '<br>max: ' + surf['max'] + '<br>scale: ' + surf['scl'] + '</h2>'; 
+				info.innerHTML += info2;		
+				document.getElementsByName('background')[0].value = background;
+				start = clock.getElapsedTime();
+				scene.remove( oldMesh);
+			}
+			cnt++;
+			if (cnt >= keys.length) {cnt = 0;}
+		}	
+		renderer.render( scene, camera );
+	}
+</script>
+</body>
+</html>

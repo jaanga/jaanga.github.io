@@ -17,51 +17,53 @@
 <script src='../../three.js/examples/js/Detector.js'></script>
 <script src='../../three.js/examples/js/libs/stats.min.js'></script>
 -->
-<script src="parser.js"></script>
-<script src="MarchingCubesData.js"></script>
+<script src='parser.js'></script>
+<script src='MarchingCubesData.js'></script>
+<script src='surfaces.js'></script>
 <script type='text/javascript'>
-  if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+
+	var renderer, scene, camera, controls, light, stats;
+	var geometry, material, mesh;
+	var clock = new THREE.Clock();
+
+	init();
+	animate();
   
-  var renderer, scene, camera, controls, light, stats;
-  var geometry, material, mesh;
-  var clock = new THREE.Clock();
+	var surf, keys, info;
+	var spin = true, player = true;
+	var spinSpeed = 3;
+	var playDelay = 5;
+	var start = clock.getElapsedTime();
+	var cnt = 72;
 
-  init();
-  animate();
-
-  function init() {
-    document.body.style.cssText = 'margin: 0; overflow: hidden; padding: 0;';
-    
-    var args = document.location.search.substring(1).split('&');
-    var vars = {};
-    for ( var i = 0, arg, kvp; i < args.length; i++) {
-        arg = unescape(args[i]);
-        if (arg.indexOf('=') == -1) {
-            vars[arg.trim()] = true;
-        } else {
-            kvp = arg.split('=');
-            vars[kvp[0].trim()] = kvp[1].trim();
-        }
-    }
- 
-    var height = vars['height'] !== undefined ? vars['height'] : 300;
-    var width = vars['width'] !== undefined ? vars['width'] : 300;
   
-    // renderer = new THREE.WebGLRenderer( { clearColor: 0xffffff, clearAlpha: 1, antialias: true } );
-    renderer = new THREE.WebGLRenderer( { antialias: true } );
-    renderer.setSize( width, height );
-    //renderer.shadowMapEnabled = true;
-    //renderer.shadowMapSoft = true;
-    renderer.domElement.style.cssText = 'border: 1px solid black; margin: 0;';
-    document.body.appendChild( renderer.domElement );
+	function init() {
+		document.body.style.cssText = 'margin: 0; overflow: hidden; padding: 0;';
 
-    scene = new THREE.Scene();
+		keys = Object.keys(surfaces);    
+		surf = surfaces[keys[0]];
+			
+		info = document.createElement( 'div' );
+		document.body.appendChild( info );
+		info.style.cssText = 'position: fixed; top: 20px; left: 20px;';
+		// info.innerHTML='<h1>' + surf.ttl + '</h1>' + surf.htm;  
 
-    camera = new THREE.PerspectiveCamera( 40, width / height, 1, 200 );
-    camera.position.set( 100, 100, -100 );
+		// renderer = new THREE.WebGLRenderer( { clearColor: 0xffffff, clearAlpha: 1, antialias: true } );
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		//renderer.shadowMapEnabled = true;
+		//renderer.shadowMapSoft = true;
+		//renderer.domElement.style.cssText = 'border: 5px solid black; margin: 0;';
+		document.body.appendChild( renderer.domElement );
 
-    controls = new THREE.TrackballControls( camera, renderer.domElement );
-    // window.addEventListener( 'resize', onWindowResize, false );
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 500 );
+		camera.position.set( 20, 20, 20 );
+
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+		// window.addEventListener( 'resize', onWindowResize, false );
     
 /*    
     stats = new Stats();
@@ -102,23 +104,41 @@
     scene.add( light );
 */
 
-    var jsFunction = Parser.parse(vars['equation']).toJSFunction( ['x','y','z'] );
-    material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
-    plotIt( jsFunction, material, vars['min'], vars['max'], vars['scale'] );
-  }
+		var jsFunction = Parser.parse(surf['eqn']).toJSFunction( ['x','y','z'] );
+		material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, });
+		plotIt( jsFunction, material, surf['min'], surf['max'], surf['scl'] );
+		info.innerHTML = txt;
+	}
 
-  function animate() {
-    requestAnimationFrame( animate );
-    controls.update();
-    camera.lookAt( scene.position);
-   
-    //for (var i = 1, l = scene.children.length; i < l; i++) {
-      scene.children[0].rotation.x = Date.now() * 0.0005;
-      scene.children[0].rotation.y = Date.now() * 0.001;
-    //}
+	var txt = info.innerHTML = '<h1>' + surf.ttl + '</h1><h2>' + surf.htm + '<br>min: ' + surf.min + '<br>max: ' + surf.max + '<br>scale: ' + surf.scl + '</h2>';  
 
-    renderer.render( scene, camera );
-  }
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update();
+		camera.lookAt( scene.position);
+
+		scene.children[0].rotation.x = Date.now() * 0.0005;
+		scene.children[0].rotation.y = Date.now() * 0.001;
+
+		if ( player && (clock.getElapsedTime() - start > playDelay) ) {
+			if( mesh ) { 
+				var oldMesh = mesh;
+			}
+			surf = surfaces[keys[cnt]];
+			if ( surf['eqn'] ) {
+				var jsFunction = Parser.parse(surf['eqn']).toJSFunction( ['x','y','z'] );
+				plotIt( jsFunction, material, surf['min'], surf['max'], surf['scl'] );
+				info.innerHTML = '<h1>' + surf.ttl + '</h1><h2>' + surf.htm + '<br>min: ' + surf.min + '<br>max: ' + surf.max + '<br>scale: ' + surf.scl + '</h2>';  
+
+				start = clock.getElapsedTime();
+				// playDelay = document.getElementById('play').value;
+				scene.remove( oldMesh);
+			}
+			cnt++;
+			if (cnt >= keys.length) {cnt = 73;}
+		}	
+		renderer.render( scene, camera );
+	}
 /*    
   function onWindowResize() {
     windowHalfX = window.innerWidth / 2;
@@ -302,6 +322,7 @@
       }
     }  
     geometry.computeFaceNormals();
+	// material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
     mesh = new THREE.Mesh( geometry, material );
     mesh.scale.set(scale, scale, scale);
     scene.add(mesh);

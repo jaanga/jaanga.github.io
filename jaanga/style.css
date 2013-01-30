@@ -1,0 +1,80 @@
+
+	@font-face {
+		font-family: 'inconsolata';
+		src: url('files/inconsolata.woff') format('woff');
+		font-weight: normal;
+		font-style: normal;
+	}
+
+	html {
+		height: 100%;
+	}
+
+	body {
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		color: #555;
+		font-family: 'inconsolata';
+		font-size: 15px;
+		line-height: 18px;
+		overflow: hidden;
+	}
+
+	a {
+		color: #2194CE;
+	}
+
+	#panel	{
+		position: fixed;
+		width: 260px;
+		height: 100%;
+		overflow: auto;
+	}
+
+		#panel h1 {
+			margin-top: 20px;
+			margin-left: 20px;
+			font-size: 25px;
+			font-weight: normal;
+		}
+
+		#panel h1 a {
+			color: #444;
+			text-decoration: none;
+		}
+
+		#panel h2 {
+			color: #454545;
+			font-size: 18px;
+			font-weight: normal;
+
+			margin-top: 20px;
+			margin-left: 20px;
+			cursor:crosshair;
+		}
+
+		#panel h3 {
+			color: #666;
+			font-size: 16px;
+			font-weight: normal;
+
+			margin-top: 20px;
+			margin-left: 20px;
+		}
+
+		#panel ul {
+			list-style-type: none;
+			padding: 0px;
+			margin-left: 20px;
+		}
+
+	#viewer {
+		border: 0px;
+		margin-left: 260px;
+		width: -webkit-calc(100% - 260px);
+		width: -moz-calc(100% - 260px);
+		width: calc(100% - 260px);
+		height: 100%;
+		overflow: auto;
+	}

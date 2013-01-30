@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>File Saver - html</title>
+<meta charset='utf-8'>
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<script src="BlobBuilder.js"/></script>
+<script src="Blob.js"/></script>
+<script src="FileSaver.js"></script>
+
+<script src="../surfaces.js"></script>
+<script type='text/javascript'>
+	var cnt = 30;
+	var keys, surf;
+	keys = Object.keys(surfaces);    
+	surf = surfaces[keys[20]];
+
+	document.body.style.font = 'bold 12pt monospace';
+
+	var info = document.createElement( 'div' );
+	document.body.appendChild( info );
+	info.innerHTML = '<p><a href="#" onclick="doUpdate(cnt)" >Save: '  + cnt + '</a></p>';
+
+	var info2 = document.createElement( 'textarea' );
+	info2.style.cssText = 'height: 500px; width: 500px;';
+	document.body.appendChild( info2 );
+
+	var fileName;
+	var txt = cnt + ' - ' + keys[cnt] + ' abc 12345';
+	info2.value = generateHTML(keys[cnt]);
+	
+	function doUpdate() {
+		fileName = keys[cnt];
+		if (cnt < 40) { 
+			saveIt(); 
+			cnt++;
+			
+			info.innerHTML = '<p><a href="#" onclick="doUpdate(cnt)" accesskey="d" >Save: '  + cnt + '</a></p>';
+			info2.value = generateHTML(keys[cnt]);
+			
+		} else {
+			info2.value = 'All done!';
+		}
+	}
+	
+	function saveIt() {
+		var blob = new Blob([info2.value], {type: "text/plain;charset=utf-8"});
+		saveAs(blob, fileName + '.html');
+	}
+
+	function generateHTML(key) {
+		var html = '<!doctype html> \n' +
+			'<html lang=\'en\'> \n' +
+			'<head> \n' +
+			'<title>' + key + '<\/title> \n' +
+			'<link type=\'text/css\' rel=\'stylesheet\' href=\'../../page.css\' />' +
+			'<script src=\'../surfaces.js\'><\/script>\n' +
+			'</head>\n' +
+			'<body> \n' +
+			'<script type=\'text/javascript\'> \n' +
+
+			'\tvar hgt = window.innerHeight; \n' +
+			'\tvar wid = window.innerWidth; \n' +
+			'\tvar s = surfaces[\'' + key + '\']; \n' +
+/*			
+			'\tinfo = document.createElement( \'div\' ); \n' +
+			'\tdocument.body.appendChild( info ); \n' +
+			'\tinfo.style.cssText = \'position: fixed; top: 20px; left: 20px;\'; \n' +
+			'\tinfo.innerHTML = \'<h1>\' + s.ttl + \'</h1><h2>equation: \' + s.htm + \'<br>min: \' + s.min + \'<br>max: \' + s.max + \'<br>scale: \' +' +
+			's.scl + \'</h2>\'; \n' +  			
+*/			
+			'\tvar f1 = document.createElement( \'iframe\' );\n' +
+			'\tdocument.body.appendChild( f1 );\n' +
+			'\tf1.style.cssText = \'border: 0px solid black; height: \' + hgt + \'px; left: 0; margin: 0px; overflow: hidden; position: absolute; top: 0;  width: \' + wid + \'px\'; \n' +
+			'\tf1.style.cssText += \' font: 12pt monospace; margin: 0; overflow: hidden;\';\n' +
+			'\tf1.src = \'../algesurf-api.html?equation=\' + s.eqn + \'&title=\' + s.ttl + \'&html=\' + s.htm + \'&material=shiny&min=\' + s.min + \'&max=\' + s.max + \'&scale=\' + s.scl + \'&height=\' + hgt + \'&width=\' + wid; \n' +
+			'<\/script>\n' +
+			'<\/body>\n' +
+			'<\/html>';	
+		return html;	
+	}
+
+	
+</script>
+</body>
+</html>
+</script>
+</body>
+</html>

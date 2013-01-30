@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>algeSurf  player</title>
+<meta charset='utf-8'>
+<script src="../../list.js"></script>
+<script src="../../page.js"></script>
+<link type="text/css" rel="stylesheet" href="../../page.css" />
+</head>
+<body>
+<script src='../surfaces.js'></script>
+<script type='text/javascript'>
+	var hgt = window.innerHeight;
+	var wid = window.innerWidth;
+	var s = surfaces['Stemkoski'];
+  
+	var f1 = document.createElement( 'iframe' );
+	f1.style.cssText = 'border: 0px solid black; height: ' + hgt + 'px; left: 0; margin: 0px; overflow: hidden; position: absolute; top: 0;  width: ' + wid + 'px;';
+	f1.style.cssText += 'background-color: #888; font: 12pt monospace; margin: 0; overflow: hidden;';
+	//f1.style.backgroundImage = '-moz-radial-gradient(40% 40%, farthest-side, red, #000)';
+	f1.style.backgroundImage = '-webkit-gradient(radial, 430 50, 0, 430 50, 987, from(#800), to(#010))';
+	f1.src = '../algesurf-api.html?equation=' + s.eqn + '&material=shiny&min=' + s.min + '&max=' + s.max +  + '&scale=' + s.scl + 
+	'&height=' + hgt + '&width=' + wid;
+	document.body.appendChild( f1 );
+	
+	var info = document.createElement( 'div' );
+	document.body.appendChild( info );	
+	info.style.cssText = 'color: #fff; position: fixed; top: 20px; left: 20px;';
+	info.innerHTML =  '<div>' + s.ttl + '</div>' + s.htm;  
+
+</script>
+</body>
+</html>
