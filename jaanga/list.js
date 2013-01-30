@@ -15,6 +15,7 @@ var list = {
 	'2 AlgeSurf': {
 		'API Overview': [
 			[ 'Player', '2algesurf/Overview/Player'],
+			[ 'Builder', '2algesurf/Overview/Builder'],
 			[ 'Credits', '2algesurf/Overview/Credits'],
 			[ 'Multiple Viewports', '2algesurf/Overview/Multiple Viewports']
 		],
