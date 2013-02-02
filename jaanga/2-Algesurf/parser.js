@@ -8,6 +8,7 @@
  to acknowledge its original source. If you feel like it, I enjoy hearing about projects that use my code,
  but don't feel like you have to let me know or ask permission.
 */
+// Error throw new rror function replaced throughout 2013-02-01 ~ Theo
 
 //  Added by stlsmiths 6/13/2011
 //  re-define Array.indexOf, because IE doesn't know it ...
@@ -196,7 +197,8 @@ var Parser = (function (scope) {
 						nstack.push(this.functions[item.index_]);
 					}
 					else {
-						throw new Error("undefined variable: " + item.index_);
+						// throw new Error("undefined variable: " + item.index_);
+						throw new builderError("undefined variable: " + item.index_);
 					}
 				}
 				else if (type_ === TOP1) {
@@ -216,15 +218,18 @@ var Parser = (function (scope) {
 						}
 					}
 					else {
-						throw new Error(f + " is not a function");
+						// throw new Error(f + " is not a function");
+						throw new builderError(f + " is not a function");
 					}
 				}
 				else {
-					throw new Error("invalid Expression");
+					// throw new Error("invalid Expression");
+					throw new builderError("invalid Expression");
 				}
 			}
 			if (nstack.length > 1) {
-				throw new Error("invalid Expression (parity)");
+				// throw new Error("invalid Expression (parity)");
+				throw new builderError("invalid Expression (parity)");
 			}
 			return nstack[0];
 		},
@@ -273,11 +278,13 @@ var Parser = (function (scope) {
 					nstack.push(f + "(" + n1 + ")");
 				}
 				else {
-					throw new Error("invalid Expression");
+					// throw new Error("invalid Expression");
+					throw new builderError("invalid Expression");
 				}
 			}
 			if (nstack.length > 1) {
-				throw new Error("invalid Expression (parity)");
+				// throw new Error("invalid Expression (parity)");
+				throw new builderError("invalid Expression (parity)");
 			}
 			return nstack[0];
 		},
@@ -603,8 +610,9 @@ var Parser = (function (scope) {
 
 		error_parsing: function (column, msg) {
 			this.success = false;
-			this.errormsg = "parse error [column " + (column) + "]: " + msg;
-			throw new Error(this.errormsg);
+			this.errormsg = "Parse error near column " + (column) + ": " + msg;
+			// throw new Error(this.errormsg);
+			throw new builderError(this.errormsg);
 		},
 
 //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\

@@ -1,0 +1,163 @@
+﻿<!doctype html>
+<html lang='en'>
+<head>
+<title>algeSurf API</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+<link type='text/css' rel='stylesheet' href='../page.css' />
+</head>
+<body>
+
+<script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
+
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/CopyShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/FXAAShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/HorizontalTiltShiftShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/VerticalTiltShiftShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/ShaderToon.js"></script>
+<!--
+<script src='../../three.js/build/three.min.js'></script>
+<script src='../../three.js/examples/js/controls/TrackballControls.js'></script>
+<script src='../../three.js/examples/js/Detector.js'></script>
+<script src='../../three.js/examples/js/libs/stats.min.js'></script>
+-->
+<script src='parser.js'></script>
+<script src='MarchingCubesData.js'></script>
+<script src='generateGeometry.js'></script>
+<script src='materials.js'></script>
+
+<script type='text/javascript'>
+	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+
+	var renderer, scene, camera, controls;
+	var geometry, material, materials, mesh;
+
+	init();
+	animate();
+
+	var spin;
+	
+	function init() {
+		document.body.style.cssText = 'margin: 0; overflow: hidden; padding: 0;';
+		
+		var sheet = document.createElement('style')
+		sheet.innerHTML = 'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
+			'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' ;
+		document.body.appendChild(sheet);		
+
+		var args = document.location.search.substring(1).split('&');
+		var vars = {};
+		for ( var i = 0, arg, kvp; i < args.length; i++) {
+			arg = unescape(args[i]);
+			if (arg.indexOf('=') == -1) {
+				vars[arg.trim()] = true;
+			} else {
+				kvp = arg.split('=');
+				vars[kvp[0].trim()] = kvp[1].trim();
+			}
+		}
+   
+		var background = vars['background'] !== undefined ? vars['background'] : 'ffffff';
+		var equation = vars['equation'] !== undefined ? vars['equation'] : 'x^2 + y^2 - z^2 - 70';
+		var height = vars['height'] !== undefined && vars['height'] > 0 ? vars['height'] : window.innerHeight;
+		var html = vars['html'] !== undefined ? vars['html'] : '' ; 
+		var max = vars['max'] !== undefined ? parseFloat( vars['max'] ) : 10;
+		var mat = vars['material'] !== undefined ? vars['material'] : 'normal~transparent';
+		var min = vars['min'] !== undefined ? parseFloat( vars['min'] ) : -10;
+		
+		var scale = vars['scale'] !== undefined ? parseFloat( vars['scale'] ) : 1;	
+		var spinVal = vars['spin'] !== undefined ? parseFloat( vars['spin'] ) : 2;
+		var title = vars['title'] !== undefined ? vars['title'] : 'Surface' ; 		
+		var width = vars['width'] !== undefined && vars['width'] > 0 ? vars['width'] : window.innerWidth;
+		var titling = vars['titling'] !== undefined ? vars['titling'] : '';
+
+		title = unescape(title);
+		titling = titling.replace(/ZZZ/, '=');
+		titling = unescape(titling);
+console.log('api: ', vars, titling); 
+
+		document.title = title + ' ~ jaanga algeSurf';
+
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setSize( width, height );
+		document.body.appendChild( renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera( 40, width / height, 1, 500 );
+		camera.position.set( 20, 20, -20 );
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+		
+		light = new THREE.DirectionalLight( 0xffffff );
+		light.position.set( 0.5, 0.5, 1 );
+		scene.add( light );
+
+		pointLight = new THREE.PointLight( 0xff3300 );
+		pointLight.position.set( 0, 0, 100 );
+		scene.add( pointLight );
+
+		ambientLight = new THREE.AmbientLight( 0x080808 );
+		scene.add( ambientLight );		
+		
+		var jsFunction = Parser.parse(equation).toJSFunction( ['x','y','z'] );
+		generateGeometry( jsFunction, min, max );
+		
+		generateMaterials('../../');
+		material = materials[mat].m;
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.multiplyScalar( scale );
+		scene.add(mesh);
+
+		info = document.createElement( 'div' ); 	
+		document.body.appendChild( info ); 	
+		info.style.cssText = 'position: fixed; top: 20px; left: 20px;'; 	
+/*		
+		info.innerHTML = '<h1>' + title + '</h1>' +
+		'<h2>' +
+		'<br>background: #' + background +
+		'<br>equation: ' + equation + 
+		'<br>height: ' + height +
+		'<br>html: ' + html +
+		'<br>material: ' + mat +
+		'<br>min: ' + min + 
+		'<br>max: ' + max + 
+		'<br>scale: ' + scale + 
+		'<br>spin: ' + spinVal +
+		'<br>width: ' + width +
+		'</h2>'; 
+*/
+		
+		info.innerHTML = titling;
+		
+		document.body.style.cssText += 'background-color: #' + background + ';';
+		
+		//info.innerHTML += '<a href="#" title="View the full API call..." target="_blank">full screen</a>';
+		if (vars['spinCtrl'] == '1' ) {info.innerHTML += '<h2>Spin<br><input type="range" id="spin" min="0" max="5" onchange="spin=this.value;" step="0.5" value="' + spinVal + '" ><\/h2>'; }
+		if (vars['backCtrl'] == '1' ) {info.innerHTML += '<h2>Background<br><input type="range" id="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade"><\/h2>'; }
+		if (vars['camCtrl'] == '1' ) {info.innerHTML += '<h2><a href="#" onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >Camera Reset</a><\/h2>'; }
+		
+		// spin = document.getElementById('spin');
+		spin = spinVal;
+	}
+
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update();
+		scene.children[4].rotation.x = Date.now() * 0.00025 * spin;
+		scene.children[4].rotation.y = Date.now() * 0.0005 * spin;
+		renderer.render( scene, camera );
+	}
+	
+	function updateBackground(i) {
+		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
+		col = '' + col[i] + col[i] + col[i];
+		document.body.style.cssText += 'background-color: #' + col + ';';
+		return col;
+	}	
+</script>
+</body>
+</html>

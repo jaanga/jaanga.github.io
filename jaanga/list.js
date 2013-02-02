@@ -4,74 +4,74 @@ var list = {
 
 	'1 Overview': {
 		'Category': [
-			[ 'Home Page', '1overview/Category/Home Page','image'],
-			[ 'Read Me', '1overview/Category/Read Me'],
-			[ 'Credits', '1overview/Category/Credits'],
-			[ 'License', '1overview/Category/License']
-		],
-	
+			[ 'Home Page', '1-Overview/Category/Home Page'],
+			[ 'Read Me', '1-Overview/Category/Read Me'],
+			[ 'Credits', '1-Overview/Category/Credits'],
+			[ 'License', '1-Overview/Category/License']
+		]
 	},
 	
 	'2 AlgeSurf': {
 		'API Overview': [
-			[ 'Player', '2algesurf/Overview/Player'],
-			[ 'Builder', '2algesurf/Overview/Builder'],
-			[ 'Credits', '2algesurf/Overview/Credits'],
-			[ 'Multiple Viewports', '2algesurf/Overview/Multiple Viewports']
+			[ 'Read Me', '2-Algesurf/1-Overview/Read Me'],
+			[ 'Player', '2-Algesurf/1-Overview/Player'],
+			[ 'Builder', '2-Algesurf/1-Overview/Builder'],
+			[ 'Credits', '2-Algesurf/1-Overview/Credits'],
+			[ 'Multiple Viewports', '2-Algesurf/1-Overview/Multiple Viewports']
 		],
 		'Hauser 1': [
-			[ 'Read Me', '2algesurf/Hauser 1/Read Me'],
-			[ 'Stemkoski', '2algesurf/Hauser 1/stemkoski','image'],
-			[ 'Calyx', '2algesurf/Hauser 1/Calyx','image'],
-			[ 'Calypso', '2algesurf/Hauser 1/Calypso','image'],
-			[ 'Columpius', '2algesurf/Hauser 1/Columpius','image'],
-			[ 'Cube', '2algesurf/Hauser 1/cube','image'],
-			[ 'Dattel', '2algesurf/Hauser 1/dattel','image'],
-			[ 'Daisy', '2algesurf/Hauser 1/daisy','image'],
-			[ 'DingDong', '2algesurf/Hauser 1/dingDong','image'],
-			[ 'Distel', '2algesurf/Hauser 1/distel','image'],
-			[ 'Durchblick', '2algesurf/Hauser 1/durchblick'],
-			[ 'Eistüte', '2algesurf/Hauser 1/eistüte','image'],
-			[ 'Eve', '2algesurf/Hauser 1/eve','image'],
-			[ 'Flirt', '2algesurf/Hauser 1/flirt','image'],
-			[ 'Geisha', '2algesurf/Hauser 1/geisha','image'],
-			[ 'Harlekin', '2algesurf/Hauser 1/harlekin','image'],
-			[ 'Helix', '2algesurf/Hauser 1/helix','image'],
-			[ 'Herz', '2algesurf/Hauser 1/herz','image'],
-			[ 'Himmel und Hölle', '2algesurf/Hauser 1/himmel und Hölle','image'],
-			[ 'Kolobri', '2algesurf/Hauser 1/kolobri','image'],
-			[ 'Leopold', '2algesurf/Hauser 1/leopold','image'],
-			[ 'octdong', '2algesurf/Hauser 1/octdong','image'],
-			[ 'plop', '2algesurf/Hauser 1/plop','image'],
-			[ 'Seepferdchen', '2algesurf/Hauser 1/Seepferdchen','image'],
-			[ 'Sofa', '2algesurf/Hauser 1/Sofa','image'],
-			[ 'Solitude', '2algesurf/Hauser 1/Solitude','image'],
-			[ 'Süss', '2algesurf/Hauser 1/Süss','image'],
-			[ 'Tanz', '2algesurf/Hauser 1/Tanz','image'],
-			[ 'Taube', '2algesurf/Hauser 1/Taube','image'],
-			[ 'Quaste - broken', '2algesurf/Hauser 1/Quaste'],
-			[ 'Spitz', '2algesurf/Hauser 1/Spitz','image'],
-			[ 'Tobel', '2algesurf/Hauser 1/Tobel','image'],
-			[ 'Vis a vis', '2algesurf/Hauser 1/Vis a vis','image'],
-			[ 'Wedeln', '2algesurf/Hauser 1/Wedeln','image'],
-			[ 'Windkanal', '2algesurf/Hauser 1/Windkanal','image'],
-			[ 'Xano', '2algesurf/Hauser 1/Xano','image'],
-			[ 'Zitrus', '2algesurf/Hauser 1/Zitrus','image'],
+			[ 'Read Me', '2-Algesurf/2-Hauser/Read Me'],
+			[ 'Stemkoski', '2-Algesurf/2-Hauser/stemkoski','image'],
+			[ 'Calyx', '2-Algesurf/2-Hauser/Calyx','image'],
+			[ 'Calypso', '2-Algesurf/2-Hauser/Calypso','image'],
+			[ 'Columpius', '2-Algesurf/2-Hauser/Columpius','image'],
+			[ 'Cube', '2-Algesurf/2-Hauser/cube','image'],
+			[ 'Dattel', '2-Algesurf/2-Hauser/dattel','image'],
+			[ 'Daisy', '2-Algesurf/2-Hauser/daisy','image'],
+			[ 'DingDong', '2-Algesurf/2-Hauser/dingDong','image'],
+			[ 'Distel', '2-Algesurf/2-Hauser/distel','image'],
+			[ 'Durchblick', '2-Algesurf/2-Hauser/durchblick'],
+			[ 'Eistüte', '2-Algesurf/2-Hauser/eistüte','image'],
+			[ 'Eve', '2-Algesurf/2-Hauser/eve','image'],
+			[ 'Flirt', '2-Algesurf/2-Hauser/flirt','image'],
+			[ 'Geisha', '2-Algesurf/2-Hauser/geisha','image'],
+			[ 'Harlekin', '2-Algesurf/2-Hauser/harlekin','image'],
+			[ 'Helix', '2-Algesurf/2-Hauser/helix','image'],
+			[ 'Herz', '2-Algesurf/2-Hauser/herz','image'],
+			[ 'Himmel und Hölle', '2-Algesurf/2-Hauser/himmel und Hölle','image'],
+			[ 'Kolobri', '2-Algesurf/2-Hauser/kolobri','image'],
+			[ 'Leopold', '2-Algesurf/2-Hauser/leopold','image'],
+			[ 'octdong', '2-Algesurf/2-Hauser/octdong','image'],
+			[ 'plop', '2-Algesurf/2-Hauser/plop','image'],
+			[ 'Seepferdchen', '2-Algesurf/2-Hauser/Seepferdchen','image'],
+			[ 'Sofa', '2-Algesurf/2-Hauser/Sofa','image'],
+			[ 'Solitude', '2-Algesurf/2-Hauser/Solitude','image'],
+			[ 'Süss', '2-Algesurf/2-Hauser/Süss','image'],
+			[ 'Tanz', '2-Algesurf/2-Hauser/Tanz','image'],
+			[ 'Taube', '2-Algesurf/2-Hauser/Taube','image'],
+			[ 'Quaste - broken', '2-Algesurf/2-Hauser/Quaste'],
+			[ 'Spitz', '2-Algesurf/2-Hauser/Spitz','image'],
+			[ 'Tobel', '2-Algesurf/2-Hauser/Tobel','image'],
+			[ 'Vis a vis', '2-Algesurf/2-Hauser/Vis a vis','image'],
+			[ 'Wedeln', '2-Algesurf/2-Hauser/Wedeln','image'],
+			[ 'Windkanal', '2-Algesurf/2-Hauser/Windkanal','image'],
+			[ 'Xano', '2-Algesurf/2-Hauser/Xano','image'],
+			[ 'Zitrus', '2-Algesurf/2-Hauser/Zitrus','image'],
 
-			// [ '', '2algesurf/Hauser 1/'],
+			// [ '', '2-Algesurf/Hauser 1/'],
 		],		
 // ["croissant", "dromedar", "Zeppelin", "Zweiloch", "Michaelangelo", "Stern", "Möbius", "Sphäre", "Limao", "Torus", "Whitney", "Buggle", "Zylinder", "diabolo", "dullo", "Miau", "Trichter", "Nepali", "Pilzchen", "Subway", "Polsterzipf", "crixxi", "Berg", "Gupf", "Kegel", "Wigwam", "Tuelle", "Pipe", "Fanfare", "Kreuz", "Spindel", "Twilight", "Ufo", "Wendel", "Zeck", "Sattel", "Schneeflocke", "cylinder", "cylinder 1", "cylinder 3", "Bifolia", "Boy Surface (broken)", "cassini", "chair", "cayley Cubic", "clebsh diagonal cubic", "crossed trough", "cubic saddle", "cushion"]		
 		'Hauser 2': [
-			[ 'File 1 3 1', '2algesurf/CHauser 2/File-1-3-1']
+			[ 'File 1 3 1', '2-Algesurf/3-Hauser/File-1-3-1']
 		],
 		'Jalape': [
-			[ 'File 1 3 1', '2algesurf/Jalape/File-1-3-1']
+			[ 'File 1 3 1', '2-Algesurf/4-Jalape/File-1-3-1']
 		]		
 	},
 	
 	'3 Brain': {
 		'Category 3 1': [
-			[ 'File 3 1 1', '3brain/Category-3-1/File-3-1-1','image']
+			[ 'File 3 1 1', '3-Brain/Category-3-1/File-3-1-1','image']
 		]		
 	}
 };	

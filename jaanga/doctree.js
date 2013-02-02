@@ -2,8 +2,10 @@
 	var DELIMITER = '/';
 	var nameCategoryMap = {};
 	for ( var section in list ) {
-		var id = section.toString().substr(0,1);
-		html += '<h2 id="h' + id + '" onclick="toggleSection(' + id + ')" >  ' + section + '</h2>';
+		// var id = section.toString().substr(0,1);
+		var id = section.replace( /\ /g, '-' );
+		html += '<h1 id="h' + id + '" onclick="toggleSection(\'' + id + '\')" >  ' + section + '<br>' ;
+		html += '<img src="' + id + '/' + id + '.png" \/></h1>';
 		html += '<ul id="c' + id + '">';
 		for ( var category in list[ section ] ) {
 			html += '<h3>' + category + '</h3>';
@@ -29,8 +31,8 @@
 	panel.innerHTML += html;
 	
 	// toggleSection( 1 );
-	toggleSection( 2 );
-	toggleSection( 3 );
+	toggleSection( '2-AlgeSurf' );
+	toggleSection( '3-Brain' );
 	
 	function encodeUrl( path ) {
 		return path.replace(/\ \/\ /g, '.').replace(/\ /g, '_');
@@ -69,6 +71,7 @@
 
 	function toggleSection(id ) {
 		var cat = document.getElementById('c' + id);
+// console.log(id, cat, hdr);
 		var hdr = document.getElementById('h' + id);	
 		if ( cat.style.display == '' || cat.style.display == 'block' ) {
 			cat.style.display = 'none';	

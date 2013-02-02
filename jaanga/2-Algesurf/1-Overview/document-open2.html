@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function createDoc()
+{
+var w=window.open();
+w.document.open();
+w.document.write("<h1>Hello World!</h1>");
+w.document.close();
+}
+</script>
+</head>
+
+<body>
+<input type="button" value="New document in a new window" onclick="createDoc()">
+</body>
+</html>

@@ -5,11 +5,11 @@ function selectMaterial(m) {
 	material = materials[m].m;    
 	document.getElementById(m).style.fontWeight = '600';
 	selectedMaterial = m;
-// console.log('sel menu: ', material, m ); 
+console.log('sel menu: ', material, m ); 
 }  
   
-function generateMaterials() {
-	var path = "../../../textures/cube/SwedishRoyalCastle/";
+function generateMaterials(basePath) {
+	var path = basePath + 'textures/cube/SwedishRoyalCastle/';
 	var format = '.jpg';
 	var urls = [
 		path + 'px' + format, path + 'nx' + format,
@@ -41,13 +41,13 @@ function generateMaterials() {
 	dottedMaterial2.uniforms.uBaseColor.value.setRGB( 0, 0, 0 );
 	dottedMaterial2.uniforms.uLineColor1.value.setHSV( 0.05, 1.0, 1.0 );
 
-	var texture = THREE.ImageUtils.loadTexture( "../../../textures/ash_uvgrid01.jpg" );
+	var texture = THREE.ImageUtils.loadTexture( basePath + 'textures/ash_uvgrid01.jpg' );
 	texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
       
 
     var texture1 = new THREE.Texture( generateTexture( 0, 0.5, 1 ), new THREE.UVMapping() );
     var texture2 = new THREE.Texture( generateTexture( 0, 1, 0 ), new THREE.SphericalReflectionMapping() );
-    var texture3 = THREE.ImageUtils.loadTexture( '../../../textures/land_ocean_ice_cloud_2048.jpg' )
+    var texture3 = THREE.ImageUtils.loadTexture( basePath + 'textures/land_ocean_ice_cloud_2048.jpg' )
 
     texture1.needsUpdate = true;
     texture2.needsUpdate = true;
@@ -183,14 +183,14 @@ function generateMaterials() {
 		
 		"basic~map1" :
 		{
-		  m: new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '../../../textures/land_ocean_ice_cloud_2048.jpg' ), side: THREE.DoubleSide }), 
-		  d: "8. MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '../../../textures/land_ocean_ice_cloud_2048.jpg' ), side: THREE.DoubleSide } )"
+		  m: new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( basePath + 'textures/land_ocean_ice_cloud_2048.jpg' ), side: THREE.DoubleSide }), 
+		  d: "8. MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( basePath + 'textures/land_ocean_ice_cloud_2048.jpg' ), side: THREE.DoubleSide } )"
 		},
 		
 		"basic~map2" :
 		{
-		  m: new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '../../../textures/cynthia-draw-lightning.jpg' ), side: THREE.DoubleSide }),
-		  d: "9. MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( '../../../textures/cynthia-draw-lightning.jpg' ), side: THREE.DoubleSide })"
+		  m: new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( basePath + 'textures/cynthia-draw-lightning.jpg' ), side: THREE.DoubleSide }),
+		  d: "9. MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( basePath + 'textures/cynthia-draw-lightning.jpg' ), side: THREE.DoubleSide })"
 		},
 
 		"phong~flat" :

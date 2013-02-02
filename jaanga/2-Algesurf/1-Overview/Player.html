@@ -107,7 +107,7 @@
 			'<br>play time<br><input type="range" name="play" min="0" max="10" onchange="play=this.value;" step="1" value="3" >' +
 			'<br>background color<br><input type="range" name="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade">';
 	
-		generateMaterials();
+		generateMaterials( '../../../' );
 		info2 += '<h3 style="margin:5px 0 0 0;">Materials</h3>';		
 		for ( var m in materials ) {
 		  info2 += '<a href="#" id="' + m + '" onclick="selectMaterial(\'' + m + '\');" style="">' + m +'</a><br>';
