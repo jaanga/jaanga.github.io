@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<title>jaanga algesurf ~ multiple viewports</title>
+<meta charset="utf-8">
+<!--
+<script src="../../list.js"></script>
+<script src="../../page.js"></script>
+-->
+<link type="text/css" rel="stylesheet" href="../../page.css" />
+</head>
+<body>
+<script type='text/javascript'>
+  document.body.style.cssText = 'margin: 0 auto; text-align: center; width: 650px;';
+
+  var info = document.createElement( 'div' );
+  document.body.appendChild( info );
+  info.innerHTML='<h1>jaanga algesurf API demo</h1>';
+
+  var f1 = document.createElement( 'div' );
+  info.appendChild( f1 );
+  f1.style.cssText = 'float: left;  height: 330px; margin: 10px; width: 300px;';
+  f1.innerHTML = '<iframe src="../algesurf-api.html?&equation=x^2 + y^2 - z^2 - 70&title=Stemkoski&html=x<sup>2</sup> + y<sup>2</sup> - z<sup>2</sup> - 70&min=-10&max=10&height=300&width=300&scale=1&titling=" ' +
+  'style="height: 300px; width: 300px;"></iframe>' +
+  'x<sup>2</sup> + y<sup>2</sup> - z<sup>2</sup> - 70';
+
+  var f2 = document.createElement( 'div' );
+  info.appendChild( f2 );
+  f2.style.cssText = 'float: left; height: 330px; margin: 10px; width: 300px;';
+  f2.innerHTML = '<iframe src="../algesurf-api.html?equation=x^6 + y^6 + z^6 - 1&title=Cube&html=x<sup>6</sup> + y<sup>6</sup> + z<sup>6</sup> - 1&min=-1&max=1&height=300&width=300&scale=7&titling=" ' +
+  'style="height: 300px; width: 300px;"></iframe>' +
+  'x<sup>6</sup> + y<sup>6</sup> + z<sup>6</sup> - 1';
+  
+  var f3 = document.createElement( 'div' );
+  info.appendChild( f3 );
+  f3.style.cssText = 'float: left; height: 330px; margin: 10px; width: 300px;';
+  f3.innerHTML = '<iframe src="../algesurf-api.html?equation=x^3*y + x*z^3 + y^3*z + z^3 + 7*z^2 + 5*z&title=Columpius&html=x<sup>3</sup>y + xz<sup>3</sup> + y<sup>3</sup>z + z<sup>3</sup> + 7z<sup>2</sup> + 5z&min=-3&max=3&height=300&width=300&scale=3&titling=" ' +
+  'style="height: 300px; width: 300px;"></iframe>' +
+  'x<sup>3</sup>y + xz<sup>3</sup> + y<sup>3</sup>z + z<sup>3</sup> + 7z<sup>2</sup> + 5z';
+  
+  var f4 = document.createElement( 'div' );
+  info.appendChild( f4 );
+  f4.style.cssText = 'float: left;height: 330px; margin: 10px; width: 300px;';
+  f4.innerHTML = '<iframe src="../algesurf-api.html?equation=y*z*(x^2 + y - z)&title=Tuelle&html=yz(x<sup>2</sup> + y - z)&min=-3&max=3&height=300&width=300&scale=3&titling=" ' +
+  'style="height: 300px; width: 300px;"></iframe>' +
+  'yz(x<sup>2</sup> + y - z)';  
+</script>
+</body>
+</html>

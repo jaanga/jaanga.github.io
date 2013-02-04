@@ -46,6 +46,7 @@
 	var surf, keys;
 	// var background, equation, height, htm, iframe, matList, max, min, link, scale, spin, title, url, width ;
 	var mats, titles;
+	var helpbar;
 	
 	init();
 	animate();	
@@ -83,7 +84,8 @@
 		surf = surfaces[keys[ Math.floor(Math.random() * keys.length) ]];			
 		generateMaterials( '../../../' ); 
 		
-		var txt = '<h1 style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;" >algeSurf Builder</h1>' +
+		var txt = '<h1 style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;" >algeSurf Builder ' +
+			'<span onclick="toggleHelp()" style="color: #aaa;" >[?]</span></h1>' +
 			'<div style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;">' +
 			'<h2 style="margin:0">Input your data here<\/h2>' +
 			'Name for the surface ' +
@@ -128,9 +130,9 @@
 		mats = '<select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
 		for ( var m in materials ) {
 			if ( m !== selectedMaterial ) {
-				mats += '<option id="' + m + '" >' + m +'</option>';
+				mats += '<option  >' + m +'</option>';
 			} else {
-				mats += '<option id="' + m + '" selected="selected" >' + m +'</option>';
+				mats += '<option selected="selected" >' + m +'</option>';
 			}
 		}
 		mats += '<\/select>';
@@ -151,12 +153,12 @@
 			
 			'<p>URL ~ www address. Use it to create a link<br>' +
 			'<textarea id="url" rows="6" cols="40" title="Copy this URL data and use it to create a link in one of your own documents"></textarea><br>' +
-			'<a id="link" href="#" onClick="grabData()" target="_blank" title="Opens a new window just as a link in one of your documents could do" >Test the Link/URL<\/a>' +
+			'<a id="link" href="#" onClick="grabData()" target="_blank" title="Opens a new window just as a link in one of your documents could do" >Test the Link/URL for ' + surf['ttl'] + '<\/a>' +
 			'<\/p>' +
 			
 			'<p>IFRAME - html code. Use it to embed a graph<br>' +
 			'<textarea id="iframe" rows="7" cols="40" title="Copy this HTML code and paste it into your post or page"></textarea><\/p>' +			
-			'<a href="#" onClick="testIframe()" title="opens a new window with the source code embedded in an iframe" >Test the IFRAME</a><\/p>' +
+			'<a href="#" onClick="testIframe()" title="opens a new window with the source code embedded in an iframe" >Test the IFRAME for ' + surf['ttl'] + '</a><\/p>' +
 
 			'<\/div>' +
 // Assistance			
@@ -164,12 +166,22 @@
 			'<h2 style="margin:0">Assistance<\/h2>' +
 			'<p>Select a different equation' +
 			'<br><select name="surfaces" onchange="selectSurface(this.value);" title="Equations are from the galleries"><\/p>';
-
+var tt = '';
 		for ( var i = 0; i < keys.length; i++ ) {
-		  txt += '<option id="' + keys[i] + '" onclick="selectSurface(\'' + keys[i] + '\');" >' + keys[i] +'</option>';
+			if (i == 0) { 
+				tt = 'selected="selected" '; 
+				txt += '<optgroup label="Hauser 1">';
+			} else if ( i == 35 ) {
+				txt += '</optgroup><optgroup label="Hauser 2">';
+			} else if ( i == 70 ) {
+				txt += '</optgroup><optgroup label="Jalape">';
+			}else if ( i == 81 ) {
+				txt += '</optgroup><optgroup label="Sing Surf">';
+			}
+			txt += '<option ' + tt + 'id="' + keys[i] + '" onclick="selectSurface(\'' + keys[i] + '\');" >' + keys[i] +'</option>';
 		}
 		
-		txt += '</select></p>' +
+		txt += '</optgroup></select></p>' +
 			'<p><button onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >Reset camera position</button>'
 			'<\/p><\/div>';
 
@@ -200,7 +212,31 @@
 */		
 		material = materials[selectedMaterial].m;
 		grabData();
+		
+		helpbar = document.createElement( 'div' );
+		document.body.appendChild( helpbar );
+		helpbar.style.cssText = 'background-color: #eee; border-radius: 10px; box-shadow: 10px 10px 5px #444; display: block; height: 200px%; overflow: auto; ' +
+			'padding: 5px 5px 5px 15px; opacity: 0.9; position: fixed; top: 230px; width: 400px; z-index: 200; right: 100px'; 
+		helpbar.innerHTML = '<div onclick="toggleHelp()">' +
+			'<p style="margin: 0; text-align: right;"><i>click here to close...</i></p>' +
+			'<h2>Help</h2>' +
+			'<p>Edit the equation by entering text in the area above.</p>' +
+			'<p>Currently:</p>' +
+			'<p>Variables supported are: x,y,z.</p>' +
+			'<p>Operators: +, -, *, /, %, ^ </p>' +
+			'<p>Functions: sin, cos, tan, asin, acos, atan, sqrt, log, abs, ceil, floor, round, neg, exp, ' +
+			'random, fac, min, max, pyt, pow, atan2</p>' +
+			'<p>Constants: E, PI</p>' +
+			'<div>';
 	}
+	
+	function toggleHelp() {
+		if (helpbar.style.display == 'none' ) {
+			helpbar.style.display = 'block';
+		} else {
+			helpbar.style.display = 'none';
+		}
+	} 	
 		
 	function selectSurface(s) {	
 		surf = surfaces[s];

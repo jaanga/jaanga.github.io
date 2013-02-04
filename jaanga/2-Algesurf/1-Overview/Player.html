@@ -44,12 +44,13 @@
 	var materials;
 	var light, pointLight, ambientLight;
 
-	var surf, keys, info;
+	var surf, keys;
 	var spin = 2;
 	var play = 5;
 	var background;
 	var start = clock.getElapsedTime();
 	var cnt = 1;
+	var sel;
 
 	var info, info2;
 	// var txt = info.innerHTML = '<h1>' + surf.ttl + '</h1><h2>' + surf.htm + '<br>min: ' + surf.min + '<br>max: ' + surf.max + '<br>scale: ' + surf.scl + '</h2>';  
@@ -99,49 +100,97 @@
 		info = document.createElement( 'div' ); 	
 		document.body.appendChild( info ); 	
 		info.style.cssText = 'position: fixed; top: 20px; left: 20px;'; 
-		info.innerHTML = '<h1>' + surf['ttl'] + '</h1><h2>equation: ' + surf['htm'] + '<br>min: ' + surf['min'] + '<br>max: ' + surf['max'] + '<br>scale: ' + surf['scl'] + '</h2>'; 
+		info.innerHTML = '<h1 id="title" >' + surf['ttl'] + '</h1>' +
+		'<p id="htm">htm: '+ surf['htm']  + '</p>' +
+		'<p id="equation">equation: ' + surf['eqn'] + '</p>' +
+		'<p id="min">min: ' + surf['min'] + '</p>' +
+		'<p id="max">max: ' + surf['max'] + '</p>' +
+		'<p id="scale">scale: ' + surf['scl'] + '</p>'; 
+		
+		generateMaterials( '../../../' );
 		
 		info2 = '<a href="#" title="View the full API call..." target="_blank">api call</a>' +
 			'<br><a href="#" onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >camera reset</a>' +
 			'<br>spin<br><input type="range" name="spin" min="0" max="5" onchange="spin=this.value;" step="0.5" value="2" >' +
-			'<br>play time<br><input type="range" name="play" min="0" max="10" onchange="play=this.value;" step="1" value="3" >' +
-			'<br>background color<br><input type="range" name="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade">';
-	
-		generateMaterials( '../../../' );
-		info2 += '<h3 style="margin:5px 0 0 0;">Materials</h3>';		
-		for ( var m in materials ) {
-		  info2 += '<a href="#" id="' + m + '" onclick="selectMaterial(\'' + m + '\');" style="">' + m +'</a><br>';
+			'<br>play time<br><input type="range" name="play" min="2" max="10" onchange="play=this.value;" step="1" value="3" >' +
+			'<br>background color<br><input type="range" name="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade">' +
+			'<p>Select a different equation' +
+			'<br><select id="sel" onchange="cnt=this.selectedIndex+  1;getSurface(this.value, this.selectedIndex);" >';
+
+		
+		for ( var i = 0; i < keys.length; i++ ) {
+			var tt = '';
+			if (i == 0) { 
+				tt = 'selected="selected" ';
+				info2 += '<optgroup label="Hauser 1">';
+			} else if ( i == 35 ) {
+				info2 += '</optgroup><optgroup label="Hauser 2">';
+			} else if ( i == 70 ) {
+				info2 += '</optgroup><optgroup label="Jalape">';
+			}else if ( i == 81 ) {
+				info2 += '</optgroup><optgroup label="Sing Surf">';
+			}
+			
+			info2 += '<option ' + tt + ' >' + keys[i] +'</option>';
 		}
+		
+		info2 += '</optgroup></select></p>' ;
+		
+		info2 += 'Select a different material<br><select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
+		
+		for ( var m in materials ) {
+			if ( m !== selectedMaterial ) {
+				info2 += '<option>' + m +'</option>';
+			} else {
+				info2 += '<option selected="selected" >' + m +'</option>';
+			}
+		}
+		info2 += '<\/select>';
 		info.innerHTML += info2;
+		sel = document.getElementById( 'sel' );
 	}
 
 	function updateBackground(i) {
-		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
-		document.body.style.cssText += 'background-color: #' + col[i] + col[i] + col[i] + ';';
+		var col = [000,111,222,333,444,555,666,777,888,999,'aaa','bbb','ccc','ddd','eee','fff']
+		document.body.style.cssText += 'background-color: #' + col[i] + ';';
 		background = i;
 	}
+	
+	function getSurface(key, index) {
+// console.log(key, index);	
+		surf = surfaces[key];
+		if ( surf['eqn'] ) {
+			if( mesh ) { 
+				var oldMesh = mesh;
+			}	
+			var jsFunction = Parser.parse(surf['eqn']).toJSFunction( ['x','y','z'] );
+			generateGeometry( jsFunction, surf['min'], surf['max']);
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.scale.multiplyScalar( surf['scl'] );
+			scene.add(mesh);		
+			scene.remove( oldMesh);
+			
+			title.innerText = surf['ttl'];
+			equation.innerText = 'equation: ' + surf['eqn'];	
+			htm.innerHTML = 'html: ' + surf['htm'];
+			min.innerText = 'min: ' + surf['min'];
+			max.innerText = 'max: ' + surf['max'];
+			scale.innerText = 'scale: ' + surf['scl'];
+			document.getElementsByName('background')[0].value = background;
+			// sel.selectedIndex = index;
+			// sel.options[index] = index;
+			sel.options[index].selected = true;
+			start = clock.getElapsedTime();
+		}
+	}
+	
 	function animate() {
 		requestAnimationFrame( animate );
 		controls.update();
 		scene.children[4].rotation.x = Date.now() * 0.000025 * spin;
 		scene.children[4].rotation.y = Date.now() * 0.0005 * spin;
-		if ( play > 0 && (clock.getElapsedTime() - start > play) ) {
-			if( mesh ) { 
-				var oldMesh = mesh;
-			}
-			surf = surfaces[keys[cnt]];
-			if ( surf['eqn'] ) {
-				var jsFunction = Parser.parse(surf['eqn']).toJSFunction( ['x','y','z'] );
-				generateGeometry( jsFunction, surf['min'], surf['max']);
-				mesh = new THREE.Mesh( geometry, material );
-				mesh.scale.multiplyScalar( surf['scl'] );
-				scene.add(mesh);
-				info.innerHTML = '<h1>' + surf['ttl'] + '</h1><h2>equation: ' + surf['htm'] + '<br>min: ' + surf['min'] + '<br>max: ' + surf['max'] + '<br>scale: ' + surf['scl'] + '</h2>'; 
-				info.innerHTML += info2;		
-				document.getElementsByName('background')[0].value = background;
-				start = clock.getElapsedTime();
-				scene.remove( oldMesh);
-			}
+		if ( play < 10 && (clock.getElapsedTime() - start > play) ) {
+			getSurface(keys[cnt], cnt)
 			cnt++;
 			if (cnt >= keys.length) {cnt = 0;}
 		}	

@@ -1,3 +1,5 @@
+var selectedSurface = 'stemkoski';
+
 var surfaces = {
 
 'stemkoski' : {
@@ -123,7 +125,7 @@ ttl:'Eistüte'
 
 'eve' : {
 eqn:'5*x^2 + 2*x*z^2 + 5*y^6 + 15*y^4 + 5*z^2 - 15*y^5 - 5*y^3',
-htm:'5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup> + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup>',
+htm:'Has a probem...<br>5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup> + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup>',
 mat: '',
 max:5.5,
 min:-5.5,
@@ -307,7 +309,7 @@ scl:1,
 tag: '',
 ttl:'Taube'
 },
-
+/*
 'Quaste' : {
 eqn:'',
 htm:'0',
@@ -318,6 +320,7 @@ scl:10,
 tag: '',
 ttl:'Quaste'
 },
+*/
 
 'Spitz' : {
 eqn:'(y^3 - x^2 - z^2)^3 - 27*x^2*y^3*z^2',
@@ -396,6 +399,7 @@ tag: '',
 ttl:'Zitrus'
 },
 
+/*
 'croissant' : {
 eqn:'',
 htm:'0',
@@ -406,6 +410,7 @@ scl:10,
 tag: '',
 ttl:'Croissant'
 },
+*/
 
 'dromedar' : {
 eqn:'x^4 - 3*x^2 + y^2 + z^3',
@@ -462,6 +467,7 @@ tag: '',
 ttl:'Stern'
 },
 
+/*
 'Möbius' : {
 eqn:'',
 htm:'0',
@@ -472,6 +478,7 @@ scl:10,
 tag: '',
 ttl:'Möbius'
 },
+*/
 
 'Sphäre' : {
 eqn:'x^2 + y^2 + z^2 - 1',
@@ -496,12 +503,12 @@ ttl:'Limao'
 },
 
 'Torus' : {
-eqn:'(x^2 + y^2 + z^2 + 4 - 1)^2 - 4*(x^2 + y^2)',
+eqn:'(x^2 + y^2 + z^2 + 0.9*0.9 - 0.8^2)^2 - 0.9^2*(x^2 + y^2)',
 htm:'(x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> + R<sup>2</sup> - r<sup>2</sup>)<sup>2</sup> = R<sup>2</sup>(x<sup>2</sup> + y<sup>2</sup>)',
 mat: '',
-max:10,
-min:-10,
-scl:1,
+max:1,
+min:-1,
+scl:10,
 tag: '',
 ttl:'Torus'
 },
@@ -759,6 +766,7 @@ tag: '',
 ttl:'Ufo'
 },
 
+/*
 'Wendel' : {
 eqn:'',
 htm:'0',
@@ -769,6 +777,7 @@ scl:10,
 tag: '',
 ttl:'Wendel'
 },
+*/
 
 'Zeck' : {
 eqn:'x^2 + y^2 - z^3*(1 - z)',
@@ -848,15 +857,15 @@ tag: '',
 ttl:'Bifolia'
 },
 
-'Boy Surface (broken)' : {
+'Boy Surface' : {
 eqn:'64*(1 - z)^3 * z^3 - 48*(1 - z)^2 * z^2*(3*x^2 + 3*y^2 + 2*z^2) + 12*(1 - z)*z*(27*(x^2 + y^2)^2 - 24*z^2*(x^2 + y^2) + 36*1.414*y*z*(y^2 - 3*x^2) + 4*z^4) + (9*x^2 + 9*y^2 - 2*z^2)*( - 81*(x^2 + y^2)^2 - 72*z^2*(x^2 + y^2) + 108*1.414*x*z*(x^2 - 3*y^2) + 4*z^4)',
 htm:'64(1 - z)<sup>3</sup>  z<sup>3</sup> - 48(1 - z)^2  z^2(3x^2 + 3y^2 + 2z^2) + 12(1 - z)z(27(x^2 + y^2)^2 - 24z^2(x^2 + y^2) + 361.414yz(y^2 - 3x^2) + 4z<sup>4</sup>) + (9x^2 + 9y^2 - 2z^2)( - 81(x^2 + y^2)^2 - 72z^2(x^2 + y^2) + 1081.414xz(x^2 - 3y^2) + 4z<sup>4</sup>)',
 mat: '',
-max:3,
-min:-3,
-scl:5,
+max:2,
+min:-1.4,
+scl:8,
 tag: '',
-ttl:'Boy Surface (broken)'
+ttl:'Boy Surface' 
 },
 
 'cassini' : {
@@ -934,6 +943,33 @@ min:-2,
 scl:10,
 tag: '',
 ttl:'Cushion'
-}
+},
+
+// Sing Surf
+
+'Cayley Cubic': {
+eqn:'4*(x^2+y^2+z^2) + 16*x*y*z - 1',
+htm:'4(x<sup>2</sup>+y<sup>2</sup>+z<sup>2</sup>) + 16xyz - 1',
+mat: '',
+max:1.5,
+min:-1.5,
+scl:10,
+tag: '',
+ttl:'Cayley\'s Cubic'
+},
+
+
+/*
+'' : {
+eqn:'',
+htm:'0',
+mat: '',
+max:1,
+min:-1,
+scl:10,
+tag: '',
+ttl:''
+},
+*/
 
 };

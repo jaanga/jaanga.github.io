@@ -1,9 +1,9 @@
 var selectedMaterial = 'normal~transparent*';
   
 function selectMaterial(m) {
-	document.getElementById(selectedMaterial).style.fontWeight = '400';
+	//document.getElementById(selectedMaterial).style.fontWeight = '400';
 	material = materials[m].m;    
-	document.getElementById(m).style.fontWeight = '600';
+	//document.getElementById(m).style.fontWeight = '600';
 	selectedMaterial = m;
 console.log('sel menu: ', material, m ); 
 }  

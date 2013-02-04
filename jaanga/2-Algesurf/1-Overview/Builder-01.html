@@ -1,0 +1,333 @@
+﻿<!doctype html>
+<html lang='en'>
+<head>
+<title></title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+<script src="../../list.js"></script>
+<!--
+<script src="../../page.js"></script>
+-->
+<link type="text/css" rel="stylesheet" href="../../page.css" />
+</head>
+<body>
+
+<script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
+<script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
+
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/CopyShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/FXAAShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/HorizontalTiltShiftShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/shaders/VerticalTiltShiftShader.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/ShaderToon.js"></script>
+
+<!--
+<script src='../../three.js/build/three.min.js'></script>
+<script src='../../three.js/examples/js/controls/TrackballControls.js'></script>
+<script src='../../three.js/examples/js/Detector.js'></script>
+<script src='../../three.js/examples/js/libs/stats.min.js'></script>
+-->
+<script src='../parser.js'></script>
+<script src='../MarchingCubesData.js'></script>
+<script src='../generateGeometry.js'></script>
+<script src='../materials.js'></script>
+<script src='../surfaces.js'></script>
+<script type='text/javascript'>
+	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+	
+	var renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	var materials;
+	var light, pointLight, ambientLight;
+
+	var surf, keys;
+	// var background, equation, height, htm, iframe, matList, max, min, link, scale, spin, title, url, width ;
+	var mats, titles;
+	
+	init();
+	animate();	
+	
+	function init() {
+		document.body.style.cssText = 'margin: 0;  padding: 0;';
+
+		renderer = new THREE.WebGLRenderer( { antialias: true } );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 500 );
+		camera.position.set( 20, 20, 20 );
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+		light = new THREE.DirectionalLight( 0xffffff );
+		light.position.set( 0.5, 0.5, 1 );
+		scene.add( light );
+
+		pointLight = new THREE.PointLight( 0xff3300 );
+		pointLight.position.set( 0, 0, 100 );
+		scene.add( pointLight );
+
+		ambientLight = new THREE.AmbientLight( 0x080808 );
+		scene.add( ambientLight );
+		
+		var sheet = document.createElement('style')
+		sheet.innerHTML = 'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
+			'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' ;
+		document.body.appendChild(sheet);	
+		
+		keys = Object.keys(surfaces);    
+		surf = surfaces[keys[ Math.floor(Math.random() * keys.length) ]];			
+		generateMaterials( '../../../' ); 
+		
+		var txt = '<h1 style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;" >algeSurf Builder</h1>' +
+			'<div style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;">' +
+			'<h2 style="margin:0">Input your data here<\/h2>' +
+			'Name for the surface ' +
+			'<input type="checkbox" id="titleCheck" checked="true" title="Check to display Name in title"><br>' +
+			'<input type="text" id="title" size="20" value="' +  surf['ttl'] + '" title="A random surface from the galleries is selected each time this page is loaded" ><br>' +
+			'Equation for the surface ' +
+			'<input type="checkbox" id="equationCheck" title="Check to display Equation in title - but HTML - below - may be a better choice..."><br>' +
+			'<textarea id="equation" cols="40" title="Type or paste in equations and formulas here. Then click \'Update...\' to see the reuslts" >' + surf['eqn'] + '</textarea><br>' +
+			
+			'<p style="margin: 0 0 10px 0;text-align:right;"><button href="#" onClick="grabData()" title="After you make changes, click here to update the visualization and Output" accesskey="U"><u>U</u>pdate the Display</button></p>' +
+						
+			'<table border="0"><tr>' +
+			'<td>Minimum' +
+			'<input type="checkbox" id="minCheck" title="Check to display Minimum in title"><br>' +
+			'<input type="text" id="min" size="1" value="' + surf['min'] + '" ><\/td>' +
+			'<td>Maximum' +
+			'<input type="checkbox" id="maxCheck" title="Check to display Maximum in title"><br>' +
+			'<input type="text" id="max" size="1" value="' + surf['max'] + '" ><\/td>' +
+			'<td>Scale' +
+			'<input type="checkbox" id="scaleCheck" title="Check to display Scale in title"><br>' +
+			'<input type="text" id="scale" size="1" value="' + surf['scl'] + '" ><\/td>' +	
+			'<\/tr><tr>' +
+			
+			'<td>Height<br>' +
+			'<input type="text" id="height" size="1" value="0" title="Sets the height of the output window. If 0 or blank then uses full height. Currently only visible using the \'Test...\' links"><\/td>' +
+			'<td>Width<br>' +
+			'<input type="text" id="width" size="1" value="0" title="Sets the width of the output window. If 0 or blank then uses full height. Currently only visible using the \'Test...\' links"><\/td>' +	
+			'<\/tr><tr>' +
+
+			'<td>Background' +
+			'<input type="checkbox" id="backgroundCheck" title="Check to display Background Color slider bar in title"><br>' +
+			'<input type="range" id="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="Change the background gray shade"><\/td>' +
+			'<td>Spin ' +
+			'<input type="checkbox" id="spinCheck" title="Check to display Spin Speed slider bat in title"><br>' +
+			'<input type="range" id="spin" min="0" max="5" onchange="spin.value=this.value;" step="0.5" value="2" title="Drag bar to change the rotation speed of the surface. Left edge = No spin."><\/td>' +		
+			'<td>' + 
+			
+			'Select a Material ' +
+			// '<input type="checkbox" id="matCheck" >' +
+			'<br>';
+			
+		mats = '<select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
+		for ( var m in materials ) {
+			if ( m !== selectedMaterial ) {
+				mats += '<option id="' + m + '" >' + m +'</option>';
+			} else {
+				mats += '<option id="' + m + '" selected="selected" >' + m +'</option>';
+			}
+		}
+		mats += '<\/select>';
+		
+		txt += mats +
+			'<\/td>' +			
+			'<\/tr><\/table>' +
+			'<\/div>' +
+			
+// Output			
+			'<div style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;">' +
+			'<h2 style="margin:0">Output for your page or post here<\/h2>' +
+			
+			'<p>HTML - to \'pretty print\' the equation ' +
+			'<input type="checkbox" id="htmlCheck" checked="true" title="Check to display html text in title" ><br>' +
+			'<textarea id="htm" rows="3" cols="40" title="Text that will appear in the title. TBD: automatically generate html from any equation you enter." >' + surf['htm'] + '</textarea>' +
+			'<\/p>' +			
+			
+			'<p>URL ~ www address. Use it to create a link<br>' +
+			'<textarea id="url" rows="6" cols="40" title="Copy this URL data and use it to create a link in one of your own documents"></textarea><br>' +
+			'<a id="link" href="#" onClick="grabData()" target="_blank" title="Opens a new window just as a link in one of your documents could do" >Test the Link/URL<\/a>' +
+			'<\/p>' +
+			
+			'<p>IFRAME - html code. Use it to embed a graph<br>' +
+			'<textarea id="iframe" rows="7" cols="40" title="Copy this HTML code and paste it into your post or page"></textarea><\/p>' +			
+			'<a href="#" onClick="testIframe()" title="opens a new window with the source code embedded in an iframe" >Test the IFRAME</a><\/p>' +
+
+			'<\/div>' +
+// Assistance			
+			'<div style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;">' +
+			'<h2 style="margin:0">Assistance<\/h2>' +
+			'<p>Select a different equation' +
+			'<br><select name="surfaces" onchange="selectSurface(this.value);" title="Equations are from the galleries"><\/p>';
+
+		for ( var i = 0; i < keys.length; i++ ) {
+		  txt += '<option id="' + keys[i] + '" onclick="selectSurface(\'' + keys[i] + '\');" >' + keys[i] +'</option>';
+		}
+		
+		txt += '</select></p>' +
+			'<p><button onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >Reset camera position</button>'
+			'<\/p><\/div>';
+
+		var info = document.createElement( 'div' ); 	
+		document.body.appendChild( info ); 	
+		info.style.cssText = 'position: absolute; top: 20px; right: 20px;';
+		info.innerHTML = txt;
+		
+		titles = document.createElement( 'div' ); 	
+		document.body.appendChild( titles ); 	
+		titles.style.cssText = 'background-color: #ffffff; opacity: 0.5; padding: 10px; position: absolute; top: 20px; left: 20px; width: 20%;';
+		// titles.innerHTML = '<p><i>Titling to be displayed in output:</i></p>';
+/*		
+		background = document.getElementById('background');
+		equation = document.getElementById('equation');
+		height = document.getElementById('height');
+		htm = document.getElementById('htm');
+		iframe = document.getElementById('iframe');
+		link = document.getElementById('link');
+		matList = document.getElementById('matList');
+		max = document.getElementById('max');
+		min = document.getElementById('min');
+		scale = document.getElementById('scale');
+		spin = document.getElementById('spin');
+		title = document.getElementById('title');
+		url = document.getElementById('url');
+		width = document.getElementById('width');
+*/		
+		material = materials[selectedMaterial].m;
+		grabData();
+	}
+		
+	function selectSurface(s) {	
+		surf = surfaces[s];
+		
+		equation.value = surf['eqn'];	
+		htm.value = surf['htm'];
+		min.value = surf['min'];
+		max.value = surf['max'];
+		scale.value = surf['scl'];
+		title.value = surf['ttl'];
+		grabData();
+	}
+
+	function selectMaterial(m) {
+		material = materials[m].m;    
+		grabData(); 
+	} 
+	
+	function grabData() { 
+		if (mesh) {scene.remove( mesh); }
+		var jsFunction = Parser.parse( equation.value ).toJSFunction( ['x','y','z'] );
+// console.log('grab ', jsFunction)		
+		generateGeometry( jsFunction, parseFloat( min.value ), parseFloat(max.value) );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.multiplyScalar( parseFloat( scale.value ) );
+		scene.add(mesh);  
+		
+		var location = document.URL;
+		location = location.replace(/1-Overview\/Builder.html/, '');
+		location = location.replace(/#/, '');
+		
+		titles.innerHTML = '<p><i>Titling to be displayed in output:</i></p>';
+		
+		var txtHash = location + 'algesurf-api.html?' +
+		'background=' + updateBackground( background.value ) +
+		'&equation=' + equation.value + 
+		'&height='  + height.value + 
+		'&html='  + htm.value + 
+		'&material=' + matList.value +
+		'&max=' + max.value + 
+		'&min=' + min.value + 
+		'&scale=' + scale.value +
+		'&spin=' + spin.value +
+		'&title=' + escape(title.value) + 
+		'&width=' + width.value +
+		'&titling=';
+		
+		
+		if ( titleCheck.checked ) { 
+			titles.innerHTML  += '<h1>' + title.value + '<\/h1>'; 
+			txtHash += '<h1>' + escape(title.value) + '<\/h1>';
+		}
+		
+		var txt  = '';
+		if ( htmlCheck.checked ) { txt += '<h2>' + htm.value + '<\/h2>'; }
+		if ( equationCheck.checked ) { txt += '<h2>' + equation.value + '<\/h2>'; }
+		if ( minCheck.checked ) { txt += '<h2>Minimum: ' + min.value + '<\/h2>'; }
+		if ( maxCheck.checked ) { txt += '<h2>Maximum: ' + max.value + '<\/h2>'; }
+		if ( scaleCheck.checked ) { txt += '<h2>Scale: ' + scale.value + '<\/h2>'; }	
+		titles.innerHTML += txt;	
+		
+		txt = txt.replace(/=/, 'ZZZ');
+		txtHash += txt;	
+
+		txt = '<i>The following will also be displayed:<br>';
+		if ( backgroundCheck.checked ) { 
+			txt += 'Background slider<br>'; 
+			txtHash += '&backCtrl=1'; 
+		}
+		if ( titleCheck.checked ) { 
+			txt += 'Camera reset button<br>'; 
+			txtHash += '&camCtrl=1'; 
+		}
+/*		
+		if ( matCheck.checked ) { 
+			txt += 'Select Material<br>'; 
+			txtHash += '&matCtrl=1'; 
+		}
+*/		
+		if ( spinCheck.checked ) { 
+			txt += 'Spin slider<br>'; 
+			txtHash += '&spinCtrl=1'; 
+		}
+		titles.innerHTML += txt + '</i>';
+		
+		url.value = txtHash;
+		link.href = txtHash;
+		
+		var hgt = height.value !== '0' ? height.value : window.innerHeight;
+		var wid = width.value !== '0' ? width.value : window.innerWidth;
+		
+		iframe.value = '<iframe src="' + txtHash + '" height="' + hgt + '" width="' + wid + '" >' +
+		'<\/iframe>' ;
+		
+	}
+	
+	function testIframe() {
+		grabData();
+		
+		var txt = '<!doctype html><html>' +
+			'<title>' + title.value + '<\/title>' +
+			'<h1>Test iframe ~ ' + title.value + '</h1>' +
+			iframe.value;			
+		var w=window.open();
+		w.document.open();
+		w.document.write( txt);
+		w.document.close();
+	}
+	
+	function updateBackground(i) {
+		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
+		col = '' + col[i] + col[i] + col[i];
+		document.body.style.cssText += 'background-color: #' + col + ';';
+		return col;
+	}	
+  
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update();
+		scene.children[4].rotation.x = Date.now() * 0.000025 * spin.value;
+		scene.children[4].rotation.y = Date.now() * 0.0005 * spin.value;		
+		renderer.render( scene, camera );
+	}
+	
+	function builderError(e) {
+		alert(e);
+	}	
+</script>
+</body>
+</html>

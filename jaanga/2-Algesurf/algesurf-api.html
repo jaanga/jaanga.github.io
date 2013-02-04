@@ -4,7 +4,9 @@
 <title>algeSurf API</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
+<!--
 <link type='text/css' rel='stylesheet' href='../page.css' />
+-->
 </head>
 <body>
 
@@ -41,8 +43,6 @@
 	var spin;
 	
 	function init() {
-		document.body.style.cssText = 'margin: 0; overflow: hidden; padding: 0;';
-		
 		var sheet = document.createElement('style')
 		sheet.innerHTML = 'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
 			'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' ;
@@ -61,25 +61,29 @@
 		}
    
 		var background = vars['background'] !== undefined ? vars['background'] : 'ffffff';
+		var css = vars['css'] !== undefined ? vars['css'] : 'font-family: monospace; margin: 0; overflow: hidden; padding: 0;';
 		var equation = vars['equation'] !== undefined ? vars['equation'] : 'x^2 + y^2 - z^2 - 70';
 		var height = vars['height'] !== undefined && vars['height'] > 0 ? vars['height'] : window.innerHeight;
 		var html = vars['html'] !== undefined ? vars['html'] : '' ; 
 		var max = vars['max'] !== undefined ? parseFloat( vars['max'] ) : 10;
-		var mat = vars['material'] !== undefined ? vars['material'] : 'normal~transparent';
+		var mat = vars['material'] !== undefined ? vars['material'] : 'normal~transparent*';
 		var min = vars['min'] !== undefined ? parseFloat( vars['min'] ) : -10;
 		
 		var scale = vars['scale'] !== undefined ? parseFloat( vars['scale'] ) : 1;	
 		var spinVal = vars['spin'] !== undefined ? parseFloat( vars['spin'] ) : 2;
 		var title = vars['title'] !== undefined ? vars['title'] : 'Surface' ; 		
 		var width = vars['width'] !== undefined && vars['width'] > 0 ? vars['width'] : window.innerWidth;
-		var titling = vars['titling'] !== undefined ? vars['titling'] : '';
+		var titling = vars['titling'] !== undefined ? vars['titling'] : '<h1>' + title + '</h1>' + '<h2>' + 'equation: ' + equation + '</h2>';
 
 		title = unescape(title);
 		titling = titling.replace(/ZZZ/, '=');
 		titling = unescape(titling);
-console.log('api: ', vars, titling); 
+		
+// console.log('api: ', vars, titling); 
 
 		document.title = title + ' ~ jaanga algeSurf';
+		
+		document.body.style.cssText = css;
 
 		renderer = new THREE.WebGLRenderer( { antialias: true } );
 		renderer.setSize( width, height );
@@ -115,22 +119,6 @@ console.log('api: ', vars, titling);
 		info = document.createElement( 'div' ); 	
 		document.body.appendChild( info ); 	
 		info.style.cssText = 'position: fixed; top: 20px; left: 20px;'; 	
-/*		
-		info.innerHTML = '<h1>' + title + '</h1>' +
-		'<h2>' +
-		'<br>background: #' + background +
-		'<br>equation: ' + equation + 
-		'<br>height: ' + height +
-		'<br>html: ' + html +
-		'<br>material: ' + mat +
-		'<br>min: ' + min + 
-		'<br>max: ' + max + 
-		'<br>scale: ' + scale + 
-		'<br>spin: ' + spinVal +
-		'<br>width: ' + width +
-		'</h2>'; 
-*/
-		
 		info.innerHTML = titling;
 		
 		document.body.style.cssText += 'background-color: #' + background + ';';
@@ -140,7 +128,6 @@ console.log('api: ', vars, titling);
 		if (vars['backCtrl'] == '1' ) {info.innerHTML += '<h2>Background<br><input type="range" id="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade"><\/h2>'; }
 		if (vars['camCtrl'] == '1' ) {info.innerHTML += '<h2><a href="#" onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >Camera Reset</a><\/h2>'; }
 		
-		// spin = document.getElementById('spin');
 		spin = spinVal;
 	}
 
@@ -153,9 +140,8 @@ console.log('api: ', vars, titling);
 	}
 	
 	function updateBackground(i) {
-		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
-		col = '' + col[i] + col[i] + col[i];
-		document.body.style.cssText += 'background-color: #' + col + ';';
+		var c = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
+		document.body.style.cssText += 'background-color: #' + c[i] + c[i] + c[i] + ';';
 		return col;
 	}	
 </script>

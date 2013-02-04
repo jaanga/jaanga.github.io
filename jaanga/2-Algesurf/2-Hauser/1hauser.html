@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>gallery - html</title>
+<meta charset='utf-8'>
+<script src="../../list.js"></script>
+<script src="../../page.js"></script>
+<link type="text/css" rel="stylesheet" href="../../page.css" />
+</head>
+<body>
+<h1>Gallery: Hauser 1</h1>
+<script src="../surfaces.js"></script>
+<script type='text/javascript'>
+	var keys = Object.keys(surfaces);
+	var start = 1;
+	var cnt = start;
+	var finish = 35; // keys.length;
+
+	var gallery = document.createElement( 'div' );
+	gallery.style.cssText = 'text-align: center; ';
+	document.body.appendChild( gallery );
+	
+	gallery.innerHTML = generateHTML();
+
+	function generateHTML() {
+		var txt = '';
+		for (var i = start; i < finish; i++) {
+			s = surfaces[keys[i]];
+			txt += '<div style="float: left; height: 250px; overflow: auto; width: 250px;">' +
+				'<a href="../algesurf-api.html?equation=' + s.eqn + '&title=' + s.ttl + '&html=' + s.htm + 
+				'&min=' + s.min + '&max=' + s.max + '&scale=' + s.scl + '" style="text-decoration: none;" >' +
+				'<img src="../2-Hauser/' + 
+				keys[i] + '.png"><br><b>' + s.ttl + '</b><br>' + 
+				s.htm +
+				'</a>' +
+				'</div>'
+		}
+		return txt;
+	}
+</script>
+</body>
+</html>
+</script>
+</body>
+</html>

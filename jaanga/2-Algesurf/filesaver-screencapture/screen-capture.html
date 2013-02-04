@@ -28,8 +28,9 @@
 <script src="../surfaces.js"></script>
 <script src="generateGeometry.js"></script>
 <script type='text/javascript'>
-	var cnt = 23;
-	var keys, surf;
+	var start = 35;
+	var cnt = start;
+	var key = 'stemkoski', keys, surf;
 	keys = Object.keys(surfaces);    
 	surf = surfaces[keys[cnt]];
 
@@ -57,14 +58,15 @@
 	init();
 	animate();
 	
-	var fileName;
+	var fileName, txt;
 
 	function genRender() {
 		if( mesh ) { scene.remove( mesh) };
-		surf = surfaces[keys[cnt]];
+		// surf = surfaces[keys[cnt]];
+		surf = surfaces[key];
 		if ( surf['eqn'] ) {
 			var jsFunction = Parser.parse(surf['eqn']).toJSFunction( ['x','y','z'] );
-			console.log(jsFunction);
+// console.log(jsFunction);
 			generateGeometry( jsFunction, parseFloat(surf.min), parseFloat(surf.max) );
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.scale.multiplyScalar( parseFloat(surf.scl) );
@@ -72,10 +74,24 @@
 		} else {
 			console.log('oops')
 		}
-		info.innerHTML = '<p>Screen capture item:'  + cnt + ' ' + surf.ttl + ' | <a href="#" onclick="genRender()">render</a> | <a href="#" onclick="toBitMap()" >Bitmap</a> | <a href="#" onclick="saveIt()" accesskey="d">SaveIt</a></p>';
 		context.clearRect (0,0,512,512);
-		console.log('genR ',cnt, surf.ttl, surf.eqn);
+console.log('genR ',cnt, surf.ttl, surf.eqn);		
+		
+		txt = '<p>Screen capture start:'  + 
+//onchange="selectSurface(this.value);"		
+			'<select name="surfaces" onchange="key=this.value;" >';
+
+		for ( var i = 0; i < keys.length; i++ ) {
+		  txt+= '<option id="' + keys[i] + '" >' + keys[i] +'</option>';
+		}
+		txt += '</select>' +
+			'<input type="text" id="strt" size="1" onchange="cnt=this.value; genRender();" value="' + cnt + '" >' +
+			' ' + surf.ttl + ' | <a href="#" onclick="genRender()">render</a> | <a href="#" onclick="toBitMap()" >Bitmap</a> | <a href="#" onclick="saveIt()" accesskey="d">SaveIt</a></p>';
+		
+		info.innerHTML = txt;
+	
 	} 
+	
 	
 	function toBitMap() { 
 		fileName = keys[cnt];
