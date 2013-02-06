@@ -40,7 +40,7 @@
 	var hdr = document.getElementById('h' + '1-Home');
 	hdr.innerHTML = '[-] ' + hdr.innerHTML.substr(3);
 	// toggleSection( 1 );
-	toggleSection( '2-AlgeSurf' );
+	toggleSection( '2-Algesurf' );
 	toggleSection( '3-Brain-of-Richard' );	
 	
 	function encodeUrl( path ) {
