@@ -11,7 +11,7 @@ var list = {
 		]
 	},
 	
-	'2 AlgeSurf': {
+	'2 Algesurf': {
 		'API Overview': [
 			[ 'Read Me', '2-Algesurf/1-Overview/Read Me'],
 			[ 'Credits', '2-Algesurf/1-Overview/Credits'],
