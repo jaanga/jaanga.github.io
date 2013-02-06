@@ -45,18 +45,25 @@
 	var light, pointLight, ambientLight;
 
 	var surf, keys;
-	var spin, play, background;
+	var spin = 0;
+	var play = 10;
+	var background;
 	var start = clock.getElapsedTime();
 	var cnt = 1;
 	var sel;
-	var info;
+
+	var info, info2;
+	// var txt = info.innerHTML = '<h1>' + surf.ttl + '</h1><h2>' + surf.htm + '<br>min: ' + surf.min + '<br>max: ' + surf.max + '<br>scale: ' + surf.scl + '</h2>';  
 
 	init();
 	animate();	
 	
 	function init() {
 		document.body.style.cssText = 'margin: 0; overflow: hidden; padding: 0;';
-		
+
+		keys = Object.keys(surfaces);    
+		surf = surfaces[keys[0]];
+
 		renderer = new THREE.WebGLRenderer( { antialias: true } );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
@@ -78,28 +85,12 @@
 		ambientLight = new THREE.AmbientLight( 0x080808 );
 		scene.add( ambientLight );
 		
-		keys = Object.keys(surfaces); 
-		var vars = {}, args = document.location.search.substring(1).split('&');
-		for ( var i = 0, arg, kvp; i < args.length; i++) {
-			arg = unescape(args[i]);
-			if (arg.indexOf('=') == -1) {
-				vars[arg.trim()] = true;
-			} else {
-				kvp = arg.split('=');
-				vars[kvp[0].trim()] = kvp[1].trim();
-			}
-		}
-		
-		var idx = Math.floor(Math.random() * keys.length)
-		var title = vars['title'] !== undefined ? vars['title'] : keys[idx] ;
-		play = vars['play'] !== undefined ? vars['play'] : 5 ;
-		spin = vars['spin'] !== undefined ? vars['spin'] : 2 ;
-		background = vars['background'] !== undefined ? vars['background'] : 'fff' ;
-		
-		updateBackground(background);	
-		
-		generateMaterials( '../../../' );
-		material = materials[selectedMaterial].m;
+		var jsFunction = Parser.parse( surf['eqn'] ).toJSFunction( ['x','y','z'] );
+		generateGeometry( jsFunction, surf['min'], surf['max']);
+		material =  new THREE.MeshNormalMaterial( { side: THREE.DoubleSide, opacity: 0.9, transparent: true, }) ;
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.multiplyScalar( surf['scl'] );
+		scene.add(mesh);
 
 		var sheet = document.createElement('style')
 		sheet.innerHTML = 'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
@@ -108,59 +99,58 @@
 		
 		info = document.createElement( 'div' ); 	
 		document.body.appendChild( info ); 	
-		info.style.cssText = 'background-color: #ffffff; opacity: 0.5; padding: 10px; position: fixed; top: 20px; left: 20px; width: 20%;'; 
+		info.style.cssText = 'position: fixed; top: 20px; left: 20px;'; 
+		info.innerHTML = '<h1 id="title" >' + surf['ttl'] + '</h1>' +
+			'<p id="htm">htm: '+ surf['htm']  + '</p>' +
+			'<p id="equation">equation: ' + surf['eqn'] + '</p>' +
+			'<p id="min">min: ' + surf['min'] + '</p>' +
+			'<p id="max">max: ' + surf['max'] + '</p>' +
+			'<p id="scale">scale: ' + surf['scl'] + '</p>'; 
 		
-		var htm = '<h1 id="title" > </h1>' +
-			'<p id="htm"> </p>' +
-			'<p id="equation"> </p>' +
-			'<p id="min"> </p>' +
-			'<p id="max"> </p>' +
-			'<p id="scale"> </p>' +
+		generateMaterials( '../../../' );
 		
+		info2 = '<p><a href="#" title="View the full API call..." target="_blank">api call</a></p>' +
+			'<p><a href="#" onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >camera reset</a></p>' +
+			
 			'<p>spin<br><input type="range" name="spin" min="0" max="5" onchange="spin=this.value;" step="0.5" value="2" ></p>' +
 			'<p>play time<br><input type="range" name="play" min="2" max="10" onchange="play=this.value;" step="1" value="3" ></p>' +
 			'<p>background color<br><input type="range" name="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade"></p>' +
 			
 			'<p>Select a different equation' +
-			'<br><select id="sel" onchange="cnt=this.selectedIndex+1;getSurface(this.value);" >';
+			'<br><select id="sel" onchange="cnt=this.selectedIndex+  1;getSurface(this.value, this.selectedIndex);" >';
 
 		for ( var i = 0; i < keys.length; i++ ) {
 			var tt = '';
 			if (i == 0) { 
 				tt = 'selected="selected" ';
-				htm += '<optgroup label="Hauser 1">';
-			} else if ( i == 37) {
-				htm += '</optgroup><optgroup label="Hauser 2">';
-			} else if ( i == 74 ) {
-				htm += '</optgroup><optgroup label="Jalape">';
-			}else if ( i == 85 ) {
-				htm += '</optgroup><optgroup label="Sing Surf">';
+				info2 += '<optgroup label="Hauser 1">';
+			} else if ( i == 35 ) {
+				info2 += '</optgroup><optgroup label="Hauser 2">';
+			} else if ( i == 70 ) {
+				info2 += '</optgroup><optgroup label="Jalape">';
+			}else if ( i == 81 ) {
+				info2 += '</optgroup><optgroup label="Sing Surf">';
 			}
-			htm += '<option ' + tt + ' >' + keys[i] +'</option>';
+			
+			info2 += '<option ' + tt + ' >' + keys[i] +'</option>';
 		}
 		
-		htm += '</optgroup></select></p>' +
-			'<p>Select a different material<br>' +
-			'<select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
+		info2 += '</optgroup></select></p>' ;
+		
+		info2 += '<p>Select a different material<br>' +
+		'<select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
 		
 		for ( var m in materials ) {
 			if ( m !== selectedMaterial ) {
-				htm += '<option>' + m +'</option>';
+				info2 += '<option>' + m +'</option>';
 			} else {
-				htm += '<option selected="selected" >' + m +'</option>';
+				info2 += '<option selected="selected" >' + m +'</option>';
 			}
 		}
-		
-		htm += '<\/select></p>' +
-		
-			'<p><a href="#" title="View the full API call..." target="_blank">api call</a></p>' +
-			'<p><button onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >camera reset</button>';
-			
-		info.innerHTML += htm;
+		info2 += '<\/select></p>';
+		info.innerHTML += info2;
 		
 		sel = document.getElementById( 'sel' );
-		
-		getSurface( title );
 	}
 
 	function updateBackground(i) {
@@ -169,7 +159,7 @@
 		background = i;
 	}
 	
-	function getSurface(key) {
+	function getSurface(key, index) {
 // console.log(key, index);	
 		surf = surfaces[key];
 		if ( surf['eqn'] ) {
@@ -190,7 +180,9 @@
 			max.innerText = 'max: ' + surf['max'];
 			scale.innerText = 'scale: ' + surf['scl'];
 			document.getElementsByName('background')[0].value = background;
-			sel.options[keys.indexOf(key)].selected = true;
+			// sel.selectedIndex = index;
+			// sel.options[index] = index;
+			sel.options[index].selected = true;
 			start = clock.getElapsedTime();
 		}
 	}

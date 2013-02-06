@@ -1,21 +1,28 @@
 	
 	var DELIMITER = '/';
 	var nameCategoryMap = {};
+	
 	for ( var section in list ) {
-		// var id = section.toString().substr(0,1);
+		var id = section.toString().substr(0,1);
 		var id = section.replace( /\ /g, '-' );
 		html += '<h1 id="h' + id + '" onclick="toggleSection(\'' + id + '\')" >  ' + section + '<br>' ;
-		html += '<img src="' + id + '/' + id + '.png" \/></h1>';
+		html += '<img  style="padding: 10px 0 0 0;" src="' + id + '/' + id + '.png" \/></h1>';
 		html += '<ul id="c' + id + '">';
 		for ( var category in list[ section ] ) {
 			html += '<h3>' + category + '</h3>';
 			html += '<ul  id="u' + id + '" >';
 			for ( var i = 0; i < list[ section ][ category ].length; i ++ ) {
 				var page = list[ section ][ category ][ i ];
-				html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
-				if (page[2]) {
+				// html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
+				if (page[2] == 'image') {
+					html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
 					html += '<br><img alt="' + page[2] + '" title="' + page[2] + '" src="' + page[1] + '.png"></a></li>';
+				} else if (page[2] !== undefined ) {
+// console.log(page[2]);		
+					html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ]+ '\', \'' + page[2] + '\')">' + page[ 0 ];
+					html += '</a></li>';
 				} else {
+					html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
 					html += '</a></li>';
 				}
 				nameCategoryMap[page[0]] = {
@@ -30,9 +37,11 @@
 	}
 	panel.innerHTML += html;
 	
+	var hdr = document.getElementById('h' + '1-Home');
+	hdr.innerHTML = '[-] ' + hdr.innerHTML.substr(3);
 	// toggleSection( 1 );
 	toggleSection( '2-AlgeSurf' );
-	toggleSection( '3-Brain' );
+	toggleSection( '3-Brain-of-Richard' );	
 	
 	function encodeUrl( path ) {
 		return path.replace(/\ \/\ /g, '.').replace(/\ /g, '_');
@@ -43,7 +52,7 @@
 	}
 
 	// Page loading
-	function goTo( section, category, name ) {
+	function goTo( section, category, name, query ) {
 		// Fully resolve links that only provide a name
 		if(arguments.length == 1) {
 			var location = nameCategoryMap[section];
@@ -53,11 +62,11 @@
 		}
 		var title = name + '-' + category + '-' + section + '-' + appName;
 		var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name);
-
+		if (query == undefined) {query = '';}
 		window.location.hash = url;
 		window.document.title = title;
 
-		viewer.src = pages[ section ][ category ][ name ] + '.html';
+		viewer.src = pages[ section ][ category ][ name ] + '.html' + query;
 	}
 
 	function goToHash() {
@@ -75,9 +84,9 @@
 		var hdr = document.getElementById('h' + id);	
 		if ( cat.style.display == '' || cat.style.display == 'block' ) {
 			cat.style.display = 'none';	
-			hdr.innerHTML = '+ ' + hdr.innerHTML.substr(2);
+			hdr.innerHTML = '[+] ' + hdr.innerHTML.substr(3);
 		} else {
 			cat.style.display = 'block';
-			hdr.innerHTML = '- ' + hdr.innerHTML.substr(2);
+			hdr.innerHTML = '[-] ' + hdr.innerHTML.substr(3);
 		}	
 	}

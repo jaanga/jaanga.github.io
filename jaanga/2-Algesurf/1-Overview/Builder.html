@@ -44,9 +44,8 @@
 	var light, pointLight, ambientLight;
 
 	var surf, keys;
-	// var background, equation, height, htm, iframe, matList, max, min, link, scale, spin, title, url, width ;
-	var mats, titles;
-	var helpbar;
+
+	var titles, helpbar;
 	
 	init();
 	animate();	
@@ -75,14 +74,14 @@
 		ambientLight = new THREE.AmbientLight( 0x080808 );
 		scene.add( ambientLight );
 		
+		keys = Object.keys(surfaces);    
+		surf = surfaces[keys[ Math.floor(Math.random() * keys.length) ]];			
+		generateMaterials( '../../../' ); 		
+		
 		var sheet = document.createElement('style')
 		sheet.innerHTML = 'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
 			'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' ;
 		document.body.appendChild(sheet);	
-		
-		keys = Object.keys(surfaces);    
-		surf = surfaces[keys[ Math.floor(Math.random() * keys.length) ]];			
-		generateMaterials( '../../../' ); 
 		
 		var txt = '<h1 style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;" >algeSurf Builder ' +
 			'<span onclick="toggleHelp()" style="color: #aaa;" >[?]</span></h1>' +
@@ -127,7 +126,7 @@
 			// '<input type="checkbox" id="matCheck" >' +
 			'<br>';
 			
-		mats = '<select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
+		var mats = '<select id="matList" onclick="selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
 		for ( var m in materials ) {
 			if ( m !== selectedMaterial ) {
 				mats += '<option  >' + m +'</option>';
@@ -140,8 +139,7 @@
 		txt += mats +
 			'<\/td>' +			
 			'<\/tr><\/table>' +
-			'<\/div>' +
-			
+			'<\/div>' +	
 // Output			
 			'<div style="background-color: #eee; border: 1px solid; opacity: 0.8; padding: 5px;">' +
 			'<h2 style="margin:0">Output for your page or post here<\/h2>' +
@@ -216,11 +214,12 @@ var tt = '';
 		helpbar = document.createElement( 'div' );
 		document.body.appendChild( helpbar );
 		helpbar.style.cssText = 'background-color: #eee; border-radius: 10px; box-shadow: 10px 10px 5px #444; display: block; height: 200px%; overflow: auto; ' +
-			'padding: 5px 5px 5px 15px; opacity: 0.9; position: fixed; top: 230px; width: 400px; z-index: 200; right: 100px'; 
+			'padding: 5px 5px 5px 15px; opacity: 0.9; position: fixed; top: 250px; width: 400px; z-index: 200; right: 100px'; 
 		helpbar.innerHTML = '<div onclick="toggleHelp()">' +
 			'<p style="margin: 0; text-align: right;"><i>click here to close...</i></p>' +
 			'<h2>Help</h2>' +
-			'<p>Edit the equation by entering text in the area above.</p>' +
+			'<p>Edit the equation by entering and editing text in the text area just above. ' +
+			'Click \Update the Display\' when you want to see the results of your edits.</p>' +
 			'<p>Currently:</p>' +
 			'<p>Variables supported are: x,y,z.</p>' +
 			'<p>Operators: +, -, *, /, %, ^ </p>' +

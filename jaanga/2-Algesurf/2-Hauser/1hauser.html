@@ -14,7 +14,7 @@
 	var keys = Object.keys(surfaces);
 	var start = 1;
 	var cnt = start;
-	var finish = 35; // keys.length;
+	var finish = 37; // keys.length;
 
 	var gallery = document.createElement( 'div' );
 	gallery.style.cssText = 'text-align: center; ';
@@ -28,7 +28,10 @@
 			s = surfaces[keys[i]];
 			txt += '<div style="float: left; height: 250px; overflow: auto; width: 250px;">' +
 				'<a href="../algesurf-api.html?equation=' + s.eqn + '&title=' + s.ttl + '&html=' + s.htm + 
-				'&min=' + s.min + '&max=' + s.max + '&scale=' + s.scl + '" style="text-decoration: none;" >' +
+				'&min=' + s.min + '&max=' + s.max + '&scale=' + s.scl + '&spinCtrl=1&backCtrl=1&camCtrl"' +
+				
+				' style="text-decoration: none;" ' +
+				'>' +
 				'<img src="../2-Hauser/' + 
 				keys[i] + '.png"><br><b>' + s.ttl + '</b><br>' + 
 				s.htm +

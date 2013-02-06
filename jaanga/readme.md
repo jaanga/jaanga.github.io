@@ -4,9 +4,30 @@ jaanga home page
 
 ## Change Log
 
+2013-02-05 ~ 
+* Brain of Richard: tidied a bit
+* Exploring the issue that surfaces that morph shape don't update materials. Looks like quite a bit of research needed here
+* Adding XY surface demmo to jaanga doctree.
+* Adding read me files for jalape and xy surface.
+* Update help/splash screen.
+
+2013-02-04 ~ Theo
+* DocTree: fixing image display
+* Home page, Read Me: many additions
+* Hauser Gallery Read Me: many additions
+* Hauser Gallery: added several new equations that had been missed out
+* Player: code clean up, has an API, works in docTree!
+* docTree: supports query strings
+* API app has better titling
+* added images for new Hauser equationsm fixed screenCapture util some
+* updated gallery files
+* a lot of work on XY surface demo.
+
+
 2013-02-01 ~ 
 * Added alert for parser error messages
-
+* builder: added help screen, added css
+* Many other improvements
 
 2013-01-31 ~ Theo
 * Lots of improvements to builder

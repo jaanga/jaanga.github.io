@@ -61,20 +61,32 @@
 		}
    
 		var background = vars['background'] !== undefined ? vars['background'] : 'ffffff';
-		var css = vars['css'] !== undefined ? vars['css'] : 'font-family: monospace; margin: 0; overflow: hidden; padding: 0;';
+		// var css = vars['css'] !== undefined ? vars['css'] : 'font-family: monospace; margin: 0; overflow: hidden; padding: 0;';
+		var css = vars['css'] !== undefined ? vars['css'] : 'font-family: monospace; margin: 0; overflow: hidden; padding: 0; ';
+		
 		var equation = vars['equation'] !== undefined ? vars['equation'] : 'x^2 + y^2 - z^2 - 70';
 		var height = vars['height'] !== undefined && vars['height'] > 0 ? vars['height'] : window.innerHeight;
-		var html = vars['html'] !== undefined ? vars['html'] : '' ; 
+		var html = vars['html'] !== undefined ? vars['html'] : 'x<sup>2</sup>+y<sup>2</sup>-z<sup>2</sup>-70' ; 
 		var max = vars['max'] !== undefined ? parseFloat( vars['max'] ) : 10;
 		var mat = vars['material'] !== undefined ? vars['material'] : 'normal~transparent*';
 		var min = vars['min'] !== undefined ? parseFloat( vars['min'] ) : -10;
 		
 		var scale = vars['scale'] !== undefined ? parseFloat( vars['scale'] ) : 1;	
 		var spinVal = vars['spin'] !== undefined ? parseFloat( vars['spin'] ) : 2;
-		var title = vars['title'] !== undefined ? vars['title'] : 'Surface' ; 		
+		var title = vars['title'] !== undefined ? vars['title'] : 'Stemkoski (default)' ; 		
 		var width = vars['width'] !== undefined && vars['width'] > 0 ? vars['width'] : window.innerWidth;
-		var titling = vars['titling'] !== undefined ? vars['titling'] : '<h1>' + title + '</h1>' + '<h2>' + 'equation: ' + equation + '</h2>';
-
+		var htm = '<h1>' + title + '</h1>' +
+		'<h2>' + html + '</h2>' +
+		// '<h2>' + 'equation: ' + equation + '</h2>' +
+		'<h2>' + 'min: ' + min + '</h2>' +
+		'<h2>' + 'max: ' + max + '</h2>' +
+		'<h2>' + 'scale: ' + scale + '</h2>' ;
+		
+		var titling = vars['titling'] !== undefined ? vars['titling'] : htm;
+		var spinCtrl = vars['spinCtrl'] !== undefined ? vars['spinCtrl'] : '1';
+		var backCtrl = vars['backCtrl'] !== undefined ? vars['backCtrl'] : '1';
+		var camCtrl = vars['camCtrl'] !== undefined ? vars['camCtrl'] : '1';
+		
 		title = unescape(title);
 		titling = titling.replace(/ZZZ/, '=');
 		titling = unescape(titling);
@@ -118,16 +130,20 @@
 
 		info = document.createElement( 'div' ); 	
 		document.body.appendChild( info ); 	
-		info.style.cssText = 'position: fixed; top: 20px; left: 20px;'; 	
+		info.style.cssText = 'background-color: #ddd; opacity: 0.5; padding: 10px; position: absolute; top: 20px; left: 20px; width: 20%; ';	
 		info.innerHTML = titling;
 		
 		document.body.style.cssText += 'background-color: #' + background + ';';
-		
+	
 		//info.innerHTML += '<a href="#" title="View the full API call..." target="_blank">full screen</a>';
-		if (vars['spinCtrl'] == '1' ) {info.innerHTML += '<h2>Spin<br><input type="range" id="spin" min="0" max="5" onchange="spin=this.value;" step="0.5" value="' + spinVal + '" ><\/h2>'; }
-		if (vars['backCtrl'] == '1' ) {info.innerHTML += '<h2>Background<br><input type="range" id="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade"><\/h2>'; }
-		if (vars['camCtrl'] == '1' ) {info.innerHTML += '<h2><a href="#" onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >Camera Reset</a><\/h2>'; }
+		if (spinCtrl == 1 ) {
 		
+		info.innerHTML += '<h2>Spin<br><input type="range" id="spin" min="0" max="5" onchange="spin=this.value;" step="0.5" value="' + spinVal + '" ><\/h2>'; 
+console.log(spinCtrl, info);			
+		}
+		if (backCtrl == '1' ) {info.innerHTML += '<h2>Background<br><input type="range" id="background" min="0" max="15" onchange="updateBackground(this.value);" step="1" value="15" title="change the background gray shade"><\/h2>'; }
+		if (camCtrl == '1' ) {info.innerHTML += '<h2><button onclick="camera.position.set( 20, 20, -20 ); controls = new THREE.TrackballControls( camera, renderer.domElement );" >Camera Reset</button><\/h2>'; }
+		info.innerHTML += '';
 		spin = spinVal;
 	}
 
@@ -142,7 +158,7 @@
 	function updateBackground(i) {
 		var c = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
 		document.body.style.cssText += 'background-color: #' + c[i] + c[i] + c[i] + ';';
-		return col;
+		return c;
 	}	
 </script>
 </body>

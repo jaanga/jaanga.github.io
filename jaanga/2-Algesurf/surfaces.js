@@ -36,12 +36,12 @@ ttl:'Calypso'
 },
 
 'columpius' : {
-eqn:'x^3*y + x*z^3 + y^3*z + z^3 + 7*z^2 + 5*z',
+eqn:'x^3*y+x*z^3+y^3*z+z*3+7*z^2+5*z', //x^3*y + y^3*z + z^3*x',
 htm:'x<sup>3</sup>y + xz<sup>3</sup> + y<sup>3</sup>z + z<sup>3</sup> + 7z<sup>2</sup> + 5z = 0 ',
 mat: '',
-max:3,
-min:-3,
-scl:5,
+max:5,
+min:-5,
+scl:2,
 tag: '',
 ttl:'Columpius'
 },
@@ -123,6 +123,7 @@ tag: '',
 ttl:'Eistüte'
 },
 
+
 'eve' : {
 eqn:'5*x^2 + 2*x*z^2 + 5*y^6 + 15*y^4 + 5*z^2 - 15*y^5 - 5*y^3',
 htm:'Has a probem...<br>5x<sup>2</sup> + 2xz<sup>2</sup> + 5y<sup>6</sup> + 15y<sup>4</sup> + 5z<sup>2</sup> = 15y<sup>5</sup> + 5y<sup>3</sup>',
@@ -132,6 +133,17 @@ min:-5.5,
 scl:2,
 tag: '',
 ttl:'Eve'
+},
+
+'Ellipsis' : {
+eqn:'x^2 +y^2 - z^3 + z',
+htm:'x^2 +y^2 - z^3 + z',
+mat: '',
+max:5,
+min:-5,
+scl:2,
+tag: '',
+ttl:'Ellipsis'
 },
 
 'flirt' : {
@@ -311,7 +323,7 @@ ttl:'Taube'
 },
 /*
 'Quaste' : {
-eqn:'',
+eqn:'( t(1-t2), s3, s2-t2+1 )',
 htm:'0',
 mat: '',
 max:1,
@@ -321,6 +333,20 @@ tag: '',
 ttl:'Quaste'
 },
 */
+
+
+
+'Quirl' : {
+eqn:'(y^2-x*z) * (y*z-x^3)* (z^2-x^2*y)',
+htm:'(y^2-x*z) * (y*z-x^3)* (z^2-x^2*y)',
+mat: '',
+max:10,
+min:-10,
+scl:1,
+tag: '',
+ttl:'Quirl'
+},
+
 
 'Spitz' : {
 eqn:'(y^3 - x^2 - z^2)^3 - 27*x^2*y^3*z^2',
@@ -678,9 +704,10 @@ tag: '',
 ttl:'Kegel'
 },
 
+// AKA 'Indianerzelt'
 'Wigwam' : {
-eqn:'x^2 + y^2*z^3',
-htm:'x<sup>2</sup> + y<sup>2</sup>z<sup>3</sup> = 0',
+eqn:'x^2 - y^2*z^3',
+htm:'x<sup>2</sup> - y<sup>2</sup>z<sup>3</sup> = 0',
 mat: '',
 max:3,
 min:-3,
@@ -700,7 +727,7 @@ tag: '',
 ttl:'Tuelle'
 },
 
-'Pipe' : {
+'Halfpipe' : {
 eqn:'x^2 - z',
 htm:'x<sup>2</sup> - z = 0',
 mat: '',
@@ -708,7 +735,7 @@ max:1,
 min:-1,
 scl:8,
 tag: '',
-ttl:'Pipe'
+ttl:'Halfpipe'
 },
 
 'Fanfare' : {
@@ -730,7 +757,18 @@ max:10,
 min:-10,
 scl:1,
 tag: '',
-ttl:'Kreuz'
+ttl:'Normal Kreuzung'
+},
+
+'Nicht Normale Kreuzung' : {
+eqn:'y*z*(x^2+y-z)',
+htm:'0',
+mat: '',
+max:10,
+min:-10,
+scl:1,
+tag: '',
+ttl:'Nicht Normale Kreuzung'
 },
 
 'Spindel' : {
@@ -766,18 +804,16 @@ tag: '',
 ttl:'Ufo'
 },
 
-/*
 'Wendel' : {
-eqn:'',
+eqn:'(x^2+y^2)*(y-z)+y*z^2 - x*z - y',
 htm:'0',
 mat: '',
-max:1,
-min:-1,
-scl:10,
+max:2,
+min:-2,
+scl:5,
 tag: '',
 ttl:'Wendel'
 },
-*/
 
 'Zeck' : {
 eqn:'x^2 + y^2 - z^3*(1 - z)',
@@ -964,9 +1000,9 @@ ttl:'Cayley\'s Cubic'
 eqn:'',
 htm:'0',
 mat: '',
-max:1,
-min:-1,
-scl:10,
+max:10,
+min:-10,
+scl:1,
 tag: '',
 ttl:''
 },
