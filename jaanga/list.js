@@ -32,8 +32,8 @@ var list = {
 			[ 'Jalape', '2-Algesurf/4-Jalape/1jalape']
 		],
 		'XY Surface': [
-			[ 'Read Me', '2-Algesurf/5-xy-surface/read-me-xy-surface'],
-			[ 'XY Surface', '2-Algesurf/5-xy-surface/xy-surface']
+			[ 'Read Me', '2-Algesurf/5-XY-Surface/read-me-xy-surface'],
+			[ 'XY Surface', '2-Algesurf/5-XY-Surface/xy-surface']
 		],
 	},
 	
