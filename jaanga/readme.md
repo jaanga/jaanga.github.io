@@ -4,6 +4,9 @@ jaanga home page
 
 ## Change Log
 
+2013-02-06 ~ Theo
+* Working on curved text.
+
 2013-02-05 ~ 
 * Brain of Richard: tidied a bit
 * Exploring the issue that surfaces that morph shape don't update materials. Looks like quite a bit of research needed here

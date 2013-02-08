@@ -3,10 +3,12 @@
 	var nameCategoryMap = {};
 	
 	for ( var section in list ) {
-		var id = section.toString().substr(0,1);
+		// var id = section.toString().substr(0,1);
+	
 		var id = section.replace( /\ /g, '-' );
-		html += '<h1 id="h' + id + '" onclick="toggleSection(\'' + id + '\')" >  ' + section + '<br>' ;
-		html += '<img  style="padding: 10px 0 0 0;" src="' + id + '/' + id + '.png" \/></h1>';
+// console.log(id, section);			
+		html += '<h1 id="h' + id + '" onclick="toggleSection(\'' + id + '\')" >  ' + section + '</h1>' ;
+		html += '<img  style="padding: 10px 0 0 30px;" src="' + subDir + id + '/' + id + '.png" \/><br>';
 		html += '<ul id="c' + id + '">';
 		for ( var category in list[ section ] ) {
 			html += '<h3>' + category + '</h3>';
@@ -15,8 +17,10 @@
 				var page = list[ section ][ category ][ i ];
 				// html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
 				if (page[2] == 'image') {
+					//html += '<li><a href="javascript:goTo(\'' + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
+					
 					html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ] + '\')">' + page[ 0 ];
-					html += '<br><img alt="' + page[2] + '" title="' + page[2] + '" src="' + page[1] + '.png"></a></li>';
+					html += '<br><img alt="' + page[2] + '" title="' + page[2] + '" src="' + subDir + page[1] + '.png"></a></li>';
 				} else if (page[2] !== undefined ) {
 // console.log(page[2]);		
 					html += '<li><a href="javascript:goTo(\'' + section + '\', \'' + category + '\', \'' + page[ 0 ]+ '\', \'' + page[2] + '\')">' + page[ 0 ];
@@ -64,9 +68,10 @@
 		var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name);
 		if (query == undefined) {query = '';}
 		window.location.hash = url;
+// console.log('url: ', url);		
 		window.document.title = title;
 
-		viewer.src = pages[ section ][ category ][ name ] + '.html' + query;
+		viewer.src = subDir + pages[ section ][ category ][ name ] + '.html' + query;
 	}
 
 	function goToHash() {

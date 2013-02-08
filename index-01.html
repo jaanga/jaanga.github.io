@@ -9,7 +9,6 @@
 <body>
 <script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
 <script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
 
 <script type='text/javascript'>
 
@@ -54,7 +53,7 @@
 	zeeBar.style.padding = '15px';
 	zeeBar.style.position = 'absolute';
 	zeeBar.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
-	zeeBar.style.top = '20%';
+	zeeBar.style.top = '18%';
 	zeeBar.style.webkitTransform = zeeBar.style.MozTransform = 'rotate(10deg)';
 	zeeBar.style.width = '300px';
 	zeeBar.innerHTML='<h1>zeeBar</h1><p>3D user experience</p><p><a href="zeebar">zeebar</a>';
@@ -70,7 +69,7 @@
 	brainOfRichard.style.opacity = '0.85';	
 	brainOfRichard.style.padding = '15px';
 	brainOfRichard.style.position = 'absolute';
-	brainOfRichard.style.top = '10%';
+	brainOfRichard.style.top = '8%';
 	brainOfRichard.style.webkitTransform = brainOfRichard.style.MozTransform = 'rotate(-7deg)';
 	brainOfRichard.style.width = '300px';
 	brainOfRichard.innerHTML='<h1>Brain of Richard</h1><p>3D compilations of 2D brain scans - now with veggies!?!</p><p><a href="brainofrichard">brainOfRichard</a>';	
@@ -83,15 +82,15 @@
 	AlgSurf.style.boxShadow = '10px 10px 5px #444';
 	AlgSurf.style.textShadow = '2px 2px 2px white, -2px -2px 2px #444';
 	AlgSurf.style.color = '#000';
-	AlgSurf.style.left = '15%';
+	AlgSurf.style.left = '12%';
 	AlgSurf.style.opacity = '0.85';	
 	AlgSurf.style.padding = '15px';
 	AlgSurf.style.position = 'absolute';
-	AlgSurf.style.top = '50%';
+	AlgSurf.style.top = '47%';
 	AlgSurf.style.webkitTransform = AlgSurf.style.MozTransform = 'rotate(-3deg)';
-	AlgSurf.style.width = '350px';
-	AlgSurf.innerHTML='<h1>Algebraic Surfaces R4</h1><p>pretty picture...</p><p><a href="algebraic-surfaces/index.html">algebraic-surfaces</a></p>' +
-  '<p><a href="algebraic-surfaces/algesurf-frame.html">algebraic-surfaces API demo</a></p>';	
+	AlgSurf.style.width = '380px';
+	AlgSurf.innerHTML='<h1>Algebraic Surfaces</h1><p>pretty picture...</p><p><a href="algebraic-surfaces/index.html">algebraic-surfaces</a></p>' +
+  '<p><a href="jaanga/index.html">algebraic-surfaces API demo</a></p>';	
 	document.body.appendChild( AlgSurf );	
   
 	var weB3D = document.createElement( 'div' );
@@ -104,7 +103,7 @@
 	weB3D.style.opacity = '0.85';	
 	weB3D.style.padding = '15px';
 	weB3D.style.position = 'absolute';
-	weB3D.style.top = '80%';
+	weB3D.style.top = '82%';
 	weB3D.style.webkitTransform = weB3D.style.MozTransform = 'rotate(3deg)';
 	weB3D.style.width = '350px';
 	weB3D.innerHTML='<h1>Jaanga weB3D R4</h1><p>3D animation DataVis<br>of realtime BigData</p><p>Coming here soon...</p>';	
@@ -149,11 +148,8 @@
 
 	
 	var camera, scene, renderer;
-	var camera2, scene2, renderer2, controls2;
     var geometry, material, mesh;
 
-	var cube, spirotext;
-	
     init();
     animate();
 	
@@ -165,95 +161,22 @@
         scene = new THREE.Scene();
         geometry = new THREE.CubeGeometry( 200, 200, 200 );
         material = new THREE.MeshNormalMaterial( { color: 0xff0000, wireframe: false } );
-        cube = new THREE.Mesh( geometry, material );
-        scene.add( cube );
+        mesh = new THREE.Mesh( geometry, material );
+        scene.add( mesh );
 		
 		renderer = new THREE.WebGLRenderer( {antialias: true } );
 		renderer.setSize( 500, 500 );
         threejs.appendChild( renderer.domElement );
-
-
-		renderer2 = new THREE.WebGLRenderer( {antialias: true } );
-		renderer2.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer2.domElement );
-		
-		scene2 = new THREE.Scene();
-		camera2 = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera2.position.set(100, 100, 0);
-		controls2 = new THREE.TrackballControls( camera2 );
-		
-	
-		getCyl();
     }
 	
     function animate() {
         requestAnimationFrame( animate );
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.02;
+        mesh.rotation.x += 0.01;
+        mesh.rotation.y += 0.02;
         renderer.render( scene, camera );
-		
-		spirotext.rotation.y -=0.01;
-		spirotext.position.z +=0.5;
-		if (spirotext.position.z > 110) {
-			scene2.remove(spirotext);
-			getCyl();
-		}
-		controls2.update( );
-		renderer2.render( scene2, camera2 );
     }
 	
-	function getCyl() {
-		geometry = new THREE.CylinderGeometry( 20 + Math.random() * 60, 20 + Math.random() * 60, 400, 50, 1, true );
-		material = canvasText( new Date(), {} ); 
-		spirotext = new THREE.Mesh( geometry, material);
-		spirotext.position.set( 0, 15, -150);
-		spirotext.rotation.set(1.5087, 2, 0);
-		scene2.add( spirotext );	
-	}
-	
-	var canvas, context, map;
-	
-	function canvasText ( text, parameters ) {
-// console.log( parameters );
-	
-		canvas = document.createElement("canvas");
 		
-		var width = ( parameters['width'] ) ? parameters['width'] : 900 ;
-		canvas.width = width;
-		var height = ( parameters['height'] ) ? parameters['height'] : 900 ;
-		canvas.height = height; 
-		
-		context = canvas.getContext("2d");
-		// context.fillStyle =  ( parameters['backgroundColor'] !== undefined ) ? parameters['backgroundColor'] : '#ffffff';
-		// context.fillRect( 0, 0, width, height );
-		// context.lineWidth = 0;
-		// context.strokeRect(0, 0, width, height);	
-
-		context.fillStyle = ( parameters['color']) ? parameters['color'] : '#000000';
-		// context.globalAlpha = 0.8;
-		
-		var gradient = context.createLinearGradient(0, 0, width, 100);
-		gradient.addColorStop(0, 'white');
-		gradient.addColorStop(0.5, 'black');
-		gradient.addColorStop(1, 'red');
-		
-		context.fillStyle = gradient;
-		// context.shadowColor =  ( parameters['shadowColor'] !== undefined ) ? parameters['shadowColor'] : '#008888';
-		context.shadowColor = 'rgb(' + parseInt(100 * Math.random()) + ',' + parseInt(100 * Math.random()) + ',' + parseInt(100 * Math.random()) + ')';
-		context.shadowBlur =  ( parameters['shadowBlur'] !== undefined ) ? parameters['shadowBlur'] : 5;
-		context.shadowOffsetX = 0;
-		context.shadowOffsetY = Math.random() * 20 - 10;
-		context.font = ( parameters['fontSize'] !== undefined ) ? parameters['fontSize'] + "pt Arial bold" : '24pt Arial bold';
-		context.rotate( 1 );
-		context.textAlign = "center";
-		context.textBaseline = 'middle';
-		
-		context.fillText(text, 600, -80);
-		
-		map = new THREE.Texture( canvas );
-		map.needsUpdate = true;
-		return new THREE.MeshBasicMaterial( { map: map, opacity: 0.8, side: THREE.DoubleSide, transparent: true } );
-	}		
 </script>
 </body>
 </html>

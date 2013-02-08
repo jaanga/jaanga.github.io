@@ -56,6 +56,10 @@
 		renderer = new THREE.WebGLRenderer( { antialias: true } );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
+		
+					renderer.gammaInput = true;
+			renderer.gammaOutput = true;
+			renderer.physicallyBasedShading = true;
 
 		scene = new THREE.Scene();
 

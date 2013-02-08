@@ -39,7 +39,8 @@ var list = {
 	
 	'3 Brain of Richard': {
 		'Overview': [
-			[ 'Read Me', '3-Brain-of-Richard/Category-3-1/File-3-1-1','image']
+			[ 'Read Me', '3-Brain-of-Richard/overview/readme'],
+			[ 'The App', '3-Brain-of-Richard/overview/theapp']
 		]		
 	}
 };	
