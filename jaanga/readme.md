@@ -4,6 +4,13 @@ jaanga home page
 
 ## Change Log
 
+2013-02-08 ~ Theo
+* Strange clock with curve text is working
+* Added info and links on Bain of Richard
+* Enhancing style sheet to show headers better
+* Adusting paths so that home page can call everything from folders - will make it easier to create new home pages and yet access older revisions
+* updates sent to GitHub
+
 2013-02-06 ~ Theo
 * Working on curved text.
 
