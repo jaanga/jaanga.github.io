@@ -32,7 +32,7 @@
 		overflow: auto;
 	}
 
-		#panel h1 {
+		#panel div , h1 {
 			background-color: #faf8f8;
 			margin-top: 20px;
 			margin-left: 0px;

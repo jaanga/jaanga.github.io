@@ -9,7 +9,7 @@ jaanga home page
 * Added info and links on Bain of Richard
 * Enhancing style sheet to show headers better
 * Adusting paths so that home page can call everything from folders - will make it easier to create new home pages and yet access older revisions
-* updates sent to GitHub
+* updates sent to GitHub + plus a bunch of ongoing minor fixes
 
 2013-02-06 ~ Theo
 * Working on curved text.
