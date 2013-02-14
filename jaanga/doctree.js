@@ -7,8 +7,8 @@
 	
 		var id = section.replace( /\ /g, '-' );
 // console.log(id, section);			
-		html += '<div id="h' + id + '" onclick="toggleSection(\'' + id + '\')" ><h1>' + section + '</h1>' ;
-		html += '<img  style="padding: 10px 0 0 30px;" src="' + subDir + id + '/' + id + '.png" \/></div>';
+		html += '<h1 id="h' + id + '" onclick="toggleSection(\'' + id + '\')" >' + section + '<br>' ;
+		html += '<img  style="padding: 10px 0 0 30px;" src="' + subDir + id + '/' + id + '.png" \/></h1>';
 		html += '<ul id="c' + id + '">';
 		for ( var category in list[ section ] ) {
 			html += '<h3>' + category + '</h3>';
@@ -42,7 +42,7 @@
 	panel.innerHTML += html;
 	
 	var hdr = document.getElementById('h' + '1-Home');
-	hdr.innerHTML = '[-] ' + hdr.innerHTML.substr(6);
+	hdr.innerHTML = '- ' + hdr.innerHTML.substr(2);
 	// toggleSection( 1 );
 	toggleSection( '2-Algesurf' );
 	toggleSection( '3-Brain-of-Richard' );	
@@ -89,9 +89,9 @@
 		var hdr = document.getElementById('h' + id);	
 		if ( cat.style.display == '' || cat.style.display == 'block' ) {
 			cat.style.display = 'none';	
-			hdr.innerHTML = '[+] ' + hdr.innerHTML.substr(6);
+			hdr.innerHTML = '+ ' + hdr.innerHTML.substr(2);
 		} else {
 			cat.style.display = 'block';
-			hdr.innerHTML = '[-] ' + hdr.innerHTML.substr(6);
+			hdr.innerHTML = '- ' + hdr.innerHTML.substr(2);
 		}	
 	}

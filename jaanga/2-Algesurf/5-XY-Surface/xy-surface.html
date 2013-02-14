@@ -184,8 +184,10 @@
 				i++;
 			}
 		}
-		plane.geometry.verticesNeedUpdate = true;
+		
 		plane.geometry.computeFaceNormals();
+		plane.geometry.computeVertexNormals();
+		plane.geometry.verticesNeedUpdate = true;
 		delta += 0.005;
 	}
 	
