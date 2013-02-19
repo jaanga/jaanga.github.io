@@ -169,4 +169,7 @@ function generateGeometry( func, axisMin, axisMax ) {
 	  }
 	}  
 	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+	geometry.computeTangents();
+	geometry.verticesNeedUpdate = true; 
 } 

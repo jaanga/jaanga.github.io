@@ -264,6 +264,15 @@ var tt = '';
 		var jsFunction = Parser.parse( equation.value ).toJSFunction( ['x','y','z'] );
 // console.log('grab ', jsFunction)		
 		generateGeometry( jsFunction, parseFloat( min.value ), parseFloat(max.value) );
+	
+	var texture = THREE.ImageUtils.loadTexture( "../../../textures/im5.jpg" );
+	// texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	// texture.repeat.set( 5, 5 );
+
+	material = new THREE.MeshBasicMaterial( {  map: texture, side: THREE.DoubleSide } );
+
+		
+		
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.scale.multiplyScalar( parseFloat( scale.value ) );
 		scene.add(mesh);  

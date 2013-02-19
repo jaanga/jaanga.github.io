@@ -1,6 +1,6 @@
 var onDocumentLoad = function ( event ) {
 	var path;
-	var section = /\/(1-Home|2-Algesurf|3-Brain-of-Richard)\//.exec( window.location.pathname )[ 1 ].toString().split( '.html' )[ 0 ];
+	var section = /\/(1-Home|2-Algesurf|3-Urdacha|4-Brain-of-Richard|5-Blode)\//.exec( window.location.pathname )[ 1 ].toString().split( '.html' )[ 0 ];
 	var name = /[\-A-z0-9]+\.html/.exec( window.location.pathname ).toString().split( '.html' )[ 0 ];
 
 	if ( section == 'sectionaxxx' ) {
@@ -8,7 +8,7 @@ var onDocumentLoad = function ( event ) {
 		path = window.location.pathname.replace( /\ /g, '-' );	
 		path = /\/sectiona\/[-a-z0-9\/]+/.exec( path ).toString().substr( 10 );
 	} else {
-		path = /\/(1-Home|2-Algesurf|3-Brain-of-Richard)\/[A-z0-9\/]+/.exec( window.location.pathname )[0].toString().substr( 1 );
+		path = /\/(1-Home|2-Algesurf|3-Urdacha|4-Brain-of-Richard|5-Blode)\/[A-z0-9\/]+/.exec( window.location.pathname )[0].toString().substr( 1 );
 // console.log('line 32 ', path, ' - ', section, name);
 	}
 

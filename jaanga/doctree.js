@@ -45,7 +45,9 @@
 	hdr.innerHTML = '- ' + hdr.innerHTML.substr(2);
 	// toggleSection( 1 );
 	toggleSection( '2-Algesurf' );
-	toggleSection( '3-Brain-of-Richard' );	
+	toggleSection( '3-Urdacha' );
+	toggleSection( '4-Brain-of-Richard' );	
+	toggleSection( '5-Blode' );
 	
 	function encodeUrl( path ) {
 		return path.replace(/\ \/\ /g, '.').replace(/\ /g, '_');
