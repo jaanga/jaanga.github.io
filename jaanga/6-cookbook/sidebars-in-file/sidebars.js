@@ -27,10 +27,10 @@
 			'<h1>App Title</h1 "h1">' +
 			'<p><i>Sub text goes here...</i></p>'+
 			'<p>This box is where you might tell people about the app.</p>' +
-			'<p>It\'s also where the copyright and license information appear.</p>' +
-			'<p>This is also where you might help the user understand what the app does and how to get started using the app.</p>' +
+			'<p>It\'s also where the copyright and license information should appear.</p>' +
+			'<p>This is also where you might help the people understand what the app does and how to get started using the app.</p>' +
 			'<p>Another use might be to give credit or thanks.</p>' +
-			'<p>A useful link ot two might be nice to include as well: <a href="http://example.com" target="_blank">example.com</a></p>';
+			'<p>A useful link ot two might be nice to include here as well: <a href="http://example.com" target="_blank">example.com</a></p>';
 
 		statusBarHeader = document.createElement( 'div' );
 		statusBarHeader.id = 'stbHeader';
@@ -43,8 +43,7 @@
 		statusBarBody.id = 'stbBody';
 		statusBarHeader.appendChild( statusBarBody );
 		statusBarBody.innerHTML =
-			'<p>Numeric and other data that is updating in real-time goes here...</p>' +
-			'<script> alert("howdy"); </script>';
+			'<p>Numeric and other data that is updating in real-time goes here...</p>';
 
 		sidebarRight = document.createElement( 'div' );
 		sidebarRight.id = 'sbr';
@@ -54,16 +53,35 @@
 
 		var sidebarRightBody = document.createElement( 'div' );
 		sidebarRightBody.style.height = (window.innerHeight - 100) + 'px';
-		sidebarRightBody.id = 'sbr-body'
+		sidebarRightBody.id = 'sbr-body';
 		sidebarRight.appendChild( sidebarRightBody );
 		sidebarRightBody.innerHTML =
-			'<p>Conceptualizing random endpoints in a access matrix provides reach extensions enterprise wide. ' +
-			'Respective divisions historically insignificant, upscale trend lines in a management inventory analysis survivability format. </p>' +
-			'<p>Document-centric projections unfetter traditional auditing practices rivaling central process management. ' +
-			'Advanced functionality, easy administration, proclaim the hallmarks of unprecedented opportunity.</p>' +
-			'<p>Iteration system wide engenders economies of scale, cross-media technology, presentation action items and life cycle replication.</p>' +
-			'<p>Enterprise engenderment accelerates initiative platforms, reducing staffing components, integration of technical accessibility, resulting in bottom line pluralisms, benefit-wise. ' +
-			'Incidental re-sizing staff requirements through attrition can be accelerated by paradigm shifts and focusing on core suitability and cross-training.</p>' +
+			'<p>This sidebar is for: </p>' +
+			'<ul>' +
+			'<li>Text entry</li>' +
+			'<li>Radio buttons</li>' +
+			'<li>Checkboxes</li>' +
+			'<li>Dropdown lists</li>' +
+			'<li>And all the other widgets you use to control an app</li>' +
+			'</ul>' +
+			'<h2>This is a demo</h2>' +
+			'</p>The purpose of this demo is to focus on the disposition of different typs in information in an app as well as its behavior. </p>' +
+			'<p>This demo is <b>*not*</b> about content, appearance or style. So issues of fonts, sizes, styles, colors, exact placement, alignmnts are not the issue here.</p> ' +
+			'<p>The important things are: </p>' +
+			'<ul>' +
+			'<li>the three boxes</li>' +
+			'<li>The kind or type of information they display</li>' +
+			'<li>The ease with which the boxes may be manipulated</li>' +
+			'</ul>' +
+			'<p>Please imagine some complicated 3D thing is happening under these three boxes.</p>' +
+			'<p>Do the boxes open and close as they should? Might there be a better way?</p> ' +
+			'<p>Does this box scroll properly? What happends hen you resize the window or reload the app? </p>' +
+			'<h2>BTW</h2>' +
+			'<p>If you look at the code you will see that it\'s nearly 100% JavaScript. There\'s no separate style sheet and just the minimum HTML to load the page.</p>' +
+			'<p>Writing text as if it were code helps remind you that it\'s all code/objects/strings just waiting to be manipulated.</p>' +
+			'<p>The layout of the code is generous horizontally and greedy vertically. One day monitors will be easier to rotate and it will be logical to be generous in both directions.</p>' +
+			'<p>All this to say, apart from the disposition and the behavios, the code itself is open for discssion in a demo like this...</p>' +
+
 		'' ;
 	}();
 
