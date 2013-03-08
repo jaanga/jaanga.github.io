@@ -7,7 +7,7 @@
 		var css = document.createElement('style');
 		css.innerHTML += 'h1 { margin: 0; min-width: 200px; }' +
 
-			'#sbl {background-color: #eee; border: 1px solid; left: 50px; margin: 10px; opacity: 0.8; padding: 10px; position: absolute; ' +
+			'#sbl {background-color: #eee; border: 1px solid; left: 30px; margin: 10px; opacity: 0.8; padding: 10px; position: absolute; ' +
 				'text-align: left; top: 50px; max-width: 350px;}' +
 
 			'#stbHeader {background-color: #eee; border: 1px solid; margin: 10px auto; opacity: 0.8; padding: 10px; ' +
@@ -52,7 +52,7 @@
 			'<h1>Control Panel</h1>';
 
 		var sidebarRightBody = document.createElement( 'div' );
-		sidebarRightBody.style.height = (window.innerHeight - 100) + 'px';
+		sidebarRightBody.style.height = (window.innerHeight - 120) + 'px';
 		sidebarRightBody.id = 'sbr-body';
 		sidebarRight.appendChild( sidebarRightBody );
 		sidebarRightBody.innerHTML =
