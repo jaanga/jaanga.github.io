@@ -1,41 +1,4 @@
-﻿<!doctype html>
-<html lang='en'>
-<head>
-<title></title>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
-<script src="../../list.js"></script>
-<!--
-<script src="../../page.js"></script>
--->
-<link type="text/css" rel="stylesheet" href="../../page.css" />
-</head>
-<body>
-
-<script src='http://mrdoob.github.com/three.js/build/three.min.js'></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js'></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js'></script>
-<script src='http://mrdoob.github.com/three.js/examples/js/Detector.js'></script>
-
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/CopyShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/FXAAShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/HorizontalTiltShiftShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/shaders/VerticalTiltShiftShader.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/ShaderToon.js"></script>
-
-<!--
-<script src='../../three.js/build/three.min.js'></script>
-<script src='../../three.js/examples/js/controls/TrackballControls.js'></script>
-<script src='../../three.js/examples/js/Detector.js'></script>
-<script src='../../three.js/examples/js/libs/stats.min.js'></script>
--->
-<script src='../parser.js'></script>
-<script src='../MarchingCubesData.js'></script>
-<script src='../generateGeometry.js'></script>
-<script src='../materials.js'></script>
-<script src='../surfaces.js'></script>
-<script type='text/javascript'>
-	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
 
 	var renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -131,7 +94,7 @@ var txt;
 			// '<input type="checkbox" id="matCheck" >' +
 			'<br>';
 
-		var mats = '<select id="matList" onclick="console.log(\'iii\'); selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
+		var mats = '<select id="matList" onclick="console.log("iii");selectMaterial(this.value);" title="TBD: select a better selection of materials" >' ;
 		for ( var m in materials ) {
 			if ( m !== selectedMaterial ) {
 				mats += '<option  >' + m +'</option>';
@@ -360,7 +323,7 @@ var tt = '';
 	}
 
 	function updateBackground(i) {
-		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
+		var col = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
 		col = '' + col[i] + col[i] + col[i];
 		document.body.style.cssText += 'background-color: #' + col + ';';
 		return col;
@@ -377,6 +340,3 @@ var tt = '';
 	function builderError(e) {
 		alert(e);
 	}
-</script>
-</body>
-</html>

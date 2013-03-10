@@ -14,7 +14,7 @@
 				'text-align: left; top: 20px; width: 500px;}' +
 
 			'#sbr {background-color: #eee; border: 1px solid; margin: 10px; opacity: 0.8; padding: 10px; position: absolute; ' +
-				'right: 20px; text-align: left; top: 20px; max-width: 350px;}' +
+				'right: 20px; text-align: left; top: 30px; max-width: 350px;}' +
 
 			'#sbr-body {  height: 95%; overflow-y: scroll; }' +
 			'div.control { color: #aaa; cursor: hand; cursor: pointer; float: right; }' ;
@@ -23,9 +23,10 @@
 		sidebarLeft = document.createElement( 'div' );
 		sidebarLeft.id = 'sbl';
 		document.body.appendChild( sidebarLeft );
-		sidebarLeft.innerHTML = '<div class="control" onclick="toggleBar( sidebarLeft )">[X]</div>' +
+		sidebarLeft.innerHTML =
+			'<div class="control" onclick="toggleBar( sidebarLeft )">[X]</div>' +
 			'<h1>App Title</h1 "h1">' +
-			'<p><i>Sub text goes here...</i></p>'+
+			'<p><i>Sub text goes here...</i></p>' +
 			'<p>This box is where you might tell people about the app.</p>' +
 			'<p>It\'s also where the copyright and license information should appear.</p>' +
 			'<p>This is also where you might help the people understand what the app does and how to get started using the app.</p>' +
@@ -35,7 +36,8 @@
 		statusBarHeader = document.createElement( 'div' );
 		statusBarHeader.id = 'stbHeader';
 		document.body.appendChild( statusBarHeader );
-		statusBarHeader.innerHTML = '<div id="toggle" class="control" onclick="toggleStatusBar()">[-]</div>' +
+		statusBarHeader.innerHTML =
+			'<div id="toggle" class="control" onclick="toggleStatusBar()">[-]</div>' +
 			'<div class="control" onclick="toggleBar( sidebarLeft ); toggleBar( sidebarRight );">[<span style="font-size: small; vertical-align: text-top; ">[]</span>] &nbsp;</div>' +
 			'<h1>App Status</h1 "h1">';
 
@@ -48,7 +50,8 @@
 		sidebarRight = document.createElement( 'div' );
 		sidebarRight.id = 'sbr';
 		document.body.appendChild( sidebarRight );
-		sidebarRight.innerHTML = '<div  class="control" onclick="toggleBar( sidebarRight )">[X]</div>' +
+		sidebarRight.innerHTML =
+			'<div class="control" onclick="toggleBar( sidebarRight )">[X]</div>' +
 			'<h1>Control Panel</h1>';
 
 		var sidebarRightBody = document.createElement( 'div' );
