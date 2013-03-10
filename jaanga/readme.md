@@ -4,6 +4,9 @@ jaanga home page
 
 ## Change Log
 
+2013-03-10 ~ Theo
+* Brain of Richard: added text and image to readme
+
 2013-02-08 ~ Theo
 * Strange clock with curve text is working
 * Added info and links on Bain of Richard

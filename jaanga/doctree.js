@@ -48,6 +48,7 @@
 	toggleSection( '3-Urdacha' );
 	toggleSection( '4-Brain-of-Richard' );	
 	toggleSection( '5-Blode' );
+	toggleSection( '6-FGx' );
 	
 	function encodeUrl( path ) {
 		return path.replace(/\ \/\ /g, '.').replace(/\ /g, '_');

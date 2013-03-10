@@ -40,7 +40,8 @@ var list = {
 	'3 Urdacha': {
 		'Overview': [
 			[ 'Read Me', '3-Urdacha/overview/readme'],
-			[ 'Data Globe r4', '3-Urdacha/overview/data-globe-r4']
+			[ 'Urdacha', '3-Urdacha/overview/urdacha'],
+			[ 'hAxis r3', '3-Urdacha/overview/haxis-r3'],
 		]		
 	},	
 	
@@ -62,7 +63,14 @@ var list = {
 			[ 'Now with Animation', '5-Blode/overview/now-with-animation'],
 			
 		]		
-	}	
+	},
+	
+	'6 FGx': {
+		'Overview': [
+			// [ 'Read Me', '4-Brain-of-Richard/overview/readme'],
+			[ 'FGx', '6-FGx/overview/FGx']
+		]		
+	}
 };	
 
 
