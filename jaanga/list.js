@@ -67,8 +67,9 @@ var list = {
 	
 	'6 FGx': {
 		'Overview': [
-			// [ 'Read Me', '4-Brain-of-Richard/overview/readme'],
-			[ 'FGx', '6-FGx/overview/FGx']
+			[ 'Case Study: FGx', '6-FGx/overview/Case-Study-FGx'],
+			[ 'FGx r2', '6-FGx/overview/FGx-r2'],
+			[ 'FGx Globe - Home', '6-FGx/overview/FGx-home']
 		]		
 	}
 };	

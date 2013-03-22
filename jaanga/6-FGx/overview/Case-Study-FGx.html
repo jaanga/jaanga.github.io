@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title></title>
+<meta charset='utf-8'>
+<script src='../../list.js'></script>
+<script src='../../page.js'></script>
+<link type='text/css' rel='stylesheet' href='../../page.css' />
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+	<h2>Case Study: FCx</h2>
+	
+	<p>FlightGear is an open sourc flight simulation application with a very following. Users like to share their fling status online.</p>
+	
+	<p>FGx, hosted in Switerland, produces add-ons for FlightGear. One of these is a service that provides status updates.</p>
+	
+	<p>The reports are updated every three seconds and look like this:</p>
+	
+	
+<script>
+	var ifr = document.body.appendChild( document.createElement( 'iframe' ) );
+	ifr.style.cssText = 'font: bold 13pt monospace; height: 400px; width: 70%; ';
+	ifr.src = 'http://crossfeed.fgx.ch/data';
+
+/*	
+	// 	Crossfeed: we want your data
+	
+	requestFile( 'http://crossfeed.fgx.ch/data' );
+	var file, data;
+	function requestFile( fname ) {
+		file = new XMLHttpRequest();
+		file.open('GET', fname, true);
+		file.onreadystatechange = callbackFile;
+		file.send(null);
+	}
+
+// Crossfeed: thanks for sending. Message received.
+	function callbackFile() {
+		if (file.readyState == 4) {
+			var string = file.responseText;
+			data = JSON.parse( string );
+			// processFlightsData();
+console.log( data );			
+		} else {
+			// console.log('waiting...');
+		}
+	}
+*/
+</script>	
+
+	<h3>Click <a href='http://fgx.github.com/fgx-globe/fgx-globe-r2/' target='_blank'>FGx</a> for a slightly different perspective on the identicak data.</h3>
+</body>
+</html>
