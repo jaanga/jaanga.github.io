@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title>Brain of Richard</title>
+<meta charset='utf-8'>
+<script src='../../list.js'></script>
+<script src='../../page.js'></script>
+<link type='text/css' rel='stylesheet' href='../../page.css' />
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<script type='text/javascript'>
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML =
+		'<h2>Case Study: MRI Scans</h2>' +
+
+		'<p>My friend Richard has a brain tumor.</p>' +
+
+		'<p>He asked to see the MRI scans. Below is a snapshot of a few of the hundreds of files of 2D scans that Richard received.</p>' +
+	'';
+
+	var ifr = document.body.appendChild( document.createElement( 'iframe' ) );
+	ifr.style.cssText = 'height: 300px; width: 1000px;' ;
+	ifr.src ='contact-sheet.png';
+
+	var info2 = document.body.appendChild( document.createElement( 'div' ) );
+
+	info2.innerHTML =
+		'<p>What do these images actually represent? Are there other ways for a layman to see what is going on?</p>' +
+		'<p>The <i>Brain of Richard</i> app came out of the discussions between Richard and myself ' +
+		'as how best to show the scans as a 3D animated visulaization.</p>' +
+		'<button><h1> Gain X-ray 3D Vision here: [page:TheApp TheApp]<h1></button>' +
+	'';
+
+/*
+'<p><i>3D compilations of hundreds of 2D scanned MRI images...</i></p>' +
+*/
+</script>
+
+</body>
+</html>

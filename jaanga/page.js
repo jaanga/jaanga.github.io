@@ -30,7 +30,7 @@ var onDocumentLoad = function ( event ) {
 	button.textContent = 'Edit this page';
 
 	button.addEventListener( 'click', function ( event ) {
-		window.open( 'https://github.com/jaanga/fff/blob/dev/docs/' + section + '/' + path + '.html' );
+		window.open( 'https://github.com/jaanga/jaanga.github.com/blob/master/jaanga/'  + path + '.html' );
 	}, false );
 
 	document.body.appendChild( button );

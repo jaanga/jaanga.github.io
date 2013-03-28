@@ -2,25 +2,23 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8'>
-<title>jaanga ~ Animated 3D stuff for your page, post, tweet & wall</title>
+<title>jaanga ~ animated 3D stuff for your page, post, tweet & wall</title>
 <link rel='icon' href='favicon.ico' />
 <link type='text/css' rel='stylesheet' href='jaanga/style.css' />
 </head>
 <body>
-<script>
-  var panel = document.createElement( 'div' );
-  panel.id = 'panel';  // for css
-  document.body.appendChild( panel );
-
-  var viewer = document.createElement( 'iframe' );
-  viewer.id = 'viewer';
-  document.body.appendChild( viewer );  
-  
-  var appName = 'Jaanga';
-  var html = '<h1>jaanga</h1><h3>Case studies in 3D Viz<br>&<br>Animated 3D stuff for your page, post, tweet & wall.</h3>';
-  var subDir = 'jaanga/';
-</script>
 <script src='jaanga/list.js'></script>
+<script>
+	var panel = document.body.appendChild( document.createElement( 'div' ) );
+	panel.id = 'panel';  // for css
+
+	var viewer = document.body.appendChild( document.createElement( 'iframe' ) );
+	viewer.id = 'viewer';
+
+	var appName = 'Jaanga';
+	var html = '<h1>jaanga</h1><h3>Case studies in 3D Viz<br>+<br>Animated 3D stuff for your page, post, tweet & wall</h3>';
+	var subDir = 'jaanga/';
+</script>
 <script src='jaanga/doctree.js'></script>
 <script>
 	if ( window.location.hash.length > 0 ) {

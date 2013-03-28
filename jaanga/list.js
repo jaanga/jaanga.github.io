@@ -7,13 +7,15 @@ var list = {
 			[ 'Home Page', '1-Home/Overview/Home Page'],
 			[ 'Read Me', '1-Home/Overview/Read Me'],
 			[ 'Credits', '1-Home/Overview/Credits'],
-			[ 'License', '1-Home/Overview/License']
+			[ 'License', '1-Home/Overview/License'],
+			[ '<br>WebGl MeetUp', '1-Home/Overview/WebGL MeetUp']
 		]
 	},
 	
 	'2 Algesurf': {
-		'API Overview': [
-			[ 'Read Me', '2-Algesurf/1-Overview/Read Me'],
+		'Overview': [
+			[ 'Case Study: Math', '2-Algesurf/1-Overview/Case Study Math'],
+			[ 'Features & Futures', '2-Algesurf/1-Overview/Features'],
 			[ 'Credits', '2-Algesurf/1-Overview/Credits'],
 			[ 'Builder', '2-Algesurf/1-Overview/Builder'],
 			[ 'Player - sequence', '2-Algesurf/1-Overview/Player'],
@@ -47,8 +49,8 @@ var list = {
 	
 	'4 Brain of Richard': {
 		'Overview': [
-			[ 'Read Me', '4-Brain-of-Richard/overview/readme'],
-			[ 'The App', '4-Brain-of-Richard/overview/theapp']
+			[ 'Case Sudy: MRI Scans', '4-Brain-of-Richard/overview/case study mri'],
+			[ 'TheApp', '4-Brain-of-Richard/overview/theapp']
 		]		
 	},
 	
