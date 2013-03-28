@@ -3,52 +3,35 @@
 <head>
 <title></title>
 <meta charset='utf-8'>
+<meta http-equiv="refresh" content="3">
 <script src='../../list.js'></script>
 <script src='../../page.js'></script>
 <link type='text/css' rel='stylesheet' href='../../page.css' />
-<meta name='author' content='Theo Armour'>
 </head>
 <body>
-	<h2>Case Study: FCx</h2>
+	<h2>Case Study: Near Realtime JSON</h2>
 	
-	<p>FlightGear is an open sourc flight simulation application with a very following. Users like to share their fling status online.</p>
+	<h1>FlightGear: FOSS flight simulation application with very strong following.<br>FG users share their flying status online.</h1>
 	
-	<p>FGx, hosted in Switerland, produces add-ons for FlightGear. One of these is a service that provides status updates.</p>
+	<h3>FGx, hosted in Switerland, produces add-ons for FlightGear. 
+	One of these is a service that provides near reealtime status updates in JSON format.</h3>
 	
-	<p>The reports are updated every three seconds and look like this:</p>
-	
+	<h3>Reports are updated every three seconds and (purposely annoyingly ;-) look like this:</h3>
 	
 <script>
 	var ifr = document.body.appendChild( document.createElement( 'iframe' ) );
-	ifr.style.cssText = 'font: bold 13pt monospace; height: 400px; width: 70%; ';
+	ifr.style.cssText = 'font: bold 13pt monospace; height: 300px; width: 80%; ';
 	ifr.src = 'http://crossfeed.fgx.ch/data';
-
-/*	
-	// 	Crossfeed: we want your data
 	
-	requestFile( 'http://crossfeed.fgx.ch/data' );
-	var file, data;
-	function requestFile( fname ) {
-		file = new XMLHttpRequest();
-		file.open('GET', fname, true);
-		file.onreadystatechange = callbackFile;
-		file.send(null);
-	}
+	var info2 = document.body.appendChild( document.createElement( 'div' ) );
+	info2.innerHTML = 
+		'<h3>Here\'s one way <s>old school</s> FlightGear pilots see this data: <a href="http://mpserver15.flightgear.org/modules/fgtracker/" target="_blank">FG Tracker & Planner</a></h3>' +
+		'<button><h1>Click <a href="http://fgx.github.com/fgx-globe/fgx-globe-r2-dev/" target="_blank">FGx</a> ' +
+		'for a slightly different perspective on the identical data.</h2></button>' +
+	'';
 
-// Crossfeed: thanks for sending. Message received.
-	function callbackFile() {
-		if (file.readyState == 4) {
-			var string = file.responseText;
-			data = JSON.parse( string );
-			// processFlightsData();
-console.log( data );			
-		} else {
-			// console.log('waiting...');
-		}
-	}
-*/
 </script>	
 
-	<h3>Click <a href='http://fgx.github.com/fgx-globe/fgx-globe-r2/' target='_blank'>FGx</a> for a slightly different perspective on the identicak data.</h3>
+
 </body>
 </html>

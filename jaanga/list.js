@@ -71,6 +71,7 @@ var list = {
 		'Overview': [
 			[ 'Case Study: FGx', '6-FGx/overview/Case-Study-FGx'],
 			[ 'FGx r2', '6-FGx/overview/FGx-r2'],
+			[ 'airports runways navaids', '6-FGx/overview/airports-runways-navaids'],
 			[ 'FGx Globe - Home', '6-FGx/overview/FGx-home']
 		]		
 	}
