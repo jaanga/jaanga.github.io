@@ -42,8 +42,9 @@ var list = {
 	'3 Urdacha': {
 		'Overview': [
 			[ 'Read Me', '3-Urdacha/overview/readme'],
-			[ 'Urdacha', '3-Urdacha/overview/urdacha'],
-			[ 'hAxis r3', '3-Urdacha/overview/haxis-r3'],
+			[ 'Urdacha Site', '3-Urdacha/overview/urdacha'],
+			[ 'hAxis r4', '3-Urdacha/overview/haxis-r4'],
+			[ 'flatland r2', '3-Urdacha/overview/flatland-r2']
 		]		
 	},	
 	
