@@ -25,13 +25,13 @@ function generateMaterials() {
 			dottedMaterial2 = createShaderMaterial( "dotted", light, ambientLight );
 
 			hatchingMaterial2.uniforms.uBaseColor.value.setRGB( 0, 0, 0 );
-			hatchingMaterial2.uniforms.uLineColor1.value.setHSV( 0, 0.9, 0.9 );
-			hatchingMaterial2.uniforms.uLineColor2.value.setHSV( 0, 0.9, 0.9 );
-			hatchingMaterial2.uniforms.uLineColor3.value.setHSV( 0, 0.9, 0.9 );
-			hatchingMaterial2.uniforms.uLineColor4.value.setHSV( 0.1, 0.9, 0.9 );
+			hatchingMaterial2.uniforms.uLineColor1.value.setHSL( 0, 0.9, 0.9 );
+			hatchingMaterial2.uniforms.uLineColor2.value.setHSL( 0, 0.9, 0.9 );
+			hatchingMaterial2.uniforms.uLineColor3.value.setHSL( 0, 0.9, 0.9 );
+			hatchingMaterial2.uniforms.uLineColor4.value.setHSL( 0.1, 0.9, 0.9 );
 
 			dottedMaterial2.uniforms.uBaseColor.value.setRGB( 0, 0, 0 );
-			dottedMaterial2.uniforms.uLineColor1.value.setHSV( 0.05, 1.0, 1.0 );
+			dottedMaterial2.uniforms.uLineColor1.value.setHSL( 0.05, 1.0, 1.0 );
 
 			var texture = THREE.ImageUtils.loadTexture( "../textures/ash_uvgrid01.jpg" );
 			texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
