@@ -77,6 +77,8 @@
 			'</p>' +
 		'';
 
+		window.addEventListener( 'dblclick', doZoom, false );
+		
 		geometry = new THREE.AxisHelper( 7000 );
 		scene.add( geometry );
 
@@ -100,6 +102,10 @@
 		setZoomLevel ( zoomLevel );
 	}
 	
+	function doZoom() {
+		zoomLevel += 1;
+		setZoomLevel ( zoomLevel );
+	}
 	
 	function setZoomLevel ( level ) {
 		var b;

@@ -1,7 +1,7 @@
-jaanga.github.com / github.com/jaanga
+jaanga.github.io / github.com/jaanga
 =====================================
 
-Home page for http://jaanga.github.com
+Home page for http://jaanga.github.io
 
 See also http://jaanga.com
 
