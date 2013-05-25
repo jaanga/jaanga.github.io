@@ -49,7 +49,7 @@
 	toggleSection( '4-Brain-of-Richard' );	
 	toggleSection( '5-Blode' );
 	toggleSection( '6-FGx' );
-	toggleSection( '7-cookBook' );
+	toggleSection( '7-cookbook' );
 	
 	function encodeUrl( path ) {
 		return path.replace(/\ \/\ /g, '.').replace(/\ /g, '_');
