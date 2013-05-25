@@ -7,11 +7,11 @@ var list = {
 			[ 'Home Page', '1-Home/Overview/Home Page'],
 			[ 'Read Me', '1-Home/Overview/Read Me'],
 			[ 'Credits', '1-Home/Overview/Credits'],
-			[ 'License', '1-Home/Overview/License'],
+			[ 'Copyright & License', '1-Home/Overview/License'],
 			[ '<br>WebGl MeetUp', '1-Home/Overview/WebGL MeetUp']
 		]
 	},
-	
+
 	'2 Algesurf': {
 		'Overview': [
 			[ 'Case Study: Math', '2-Algesurf/1-Overview/Case Study Math'],
@@ -27,7 +27,7 @@ var list = {
 			[ 'Hauser 1', '2-Algesurf/2-Hauser/1hauser'],
 			[ 'Hauser 2', '2-Algesurf/3-Hauser/2hauser'],
 			// [ '', '2-Algesurf/Hauser 1/'],
-		],		
+		],
 
 		'Jalape Gallery': [
 			[ 'Read Me', '2-Algesurf/4-Jalape/read-me-jalape'],
@@ -38,23 +38,23 @@ var list = {
 			[ 'XY Surface', '2-Algesurf/5-XY-Surface/xy-surface']
 		],
 	},
-	
+
 	'3 Urdacha': {
 		'Overview': [
 			[ 'Read Me', '3-Urdacha/overview/readme'],
 			[ 'Urdacha Site', '3-Urdacha/overview/urdacha'],
 			[ 'hAxis r4', '3-Urdacha/overview/haxis-r4'],
 			[ 'flatland r2', '3-Urdacha/overview/flatland-r2']
-		]		
-	},	
-	
+		]
+	},
+
 	'4 Brain of Richard': {
 		'Overview': [
 			[ 'Case Sudy: MRI Scans', '4-Brain-of-Richard/overview/case study mri'],
 			[ 'TheApp', '4-Brain-of-Richard/overview/theapp']
-		]		
+		]
 	},
-	
+
 	'5 Blode': {
 		'Overview': [
 			[ 'Read Me', '5-Blode/overview/readme'],
@@ -64,19 +64,30 @@ var list = {
 			[ 'We Have Callbacks', '5-Blode/overview/we-have-callbacks'],
 			[ 'Up and Running', '5-Blode/overview/up-and-running'],
 			[ 'Now with Animation', '5-Blode/overview/now-with-animation'],
-			
-		]		
+
+		]
 	},
-	
+
 	'6 FGx': {
 		'Overview': [
 			[ 'Case Study: FGx', '6-FGx/overview/Case-Study-FGx'],
 			[ 'FGx r2', '6-FGx/overview/FGx-r2'],
 			[ 'airports runways navaids', '6-FGx/overview/airports-runways-navaids'],
 			[ 'FGx Globe - Home', '6-FGx/overview/FGx-home']
-		]		
-	}
-};	
+		]
+	},
+
+	'7 cookBook': {
+		'j3qUE': [
+			[ 'j3qUE Read Me', '7-cookbook/j3qUE/readme'],
+			[ 'j3qUE minimum', '7-cookbook/j3qUE/minimum/index'],
+			[ 'j3qUE interactive', '7-cookbook/j3qUE/interactive/index']
+		],
+		'Samples': [
+			[ 'Sidebars in File', '7-cookbook/sidebars-in-file/home-page'],
+		]
+	},
+};
 
 
 var pages = {};
