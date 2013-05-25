@@ -79,12 +79,12 @@ var list = {
 
 	'7 cookBook': {
 		'j3qUE': [
-			[ 'j3qUE Read Me', '7-cookbook/j3qUE/readme'],
-			[ 'j3qUE minimum', '7-cookbook/j3qUE/minimum/index'],
-			[ 'j3qUE interactive', '7-cookbook/j3qUE/interactive/index']
+			[ 'j3qUE Read Me', '7-cookBook/j3qUE/readme'],
+			[ 'j3qUE minimum', '7-cookBook/j3qUE/minimum/index'],
+			[ 'j3qUE interactive', '7-cookBook/j3qUE/interactive/index']
 		],
 		'Samples': [
-			[ 'Sidebars in File', '7-cookbook/sidebars-in-file/home-page'],
+			[ 'Sidebars in File', '7-cookBook/sidebars-in-file/home-page'],
 		]
 	},
 };
