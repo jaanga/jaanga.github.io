@@ -44,6 +44,7 @@
 	var hdr = document.getElementById('h' + '1-Home');
 	hdr.innerHTML = '- ' + hdr.innerHTML.substr(2);
 	// toggleSection( 1 );
+	toggleSection( '0-Sketchbook' );
 	toggleSection( '2-Algesurf' );
 	toggleSection( '3-Urdacha' );
 	toggleSection( '4-Brain-of-Richard' );	

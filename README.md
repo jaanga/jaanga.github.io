@@ -1,4 +1,4 @@
-jaanga.github.io / github.com/jaanga
+jaanga.github.io ~ github.com/jaanga
 =====================================
 
 Home page for http://jaanga.github.io

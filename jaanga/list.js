@@ -2,6 +2,16 @@ var list = {
 // avoid using -,/_
 // use same capitalization
 
+	'0 Sketchbook': {
+		'': [
+			[ 'Sketchbook', '0-Sketchbook/sketchbook'],
+			//[ 'Read Me', '1-Home/Overview/Read Me'],
+			//[ 'Credits', '1-Home/Overview/Credits'],
+			//[ 'Copyright & License', '1-Home/Overview/License'],
+			// [ '<br>WebGl MeetUp', '1-Home/Overview/WebGL MeetUp']
+		]
+	},
+
 	'1 Home': {
 		'Overview': [
 			[ 'Home Page', '1-Home/Overview/Home Page'],
