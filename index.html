@@ -16,7 +16,7 @@
 	viewer.id = 'viewer';
 
 	var appName = 'Jaanga';
-	var html = '<h1>jaanga</h1><h3>Case studies in 3D Viz<br>+<br>Animated 3D stuff for your page, post, tweet & wall</h3>';
+	var html = '<h1><a href="./index.html" >jaanga</a></h1><h3>Case studies in 3D Viz<br>+<br>Animated 3D stuff for your page, post, tweet & wall<br> <br><b>Main Menu</b></h3>';
 	var subDir = 'jaanga/';
 </script>
 <script src='jaanga/doctree.js'></script>
@@ -24,7 +24,9 @@
 	if ( window.location.hash.length > 0 ) {
 		goToHash();
 	} else {
-		goTo('1 Home','Overview','Home Page');
+		goTo('0 Sketchbook','','Current_sketch');
+		
+		//goTo('1 Home','Overview','Home Page');
 	}
 </script>
 </body>

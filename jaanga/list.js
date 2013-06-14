@@ -4,7 +4,9 @@ var list = {
 
 	'0 Sketchbook': {
 		'': [
-			[ 'Sketchbook', '0-Sketchbook/sketchbook'],
+			[ 'Current sketch', '0-Sketchbook/sketchbook'],
+			[ 'Previous Home Page', '1-Home/Overview/Home Page'],
+			[ 'WebGl MeetUp @ GDC', '1-Home/Overview/WebGL MeetUp']
 			//[ 'Read Me', '1-Home/Overview/Read Me'],
 			//[ 'Credits', '1-Home/Overview/Credits'],
 			//[ 'Copyright & License', '1-Home/Overview/License'],
@@ -14,11 +16,11 @@ var list = {
 
 	'1 Home': {
 		'Overview': [
-			[ 'Home Page', '1-Home/Overview/Home Page'],
-			[ 'Read Me', '1-Home/Overview/Read Me'],
+			
+			[ 'Read Me', '1-Home/Overview/ReadMe'],
 			[ 'Credits', '1-Home/Overview/Credits'],
-			[ 'Copyright & License', '1-Home/Overview/License'],
-			[ '<br>WebGl MeetUp', '1-Home/Overview/WebGL MeetUp']
+			[ 'Copyright & License', '1-Home/Overview/License']
+			
 		]
 	},
 
