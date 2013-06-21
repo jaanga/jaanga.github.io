@@ -87,6 +87,12 @@ var list = {
 	},
 
 	'7 cookbook': {
+		'unFlatLand': [
+			[ 'unFlatLand r1', '7-cookbook/unflatland/index'],
+		],
+		'oSome Globe': [
+			[ 'oSomeGlobe r4', '7-cookbook/osome-globe/index'],
+		],
 		'j3qUE': [
 			[ 'j3qUE Read Me', '7-cookbook/j3qUE/readme'],
 			[ 'j3qUE minimum', '7-cookbook/j3qUE/minimum/index'],
