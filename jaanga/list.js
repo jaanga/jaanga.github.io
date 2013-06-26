@@ -6,6 +6,7 @@ var list = {
 		'': [
 			[ 'Current sketch', '0-Sketchbook/sketchbook'],
 			[ 'Previous Home Page', '1-Home/Overview/Home Page'],
+			[ 'WebGl MeetUp 2013-06-26', '0-Sketchbook/webgl-2013-06-26'],
 			[ 'WebGl MeetUp @ GDC', '1-Home/Overview/WebGL MeetUp']
 		]
 	},
@@ -89,8 +90,11 @@ var list = {
 	'7 cookbook': {
 		'unFlatLand': [
 			[ 'unFlatLand r1', '7-cookbook/unflatland/index'],
+			[ 'unFlatLand r2', '7-cookbook/unflatland/unflatland-r2'],
 		],
 		'oSome Globe': [
+			[ 'oSomeGlobe r1', '7-cookbook/osome-globe/r1/index'],
+			[ 'oSomeGlobe r2', '7-cookbook/osome-globe/osome-globe-r2'],
 			[ 'oSomeGlobe r4', '7-cookbook/osome-globe/index'],
 		],
 		'j3qUE': [

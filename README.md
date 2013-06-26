@@ -5,6 +5,9 @@ See also the blog at http://jaanga.com
 
 What's new:
 
+2013-06-26 ~ jaanga.github.io: added menu items
+2013-06-26 ~ Events: added SF WebGL 2013-06-26
+2013-06-22 ~ Cookbook: added 'unFlatLand' R2
 2013-06-19 ~ jaanga.github.io: added the sections
 2013-06-15 ~ Cookbook: added 'unFlatLand' R1
 2013-06-15 ~ Cookbook: added 'oSome Globe' R4

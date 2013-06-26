@@ -73,7 +73,7 @@
 		var url = encodeUrl(section) + DELIMITER + encodeUrl( category ) + DELIMITER + encodeUrl(name);
 		if (query == undefined) {query = '';}
 		window.location.hash = url;
-// console.log('url: ', url);		
+console.log('url: ', url);		
 		window.document.title = title;
 
 		viewer.src = subDir + pages[ section ][ category ][ name ] + '.html' + query;
