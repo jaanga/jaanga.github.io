@@ -5,7 +5,10 @@ var list = {
 	'0 Sketchbook': {
 		'': [
 			[ 'Current sketch', '0-Sketchbook/sketchbook'],
-			[ 'Previous Home Page', '1-Home/Overview/Home Page'],
+			[ 'Previous Home Page', '1-Home/Overview/Home Page']
+		],	
+		'Events': [	
+			[ 'WebGl MeetUp 2013-08-22', '0-Sketchbook/webgl-2013-08-22'],
 			[ 'WebGl MeetUp 2013-06-26', '0-Sketchbook/webgl-2013-06-26'],
 			[ 'WebGl MeetUp @ GDC', '1-Home/Overview/WebGL MeetUp']
 		]

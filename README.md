@@ -4,7 +4,10 @@ jaanga.github.io ~ github.com/jaanga
 See also the blog at http://jaanga.com
 
 What's new:
-
+2013-08-30 ~ Gestification (Leap Motion): added Barfolina Pavilion
+2013-08-27 ~ Cookbook: Added video-surfaces folders and files
+2013-08-22 ~ Events: SF WebGL Meetup demo files added
+2013-08-13 ~ Cookbook: Leap Motion Gestification folder addded
 2013-06-26 ~ jaanga.github.io: added menu items
 2013-06-26 ~ Events: added SF WebGL 2013-06-26
 2013-06-22 ~ Cookbook: added 'unFlatLand' R2
