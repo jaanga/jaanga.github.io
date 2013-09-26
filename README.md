@@ -1,6 +1,9 @@
 The green text is the *Change Log* for
 jaanga.github.io ~ github.com/jaanga
 =================================================
+
+Demo: http://jaanga.github.io
+
 See also the blog at http://jaanga.com  
 
 What's new:
