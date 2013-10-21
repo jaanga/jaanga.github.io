@@ -6,7 +6,8 @@ Demo: http://jaanga.github.io
 
 See also the blog at http://jaanga.com  
 
-What's new:
+What's new:  
+2013-10-08 ~ Cookbook: many shiny new things
 2013-08-30 ~ Gestification (Leap Motion): added Barfolina Pavilion  
 2013-08-27 ~ Cookbook: Added video-surfaces folders and files  
 2013-08-22 ~ Events: SF WebGL Meetup demo files added  
