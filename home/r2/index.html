@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Jaanga</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script src=http://jaanga.github.io/libs/md/showdown.js ></script>
+<script src='http://jaanga.github.io/libs/db/r2/doc-browser.js' ></script>
+
+	<div id=txt >
+	
+		<h1>
+			<a href=# >Jaanga</a>
+		</h1>
+				
+		<p id=intro >
+			<a href=JavaScript:DS.displayMarkdown('../../readme.md',intro); >Jaanga Read Me on GitHub</a>
+		</p>
+			
+		<p>
+			Your 3D happy place
+		</p>	
+				
+		<p id=ge>
+			<a href=JavaScript:DS.displayMarkdown('../../../jaanga/gestification/gestification-introduction.md',ge); >Gestification Introduction</a><br>
+			<a href=JavaScript:DS.displayMarkdown('../../../jaanga/gestification/readme.md',ge); >Gestification Read Me</a><br>
+			&nbsp; <a href="../../../jaanga/gestification/index.html" >Open estification</a><br>
+			3D Code that works with the Leap Motion device.
+		</p>			
+
+		<p id=pr>
+			<a href=JavaScript:DS.displayMarkdown('../../../jaanga/projects/readme.md',pr); >Projects</a><br>
+			&nbsp; <a href="../../../jaanga/projects/index.html" >Open Projects</a><br>
+			3D Projects 
+		</p>
+		
+		<p id=cb>
+			<a href=JavaScript:DS.displayMarkdown('../../../jaanga/cookbook/readme.md',cb); >Cookbook Readme</a><br>
+			&nbsp; <a href="../../../jaanga/cookbook/index.html" >Open Cookbook</a><br>
+			3D Code that's fun and easy to play with
+		</p>
+
+
+
+		<p id=ev>
+			<a href=JavaScript:DS.displayMarkdown('../../../jaanga/events/readme.md',ev); >Events Readme</a><br>
+			&nbsp; <a href="../../../jaanga/events/index.html" >Open Events</a><br>
+			3D Events
+		</p>	
+
+		<p id=li>
+			<a href=JavaScript:DS.displayMarkdown('../../../jaanga/libs/readme.md',li); >Libs Readme</a><br>
+			&nbsp; <a href="../../../jaanga/libs/index.html" >Open Events</a><br>
+			3D libs
+		</p>	
+		
+		<hr>
+		
+		<p>
+			<a href='https://github.com/jaanga/libs/blob/gh-pages/jaanga-copyright-and-mit-license.md'><small>Jaanga Copyright Notice and License</small></a>
+		</p>
+	
+	</div>		
+
+<script>
+
+	DS.menu.innerHTML = txt.innerHTML;
+	txt.innerHTML = '';
+	DS.init( 'https://github.com/jaanga/jaanga.github.io/tree/gh-pages/db/','../../readme.md', intro );
+	
+</script>
+</body>
+</html>

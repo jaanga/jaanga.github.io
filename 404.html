@@ -3,16 +3,34 @@
 <head>
 <title></title>
 <meta charset=utf-8>
+<meta http-equiv="refresh" content="0.5">
 <meta name=author content='Theo Armour'>
 </head>
 <body>
 <script>
+	
+	css = document.body.appendChild( document.createElement('style') );
+	var col1 = "#" + Math.random().toString(16).slice(2, 8);
+	var col2 = "#" + Math.random().toString(16).slice(2, 8);
+	var col3 = "#" + Math.random().toString(16).slice(2, 8);
+	var X = ( Math.random() * window.innerWidth ).toFixed(0);
+	var Y = (Math.random() * window.innerHeight).toFixed(0);
+	var center =  20 + (Math.random() * 60).toFixed(0);
 
-	document.body.style.cssText = ' font: bold 12pt monospace; text-align: center;';
+	css.innerHTML = 'body { color: #eee; font: 600 14pt monospace; margin: 0; height: 1000px; overflow: hidden; text-align: center; ' +
+		'background: -webkit-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
+		'background: -moz-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
+		'background: radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); }' +
+		'a { color: #eee; }' +
+	'';
+		
 	var info = document.body.appendChild( document.createElement( 'div' ) );
 	info.innerHTML = '<h1>The Jaanga <s>Era</s> <s>Horror</s> <s>Eeyore</s> Whatever Page</h1>' +
 		'<h1>Sorrzy to see you here</h1>' +
 		'<h1>Budder luck nex time...</h1>' +
+		'<br>' +
+		'<h1><a href="http://jaanga.github.io" target="_blank">jaanga.github.io</a></h1>' +
+		'<h1><a href="http://github.com/jaanga" target="_blank">github.com/jaanga</a></h1>' +
 	'';
 
 </script>
