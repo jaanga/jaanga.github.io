@@ -2,7 +2,11 @@ Jaanga ~ Read Me
 ================
 
 ## Live Sites
-Hosted: [jaanga.github.io]( http://jaanga.github.io ) ~ Source: [github.com/jaanga]( http://github.com/jaanga/jaanga.github.io ).
+Hosted: [jaanga.github.io]( http://jaanga.github.io )  
+Beta - hosted next release: [jaanga.github.io r2]( http://jaanga.github.io/home/r2/ )
+
+Source: [github.com/jaanga]( http://github.com/jaanga/jaanga.github.io )  
+
 
 
 
