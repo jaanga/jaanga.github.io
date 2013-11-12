@@ -7,7 +7,7 @@ The green text is the *Change Log* for
 jaanga.github.io ~ github.com/jaanga
 =================================================
 
-Demo: http://jaanga.github.io
+R2 Demo: <http://jaanga.github.io/home/r2/>
 
 See also the blog at http://jaanga.com  
 
