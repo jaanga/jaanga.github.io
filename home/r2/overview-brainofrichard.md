@@ -1,5 +1,5 @@
 brainOfRichard Overview
-========
+=======================
 
 What the brainOfRichard home page looks like:	
 <iframe src="http://jaanga.github.io/brainofrichard/" width=100% height=500px></iframe>

@@ -1,7 +1,7 @@
 Events Overview
 ===============
 
-What the Events Read Me page looks like:	
+What the Events home page looks like:	
 <iframe src="http://jaanga.github.io/events/" width=100% height=500px></iframe>
 	
 ## Concept
