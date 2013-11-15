@@ -2,11 +2,12 @@ Jaanga Overview
 ===============
 
 Mr.doob's [HTML Editor]( http://www.mrdoob.com/projects/htmleditor/ ):
-<iframe src="http://www.mrdoob.com/projects/htmleditor/" width=100% height=500px>iframe not visible when viewed on github.com</iframe>
+<iframe src="http://www.mrdoob.com/projects/htmleditor/" width=100% height=500px>
+There is an `iframe` here. It is not visible when viewed on github.com/jaanga. To view, please go to jaanga.github.io.</iframe>
 _If you do not see a spinning cube above, then you will have difficulty with this site._
 
 ## Concept
-This is your 3D happy place. Click the menu items on the left to see all the wonderful toys you can play with here.
+This is your 3D happy-place. Click the menu items on the left to see all the wonderful toys you can play with here.
 
 ## Links
 
