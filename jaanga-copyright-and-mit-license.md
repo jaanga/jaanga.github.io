@@ -1,12 +1,12 @@
-Jaanga Copyright and License
-==============================
+Jaanga Copyright Notice and License
+===================================
 <br>
 
-## Copyright for All Jaanga Works
+## Copyright Nitice for All Jaanga Works
 
-[jaanga.com](http://jaanga.com)  
-[jaanga.github.io](http://jaanga.github.io)  
-[github.com/jaanga](http://github.com/jaanga)
+[jaanga.com]( http://jaanga.com)  
+[jaanga.github.io]( http://jaanga.github.io/ )  
+[github.com/jaanga]( https://github.com/jaanga/ )
 
 Copyright &copy; 2013 Jaanga authors
 

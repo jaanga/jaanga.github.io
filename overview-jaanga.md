@@ -11,8 +11,9 @@ This is your 3D happy-place. Click the menu items on the left to see all the won
 
 ## Links
 
-Code hosted on GitHub: <a href="http://jaanga.github.io/" target="_blank">jaanga.github.io</a>  
-Source code on GitHub: <a href="https://github.com/jaanga/" target="_blank">github.com/jaanga</a>
+You have two ways of viewing the Jaanga files:  
+Code hosted on GitHub: [jaanga.github.io]( http://jaanga.github.io/jaanga.github.io/ "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
+Source code on GitHub: [github.com/jaanga]( https://github.com/jaanga/jaanga.github.io/overview-jaanga.md "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
 
 ## Notes
 The library used to display these pages is under heavy development. See: [docBrowser]( https://github.com/jaanga/libs/tree/gh-pages/db/ "Your GitHub hosted pages buddy" ) 
