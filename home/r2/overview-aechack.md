@@ -1,20 +1,22 @@
 aeChack Overview
 ================
 What the aeChack home page looks like:	
-<iframe src="http://aechack.github.io" width=100% height=500px></iframe>
+<iframe src="http://aechack.github.io" width=100% height=500px>
+There is an `iframe` here. It is not visible when viewed on github.com/aechack. To view, please go to archack.github.io.
+</iframe>
 	
 ## Concept
 The web site for Team aeCkack's high energy entry to the AEC Hackathon held at Facebook HQ in Menlo Park CA, November 8-10, 2013.
 
-## Links
+## Project Links
 
-Code hosted on GitHub: <a href="http://aechack.github.io" target="_blank">aechack.github.io</a>  
-Source code on GitHub: <a href="https://github.com/aechack/" target="_blank">github.com/aechack</a>
+You have two ways of viewing the aeChack files:  
 
-## Notes
+* Code hosted on GitHub: [aechack.github.io]( http://aechack.github.io/ "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
+* Source code on GitHub: [github.com/aechack]( https://github.com/aechack/aeChack.github.io/ "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
 
 		
-
-<h2>&#x2766;</h2>
+<br>
+<center><h2>&#x2766;</h2></center>
 
 

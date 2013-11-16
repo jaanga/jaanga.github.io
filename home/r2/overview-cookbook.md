@@ -1,22 +1,25 @@
-Cookbook Overview
-========
+Jaanga Cookbook Overview
+========================
 
 What the Cookbook home page looks like:	
-<iframe src="http://jaanga.github.io/cookbook/" width=100% height=500px></iframe>
+<iframe src="http://jaanga.github.io/cookbook/" width=100% height=500px>
+There is an `iframe` here. It is not visible when viewed on github.com/jaanga. To view, please go to jaanga.github.io.
+</iframe>
 	
 ## Concept
-3D Code that's fun and easy to play with.
+3D code that's fun and easy to play with.
 
-## Links
+## Project Links
 
-Code hosted on GitHub: <a href="http://jaanga.github.io/cookbook/" target="_blank">jaanga.github.io/cookbook</a>  
-Source code on GitHub: <a href="https://github.com/jaanga/cookbook/" target="_blank">github.com/jaanga/cookbook</a>
+You have two ways of viewing the Cookbook files:  
 
-## Notes
+* Code hosted on GitHub: [jaanga.github.io/cookbook]( http://jaanga.github.io/cookbook/ "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
+* Source code on GitHub: [github.com/jaanga/cookbook]( https://github.com/jaanga/cookbook/ "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
 
 		
+<br>
+<center><h2>&#x2766;</h2></center>
 
-<h2>&#x2766;</h2>
 
 
 

@@ -1,7 +1,7 @@
 Jaanga ~ Read Me
 ================
 
-## Links
+## Project Links
 
 You have two ways of viewing the Jaanga files:  
 
@@ -16,7 +16,6 @@ Beta - hosted next release: [jaanga.github.io r2]( http://jaanga.github.io/home/
 
 Jaanga is the home of a variety of 3D visualization apps that are generally based around the [Three.js]( http://threejs.org ) JavaScript 3D library 
 - a collection of tools that greatly simplifies access to [WebGL]( http://en.wikipedia.org/wiki/WebGL ) API. 
-
 
 
 Everything here is [free and open source software]( http://en.wikipedia.org/wiki/Free_and_open-source_software 'free as in beer and free as in money' ).
@@ -146,4 +145,6 @@ See also the blog at [jaanga.com](http://jaanga.com )
 * Player.html: adding sliders, css and fixes etc to menu
 
 
+<br>
+<center><h2>&#x2766;</h2></center>
 
