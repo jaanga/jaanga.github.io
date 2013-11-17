@@ -28,6 +28,9 @@ The code on Jaanga makes extensive use of the latest and most demanding Internet
 Unless you are on a recently-built computer with a multi-core CPU and GPU and using the latest version of the Chrome, Opera or Firefox browsers, 
 you will not a great experience here. In some instances, you may be able to use Safari or Internet Explorer 11 but this is not predictable or likely - yet. 
 		
+### The Name
+The name 'Jaanga' was chosen because it sounds jazzy, it is short and search results indicate uniqueness.
+		
 <br>		
 <center><h2>&#x2766;</h2></center>
 

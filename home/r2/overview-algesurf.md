@@ -1,11 +1,11 @@
 algeSurf Overview
 =================
 
-What the algeSurf home page looks like:	
+What the algeSurf home page looks like:
 <iframe src="http://jaanga.github.io/algesurf/"	width=100% height=500px>
 There is an `iframe` here. It is not visible when viewed on github.com/jaanga. To view, please go to jaanga.github.io.
 </iframe>
-	
+
 ## Concept
 Algebraic Surfaces and other 3D math toys
 
@@ -16,12 +16,12 @@ Algebraic Surfaces and other 3D math toys
 
 ## Project Links
 
-You have two ways of viewing the algeSurf files:  
+You have two ways of viewing the algeSurf files:
 
-* Code hosted on GitHub: [jaanga.github.io/algesurf]( http://jaanga.github.io/algesurf/ "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
-* Source code on GitHub: [github.com/jaanga/algesurf]( https://github.com/jaanga/algesurf/ "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
+* Code hosted on GitHub: [jaanga.github.io/algesurf]( http://jaanga.github.io/algesurf/ "view the files as apps." )
+* Source code on GitHub: [github.com/jaanga/algesurf]( https://github.com/jaanga/algesurf/ "View the files as source code." )
 
-		
+
 <br>
 <center><h2>&#x2766;</h2></center>
 

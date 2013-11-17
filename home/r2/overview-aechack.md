@@ -12,8 +12,8 @@ The web site for Team aeCkack's high energy entry to the AEC Hackathon held at F
 
 You have two ways of viewing the aeChack files:  
 
-* Code hosted on GitHub: [aechack.github.io]( http://aechack.github.io/ "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
-* Source code on GitHub: [github.com/aechack]( https://github.com/aechack/aeChack.github.io/ "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
+* Code hosted on GitHub: [aechack.github.io]( http://aechack.github.io/ "view the files as apps." )  
+* Source code on GitHub: [github.com/aechack]( https://github.com/aechack/aeChack.github.io/ "View the files as source code." )
 
 		
 <br>
