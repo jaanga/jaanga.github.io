@@ -1,7 +1,7 @@
  Overview
 ========
 
-What the home page looks like:	
+Cropped `iframe` view of the home page:	
 <iframe src="http://jaanga.github.io" width=100% height=500px></iframe>
 	
 ## Concept

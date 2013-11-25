@@ -1,7 +1,7 @@
 Jaanga Events Overview
 ======================
 
-What the Events home page looks like:
+Cropped `iframe` view of the Jaanga Events home page:
 <iframe src="http://jaanga.github.io/events/" width=100% height=500px></iframe>
 There is an `iframe` here. It is not visible when viewed on github.com/jaanga. To view, please go to jaanga.github.io.
 
@@ -12,7 +12,7 @@ Code prepared for an event, as a one-off probably to help somebody or to respond
 
 ## Project Links
 
-You have two ways of viewing the Events files:
+You have two ways of viewing the Jaanga Events files:
 
 * Code hosted on GitHub: [jaanga.github.io/events]( http://jaanga.github.io/events/ "view the files as apps." )
 * Source code on GitHub: [github.com/jaanga/events]( https://github.com/jaanga/events/ "View the files as source code." )

@@ -1,7 +1,7 @@
 FGX Overview
 ============
 
-What the FGx home page looks like:		
+Cropped `iframe` view of the FGx home page:		
 <iframe src="http://fgx.github.io" width=100% height=300px>
 There is an `iframe` here. It is not visible when viewed on github.com/jaanga. To view, please go to jaanga.github.io.
 </iframe>

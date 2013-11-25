@@ -1,7 +1,7 @@
 brainOfRichard Overview
 =======================
 
-What the brainOfRichard home page looks like:
+Cropped `iframe` view of the brainOfRichard home page:
 <iframe src="http://jaanga.github.io/brainofrichard/" width=100% height=500px>
 There is an `iframe` here. It is not visible when viewed on github.com/jaanga. To view, please go to jaanga.github.io.
 </iframe>
