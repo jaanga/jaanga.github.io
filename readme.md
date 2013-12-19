@@ -1,21 +1,19 @@
 Jaanga ~ Read Me
 ================
+## Concept
+Jaanga is the home of a variety of 3D visualization apps that are generally based around the [Three.js]( http://threejs.org ) JavaScript 3D library 
+- a collection of tools that greatly simplifies access to [WebGL]( http://en.wikipedia.org/wiki/WebGL ) API. 
+
 
 ## Project Links
 
-You have two ways of viewing the Jaanga files:  
+You have two ways of viewing the Jaanga files on GitHub:  
 
-* Code hosted on GitHub: [jaanga.github.io]( http://jaanga.github.io/home/r2/index.html#../../readme.md "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
-* Source code on GitHub: [github.com/jaanga]( https://github.com/jaanga/jaanga.github.io/blob/master/readme.md "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
-
-
-Beta - hosted next release: [jaanga.github.io r2]( http://jaanga.github.io/home/r2/ )
+* As web pages hosted on GitHub: [jaanga.github.io]( http://jaanga.github.io/home/r2/index.html#../../readme.md "view the files as apps." )  <input value="<< You are now probably here." size=28 style="font:bold 12pt monospace;border-width:0;" >  
+* As source code on GitHub: [github.com/jaanga]( https://github.com/jaanga/jaanga.github.io/blob/master/readme.md "View the files as source code." )  <scan style=display:none ><< You are now probably here.</scan>
 
 
 ## Notes
-
-Jaanga is the home of a variety of 3D visualization apps that are generally based around the [Three.js]( http://threejs.org ) JavaScript 3D library 
-- a collection of tools that greatly simplifies access to [WebGL]( http://en.wikipedia.org/wiki/WebGL ) API. 
 
 
 Everything here is [free and open source software]( http://en.wikipedia.org/wiki/Free_and_open-source_software 'free as in beer and free as in money' ).
