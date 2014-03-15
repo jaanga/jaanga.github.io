@@ -33,7 +33,7 @@ Jaanga web log: [jaanga.com]( http://jaanga.com )
 
 ## Copyright Notice and License
 
-[Jaanga copyright notice and license]( https://github.com/theo-armour/theo-armour.github.io/blob/master/copyright-notice-and-license.md )
+[Jaanga copyright notice and license]( https://github.com/jaanga/jaanga.github.io/blob/master/jaanga-copyright-and-mit-license.md )
 
 This app is at an early and volatile stage. Not all licensing requirements may have been fully met let alone identified. It is the intension of the authors to play fair and all such requirements will either be met or the feature in question will turned off.
 
