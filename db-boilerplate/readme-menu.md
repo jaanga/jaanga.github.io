@@ -6,17 +6,15 @@
 </p>
 
 <!--
-<p id=uf >
-	<a href=./un-flatland/index.html >unFlatland</a>
+
+<p id=abc >
+	<a href=JavaScript:displayPage("../test-folder-abc/readme.md",abc); >test-folder-abc Read Me</a>
 </p>
 
-<p id=hw >
-	<a href=./hello-world/index.html>Hello World</a>
+<p id=def >
+	<a href=JavaScript:displayPage("../test-folder-def/readme.md",def); >test-folder-def Read Me</a>
 </p>
 
-<p id=pv >
-	<a href=./png-viewer/index.html >PNG Viewer</a>
-</p>
 -->
 
 ****
