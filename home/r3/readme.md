@@ -17,7 +17,7 @@ There is a good amount of FOSS available here - including the following projects
 * <a href="http://atechathon.github.io/" target="_blank">aTechathon</a> ~ the current 'hottie'.
 <a href="https://github.com/aTechathon/atechathon.github.io" target="_blank">Source</a>.
 
-* <a href="http://jaanga.github.io/terrain/" target="_blank">Jaanga Terrain</a> ~ The data fot the altitude above sea level of everywhere on earth to a resolution of 90 meters supplied as PNG heightmaps.
+* <a href="http://jaanga.github.io/terrain/" target="_blank">Jaanga Terrain</a> ~ The data for the altitude above sea level of everywhere on earth to a resolution of 90 meters supplied as PNG heightmaps.
 Also supplied are demo apps with source to view Jaanga Terrain data in 3D.
 <a href="https://github.com/jaanga/terrain" target="_blank">Source</a>.
 
