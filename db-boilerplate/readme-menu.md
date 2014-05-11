@@ -1,24 +1,14 @@
 [Jaanga](../../index.html ) &raquo;<br>[repo]( ../index.html ) &raquo;<br>[app]( ./index.html )
-=========================================================================================
+===
 
 <p id=rm >
 	<a href=JavaScript:displayPage("#readme.md#rm"); >Read Me</a>
-
 </p>
 
-<!--
+<i class="fa fa-external-link"></i> [Live Demo (latest)]( https://github.com/jaanga/libs/tree/gh-pages/db ) 
 
-<p id=abc >
-	<a href=JavaScript:displayPage("#test-folder-abc/readme.md#abc"); >test-folder-abc Read Me</a>
-</p>
-
-<p id=def >
-	<a href=JavaScript:displayPage("#test-folder-def/readme.md#def"); >test-folder-def Read Me</a>
-</p>
-
--->
-
-****
-
-[Source Code on GitHub]( https://github.com/jaanga/ )  
-[Copyright and License]( https://github.com/jaanga/jaanga.github.io/blob/master/jaanga-copyright-and-mit-license.md )
+<i class="fa fa-github"></i> [Source Code on GitHub]( https://github.com/jaanga/ ) 
+<br>
+<br>
+ 
+<i class="fa fa-copy"></i> [Copyright and License]( https://github.com/jaanga/jaanga.github.io/blob/master/jaanga-copyright-and-mit-license.md )
