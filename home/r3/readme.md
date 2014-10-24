@@ -1,7 +1,7 @@
 Jaanga Read Me
 ===
-[Web page view]( http://jaanga.github.io/ "View files with docBrowser" ) &nbsp;
-[Source code view]( https://github.com/jaanga/ "View files with GitHub")
+[Web page view]( https://github.com/jaanga/jaanga.github.io/home/r3/ "View files with docBrowser" ) &nbsp;
+[Source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r3 "View files with GitHub")
 
 ### Live Demo
 
