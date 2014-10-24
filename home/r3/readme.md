@@ -18,8 +18,8 @@ The name 'Jaanga' was chosen because it sounds jazzy, it is short and search res
 
 There is a good amount of FOSS available here - including the following projects:
 
-* <a href="https://github.com/jaanga/cookbook" >Cookbook</a> ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
-
+* <a href="http://jaanga.github.com/cookbook" >Cookbook</a> ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
+	* Most recent work has been here
 * <a href="http://jaanga.github.io/algesurf" >algeSurf</a> ~ mathematics with a 3D perspective.
 
 * <a href="http://jaanga.github.io/terrain/" >Terrain Data</a> ~ The data for the altitude above sea level of everywhere on earth to a resolution of 90 meters supplied as PNG heightmaps.

@@ -1,5 +1,10 @@
 Jaanga ~ Read Me
 ================
+[Web page view]( http://jaanga.github.io/home/r3/ "View files with docBrowser" ) &nbsp;
+[Source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r3 "View files with GitHub")
+
+_This read me is superseded_
+
 ## Concept
 Jaanga is the home of a variety of 3D visualization apps that are generally based around the [Three.js]( http://threejs.org ) JavaScript 3D library - a collection of tools that greatly simplifies access to [WebGL]( http://en.wikipedia.org/wiki/WebGL ) API. 
 

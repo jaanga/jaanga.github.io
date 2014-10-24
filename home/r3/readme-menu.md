@@ -17,11 +17,11 @@ _Your 3D happy-place..._
 
 [Terrain Plus]( http://jaanga.github.io/terrain-plus/index.html ) 
 
-[Gestifcation read me]( http://jaanga.github.io/gestification/index.html )  
+[Gestifcation]( http://jaanga.github.io/gestification/index.html )  
 
-[algeSurf read me]( http://jaanga.github.io/algesurf/ )  
+[algeSurf]( http://jaanga.github.io/algesurf/ )  
 
-[Urdacha read me]( http://jaanga.github.io/urdacha/ )  
+[Urdacha]( http://jaanga.github.io/urdacha/ )  
 
 [Brain of Richard]( http://jaanga.github.io/brainofrichard/ )
 
