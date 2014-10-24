@@ -11,9 +11,9 @@ _Your 3D happy-place..._
 
 [Cookbook]( http://jaanga.github.io/cookbook/index.html )
 
-[Terrain Data]( http://jaanga.github.io/terrain/index.html )  
-
 [Terrain Viewer]( http://jaanga.github.io/terrain-viewer/index.html ) 
+
+[Terrain Data]( http://jaanga.github.io/terrain/index.html )  
 
 [Terrain Plus]( http://jaanga.github.io/terrain-plus/index.html ) 
 
@@ -30,6 +30,18 @@ _Your 3D happy-place..._
 [Events]( http://jaanga.github.io/events/ )
 
 [Blode]( http://jaanga.github.io/blode/ )
+
+## Kindred Spirits
+
+<i class="fa fa-external-link"></i> [vA3C]( http://va3c.github.io/ )  
+
+<i class="fa fa-external-link"></i> [FGx]( http://fgx.github.io/ ) 
+
+<i class="fa fa-external-link"></i> [SoundViz]( http://soundviz.github.io/ )  
+
+<i class="fa fa-external-link"></i> [aTechathon]( http://atechathon.github.io/ )  
+
+<i class="fa fa-external-link"></i> [aeChack]( http://aechack.github.io/ )  
  
 <hr>
 
