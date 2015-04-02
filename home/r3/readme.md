@@ -25,11 +25,16 @@ There is a good amount of FOSS available here - including the following projects
 
 * <a href="http://jaanga.github.io/algesurf" >algeSurf</a> ~ mathematics with a 3D perspective.
 
+* <a href="http://jaanga.github.io/terrain-r2/terrain.html" >Terrain</a> ~ In the mist of a complete reconstruction
+
+<!--
+
 * <a href="http://jaanga.github.io/terrain/" >Terrain Data</a> ~ The data for the altitude above sea level of everywhere on earth to a resolution of 90 meters supplied as PNG heightmaps.
 
 * <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Viewer</a> ~ Three quite different ways of viewing the Terrain Data
 
 * <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
+-->
 
 * <a href="http://jaanga.github.io/gestification/" >Gestification</a> ~ work that involves Three.js and the Leap Motion device.
 
