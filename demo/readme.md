@@ -12,5 +12,6 @@
 #[Scripps 3D Globe]( http://jaanga.github.io/terrain-srtm30-plus-viewers/png-tms7-viewer-3d-globe-low/r3/png-tms7-viewer-3d-globe-low.html )
 #[FGx 3D Globe]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
 
+#[Array of Cubes Riding Sin Wave]( http://theo-armour.github.io/explayrimental/tumblrs/2014-11-27-2d-array-cubes-sin-wave.html
 
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo'; />
