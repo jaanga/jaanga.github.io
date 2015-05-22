@@ -16,7 +16,7 @@
 
 ---
 
-#[Art Scott Orbit Thingy]( http://heo-armour.github.io/explayrimental/art-scott/art-scott-orbit-thingy.html )
+#[Art Scott Orbit Thingy]( http://theo-armour.github.io/explayrimental/art-scott/art-scott-orbit-thingy.html )
 #[Array of Cubes Riding Sin Wave]( http://theo-armour.github.io/explayrimental/tumblrs/2014-11-27-2d-array-cubes-sin-wave.html )
 
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo'; />
