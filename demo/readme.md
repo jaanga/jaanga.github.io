@@ -3,7 +3,7 @@ Jaanga Demo
 
 <span style=display:none; >[View as web page]( http://jaanga.github.io/demo/ "View file as a web page." ) </span>  
 
-#[WikiHouse]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2.html )
+#[WikiHouse]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
 
 #[Moon Rover]( http://jaanga.github.io/terrain-r2/viewers/moon-viewer/moon-viewer-r4.html )
 
