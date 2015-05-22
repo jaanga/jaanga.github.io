@@ -5,8 +5,7 @@
 
 #[WikiHouse]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
 
-#[Moon Rover]( http://jaanga.github.io/terrain-r2/viewers/moon-viewer/moon-viewer-r4.html )
-
+#[Moon Rover]( http://jaanga.github.io/terrain-r2/viewers/moon-viewer/moon-viewer-r4-phone.html )
 
 #[algeSurf]( http://jaanga.github.io/algesurf/parametric-equations/r4/algesurf-pe-r4.html )
 
