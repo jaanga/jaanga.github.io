@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Drag and Drop Iframe as file or URL or open R1</title>
+<title>Open Three.js File Screen Capture R2</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -13,6 +13,9 @@
 		'480 x 480','480 x 320','384 x 384','320 x 240','256 x 256', '128 x 128', '64 x 64'
 	];
 
+	var fileName;
+	var xmlHttp;
+
 	init();
 
 	function init() {
@@ -21,18 +24,18 @@
 		css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
 			'h1, a { margin: 0; }' +
 			'#i { text-decoration: none; }' +
-			'#drag { border: 3px dashed black; width: 200px; height: 100px; }' +
+			'#drag { border: 3px dashed black; font-size: 36pt; }' +
 		'';
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute;';
 		menu.innerHTML = '<h2>' +
 				'<a href="" >' + document.title + '</a> - ' +
-				'<a id=i href=http://jaanga.github.io/ >ⓘ</a>' +
+				'<a id=i href=http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/ >ⓘ</a>' +
 			'</h2>' +
 			'<p>Select a size <select id=selSize onchange=updateSize() ></select> then ' +
-				'<input type=file id=inpFile onchange=readFile(this); /> or drag and drop here: ' +
-			'<span id=drag > &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;</span>&nbsp;then ' +
+				'<input type=file id=inpFile onchange=readFile(this.files[0]); /> or drag and drop here: ' +
+			'<span id=drag > &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  &nbsp; </span>&nbsp;then ' +
 			'<button onclick=grabIt(); >Grab it</button> and ' +
 			'<a id=download href="" onclick=saveIt(); ><button>Save it</button></a>' +
 			'<p><iframe id=ifr width=300 height=240 style="border: 1px solid red;" ></iframe>' +
@@ -50,15 +53,23 @@
 
 		selSize.selectedIndex = 4;
 
-//		canvas = menu.appendChild( document.createElement( 'canvas' ) );
 		canvas.style.cssText = 'border: 2px #000 solid; margin: 0 10px;';
-
 		context = canvas.getContext( '2d' );
 
 		updateSize();
 
 		drag.addEventListener( "dragover", function(e){e.preventDefault();}, true );
 		drag.addEventListener( 'drop', drop, false );
+
+		hashes = location.hash.split ( '#' );
+
+		if ( hashes.length > 1 ) {
+
+			fileName = hashes[ 1 ];
+
+			requestFile();
+
+		}
 
 	}
 
@@ -80,18 +91,17 @@
 
 		event.preventDefault(); 
 
-		var iframeUrl = event.dataTransfer.getData( 'URL' );
+		fileName = event.dataTransfer.getData( 'URL' );
 
-		if ( iframeUrl ) {
+		if ( fileName ) {
 
-			ifr.src = iframeUrl;
+			requestFile();
 
 		} else {
 
-			readFile( event.dataTransfer );
+			readFile( event.dataTransfer.files[ 0 ] );
 
 		}
-
 
 	}
 
@@ -101,24 +111,15 @@
 
 			reader.onload = function ( event ) {
 
-				contents = event.target.result;
-
-				re = /antialias: true/gi;
-
-				mat = contents.match( re );
-
-//console.log( mat );
-
-				str = 'antialias: true, preserveDrawingBuffer: true' ;
-
-				contents = contents.replace( re, str );
+				contents = preserveBuffer( event.target.result );
 
 				ifr.srcdoc = contents;
 
 				fileName = obj.files[ 0 ].name;
+
 			};
 
-			reader.readAsText( obj.files[ 0 ] );
+			reader.readAsText( obj );
 
 	}
 
@@ -139,13 +140,9 @@
 
 	function saveIt() {
 
-//		var name = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
-
 		var slash = navigator.platform === "Win32" ? '\\' : '/' ;
 
-		var name = fileName; //.substr( 1 + fileName.lastIndexOf( slash ) );
-
-console.log( fileName, name )
+		var name = fileName.substr( 1 + fileName.lastIndexOf( slash ) );
 
 		name = name.replace(/\.html|\.json|\.js|\.obj|\.stl/gi,'-') + imageSize.replace( / /gi,'' ) + '.png';
 
@@ -154,6 +151,37 @@ console.log( fileName, name )
 		download.download = name;
 
 		download.href = c2du;
+
+	}
+
+	function requestFile() {
+
+		xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.onreadystatechange = callback;
+		xmlHttp.send( null );
+
+	}
+
+	function callback() {
+
+		if ( xmlHttp.readyState != 4  ) { return; }
+
+		contents = preserveBuffer( xmlHttp.responseText );
+
+		ifr.srcdoc = contents;
+
+	}
+
+	function preserveBuffer( contents ) {
+
+		regex = /antialias: true/gi;
+
+		mat = contents.match( regex );
+
+		str = 'antialias: true, preserveDrawingBuffer: true' ;
+
+		return contents.replace( regex, str );
 
 	}
 
