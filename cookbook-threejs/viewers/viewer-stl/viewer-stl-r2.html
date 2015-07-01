@@ -95,7 +95,7 @@
 // http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/#http://va3c.github.io/viewer/samples/NPP_16.stl
 
 		var loader = new THREE.STLLoader();
-
+		loader.crossOrigin = 'anonymous';
 		loader.load( fileName, function ( geometry ) {
 
 			addMesh( geometry );
@@ -114,7 +114,9 @@
 
 		reader.onload = function ( event ) {
 
-			geometry = new THREE.STLLoader().parse( reader.result );
+			loader = new THREE.STLLoader()
+			loader.crossOrigin = 'anonymous';
+			geometry = loader.parse( reader.result );
 
 			addMesh( geometry );
 

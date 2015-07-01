@@ -8,6 +8,12 @@ Viewers Read Me
 
 [Viewer STL]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/ )
 
+Loads STL files by
+
+* Open file dialog
+* Drag and drop from local drive
+* Drag and drop from browser tag
+* Open using URL in location.hash 
 
 
 ## Contacts
