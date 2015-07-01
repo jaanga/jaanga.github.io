@@ -94,7 +94,7 @@
 
 		if ( fileName ) {
 
-// #http://va3c.github.io/viewer/samples/NPP_16.stl
+
 
 			loadFileSTLByURL( fileName );
 
@@ -108,8 +108,9 @@
 
 	function loadFileSTLByURL( fileName ) {
 
-		var loader = new THREE.STLLoader();
+// http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/viewer-stl-r2.html#http://va3c.github.io/viewer/samples/NPP_16.stl
 
+		var loader = new THREE.STLLoader();
 
 		loader.load( fileName, function ( geometry ) {
 			loader.crossOrigin = 'anonymous';
@@ -126,9 +127,12 @@
 
 			}
 
+			scene.remove( mesh );
 			mesh = new THREE.Mesh( geometry, material );
-
 			scene.add( mesh );
+
+			msg.innerHTML = 'name: ' + fileName + '<br>' +
+			'';
 
 		} );
 
@@ -158,7 +162,6 @@
 
 			scene.remove( mesh );
 			mesh = new THREE.Mesh( geometry, material );
-
 			scene.add( mesh );
 
 		};
