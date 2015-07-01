@@ -1,21 +1,14 @@
 
-[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  
-Viewers Read Me
+[Jaanga]( http://jaanga.github.io// ) &raquo;
+Three.js Cookbook Read Me
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
 ## Projects
 
-[Viewer STL]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/ )
+[Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ )
 
-Loads STL files by
-
-* Open file dialog
-* Drag and drop from local drive
-* Drag and drop from browser tag // still with CORS issues
-* Open using URL in location.hash 
-
-Small and fast!
+[Viewers](  http://jaanga.github.io/cookbook-threejs/viewers/ ) 
 
 
 ## Contacts
