@@ -12,6 +12,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js ></script>
 <script>
 
+
 	var css, info, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
@@ -50,6 +51,19 @@
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 		scene = new THREE.Scene();
+
+/*
+// ground box
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -10, 0 );
+		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 50, 10 );
+		mesh.position.set( 0, -9, 0 );
+		scene.add( mesh );
+*/
 
 // axes
 		var axisHelper = new THREE.AxisHelper( 50 );
@@ -98,7 +112,26 @@
 
 		loader.load( fileName, function ( geometry ) {
 
-			addMesh( geometry );
+/*
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals();
+
+			if (geometry.hasColors) {
+
+				material = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+
+			} else {
+
+				material = new THREE.MeshNormalMaterial();
+
+			}
+
+			scene.remove( mesh );
+			mesh = new THREE.Mesh( geometry, material );
+			scene.add( mesh );
+*/
+
+addMesh( geometry );
 
 			msg.innerHTML = 'name: ' + fileName + '<br>' +
 			'';
@@ -114,15 +147,28 @@
 
 		reader.onload = function ( event ) {
 
-			geometry = new THREE.STLLoader().parse( reader.result );
-
-			addMesh( geometry );
+			output = reader.result;
 
 			msg.innerHTML = 'name: ' + file.name + '<br>' +
 				'size: ' + file.size + '<br>' +
 				'type: ' + file.type + '<br>' +
 				'modified: ' + file.lastModifiedDate +
 			'';
+
+			geometry = new THREE.STLLoader().parse( reader.result );
+/*
+			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals();
+
+			material = new THREE.MeshNormalMaterial();
+
+			scene.remove( mesh );
+			mesh = new THREE.Mesh( geometry, material );
+			scene.add( mesh );
+*/
+
+addMesh( geometry );
 
 		};
 
