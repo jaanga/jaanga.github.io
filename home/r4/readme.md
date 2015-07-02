@@ -28,13 +28,13 @@ There is a good amount of FOSS available here - including the following projects
 
 * [Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
-* [Three.js Cookbook]( http://jaanga.github.com/cookbook-threejs ) ~ just started
+* ( http://jaanga.github.com/cookbook-threejs ) ~ just started
 	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
-* <a href="http://jaanga.github.com/cookbook" >Cookbook</a> ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
+* [ ![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( (http://jaanga.github.com/cookbook ) ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
 	* Most recent work has been here
 
-* ![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png ) [SP500]( http://jaanga.github.io/sp500/index.html )
+* [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html ) ~ All 500 stocks all at once in 3D with frequent updates
 
 * <a href="http://jaanga.github.io/algesurf" >algeSurf</a> ~ mathematics with a 3D perspective.
 
@@ -122,3 +122,4 @@ In no event shall the authors or copyright holders be liable for any claim, dama
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >❦</center>
 ===
+<style> img { border: 1px solid black; } </style>
