@@ -34,7 +34,7 @@ There is a good amount of FOSS available here - including the following projects
 * <a href="http://jaanga.github.com/cookbook" >Cookbook</a> ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
 	* Most recent work has been here
 
-* [SP500]( http://jaanga.github.io/sp500/index.html )
+* ![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png ) [SP500]( http://jaanga.github.io/sp500/index.html )
 
 * <a href="http://jaanga.github.io/algesurf" >algeSurf</a> ~ mathematics with a 3D perspective.
 
