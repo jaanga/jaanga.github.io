@@ -28,7 +28,7 @@ There is a good amount of FOSS available here - including the following projects
 
 * [Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
-* ( http://jaanga.github.com/cookbook-threejs ) ~ just started
+* [Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs ) ~ just started
 	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
 * [ ![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( (http://jaanga.github.com/cookbook ) ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
@@ -49,7 +49,7 @@ There is a good amount of FOSS available here - including the following projects
 * <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
 -->
 
-* <a href="http://jaanga.github.io/gestification/" >Gestification</a> ~ work that involves Three.js and the Leap Motion device.
+* [ ![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification]( http://jaanga.github.io/gestification/ ) ~ work that involves Three.js and the Leap Motion device.
 
 * <a href="http://jaanga.github.io/urdacha" >Urdacha</a> ~ entry for the Swiss Center _Urban Data Challenge_.
 
