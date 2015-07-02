@@ -29,7 +29,7 @@ There is a good amount of FOSS available here - including the following projects
 * [Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
 * [Three.js Cookbook]( http://jaanga.github.com/cookbook-threejs ) ~ just started
-	* [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) ~ a file or two
+	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
 * <a href="http://jaanga.github.com/cookbook" >Cookbook</a> ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
 	* Most recent work has been here

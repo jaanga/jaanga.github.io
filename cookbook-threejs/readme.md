@@ -1,5 +1,5 @@
 
-[Jaanga]( http://jaanga.github.io// ) &raquo;
+[Jaanga]( https://github.com/jaanga/jaanga.github.io ) &raquo;
 Three.js Cookbook Read Me
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>

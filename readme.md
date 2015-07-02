@@ -1,10 +1,12 @@
-<<<<<<< HEAD
-=======
-Jaanga ~ Read Me ~ Deprecated
+Jaanga ~ Read Me
 ================
-[Web page view]( http://jaanga.github.io/home/r3/ "View files with docBrowser" ) &nbsp;
-[Source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r3 "View files with GitHub")
+[Read Me R3 web page view]( http://jaanga.github.io/home/r3/ "View files with docBrowser" )  
+[Read Me R3 source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r3 "View files with GitHub")
 
+The Jaanga Read Me - which is also the source of the web page document - is updated fairly frequently.
+Click on one of the above links to go to the read me document for the current release.
+
+<!--
 _This read me is superseded_
 
 ## Concept
@@ -48,6 +50,7 @@ Apps that use Three.js and have the some of the same developers.
 ## Outside Links
 See also the blog at [jaanga.com](http://jaanga.com ) 
 
+-->
 
 ## Copyright Notice and License
 [ Copyright Notice and License ]( https://github.com/jaanga/jaanga.github.io/copyright-notice-and-license.md )
@@ -152,4 +155,4 @@ See also the blog at [jaanga.com](http://jaanga.com )
 <br>
 <center><h2>&#x2766;</h2></center>
 
->>>>>>> origin/master
+
