@@ -26,9 +26,9 @@ The name 'Jaanga' was chosen because it sounds jazzy, it is short and search res
 ## Projects
 There is a good amount of FOSS available here - including the following projects:
 
-* [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
+* [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
-* [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs ) ~ just started
+* [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs ) ~ just started
 	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
 * [![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( http://jaanga.github.com/cookbook ) ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
@@ -57,7 +57,9 @@ There is a good amount of FOSS available here - including the following projects
 
 ## Spin-Offs
 
-* [![WikiHouse]( http://jaanga.github.io/home/images/wkikihouse-studio2-240x180.png )<br>WikiHouse]( http://wikihouse.github.io/viewer-experiments/ )
+* [![WikiHouse]( http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png )<br>WikiHouse]( http://wikihouse.github.io/viewer-experiments/ )
+
+* [![Half Sheet Table]( http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png )<br>OpenDesk]( http://opendesk.github.io/design-playground/ ) ~ a global platform for local making. You may use the to download, make and buy work space furniture.
 
 * [vA3C]( http://va3c.github.io/ )  
 
