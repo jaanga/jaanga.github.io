@@ -1,14 +1,14 @@
-
-[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  
+[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  
 Utilities Read Me
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
 ## Projects
 
-[Open File Capture Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/ )
+## [Open File Capture Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/ )
+[Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/ )
 
-
+* Load a Three.js HTML file, select size of image, update the view, capture the screen image and save to file
 
 ## Contacts
 

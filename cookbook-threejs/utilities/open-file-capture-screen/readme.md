@@ -1,17 +1,30 @@
-
-[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  [Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ ) &raquo;
-Open File Capture Screen Read Me
+[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  [Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ ) &raquo;
+[Open File Capture Screen Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/ )
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
-## Projects
 
-[Open File Capture Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/ )
+<iframe src="http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/index.html" width=100% height=500px ></iframe>  
+_Open File Capture Screen - latest revision_ / [Full Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/index.html  )
 
-## Road Map
+## Features
 
-* fix filename save issues
-* load Three.js for files that have Thrre.js as a relative link
+* Load files via:
+
+	* Open file dialog
+	* Drag and drop from local drive
+	* Drag and drop from browser tag // still with CORS issues
+	* Open using URL in location.hash 
+* Select size of image from dropdown list
+* Zoom, and rotate the model
+* Grab the image you want
+* Save the image to file as a PNG
+	* Logical filename is pre-defined for you
+
+##Issues / Road Map
+
+* There are still a number of CORS issues to be resolved
+* load Three.js for files that have Three.js as a relative link
 
 ## Contacts
 
@@ -36,6 +49,12 @@ In no event shall the authors or copyright holders be liable for any claim, dama
 
 
 ## Change Log
+
+2015-07-02 ~ Theo
+
+* Many fixes
+* fix file naming issues
+* Update read me
 
 2015-06-28 ~ Theo
 

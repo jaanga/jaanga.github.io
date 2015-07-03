@@ -145,9 +145,9 @@
 
 	function saveIt() {
 
-		var slash = navigator.platform === "Win32" ? '\\' : '/' ;
+		slash = navigator.platform === 'Win32' ? '\\' : '/' ;
 
-		var name = fileName.substr( 1 + fileName.lastIndexOf( slash ) );
+		name = fileName.substr( 1 + fileName.lastIndexOf( slash ) );
 
 		name = name.replace(/\.html|\.json|\.js|\.obj|\.stl/gi,'-') + imageSize.replace( / /gi,'' ) + '.png';
 
