@@ -5,7 +5,7 @@ Utilities Read Me
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
 ## Projects
 
-## [Open File Capture Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/ )
+## [Open File Capture Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/ )
 [Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/ )
 
 * Load a Three.js HTML file, select size of image, update the view, capture the screen image and save to file
