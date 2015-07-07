@@ -38,7 +38,7 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf ) ~ mathematics with a 3D perspective.
 
-* [![terrain sf]( terrain-sf-240x180.png )<br>Terrain]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction
+* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction
 
 <!--
 
@@ -61,7 +61,7 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![Half Sheet Table]( http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png )<br>OpenDesk]( http://opendesk.github.io/design-playground/ ) ~ a global platform for local making. You may use the to download, make and buy work space furniture.
 
-* [![va3c r1]( http://jaanga.github.io/home/images/va3c-r1-240x180.png)<br>vA3C]( http://va3c.github.io/ )  
+* [![va3c r1]( http://jaanga.github.io/home/images/va3c-r1-240x180.png )<br>vA3C]( http://va3c.github.io/ )  
 
 * [![FGx]( http://jaanga.github.io/home/images/6-FGx.png )<br>FGx]( http://fgx.github.io/ ) 
 
