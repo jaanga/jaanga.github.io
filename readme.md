@@ -1,7 +1,7 @@
 Jaanga ~ Read Me
 ================
-[Read Me R3 web page view]( http://jaanga.github.io/home/r3/ "View files with docBrowser" )  
-[Read Me R3 source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r3 "View files with GitHub")
+[Read Me R4 web page view]( http://jaanga.github.io/home/r4/  )  
+[Read Me R4 source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4/ "View files with GitHub")
 
 The Jaanga Read Me - which is also the source of the web page document - is updated fairly frequently.
 Click on one of the above links to go to the read me document for the current release.

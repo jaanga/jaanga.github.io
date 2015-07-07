@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Template Three.js Basic R1</title>
+<title>Angles Normalize R1</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -26,6 +26,7 @@
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'margin: 0 20px; position: absolute; ';
 		info.innerHTML = '<h1><a href="" >' + document.title + '</a></h1>' +
+			'<p><button onclick=setNormal(); >Normalize</button></p>' +
 			'<div id=msg ></div>' +
 		'';
 
@@ -62,7 +63,41 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
+// this app
 
+		geometry = new THREE.BoxGeometry( 20, 20, 10 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 20, 20, -30 ) );
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI / 7 ) );
+		material = new THREE.MeshNormalMaterial( { opacity: 0.7, side: THREE.DoubleSide, transparent: true });
+		mesh = new THREE.Mesh( geometry, material );
+
+		scene.add( mesh );
+//		scene.add( new THREE.EdgesHelper( mesh ) );
+
+
+	}
+
+	function setNormal() {
+
+		geometry.center();
+
+		pt1 = geometry.vertices[ 0 ];
+		pt2 = geometry.vertices[ 2 ];
+
+		vectorDelta = pt2.clone().sub( pt1 );
+		angle = Math.atan2( vectorDelta.y, vectorDelta.x );
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( - angle ) );
+
+		geometry.computeBoundingBox();
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( - geometry.boundingBox.min.x, - geometry.boundingBox.min.y, - geometry.boundingBox.min.z ) );
+
+//		geometry.computeFaceNormals();
+//		geometry.computeVertexNormals();
+
+		mesh.geometry.verticesNeedUpdate = true;  
+//		mesh.geometry.normalsNeedUpdate = true;
 
 	}
 
