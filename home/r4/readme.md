@@ -66,9 +66,9 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![FGx]( http://jaanga.github.io/home/images/6-FGx.png )<br>FGx]( http://fgx.github.io/ ) 
 
-* [![soundviz]( http://jaanga.github.io/home/images/soundvix-240x180.png )<br>SoundViz]( http://soundviz.github.io/ )  
+* [![soundviz]( http://jaanga.github.io/home/images/soundviz-240x180.png )<br>SoundViz]( http://soundviz.github.io/ )  
 
-* [![atechathon]( http://jaanga.github.io/home/images/atechathon-240-180.png )<br>aTechathon]( http://atechathon.github.io/ )  
+* [![atechathon]( http://jaanga.github.io/home/images/atechathon-240x180.png )<br>aTechathon]( http://atechathon.github.io/ )  
 
 * [![aechack]( http://jaanga.github.io/home/images/aechack-240x180.png)<br>aeChack]( http://aechack.github.io/ )  
 
