@@ -36,7 +36,8 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html ) ~ All 500 stocks all at once in 3D with frequent updates
 
-* [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf ) ~ mathematics with a 3D perspective.
+* [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf )
+	* mathematics with a 3D perspective.
 
 * [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction
 
@@ -65,11 +66,11 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![FGx]( http://jaanga.github.io/home/images/6-FGx.png )<br>FGx]( http://fgx.github.io/ ) 
 
-* [SoundViz]( http://soundviz.github.io/ )  
+* [![soundviz]( http://jaanga.github.io/home/images/soundvix-240x180.png )<br>SoundViz]( http://soundviz.github.io/ )  
 
-* [aTechathon]( http://atechathon.github.io/ )  
+* [![atechathon]( http://jaanga.github.io/home/images/atechathon-240-180.png )<br>aTechathon]( http://atechathon.github.io/ )  
 
-* [aeChack]( http://aechack.github.io/ )  
+* [![aechack]( http://jaanga.github.io/home/images/aechack-240x180.png)<br>aeChack]( http://aechack.github.io/ )  
 
 ## Contacts
 
