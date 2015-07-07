@@ -21,11 +21,14 @@
 	function init() {
 
 		css = document.head.appendChild( document.createElement('style') );
-		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' ;
+		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'#i {text-decoration: none; }' +
+		'';
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'margin: 0 20px; position: absolute; ';
-		info.innerHTML = '<h1><a href="" >' + document.title + '</a></h1>' +
+		info.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
+			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a><h2>' +
 			'<div id=msg ></div>' +
 		'';
 
