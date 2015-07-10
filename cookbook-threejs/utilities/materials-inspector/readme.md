@@ -1,20 +1,27 @@
-[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  
-Utilities Read Me
+[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  [Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ ) &raquo;
+[Materials Inspector Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/materials-inspector/ )
 ===
-<span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
-## Projects
 
-## [Materials Inspector]( http://jaanga.github.io/cookbook-threejs/utilities/materials-inspector/latest/ )
-[Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/materials-inspector/ )
+<span style=display:none; >[View as web page]( http://jaanga.github.io/cookbook-threejs/utilities/materials-inspector/ "View file as a web page." ) </span>
+<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/cookbook-threejs/utilities/'; />
 
-* Apply materials to a variety of objects to see the colors and other parameters interact
+<iframe src="http://XXX.github.io/XXX/latest/index.html" width=100% height=500px ></iframe>  
+_XXX - latest revision_ / [Full Screen]( http://XXX.github.io/latest/index.html )
 
-## [Open File Capture Screen]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/latest/ )
-[Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/open-file-capture-screen/ )
+## Concept
 
-* Load a Three.js HTML file, select size of image, update the view, capture the screen image and save to file
+### Mission  
+<!-- a statement of a rationale, applicable now as well as in the future -->
 
+* Test out a wide variety of material parameters quickly and easily 
+
+### Vision  
+<!--  a descriptive picture of a desired future state -->
+
+
+## Features
+
+## Road Map
 
 ## Contacts
 
@@ -22,7 +29,7 @@ jaanga@googlegroups.com
 
 ##Copyright
 
-Copyright Â© 2015 Jaanga authors
+Copyright © 2015 Jaanga authors
 
 
 ## License
@@ -43,3 +50,9 @@ In no event shall the authors or copyright holders be liable for any claim, dama
 2015-06-28 ~ Theo
 
 * First commit
+
+
+
+<center>
+# &#x2766;
+</center>
