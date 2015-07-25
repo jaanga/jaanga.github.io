@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Template Three.js Basic R1</title>
+<title>materials-lights-things</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -9,8 +9,11 @@
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.rawgit.com/mrdoob/texgen.js/master/build/texgen.min.js ></script>
+<script src=materials-lights.js ></script>
+<script src=draw-things.js ></script>
 <script>
-
+	var defaultMaterial = 36;
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -30,6 +33,8 @@
 		menu.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
 			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
 			'<div id=info ></div>' +
+			'<p><input type=checkbox id=chkEnvMap checked /> envMap</p>' +
+			'<p><select id=selMaterial></select></p>' +
 		'';
 
 		stats = new Stats();
@@ -50,21 +55,36 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
-// assets
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -10, 0 );
-		scene.add( mesh );
+		addLights();
 
-		mesh = new THREE.GridHelper( 50, 10 );
-		mesh.position.set( 0, -9, 0 );
-		scene.add( mesh );
+		material = getMaterial();
 
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		for ( var i = 0; i < materialsKeys.length ; i++ ) {
+
+			if ( materialsKeys[ i ].substr( 0, 1 ) === '#' ) {
+
+				node = document.createElement( 'optgroup' );
+				selMaterial.appendChild( node );
+				node.label = materialsKeys[ i ].substr( 1 );
+
+			} else {
+
+				node = document.createElement( 'option' );
+				selMaterial.appendChild( node );
+				node.text = materialsKeys[ i ];
+				if ( materialsKeys[ defaultMaterial ] === materialsKeys[ i ] ) { selMaterial.selectedIndex = i; }
+			}
+
+		}
+		selMaterial.selectedIndex = defaultMaterial; //materialsKeys.indexOf( materialsKeys[ defaultMaterial ] );
+
+		selMaterial.onchange = function() { updateMaterial( selMaterial.value ); }
+
+		drawThings();
 
 	}
+
+
 
 	function onWindowResize() {
 

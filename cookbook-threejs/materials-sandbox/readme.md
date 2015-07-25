@@ -23,6 +23,10 @@ _XXX - latest revision_ / [Full Screen]( http://XXX.github.io/latest/index.html 
 
 ## Road Map
 
+* Open or drag and drop files to inspect
+
+
+
 ## Contacts
 
 jaanga@googlegroups.com

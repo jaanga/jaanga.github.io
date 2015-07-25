@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Materials Inspector R1</title>
+<title>Materials Sandbox R1</title>
 <meta charset=utf-8 />
 <meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
 </head>
@@ -12,7 +12,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js ></script>
 <script>
 
-	var index = 21;
+	var index = 4;
 
 	var info, renderer, scene, camera, controls, stats, light;
 	var geometry, material, mesh, helper;
@@ -25,15 +25,18 @@
 
 	function init() {
 
-
 		var css = document.head.appendChild( document.createElement('style') );
 		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
 			'h2, h3, h4 { margin: 0; }' +
+			'textarea { font-size: 12pt; }' +
 		'';
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'left: 20px; position: absolute; top: 0; ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<p id=materialKey ></p>' +
+			'<p><textarea id=txtMaterial cols=50 rows=5 ></textarea><br>' +
+				'<button onclick=updateDisplay(); >Update the display</button></p>' +
 			'<p><input type=range id=inpOpacity min=0 max=1 step=0.05 value=1 onchange=updateMaterial(); /> <output id=outOpacity >1</output> Opacity</p>' +
 			'<p><input type=range id=inpShininess min=1 max=900 step=1 value=30 onchange=updateMaterial(); /> <output id=outShininess >30</output> Shininess</p>' +
 			'<p><input type=color id=inpColor onchange=updateMaterial(); /> <output id=outColor ></output> Color</p>' +
@@ -47,8 +50,8 @@
 			'<input type="radio" onchange=inpColor.value="#00ff00";updateMaterial(); name="color" /> Green &nbsp;<input type="radio" onchange=inpColor.value="#ff00ff";updateMaterial(); name="color" /> Magenta<br>' +
 			'<input type="radio" onchange=inpColor.value="#0000ff";updateMaterial(); name="color" /> Blue &nbsp; <input type="radio" onchange=inpColor.value="#00ffff";updateMaterial();name="color" /> Cyan<br>' +
 
-			'<p id=msg1 ></p>' +
-			'<div id=materials style=height:500px;overflow:auto;width:300px; ></div>' +
+
+			'<div id=materials style=height:200px;overflow:scroll;width:300px; ></div>' +
 		'';
 
 		stats = new Stats();
@@ -114,11 +117,11 @@
 		matLib = {
 			'<Standard': '<h2>Standard</h2>',
 // http://mrdoob.github.io/three.js/examples/#webgl_materials_cars
-			"Orange": 	new THREE.MeshLambertMaterial( { color: 0xff6600, ambient: 0xff2200, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.3 } ),
-			"Blue": 	new THREE.MeshLambertMaterial( { color: 0x001133, ambient: 0x001133, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.3 } ),
-			"Red": 		new THREE.MeshLambertMaterial( { color: 0x660000, ambient: 0x330000, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.25 } ),
-			"Black": 	new THREE.MeshLambertMaterial( { color: 0x000000, ambient: 0x000000, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.15 } ),
-			"White":	new THREE.MeshLambertMaterial( { color: 0xffffff, ambient: 0x666666, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.25 } ),
+			"Orange": 	new THREE.MeshLambertMaterial( { color: 0xff6600, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.3 } ),
+			"Blue": 	new THREE.MeshLambertMaterial( { color: 0x001133, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.3 } ),
+			"Red": 		new THREE.MeshLambertMaterial( { color: 0x660000, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.25 } ),
+			"Black": 	new THREE.MeshLambertMaterial( { color: 0x000000, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.15 } ),
+			"White":	new THREE.MeshLambertMaterial( { color: 0xffffff, envMap: textureCube, combine: THREE.MixOperation, reflectivity: 0.25 } ),
 
 			"Carmine": 	new THREE.MeshPhongMaterial( { color: 0x770000, specular:0xffaaaa, envMap: textureCube, combine: THREE.MultiplyOperation } ),
 			"Gold": 	new THREE.MeshPhongMaterial( { color: 0xaa9944, specular:0xbbaa99, shininess:50, envMap: textureCube, combine: THREE.MultiplyOperation } ),
@@ -126,8 +129,8 @@
 			"Chrome": 	new THREE.MeshPhongMaterial( { color: 0xffffff, specular:0xffffff, envMap: textureCube, combine: THREE.MultiplyOperation } ),
 
 			'<metal' : '<h3>metal</h3>',
-			"Orange metal": new THREE.MeshLambertMaterial( { color: 0xff6600, ambient: 0xff2200, envMap: textureCube, combine: THREE.MultiplyOperation } ),
-			"Blue metal": 	new THREE.MeshLambertMaterial( { color: 0x001133, ambient: 0x002266, envMap: textureCube, combine: THREE.MultiplyOperation } ),
+			"Orange metal": new THREE.MeshLambertMaterial( { color: 0xff6600, envMap: textureCube, combine: THREE.MultiplyOperation } ),
+			"Blue metal": 	new THREE.MeshLambertMaterial( { color: 0x001133, envMap: textureCube, combine: THREE.MultiplyOperation } ),
 			"Red metal": 	new THREE.MeshLambertMaterial( { color: 0x770000, envMap: textureCube, combine: THREE.MultiplyOperation } ),
 			"Green metal": 	new THREE.MeshLambertMaterial( { color: 0x007711, envMap: textureCube, combine: THREE.MultiplyOperation } ),
 			"Black metal":	new THREE.MeshLambertMaterial( { color: 0x222222, envMap: textureCube, combine: THREE.MultiplyOperation } ),
@@ -269,6 +272,7 @@
 		"Normal Wireframe":
 			new THREE.MeshNormalMaterial( { shading: THREE.FlatShading, side: 2, wireframe: true } ),
 
+
 		"<Basic":
 			'<h4>Basic</h4>',
 		"Basic Defaults":
@@ -358,7 +362,94 @@
 		}
 
 
-		matKeys = Object.keys( matLib2 );
+		matLib3 = {
+
+		'<Normal' : '<h4>Normal</h4>',
+		"Normal Smooth":
+			'new THREE.MeshNormalMaterial( { shading: THREE.SmoothShading, side: 2 })',
+		'Normal Flat':
+			'new THREE.MeshNormalMaterial( { shading: THREE.FlatShading, side: 2 } )',
+		'Normal Wireframe':
+			'new THREE.MeshNormalMaterial( { shading: THREE.FlatShading, side: 2, wireframe: true } )',
+
+"Phong Red Plastic": 
+'new THREE.MeshPhongMaterial( { color: 0xff0000,  emissive: 0x330000, metal: true, shininess: 250, specular: 0xff5555} )',
+
+// http://mrdoob.github.io/three.js/examples/#webgl_geometry_large_mesh
+			'red': 'new THREE.MeshPhongMaterial( { emissive: 0x030303, color: 0x060606, specular: 0x990000, shininess: 30 } )',
+			'gold': 'new THREE.MeshPhongMaterial( { emissive: 0x030303, color: 0x111111, specular: 0xffaa00, shininess: 10 } )',
+			'white': 'new THREE.MeshPhongMaterial( { emissive: 0x030303, color: 0x555555, specular: 0x666666, shininess: 10 } )',
+
+		"<Basic":
+			'<h4>Basic</h4>',
+		"Basic Defaults":
+			'new THREE.MeshBasicMaterial()',
+		"Basic Red":
+			'new THREE.MeshBasicMaterial( { color: 0xff0000 } )',
+
+		"Basic Green":
+			'new THREE.MeshBasicMaterial( { color: 0x00ff00 } )',
+
+		"Basic Blue":
+			'new THREE.MeshBasicMaterial( { color: 0x0000ff } )',
+
+		"Basic Magenta":
+			'new THREE.MeshBasicMaterial( { color: 0xff00ff } )',
+
+		"Basic Yellow":
+			'new THREE.MeshBasicMaterial( { color: 0xffff00 } )',
+
+		"Basic Cyan":
+			'new THREE.MeshBasicMaterial( { color: 0x00ffff } )',
+
+		"<Lambert":
+			'<h4>Lambert</h4>',
+		"Lambert Defaults":
+			'new THREE.MeshLambertMaterial()',
+
+		"Lambert Red":
+			'new THREE.MeshLambertMaterial( { color: 0xff0000 } )',
+
+		"Lambert Green":
+			'new THREE.MeshLambertMaterial( { color: 0x00ff00 } )',
+
+		"Lambert Blue":
+			'new THREE.MeshLambertMaterial( { color: 0x0000ff } )',
+
+		"Lambert Magenta":
+			'new THREE.MeshLambertMaterial( { color: 0xff00ff } )',
+
+		"Lambert Yellow":
+			'new THREE.MeshLambertMaterial( { color: 0xffff00 } )',
+
+		"Lambert Cyan":
+			'new THREE.MeshLambertMaterial( { color: 0x00ffff } )',
+
+		"<Phong":
+			'<h4>Phong</h4>',
+		"Phong Defaults":
+			'new THREE.MeshPhongMaterial()',
+		"Phong Red":
+			'new THREE.MeshPhongMaterial( { color: 0xff0000 } )',
+
+		"Phong Green":
+			'new THREE.MeshPhongMaterial( { color: 0x00ff00 } )',
+
+		"Phong Blue":
+			'new THREE.MeshPhongMaterial( { color: 0x0000ff } )',
+
+		"Phong Magenta":
+			'new THREE.MeshPhongMaterial( { color: 0xff00ff } )',
+
+		"Phong Yellow":
+			'new THREE.MeshPhongMaterial( { color: 0xffff00 } )',
+
+		"Phong Cyan":
+			'new THREE.MeshPhongMaterial( { color: 0x00ffff } )'
+
+		}
+
+		matKeys = Object.keys( matLib3 );
 
 // find a random key that is not a title
 
@@ -375,10 +466,26 @@
 		setMaterial( index );
 
 
+		txt = '';
+
+		for ( var i = 0; i < matKeys.length; i++ ) {
+
+			if ( matKeys[ i ].substr( 0, 1 ) === '<' ) {
+
+				txt += matLib2[ matKeys[ i ] ];
+
+			} else {
+
+				txt += '<a href=# onclick=setMaterial(' + i + '); >' + matKeys[ i ] + '</a><br>';
+
+			}
+
+		}
+
+		materials.innerHTML = txt;
+
+
 // Ground Plane
-
-
-
 		geometry = new THREE.BoxGeometry( 150, 5, 200 );
 		ground = new THREE.Mesh( geometry, material );
 		ground.position.set( 0, -1, 0 );
@@ -416,6 +523,7 @@
 		scene.add( cube );
 */
 
+// stl
 		var loader = new THREE.STLLoader();
 		loader.crossOrigin = 'anonymous';
 		loader.load( 'NPP_16.stl', function ( geometry ) {
@@ -438,8 +546,8 @@
 		torus.receiveShadow = true;
 		scene.add( torus );
 
+// function
 		geometry = new THREE.PlaneBufferGeometry( 1, 1, 99, 99 );
-
 		vertices = geometry.attributes.position.array;
 
 		var i = 2;
@@ -447,7 +555,6 @@
 			for ( var y = 0; y < 100; y++ ) {
 
 				vertices[ i ] = Math.sin( x * 0.08 ) * Math.sin( y * 0.08 )
-
 				i += 3;
 
 			}
@@ -484,36 +591,33 @@
 			scene.add( mesh );
 		} );
 
+	}
 
-		txt = '';
+	function updateDisplay() {
 
-		for ( var i = 0; i < matKeys.length; i++ ) {
+		material = eval( txtMaterial.value );
 
-			if ( matKeys[ i ].substr( 0, 1 ) === '<' ) {
+		scene.traverse( function ( child ) {
 
-				txt += matLib2[ matKeys[ i ] ];
+			if ( child instanceof THREE.Mesh ) {
 
-			} else {
-
-				txt += '<a href=# onclick=setMaterial(' + i + '); >' + matKeys[ i ] + '</a><br>';
+				child.material = material;
 
 			}
 
-		}
-
-		materials.innerHTML = txt;
+		} );
 
 	}
 
-	function setMaterial( key ) {
+	function setMaterial( index ) {
 
-		material = matLib2[ matKeys[ key ] ];
+		material = eval( matLib3[ matKeys[ index ] ] );
 
 		outOpacity = inpOpacity.value = material.opacity;
 		outShininess.value = inpShininess.value = material.shininess ? material.shininess : 30;
 
 		inpColor.value = material.color ? '#' + material.color.getHexString() : inpColor.value ;
-		inpEmissive.value = material.emissve ? '#' + material.emissve.getHexString() : '#000000' ;
+		inpEmissive.value = material.emissive ? '#' + material.emissive.getHexString() : '#000000' ;
 		inpSpecular.value = material.specular ? '#' + material.specular.getHexString() : '#000000' ;
 
 		scene.traverse( function ( child ) {
@@ -526,35 +630,58 @@
 
 		} );
 
-		msg1.innerHTML = 'Currently: ' + matKeys[ key ];
+		materialKey.innerHTML = 'Current material: ' + matKeys[ index ];
+
+		txtMaterial.value = matLib3[ matKeys[ index ] ];
 
 	}
 
 	function updateMaterial() {
 
-		material.opacity = parseFloat( inpOpacity.value );
-		outOpacity.value = inpOpacity.value;
-		material.transparent = true;
+		txt = 'new THREE.' + material.type + '( { ' ;
 
-		material.shininess = parseFloat( inpShininess.value );
-		outShininess.value = inpShininess.value;
 
-		material.color.setHex( inpColor.value.replace('#', '0x') );
-		outColor.value = inpColor.value;
 
-		if ( material.emissive ) {
+		if ( material.color && material.color.getHexString() !== 'ffffff' ) {
 
-			material.emissive.setHex( inpEmissive.value.replace('#', '0x') );
+			material.color.setHex( inpColor.value.replace( '#', '0x') );
+			outColor.value = inpColor.value;
+			txt += 'color: 0x' + material.color.getHexString() + ', ';
+
 
 		}
-		outEmissive.value = inpEmissive.value;
 
-		if ( material.specular ) {
+		if ( material.emissive && inpEmissive.value !== '#000000' ) {
+
+			material.emissive.setHex( inpEmissive.value.replace('#', '0x' ) );
+			txt += 'emissive: 0x' + material.emissive.getHexString() + ', ';
+			outEmissive.value = inpEmissive.value;
+
+		}
+
+		if ( material.specular && inpSpecular.value !== '#000000' ) {
 
 			material.specular.setHex( inpSpecular.value.replace('#', '0x') );
+			txt += 'specular: 0x' + material.specular.getHexString() + ', ';
+			outSpecular.value = outSpecular.value;
 
 		}
-		outSpecular.value = inpSpecular.value;
+
+		if ( material.opacity && inpOpacity.value !== '1' ) {
+
+			material.opacity = parseFloat( inpOpacity.value );
+			txt += 'opacity: ' + material.opacity + ', transparent:true, ';
+			outOpacity.value = inpOpacity.value;
+			material.transparent = true;
+
+		}
+
+		if ( material.shininess && inpShininess.value !== '30' ) {
+
+			material.shininess = parseFloat( inpShininess.value );
+			txt += 'shininess: ' + material.shininess + ', ';
+			outShininess.value = inpShininess.value;
+		}
 
 		scene.traverse( function ( child ) {
 
@@ -565,6 +692,12 @@
 			}
 
 		} );
+
+		txt += '} )';
+
+		txtMaterial.value = txt;
+
+console.log( txt );
 
 	}
 

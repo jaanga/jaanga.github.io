@@ -7,7 +7,7 @@
 
 ##[Moon Rover]( http://jaanga.github.io/terrain-r2/viewers/moon-viewer/moon-viewer-r4-phone.html )
 
-##[algeSurf]( http://jaanga.github.io/algesurf/parametric-equations/r4/algesurf-pe-r4.html )
+##[algeSurf]( http://jaanga.github.io/algesurf/parametric-equations/function-graph/r4/function-graph-r4.1.html )
 
 ##[simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
