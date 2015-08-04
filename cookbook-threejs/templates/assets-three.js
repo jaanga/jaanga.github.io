@@ -233,6 +233,12 @@ Ground <input type=checkbox id=chkGround onchange=toggleGround(); />
 
 // @@@@@@@@@@@@@@@@@@@
 
+
+			'<p><input type=checkbox id=chkRotate onchange=controls.autoRotate=controls.autoRotate===true?false:true; /> Enable auto-rotation</p>' +
+
+		chkRotate.checked = controls.autoRotate = true;
+
+
 	var startTime = performance.now();
 	var delayTime = 2000;
 
