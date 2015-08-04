@@ -1,11 +1,12 @@
-[Jaanga]( http://jaanga.github.io/ ) &raquo;  [libs]( http://jaanga.github.io/libs/ ) &raquo; [templates]( http://jaanga.github.io/libs/ ) &raquo;  
-[XXX Read Me]( http://jaanga.github.io/ )
+[Jaanga]( http://jaanga.github.io/ ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) &raquo;  [Templates]( http://jaanga.github.io/cookbook-html/templates/ ) &raquo;  
+[Read Me with Iframe]( index.html )
 ===
 
 <span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
 
-<iframe src="http://jaanga.github.io/index.html" width=100% height=500px ></iframe>  
+<iframe id=ifr src="iframe-random-site-show-r1.html" width=100% height=500px ></iframe>  
+
 _XXX - latest revision_ / [Full Screen]( http://XXX.github.io/latest/index.html )
 
 ## Concept
@@ -28,7 +29,7 @@ jaanga@googlegroups.com
 
 ##Copyright
 
-Copyright Â© 2015 Jaanga authors
+Copyright © 2015 Jaanga authors
 
 
 ## License
@@ -55,3 +56,4 @@ In no event shall the authors or copyright holders be liable for any claim, dama
 <center>
 # &#x2766;
 </center>
+<style>iframe { border-width: 0; }</style>
