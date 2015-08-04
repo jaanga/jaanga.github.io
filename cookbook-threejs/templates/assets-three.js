@@ -155,34 +155,31 @@ Ground <input type=checkbox id=chkGround onchange=toggleGround(); />
 
 	}
 
+
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradient(); /> Background </p>' +
+
+		chkGradient.checked = true;
+		toggleGradient();
+
 	function toggleGradient () {
 
-		gradient = document.getElementById( 'chkGradient' );
+		if ( chkGradient.checked ) {
 
-		if ( gradient.checked ) { 
+				var col1 = Math.random().toString(16).slice(2, 8);
+				var col2 = Math.random().toString(16).slice(2, 8);
+				var col3 = Math.random().toString(16).slice(2, 8);
+				var x = ( Math.random() * window.innerWidth ).toFixed(0);
+				var y = ( Math.random() * window.innerHeight ).toFixed(0);
 
-			cssBackround = renderer.domElement.appendChild( document.createElement('style') );
-
-			var col1 = "#" + Math.random().toString(16).slice(2, 8);
-			var col2 = "#" + Math.random().toString(16).slice(2, 8);
-			var col3 = "#" + Math.random().toString(16).slice(2, 8);
-			var X = ( Math.random() * window.innerWidth ).toFixed(0);
-			var Y = ( Math.random() * window.innerHeight ).toFixed(0);
-			var center =  20 + ( Math.random() * 60 ).toFixed(0);
-
-			cssBackround.innerText = 'body { ' +
-				'background: -webkit-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
-				'background: -moz-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
-				'background: radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); }' +
-			'';
+				document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
 
 		} else {
 
-			cssBackround.innerText = 'body { background: #fff; }';
+			document.body.style.backgroundImage = '';
 
 		}
 
-	};
+	}
 
 	function toggleGrid() {
 
