@@ -45,7 +45,7 @@
 
 				  window.addEventListener('load', function() {
 
-						var container, camera, scene, renderer, controls, geometry, mesh;
+						var container, camera, scene, renderer, controls, geometry, mesh, thing;
 
 						var animate = function(){
 
@@ -72,14 +72,14 @@
 						} );
 
 						var mesh = new THREE.Mesh( geometry, material );
-						scene.add( mesh );
+//						scene.add( mesh );
 
 						var geometry = new THREE.BoxGeometry( 100, 100, 100, 4, 4, 4 );
 						var material = new THREE.MeshBasicMaterial( { color: 0xff00ff, side: THREE.BackSide, wireframe: true } );
-						var mesh = new THREE.Mesh( geometry, material );
-						scene.add( mesh );
+						thing = new THREE.Mesh( geometry, material );
+						scene.add( thing );
 
-						controls = new THREE.DeviceOrientationControls( mesh, true );
+						controls = new THREE.DeviceOrientationControls( thing );
 
 						renderer = new THREE.WebGLRenderer();
 						renderer.setPixelRatio( window.devicePixelRatio );
