@@ -6,7 +6,9 @@ Three.js Cookbook Read Me
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs'; />
 ## Projects
 
-[Templates](  http://jaanga.github.io/cookbook-threejs/templates/ ) 
+[Functions]( http://jaanga.github.io/cookbook-threejs/functions/ ) 
+
+[Templates]( http://jaanga.github.io/cookbook-threejs/templates/ ) 
 
 [Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ )
 

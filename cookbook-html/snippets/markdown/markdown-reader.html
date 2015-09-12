@@ -10,7 +10,7 @@
 
 	var script = document.body.appendChild( document.createElement( 'script' ) );
 	script.onload = init;
-	script.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js'; 
+	script.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js'; 
 
 	function init() {
 
@@ -25,7 +25,7 @@
 		xmlHttp.open( 'GET', fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
-			info.innerHTML = xmlHttp.readyState === 4 ? new Showdown.converter().makeHtml( xmlHttp.responseText ) : '';
+			info.innerHTML = xmlHttp.readyState === 4 ? new showdown.Converter().makeHtml( xmlHttp.responseText ) : '';
 
 		};
 		xmlHttp.send( null );

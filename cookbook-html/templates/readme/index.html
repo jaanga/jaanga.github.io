@@ -1,19 +1,19 @@
-.<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <title></title>
 <meta charset=utf-8 />
-<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js ></script>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
 <script>
 
 	init();
 
 	function init() {
 
-		document.body.style.cssText = ' font: bold 12pt monospace; left: 0; margin: 0 auto; max-width: 900px; position: absolute; right: 0; ';
+		document.body.style.cssText = ' font: 12pt monospace; left: 350px; margin: 0 auto; max-width: 900px; position: absolute; right: 0; ';
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
 
@@ -33,7 +33,7 @@
 		xmlHttp.open( 'GET', fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
-			info.innerHTML = xmlHttp.readyState === 4 ? new Showdown.converter().makeHtml( xmlHttp.responseText ) : '';
+			info.innerHTML = xmlHttp.readyState === 4 ? new showdown.Converter().makeHtml( xmlHttp.responseText ) : '';
 
 		};
 
@@ -44,7 +44,7 @@
 /*
 
 Visible only on GitHub
-<span style=display:none; >[View as web page]( http://xxxxx.github.io/xxxxx/ "View file as a web page." ) </span>  
+<span style=display:none; >[View as web page]( http://xx.github.io/xxxxx/ "View file as a web page." ) </span>  
 
 Visible only on the web page
 <input type=button value='View file as source code on GitHub' onclick=window.location.href='http://github.com/xxxxx/xxxxx/tree/gh-pages/'; />
