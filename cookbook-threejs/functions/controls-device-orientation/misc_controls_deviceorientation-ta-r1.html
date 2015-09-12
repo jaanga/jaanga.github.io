@@ -79,7 +79,7 @@
 						thing = new THREE.Mesh( geometry, material );
 						scene.add( thing );
 
-						controls = new THREE.DeviceOrientationControls( thing );
+						controls = new THREE.DeviceOrientationControls( thing, true );
 
 						renderer = new THREE.WebGLRenderer();
 						renderer.setPixelRatio( window.devicePixelRatio );
