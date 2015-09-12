@@ -36,8 +36,8 @@
 			photo by <a href="http://www.flickr.com/photos/jonragnarsson/2294472375/" target="_blank">Jón Ragnarsson</a>.
 		</div>
 
-		<script src="../build/three.min.js"></script>
-		<script src="js/controls/DeviceOrientationControls.js"></script>
+<script src = http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src="http://mrdoob.github.io/three.js/examples/js/controls/DeviceOrientationControls.js"></script>
 
 		<script>
 			(function() {
@@ -68,7 +68,7 @@
 						geometry.applyMatrix( new THREE.Matrix4().makeScale( -1, 1, 1 ) );
 
 						var material = new THREE.MeshBasicMaterial( {
-							map: THREE.ImageUtils.loadTexture( 'textures/2294472375_24a3b8ef46_o.jpg' )
+							map: THREE.ImageUtils.loadTexture( '2294472375_24a3b8ef46_o.jpg' )
 						} );
 
 						var mesh = new THREE.Mesh( geometry, material );
