@@ -16,10 +16,12 @@
 	</head>
 	<body>
 		<div id="container"></div>
-		<script src="http://mrdoob.github.io/three.js/js/vendors/three.js"></script>
-		<script src="js/vendors/StereoEffect.js"></script>
-		<script src="js/vendors/DeviceOrientationControls.js"></script>
-		<script src="js/vendors/OrbitControls.js"></script>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src="http://mrdoob.github.io/three.js/examples/js/effects/StereoEffect.js"></script>
+<script src="http://mrdoob.github.io/three.js/examples/js/controls//DeviceOrientationControls.js"></script>
+
 		<script>
 			var renderer,
 				camera,
@@ -34,7 +36,7 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.autoClear = false;
 				renderer.setSize(window.innerWidth, window.innerHeight);
-				renderer.setClearColor(0xffffff, 1);
+				renderer.setClearColor(0x888888, 1);
 
 				// Add the canvas into the DOM
 				container = document.getElementById("container");
@@ -80,13 +82,15 @@
 			}
 
 			function createScene() {
+
+/*
 				// A SphereBox
 				var geometry = new THREE.SphereGeometry(1500, 16, 16);
 				var material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("images/skysphere.jpg") });
 				var skysphere = new THREE.Mesh(geometry, material);
 				skysphere.scale.x = -1;
 				scene.add(skysphere);
-
+*/
 				// A light
 				var directionalLight = new THREE.DirectionalLight(0x008888, 0.8);
 				directionalLight.position.set(0.5, 0.8, 0);
@@ -97,6 +101,7 @@
 					depth = 500,
 					blockSize = 50;
 
+/*
 				// With a ground
 				var gMaterial = new THREE.MeshBasicMaterial({
 					map: THREE.ImageUtils.loadTexture("images/checker_green.png")
@@ -106,14 +111,17 @@
 				gMaterial.map.wrapT = THREE.RepeatWrapping;
 				gMaterial.map.repeat.x = 8;
 				gMaterial.map.repeat.y = 8;
+*/
 
-				var ground = new THREE.Mesh(new THREE.BoxGeometry(width, 1, depth), gMaterial);
+		material = new THREE.MeshNormalMaterial();
+
+				var ground = new THREE.Mesh(new THREE.BoxGeometry(width, 1, depth), material);
 				scene.add(ground);
 
 				// And few cubes...
 				var geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-				var material = new THREE.MeshBasicMaterial({
-					map: THREE.ImageUtils.loadTexture("images/checker_blue.png")
+				var material = new THREE.MeshNormalMaterial({
+//					map: THREE.ImageUtils.loadTexture("images/checker_blue.png")
 				});
 
 				function random(min, max) {
