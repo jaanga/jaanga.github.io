@@ -59,8 +59,8 @@
 						container = document.getElementById( 'container' );
 
 						camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
+		camera.position.set( 300, 300, 300 );
 
-						controls = new THREE.DeviceOrientationControls( camera );
 
 						scene = new THREE.Scene();
 
@@ -78,6 +78,8 @@
 						var material = new THREE.MeshBasicMaterial( { color: 0xff00ff, side: THREE.BackSide, wireframe: true } );
 						var mesh = new THREE.Mesh( geometry, material );
 						scene.add( mesh );
+
+						controls = new THREE.DeviceOrientationControls( mesh, true );
 
 						renderer = new THREE.WebGLRenderer();
 						renderer.setPixelRatio( window.devicePixelRatio );
