@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.6 Sandbox 3D</title>
+<title>VR 2.7 Sandbox 3D</title>
 <style>
 </style>
 </head>
@@ -12,16 +12,15 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls//DeviceOrientationControls.js ></script>
 <script>
-	var renderer,
-		camera,
-		scene,
-		viewController,
-		clock,
-		container;
+var renderer,
+	camera,
+	scene,
+	controller,
+	container;
 
-		initialize();
-		createScene();
-		loop();
+	initialize();
+	createScene();
+	loop();
 
 	function initialize() {
 
@@ -38,21 +37,15 @@
 		'';
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-//		renderer.autoClear = false;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		// The camera
 		camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
 		camera.position.set( 50, 50, 50);
 
 		// The scene
 		scene = new THREE.Scene();
 
-		// A clock used for the controllers.
-//		clock = new THREE.Clock();
-
-		// An orbit controller for PC, it's disabled on mobile devices.
 		controller = new THREE.OrbitControls(camera, renderer.domElement);
 
 		// On mobile we want to use the device orientation
