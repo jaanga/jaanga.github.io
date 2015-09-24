@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.7 Sandbox 3D</title>
+<title>VR 2.9 Sandbox 3D</title>
 <style>
 </style>
 </head>
@@ -43,26 +43,27 @@ var renderer,
 		camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
 		camera.position.set( 50, 50, 50);
 
-		// The scene
 		scene = new THREE.Scene();
 
 		controller = new THREE.OrbitControls(camera, renderer.domElement);
 
-		// On mobile we want to use the device orientation
-		var onOrientationChanged = function (event) {
-			if (!event.alpha) { return; }
-
-			controller = new THREE.DeviceOrientationControls( camera, true );
-			controller.connect();
-			controller.update();
-			resize();
-
-			window.removeEventListener( 'deviceorientation', onOrientationChanged);
-		};
 
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
-		window.addEventListener("resize", resize, false);
+		window.addEventListener( 'resize', resize, false);
 	}
+
+	// On mobile we want to use the device orientation
+	function onOrientationChanged( event ) {
+		if (!event.alpha) { return; }
+
+		controller = new THREE.DeviceOrientationControls( camera, true );
+		controller.connect();
+		controller.update();
+		resize();
+
+		window.removeEventListener( 'deviceorientation', onOrientationChanged);
+	};
+
 
 	function createScene() {
 

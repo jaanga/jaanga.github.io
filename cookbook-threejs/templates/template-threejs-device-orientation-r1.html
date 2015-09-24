@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>template-threejs-device-orientation-r1</title>
+<title>2.1 template-threejs-device-orientation-r1</title>
 <meta charset=utf-8 />
+<meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
+<!--
 <meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+-->
 </head>
 <body>
 <div id="container" style=width:100%;height:100%; ></div>
@@ -42,19 +45,19 @@
 //		document.body.appendChild( stats.domElement );
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-				renderer.autoClear = false;
+		renderer.autoClear = false;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 
-				container = document.getElementById("container");
-				container.appendChild(renderer.domElement);
+//				container = document.getElementById("container");
+//				container.appendChild(renderer.domElement);
 
-//		document.body.appendChild( renderer.domElement );
+		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
 		camera.position.set( 100, 100, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+//		controls.maxDistance = 800;
 
 		scene = new THREE.Scene();
 
