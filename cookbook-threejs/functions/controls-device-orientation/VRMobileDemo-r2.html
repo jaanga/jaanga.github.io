@@ -3,16 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-<title>VR 2.2 Sandbox 3D</title>
+<title>VR 2.3 Sandbox 3D</title>
 <style>
 </style>
 </head>
 <body>
-<div id="container"></div>
-
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<script src="http://mrdoob.github.io/three.js/examples/js/effects/StereoEffect.js"></script>
 <script src="http://mrdoob.github.io/three.js/examples/js/controls//DeviceOrientationControls.js"></script>
 <script>
 	var renderer,
@@ -22,6 +19,10 @@
 		stereoEffect,
 		clock,
 		container;
+
+		initialize();
+		createScene();
+		loop();
 
 	function initialize() {
 
@@ -43,7 +44,7 @@
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setClearColor( 0x888888, 1);
 
-document.body.appendChild( renderer.domElement );
+		document.body.appendChild( renderer.domElement );
 
 		// Add the canvas into the DOM
 //		container = document.getElementById("container");
@@ -98,29 +99,13 @@ document.body.appendChild( renderer.domElement );
 		skysphere.scale.x = -1;
 		scene.add(skysphere);
 */
-		// A light
-		var directionalLight = new THREE.DirectionalLight(0x008888, 0.8);
-		directionalLight.position.set(0.5, 0.8, 0);
-		scene.add(directionalLight);
 
-		// Now it's time to build a small world :-)
-		var width = 500,
-			depth = 500,
-			blockSize = 50;
-
-/*
-		// With a ground
-		var gMaterial = new THREE.MeshBasicMaterial({
-			map: THREE.ImageUtils.loadTexture("images/checker_green.png")
-		});
-
-		gMaterial.map.wrapS = THREE.RepeatWrapping;
-		gMaterial.map.wrapT = THREE.RepeatWrapping;
-		gMaterial.map.repeat.x = 8;
-		gMaterial.map.repeat.y = 8;
-*/
 
 material = new THREE.MeshNormalMaterial();
+
+				var width = 500,
+					depth = 500,
+					blockSize = 50;
 
 		var ground = new THREE.Mesh(new THREE.BoxGeometry(width, 1, depth), material);
 		scene.add(ground);
@@ -161,11 +146,9 @@ renderer.render( scene, camera );
 	}
 
 	// Entry point
-	window.onload = function () {
-		initialize();
-		createScene();
-		loop();
-	};
+//	window.onload = function () {
+
+//	};
 </script>
 </body>
 </html>
