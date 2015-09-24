@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.4 Sandbox 3D</title>
+<title>VR 2.5 Sandbox 3D</title>
 <style>
 </style>
 </head>
@@ -16,7 +16,6 @@
 		camera,
 		scene,
 		viewController,
-		stereoEffect,
 		clock,
 		container;
 
@@ -37,23 +36,12 @@
 			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
 			'<div id=info ></div>' +
 		'';
-/*
-		// The renderer
-		renderer = new THREE.WebGLRenderer();
-		renderer.autoClear = false;
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		renderer.setClearColor( 0x888888, 1);
-*/
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 				renderer.autoClear = false;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 
 		document.body.appendChild( renderer.domElement );
-
-		// Add the canvas into the DOM
-//		container = document.getElementById("container");
-//		container.appendChild(renderer.domElement);
 
 		// The camera
 		camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
@@ -62,11 +50,8 @@
 		// The scene
 		scene = new THREE.Scene();
 
-		// This is the needed effect that shows two screens (one per eye)
-//				stereoEffect = new THREE.StereoEffect(renderer);
-
 		// A clock used for the controllers.
-		clock = new THREE.Clock();
+//		clock = new THREE.Clock();
 
 		// An orbit controller for PC, it's disabled on mobile devices.
 		viewController = new THREE.OrbitControls(camera, renderer.domElement);
@@ -74,7 +59,7 @@
 //				viewController.target.set(camera.position.x + 0.1, camera.position.y, camera.position.z);
 
 		// Set the correct size of all this world!
-		resize();
+//		resize();
 
 		// On mobile we want to use the device orientation
 		var onOrientationChanged = function (event) {
@@ -96,21 +81,11 @@
 
 	function createScene() {
 
-/*
-		// A SphereBox
-		var geometry = new THREE.SphereGeometry(1500, 16, 16);
-		var material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture("images/skysphere.jpg") });
-		var skysphere = new THREE.Mesh(geometry, material);
-		skysphere.scale.x = -1;
-		scene.add(skysphere);
-*/
+		material = new THREE.MeshNormalMaterial();
 
-
-material = new THREE.MeshNormalMaterial();
-
-				var width = 500,
-					depth = 500,
-					blockSize = 50;
+		var width = 500,
+			depth = 500,
+			blockSize = 50;
 
 		var ground = new THREE.Mesh(new THREE.BoxGeometry(width, 1, depth), material);
 		scene.add(ground);
@@ -138,22 +113,17 @@ material = new THREE.MeshNormalMaterial();
 
 	function resize() {
 		renderer.setSize(window.innerWidth, window.innerHeight);
-//				stereoEffect.setSize(window.innerWidth, window.innerHeight);
+
 		camera.aspect = window.innerWidth / window.innerHeight;
 		camera.updateProjectionMatrix();
 	}
 
 	function loop() {
 		requestAnimationFrame(loop);
-		viewController.update(clock.getDelta());
-//				stereoEffect.render(scene, camera);
-renderer.render( scene, camera );
+		viewController.update();
+		renderer.render( scene, camera );
 	}
 
-	// Entry point
-//	window.onload = function () {
-
-//	};
 </script>
 </body>
 </html>
