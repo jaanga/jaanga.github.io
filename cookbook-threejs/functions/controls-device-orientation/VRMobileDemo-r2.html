@@ -75,6 +75,7 @@
 	}
 
 	function onOrientationChanged( event ) {
+
 		if (!event.alpha) { return; }
 
 		controls = new THREE.DeviceOrientationControls( camera, true );
@@ -101,6 +102,7 @@
 		renderer.render( scene, camera );
 
 	}
+
 </script>
 </body>
 </html>
