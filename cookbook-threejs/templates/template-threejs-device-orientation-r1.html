@@ -21,8 +21,6 @@
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
-	var clock = new THREE.Clock();
-
 	init();
 	animate();
 
@@ -78,8 +76,6 @@
 	};
 
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
-
-onWindowResize();
 
 // assets
 
@@ -139,7 +135,7 @@ onWindowResize();
 	function animate() {
 
 		requestAnimationFrame( animate );
-		controls.update( clock.getDelta() );
+		controls.update();
 //		stats.update();
 		renderer.render( scene, camera );
 

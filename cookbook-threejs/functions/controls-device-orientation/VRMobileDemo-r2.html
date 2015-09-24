@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.11 Sandbox 3D</title>
+<title>VR 2.12 Sandbox 3D</title>
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
@@ -14,7 +14,7 @@
 	var renderer,camera, scene, controller;
 
 	init();
-	loop();
+	animate();
 
 	function init() {
 
@@ -39,7 +39,7 @@
 
 		scene = new THREE.Scene();
 
-		controller = new THREE.OrbitControls(camera, renderer.domElement);
+		controls = new THREE.OrbitControls(camera, renderer.domElement);
 
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 		window.addEventListener( 'resize', onWindowResize, false);
@@ -50,7 +50,32 @@
 		skysphere.scale.x = -1;
 		scene.add( skysphere );
 
-		createScene();
+//		createScene();
+
+//	}
+
+
+		addBoxesNoLights();
+
+	}
+
+	function addBoxesNoLights() {
+
+		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		material = new THREE.MeshNormalMaterial( { opacity: 0.7, side: THREE.DoubleSide, transparent: true });
+		for (var i = 0; i < 50; i++) {
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
+			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+
+			scene.add( mesh );
+
+			helper = new THREE.EdgesHelper( mesh );
+			helper.material.color.setRGB( 1, 0, 0 );
+			scene.add( helper );
+
+		}
 
 	}
 
@@ -89,14 +114,15 @@
 	function onOrientationChanged( event ) {
 		if (!event.alpha) { return; }
 
-		controller = new THREE.DeviceOrientationControls( camera, true );
-		controller.connect();
-		controller.update();
+		controls = new THREE.DeviceOrientationControls( camera, true );
+		controls.connect();
+		controls.update();
 		onWindowResize();
 
 		window.removeEventListener( 'deviceorientation', onOrientationChanged);
 	};
 
+/*
 	function onWindowResize() {
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -109,7 +135,25 @@
 		controller.update();
 		renderer.render( scene, camera );
 	}
+*/
 
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+//		stats.update();
+		renderer.render( scene, camera );
+
+	}
 </script>
 </body>
 </html>
