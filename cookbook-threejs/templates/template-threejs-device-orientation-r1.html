@@ -57,6 +57,21 @@
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
+
+	// On mobile we want to use the device orientation
+	var onOrientationChanged = function (event) {
+
+		if ( !event.alpha ) { return; }
+
+		controller = new THREE.DeviceOrientationControls( camera, true );
+		controller.connect();
+		controller.update();
+		onWindowResize();
+
+		window.removeEventListener( 'deviceorientation', onOrientationChanged);
+
+	};
+
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 
 onWindowResize();
@@ -107,19 +122,7 @@ onWindowResize();
 
 	}
 
-	// On mobile we want to use the device orientation
-	var onOrientationChanged = function (event) {
 
-		if ( !event.alpha ) { return; }
-
-		controller = new THREE.DeviceOrientationControls( camera, true );
-		controller.connect();
-		controller.update();
-		onWindowResize();
-
-		window.removeEventListener( 'deviceorientation', onOrientationChanged);
-
-	};
 
 	function onWindowResize() {
 
