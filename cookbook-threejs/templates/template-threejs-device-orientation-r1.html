@@ -1,20 +1,13 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>2.1 template-threejs-device-orientation-r1</title>
+<title>2.2 template-threejs-device-orientation-r1</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<!--
-<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
--->
 </head>
 <body>
-<div id="container" style=width:100%;height:100%; ></div>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<!--
-<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
--->
 <script src="http://mrdoob.github.io/three.js/examples/js/controls//DeviceOrientationControls.js"></script>
 <script>
 
@@ -38,17 +31,8 @@
 			'<div id=info ></div>' +
 		'';
 
-//		stats = new Stats();
-//		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
-//		document.body.appendChild( stats.domElement );
-
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-		renderer.autoClear = false;
 		renderer.setSize( window.innerWidth, window.innerHeight );
-
-//				container = document.getElementById("container");
-//				container.appendChild(renderer.domElement);
-
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -60,21 +44,6 @@
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
-
-	// On mobile we want to use the device orientation
-	var onOrientationChanged = function (event) {
-
-		if ( !event.alpha ) { return; }
-
-		controller = new THREE.DeviceOrientationControls( camera, true );
-		controller.connect();
-		controller.update();
-		onWindowResize();
-
-		window.removeEventListener( 'deviceorientation', onOrientationChanged);
-
-	};
-
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 
 // assets
@@ -122,6 +91,18 @@
 		}
 
 	}
+
+	function onOrientationChanged( event ) {
+		if (!event.alpha) { return; }
+
+		controls = new THREE.DeviceOrientationControls( camera, true );
+		controls.connect();
+		controls.update();
+		onWindowResize();
+
+		window.removeEventListener( 'deviceorientation', onOrientationChanged);
+	}
+
 
 	function onWindowResize() {
 

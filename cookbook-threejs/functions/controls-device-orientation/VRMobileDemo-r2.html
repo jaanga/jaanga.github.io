@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.12 Sandbox 3D</title>
+<title>VR 2.13 Sandbox 3D</title>
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
@@ -11,7 +11,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls//DeviceOrientationControls.js ></script>
 <script>
 
-	var renderer,camera, scene, controller;
+	var renderer, camera, scene, controller;
 
 	init();
 	animate();
@@ -37,9 +37,9 @@
 		camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
 		camera.position.set( 50, 50, 50);
 
-		scene = new THREE.Scene();
-
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+		scene = new THREE.Scene();
 
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 		window.addEventListener( 'resize', onWindowResize, false);
@@ -49,11 +49,6 @@
 		var skysphere = new THREE.Mesh( geometry, material );
 		skysphere.scale.x = -1;
 		scene.add( skysphere );
-
-//		createScene();
-
-//	}
-
 
 		addBoxesNoLights();
 
@@ -79,38 +74,6 @@
 
 	}
 
-	function createScene() {
-
-		material = new THREE.MeshNormalMaterial();
-
-		var width = 500,
-			depth = 500,
-			blockSize = 50;
-
-		var ground = new THREE.Mesh(new THREE.BoxGeometry(width, 1, depth), material);
-		scene.add(ground);
-
-		// And few cubes...
-		var geometry = new THREE.BoxGeometry(blockSize, blockSize, blockSize);
-		var material = new THREE.MeshNormalMaterial({
-//					map: THREE.ImageUtils.loadTexture("images/checker_blue.png")
-		});
-
-		function random(min, max) {
-			return (Math.random() * (max - min) + min);
-		}
-
-		for (var i = 0; i < 6; i++) {
-			var mesh = new THREE.Mesh(geometry, material);
-			mesh.position.x = random(-width / 2 + blockSize, width / 2 - blockSize);
-			mesh.position.y = blockSize / 2;
-			mesh.position.z = random(-depth / 2 + blockSize, depth / 2 - blockSize);
-			mesh.receiveShadow = true;
-			mesh.castShadow = true;
-			scene.add(mesh);
-		}
-	}
-
 	function onOrientationChanged( event ) {
 		if (!event.alpha) { return; }
 
@@ -120,22 +83,7 @@
 		onWindowResize();
 
 		window.removeEventListener( 'deviceorientation', onOrientationChanged);
-	};
-
-/*
-	function onWindowResize() {
-		renderer.setSize(window.innerWidth, window.innerHeight);
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
 	}
-
-	function loop() {
-		requestAnimationFrame(loop);
-		controller.update();
-		renderer.render( scene, camera );
-	}
-*/
 
 	function onWindowResize() {
 
@@ -150,7 +98,6 @@
 
 		requestAnimationFrame( animate );
 		controls.update();
-//		stats.update();
 		renderer.render( scene, camera );
 
 	}
