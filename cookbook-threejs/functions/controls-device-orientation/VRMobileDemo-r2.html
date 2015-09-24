@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-<title>VR 2.1 Sandbox 3D</title>
+<title>VR 2.2 Sandbox 3D</title>
 <style>
 </style>
 </head>
@@ -60,7 +60,7 @@ document.body.appendChild( renderer.domElement );
 //				stereoEffect = new THREE.StereoEffect(renderer);
 
 		// A clock used for the controllers.
-//		clock = new THREE.Clock();
+		clock = new THREE.Clock();
 
 		// An orbit controller for PC, it's disabled on mobile devices.
 		viewController = new THREE.OrbitControls(camera, renderer.domElement);
@@ -98,7 +98,27 @@ document.body.appendChild( renderer.domElement );
 		skysphere.scale.x = -1;
 		scene.add(skysphere);
 */
+		// A light
+		var directionalLight = new THREE.DirectionalLight(0x008888, 0.8);
+		directionalLight.position.set(0.5, 0.8, 0);
+		scene.add(directionalLight);
 
+		// Now it's time to build a small world :-)
+		var width = 500,
+			depth = 500,
+			blockSize = 50;
+
+/*
+		// With a ground
+		var gMaterial = new THREE.MeshBasicMaterial({
+			map: THREE.ImageUtils.loadTexture("images/checker_green.png")
+		});
+
+		gMaterial.map.wrapS = THREE.RepeatWrapping;
+		gMaterial.map.wrapT = THREE.RepeatWrapping;
+		gMaterial.map.repeat.x = 8;
+		gMaterial.map.repeat.y = 8;
+*/
 
 material = new THREE.MeshNormalMaterial();
 
@@ -135,7 +155,7 @@ material = new THREE.MeshNormalMaterial();
 
 	function loop() {
 		requestAnimationFrame(loop);
-		viewController.update();
+		viewController.update(clock.getDelta());
 //				stereoEffect.render(scene, camera);
 renderer.render( scene, camera );
 	}
