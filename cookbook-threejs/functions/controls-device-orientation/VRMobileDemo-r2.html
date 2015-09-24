@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-<title>VR Sandbox 3D</title>
+<title>VR 2.1 Sandbox 3D</title>
 <style>
-body {
-margin: 0; padding: 0; overflow: hidden;
-}
-
-#container {
-width: 100%; height: 100%;
-}
 </style>
 </head>
 <body>
@@ -31,19 +24,27 @@ width: 100%; height: 100%;
 		container;
 
 	function initialize() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML ='body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'#i {text-decoration: none; }' +
+		'';
+
 		// The renderer
 		renderer = new THREE.WebGLRenderer();
 		renderer.autoClear = false;
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.setClearColor( 0x888888, 1);
 
+document.body.appendChild( renderer.domElement );
+
 		// Add the canvas into the DOM
-		container = document.getElementById("container");
-		container.appendChild(renderer.domElement);
+//		container = document.getElementById("container");
+//		container.appendChild(renderer.domElement);
 
 		// The camera
 		camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
-		camera.position.set( 0, 50, 0);
+		camera.position.set( 50, 50, 50);
 
 		// The scene
 		scene = new THREE.Scene();
