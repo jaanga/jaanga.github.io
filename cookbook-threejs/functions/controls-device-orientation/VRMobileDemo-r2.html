@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.10 Sandbox 3D</title>
+<title>VR 2.11 Sandbox 3D</title>
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
@@ -43,6 +43,12 @@
 
 		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 		window.addEventListener( 'resize', onWindowResize, false);
+
+		var geometry = new THREE.SphereGeometry( 150, 16, 16);
+		var material = new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture( '../../../textures/skydome.jpg' ) });
+		var skysphere = new THREE.Mesh( geometry, material );
+		skysphere.scale.x = -1;
+		scene.add( skysphere );
 
 		createScene();
 
