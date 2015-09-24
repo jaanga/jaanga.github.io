@@ -36,7 +36,7 @@
 				renderer = new THREE.WebGLRenderer();
 				renderer.autoClear = false;
 				renderer.setSize(window.innerWidth, window.innerHeight);
-				renderer.setClearColor(0x888888, 1);
+				renderer.setClearColor( 0x888888, 1);
 
 				// Add the canvas into the DOM
 				container = document.getElementById("container");
@@ -44,21 +44,21 @@
 
 				// The camera
 				camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 5000);
-				camera.position.set(0, 50, 0);
+				camera.position.set( 0, 50, 0);
 
 				// The scene
 				scene = new THREE.Scene();
 
 				// This is the needed effect that shows two screens (one per eye)
-				stereoEffect = new THREE.StereoEffect(renderer);
+//				stereoEffect = new THREE.StereoEffect(renderer);
 
 				// A clock used for the controllers.
 				clock = new THREE.Clock();
 
 				// An orbit controller for PC, it's disabled on mobile devices.
 				viewController = new THREE.OrbitControls(camera, renderer.domElement);
-				viewController.rotateUp(Math.PI / 4);
-				viewController.target.set(camera.position.x + 0.1, camera.position.y, camera.position.z);
+//				viewController.rotateUp(Math.PI / 4);
+//				viewController.target.set(camera.position.x + 0.1, camera.position.y, camera.position.z);
 
 				// Set the correct size of all this world!
 				resize();
@@ -141,7 +141,7 @@
 
 			function resize() {
 				renderer.setSize(window.innerWidth, window.innerHeight);
-				stereoEffect.setSize(window.innerWidth, window.innerHeight);
+//				stereoEffect.setSize(window.innerWidth, window.innerHeight);
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 			}
@@ -149,7 +149,8 @@
 			function loop() {
 				requestAnimationFrame(loop);
 				viewController.update(clock.getDelta());
-				stereoEffect.render(scene, camera);
+//				stereoEffect.render(scene, camera);
+		renderer.render( scene, camera );
 			}
 
 			// Entry point
