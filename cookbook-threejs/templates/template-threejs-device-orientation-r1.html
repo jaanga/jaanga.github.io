@@ -15,6 +15,8 @@
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
+	varclock = new THREE.Clock();
+
 	init();
 	animate();
 
@@ -49,6 +51,7 @@
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 
 // assets
 
@@ -71,9 +74,6 @@
 		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
-
-
-		window.addEventListener("deviceorientation", onOrientationChanged, false);
 
 		addBoxesNoLights();
 
@@ -101,16 +101,16 @@
 
 	// On mobile we want to use the device orientation
 	var onOrientationChanged = function (event) {
-		if (!event.alpha) {
-			return;
-		}
 
-		viewController = new THREE.DeviceOrientationControls(camera, true);
-		viewController.connect();
-		viewController.update();
-		resize();
+		if ( !event.alpha ) { return; }
 
-		window.removeEventListener("deviceorientation", onOrientationChanged);
+		controller = new THREE.DeviceOrientationControls( camera, true );
+		controller.connect();
+		controller.update();
+		onWindowResize();
+
+		window.removeEventListener( 'deviceorientation', onOrientationChanged);
+
 	};
 
 	function onWindowResize() {
@@ -125,7 +125,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-		controls.update();
+		controls.update( clock.getDelta() );
 		stats.update();
 		renderer.render( scene, camera );
 
