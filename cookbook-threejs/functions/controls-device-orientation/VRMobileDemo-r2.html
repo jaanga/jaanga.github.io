@@ -3,7 +3,7 @@
 <head>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no' />
-<title>VR 2.5 Sandbox 3D</title>
+<title>VR 2.6 Sandbox 3D</title>
 <style>
 </style>
 </head>
@@ -38,9 +38,8 @@
 		'';
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-				renderer.autoClear = false;
+//		renderer.autoClear = false;
 		renderer.setSize( window.innerWidth, window.innerHeight );
-
 		document.body.appendChild( renderer.domElement );
 
 		// The camera
@@ -54,28 +53,21 @@
 //		clock = new THREE.Clock();
 
 		// An orbit controller for PC, it's disabled on mobile devices.
-		viewController = new THREE.OrbitControls(camera, renderer.domElement);
-//				viewController.rotateUp(Math.PI / 4);
-//				viewController.target.set(camera.position.x + 0.1, camera.position.y, camera.position.z);
-
-		// Set the correct size of all this world!
-//		resize();
+		controller = new THREE.OrbitControls(camera, renderer.domElement);
 
 		// On mobile we want to use the device orientation
 		var onOrientationChanged = function (event) {
-			if (!event.alpha) {
-				return;
-			}
+			if (!event.alpha) { return; }
 
-			viewController = new THREE.DeviceOrientationControls(camera, true);
-			viewController.connect();
-			viewController.update();
+			controller = new THREE.DeviceOrientationControls( camera, true );
+			controller.connect();
+			controller.update();
 			resize();
 
-			window.removeEventListener("deviceorientation", onOrientationChanged);
+			window.removeEventListener( 'deviceorientation', onOrientationChanged);
 		};
 
-		window.addEventListener("deviceorientation", onOrientationChanged, false);
+		window.addEventListener( 'deviceorientation', onOrientationChanged, false);
 		window.addEventListener("resize", resize, false);
 	}
 
@@ -120,7 +112,7 @@
 
 	function loop() {
 		requestAnimationFrame(loop);
-		viewController.update();
+		controller.update();
 		renderer.render( scene, camera );
 	}
 
