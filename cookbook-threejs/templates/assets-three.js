@@ -88,26 +88,30 @@
 // add remove existing
 // see algesurf pe r4
 
-	function getLights() {
 
-// Lights
-		var light = new THREE.AmbientLight( 0x888888 );
-		scene.add( light );
+	function addLights() {
+
+		renderer.shadowMapEnabled = true;
+
+		var lightAmbient, lightDirectional, lightPoint;
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
 
 		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		lightDirectional.position.set( -400, 400, 400 );
+		lightDirectional.position.set( -200, 200, 200 );
 
-		var d = 400;
+		var d = 100;
 		lightDirectional.shadowCameraLeft = -d;
 		lightDirectional.shadowCameraRight = d;
 		lightDirectional.shadowCameraTop = d;
 		lightDirectional.shadowCameraBottom = -d;
 
-		lightDirectional.shadowCameraNear = 300;
-		lightDirectional.shadowCameraFar = 2000;
+		lightDirectional.shadowCameraNear = 200;
+		lightDirectional.shadowCameraFar = 500;
 
 // can help stop appearance of gridlines in objects with opacity < 1
-		lightDirectional.shadowBias = -0.0002; // default 0 ~ distance fron corners?
+		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
 		lightDirectional.shadowDarkness = 0.3; // default 0.5
 		lightDirectional.shadowMapWidth = 2048;  // default 512
 		lightDirectional.shadowMapHeight = 2048;
@@ -116,24 +120,24 @@
 		lightDirectional.shadowCameraVisible = true;
 		scene.add( lightDirectional );
 
-		pointLight = new THREE.PointLight( 0xffffff, 0.5 );
-		pointLight.position = camera.position;
-		camera.add( pointLight );
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
 		scene.add( camera );
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = child.receiveShadow = true;
+				child.material = material;
+
+			}
+
+		} );
 
 	}
 
-
-
-
-<details>
-<summary><h2>Preferences</h2></summary>
-Auto Rotate after two seconds inactivity <input type=checkbox id=chkRotate  checked />  
-
-Axis <input type=checkbox id=chkAxis onchange=toggleAxis(); />  
-Gradient <input type=checkbox id=chkGradient onchange=toggleGradient(); checked />  
-Ground <input type=checkbox id=chkGround onchange=toggleGround(); />
-</details>
 
 
 	function toggleAxis( length ) {

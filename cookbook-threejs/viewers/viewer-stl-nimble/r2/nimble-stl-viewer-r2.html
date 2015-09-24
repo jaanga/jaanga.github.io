@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Nimble STL Viewer R2</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js ></script>
+<script>
+
+	var modelsDir = '../models/';
+	var fileName = 'original-nimble-scooter.stl';
+	var handles;
+
+	files = [
+
+		'Original Nimble Scooter - Handlebars-1.STL',
+		'Original Nimble Scooter - ONS Base Plate-1.STL',
+		'Original Nimble Scooter - ONS Board-1.STL',
+		'Original Nimble Scooter - ONS Fork Tube-1.STL',
+		'Original Nimble Scooter - ONS Front Frame-1.STL',
+		'Original Nimble Scooter - ONS Front Wheel Fork-1.STL',
+		'Original Nimble Scooter - ONS Middle Frame-2.STL',
+		'Original Nimble Scooter - ONS Rear Frame for E scooter-1.STL',
+		'Original Nimble Scooter - ONS Rear Wheel-1.STL',
+		'Original Nimble Scooter - ONS Rear Wheel-2.STL',
+		'Original Nimble Scooter - Part7-1.STL',
+		'Original Nimble Scooter - Part8^Assem2-1.STL',
+		'original-nimble-scooter.stl',
+
+
+	];
+
+var ngle = 0;
+
+	materials = [];
+
+	var texture = new THREE.Texture( generateTexture() );
+	texture.needsUpdate = true;
+
+	materials.push( new THREE.MeshLambertMaterial( { map: texture, transparent: true } ) );
+	materials.push( new THREE.MeshLambertMaterial( { color: 0xdddddd } ) );
+	materials.push( new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ) );
+	materials.push( new THREE.MeshNormalMaterial( ) );
+	materials.push( new THREE.MeshBasicMaterial( { color: 0xffaa00, transparent: true, blending: THREE.AdditiveBlending } ) );
+	//materials.push( new THREE.MeshBasicMaterial( { color: 0xff0000, blending: THREE.SubtractiveBlending } ) );
+
+	materials.push( new THREE.MeshLambertMaterial( { color: 0xdddddd } ) );
+	materials.push( new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.SmoothShading, map: texture, transparent: true } ) );
+	materials.push( new THREE.MeshNormalMaterial() );
+	materials.push( new THREE.MeshBasicMaterial( { color: 0xffaa00, wireframe: true } ) );
+
+	materials.push( new THREE.MeshDepthMaterial() );
+
+	materials.push( new THREE.MeshLambertMaterial( { color: 0x666666, emissive: 0xff0000 } ) );
+	materials.push( new THREE.MeshPhongMaterial( { color: 0x000000, specular: 0x666666, emissive: 0xff0000, shininess: 10, shading: THREE.SmoothShading, opacity: 0.9, transparent: true } ) );
+
+	materials.push( new THREE.MeshBasicMaterial( { map: texture, transparent: true } ) );
+
+	var css, info, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h1, a { margin: 0; }' +
+			'#i { text-decoration: none; }' +
+			'#drag { border: 3px dashed black; height: 200px; width: 250px;}' +
+		'';
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'margin: 0 20px; position: absolute; ';
+		info.innerHTML = '<h1><a href="" >' + document.title + '</a> - ' +
+			'<a id=i href=http://jaanga.github.io/cookbook-threejs/viewers/viewer-stl-nimble/ >&#x24D8;</a>' +
+			'</h1>' +
+			'<p>Drag and drop or <input type=file onchange=loadFileSTLByContent(this); /><p>' +
+			'<p>Use your pointing device to zoom, pan and rotate</p>' +
+			'<p><input type=checkbox id=chkRotate onchange=controls.autoRotate=controls.autoRotate===true?false:true; /> Auto-rotation</p>' +
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradient(); /> Background </p>' +
+			'<div id=msg ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMapSoft = true;
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera.position.set( 80, 80, 80 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 8000;
+		controls.target.set( 40, 5, 0 );
+
+		scene = new THREE.Scene();
+
+		addLights();
+
+// axes
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		geometry = new THREE.BoxGeometry( 100, 2, 90 );
+		material = new THREE.MeshPhongMaterial( {
+			color: 0xffffff * Math.random(), 
+			emissive: 0x333333 * Math.random(),
+			specular: 0xffffff * Math.random(),
+			shininess: 10
+		} );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.position.set( 20, -10, -30 );
+		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 50, 10 );
+		mesh.position.set( 0, -9, 0 );
+		scene.add( mesh );
+
+		nimble = new THREE.Object3D();
+		nimble.scale.multiplyScalar( 0.05 );
+
+		scene.add( nimble );
+
+		for ( var i = 0; i < 12; i++ ) {
+
+			loadFileSTLByURL( files[ i ] );
+
+		}
+
+		chkRotate.checked = controls.autoRotate = true;
+		chkGradient.checked = true;
+		toggleGradient();
+
+
+	}
+
+	function loadFileSTLByURL( fileName ) {
+
+// http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/#http://va3c.github.io/viewer/samples/NPP_16.stl
+
+		var loader = new THREE.STLLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.name = fileName
+		loader.load( modelsDir + fileName, function ( geometry ) {
+
+			mesh = new THREE.Mesh( geometry, materials[ Math.floor( Math.random() * materials.length ) ] );
+
+
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+			nimble.add( mesh );
+			mesh.name = loader.name;
+console.log( fileName  );
+			if ( loader.name === files[ 0 ] ) {
+
+
+				handles = mesh;
+				handles.geometry.center();
+				handles.position.set( 690, 840, 260 );
+
+			}
+
+			msg.innerHTML = 'name: ' + fileName + '<br>' +
+			'';
+
+		} );
+
+	}
+
+	function toggleGradient () {
+
+		if ( chkGradient.checked ) {
+
+				var col1 = Math.random().toString(16).slice(2, 8);
+				var col2 = Math.random().toString(16).slice(2, 8);
+				var col3 = Math.random().toString(16).slice(2, 8);
+				var x = ( Math.random() * window.innerWidth ).toFixed(0);
+				var y = ( Math.random() * window.innerHeight ).toFixed(0);
+
+				document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
+
+	}
+
+	function generateTexture() {
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = 256;
+		canvas.height = 256;
+
+		var context = canvas.getContext( '2d' );
+		var image = context.getImageData( 0, 0, 256, 256 );
+
+		var x = 0, y = 0;
+
+		for ( var i = 0, j = 0, l = image.data.length; i < l; i += 4, j ++ ) {
+
+			x = j % 256;
+			y = x == 0 ? y + 1 : y;
+
+			image.data[ i ] = 255;
+			image.data[ i + 1 ] = 255;
+			image.data[ i + 2 ] = 255;
+			image.data[ i + 3 ] = Math.floor( x ^ y );
+
+		}
+
+		context.putImageData( image, 0, 0 );
+
+		return canvas;
+
+	}
+
+	function addLights() {
+	
+		scene.add( camera );  // needed for light to track
+
+		lightAmbient = new THREE.AmbientLight( 0x888888 );
+		scene.add( lightAmbient );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 1 );
+		lightPoint.position = camera.position;
+		camera.add( lightPoint );
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+
+		lightDirectional.castShadow = true;
+		lightDirectional.shadowMapWidth = 2048;
+		lightDirectional.shadowMapHeight = 2048;
+
+		var r = 170;
+		lightDirectional.position.set( 100, 100, 100);
+
+		lightDirectional.shadowCameraLeft = -r;
+		lightDirectional.shadowCameraRight = r;
+		lightDirectional.shadowCameraTop = r;
+		lightDirectional.shadowCameraBottom = -r;
+
+		lightDirectional.shadowCameraNear = 0;
+		lightDirectional.shadowCameraFar = 3 * r;
+		lightDirectional.shadowCameraVisible = true;
+		scene.add( lightDirectional );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+		updateThings();
+
+	}
+
+
+
+	function updateThings() {
+		ngle += 0.001;
+
+		if ( handles ) {
+
+			if ( handles.rotation.y > 1 ) {
+
+				dir = -0.01;
+
+			} else if (  handles.rotation.y <= 0 ) {
+
+				dir = 0.01;
+
+			}
+
+			handles.rotateOnAxis( v( 0, 1, 0 ), dir );
+		}
+	}
+
+		function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+</script>
+</body>
+</html>
