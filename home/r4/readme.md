@@ -28,18 +28,18 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
+* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction
+
 * [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs ) ~ just started
 	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
 * [![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( http://jaanga.github.com/cookbook ) ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
-	* Most recent work has been here
 
 * [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html ) ~ All 500 stocks all at once in 3D with frequent updates
 
 * [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf )
 	* mathematics with a 3D perspective.
 
-* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction
 
 <!--
 
