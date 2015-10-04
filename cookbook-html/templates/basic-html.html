@@ -2,8 +2,8 @@
 <html lang=en >
 <head>
 <title>Basic HTML Template</title>
-<meta charset=utf-8 />
-<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<meta charset = utf-8 />
+<meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
 </head>
 <body>
 <script>
@@ -17,8 +17,9 @@
 			'h2, a { margin: 0; }' +
 			'#i { text-decoration: none; }' +
 
-			'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; width: 200px; } ' +
-			'input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 28px; opacity: 0.5; width: 10px; } ' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; } ' +
+			'input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; width: 10px; } ' +
+			'input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; opacity: 0.5; width: 10px; } ' +
 
 		'';
 
@@ -33,6 +34,11 @@
 			'<p>Pretty colors: <input id=inpPretty type=checkbox ></p>' +
 			'<p>Overlay: <select id=selList title="Select the 2D overlay" >select option<select></p>' +
 			'<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>' +
+			'<p>' +
+				'<input type=radio name=field id=but1 />button 1 ' +
+				'<input type=radio name=field id=but2 checked />button 2 ' +
+				'<input type=radio name=field id=but3 />button 3 ' +
+			'</p>' +
 			'<div id=info ></div>' +
 		'';
 
