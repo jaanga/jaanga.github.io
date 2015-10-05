@@ -1,4 +1,4 @@
-[Jaange]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo; [Templates]( http://jaanga.github.io/cookbook-html/templates/  ) &raquo; [Reader/( http://jaanga.github.io/cookbook-html/templates/reader/  ) &raquo;
+[Jaange]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo; [Templates]( http://jaanga.github.io/cookbook-html/templates/  ) &raquo; [Reader]( http://jaanga.github.io/cookbook-html/templates/reader/  ) &raquo;
 
 Read Me Reader R3 Read Me
 ====
