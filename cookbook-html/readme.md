@@ -1,6 +1,6 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
 
-Cookbook Read Me
+[Cookbook Read Me]( index.html )
 ====
 
 <span style=display:none; >[You are now in GitHub source code view - Click here to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/index.html "View file as a web page." ) </span>
