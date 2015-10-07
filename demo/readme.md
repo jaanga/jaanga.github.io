@@ -5,9 +5,11 @@
 
 ##[OpenDesk ~ Half Sheet Table]( http://theo-armour.github.io/theo-armour.testing/opendesk-half-sheet-table/latest/ )
 
-##[Moon Voyager]( http://jaanga.github.io/terrain-r2/viewers/moon-voyager/dev/ )
+##[Moon Voyager]( http://jaanga.github.io/moon/voyager/dev/ )
 
-##[Moon Rover Mobile R5]( http://jaanga.github.io/terrain-r2/viewers/moon-rover-mobile/dev/ )
+##[Moon Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ )
+
+##[Mars Voyager]( http://jaanga.github.io/terrain-r2/viewers/mars-voyager/dev/ )
 
 ##[algeSurf]( http://jaanga.github.io/algesurf/function-graph/r4/function-graph-r4.1.html )
 
