@@ -28,7 +28,7 @@ There is a good amount of FOSS available here - including the following projects
 
 * [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
-* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction. Also [Moon]( http:/jaanga.github.io/moon/ )
+* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction. Also [Moon]( http://jaanga.github.io/moon/ )
 
 * [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs ) ~ just started
 	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
