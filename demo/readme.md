@@ -1,9 +1,14 @@
 [jaanga.github.io/demo]( http://jaanga.github.io/demo )
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/demo/ "View file as a web page." ) </span>
+
 ##[WikiHouse ~ Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
 
-##[OpenDesk ~ Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html )
+##[OpenDesk ~ Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-half-sheet-table/latest/ )
+
+##[OpenDesk ~ Slim Chair]( http://opendesk.github.io/design-playground/opendesk-slim-chair/latest/ )
+
+
 
 ##[Moon Voyager]( http://jaanga.github.io/moon/voyager/dev/ )
 
@@ -12,6 +17,7 @@
 ##[Moon Rover]( http://jaanga.github.io/moon/rover/dev/ )
 
 ##[Mars Voyager]( http://jaanga.github.io/terrain-r2/viewers/mars-voyager/dev/ )
+
 
 ##[algeSurf]( http://jaanga.github.io/algesurf/function-graph/r4/function-graph-r4.1.html )
 
