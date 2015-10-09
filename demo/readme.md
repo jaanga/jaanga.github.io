@@ -3,7 +3,7 @@
 <span style=display:none; >[View as web page]( http://jaanga.github.io/demo/ "View file as a web page." ) </span>
 ##[WikiHouse ~ Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
 
-##[OpenDesk ~ Half Sheet Table]( http://theo-armour.github.io/theo-armour.testing/opendesk-half-sheet-table/latest/ )
+##[OpenDesk ~ Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html )
 
 ##[Moon Voyager]( http://jaanga.github.io/moon/voyager/dev/ )
 
