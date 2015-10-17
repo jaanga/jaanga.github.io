@@ -1,13 +1,17 @@
 [Jaanga]( http://jaanga.github.io/ ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) &raquo;  [Templates]( http://jaanga.github.io/cookbook-html/templates/ ) &raquo;  
-[Read Me with Iframe]( index.html )
+[Read Me with Iframe Carousel]( index.html )
 ===
 
-<span style=display:none; >[View as web page]( http://jaanga.github.io/cookbook-html/templates/ "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='http://jaanga.github.io/cookbook-html/templates/'; />
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/  "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='http://jaanga.github.io/cookbook-html/templates/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-<iframe id=ifr src="iframe-carousel-r2.html" width=100% height=500px ></iframe>  
+<iframe id=ifr src="iframe-carousel-r2.html" width=100% height=600px ></iframe>  
 
-_Sample Jaanga Moon Apps_
+_Sample Jaanga Apps_
+
+see also:
+
+* <http://exploratoria.github.io/sandbox/templates/readme-with-iframe-sequence/>
 
 ## Concept
 

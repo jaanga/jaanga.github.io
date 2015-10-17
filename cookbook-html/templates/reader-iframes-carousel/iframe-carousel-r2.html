@@ -9,6 +9,7 @@
 <script>
 
 	var interval = 8000;
+	var timer;
 	var editor = 'http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#';
 	var sites = [
 
@@ -34,7 +35,7 @@
 
 		var content = document.body.appendChild( document.createElement( 'div' ) );
 		content.innerHTML = 
-			'<iframe id=ifr width=100% height=500px ></iframe>' +
+			'<iframe id=ifr width=100% height=' + ( window.innerHeight - 40 ) + 'px ></iframe>' +
 			'<center><p id=buttons ></p></center>' +
 		'';
 
@@ -43,7 +44,11 @@
 			button = buttons.appendChild( document.createElement( 'button' ) );
 			button.innerHTML = sites[ i ][ 0 ];
 			button.id = i;
-			button.onclick = function(){ ifr.src = sites[ this.id ][ 1 ]; };
+			button.onclick = function(){ 
+
+				ifr.src = sites[ this.id ][ 1 ]; 
+				clearInterval( timer );
+			};
 
 		}
 
@@ -52,7 +57,7 @@
 
 		ifr.src = sites[ index ][ 1 ];
 
-		setInterval( displayNext, interval );
+		timer = setInterval( displayNext, interval );
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
