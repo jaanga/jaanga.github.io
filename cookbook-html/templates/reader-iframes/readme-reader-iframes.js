@@ -13,8 +13,9 @@
 
 			'iframe { border: 0px solid; margin: 50px 0 0px 0; width: 100%; }' +
 
-			'p, li { margin: 10px 20%; }' +
-			'li li { margin: 10px 2%; }' +
+			'p, ul { margin: 10px 20%; }' +
+			'li ul { margin: 10px 1%; }' +
+
 			'p em { font-size: 12pt; }' +
 
 			'table { font-size: 14pt; margin: 10px 20%; }' +
