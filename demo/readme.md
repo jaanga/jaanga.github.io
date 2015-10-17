@@ -30,6 +30,8 @@
 # Math
 ## [algeSurf]( http://jaanga.github.io/algesurf/function-graph/r4/function-graph-r4.1.html )
 
+## [Lorenz Attractor]( http://jaanga.github.io/algesurf/chaotic-maps/lorenz-attractor/r2/lorenz-attractor.html )
+
 # Fun
 
 ## [SP 500]( http://jaanga.github.io/sp500/latest )
