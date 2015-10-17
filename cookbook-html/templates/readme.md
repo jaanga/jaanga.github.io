@@ -7,3 +7,10 @@
 <input type=button value='You are now in GitHub web page view - Click here to view Read Me file as source code' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/'; />
 
 * [Reader]( http://jaanga.github.io/cookbook-html/templates/reader/ )
+	* Derived from Exploratoria revisions
+* [Reader Iframes]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ )
+	* Allows for full width iframes
+* [Reader Iframes Carousel]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/ )
+	* Demo of a courousel iframe
+* [Read Me]( http://jaanga.github.io/cookbook-html/templates/readme ) 
+	* Older version / deprecated

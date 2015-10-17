@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Iframe Random Site Show v0.1.1</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script>
+
+	var interval = 8000;
+	var editor = 'http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#';
+	var sites = [
+
+		['Spherical Wave', editor + 'http://exploratoria.github.io/exhibits/waves/spherical-wave/spherical-wave.html' ],
+		['Plane Wave', editor + 'http://exploratoria.github.io/exhibits/waves/plane-wave/plane-wave.html' ],
+		['Cylindrical Wave', editor + 'http://exploratoria.github.io/exhibits/waves/cylindrical-wave/cylindrical-wave.html' ],
+		['Random Walk', editor + 'http://exploratoria.github.io/exhibits/heat/random-walk/random-walk.html' ]
+
+	]
+
+	var index = Math.floor( Math.random() * sites.length );
+
+	init();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'button { background-color: white; border-width: 1px; margin-right: 5px; }' +
+			'p { width: ' + window.innerWidth + 'px; }' +
+			'#ifr { border: 0px solid; } ' +
+		'';
+
+		var content = document.body.appendChild( document.createElement( 'div' ) );
+		content.innerHTML = 
+			'<iframe id=ifr width=100% height=500px ></iframe>' +
+			'<center><p id=buttons ></p></center>' +
+		'';
+
+		for ( var i = 0; i < sites.length; i++ ) {
+
+			button = buttons.appendChild( document.createElement( 'button' ) );
+			button.innerHTML = sites[ i ][ 0 ];
+			button.id = i;
+			button.onclick = function(){ ifr.src = sites[ this.id ][ 1 ]; };
+
+		}
+
+		but = document.getElementById( index );
+		but.style.backgroundColor = 'lightgreen';
+
+		ifr.src = sites[ index ][ 1 ];
+
+		setInterval( displayNext, interval );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+	}
+
+	function displayNext() {
+
+		var but = document.getElementById( index );
+		but.style.backgroundColor = 'white';
+
+		index = ++index >= sites.length ? 0 : index;
+		ifr.src = sites[ index ][ 1 ];
+
+		but = document.getElementById( index );
+		but.style.backgroundColor = 'lightgreen';
+
+	}
+
+	function onWindowResize() {
+
+		parent.ifr.style.cssText += ' width: ' + parent.parent.window.innerWidth + 'px; ' ;
+
+	}
+
+</script>
+</body>
+</html>

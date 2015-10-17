@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang=en >
 <head>
+<meta charset=utf-8 >
 <title>Iframe Random Site Show R1</title>
-<meta charset=utf-8 />
-<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' >
 </head>
 <body>
 <script>
@@ -14,9 +14,10 @@
 		['http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html','opendesk'],
 		['http://jaanga.github.io/cookbook/rubiks-cube/rubiks-cube-r2-theo.html','rubiks'],
 		['http://fgx.github.io/fgx-aircraft-overview/latest/','fgx'],
-		['http://abantech.github.io/','abantech']
+		['http://theo-armour.github.io/ucsf/','ucsf']
 
-	]
+	];
+	var timer;
 
 	var index = Math.floor( Math.random() * sites.length );
 
@@ -43,13 +44,16 @@
 			button = buttons.appendChild( document.createElement( 'button' ) );
 			button.innerText = sites[ i ][ 1 ];
 			button.id = i;
-			button.onclick = function(){ ifr.src = sites[ this.id ][ 0 ]; };
+			button.onclick = function(){ 
+				ifr.src = sites[ this.id ][ 0 ]; 
+				clearInterval( timer );
+			};
 
 		}
 
 		ifr.src = sites[ index ][ 0 ];
 
-		setInterval( displayNext, 8000 );
+		timer = setInterval( displayNext, 8000 );
 
 	}
 

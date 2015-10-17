@@ -2,14 +2,24 @@
 [Read Me with Iframe]( index.html )
 ===
 
-<span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
+<span style=display:none; >[View as web page]( http://jaanga.github.io/cookbook-html/templates/ "View file as a web page." ) </span>
+<input type=button value='View file as source code on GitHub' onclick=window.location.href='http://jaanga.github.io/cookbook-html/templates/'; />
 
-<iframe id=ifr src="iframe-random-site-show-r1.html" width=100% height=500px ></iframe>  
+<iframe id=ifr src="iframe-carousel-r2.html" width=100% height=500px ></iframe>  
 
-_XXX - latest revision_ / [Full Screen]( http://XXX.github.io/latest/index.html )
+_Sample Jaanga Moon Apps_
 
 ## Concept
+
+### Issue
+
+* item
+* item
+* item
+	* item
+	* item
+		* item
+* item
 
 ### Mission  
 <!-- a statement of a rationale, applicable now as well as in the future -->
@@ -29,7 +39,7 @@ jaanga@googlegroups.com
 
 ##Copyright
 
-Copyright © 2015 Jaanga authors
+Copyright Â© 2015 Jaanga authors
 
 
 ## License
