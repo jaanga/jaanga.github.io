@@ -13,7 +13,7 @@
 
 			'iframe { border: 0px solid; margin: 50px 0 0px 0; width: 100%; }' +
 
-			'p, ul { margin: 10px 20%; }' +
+			'p, ul, code { margin: 10px 20%; }' +
 			'li ul { margin: 10px 1%; }' +
 
 			'p em { font-size: 12pt; }' +
