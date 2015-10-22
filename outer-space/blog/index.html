@@ -8,7 +8,6 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
 <script>
 
-	var arr = [];
 
 	var converter = new showdown.Converter();
 
@@ -46,9 +45,12 @@
 
 	function getBlogPosts() {
 
-		var xx = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/outer-space/blog';
+
+
+		var link = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/outer-space/blog';
+		var arr = [];
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', xx, true );
+		xmlHttp.open( 'GET', link, true );
 
 		xmlHttp.onreadystatechange = function() {
 
@@ -95,7 +97,6 @@
 			if ( xmlHttp.readyState !== 4 ) { return; }
 
 			posts.innerHTML += '<div><i>' + fileName.substr( 0, 4 ) + '-' + fileName.substr( 4, 2 ) + '-' + fileName.substr( 6, 2 ) + '</i></div>';
-
 			posts.innerHTML += converter.makeHtml( xmlHttp.responseText );
 
 		};

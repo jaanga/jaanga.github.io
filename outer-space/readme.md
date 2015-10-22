@@ -79,8 +79,8 @@ The Apps
 
 ## Mars
 
-[Mars Read Me - Web Page]( http://jaanga.github.io/outer-space/mars )  
-[Mars Spotter Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/mars )  
+[Mars Read Me - Web Page]( http://jaanga.github.io/mars )  
+[Mars Spotter Read Me - Source Code]( https://github.com/jaanga/mars/ )  
 
 
 ## Star Spotter
