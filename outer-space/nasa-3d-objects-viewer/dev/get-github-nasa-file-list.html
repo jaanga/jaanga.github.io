@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>get-github-nasa-file-list.html</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+	init();
+
+	function init() {
+	document.body.style.cssText = ' font: 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg1 ></div>' +
+
+	'';
+
+		getNASAFileNames() ;
+
+	}
+
+	function getNASAFileNames() {
+
+		var xmlHttp = new XMLHttpRequest();
+//		xmlHttp.open( 'GET', 'https://github.com/nasa/NASA-3D-Resources/tree/master/3D%20Printing', true );
+//		xmlHttp.open( 'GET', 'https://api.github.com/repos/theo-armour/theo-armour.github.io/git/trees/master?recursive=1', true );
+		xmlHttp.open( 'GET', 'https://api.github.com/repos/nasa/NASA-3D-Resources/git/trees/master?recursive=1', true );
+
+
+		xmlHttp.onreadystatechange = function() {
+
+			if ( xmlHttp.readyState !== 4 ) { return; }
+
+			response =  xmlHttp.responseText;
+
+			var obj = JSON.parse( response );
+
+//console.log(  response, obj );
+
+			var lines = response.split(/\r\n|\n/);
+			var head = '<h2>NASA 3D STL Files</h2>' +
+//				'<small>The following files are from <a href=http://mrdoob.github.io/three.js/examples/ >Three.js Examples</a>.</small>' +
+			'';
+			var text = '';
+			var writing = false;
+
+			for ( var i = 0; i < lines.length; i++ ) {
+
+				if ( lines[ i ].indexOf( '.stl' ) > -1 ) {
+
+					text += lines[ i ].replace( '"path": ','' ) + '<br>';
+
+				}
+
+			}
+
+			msg1.innerHTML = text;
+
+		};
+
+		xmlHttp.send( null );
+
+
+	}
+
+
+</script>
+</body>
+</html>
+

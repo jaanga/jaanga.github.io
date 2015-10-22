@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<style>
+
+	body { font: 12pt monospace; margin: 0; }
+	h1 { margin: 0; }
+	h1 a { text-decoration: none; }
+	#bars, #i { text-decoration: none; }
+	#bars { color: #fcf; }
+
+</style>
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
+<script>
+
+	var menuFile = 'nasa-3d-objects-viewer-v-0-1-1.md';
+	var openingFile = ['./readme.md'];
+
+	var hamburger, menu, iFrame, divFrame;
+
+	init();
+
+	function init() {
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.style.cssText = 'position: absolute; left: 340px; transition: left 1s; ';
+		hamburger.innerHTML = '<h1><a href=JavaScript:slideMenu(); id=bars >&#9776;</a></h1>';
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = 'background-color: #eee; max-height: ' + ( window.innerHeight - 25 ) + 'px; left: -345px; max-width: 300px; ' +
+		'opacity: 0.85; overflow: auto; padding: 0 15px; position: absolute; top: 0;';
+		menu.innerHTML = '<div id=header ></div>' +
+			'<p><input type=checkbox id=chkRotate onchange=toggleRotate(); checked /> toggle rotation</p>' +
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradient(); checked >toggle gradient</p>' +
+			'<div id=stats ></div>' +
+			'<div id=nasa3DModels ><h2>NASA 3D Models</h2></div>' +
+			'<div id=nasa3DPrinting ><h2>MASA 3D Printing</h2><div>' +
+		'';
+
+		iFrame = document.body.appendChild( document.createElement( 'iframe' ) );
+		iFrame.width = window.innerWidth;
+		iFrame.height = window.innerHeight;
+		iFrame.style.cssText = 'border-width: 0; margin: 0; overflow: hidden; ';
+
+		divFrame = document.body.appendChild( document.createElement( 'div' ) );
+		divFrame.style.cssText = 'left: 360px; margin: 0 auto; max-width: 900px; position: absolute; right: 0; top: 0; ';
+
+		requestFile ( header, menuFile );
+
+		getNASAFileNames();
+
+		window.addEventListener( 'hashchange', hashChange, false );
+
+		hashChange();
+
+	}
+
+	function getNASAFileNames() {
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', 'https://api.github.com/repos/nasa/NASA-3D-Resources/git/trees/master?recursive=1', true );
+
+		xmlHttp.onreadystatechange = function() {
+
+			if ( xmlHttp.readyState !== 4 ) { return; }
+
+			response =  xmlHttp.responseText;
+
+			var lines = response.split(/\r\n|\n/);
+			var textModels = '';
+			var textPrinting = '';
+			var mods = 0;
+			var prints = 0;
+
+			for ( var i = 0; i < lines.length; i++ ) {
+
+				if ( lines[ i ].indexOf( '.stl' ) > -1 ) {
+
+					line = lines[ i ];
+					start = line.indexOf( '/' );
+					fname =  line.substr( start ).replace( '",','' );
+
+					elements = lines[ i ].split('/' );
+
+					if ( line.indexOf( '3D Models' ) > - 1 ) {
+
+						textModels += '<p><a href="#https://rawgit.com/nasa/NASA-3D-Resources/master/3D Models/' + fname + '" >' +
+						fname + '</a></p>';
+						mods++
+
+					} else 
+
+						textPrinting += '<p><a href="#https://rawgit.com/nasa/NASA-3D-Resources/master/3D Printing/' + fname + '" >' +
+						fname + '</a></p>';
+						prints++;
+				}
+
+			}
+
+			nasa3DModels.innerHTML += textModels;
+			nasa3DPrinting.innerHTML += textPrinting;
+			stats.innerHTML = '3D Model files: ' + mods + '<br>3D Printer files: ' + prints;
+
+
+		};
+
+		xmlHttp.send( null );
+
+	}
+
+
+	function hashChange() {
+
+		var fileName = location.hash ? location.hash.split( '#' ): openingFile;
+
+		fileName =  fileName.length > 1 ? fileName[ 1 ] : fileName [ 0 ];
+
+		document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+
+		var fileType = fileName.substr( fileName.lastIndexOf( '.' )).toLowerCase();
+
+		if ( fileType === '.html' ) {
+
+			divFrame.innerHTML = '';
+
+			iFrame.src = fileName + '#' + location.hash.split( '#' )[2];
+
+			document.body.style.overflow = 'hidden';
+
+		} else if ( fileType === '.md' ) {
+
+			iFrame.src = '';
+
+			requestFile ( divFrame, fileName );
+
+			document.body.style.overflow = '';
+
+			document.body.style.backgroundImage = '';
+
+		} else if ( fileType === '.stl' ) {
+
+			divFrame.innerHTML = '';
+
+			iFrame.onload = function() { 
+
+				if ( iFrame.contentWindow.controls ) {
+
+					toggleRotate(); 
+					toggleGradient();
+
+				}
+
+			}
+
+			iFrame.src = 'http://exploratoria.github.io/cookbook/viewers/view-stl-files/view-stl-files-v-0-1-0.html#' + fileName;
+
+			document.body.style.overflow = 'hidden';
+
+		}
+
+	}
+
+	function requestFile ( obj, fileName ) {
+
+		obj.xmlHttp = new XMLHttpRequest();
+		obj.xmlHttp.open( 'GET', fileName, true );
+		obj.xmlHttp.onreadystatechange = function() {
+
+			obj.innerHTML = obj.xmlHttp.readyState === 4 ? new showdown.Converter().makeHtml( obj.xmlHttp.responseText ) : '';
+
+		};
+
+		obj.xmlHttp.send( null );
+
+	}
+
+	function toggleRotate() {
+
+		iFrame.contentWindow.controls.autoRotate = chkRotate.checked === true ? true : false;
+
+	}
+
+	function toggleGradient() {
+
+		if ( chkGradient.checked ) {
+
+				var col1 = Math.random().toString( 16 ).slice( 2, 8 );
+				var col2 = Math.random().toString( 16 ).slice( 2, 8 );
+				var col3 = Math.random().toString( 16 ).slice( 2, 8 );
+				var x = ( Math.random() * window.innerWidth ).toFixed( 0 );
+				var y = ( Math.random() * window.innerHeight ).toFixed( 0 );
+
+				document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
+
+	}
+
+	function slideMenu(){
+
+		hamburger.style.left = hamburger.style.left === '20px' ? '340px' : '20px';
+
+	}
+
+</script>
+</body>
+</html>

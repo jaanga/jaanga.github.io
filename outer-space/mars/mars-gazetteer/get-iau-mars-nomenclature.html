@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>get-iau-mars-nomenclature.html</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+// http://planetarynames.wr.usgs.gov/Page/MARS/target
+
+	var fileName = './iau-mars-nomenclature-original.csv';
+	var saveFileName = 'mars-nomenclature.csv';
+
+//	var width = 9216;
+//	var height = 4608;
+
+	var width = 5760;
+	var height = 2880;
+
+	var gazetteer;
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<p><button onclick=saveFile(); >Save File</button></p>' +
+			'<div id=msg1 ></div>' +
+		'';
+
+		getGazetteerGEBCO();
+
+	}
+
+	function getGazetteerGEBCO() {
+
+		requestGazetteer();
+		var xmlHttp;
+
+		function requestGazetteer(  ) {
+
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( 'GET', fileName, true );
+			xmlHttp.onreadystatechange = callbackGazetteer;
+			xmlHttp.send( null );
+
+		}
+
+		function callbackGazetteer() {
+
+			if ( xmlHttp.readyState != 4  ) { return; }
+
+			var response = xmlHttp.responseText;
+
+			lines = response.split(/\r\n|\n|\n/);
+//console.log( lines );
+			gazetteer = [];
+
+			var index = 0;
+
+			places = [];
+
+			for ( var i = 1; i < lines.length - 1; i++ ) {
+
+				place = lines[i].split( ',' );
+
+//				places.push( place );
+
+				radius = place[ 2 ];
+
+				lat = place[ 3 ];
+
+				lon = place[ 4 ]; // .substr( -1 ) === 'E' ? place[ 3 ].slice( 0, -1 ) : '-' +  place[ 3 ].slice( 0, -1 );
+
+				notes = place[ 8 ];
+
+				gazetteer.push( [ place[ 0 ].replace( /"/g, '' ),radius, lat, lon, notes ] );
+
+			}
+
+// console.log( places );
+
+			var txt = '';
+
+			for ( var i = 0; i < gazetteer.length; i++ ) {
+
+				txt += gazetteer[ i ][ 0 ] + ',' + gazetteer[ i ][ 1 ]  + ',' + gazetteer[ i ][ 2 ] + ',' + gazetteer[ i ][ 3 ] + ',' + gazetteer[ i ][ 4 ]  +'<br>' ;
+
+			}
+
+			msg1.innerHTML = txt;
+
+		}
+
+	}
+
+	function saveFile() {
+
+		var blob = new Blob( [ msg1.innerText ] );
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = saveFileName;
+		a.click();
+		delete a;
+
+	}
+</script>
+</body>
+</html>
+

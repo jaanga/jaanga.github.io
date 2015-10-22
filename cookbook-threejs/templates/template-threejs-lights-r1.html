@@ -40,7 +40,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
@@ -83,7 +83,7 @@
 
 		lightPoint = new THREE.PointLight( 0xffffff, 0.25 );
 		camera.add( lightPoint );
-		lightPoint.position = new THREE.Vector3( 0, 0 , 1 );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
 
 
 // Ground Plane
