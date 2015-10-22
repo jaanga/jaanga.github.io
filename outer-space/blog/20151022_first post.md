@@ -13,6 +13,6 @@ The inspiration for the validity of this thought comes from the brilliant Englis
 Remy has been hosting a blog with posts written in MarkDown and hosted on GitHub for years.
 
 Remy's code is sophisticated and well beyond the scope of Outer Space.
-We are starting with a very simple JavaScript cookbook example
+We are starting with a very simple JavaScript [cookbook example]( https://github.com/jaanga/jaanga.github.io/blob/master/outer-space/blog/index.html )
 
  

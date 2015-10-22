@@ -10,8 +10,6 @@
 
 	var arr = [];
 
-	var text = '<h1>Outer Space Blog</h1><p><i>Fast, cheap and good ways into STEM</i></p><hr>';
-
 	var converter = new showdown.Converter();
 
 	init();
@@ -21,20 +19,20 @@
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }' +
 			'h2, a { margin: 0; }' +
-			'#i { text-decoration: none; }' +
+			'h1 a, #i { text-decoration: none; }' +
 		'';
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
 
-		content.innerHTML = '<h2>' +
-				'<a href="" >Blogmire</a> ' +
-				'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a>' +
-			'</h2>' +
-			'<div id=names ></div>' +
-			'<div id=posts >' + text + '</div>' +
+		content.innerHTML = '<h1>' +
+				'<a href="" >Outer Space Blog</a> ' +
+				'<a id=i href=http://jaanga.github.io/outer-space >&#x24D8;</a>' +
+			'</h1>' +
+			'<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p><hr>' +
+			'<div id=posts ></div>' +
 		'';
 
-		if ( location.hash !== undefined ) {
+		if ( location.hash !== '' ) {
 
 			requestFile( location.hash.substr( 1 ) );
 
@@ -48,7 +46,7 @@
 
 	function getBlogPosts() {
 
-		var xx = 'https://api.github.com/repos/jaanga/cookbook/contents/blogmire';
+		var xx = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/outer-space/blog';
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open( 'GET', xx, true );
 
@@ -57,16 +55,16 @@
 			if ( xmlHttp.readyState !== 4 ) { return; }
 
 			response =  xmlHttp.responseText;
-console.log( response );
+
 			var lines = response.split(/\r\n|\n/);
 			var txt = '';
 
 			for ( var i = 0; i < lines.length; i++ ) {
 
-				if ( lines[ i ].indexOf( '"path"' ) > -1 && lines[ i ].indexOf( '.md' ) > -1 ) {
+				if ( lines[ i ].indexOf( '"name"' ) > -1 && lines[ i ].substr( 13, 3 ) === '201' ) {
 
 					line = lines[ i ];
-					fname =  line.substr( 22 ).replace( '",','' );
+					fname =  line.substr( 13 ).replace( '",','' );
 					arr.push( { date: fname.substr( 0, 8 ), name: fname } );
 					txt += fname + '<br>';
 
@@ -75,8 +73,6 @@ console.log( response );
 			}
 
 			arr.sort( function( a, b ){return b.date - a.date } );
-
-			posts.innerHTML += txt;
 
 			for ( var i = 0; i < arr.length; i++ ) {
 

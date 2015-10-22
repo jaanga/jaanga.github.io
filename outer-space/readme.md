@@ -3,19 +3,25 @@
 🔭 [Outer Space Read Me]( index.html )
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/moon/ "View file as a web page." ) </span>
-<input type=button value='You are now in GitHub web page view - Click this button to view Read Me file as source code' onclick=window.location.href='https://github.com/jaanga/moon/'; />
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/ "View file as a web page." ) </span>
+<input type=button value='You are now in GitHub web page view - Click this button to view Read Me file as source code' onclick=window.location.href='https://github.com/jaanga/outer-space/'; />
+
+[Outer Space Blog]( ./blog/index.html )
 
 ## Concept
 
 ### Issues / Problems
 <!--
 
-The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Patttern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
+The general format is an adaptation of the ideas developed in Alexander's _et al_ 
+[A Patttern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as summarized on page 10.
 
-Each pattern describes a problem which occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over, without ever doing it the same way twice.
+Each pattern describes a problem which occurs over and over again in our environment, 
+and then describes the core of the solution to that problem, 
+in such a way that you can use this solution a million times over, without ever doing it the same way twice.
 
-patterns are descriptions of common problems and proposal for the solutions that can be used repeatedly every time the problem is encountered and producing an different outcome.
+Patterns are descriptions of common problems and proposal for the solutions that 
+can be used repeatedly every time the problem is encountered and producing an different outcome.
 
 -->
 
