@@ -4,7 +4,7 @@
 ===
 
 <span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/ "View file as a web page." ) </span>
-<input type=button value='You are now in GitHub web page view - Click this button to view Read Me file as source code' onclick=window.location.href='https://github.com/jaanga/outer-space/'; />
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code'  />
 
 [Outer Space Blog]( ./blog/index.html )
 
