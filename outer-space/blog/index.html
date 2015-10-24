@@ -45,10 +45,8 @@
 
 	function getBlogPosts() {
 
-
-
 		var link = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/outer-space/blog';
-		var arr = [];
+		arr = [];
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open( 'GET', link, true );
 
@@ -67,11 +65,11 @@
 
 					line = lines[ i ];
 
-console.log( line );
+// console.log( line );
 
 					items = line.substr( 0, 8 ).split( '_' );
 					fname =  line.substr( 13 ).replace( '",', '' );
-					arr.push( { date: fname.substr( 0, 8 ).replace( '-', '' ), name: fname } );
+					arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
 					txt += fname + '<br>';
 
 				}
@@ -100,9 +98,15 @@ console.log( line );
 
 			if ( xmlHttp.readyState !== 4 ) { return; }
 
-			posts.innerHTML += '<div><i>' + fileName.substr( 0, 4 ) + '-' + fileName.substr( 4, 2 ) + '-' + fileName.substr( 6, 2 ) + '</i></div>';
-			posts.innerHTML += converter.makeHtml( xmlHttp.responseText );
+			items = fileName.split( '_' );
 
+//console.log( 'fn', fileName );
+
+			txt = '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' + 
+				converter.makeHtml( xmlHttp.responseText ) +
+			'<hr>';
+
+			posts.innerHTML += txt;
 		};
 
 		xmlHttp.send( null );
