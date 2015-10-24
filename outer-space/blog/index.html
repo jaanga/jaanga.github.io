@@ -66,8 +66,11 @@
 				if ( lines[ i ].indexOf( '"name"' ) > -1 && lines[ i ].substr( 13, 3 ) === '201' ) {
 
 					line = lines[ i ];
-					fname =  line.substr( 13 ).replace( '",','' );
-					arr.push( { date: fname.substr( 0, 8 ), name: fname } );
+console.log( line );
+
+					items = line.substr( 0, 8 ).split( '_' );
+					fname =  line.substr( 13 ).replace( '",', '' );
+					arr.push( { date: fname.substr( 0, 8 ).replace( '-', '' ), name: fname } );
 					txt += fname + '<br>';
 
 				}
