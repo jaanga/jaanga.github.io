@@ -34,7 +34,8 @@ Access to Science, Technology, Engineering and Math ([STEM]( https://en.wikipedi
 Access to Data
 
 * The tools to explore and discover things were once literally rocket science. Yet we know that the data is accessible and and the development tools easier than ever. 
-* Computers and the Internet have allowed scientists to gather, store and share huge amounts of data, yet that data is often in huge highly inaccessible files and to examine the data compl  
+* Computers and the Internet have allowed scientists to gather, store and share huge amounts of data, 
+yet that data is often in huge highly inaccessible files and to examine the data requires complicated tools.  
 
 Access to Tools
 
@@ -47,7 +48,7 @@ Beginners have little access to good places to start.
 
 
 STEM
-* To proved software examples that only require a basic knowledge of HTML, CSS and JavaScript in order to get going and 'make it your own'
+* To provide software examples that only require a basic knowledge of HTML, CSS and JavaScript in order to get going and 'make it your own'
 * To demonstrate that all this is possible in an environment that allows you to fork, embellish, share and publish online that is free and open source
 
 
