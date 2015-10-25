@@ -9,6 +9,10 @@ Outer Space Blog Read Me
 
 [Outer Space Blog]( http://jaanga.github.io/outer-space/blog/index.html )
 
+
+<iframe src=http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/blog/index.html width=100% height=500px></iframe>
+
+
 ## Features
 
 * Everything free and open source and hosted on GitHub 
