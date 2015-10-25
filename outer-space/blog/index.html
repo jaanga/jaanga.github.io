@@ -76,7 +76,7 @@
 
 					items = line.substr( 0, 8 ).split( '_' );
 					fname =  line.substr( 13 ).replace( '",', '' );
-					arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: 'http://jaanga.github.io/outer-space/blog/' + fname } );
+					arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
 					txt += fname + '<br>';
 
 				}
@@ -87,7 +87,7 @@
 
 			for ( var i = 0; i < arr.length; i++ ) {
 
-				requestFile ( arr[ i ].name );
+				requestFile ( 'http://jaanga.github.io/outer-space/blog/', arr[ i ].name );
 
 			}
 
@@ -97,10 +97,10 @@
 
 	}
 
-	function requestFile ( fileName ) {
+	function requestFile ( path, fileName ) {
 
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.open( 'GET', path + fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
 			if ( xmlHttp.readyState !== 4 ) { return; }
@@ -111,8 +111,7 @@
 			
 			txt = items.length > 1 ? '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' : ''; 
 
-			txt += converter.makeHtml( xmlHttp.responseText ) +
-			'<hr>';
+			txt += converter.makeHtml( xmlHttp.responseText ) + '<hr>';
 
 			posts.innerHTML += txt;
 		};

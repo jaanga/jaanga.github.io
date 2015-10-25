@@ -13,6 +13,11 @@ Outer Space Blog Read Me
 <iframe src=http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/blog/index.html width=100% height=500px></iframe>
 
 
+## Things to Do
+
+* Make the tags into links that just call up posts that have that tag
+
+
 ## Features
 
 * Everything free and open source and hosted on GitHub 
