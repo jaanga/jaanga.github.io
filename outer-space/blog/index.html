@@ -76,7 +76,7 @@
 
 					items = line.substr( 0, 8 ).split( '_' );
 					fname =  line.substr( 13 ).replace( '",', '' );
-					arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
+					arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: 'http://jaanga.github.io/outer-space/blog/' + fname } );
 					txt += fname + '<br>';
 
 				}
@@ -108,9 +108,10 @@
 			items = fileName.split( '_' );
 
 //console.log( 'fn', fileName );
+			
+			txt = items.length > 1 ? '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' : ''; 
 
-			txt = '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' + 
-				converter.makeHtml( xmlHttp.responseText ) +
+			txt += converter.makeHtml( xmlHttp.responseText ) +
 			'<hr>';
 
 			posts.innerHTML += txt;
