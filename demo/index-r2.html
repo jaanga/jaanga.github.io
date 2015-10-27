@@ -1,16 +1,16 @@
 <!doctype html>
-<html>
+<html lang=en >
 <head>
-<meta charset=utf-8 >
 <title>Jaanga Demo</title>
+<meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
 <script>
 
-	init();
-
+	var script = document.body.appendChild( document.createElement( 'script' ) );
+	script.onload = init;
+	script.src = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js'; 
 
 	function init() {
 
@@ -25,7 +25,7 @@
 		xmlHttp.open( 'GET', fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
-			info.innerHTML = xmlHttp.readyState === 4  ? new showdown.Converter().makeHtml( xmlHttp.responseText ) : '';
+			info.innerHTML = xmlHttp.readyState === 4  ? new Showdown.converter().makeHtml( xmlHttp.responseText ) : '';
 
 		};
 
