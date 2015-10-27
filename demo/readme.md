@@ -12,9 +12,7 @@
 
 #[Outer Space]( http://jaanga.github.io/outer-space/ )
 
-## [Moon Voyager Gamer]( http://jaanga.github.io/moon/voyager/gamer/dev/ )
-
-## [Moon Voyager Altitude]( http://jaanga.github.io/moon/voyager/altitude/dev/ )
+## [Moon Voyager]( http://jaanga.github.io/moon/voyager/altitude/dev/ )  - [Gamer]( http://jaanga.github.io/moon/voyager/gamer/dev/ ) [Altitude]( http://jaanga.github.io/moon/voyager/altitude/dev/ )
 
 ## [Moon Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ )
 
