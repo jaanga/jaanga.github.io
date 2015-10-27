@@ -1,4 +1,4 @@
-[Jaanga]( http://jaanga.github.io ) &raquo; 
+﻿[Jaanga]( http://jaanga.github.io ) &raquo; 
 
 🔭 [Outer Space Read Me]( index.html )
 ===
@@ -94,3 +94,39 @@ The Apps
 
 [NASA 3D Objects Read Me - Web Page]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer )  
 [NASA 3D Objects Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/nasa-3d-objects-viewer )  
+
+
+## Copyright and License
+
+Copyright © 2015 Jaanga authors
+
+This work is available under two licenses
+
+1: Jaanga software is available under the [MIT License]( http://en.wikipedia.org/wiki/MIT_License) which states:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'),
+to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+The software is provided 'as is', without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.
+In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+
+
+2: Jaanga documentation and data is available under a [Creative Commons]( http://creativecommons.org/ ) CC0 license.
+
+<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+<a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
+<img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+</a>
+<br />
+To the extent possible under law, <a rel="dct:publisher" href="http://jaanga.github.io">
+<span property="dct:title">Jaanga authors</span></a> have waived all copyright and related or neighboring rights to <span property="dct:title">Jaanga works</span>.
+This work is published from: <span property="vcard:Country" datatype="dct:ISO3166" content="US" about="http://jaanga.github.io"> United States</span>.
+</p>
+
+<br>
+<hr>
+<center title="glowing star" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >&#127775;</a>
+</center>
