@@ -14,7 +14,7 @@
 
 ## [Moon Voyager]( http://jaanga.github.io/moon/voyager/ ) [Gamer]( http://jaanga.github.io/moon/voyager/gamer/dev/ ) [Altitude]( http://jaanga.github.io/moon/voyager/altitude/dev/ )
 
-## [Moon Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ ) [256p]( http://jaanga.github.io/moon/rover-256p/dev/ ) ~ [64p]( http://jaanga.github.io/moon/rover-64p/dev/ )
+## [Moon Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ ) [64p]( http://jaanga.github.io/moon/rover-64p/dev/ ) [256p]( http://jaanga.github.io/moon/rover-256p/dev/ ) 
 
 ## [Mars Voyager]( http://jaanga.github.io/mars/voyager/gamer/dev/ )
 
