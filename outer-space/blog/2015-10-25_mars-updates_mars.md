@@ -1,6 +1,6 @@
 [Mars Updates]( http://jaanga.github.io/outer-space/blog/index.html#2015-10-25_mars-updates_mars.md )
 ===
-
+![mars-heightmap-2d-1440x720.jpg]( http://jaanga.github.io/mars/images/mars-heightmap-2d-1440x720.jpg =640x320 )
 [Mars Voyager Gamer]( http://jaanga.github.io/mars/voyager/gamer/dev/ ) made a lot of progress today.
 The code is becoming fairly clean and effective. Placards line up with their relevant geography.
 Clicking on the dropdown list takes you to the designated location. 
