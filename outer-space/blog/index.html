@@ -8,6 +8,8 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
 <script>
 
+	var path = './';
+//	var path = 'http://jaanga.github.io/outer-space/blog/';
 
 	var converter = new showdown.Converter();
 
@@ -42,7 +44,7 @@
 
 		if ( location.hash !== '' ) {
 
-			requestFile( location.hash.substr( 1 ) );
+			requestFile( path, location.hash.substr( 1 ) );
 
 		} else {
 
@@ -109,7 +111,7 @@
 
 			items = fileName.split( '_' );
 
-//console.log( 'fn', fileName );
+console.log( 'fn', fileName );
 			
 			txt = items.length > 1 ? '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' : ''; 
 

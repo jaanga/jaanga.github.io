@@ -1,6 +1,9 @@
 Mars Repository Created
 ===
 
+![mars-heightmap-2d-1440x720.jpg]( http://jaanga.github.io/mars/images/mars-heightmap-2d-1440x720.jpg =640x320 )  
+_Mars Heightmap_
+
 A [Mars repository]( https://github.com/jaanga/mars ) has been created on Jaanga.
 
 The repository is starting to be populated. See the [Mars Read Me]( http://jaanga.github.io/mars/ ) for details.
