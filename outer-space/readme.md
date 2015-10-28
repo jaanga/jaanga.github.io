@@ -100,7 +100,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ##  Moon
-![ moon-rover-256p-screen-1024x768.jpg]( ../../jaanga-terrain/moon/images/moon-rover-256p-screen-1024x768.jpg =640x480 )
+![ moon-rover-256p-screen-1024x768.jpg]( http://jaanga.github.io/moon/images/moon-rover-256p-screen-1024x768.jpg =640x480 )
 * Explore the Moon in 3D
 * Access over 3GB digital elevation heightmap data for the entire surface of the Moon
 * Play with dozens of simple cookbook visualization scripts and utilities
@@ -110,7 +110,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ## Mars
-![mars-voyager-gamer-screen-1024x768.jpg]( ../../jaanga-terrain/mars/images/mars-voyager-gamer-screen-1024x768.jpg =640x480 )
+![mars-voyager-gamer-screen-1024x768.jpg]( http://jaanga.github.io/mars/images/mars-voyager-gamer-screen-1024x768.jpg =640x480 )
 * Explore Mars in 3D
 * Access over a gigabyte of digital elevation heightmap data for the entire surface of Mars
 * Learn how to access NASA data, chop it up into usable bits and create 3D visualizations
@@ -121,7 +121,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ## Star Spotter
-![star-spotter-screen-1034x768.jpg]( ./star-spotter/images/star-spotter-screen-1034x768.jpg =640x480 )
+![star-spotter-screen-1034x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-1034x768.jpg =640x480 )
 * View over a hundred thousand of stellar objects in 3D
 * Learn how to select objects in 3D and display related data
 
@@ -130,7 +130,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ## NASA 3D Objects Viewer
-![nasa-3d-objects-viewer-screen-1024x768.jpg]( ./nasa-3d-objects-viewer/images/nasa-3d-objects-viewer-screen-1024x768.jpg =640x480 )
+![nasa-3d-objects-viewer-screen-1024x768.jpg]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/images/nasa-3d-objects-viewer-screen-1024x768.jpg =640x480 )
 * View NASA 3D Printer STL files in 3D
 * Learn how to access the NASA database on GitHub from any app
 
