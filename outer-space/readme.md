@@ -110,7 +110,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ## Mars
-![mars-voyager-gamer-screen-1024x768.jpg]( ../../jaanga-terrain/mars-voyager-gamer-screen-1024x768.jpg =640x480 )
+![mars-voyager-gamer-screen-1024x768.jpg]( ../../jaanga-terrain/mars/images/mars-voyager-gamer-screen-1024x768.jpg =640x480 )
 * Explore Mars in 3D
 * Access over a gigabyte of digital elevation heightmap data for the entire surface of Mars
 * Learn how to access NASA data, chop it up into usable bits and create 3D visualizations
@@ -121,7 +121,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ## Star Spotter
-
+![star-spotter-screen-1034x768.jpg]( ./star-spotter/images/star-spotter-screen-1034x768.jpg =640x480 )
 * View over a hundred thousand of stellar objects in 3D
 * Learn how to select objects in 3D and display related data
 
@@ -130,7 +130,7 @@ _Every page list the content that is available and associated with the page._
 
 
 ## NASA 3D Objects Viewer
-
+![nasa-3d-objects-viewer-screen-1024x768.jpg]( ./nasa-3d-objects-viewer/images/nasa-3d-objects-viewer-screen-1024x768.jpg =640x480 )
 * View NASA 3D Printer STL files in 3D
 * Learn how to access the NASA database on GitHub from any app
 
@@ -142,7 +142,7 @@ _Every page list the content that is available and associated with the page._
 
 ## Top Features
 
-_Would like to write about what we are doing? Here is some text you can copy and paste to help get you going._ 
+_Would you like to write about what we are doing? Here is some text you can copy and paste to help get you going._ 
 
 * Access that is free and easy to gigabytes of data from NASA and other sources that is otherwise highly inaccessible
 * Learn from dozens of short, easy JavaScript scripts
