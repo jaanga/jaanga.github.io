@@ -134,6 +134,7 @@ The Apps
 ### Code
 
 * Develop simple techniques for displaying orbits and trajectories
+* Add sky-spheres and sky-boxes with stars and other suitable images
 
 ### User Experience
 
@@ -417,19 +418,6 @@ Examples:
 * Was that crack in the ground made by an earthquake? It seems to break through hills and valleys.
 
  
-### Fork, Edit and Share
-
-* For - to beg, borrow or steal a concept
-* Edit - to make it your own
-* Share - to give back to the world 
-
-
-<https://guides.github.com/activities/forking/>  
-<http://scholarslab.org/research-and-development/forking-fetching-pushing-pulling/>
-
-### FOSS
-
-[Free open source software (FOSS)]( https://en.wikipedia.org/wiki/Free_and_open-source_software ) is of the essence in the future of pedagogy.
 
 ### Reduction of the Barriers of Notation
 
@@ -444,7 +432,32 @@ You can experience a concept by
 * Editing the code
 * Reading descriptions
 
-  
+
+### A map is not the territory
+
+Much of what we do here is about data visualization - looking at numbers and trying to find meaning from them. 
+The use of the numbers to recreate a photographic representation of an object is but one use for that data.
+Often it is not an important use...
+
+<https://en.wikipedia.org/wiki/Map%E2%80%93territory_relation>  
+<http://www.nobeliefs.com/MapandTerritory.htm>
+
+
+### Fork, Edit and Share
+
+* For - to beg, borrow or steal a concept
+* Edit - to make it your own
+* Share - to give back to the world 
+
+
+<https://guides.github.com/activities/forking/>  
+<http://scholarslab.org/research-and-development/forking-fetching-pushing-pulling/>
+
+
+
+### FOSS
+
+[Free open source software (FOSS)]( https://en.wikipedia.org/wiki/Free_and_open-source_software ) is of the essence in the future of pedagogy.
 
 
 ### GitHub
