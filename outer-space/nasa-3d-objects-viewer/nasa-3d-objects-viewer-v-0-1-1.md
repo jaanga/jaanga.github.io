@@ -1,5 +1,5 @@
 [Jaanga]( http://jaanga.github.io/ ) &raquo; [Outer Space]( http://jaanga.github.io/outer-space ) &raquo; 
-[NASA 3D Objects Viewer v0.1.1]( ./dev/index.html ) [&#x24D8;]( https://github.com/exploratoria/sandbox/tree/gh-pages/astronomy/nasa-3d-objects-viewer/ )
+[NASA 3D Objects Viewer v0.1.1]( ./dev/index.html ) [&#x24D8;]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/ )
 ===
  
 [Read Me]( #readme.md )
