@@ -107,7 +107,7 @@ The Apps
 
 ## Star Spotter
 
-* View undreds of thousands of stellar objects in 3D
+* View hundreds of thousands of stellar objects in 3D
 
 [Star Spotter Read Me - Web Page]( http://jaanga.github.io/outer-space/star-spotter )  
 [Star Spotter Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/star-spotter/ )  
@@ -119,6 +119,15 @@ The Apps
 
 [NASA 3D Objects Read Me - Web Page]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer )  
 [NASA 3D Objects Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/nasa-3d-objects-viewer )  
+
+<br>
+<hr>
+
+## Top Features
+
+
+* View NASA's GitHub repository of STL files of satellites in 3D
+* Source code provided for everything that is short and easy fork, edit and share 
 
 <br>
 <hr>
@@ -292,8 +301,8 @@ As in:
 ### PNG files are used to store the data
 
 We tried using ASCII JSON text files to store elevation data. There were many issues.
-The file sizes soon becaume huge and transmission speed suffer. 
-If all the data did not come in. the app is hosed.
+The file sizes soon become huge and transmission speed suffer. 
+If all the data did not come in, the app is hosed.
 There are too many numbers to be able to 'see' things.
 
 We looked into using binary files, but these seem to require a whole lot of expertise and effert. 

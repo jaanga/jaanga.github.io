@@ -77,7 +77,6 @@ This work is published from: <span property="vcard:Country" datatype="dct:ISO316
 </p>
 
 <br>
-
 <hr>
 
 * item

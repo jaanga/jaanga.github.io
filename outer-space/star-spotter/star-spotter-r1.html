@@ -1,10 +1,9 @@
 <!doctype html>
-<html lang=en>
+<html>
 <head>
-<title>Star Spotter</title>
 <meta charset=utf-8>
+<title>Star Spotter</title>
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0'>
-<meta name=author content='Theo Armour'>
 </head>
 <body>
 <script src=http://rawgit.com/mrdoob/three.js/r71/build/three.min.js ></script>  
@@ -14,7 +13,8 @@
 
 <script>
 
-	var fileName ='http://exploratoria.github.io/exhibits/astronomy/star-spotter/data/hygdata_v3.csv';
+	var sourceFolder = './'; //'http://jaanga.github.io/outer-space/star-spotter/'
+	var fileName = sourceFolder + 'data/hygdata_v3.csv';
 	var xmlHttp;
 	var count = 0;
 	var particleSystem;
@@ -54,8 +54,8 @@
 		menu.style.cssText = ' background-color: #eee; border: 1px #ccc solid; left: 20px;  max-height: ' + ( window.innerHeight - 50 ) + 'px; ' +
 			'opacity: 0.8; overflow: auto; padding: 0 10px; position: absolute; top: 20px; transition: left 1s; width: 260px; ';
 
-		menu.innerHTML = '<h2>' + document.title +
-			' <a id=i href=https://github.com/exploratoria/exploratoria.github.io/tree/master/exhibits/astronomy/star-spotter/ >&#x24D8;</a>' +
+		menu.innerHTML = '<h2><a href=""> ' + document.title + '</a>' +
+			' <a id=i href=http://jaanga.github.io/outer-space/star-spotter/ >&#x24D8;</a>' +
 			'</h2>' +
 			'<div>Symbol <select id=selSprite ></select></div>' +
 			'<p><button onclick=setControlsFirstPerson(); >First Person Controls</button> ' +
@@ -74,7 +74,7 @@
 
 		selSprite.onchange = function() { 
 
-			texture = THREE.ImageUtils.loadTexture( 'http://exploratoria.github.io/exhibits/astronomy/star-spotter/sprites/' + sprites[ selSprite.selectedIndex ] + '.png' ); 
+			texture = THREE.ImageUtils.loadTexture( sourceFolder + 'sprites/' + sprites[ selSprite.selectedIndex ] + '.png' ); 
 			drawStars();
 
 		};
@@ -101,7 +101,7 @@
 		scene.add( axisHelper );
 
 // texture
-		texture = THREE.ImageUtils.loadTexture( 'http://exploratoria.github.io/exhibits/astronomy/star-spotter/sprites/ball.png' );
+		texture = THREE.ImageUtils.loadTexture( sourceFolder + 'sprites/ball.png' );
 
 // interaction
 		raycaster = new THREE.Raycaster();
