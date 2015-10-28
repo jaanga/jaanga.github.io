@@ -104,6 +104,8 @@
 // texture
 		THREE.ImageUtils.crossOrigin = 'anonymous';
 		texture = THREE.ImageUtils.loadTexture( sourceFolder + 'sprites/ball.png' );
+		texture.minFilter = texture.magFilter = THREE.NearestFilter;
+		texture.needsUpdate = true;
 
 // interaction
 		raycaster = new THREE.Raycaster();
