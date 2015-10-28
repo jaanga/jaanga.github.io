@@ -8,7 +8,11 @@
 
 [Outer Space Blog]( ./blog/index.html )
 
+_2015-10-28 - welcome to a beta release of an ongoing effort_
+
 ## Concept
+
+_This page - as do most all pages here - tries to define what issues need to be solved and how we are going to try to solve them._
 
 ### Issues / Problems
 <!--
@@ -25,22 +29,22 @@ can be used repeatedly every time the problem is encountered and producing an di
 
 -->
 
-Access to Science, Technology, Engineering and Math ([STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ))
+Access to [Science, Technology, Engineering and Math (STEM)]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ))
 
-* People do not always find it an easy thing trying to acquire skills in science, technology, engineering and math.
+* People do not always find it an easy thing trying to acquire skills - let alone delight - in science, technology, engineering and math.
 
 <!-- Theo 2015-10-21 >> I'm looking for links that describe the types of issues that people may have in acquiring STEM skills -->
  
 Access to Data
 
-* The tools to explore and discover things were once literally rocket science. Yet we know that the data is accessible and and the development tools easier than ever. 
+* The tools to explore and discover things in outer space were once literally rocket science. Yet we know that the data is accessible and and the development tools easier than ever. 
 * Computers and the Internet have allowed scientists to gather, store and share huge amounts of data, 
 yet that data is often in huge highly inaccessible files and to examine the data requires complicated tools.  
 
 Access to Tools
 
-* Typical samples of programming code relate to coding skills, while actual STEM applications tend to be huge and complex. 
-Beginners have little access to good places to start.
+* Typical samples of programming code for beginners relate to coding skills, while actual STEM applications tend to be huge and complex. 
+Beginners wanting to know about STEM have little access to good places to start.
 
 User Experience
 
@@ -59,7 +63,7 @@ Access to Tools
 
 * To provide real-world STEM tools that useful, informative and simple that you may fork, edit and share
 * To supply a range of cookbook code samples only a few hundred lines long that beginners can learn in an afternoon and begin enhancing in a day or two.
-* To follow established coding - not quirky - standards so that students coming in get up to speed quickly
+* To follow established coding - not too quirky - standards so that students coming in get up to speed quickly
 
 _If you can change the orbit of a satellite and monitor the consequences, do you not then 'own' that satellite?
 If you 'own' a thing - even if it's only in your imagination - have you not acquired a huge amount of knowledge?_
@@ -86,20 +90,31 @@ If you 'own' a thing - even if it's only in your imagination - have you not acqu
 		* No need to know jQuery, Backbone, Angular. Get going if you only know a tiny bit of JavaScript
 		* If you do know jQuery etc: you are welcome! Viewer code can be embedded easily in your apps
 
+<br>
+<hr>
+
 The Apps
 ===
 
-## Moon
+_Every page list the content that is available and associated with the page._
 
+
+##  Moon
+![ moon-rover-256p-screen-1024x768.jpg]( ../../jaanga-terrain/moon/images/moon-rover-256p-screen-1024x768.jpg =640x480 )
 * Explore the Moon in 3D
+* Access over 3GB digital elevation heightmap data for the entire surface of the Moon
+* Play with dozens of simple cookbook visualization scripts and utilities
 
 [Moon Read Me - Web Page]( http://jaanga.github.io/moon/ )  
 [Moon Read Me - Source Code]( https://github.com/jaanga/moon/ )  
 
 
 ## Mars
-
+![mars-voyager-gamer-screen-1024x768.jpg]( ../../jaanga-terrain/mars-voyager-gamer-screen-1024x768.jpg =640x480 )
 * Explore Mars in 3D
+* Access over a gigabyte of digital elevation heightmap data for the entire surface of Mars
+* Learn how to access NASA data, chop it up into usable bits and create 3D visualizations
+
 
 [Mars Read Me - Web Page]( http://jaanga.github.io/mars )  
 [Mars Spotter Read Me - Source Code]( https://github.com/jaanga/mars/ )  
@@ -107,7 +122,8 @@ The Apps
 
 ## Star Spotter
 
-* View hundreds of thousands of stellar objects in 3D
+* View over a hundred thousand of stellar objects in 3D
+* Learn how to select objects in 3D and display related data
 
 [Star Spotter Read Me - Web Page]( http://jaanga.github.io/outer-space/star-spotter )  
 [Star Spotter Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/star-spotter/ )  
@@ -115,7 +131,8 @@ The Apps
 
 ## NASA 3D Objects Viewer
 
-* View NASA 3Dprinter STL files in 3D
+* View NASA 3D Printer STL files in 3D
+* Learn how to access the NASA database on GitHub from any app
 
 [NASA 3D Objects Read Me - Web Page]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer )  
 [NASA 3D Objects Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/nasa-3d-objects-viewer )  
@@ -125,7 +142,11 @@ The Apps
 
 ## Top Features
 
+_Would like to write about what we are doing? Here is some text you can copy and paste to help get you going._ 
 
+* Access that is free and easy to gigabytes of data from NASA and other sources that is otherwise highly inaccessible
+* Learn from dozens of short, easy JavaScript scripts
+* Pick up dozens of tips and insights for sourcing good info, mashing up data and building demos quickly
 * View NASA's GitHub repository of STL files of satellites in 3D
 * Source code provided for everything that is short and easy fork, edit and share 
 
@@ -133,6 +154,8 @@ The Apps
 <hr>
 
 ## Things to Do
+
+_Every page discusses thing to try or do and builds a road map as to future possibilities._
 
 ### Current Mission: Outer Space
 
@@ -158,7 +181,7 @@ The Apps
 _The following sections are very much a work in progress. 
 Text is in the process of being culled from a variety of sources and needs much editing.
 Eventually the following work will be split into several files._
-_
+
 
 ## Coding Style Guidelines
 
