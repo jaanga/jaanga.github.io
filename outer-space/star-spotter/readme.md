@@ -12,7 +12,8 @@ Star Spotter
 
 ## Concept
 
-People have been charting heavenly bodies and their attributes since the beginning of humankind. These efforts have been fraught with difficulty, covered small numbers of bodies and require much learning. This exhibit shows that creating a real-time 3D [orrery]( http://en.wikipedia.org/wiki/Orrery ) - using modern technology - is pretty simple with a small amount of easy-to-read code.  
+People have been charting heavenly bodies and their attributes since the beginning of humankind. 
+These efforts have been fraught with difficulty, covered small numbers of bodies and require much learning. 
 
 ### Mission
 

@@ -1,16 +1,17 @@
-[Exploratoria]( http://exploratoria.github.io ) &raquo; [Sandbox]( http://exploratoria.github.io/sandbox/ ) &raquo; [Astronomy]( http://exploratoria.github.io/sandbox/astronomy/ ) &raquo; 
+[Jaanga]( http://jaanga.github.io/ ) &raquo; [Outer Space]( http://jaanga.github.io/outer-space ) &raquo; 
+
 NASA 3D Objects Viewer Read Me
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click here to view Read Me file as a web page]( http://exploratoria.github.io/sandbox/astronomy/nasa-3d-objects-viewer/index.html "View file as a web page." ) </span>
-<input type=button value='You are now in GitHub web page view - Click here to view Read Me file as source code' onclick=window.location.href='https://github.com/exploratoria/sandbox/tree/gh-pages/astronomy/nasa-3d-objects-viewer/'; />
+<span style=display:none; >[You are now in GitHub source code view - click here to view Read Me file as a web page]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/index.html "View file as a web page." ) </span>
+<input type=button value='You are now in GitHub web page view - Click here to view Read Me file as source code' onclick=window.location.href='http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/'; />
 
-<iframe src="http://exploratoria.github.io/sandbox/astronomy/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D Models/Cassini (A)/cassini.stl" width=100% height=500px ></iframe>  
-_NASA 3D Objects - Dev revision_ /  [Fullscreen]( http://exploratoria.github.io/sandbox/astronomy/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Models/Cassini%20(A)/cassini.stl  )
+<iframe src="http://jaanga.github.io/outer-space//nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D Models/Cassini (A)/cassini.stl" width=100% height=500px ></iframe>  
+_NASA 3D Objects - Dev revision_ /  [Fullscreen]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Models/Cassini%20(A)/cassini.stl  )
 
 
-[NASA 3D Objects Viewer - Dev revision]( http://exploratoria.github.io/sandbox/astronomy/nasa-3d-objects-viewer/dev/index.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Models/Cassini%20(A)/cassini.stl )  
-[NASA 3D Objects Viewer - Build revision]( http://exploratoria.github.io/sandbox/astronomy/nasa-3d-objects-viewer/build/index.html )
+[NASA 3D Objects Viewer - Dev revision]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/dev/index.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Models/Cassini%20(A)/cassini.stl )  
+[NASA 3D Objects Viewer - Build revision]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/build/index.html )
 
 ## Concept
 
