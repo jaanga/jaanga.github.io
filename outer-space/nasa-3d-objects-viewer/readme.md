@@ -7,7 +7,7 @@ NASA 3D Objects Viewer Read Me
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/nasa-3d-objects-viewer'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code'  />
 
 <iframe src="http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space//nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html" width=100% height=500px ></iframe>  
-#### _NASA 3D Objects - Cose Edit View - Dev revision_ /  [Fullscreen]( http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html  )
+#### _NASA 3D Objects - Code Edit View - Dev revision_ /  [Fullscreen]( http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html  )
 
 
 [NASA 3D Objects Viewer - Dev revision]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/dev/index.html )  

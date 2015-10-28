@@ -10,9 +10,11 @@
 
 _2015-10-28 - welcome to a beta release of an ongoing effort_
 
+<iframe id=ifr src="iframe-carousel-r2.html" width=100% height=600px ></iframe>  
+
 ## Concept
 
-_This page - as do most all pages here - tries to define what issues need to be solved and how we are going to try to solve them._
+_This page - as do most all pages here - begins by defining what issues we need to solve and how we are going to try to solve them._
 
 ### Issues / Problems
 <!--
@@ -96,7 +98,7 @@ If you 'own' a thing - even if it's only in your imagination - have you not acqu
 The Apps
 ===
 
-_Every page list the content that is available and associated with the page._
+_Every page lists the content that is available and associated with the page._
 
 
 ##  Moon
@@ -155,7 +157,9 @@ _Would you like to write about what we are doing? Here is some text you can copy
 
 ## Things to Do
 
-_Every page discusses thing to try or do and builds a road map as to future possibilities._
+_Every page discusses thing to try or to do and builds a road map as to future possibilities._
+
+_We like things that are practical, pedagogical and provocative..._
 
 ### Current Mission: Outer Space
 
@@ -182,6 +186,7 @@ _The following sections are very much a work in progress.
 Text is in the process of being culled from a variety of sources and needs much editing.
 Eventually the following work will be split into several files._
 
+_Hey! Enough with the scrolling. Go back up and play with some stuff._
 
 ## Coding Style Guidelines
 
