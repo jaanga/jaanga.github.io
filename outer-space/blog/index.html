@@ -111,8 +111,7 @@
 
 			items = fileName.split( '_' );
 
-console.log( 'fn', fileName );
-			
+
 			txt = items.length > 1 ? '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' : ''; 
 
 			txt += converter.makeHtml( xmlHttp.responseText ) + '<hr>';
