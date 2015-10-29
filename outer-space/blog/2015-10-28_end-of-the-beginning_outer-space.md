@@ -1,7 +1,7 @@
 The End of the Beginning?
 ===
 
-![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =640x480 )
+![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =640x480 )  
 _Star Spotter Stars_
 
 One of our favorite quotes is: 'This is not the end, not even the beginning of the end, but it is, perhaps, the end of the beginning.' 
@@ -29,7 +29,3 @@ And there is no indication as to the optics and sensors used to capture the data
 We will recreate the trajectories of the heavenly bpdies according to Kepler's rules and to all the subsequent enhancements.
 
 Here is another quote: The best is yet to be.
-
-
-[Mars Updates]( http://jaanga.github.io/outer-space/blog/index.html#2015-10-25_mars-updates_mars.md )
-===
