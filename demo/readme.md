@@ -25,8 +25,8 @@
 ## [NASA 3D Objects Viewer]( http://exploratoria.github.io/sandbox/astronomy/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html#https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Models/Cassini%20(A)/cassini.stl )
 
 
-# Math
-## [algeSurf]( http://jaanga.github.io/algesurf/function-graph/dev/ )
+# [Math]( http://jaanga.github.io/algesurf/home-page/r3/index.html )
+## [algeSurf]( http://jaanga.github.io/algesurf/function-graph/latest/ )
 
 ## [Lorenz Attractor]( http://jaanga.github.io/algesurf/chaotic-maps/lorenz-attractor/r2/lorenz-attractor.html )
 
