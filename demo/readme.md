@@ -37,14 +37,17 @@
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
 
-# Cartography
+# [Terrain Viewer]( http://jaanga.github.io/terrain-viewer/readme-reader.html )
 
 ## [unFlatland R11]( http://jaanga.github.io/terrain-viewer/un-flatland/r11/un-flatland-r11.html ) &nbsp; [GH]( https://github.com/jaanga/terrain-viewer/tree/gh-pages/un-flatland )
 ## [Scripps 3D Globe]( http://jaanga.github.io/terrain-srtm30-plus-viewers/png-tms7-viewer-3d-globe-low/r3/png-tms7-viewer-3d-globe-low.html )
 ## [Scripps 3D unFlatland]( http://jaanga.github.io/terrain-srtm30-plus-viewers/png-tms7-viewer-3d-unflatland-features/r5/png-tms7-viewer-3d-unflatland.html )
 
-## [Terrain Viewer]( http://jaanga.github.io/terrain-viewer/readme-reader.html )
+
+# [FGX]( http://fgx.github.io/ )
+## [FGx Aircraft]( http://fgx.github.io/fgx-aircraft-overview/latest/ )
 ## [FGx 3D Globe]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
+## [FGx Plane Spotter]( http://jaanga.github.io/fgx-plane-spotter/latest/ )
 
 ---
 <!--
