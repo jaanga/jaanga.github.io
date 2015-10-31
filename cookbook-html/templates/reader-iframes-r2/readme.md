@@ -1,15 +1,17 @@
+
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo; [Templates]( http://jaanga.github.io/cookbook-html/templates/  ) &raquo;
 
 [Read Me Reader Iframes R1 Read Me]( ./index.html )
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
 
-<iframe id=ifr src="http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
-_Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+<iframe class=ifr src="http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
-##### [Template Three.js Draw Things - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+[Template Three.js Draw Things - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 
 ## Concept
@@ -77,7 +79,50 @@ This work is published from: <span property="vcard:Country" datatype="dct:ISO316
 </p>
 
 <br>
-<hr>
+# Cheat Sheet
+
+### Horizontal rules
+
+```
+	***
+	---
+	___
+```
+
+***
+
+---
+
+___
+
+### Links
+
+https://github.com/showdownjs/showdown  
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+http://google.com
+
+
+### Strike through
+
+```
+	~~Strike through~~
+```
+~~Strike through~~
+
+
+
+### Tables
+```
+	| h1    |    h2   |      h3 |
+	|:------|:-------:|--------:|
+	| 100   | [a][1]  | ![b][2] |
+	| *foo* | **bar** | ~~baz~~ |
+```
+| h1    |    h2   |      h3 |
+|:------|:-------:|--------:|
+| 100   | [a][1]  | ![b][2] |
+| *foo* | **bar** | ~~baz~~ |
 
 * item
 * item
@@ -87,21 +132,25 @@ This work is published from: <span property="vcard:Country" datatype="dct:ISO316
 		* item
 * item
 
-#### Heading 4
+###### Heading 6 - use as caption to a full screen iframe
+
+	_italics_
 
 _italics_
 
-**Bold**
+	**Bold**
 
-	line of code
-	line of code 
-	line of code
+**Bold**
 
 ```
 	line of code with 3 backquote characters
 	line of code 
 	line of code
 ```
+
+	line of code
+	line of code 
+	line of code
 
 text with `back quote` characters
 
@@ -113,10 +162,14 @@ text text text
 
 <br>
 
-<hr>
+***
 
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
+</center>
+
+<center title="dingbat" >
+# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
 </center>
 
 

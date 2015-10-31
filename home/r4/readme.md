@@ -1,9 +1,9 @@
 
-[Jaanga Read Me]( ./index.html )
-===
-
 <span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+
+[Jaanga Read Me]( ./index.html )
+===
 
 ## Concept
 
@@ -132,6 +132,8 @@ In no event shall the authors or copyright holders be liable for any claim, dama
 * Folders and files created
 * First commit
 
-<center title='This is called a dingbat. It indicates the end of things. Bye for now...' >❦</center>
+<center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
+</center>
 ===
 <style> img { border: 1px solid black; } </style>
