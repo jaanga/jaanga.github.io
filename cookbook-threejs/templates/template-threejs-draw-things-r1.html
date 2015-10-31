@@ -177,15 +177,15 @@
 
 
 		loader = new THREE.JSONLoader();
-//		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js', function ( geometry ) { // scale 0.6 y 35
-		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
+		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js', function ( geometry ) { //  scale 0.6 y 35
+//		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
 
 			geometry.computeFaceNormals();
 			geometry.computeVertexNormals();
 
 			tree = new THREE.Mesh( geometry, material );
-			tree.position.set( 30, 10, 60 );
-			tree.scale.multiplyScalar( 50 );
+			tree.position.set( 30, 35, 60 );
+			tree.scale.multiplyScalar( 0.5 );
 			tree.castShadow = tree.receiveShadow = true;
 			scene.add( tree );
 

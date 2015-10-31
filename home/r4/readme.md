@@ -2,8 +2,9 @@
 [Jaanga Read Me]( ./index.html )
 ===
 
-<span style=display:none; >[View as web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/home/r4/'; />
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+
 ## Concept
 
 <a href="http://jaanga.github.io" target="_blank">Jaanga.github.io</a> is a GitHub organization

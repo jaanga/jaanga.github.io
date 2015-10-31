@@ -1,7 +1,13 @@
-Jaanga ~ Read Me
+[Jaanga ~ Read Me]( index,html )
 ================
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+
+
 [Read Me R4 web page view]( http://jaanga.github.io/home/r4/  )  
 [Read Me R4 source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4/ "View files with GitHub")
+
+
 
 The Jaanga Read Me - which is also the source of the web page document - is updated fairly frequently.
 Click on one of the above links to go to the read me document for the current release.
