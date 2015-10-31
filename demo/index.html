@@ -3,21 +3,26 @@
 <head>
 <meta charset=utf-8 >
 <title>Jaanga Demo</title>
-<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
 	init();
 
-
 	function init() {
 
-		document.body.style.cssText = ' font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px; ';
+//		document.body.style.cssText = ' font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px; ';
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px;}' +
+			'h2, a { margin: 0; }' +
+			'h1 a, #i { text-decoration: none; }' +
+		'';
 
 		var info = document.body.appendChild( document.createElement( 'div' ) );
-
+		var converter = new showdown.Converter();
 		var fileName = location.hash ? location.hash.split( '#' )[1] : 'readme.md';
 //		document.title = document.title ? document.title : fileName;
 
@@ -25,7 +30,7 @@
 		xmlHttp.open( 'GET', fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
-			info.innerHTML = xmlHttp.readyState === 4  ? new showdown.Converter().makeHtml( xmlHttp.responseText ) : '';
+			info.innerHTML = xmlHttp.readyState === 4  ? converter.makeHtml( xmlHttp.responseText ) : '';
 
 		};
 

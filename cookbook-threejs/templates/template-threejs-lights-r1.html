@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang=en >
+<html>
 <head>
+<meta charset=utf-8 >
 <title>Template Three.js Light R1</title>
-<meta charset=utf-8 />
-<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
@@ -41,7 +41,6 @@
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.shadowMap.enabled = true;
-		renderer.shadowMapSoft = true;
 		document.body.appendChild( renderer.domElement );
 
 		scene = new THREE.Scene();
@@ -81,10 +80,13 @@
 		lightDirectional.shadowCameraVisible = true;
 		scene.add( lightDirectional );
 
-		lightPoint = new THREE.PointLight( 0xffffff, 0.25 );
-		camera.add( lightPoint );
-		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+//		lightPoint = new THREE.PointLight( 0xffffff, 0.25 );
+//		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+//		camera.add( lightPoint );
 
+		lightPoint = new THREE.PointLight( 0xff0000, 0.5 );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		camera.add( lightPoint );
 
 // Ground Plane
 		geometry = new THREE.BoxGeometry( 100, 5, 100 );
@@ -102,7 +104,7 @@
 		mesh.receiveShadow = true;
 		scene.add( mesh );
 
-		helper = new THREE.BoxHelper( mesh );
+		helper = new THREE.EdgesHelper( mesh );
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
@@ -113,15 +115,21 @@
 		helper.position.set( 0, -7.5, 0 );
 		scene.add( helper );
 
+		window.addEventListener( 'resize', onWindowResize, false );
+
 // Sphere
 		geometry = new THREE.SphereGeometry( 25, 50, 50 );
 
 //		material = new THREE.MeshNormalMaterial();
 		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(),
-			emissive: 0xffffff * Math.random(),
-			specular: 0xffffff * Math.random(),
-			shininess: 0.1
+//			color: 0xffffff * Math.random(),
+//			emissive: 0xffffff * Math.random(),
+//			specular: 0xffffff * Math.random(),
+
+			color: 0xaaaaaa,
+//			emissive: 0xffffff * Math.random(),
+			specular: 0xffffff
+//			shininess: 0.1
 		} );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( -100, 10, 0 );
@@ -150,7 +158,7 @@
 			scene.add( mesh );
 			cubes.push( mesh );
 
-			helper = new THREE.BoxHelper( mesh );
+			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 
@@ -158,7 +166,16 @@
 
 	}
 
-	function animate( timestamp ) {
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
 
 		requestAnimationFrame( animate );
 		controls.update();

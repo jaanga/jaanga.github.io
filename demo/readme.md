@@ -1,8 +1,8 @@
-[jaanga.github.io/demo]( http://jaanga.github.io/demo )
+[jaanga.github.io/demo]( http://jaanga.github.io/demo/ )
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/demo/ "View file as a web page." ) </span>
 
-#Wiki
+#[Wiki]( http://wikihouse.github.io/viewer-experiments/ ) / [Open]( http://opendesk.github.io/design-playground/ )
 
 ##[WikiHouse ~ Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
 
@@ -12,7 +12,7 @@
 
 #[Outer Space]( http://jaanga.github.io/outer-space/ )
 
-## [Moon Voyager]( http://jaanga.github.io/moon/voyager/ ) [Gamer]( http://jaanga.github.io/moon/voyager/gamer/dev/ ) [Altitude]( http://jaanga.github.io/moon/voyager/altitude/dev/ )
+## [Moon Voyager]( http://jaanga.github.io/moon/voyager/ ) [Gamer]( http://jaanga.github.io/moon/voyager/gamer/dev/ ) [Altitude]( http://jaanga.github.io/moon/voyager/altitude/dev/ ) [Satellities]( http://jaanga.github.io/moon/voyager/satellites/dev/ ) [SEM]( http://jaanga.github.io/moon/voyager/sun-earth-moon/dev/ )
 
 ## [Moon Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ ) [64p]( http://jaanga.github.io/moon/rover-64p/dev/ ) [256p]( http://jaanga.github.io/moon/rover-256p/dev/ ) 
 
@@ -32,7 +32,7 @@
 
 # Fun
 
-## [SP 500]( http://jaanga.github.io/sp500/latest )
+## [SP 500]( http://jaanga.github.io/sp500/dev/index.html )
 ## [Femur Heart UCSH]( http://theo-armour.github.io/ucsf/ )
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
