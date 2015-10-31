@@ -17,13 +17,14 @@
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 'body { font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px;}' +
-			'h2, a { margin: 0; }' +
+//			'h2, a { margin: 0; }' +
 			'h1 a, #i { text-decoration: none; }' +
 		'';
 
 		var info = document.body.appendChild( document.createElement( 'div' ) );
 		var converter = new showdown.Converter();
 		var fileName = location.hash ? location.hash.split( '#' )[1] : 'readme.md';
+
 //		document.title = document.title ? document.title : fileName;
 
 		var xmlHttp = new XMLHttpRequest();
@@ -37,7 +38,6 @@
 		xmlHttp.send( null );
 
 	}
-
 
 </script>
 </body>

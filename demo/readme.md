@@ -26,7 +26,7 @@
 
 
 # Math
-## [algeSurf]( http://jaanga.github.io/algesurf/function-graph/r4/function-graph-r4.1.html )
+## [algeSurf]( http://jaanga.github.io/algesurf/function-graph/dev/ )
 
 ## [Lorenz Attractor]( http://jaanga.github.io/algesurf/chaotic-maps/lorenz-attractor/r2/lorenz-attractor.html )
 
