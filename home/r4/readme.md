@@ -4,7 +4,7 @@
 [Jaanga]( index.html ) 
 ===
 
-[Copyright and License]( ./index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) [Jaanga Read Me]( index.html#http://jaanga.github.io/readme.md )
+[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) [ Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 
 ## Concept
 
