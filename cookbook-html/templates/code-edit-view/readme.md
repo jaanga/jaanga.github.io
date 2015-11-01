@@ -6,10 +6,9 @@
 [Code-Edit-View Read Me]( index.html )
 ====
 
-<span style=display:none>_View as a web page to see the content of this iframe_</span>
-<iframe class=ifr src=code-edit-view-r2.html width=100% height=500px ></iframe>
-######_Code Edit View_
+<iframe class=ifr src=./dev/index.html width=100% height=500px >View thid read me file as a web page to see the content of this iframe</iframe>
+######_Code Edit View - Dev version_
 
 Loads an HTML file provided in the location hash in a split view showing both raw code and rendered HTML.
 
-Defaults to local index.html file.
+Defaults to loading the local index.html file.
