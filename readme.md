@@ -6,8 +6,6 @@
 [Jaanga Read Me]( index.html )
 ===
 
-
-
 The Jaanga Read Me - which is also the source of the web page document - is updated fairly frequently.
 Click on one of the above links to go to the read me document for the current release.
 
@@ -35,9 +33,30 @@ All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-sourc
 
 
 ## Copyright Notice and License
-[ Copyright Notice and License ]( https://github.com/jaanga/jaanga.github.io/copyright-notice-and-license.md )
+[ Copyright Notice and License ]( http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md)
 
 ## Change Log
+
+## Change Log
+
+2015-07-02 ~ Theo
+
+* R4 set as default
+
+2015-06-29 ~ Theo
+
+* Home page R4 started
+* Files and folders added
+
+2014-10-23 ~ Theo
+
+* set as home page
+* more read me updates
+
+2014-05-11 ~ Theo
+
+* Folders and files created
+* First commit
 
 2013-11-15 ~ Continuing to polish things up.
 

@@ -27,15 +27,17 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 <!--  a descriptive picture of a desired future state -->
 
 * So much of what people do is informed by the tradition of paper. Let's disrupt some of those notions
+* Let's make magic happen - and also know what's happening behind the curtain
 
 ## Projects
 
+_Years indicate latest date when significant effort was made_
 
 * [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo ) 2015
-	* Links to just the good stuff - nothing more - a collection of fun scripts built to work on your mobile device
+	* Links to just the good stuff - nothing more - the collection of fun scripts - built to work on your mobile device
 
 * [ ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =240x180 )<br>Outer Space]( http://jaanga.github.io/outer-space/ ) 2015
-	* Explore the surface of the Moon and Mars in 3D - and much more 
+	* Explore the surfaces of the Moon and Mars in 3D - and much more 
 	* Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap files
 
 * [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html ) 2015
@@ -43,7 +45,7 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 	* Access web resources in real-time
 
 * [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf ) 2015
-	* mathematics with a 3D perspective
+	* Mathematics with a 3D perspective
 
 * [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) 2015
 	* In the mi[d]st of a complete reconstruction. 
@@ -92,50 +94,11 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 
 * [![aechack]( http://jaanga.github.io/home/images/aechack-240x180.png)<br>aeChack]( http://aechack.github.io/ ) 2013
 
-_Years indicate latest data when significant effort was made_
+
  
 ## Contacts
 
 jaanga@googlegroups.com
-
-## System Requirements
-
-In order to view the files on this site you will need a device and browser that provides good support for [WebGL](http://get.webgl.org/).
-WebGL is the JavaScript API for rendering interactive 3D graphics and 2D graphics within any compatible web browser without the use of plug-ins. 
-
-Generally this means a computer with an Intel Core i5 processor or better with an external GPU such as one made by Nvidia. 
-Successful use of the apps on a phone or tablet is highly unlikely. 
-A mouse or other pointing device with a scroll wheel is also highly recommended so that you can zoom, pant and rotate in 3D.
- 
-The apps here are currently being built and tested with the Google Chrome browser. 
-Bugs on browsers other than Chrome need not be reported until such time as the work settles down and an effort to support more browsers is initiated.
-
-##Organization and Copyright
-
-Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins. 
-All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ).
-
-
-## Change Log
-
-2015-07-02 ~ Theo
-
-* R4 set as default
-
-2015-06-29 ~ Theo
-
-* Home page R4 started
-* Files and folders added
-
-2014-10-23 ~ Theo
-
-* set as home page
-* more read me updates
-
-2014-05-11 ~ Theo
-
-* Folders and files created
-* First commit
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
