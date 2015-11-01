@@ -7,14 +7,19 @@
 [Read Me Reader Iframes R1 Read Me]( ./index.html )
 ===
 
-
 <iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
 ###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 [Template Three.js Draw Things - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 
+[Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
+
+[Read Me Template]( ./index.html#readme-template.md )
+
 ## Concept
+
+
 
 ### Issues / Problems
 <!--
@@ -27,14 +32,19 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+Arthur C Clarke's Three Laws number three states: Any sufficiently advanced technology is indistinguishable from magic.
 
+Web pages are a good example of this phenomenon. Most people have not a clue as to how what they see on the screen has been created, stored and transmitted.
+ 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
+
+* To show that a web page is made from code
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
-
+* To help more people become interested in coding in order to help get things done
 
 ## Things to Do
 
@@ -42,131 +52,6 @@ patterns are descriptions of common problems and proposal for the solutions that
 ## Features
 
 
-## Road Map
-
-
-## Issues
-
- 
-## Sources
-
-## Copyright and License
-
-Copyright © 2015 Jaanga authors
-
-This work is available under two licenses:
-
-1: Jaanga software is available under the [MIT License]( http://en.wikipedia.org/wiki/MIT_License) which states:
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'),
-to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-The software is provided 'as is', without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.
-In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
-
-2: Jaanga documentation and data is available under a [Creative Commons]( http://creativecommons.org/ ) CC0 license.
-
-<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
-<a rel="license" href="http://creativecommons.org/publicdomain/zero/1.0/">
-<img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
-</a>
-<br />
-To the extent possible under law, <a rel="dct:publisher" href="http://jaanga.github.io">
-<span property="dct:title">Jaanga authors</span></a> have waived all copyright and related or neighboring rights to <span property="dct:title">Jaanga works</span>.
-This work is published from: <span property="vcard:Country" datatype="dct:ISO3166" content="US" about="http://jaanga.github.io"> United States</span>.
-</p>
-
-<br>
-# Cheat Sheet
-
-### Horizontal rules
-
-```
-	***
-	---
-	___
-```
-
-***
-
----
-
-___
-
-### Links
-
-https://github.com/showdownjs/showdown  
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-
-http://google.com
-
-
-### Strike through
-
-```
-	~~Strike through~~
-```
-~~Strike through~~
-
-
-
-### Tables
-```
-	| h1    |    h2   |      h3 |
-	|:------|:-------:|--------:|
-	| 100   | [a][1]  | ![b][2] |
-	| *foo* | **bar** | ~~baz~~ |
-```
-| h1    |    h2   |      h3 |
-|:------|:-------:|--------:|
-| 100   | [a][1]  | ![b][2] |
-| *foo* | **bar** | ~~baz~~ |
-
-* item
-* item
-* item
-	* item
-	* item
-		* item
-* item
-
-###### Heading 6 - use as caption to a full screen iframe
-
-	_italics_
-
-_italics_
-
-	**Bold**
-
-**Bold**
-
-```
-	line of code with 3 backquote characters
-	line of code 
-	line of code
-```
-
-	line of code
-	line of code 
-	line of code
-
-text with `back quote` characters
-
-text text text
-
-> quote
-> quote
-> quote
-
-<br>
-
-***
-
-<center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
-</center>
 
 <center title="dingbat" >
 # <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>

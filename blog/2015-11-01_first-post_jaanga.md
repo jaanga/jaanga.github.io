@@ -1,12 +1,27 @@
 First Post
 ===
 
-Comtinuing yhe work on upgrading the overall Jaanga user experiencce.
+Comtinuing the work on upgrading the overall Jaanga user experiencce.
 
 Yesterday the default reader-iframes was seriously updated. Ditto the carousel.
 
 Code Edit View was forked over from Exploratoria. The code has been simplified and cleaned up. 
-The view and edit panes placement switched. And buttons style simplified - no more gradient except for file open.
+The view and edit panes placement switched. 
+Perhaps there should be a toggle that let's you choose which goes where.
+And buttons style simplified - no more gradient except for file open.
 
-here were quite a few edits and additions to the home page read me nd to read me files elsewhere.
+The Code Edit View Feature was suggested by Paul M. 
+It's a great way to show that web pages are code not magic.
+
+There were quite a few edits and additions to the home page read me nd to read me files elsewhere.
+
+In the process of moving the web page/source code view buttons to the top of the page.
+Placing them above the breadcrumbs, makes them even more part of the navigation system.
+This should make them less distracting and yet help you remember where they always are without having to think about it.
+In turn this is part of the process to help you remember that a web page is not magic, a web page is code.
+
+There are a number of housekeeping read me files. 
+Files that sit between top menus and app menus with nothing but links and short descriptions
+One day these files will be created by algorithm
+And with the GitHub API this should not be a difficult task.
 

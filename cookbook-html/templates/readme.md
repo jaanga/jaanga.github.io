@@ -6,15 +6,17 @@
 [Templates Read Me]( index.html )
 ===
 
+* [Basic HTML]( http://jaanga.github.io/cookbook-html/templates/basic-html/ )
+	* A good place to start
 
 * [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )
 	* Derived from Exploratoria revisions
 
 * [Latest]( http://jaanga.github.io/cookbook-html/templates/latest/ )
-	* tsample file to take brwoeser to most recenent revision
+	* Sample file to take browser to most recent revision of a script
 	* Also use in 'dev' and 'build' folders
 
-* [Reader Iframes]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-/ )
+* [Reader Iframes]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ )
 	* Allows for full width iframes
 
 * [Reader]( http://jaanga.github.io/cookbook-html/templates/reader/ )
