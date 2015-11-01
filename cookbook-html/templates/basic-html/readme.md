@@ -7,10 +7,10 @@
 [Basic HTML Template Read Me]( ./index.html )
 ===
 
-<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/basic-html/basic-html.html" width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/basic-html/basic-html.html )
+<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html" width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html )
 
-[Basic HTML Template - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/basic-html/basic-html.html )
+[Basic HTML Template - Demo - Full Screen]( http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html )
 
 
 ## Concept
