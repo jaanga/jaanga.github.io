@@ -16,10 +16,12 @@
 //		document.body.style.cssText = ' font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px; ';
 
 		var css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = 'body { font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px;}' +
-//			'h2, a { margin: 0; }' +
-			'h1 a, #i { text-decoration: none; }' +
-		'';
+		css.innerHTML = `
+			body { font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px;}
+//			h2, a { margin: 0; }
+			h1 a, #i { text-decoration: none; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
+		`;
 
 		var info = document.body.appendChild( document.createElement( 'div' ) );
 		var converter = new showdown.Converter();

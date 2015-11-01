@@ -11,7 +11,7 @@
 			h1 a { text-decoration: none; }
 			iframe { border: 0px solid; }
 			img { vertical-align: top; }
-			input[type='button'] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
 			ul li {list-style-type: square;}
 			ul li ul li {list-style-type: circle;}
 		`;
