@@ -4,7 +4,7 @@
 [Jaanga]( index.html ) 
 ===
 
-[[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
+[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) ~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 
 ## Concept
 
@@ -114,20 +114,6 @@ Bugs on browsers other than Chrome need not be reported until such time as the w
 
 Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins. 
 All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ).
-
-Copyright © 2015 Jaanga authors
-
-## License
-
-Jaanga software is available under the [MIT License]( http://en.wikipedia.org/wiki/MIT_License) which states:
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'),
-to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-The software is provided 'as is', without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.
-In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
 
 
 ## Change Log
