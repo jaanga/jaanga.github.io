@@ -1,0 +1,155 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>Code-Edit-View R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.min.js></script>
+<script>
+
+//	var view = document.getElementById( 'view' );  // for Safari compatibility
+	var editor;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = `
+			* { box-sizing: border-box; vertical-align:top; }
+			html, body { height: 100%; }
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			#info { line-height: 18pt; font-size: 18pt; text-decoration: none; }
+		`;
+
+		content = document.body.appendChild( document.createElement( 'div' ) );
+		content.style.height = window.innerHeight + 'px';
+
+		edit = content.appendChild( document.createElement( 'div' ) );
+
+		edit.style.cssText = 'border: 1px solid; float: right; height: 94%; width: 50%;';
+		edit.id = 'edit';
+
+		view = content.appendChild( document.createElement( 'iframe' ) );
+		view.style.cssText = ' border: 1px solid; float: left; height: 94%; width: 50%; ';
+		view.id = 'view';
+
+		buttons = content.appendChild( document.createElement( 'div' ) );
+		buttons.style.cssText = ' position: absolute; right: 1%; top: 95%; ';
+		buttons.innerHTML = `
+				<input type=range id=inpSplit min=1 max=99 step=1 value=50 onchange=updateSplit(); />
+				<button onclick=splitVertical(); >vertical</button>
+				<button onclick=splitHorizontal(); >horizontal</button>
+				<input type=file id=inpFile onchange=openFile(this); />
+				<button onclick=updateView(); >Update View</button>
+				<button onclick=saveFile(); >Save to File</button>
+				<a id=info href=https://github.com/exploratoria/exploratoria.github.io/tree/master/lib/code-edit-view/ >&#x24D8;</a>
+`
+		;
+
+		window.addEventListener( 'hashchange', hashChange, false );
+
+		editor = ace.edit( 'edit' );
+		editor.$blockScrolling = Infinity;
+
+		hashChange();
+
+	}
+
+	function hashChange() {
+
+//		var fileName = location.hash ? location.hash.split( '#' )[1] : 'index.html';
+
+		var fileName = location.hash ? location.hash.substr( 1 ) : 'index.html';
+
+//		if ( fileName === '' ) { return; }
+
+		document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+
+		requestFile ( edit, fileName );
+
+	}
+
+
+	function requestFile ( obj, fileName ) {
+
+		obj.xmlHttp = new XMLHttpRequest();
+		obj.xmlHttp.open( 'GET', fileName, true );
+		obj.xmlHttp.onreadystatechange = function() {
+
+			if ( obj.xmlHttp.readyState !== 4 ) { return; }
+
+			updateViews( obj.xmlHttp.responseText );
+
+		};
+
+		obj.xmlHttp.send( null );
+
+	}
+
+	function openFile( that ) {
+
+		var reader = new FileReader();
+		reader.onloadend = function() {
+
+			data = reader.result;
+
+			updateViews( data );
+
+		};
+
+		reader.readAsText( that.files[0] );
+
+	}
+
+	function updateViews( data ) {
+
+		editor.setValue( data, -1 );
+		view.srcdoc = editor.getValue();
+
+	}
+
+	function saveFile() {
+
+		blob = new Blob( [ editor.getValue() ] );
+		a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = document.title;
+		a.click();
+
+	}
+
+	function splitHorizontal() {
+
+		inpSplit.value = view.style.height = edit.style.height = '47%';
+		view.style.width = edit.style.width = '100%';
+
+	}
+
+	function splitVertical() {
+
+		view.style.height = edit.style.height = '94%';
+		inpSplit.value = view.style.width = edit.style.width = '50%';
+
+	}
+
+	function updateSplit() {
+
+		if ( view.style.width === '100%' ) {
+
+			edit.style.height = 0.94 * inpSplit.value + '%';
+			view.style.height = 0.94 * ( 100 - inpSplit.value ) + '%';
+
+		} else {
+
+			edit.style.width = inpSplit.value + '%';
+			view.style.width = ( 100 - inpSplit.value ) + '%';
+
+		}
+	}
+
+</script>
+</body>
+</html>
