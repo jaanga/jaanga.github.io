@@ -1,8 +1,8 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/basic-html/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/basic-html'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) » 
-[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) »
+[Jaanga]( http://jaanga.github.io ) Â» [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) Â» 
+[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) Â»
 
 [Basic HTML Template Read Me]( ./index.html )
 ===

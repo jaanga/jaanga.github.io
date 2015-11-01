@@ -13,7 +13,11 @@ And buttons style simplified - no more gradient except for file open.
 The Code Edit View Feature was suggested by Paul M. 
 It's a great way to show that web pages are code not magic.
 
+Edits
 There were quite a few edits and additions to the home page read me nd to read me files elsewhere.
+Read Me cheat sheet and read me template files were created.
+Basic-html.html move into its own folder and read me created.
+
 
 In the process of moving the web page/source code view buttons to the top of the page.
 Placing them above the breadcrumbs, makes them even more part of the navigation system.
@@ -29,7 +33,7 @@ Copyright and license and read me stuff have been moved from the jope page into 
 Actually the files were already there, it's just the data was duplicated and the links were not there.
 
 Generally the Jaanga home page is becoming a more simple experience for the user - and possibly becoming easier to maintain
-As aoways, there could be many more words - and much more code.
+As always, there could be many more words - and much more code.
 
 
 
