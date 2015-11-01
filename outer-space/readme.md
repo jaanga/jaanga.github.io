@@ -6,12 +6,15 @@
 🔭 [Outer Space Read Me]( index.html )
 ===
 
-
 [Outer Space Blog]( ./blog/index.html )
 
-_2015-10-28 - welcome to a beta release of an ongoing effort_
+_2015-11-01 - welcome to a beta release of an ongoing mission_
+
+
+## Web Page / Source Code
 
 <iframe class=ifr src="iframe-carousel-r3.html" width=100% height=600px ></iframe>  
+
 
 ## Concept
 
