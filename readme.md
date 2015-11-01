@@ -14,6 +14,7 @@ Click on one of the above links to go to the read me document for the current re
 
 jaanga@googlegroups.com
 
+
 ## System Requirements
 
 In order to view the files on this site you will need a device and browser that provides good support for [WebGL](http://get.webgl.org/).
@@ -26,6 +27,7 @@ A mouse or other pointing device with a scroll wheel is also highly recommended 
 The apps here are currently being built and tested with the Google Chrome browser. 
 Bugs on browsers other than Chrome need not be reported until such time as the work settles down and an effort to support more browsers is initiated.
 
+
 ##Organization
 
 Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins. 
@@ -35,9 +37,13 @@ All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-sourc
 ## Copyright Notice and License
 [ Copyright Notice and License ]( http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md)
 
-## Change Log
 
 ## Change Log
+
+2015-11-01 ~ Theo
+
+* Many changes
+* Blog started
 
 2015-07-02 ~ Theo
 

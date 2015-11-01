@@ -25,3 +25,11 @@ Files that sit between top menus and app menus with nothing but links and short 
 One day these files will be created by algorithm
 And with the GitHub API this should not be a difficult task.
 
+Copyright and license and read me stuff have been moved from the jope page into their own files.
+Actually the files were already there, it's just the data was duplicated and the links were not there.
+
+Generally the Jaanga home page is becoming a more simple experience for the user - and possibly becoming easier to maintain
+As aoways, there could be many more words - and much more code.
+
+
+
