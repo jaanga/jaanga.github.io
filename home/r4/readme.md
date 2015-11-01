@@ -51,7 +51,7 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
 * [![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( http://jaanga.github.com/cookbook )
-	* aVrious and sundry code cookbook projects and files used for presentations or in blog posts.
+	* Various and sundry code cookbook projects and files used for presentations or in blog posts.
 
 
 <!--
@@ -77,7 +77,7 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 * [![WikiHouse]( http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png )<br>WikiHouse]( http://wikihouse.github.io/viewer-experiments/ )
 
 * [![Half Sheet Table]( http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png )<br>OpenDesk]( http://opendesk.github.io/design-playground/ )
-	* a global platform for local making. You may use the to download, make and buy work space furniture.
+	* A global platform for local making. You may use the to download, make and buy work space furniture.
 
 * [![va3c r1]( http://jaanga.github.io/home/images/va3c-r1-240x180.png )<br>vA3C]( http://va3c.github.io/ )  
 

@@ -1,16 +1,17 @@
-﻿[Jaanga]( http://jaanga.github.io ) &raquo; 
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/outer-space/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code'  />
+
+[Jaanga]( http://jaanga.github.io ) &raquo; 
 
 🔭 [Outer Space Read Me]( index.html )
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/ "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code'  />
 
 [Outer Space Blog]( ./blog/index.html )
 
 _2015-10-28 - welcome to a beta release of an ongoing effort_
 
-<iframe id=ifr src="iframe-carousel-r2.html" width=100% height=600px ></iframe>  
+<iframe class=ifr src="iframe-carousel-r2.html" width=100% height=600px ></iframe>  
 
 ## Concept
 
