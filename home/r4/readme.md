@@ -1,23 +1,25 @@
-
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+<span style=display:none; >[You are now in GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/home/r4'; value='You are now in a GitHub web page view - Click this button to view this read fe file as source code' />
 
 [Jaanga Read Me]( ./index.html )
 ===
 
 ## Concept
 
-<a href="http://jaanga.github.io" target="_blank">Jaanga.github.io</a> is a GitHub organization
-with source code at <a href="https://github.com/jaanga" target="_blank">github.com/jaanga</a>.
+[Jaanga.github.io]( http://jaanga.github.io ) is a [GitHub]( http://github.com ) [organization]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4 )
+with source code at [github.com/jaanga]( http://github.com/jaanga ).
 
 The name 'Jaanga' was chosen because it sounds jazzy, it is short and search results indicate uniqueness.
+This is because Jaanga is about writing software that is fun, easy and gets things done.
 
 ### Mission  
 <!-- a statement of a rationale, applicable now as well as in the future -->
 * To supply scripts that are useful, written in code that is simple to understand
+* To help people get into science, technology, engineering and math ([STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ) )
 * To help designers, engineers, scientists - non-programmers - create new types of domain-specific apps
 * To utilize the new technologies being made available in browsers to create new visual and aural interactions
-* To make everything in 3D
+* To supply all code as free open source software( [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ) )
+* To visualize everything in 3D
 
 ### Vision  
 <!--  a descriptive picture of a desired future state -->
@@ -25,23 +27,31 @@ The name 'Jaanga' was chosen because it sounds jazzy, it is short and search res
 * So much of what people do is informed by the tradition of paper. Let's disrupt some of those notions
 
 ## Projects
-There is a good amount of FOSS available here - including the following projects:
 
-* [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo ) ~  a collection of fun scripts designed to work on your mobile device.
 
-* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) ~ In the mi[d]st of a complete reconstruction. 
+* [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo )
+	* Links to just the good stuff - nothing more - a collection of fun scripts built to work on your mobile device
 
-* Also [Outer Space]( http://jaanga.github.io/outer-space/ )
+* [ ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =240x120 )<br>Outer Space]( http://jaanga.github.io/outer-space/ )
+	* Explore the surface of the Moon and Mars in 3D - and much more 
+	* Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap iles
 
-* [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs ) ~ just started
-	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
-
-* [![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( http://jaanga.github.com/cookbook ) ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
-
-* [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html ) ~ All 500 stocks all at once in 3D with frequent updates
+* [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html )
+	* All 500 stocks all at once in 3D with frequent updates
+	* Access web resources in real-time
 
 * [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf )
-	* mathematics with a 3D perspective.
+	* mathematics with a 3D perspective
+
+* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html )
+	* In the mi[d]st of a complete reconstruction. 
+
+
+* [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs )
+	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
+
+* [![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( http://jaanga.github.com/cookbook )
+	* aVrious and sundry code cookbook projects and files used for presentations or in blog posts.
 
 
 <!--
@@ -53,17 +63,21 @@ There is a good amount of FOSS available here - including the following projects
 * <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
 -->
 
-* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification]( http://jaanga.github.io/gestification/ ) ~ work that involves Three.js and the Leap Motion device.
+* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification]( http://jaanga.github.io/gestification/ )
+	* Work that involves Three.js and the Leap Motion device.
 
-* [![Urdacha]( http://jaanga.github.io/home/images/3-Urdacha.png )<br>Urdacha]( http://jaanga.github.io/urdacha ) ~ entry for the Swiss Center _Urban Data Challenge_ in 2013.
+* [![Urdacha]( http://jaanga.github.io/home/images/3-Urdacha.png )<br>Urdacha]( http://jaanga.github.io/urdacha )
+	* Entry for the Swiss Center _Urban Data Challenge_ in 2013.
 
-* [![Brain of Richard]( http://jaanga.github.io/home/images/4-Brain-of-Richard.png )<br>The Brain of Richard]( http://jaanga.github.io/brainofrichard/ ) ~ 3D compilations of hundreds of 2D scanned MRI images.
+* [![Brain of Richard]( http://jaanga.github.io/home/images/4-Brain-of-Richard.png )<br>The Brain of Richard]( http://jaanga.github.io/brainofrichard/ )
+	* 3D compilations of hundreds of 2D scanned MRI images.
 
 ## Spin-Offs
 
 * [![WikiHouse]( http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png )<br>WikiHouse]( http://wikihouse.github.io/viewer-experiments/ )
 
-* [![Half Sheet Table]( http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png )<br>OpenDesk]( http://opendesk.github.io/design-playground/ ) ~ a global platform for local making. You may use the to download, make and buy work space furniture.
+* [![Half Sheet Table]( http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png )<br>OpenDesk]( http://opendesk.github.io/design-playground/ )
+	* a global platform for local making. You may use the to download, make and buy work space furniture.
 
 * [![va3c r1]( http://jaanga.github.io/home/images/va3c-r1-240x180.png )<br>vA3C]( http://va3c.github.io/ )  
 
@@ -81,7 +95,7 @@ jaanga@googlegroups.com
 
 ## System Requirements
 
-In order to view the files on this site you will need a device and browser that provides good support for [WebGL](http://get.webgl.org/)
+In order to view the files on this site you will need a device and browser that provides good support for [WebGL](http://get.webgl.org/).
 WebGL is the JavaScript API for rendering interactive 3D graphics and 2D graphics within any compatible web browser without the use of plug-ins. 
 
 Generally this means a computer with an Intel Core i5 processor or better with an external GPU such as one made by Nvidia. 

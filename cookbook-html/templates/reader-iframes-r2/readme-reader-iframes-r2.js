@@ -10,6 +10,9 @@
 			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; position: absolute: right: 0; }' +
 			'iframe { border: 0px solid; }' +
 			'img { vertical-align: top; }' +
+			'input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }' +
+			'ul li {list-style-type: square;} ' +
+			'ul li ul li {list-style-type: circle;} ' +
 		'';
 
 		var reader = document.body.appendChild( document.createElement( 'script' ) );
@@ -29,7 +32,7 @@
 
 		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
 
-		content = document.body.appendChild( document.createElement( 'div' ) );
+		var content = document.body.appendChild( document.createElement( 'div' ) );
 
 		document.title = document.title ? document.title : fileName;
 
