@@ -9,11 +9,23 @@
 
 * [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )
 	* Derived from Exploratoria revisions
+
+* [Latest]( http://jaanga.github.io/cookbook-html/templates/latest/ )
+	* tsample file to take brwoeser to most recenent revision
+	* Also use in 'dev' and 'build' folders
+
+* [Reader Iframes]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-/ )
+	* Allows for full width iframes
+
 * [Reader]( http://jaanga.github.io/cookbook-html/templates/reader/ )
 	* Derived from Exploratoria revisions
+
 * [Reader Iframes R2]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-r2/ )
+	* Dev version
 	* Allows for full width iframes
+
 * [Reader Iframes Carousel]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/ )
 	* Demo of a courousel iframe
+
 * [Read Me]( http://jaanga.github.io/cookbook-html/templates/readme ) 
 	* Older version / deprecated

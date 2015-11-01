@@ -1,38 +1,27 @@
 
+	var converter;
+
 	init();
 
 	function init() {
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = '' +
-			'body { font: 12pt monospace; margin: 0; }' +
-			'h1 { margin: 30px 20%; }' +
-			'h2 { margin: 30px 20% 10px 20%; }' +
-			'h3 { margin: 30px 20% 10px 20%; }' +
-			'h4 { margin: 0 0 40px 5px; }' +
-
-			'iframe { border: 0px solid; margin: 50px 0 0px 0; width: 100%; }' +
-
-			'p, ul, pre { margin: 10px 20%; }' +
-			'li ul { margin: 10px 1%; }' +
-
-			'p em { font-size: 12pt; }' +
-
-			'table { font-size: 14pt; margin: 10px 20%; }' +
-
-			'#footer { font-size: 10pt; margin: 50px 20%; }' +
-
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; position: absolute: right: 0; }' +
+			'iframe { border: 0px solid; }' +
+			'img { vertical-align: top; }' +
+			'input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }' +
+			'ul li {list-style-type: square;} ' +
+			'ul li ul li {list-style-type: circle;} ' +
 		'';
 
-
 		var reader = document.body.appendChild( document.createElement( 'script' ) );
-
 		reader.onload = function() {
 
+			converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 			hashChange();
 
 		};
-
 		reader.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
 
 		window.addEventListener( 'hashchange', hashChange, false );
@@ -42,7 +31,7 @@
 	function hashChange() {
 
 		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
-		var converter = new showdown.Converter();
+
 		var content = document.body.appendChild( document.createElement( 'div' ) );
 
 		document.title = document.title ? document.title : fileName;
@@ -51,7 +40,35 @@
 		xmlHttp.open( 'get', fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
-			content.innerHTML = xmlHttp.readyState === 4 ? converter.makeHtml( xmlHttp.responseText ) : '';
+			if ( xmlHttp.readyState !== 4 ) { return; }
+ 
+			content.innerHTML = converter.makeHtml( xmlHttp.responseText );
+
+			var ifr = content.getElementsByClassName( 'ifr' );
+
+			if ( ifr !== undefined ) {
+
+				for ( var i = 0; i < ifr.length; i++ ) {
+
+					ifr[ 0 ].style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
+					ifr[ 0 ].style.width = ( window.innerWidth - 20 ) + 'px';
+
+				}
+
+			}
+
+			caption = content.getElementsByTagName( 'h6' );
+
+			if ( caption !== undefined ) {
+
+				for ( var i = 0; i < caption.length; i++ ) {
+
+					caption[ i ].style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
+					caption[ i ].style.width = ( window.innerWidth - 20 ) + 'px';
+
+				}
+
+			}
 
 		};
 
