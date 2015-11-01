@@ -6,15 +6,14 @@
 	function init() {
 
 		var css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = `
-			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; position: absolute: right: 0; }
-			h1 a { text-decoration: none; }
-			iframe { border: 0px solid; }
-			img { vertical-align: top; }
-			input[type='button'] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
-			ul li {list-style-type: square;}
-			ul li ul li {list-style-type: circle;}
-		`;
+		css.innerHTML = '' +
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; position: absolute: right: 0; }' +
+			'iframe { border: 0px solid; }' +
+			'img { vertical-align: top; }' +
+			'input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }' +
+			'ul li {list-style-type: square;} ' +
+			'ul li ul li {list-style-type: circle;} ' +
+		'';
 
 		var reader = document.body.appendChild( document.createElement( 'script' ) );
 		reader.onload = function() {

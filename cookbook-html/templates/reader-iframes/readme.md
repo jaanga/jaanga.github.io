@@ -7,19 +7,18 @@
 [Reader Iframes Read Me]( ./index.html )
 ===
 
-<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
-
 [Template Three.js Draw Things - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
-
 
 [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
 
 [Read Me Template]( ./index.html#readme-template.md )
 
+## Web Page / Source Code
+<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+
+
 ## Concept
-
-
 
 ### Issues / Problems
 <!--
