@@ -11,7 +11,7 @@
 
 _2015-10-28 - welcome to a beta release of an ongoing effort_
 
-<iframe class=ifr src="iframe-carousel-r2.html" width=100% height=600px ></iframe>  
+<iframe class=ifr src="iframe-carousel-r3.html" width=100% height=600px ></iframe>  
 
 ## Concept
 

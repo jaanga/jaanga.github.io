@@ -32,7 +32,7 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 * [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo )
 	* Links to just the good stuff - nothing more - a collection of fun scripts built to work on your mobile device
 
-* [ ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =240x120 )<br>Outer Space]( http://jaanga.github.io/outer-space/ )
+* [ ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =240x180 )<br>Outer Space]( http://jaanga.github.io/outer-space/ )
 	* Explore the surface of the Moon and Mars in 3D - and much more 
 	* Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap iles
 
