@@ -13,7 +13,7 @@ _2015-11-01 - welcome to a beta release of an ongoing mission_
 
 ## Web Page / Source Code
 
-<iframe class=ifr src="iframe-carousel-r3.html" width=100% height=600px ></iframe>  
+<iframe class=ifr src="iframe-carousel-r3.html" width=100% height=600px >There is an iframe here that is only visible in web page view</iframe>  
 
 
 ## Concept
@@ -35,7 +35,7 @@ can be used repeatedly every time the problem is encountered and producing an di
 
 -->
 
-Access to [Science, Technology, Engineering and Math (STEM)]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ))
+Access to Science, Technology, Engineering and Math ( [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ) )
 
 * People do not always find it an easy thing trying to acquire skills - let alone delight - in science, technology, engineering and math.
 
