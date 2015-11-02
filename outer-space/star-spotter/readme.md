@@ -1,14 +1,20 @@
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/star-spotter/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='http://jaanga.github.io/outer-space/star-spotter' value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+
 [Jaanga]( http://jaanga.github.io/ ) &raquo; [Outer Space]( http://jaanga.github.io/outer-space ) &raquo; 
 
-Star Spotter
+&star; [Star Spotter]( index.html )
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/star-spotter/ "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='http://jaanga.github.io/outer-space/star-spotter; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+[Star Spotter - Demo Full Screen]( http://jaanga.github.io/outer-space/star-spotter/dev/ )
 
-<iframe src=http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/star-spotter/star-spotter-r1.html width=100% height=500px></iframe>
+## Web Page / Source Code
 
-[Star Spotter - Full Screen]( http://jaanga.github.io/outer-space/star-spotter/dev/ )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space/star-spotter/star-spotter-r1.html width=100% height=500px></iframe>
+
+###### _Star Spotter - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space/star-spotter/star-spotter-r1.html )
+
+
 
 ## Concept
 
@@ -29,12 +35,12 @@ To create interactive views of the universe with a small amount of easy to read 
 ## Things to Try
 
 * Click on a star to see all of the data available for it
-* Zoom into the center of the visualization to find our sun
+* Zoom into the center of the visualization to find our sun ( sol )
 * What is the most common type of stars near us?
  
 ## Road Map
 
-* Link each object to online databases such as: <http://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/sao.html?
+* Link each object to online databases such as: <http://heasarc.gsfc.nasa.gov/W3Browse/star-catalog/sao.html>
 * Currently the 'Time travel' slider updates star positions in a mostly arbitrary manner. Future revisions:
 	* Tie movements to specific time periods and, for example, display the date of the current positions
 	* Also be able to show apparent movement around Sol for any specific date
@@ -63,3 +69,18 @@ Star data courtesy of:
 * <https://github.com/astronexus/HYG-Database>
 
 Thank you David Nash!
+
+
+## Contact
+
+* jaanga@googlegroups.com
+
+## Copyright and License
+
+* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+
+***
+
+<center title="dingbat" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >&star;</a>
+</center>

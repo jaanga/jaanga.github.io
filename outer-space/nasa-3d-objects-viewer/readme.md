@@ -1,17 +1,19 @@
-[Jaanga]( http://jaanga.github.io/ ) &raquo; [Outer Space]( http://jaanga.github.io/outer-space ) &raquo; 
 
-NASA 3D Objects Viewer Read Me
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/index.html "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/nasa-3d-objects-viewer'; type=button value='You are now in GitHub web page view - Click this button to view Read Me file as source code'  />
+
+[Jaanga]( http://jaanga.github.io/ ) » [Outer Space]( http://jaanga.github.io/outer-space ) »
+
+🚀 [NASA 3D Objects Viewer Read Me]( index.html )
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/nasa-3d-objects-viewer'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code'  />
-
-<iframe src="http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space//nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html" width=100% height=500px ></iframe>  
-#### _NASA 3D Objects - Code Edit View - Dev revision_ /  [Fullscreen]( http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html  )
-
-
 [NASA 3D Objects Viewer - Dev revision]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/dev/index.html )  
-[NASA 3D Objects Viewer - Build revision]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/build/index.html )
+
+## Web Page / Source Code
+
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space//nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html width=100% height=600px ></iframe>  
+###### _NASA 3D Objects - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html  )
+
 
 ## Concept
 
@@ -34,3 +36,17 @@ NASA 3D Objects Viewer Read Me
 ## Issues
 
 * Need a good code clean-up
+
+## Contact
+
+* jaanga@googlegroups.com
+
+## Copyright and License
+
+* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+
+***
+
+<center title="dingbat" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >🛰</a>
+</center>

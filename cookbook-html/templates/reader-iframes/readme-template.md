@@ -7,10 +7,12 @@
 [Read Me Template]( ./index.html#readme-template.md )
 ===
 
-<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
-
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+
+## Web Page / Source Code
+
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 
 ## Concept
@@ -53,6 +55,8 @@ patterns are descriptions of common problems and proposal for the solutions that
 ## Copyright and License
 
 * [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+
+***
 
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>

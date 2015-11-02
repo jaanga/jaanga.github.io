@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset=utf-8>
-<title>Star Spotter</title>
+<title>Star Spotter R1</title>
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0'>
 </head>
 <body>
@@ -41,9 +41,10 @@
 			'h2 { margin: 0; }' +
 			'#bars, #i { font-size: 24pt; text-decoration: none; }' +
 			'#bars { color: pink; } ' +
-// add moz
-			'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; width: 200px; } ' +
-			'input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 28px; opacity: 0.5; width: 10px; } ' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; } ' +
+			'input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; } ' +
+			'input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; } ' +
 		'';
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
@@ -154,7 +155,6 @@
 		controls = con1;
 
 	}
-
 
 	function setControlsOrbit() {
 
