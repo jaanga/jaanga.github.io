@@ -1,9 +1,9 @@
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/'; value='You are now in a GitHub web page view - Click this button to view Read Me file as source code' >
 
-[Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
+[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) »
 
-[Templates Read Me]( index.html )
+[HTML Templates Read Me]( index.html )
 ===
 
 * [Basic HTML]( http://jaanga.github.io/cookbook-html/templates/basic-html/ )
