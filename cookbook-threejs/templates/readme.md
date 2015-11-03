@@ -6,13 +6,13 @@
 [Three.js Templates Read Me]( index.html )
 ===
 
-[template-threejs-basic-r1.html]( template-threejs-basic-r1.html )
-[template-threejs-canvas-text-r1.html ]( template-threejs-canvas-text-r1.html ) 
-[template-threejs-device-orientation-r1.html]( template-threejs-device-orientation-r1.html )
-[template-threejs-device-orientation-r2.html ]( template-threejs-device-orientation-r2.html )
-[template-threejs-draw-things-r1.html]( template-threejs-draw-things-r1.html )
-[template-threejs-lights-r1.html]( template-threejs-lights-r1.html )
-[template-threejs-shaders-r1.html]( template-threejs-shaders-r1.html )
+* [template-threejs-basic-r1.html]( template-threejs-basic-r1.html )
+* [template-threejs-canvas-text-r1.html ]( template-threejs-canvas-text-r1.html ) 
+* [template-threejs-device-orientation-r1.html]( template-threejs-device-orientation-r1.html )
+* [template-threejs-device-orientation-r2.html ]( template-threejs-device-orientation-r2.html )
+* [template-threejs-draw-things-r1.html]( template-threejs-draw-things-r1.html )
+* [template-threejs-lights-r1.html]( template-threejs-lights-r1.html )
+* [template-threejs-shaders-r1.html]( template-threejs-shaders-r1.html )
 
 
 
@@ -31,11 +31,6 @@
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
-
-<center title="dingbat" >
-# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
-</center>
-
 
 
 
