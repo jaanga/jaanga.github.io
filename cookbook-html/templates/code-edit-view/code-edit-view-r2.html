@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8>
+<title>Code-Edit-View R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.min.js></script>
+<script>
+
+	var editor;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = `
+			* { box-sizing: border-box; vertical-align:top; }
+			html, body { height: 100%; }
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			#info { line-height: 18pt; font-size: 18pt; text-decoration: none; }
+			button.bb, input.bb { background-color: #ddd; border: 2px solid #ddd; color: #888; }
+		`;
+
+		edit = document.body.appendChild( document.createElement( 'div' ) );
+		edit.style.cssText = 'border: 1px solid; float: right; height: 94%; width: 50%;';
+		edit.id = 'edit';
+
+		view = document.body.appendChild( document.createElement( 'iframe' ) );
+		view.style.cssText = ' border: 1px solid; float: left; height: 94%; width: 50%; ';
+		view.id = 'view';
+
+		buttons = document.body.appendChild( document.createElement( 'div' ) );
+		buttons.style.cssText = ' position: absolute; right: 1%; top: 95%; ';
+		buttons.innerHTML = `
+			<input type=range class=bb id=inpSplit min=1 max=99 step=1 value=50 onchange=updateSplit(); />
+			<button class=bb onclick=splitVertical(); >vertical</button>
+			<button class=bb onclick=splitHorizontal(); >horizontal</button>
+			<input class=bb type=file id=inpFile onchange=openFile(this); />
+			<button class=bb class=bb onclick=updateView(); >Update View</button>
+			<button class=bb onclick=saveFile(); >Save to File</button>
+			<a id=info href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/code-edit-view-r2/ >&#x24D8;</a>
+		`;
+
+		window.addEventListener( 'hashchange', hashChange, false );
+
+		editor = ace.edit( 'edit' );
+		editor.$blockScrolling = Infinity;
+
+		hashChange();
+
+	}
+
+	function hashChange() {
+
+		var fileName = location.hash ? location.hash.substr( 1 ) : 'index.html';
+
+//		if ( fileName === '' ) { return; }
+
+		document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+
+		requestFile ( edit, fileName );
+
+	}
+
+	function openFile( that ) {
+
+		var reader = new FileReader();
+		reader.onloadend = function() { updateView( reader.result ); };
+		reader.readAsText( that.files[0] );
+
+	}
+
+	function requestFile ( obj, fileName ) {
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.onreadystatechange = function() {
+
+			if ( xmlHttp.readyState !== 4 ) { return; }
+			updateView( xmlHttp.responseText );
+
+		};
+		xmlHttp.send( null );
+
+	}
+
+	function updateView( data ) {
+
+		if ( data !== undefined ) { editor.setValue( data, -1 ); }
+		view.srcdoc = editor.getValue();
+
+	}
+
+	function saveFile() {
+
+		blob = new Blob( [ editor.getValue() ] );
+		a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = document.title;
+		a.click();
+
+	}
+
+	function splitHorizontal() {
+
+		inpSplit.value = view.style.height = edit.style.height = '47%';
+		view.style.width = edit.style.width = '100%';
+
+	}
+
+	function splitVertical() {
+
+		view.style.height = edit.style.height = '94%';
+		inpSplit.value = view.style.width = edit.style.width = '50%';
+
+	}
+
+	function updateSplit() {
+
+		if ( view.style.width === '100%' ) {
+
+			edit.style.height = 0.94 * inpSplit.value + '%';
+			view.style.height = 0.94 * ( 100 - inpSplit.value ) + '%';
+
+		} else {
+
+			edit.style.width = inpSplit.value + '%';
+			view.style.width = ( 100 - inpSplit.value ) + '%';
+
+		}
+	}
+
+</script>
+</body>
+</html>

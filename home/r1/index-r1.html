@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta charset=utf-8>
+<title>jaanga ~ animated 3D stuff for your page, post, tweet & wall</title>
+<link rel=icon href=favicon.ico />
+<link rel=stylesheet href=jaanga/style.css />
+</head>
+<body>
+<script src=jaanga/list.js></script>
+<script>
+	var panel = document.body.appendChild( document.createElement( 'div' ) );
+	panel.id = 'panel';  // for css
+
+	var viewer = document.body.appendChild( document.createElement( 'iframe' ) );
+	viewer.id = 'viewer';
+
+	var appName = 'Jaanga';
+	var html = '<h1><a href="./index.html" >jaanga</a></h1>' +
+	'<h3>Case studies in 3D Viz<br>+<br>Animated 3D stuff for your page, post, tweet & wall<br>' +
+	'<a href="home/r2/index.html" target="_blank">Beta</a> ' +
+	'<a href="https://github.com/jaanga" target="_blank"><br>' +
+	'&raquo;Source on GitHub</a> <a href="http://jaanga.com" target="_blank">&raquo;Blog</a><br><br>' +
+	'<b>Main Menu</b></h3>';
+	var subDir = 'jaanga/';
+</script>
+<script src='jaanga/doctree.js'></script>
+<script>
+	if ( window.location.hash.length > 0 ) {
+		goToHash();
+	} else {
+		goTo('0 Sketchbook','','Current_sketch');
+		
+		//goTo('1 Home','Overview','Home Page');
+	}
+</script>
+</body>
+</html>

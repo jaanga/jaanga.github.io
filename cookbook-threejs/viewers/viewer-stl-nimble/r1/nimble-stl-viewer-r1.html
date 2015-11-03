@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Nimble STL Viewer R1</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js ></script>
+<script>
+
+	var css, info, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h1, a { margin: 0; }' +
+			'#i { text-decoration: none; }' +
+			'#drag { border: 3px dashed black; height: 200px; width: 250px;}' +
+		'';
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'margin: 0 20px; position: absolute; ';
+		info.innerHTML = '<h1><a href="" >' + document.title + '</a> - ' +
+			'<a id=i href=http://jaanga.github.io/cookbook-threejs/viewers/viewer-stl-nimble/ >&#x24D8;</a>' +
+			'</h1>' +
+			'<p>Drag and drop or <input type=file onchange=loadFileSTLByContent(this); /><p>' +
+			'<p>Use your pointing device to zoom, pan and rotate</p>' +
+			'<p><input type=checkbox id=chkRotate onchange=controls.autoRotate=controls.autoRotate===true?false:true; /> Auto-rotation</p>' +
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradient(); /> Background </p>' +
+			'<div id=msg ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera.position.set( 1000, 1000, 1000 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 8000;
+		controls.target.set( 200, 0, 0 );
+
+		scene = new THREE.Scene();
+
+// axes
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer.domElement.addEventListener( "dragover", function(e){e.preventDefault();}, true );
+		renderer.domElement.addEventListener( 'drop', drop, false );
+
+		loadFileSTLByURL( '../original-nimble-scooter.stl' );
+
+
+		chkRotate.checked = controls.autoRotate = true;
+		chkGradient.checked = true;
+		toggleGradient();
+
+/*
+		hashes = location.hash.split ( '#' );
+
+		if ( hashes.length > 1 ) {
+
+			fileName = hashes[ 1 ];
+
+			loadFileSTLByURL( fileName )
+
+		}
+*/
+
+	}
+
+	function drop( event ) {
+
+		event.preventDefault(); 
+
+		fileName = event.dataTransfer.getData( 'URL' );
+
+		if ( fileName ) {
+
+			loadFileSTLByURL( fileName );
+
+		} else {
+
+			loadFileSTLByContent( event.dataTransfer );
+
+		}
+
+	}
+
+	function loadFileSTLByURL( fileName ) {
+
+// http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/#http://va3c.github.io/viewer/samples/NPP_16.stl
+
+		var loader = new THREE.STLLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( fileName, function ( geometry ) {
+
+			addMesh( geometry );
+
+			msg.innerHTML = 'name: ' + fileName + '<br>' +
+			'';
+
+		} );
+
+	}
+
+	function loadFileSTLByContent( fileObject ) {
+
+		var file = fileObject.files[ 0 ];
+		var reader = new FileReader();
+
+		reader.onload = function ( event ) {
+
+			loader = new THREE.STLLoader()
+			loader.crossOrigin = 'anonymous';
+			geometry = loader.parse( reader.result );
+
+			addMesh( geometry );
+
+			msg.innerHTML = 'name: ' + file.name + '<br>' +
+				'size: ' + file.size + '<br>' +
+				'type: ' + file.type + '<br>' +
+				'modified: ' + file.lastModifiedDate +
+			'';
+
+		};
+
+		if ( reader.readAsBinaryString !== undefined ) {
+
+			reader.readAsBinaryString( file );
+
+		} else {
+
+			reader.readAsArrayBuffer( file );
+
+		}
+
+	}
+
+	function addMesh( geometry ) {
+
+//			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+//			geometry.center();
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals();
+
+			if (geometry.hasColors) {
+
+				material = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+
+			} else {
+
+				material = new THREE.MeshNormalMaterial();
+
+			}
+
+			scene.remove( mesh );
+			mesh = new THREE.Mesh( geometry, material );
+			scene.add( mesh );
+
+	}
+
+
+
+	function toggleGradient () {
+
+		if ( chkGradient.checked ) {
+
+				var col1 = Math.random().toString(16).slice(2, 8);
+				var col2 = Math.random().toString(16).slice(2, 8);
+				var col3 = Math.random().toString(16).slice(2, 8);
+				var x = ( Math.random() * window.innerWidth ).toFixed(0);
+				var y = ( Math.random() * window.innerHeight ).toFixed(0);
+
+				document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

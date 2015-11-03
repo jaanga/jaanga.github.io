@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Materials Library No Lights R1</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.rawgit.com/mrdoob/texgen.js/master/build/texgen.min.js ></script>
+<script>
+
+	var defaultMaterial = 2;
+	var materialsLibrary;
+
+	var css, info, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+	var texture;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement('style') );
+		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'#i {text-decoration: none; }' +
+		'';
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'background-color: #ddd; height: ' + ( window.innerHeight - 20 ) + 'px; margin: 0 20px; max-width: 250px;' +
+			'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; ';
+		info.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
+			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
+
+			'<p>Select a material' +
+			'<br><select id=selMaterial ></select></p>' +
+			'<hr>' +
+			'<div id=textures ></div>' +
+		'';
+
+		getMaterials();
+
+		materialsKeys = Object.keys( materialsLibrary );
+
+		for ( var i = 0; i < materialsKeys.length ; i++ ) {
+
+			if ( materialsKeys[ i ].substr( 0, 1 ) === '#' ) {
+
+				node = document.createElement( 'optgroup' );
+				selMaterial.appendChild( node );
+				node.label = materialsKeys[ i ].substr( 1 );
+
+			} else {
+
+				node = document.createElement( 'option' );
+				selMaterial.appendChild( node );
+				node.text = materialsKeys[ i ];
+
+			}
+
+		}
+		selMaterial.selectedIndex = defaultMaterial;
+		selMaterial.onchange = updateDisplay;
+
+		txt = '';
+
+		for ( var i = 0; i < materialsKeys.length; i++ ) {
+
+			if ( materialsKeys[ i ].substr( 0, 1 ) === '#' ) {
+
+				txt += '<p>' + materialsLibrary[ materialsKeys[ i ] ] + '</p>';
+
+			} else {
+
+				txt += '<a href=# onclick=updateDisplay(' + i + '); >' + materialsKeys[ i ] + '</a><br>';
+
+			}
+
+		}
+
+		textures.innerHTML = txt;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+		updateDisplay( defaultMaterial );
+
+		drawThings();
+
+	}
+
+
+	function updateDisplaySelect() {
+
+		mat =  materialsLibrary[ selMaterial.value ];
+
+		texture = mat.texture;
+		texture.needsUpdate = true;
+
+		material = mat.material;
+		material.map = texture;
+
+		if ( !geometry ) return;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material = material;
+
+			}
+
+		} );
+
+	}
+
+	function updateDisplay( index ) {
+
+		if ( index === undefined && selMaterial.value ) {
+
+			mat =  materialsLibrary[ selMaterial.value ];
+
+		} else {
+
+			mat =  materialsLibrary[ materialsKeys[ index ] ];
+
+		}
+
+		material = mat.material;
+
+		if ( mat.texture ) {
+
+			texture = mat.texture;
+			texture.needsUpdate = true;
+
+			material.map = texture;
+
+		}
+
+		if ( !geometry ) return;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material = material;
+
+			}
+
+		} );
+
+	}
+
+
+	function getMaterials() {
+
+		materialsLibrary = {
+
+		'#Normal' : 'Normal',
+
+		'Normal Side 2': { 'material': new THREE.MeshNormalMaterial( { side: 2  } ) },
+		'Normal Side 2 Opacity 0.7' : { 'material' : new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true   } ), },
+		'Normal Flat': { 'material': new THREE.MeshNormalMaterial( { shading: THREE.FlatShading, side: 2 } )  },
+		'Normal Wireframe': { 'material': new THREE.MeshNormalMaterial( { wireframe: true } ) },
+
+
+		'#Basic': 'Basic',
+
+		'Basic Defaults':
+			{ 'material': new THREE.MeshBasicMaterial() },
+		'Basic Red':
+			{ 'material': new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.7, side: 2, transparent: true } ) },
+
+		'Basic Green':
+			{ 'material': new THREE.MeshBasicMaterial( { color: 0x00ff00, opacity: 0.7, side: 2, transparent: true } ) },
+
+		'Basic Blue':
+			{ 'material': new THREE.MeshBasicMaterial( { color: 0x0000ff, opacity: 0.7, side: 2, transparent: true } ) },
+
+		'Basic Magenta':
+			{ 'material': new THREE.MeshBasicMaterial( { color: 0xff00ff, opacity: 0.7, side: 2, transparent: true } ) },
+
+		'Basic Yellow':
+			{ 'material': new THREE.MeshBasicMaterial( { color: 0xffff00, opacity: 0.7, side: 2, transparent: true } ) },
+
+		'Basic Cyan':
+			{ 'material': new THREE.MeshBasicMaterial( { color: 0x00ffff, opacity: 0.7, side: 2, transparent: true } ) },
+
+		'#Procedure Generated' : 'Procedure Generated',
+
+		'red triangles' : {
+			'material' : new THREE.MeshBasicMaterial( { } ),
+			'texture' : new THREE.Texture( generateTriangles( 1, 0.5, 0 ), THREE.UVMapping ),
+		},
+
+		'green triangles' :  {
+			'material' : new THREE.MeshBasicMaterial( { } ),
+			'texture' : new THREE.Texture( generateTriangles( 0, 1, 0 ), THREE.UVMapping ),
+		},
+
+		'blue triangles' :  {
+			'material' : new THREE.MeshBasicMaterial( { } ),
+			'texture' : new THREE.Texture( generateTriangles( 0, 0.5, 1 ), THREE.UVMapping ),
+		},
+
+		'squares' :  {
+			'material' : new THREE.MeshBasicMaterial( { opacity : 0.7, transparent : true } ),
+			'texture' : new THREE.Texture( generateSquares(), THREE.UVMapping ),
+		},
+
+		'random squiggles' :  {
+			'material' : new THREE.MeshBasicMaterial( { side: 2, transparent: true } ),
+			'texture' : new THREE.Texture( generateRandomSquiggles(), THREE.UVMapping ),
+		},
+
+		'tron' :  {
+			'material' : new THREE.MeshBasicMaterial( { color: 0x00ff00 } ),
+			'texture' : new THREE.Texture( setTron(), THREE.UVMapping ),
+		},
+
+		'random dots' :  {
+			'material' : new THREE.MeshBasicMaterial({ side: 2, transparent: true }),
+			'texture' : new THREE.Texture( randomDots(), THREE.UVMapping ),
+		},
+
+
+		'#Textgen.js' : 'Textgen.js Textures',
+
+		'texture1' : { 
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.XOR().tint( 1, 0.5, 0.7 ) )
+			.add( new TG.SinX().frequency( 0.004 ).tint( 0.5, 0, 0 ) )
+			.mul( new TG.SinY().frequency( 0.004 ).tint( 0.5, 0, 0 ) )
+			.add( new TG.SinX().frequency( 0.0065 ).tint( 0.1, 0.5, 0.2 ) )
+			.add( new TG.SinY().frequency( 0.0065 ).tint( 0.5, 0.5, 0.5 ) )
+			.add( new TG.Noise().tint( 0.1, 0.1, 0.2 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture2' : { 
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.SinX().offset( - 16 ).frequency( 0.03 ).tint( 0.1, 0.25, 0.5 ) )
+			.add( new TG.SinY().offset( - 16 ).frequency( 0.03 ).tint( 0.1, 0.25, 0.5 ) )
+			.add( new TG.Number().tint( 0.75, 0.5, 0.5 ) )
+			.add( new TG.SinX().frequency( 0.03 ).tint( 0.2, 0.2, 0.2 ) )
+			.add( new TG.SinY().frequency( 0.03 ).tint( 0.2, 0.2, 0.2 ) )
+			.add( new TG.Noise().tint( 0.1, 0, 0 ) )
+			.add( new TG.Noise().tint( 0, 0.1, 0 ) )
+			.add( new TG.Noise().tint( 0, 0, 0.1 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture3' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.SinX().frequency( 0.1 ) )
+			.mul( new TG.SinX().frequency( 0.05 ) )
+			.mul( new TG.SinX().frequency( 0.025 ) )
+			.mul( new TG.SinY().frequency( 0.1 ) )
+			.mul( new TG.SinY().frequency( 0.05 ) )
+			.mul( new TG.SinY().frequency( 0.025 ) )
+			.add( new TG.SinX().frequency( 0.004 ).tint( -0.25, 0.1, 0.6 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture4' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.XOR() )
+			.mul( new TG.OR().tint( 0.5, 0.8, 0.5 ) )
+			.mul( new TG.SinX().frequency( 0.0312 ) )
+			.div( new TG.SinY().frequency( 0.0312 ) )
+			.add( new TG.SinX().frequency( 0.004 ).tint( 0.5, 0, 0 ) )
+			.add( new TG.Noise().tint( 0.1, 0.1, 0.2 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture5' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.SinX().frequency( 0.01 ) )
+			.mul( new TG.SinY().frequency( 0.0075 ) )
+			.add( new TG.SinX().frequency( 0.0225 ) )
+			.mul( new TG.SinY().frequency( 0.015 ) )
+			.add( new TG.Noise().tint( 0.1, 0.1, 0.3 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture6' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.SinX().frequency( 0.05 ) )
+			.mul( new TG.SinX().frequency( 0.08 ) )
+			.add( new TG.SinY().frequency( 0.05 ) )
+			.mul( new TG.SinY().frequency( 0.08 ) )
+			.div( new TG.Number().tint( 1, 2, 1 ) )
+			.add( new TG.SinX().frequency( 0.003 ).tint( 0.5, 0, 0 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture7' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.SinX().frequency( 0.066 ) )
+			.add( new TG.SinY().frequency( 0.066 ) )
+			.mul( new TG.SinX().offset( 32 ).frequency( 0.044 ).tint( 2, 2, 2 ) )
+			.mul( new TG.SinY().offset( 16 ).frequency( 0.044 ).tint( 2, 2, 2 ) )
+			.sub( new TG.Number().tint( 0.5, 2, 4 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture8' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.SinX().frequency( 0.004 ) )
+			.mul( new TG.SinY().frequency( 0.004 ) )
+			.mul( new TG.SinY().offset( 32 ).frequency( 0.02 ) )
+			.div( new TG.SinX().frequency( 0.02 ).tint( 8, 5, 4 ) )
+			.add( new TG.Noise().tint( 0.1, 0, 0 ) )
+			.add( new TG.Noise().tint( 0, 0.1, 0 ) )
+			.add( new TG.Noise().tint( 0, 0, 0.1 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture9' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.CheckerBoard() )
+			.add( new TG.CheckerBoard().size( 2, 2 ).tint( 0.5, 0, 0 ) )
+			.add( new TG.CheckerBoard().size( 8, 8 ).tint( 1, 0.5, 0.5 ) )
+			.sub( new TG.CheckerBoard().offset( 16, 16 ).tint( 0.5, 0.5, 0 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture10' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.Rect().position( 50, 20 ).size( 150, 130 ).tint( 1, 0.25, 0.25 ) )
+			.add( new TG.Rect().position( 20, 65 ).size( 210, 130 ).tint( 0.25, 1, 0.25 ) )
+			.add( new TG.Rect().position( 50, 110 ).size( 150, 130 ).tint( 0.25, 0.25, 1 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture11' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.CheckerBoard().size( 32, 32 ).tint( 0.5, 0, 0 ) )
+			.set( new TG.SineDistort() )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture12' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.CheckerBoard().size( 32, 32 ).tint( 0.5, 0, 0 ) )
+			.set( new TG.Twirl().radius( 128 ).strength ( 75 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture13' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.Circle().position( 128, 128 ).radius( 64 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture14' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.Circle().position( 128, 128 ).radius( 64 ).delta( 60 ).tint( 1, 0.25, 0.25 ) )
+			.set( new TG.Pixelate().size( 8, 8 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+ 		'texture15' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.CheckerBoard().tint( 1, 1, 0 ) )
+			.set( new TG.Transform().offset( 10, 20 ).angle( 23 ).scale( 2, 0.5 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture16' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.CheckerBoard() )
+			.and( new TG.Circle().position( 128, 128 ).radius( 80 ) )
+			.xor( new TG.Circle().position( 128, 128 ).radius( 64 ) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture17' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.CheckerBoard().size( 16,16 ) )
+			.set( new TG.Twirl().radius( 128 ).strength ( 75 ) )
+			.min( new TG.Circle().position( 128, 128 ).radius( 128 ).delta( 128 ) )
+				.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture18' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.LinearGradient().interpolation( 0 ).point( 0, [1,1,0,0] ).point( 0.25, [0.2,0,0.5,1]).point( 0.5, [0.5,0.2,0.5,1]).point( 1, [1,0,1,1]) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture19' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.LinearGradient().interpolation( 1 ).point( 0, [1,1,0,0] ).point( 0.25, [0.2,0,0.5,1]).point( 0.5, [0.5,0.2,0.5,1]).point( 1, [1,0,1,1]) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture20' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.LinearGradient().interpolation( 2 ).point( 0, [1,1,0,0] ).point( 0.25, [0.2,0,0.5,1]).point( 0.5, [0.5,0.2,0.5,1]).point( 1, [1,0,1,1]) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture21' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.RadialGradient().center( 128, 128 ).radius( 32 ).repeat( true ).interpolation( 0 ).point( 0, [1,1,0,0] ).point( 0.25, [0.2,0,0.5,1]).point( 0.5, [0.5,0.2,0.5,1]).point( 1, [1,0,1,1]) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture22' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.RadialGradient().center( 0, 0 ).radius( 512 ).interpolation( 1 ).point( 0, [1,1,0,0] ).point( 0.25, [0.2,0,0.5,1]).point( 0.5, [0.5,0.2,0.5,1]).point( 1, [1,0,1,1]) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		'texture23' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add( new TG.RadialGradient().center( 128, 0 ).radius( 200 ).interpolation( 2 ).point( 0, [1,1,0,0] ).point( 0.25, [0.2,0,0.5,1]).point( 0.5, [0.5,0.2,0.5,1]).point( 1, [1,0,1,1]) )
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+// https://twitter.com/learningthreejs/status/579292161373405184
+		'texture24' : {
+			'material' : new THREE.MeshBasicMaterial( { side: 2 } ),
+			'texture' : new THREE.Texture( new TG.Texture( 256, 256 )
+			.add(new TG.SinY().frequency(0.16).offset(0))
+			.add(new TG.SinX().frequency(0.16).offset(0))
+			.add(new TG.Twirl().position(128, 128).radius(120).strength(0.37))
+			.toCanvas(), THREE.UVMapping ),
+		},
+
+		};
+
+	}
+
+
+	function generateTriangles( r, g, b ) {
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = canvas.height = 256;
+		var context = canvas.getContext( '2d' );
+
+		var image = context.getImageData( 0, 0, 256, 256 );
+		var x = 0, y = 0, p;
+
+		for ( var i = 0, j = 0; i < image.data.length; i += 4, j++ ) {
+			x = j % 256;
+			y = x == 0 ? y + 1 : y;
+			p = Math.floor( x ^ y );// ^ = xor 
+
+			image.data[ i ] = Math.floor( p * r );
+			image.data[ i + 1 ] = Math.floor( p * g );
+			image.data[ i + 2 ] = Math.floor( p * b );
+			image.data[ i + 3 ] = 255;
+
+		}
+
+		context.putImageData( image, 0, 0 );
+		return canvas;
+	}    
+
+
+	function generateSquares() {
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = canvas.height = 256;
+
+		var context = canvas.getContext( '2d' );
+		var image = context.getImageData( 0, 0, 256, 256 );
+
+		var x = 0, y = 0;
+
+		for ( var i = 0, j = 0, l = image.data.length; i < l; i += 4, j ++ ) {
+
+			x = j % 256;
+			y = x == 0 ? y + 1 : y;
+
+			image.data[ i ] = 255;
+			image.data[ i + 1 ] = 0;
+			image.data[ i + 2 ] = 0;
+			image.data[ i + 3 ] = Math.floor( x ^ y );
+
+		}
+
+		context.putImageData( image, 0, 0 );
+
+		return canvas;
+
+	}
+
+	function generateRandomSquiggles() {
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = canvas.height = 512;
+
+		var context = canvas.getContext( '2d' );
+
+		for ( var i = 0; i < 20000; i ++ ) { 
+
+			context.fillStyle = 'hsl( 0, 0%,' + ( Math.random() * 50 + 50 ) + '%)';
+			context.beginPath();
+			context.arc( Math.random() * canvas.width, Math.random() * canvas.height, Math.random() + 0.15, 0, Math.PI * 2, true );
+			context.fill();
+
+		}
+
+		context.globalAlpha = 0.075;
+		context.globalCompositeOperation = 'lighter';
+
+		return canvas;
+
+	}
+
+
+	function setTron() {
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = canvas.height = 256;
+		var context = canvas.getContext( '2d' );
+
+		var image = context.getImageData( 0, 0, 256, 256 );
+
+		pos = 0; // index position into imagedata array
+
+		xoff = canvas.width / 3; // offsets to "center"
+		yoff = canvas.height / 3;
+
+		// walk left-to-right, top-to-bottom; it's the
+		// same as the ordering in the imagedata array:
+
+		for (y = 0; y < canvas.height; y++) {
+			for (x = 0; x < canvas.width; x++) {
+				// calculate sine based on distance
+				x2 = x - xoff;
+				y2 = y - yoff;
+				d = Math.sqrt( x2 * x2 + y2 * y2 );
+				t = Math.sin( d/6.0 );
+
+				// calculate RGB values based on sine
+				r = t * 200;
+				g = 125 + t * 80;
+				b = 235 + t * 20;
+
+				// set red, green, blue, and alpha:
+				image.data[pos++] = Math.max(0,Math.min(255, r));
+				image.data[pos++] = Math.max(0,Math.min(255, g));
+				image.data[pos++] = Math.max(0,Math.min(255, b));
+				image.data[pos++] = 255; // opaque alpha
+			}
+		}
+
+		context.putImageData( image, 0, 0 );
+		return canvas;
+	}
+
+	function randomDots() {
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = canvas.height = 256;
+		var context = canvas.getContext( '2d' );
+
+		var image = context.getImageData( 0, 0, 256, 256 );
+
+// draw random dots
+		for (i = 0; i < 10000; i++) {
+			x = Math.random() * canvas.width | 0; // |0 to truncate to Int32
+			y = Math.random() * canvas.height | 0;
+			r = Math.random() * 256 | 0;
+			g = Math.random() * 256 | 0;
+			b = Math.random() * 256 | 0;
+
+			index = (x + y * image.width) * 4;
+			image.data[index+0] = r;
+			image.data[index+1] = g;
+			image.data[index+2] = b;
+			image.data[index+3] = 255;
+		}
+
+		context.putImageData( image, 0, 0 );
+		return canvas;
+	}
+
+
+	function drawThings() {
+// 2015-07-14
+
+		material = material === undefined ? new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true } ) : material;
+
+		var ground, helper, axis, cylinder, cube, sphere, torus, wave, loader, stl, female, suzanne, tree;
+ 
+// back row
+		geometry = new THREE.BoxGeometry( 150, 5, 150 );
+		ground = new THREE.Mesh( geometry, material );
+		ground.position.set( 0, -2.5, 0 );
+		ground.castShadow = ground.receiveShadow = true;
+		scene.add( ground );
+
+		helper = new THREE.BoxHelper( mesh );
+		helper.material.color.setRGB( 1, 0, 1 );
+		scene.add( helper );
+
+		grid = new THREE.GridHelper( 75, 10 );
+		scene.add( grid );
+
+		axis = new THREE.AxisHelper( 100 );
+		scene.add( axis );
+
+		cylinder = new THREE.Mesh( new THREE.CylinderGeometry( 20, 30, 40, 50 ), material );
+		cylinder.position.set( -30, 30, -80 );
+		cylinder.castShadow = cylinder.receiveShadow = true;
+		scene.add( cylinder );
+
+		sphere = new THREE.Mesh( new THREE.SphereGeometry( 25, 30, 15 ), material );
+		sphere.position.set( -30, 30, -30 );
+		sphere.castShadow = sphere.receiveShadow = true;
+		scene.add( sphere );
+
+		cube = new THREE.Mesh( new THREE.BoxGeometry( 30, 30, 30 ), material );
+		cube.position.set( -50, 30, -30 );
+		cube.castShadow = cube.receiveShadow = true;
+		scene.add( cube );
+
+		torus = new THREE.Mesh( new THREE.TorusKnotGeometry( 15, 8, 100, 25 ), material );
+		torus.position.set( -30, 30, 20 );
+		torus.castShadow = torus.receiveShadow = true;
+		scene.add( torus );
+
+		geometry = new THREE.PlaneBufferGeometry( 1, 1, 99, 99 );
+		vertices = geometry.attributes.position.array;
+
+		for ( var x = 0, i = 2; x < 100; x++ ) {
+			for ( var y = 0; y < 100; y++ ) {
+
+				vertices[ i ] = Math.sin( x * 0.08 ) * Math.sin( y * 0.08 )
+				i += 3;
+
+			}
+		}
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+		geometry.verticesNeedUpdate = true;  
+		geometry.normalsNeedUpdate = true;
+
+		wave = new THREE.Mesh( geometry, material );
+		wave.position.set( -30, 35, 60 );
+		wave.scale.set( 45, 15, 45 );
+		wave.castShadow = wave.receiveShadow = true;
+		scene.add( wave );
+
+
+// front row
+		script = document.head.appendChild( document.createElement('script') );
+		script.onload = function() {
+
+			loader = new THREE.STLLoader();
+			loader.load( 'http://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Printing/NPP/NPP_16.stl', function ( geometry ) {
+
+				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+				stl = new THREE.Mesh( geometry, material );
+				stl.position.set( 30, 35, -50 );
+				stl.castShadow = stl.receiveShadow = true;
+				scene.add( stl );
+
+			} );
+
+		};
+		script.src='http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js';
+
+		loader = new THREE.JSONLoader();
+		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/female02/Female02_slim.js', function ( geometry ) { // scale 0.5 y 5
+
+			female = new THREE.Mesh( geometry, material );
+			female.position.set( 30, 10, -20 );
+			female.scale.multiplyScalar( 0.4 );
+			female.castShadow = female.receiveShadow = true;
+			scene.add( female );
+
+		} );
+
+		loader = new THREE.JSONLoader();
+		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/Suzanne.js', function ( geometry ) { // scale 20 y 35
+
+			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals();
+			geometry.verticesNeedUpdate = true;  
+			geometry.normalsNeedUpdate = true;
+
+			suzannne = new THREE.Mesh( geometry, material );
+			suzannne.position.set( 30, 30, 15 );
+			suzannne.scale.multiplyScalar( 20 );
+			suzannne.castShadow = suzannne.receiveShadow = true;
+			scene.add( suzannne );
+
+		} );
+
+
+		loader = new THREE.JSONLoader();
+//		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js', function ( geometry ) { // scale 0.6 y 35
+		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
+
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals();
+
+			tree = new THREE.Mesh( geometry, material );
+			tree.position.set( 30, 10, 60 );
+			tree.scale.multiplyScalar( 50 );
+			tree.castShadow = tree.receiveShadow = true;
+			scene.add( tree );
+
+		} );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

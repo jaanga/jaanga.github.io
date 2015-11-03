@@ -2,6 +2,7 @@ Jaanga Read Me
 ===
 [Web page view]( http://jaanga.github.io/home/r3/ "View files with docBrowser" ) &nbsp;
 [Source code view]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r3 "View files with GitHub")
+[r4]( http://jaanga.github.io/home/r4/ )
 
 ### Live Demo
 
@@ -17,6 +18,8 @@ with source code at <a href="https://github.com/jaanga" target="_blank">github.c
 The name 'Jaanga' was chosen because it sounds jazzy, it is short and search results indicate uniqueness.
 
 There is a good amount of FOSS available here - including the following projects:
+
+* <a href="http://jaanga.github.com/demo" >Demo</a> ~  a collection of fun scripts designed to work on your mobile device.
 
 * <a href="http://jaanga.github.com/cookbook" >Cookbook</a> ~ various and sundry code cookbook projects and files used for presentations or in blog posts.
 	* Most recent work has been here

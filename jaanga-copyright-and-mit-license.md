@@ -1,3 +1,8 @@
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/jaanga-copyright-and-mit-license.md'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+
+[Jaanga]( http://jaanga.github.io ) »
+
 Jaanga Copyright Notice and License
 ===================================
 <br>
@@ -8,7 +13,7 @@ Jaanga Copyright Notice and License
 [jaanga.github.io]( http://jaanga.github.io/ )  
 [github.com/jaanga]( https://github.com/jaanga/ )
 
-Copyright &copy; 2014 Jaanga authors
+Copyright © 2015 Jaanga authors
 
 <br>
 
@@ -34,4 +39,14 @@ liability, whether in an action of contract, tort or otherwise, arising from,
 out of or in connection with the software or the use or other dealings in
 the software.
 
+## Organization
+
+Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins. 
+All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ).
+
+
 <br>
+
+<center title="dingbat" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
+</center>

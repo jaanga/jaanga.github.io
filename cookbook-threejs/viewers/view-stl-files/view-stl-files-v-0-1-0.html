@@ -1,0 +1,169 @@
+<!doctype html >
+<html lang=en >
+<head>
+<title>View STL Files v0.1.0</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+<style>
+body { font: 12pt monospace; margin: 0; overflow: hidden; }
+h1, a { margin: 0; }
+#i { text-decoration: none; }
+</style>
+</head>
+<body>
+<script src=http://rawgit.com/mrdoob/three.js/r71/build/three.min.js ></script>  
+<script src=http://rawgit.com/mrdoob/three.js/r71/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r71/examples/js/libs/stats.min.js ></script>  
+<script src=http://rawgit.com/mrdoob/three.js/r71/examples/js/loaders/STLLoader.js ></script>
+<script>
+
+	var css, info, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	var scale = 1;
+
+	init();
+	animate();
+
+	function init() {
+
+		if ( window.self === window.top ) {
+
+			info = document.body.appendChild( document.createElement( 'div' ) );
+			info.style.cssText = 'margin: 0 20px; position: absolute; ';
+			info.innerHTML = '<h1><a href="" >' + document.title + '</a> - ' +
+				'<a id=i href=http://exploratoria.github.io/cookbook/viewers/view-stl-files/ >&#x24D8;</a>' +
+				'</h1>' +
+				'<p>Use your pointing device to zoom, pan and rotate</p>' +
+				'<div id=msg ></div>' +
+			'';
+
+		}
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000);
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 5000;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'hashchange', hashChange, false );
+
+		hashChange();
+
+	}
+
+	function hashChange() {
+
+		hashes = location.hash.split ( '#' );
+
+		if ( hashes.length > 1 ) {
+
+			fileName = hashes[ 1 ];
+
+			loadFileSTLByURL( fileName )
+
+		} else {
+
+			loadFileSTLByURL( 'http://exploratoria.github.io/cookbook/models/original-nimble-scooter.stl' );
+
+		}
+
+
+	}
+
+	function loadFileSTLByURL( fileName ) {
+
+// http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/#http://va3c.github.io/viewer/samples/NPP_16.stl
+
+		var loader = new THREE.STLLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( fileName, function ( geometry ) {
+
+			addMesh( geometry );
+
+			if ( window.self === window.top ) {
+
+				msg.innerHTML = 'name: ' + fileName + '<br>' +
+				'';
+
+			}
+
+		} );
+
+	}
+
+	function addMesh( geometry ) {
+
+//			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometry.center();
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		if (geometry.hasColors) {
+
+			material = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
+
+		} else {
+
+			material = new THREE.MeshNormalMaterial();
+
+		}
+
+		scene.remove( mesh );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.multiplyScalar( scale );
+		scene.add( mesh );
+
+		zoomExtents();
+
+	}
+
+	function zoomExtents() {
+
+		bbh = new THREE.BoundingBoxHelper( scene );
+		bbh.update();
+
+//		scene.add( bbh );
+//console.log( bbh );
+//console.log( 'position', bbh.position );
+//console.log( 'scale', bbh.scale );
+
+		controls.target = bbh.position.clone();
+		camera.position.set( bbh.position.x + bbh.scale.x, bbh.position.y + bbh.scale.y, bbh.position.z + bbh.scale.z );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
