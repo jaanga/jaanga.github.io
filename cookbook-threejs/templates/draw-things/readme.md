@@ -1,10 +1,10 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-threejs/templates/draw-things/index.html  "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates/draw-things'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io// ) » [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) » 
-[Templates]( https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates ) »
+[Templates]( https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates/ ) »
 
-[Template Draw Things]( ./index.html#readme-template.md )
+[Template Draw Things]( index.html )
 ===
 
 [template-threejs-draw-things-r1]( template-threejs-draw-things-r1.html )
