@@ -60,14 +60,12 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 * [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 
+<br>
+
 ***
 
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
-</center>
-
-<center title="dingbat" >
-# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
 </center>
 
 
