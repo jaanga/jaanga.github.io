@@ -28,9 +28,13 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+* Examples in 3D need 'assets' in order to demo what they are meant to show. Assets are time-consuming to produce and are often too simple to show sufficient quality 
+
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
+
+* Create JavaScript that create interesting assets
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
