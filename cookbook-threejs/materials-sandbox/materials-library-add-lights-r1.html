@@ -989,13 +989,14 @@
 
 	function addDirectionalLight() {
 
-		renderer.shadowMapEnabled = true;
-		renderer.shadowMapSoft = true;
+//		renderer.shadowMapEnabled = true;
+//		renderer.shadowMapSoft = true;
 
 //		lightDirectional = new THREE.DirectionalLight();
 		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
 		lightDirectional.position.set( -200, 200, 200 );
 
+/*
 		var d = 100;
 		lightDirectional.shadowCameraLeft = -d;
 		lightDirectional.shadowCameraRight = d;
@@ -1010,7 +1011,9 @@
 		lightDirectional.shadowMapWidth = lightDirectional.shadowMapHeight = 1024;
 
 		lightDirectional.castShadow = true;
-		lightDirectional.shadowCameraVisible = true;
+//		lightDirectional.shadowCameraVisible = true;
+*/
+
 		scene.add( lightDirectional);
 
 		scene.traverse( function ( child ) {
