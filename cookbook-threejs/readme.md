@@ -1,5 +1,5 @@
-<span style=display:none; >[View as web page]( http://jaanga.github.io/cookbook-threejs/index.html "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs'; />
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-threejs/index.html "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs'; type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( https://github.com/jaanga/jaanga.github.io ) »
 
