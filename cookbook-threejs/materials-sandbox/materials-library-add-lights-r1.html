@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Materials Library Add Lights R1.1</title>
+<title>Materials Library Add Lights R1.2</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -989,7 +989,7 @@
 
 	function addDirectionalLight() {
 
-		renderer.shadowMapEnabled = true;
+		renderer.shadowMap.enabled = true;
 //		renderer.shadowMapSoft = true;
 
 //		lightDirectional = new THREE.DirectionalLight();
@@ -1009,10 +1009,10 @@
 		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
 		lightDirectional.shadowDarkness = 0.3; // default 0.5
 		lightDirectional.shadowMapWidth = lightDirectional.shadowMapHeight = 1024;
-
+*/
 		lightDirectional.castShadow = true;
 //		lightDirectional.shadowCameraVisible = true;
-*/
+
 
 		scene.add( lightDirectional);
 
