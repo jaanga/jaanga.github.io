@@ -12,6 +12,10 @@
 
 * Useful cookbook code samples
 
+[Materials Sandbox]( http://jaanga.github.io/cookbook-threejs/materials-sandbox/ ) 
+
+* Three.js sample materials
+
 [Templates]( http://jaanga.github.io/cookbook-threejs/templates/ ) 
 
 * Files that be used as boilerplate to start new projects

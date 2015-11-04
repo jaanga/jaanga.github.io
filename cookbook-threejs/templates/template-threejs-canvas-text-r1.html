@@ -73,7 +73,7 @@
 	function drawSprite( text, scale, color, x, y, z) {
 
 		texture = canvasMultilineText( text, { backgroundColor: color }  );
-		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, useScreenCoordinates: false, opacity: 0.9, transparent: true } );
+		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
 		var sprite = new THREE.Sprite( spriteMaterial );
 		sprite.position.set( x, y, z ) ;
 		sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
@@ -81,7 +81,6 @@
 		return sprite;
 
 	}
-
 
 	function canvasMultilineText( textArray, parameters ) {
 

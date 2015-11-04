@@ -1,15 +1,38 @@
-[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  [Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ ) &raquo;
-[Materials Inspector Read Me]( http://jaanga.github.io/cookbook-threejs/utilities/materials-inspector/ )
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-threejs/materials-sandbox/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/materials-sandbox'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+
+
+[Jaanga]( http://jaanga.github.io/ ) » [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) »
+[Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ ) »
+
+[Materials Sandbox Read Me]( index.html )
 ===
 
-<span style=display:none; >[View as web page]( http://jaanga.github.io/cookbook-threejs/utilities/materials-inspector/ "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/cookbook-threejs/utilities/'; />
-
-<iframe src="http://XXX.github.io/XXX/latest/index.html" width=100% height=500px ></iframe>  
-_XXX - latest revision_ / [Full Screen]( http://XXX.github.io/latest/index.html )
 
 
-[Load Texture]( load-texture/load-texture-r1.html )
+## Web Page / Source Code
+
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/materials-sandbox/materials-library-add-lights-r1.html width=100% height=600px ></iframe>  
+###### _Materials Library Add Lights R1 - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/materials-sandbox/materials-library-add-lights-r1.html )
+
+## The Scripts
+
+
+* [Load Texture]( load-texture/load-texture-r1.html )
+* [materials-library-add-lights-r1.html]( materials-library-add-lights-r1.html )
+* [materials-library-no-lights-r1.html]( materials-library-no-lights-r1.html )
+* [materials-lights-things]( materials-lights-things )
+* [materials-reflection-simple-r1.html]( materials-reflection-simple-r1.html )
+* [materials-sandbox-generate-textures-r1.html]( materials-sandbox-generate-textures-r1.html )
+* [materials-sandbox-r1-01.html]( materials-sandbox-r1.html )
+* [materials-sandbox-texgen-r1.html]( materials-sandbox-texgen-r1.html )
+
+
+materials-sandbox-generate-textures-r1-00.html
+
+materials-sandbox-r1-00.html
+
+materials-sandbox-r1.html
 
 
 ## Concept
@@ -31,36 +54,16 @@ _XXX - latest revision_ / [Full Screen]( http://XXX.github.io/latest/index.html 
 
 
 
-## Contacts
+## Contact
 
-jaanga@googlegroups.com
+* jaanga@googlegroups.com
 
-##Copyright
+## Copyright and License
 
-Copyright � 2015 Jaanga authors
+* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 
+***
 
-## License
-
-Jaanga software is available under the [MIT License]( http://en.wikipedia.org/wiki/MIT_License) which states:
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'),
-to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-The software is provided 'as is', without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement.
-In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
-
-
-## Change Log
-
-2015-06-28 ~ Theo
-
-* First commit
-
-
-
-<center>
-# &#x2766;
+<center title="dingbat" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >?</a>
 </center>
