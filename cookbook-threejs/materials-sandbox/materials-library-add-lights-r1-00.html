@@ -12,7 +12,7 @@
 <script src=https://cdn.rawgit.com/mrdoob/texgen.js/master/build/texgen.min.js ></script>
 <script>
 
-	var defaultMaterial = 1;
+	var defaultMaterial = 15;
 	var materialsLibrary;
 	var texture;
 
@@ -35,7 +35,7 @@
 		menu.style.cssText = 'background-color: #ddd; height: ' + ( window.innerHeight - 20 ) + 'px; margin: 0 20px; max-width: 250px;' +
 			'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; ';
 		menu.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
-			'<a id=i href=http://jaanga.github.io/cookbook-threejs/materials-sandbox/ >&#x24D8;</a></h2>' +
+			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
 
 			'<p><button onclick=listLights() >list lights</button> ' +
 				'<button onclick=removeLights() >remove lights</button></p>' +
@@ -115,13 +115,13 @@
 
 		drawThings();
 
-//		addLights();
+		addLights();
 
 	}
 
 	function addLights() {
 
-		renderer.shadowMap.enabled = true;
+		renderer.shadowMapEnabled = true;
 
 		var lightAmbient, lightDirectional, lightPoint;
 
@@ -147,7 +147,7 @@
 		lightDirectional.shadowMapHeight = 2048;
 
 		lightDirectional.castShadow = true;
-//		lightDirectional.shadowCameraVisible = true;
+		lightDirectional.shadowCameraVisible = true;
 		scene.add( lightDirectional );
 
 		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
@@ -238,7 +238,7 @@
 
 		'Normal Side 2': { 'material': new THREE.MeshNormalMaterial( { side: 2  } ) },
 		'Normal Side 2 Opacity 0.7' : { 'material' : new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true   } ), },
-//		'Normal Flat': { 'material': new THREE.MeshNormalMaterial( { shading: THREE.FlatShading, side: 2 } )  },
+		'Normal Flat': { 'material': new THREE.MeshNormalMaterial( { shading: THREE.FlatShading, side: 2 } )  },
 		'Normal Wireframe': { 'material': new THREE.MeshNormalMaterial( { wireframe: true } ) },
 
 
@@ -273,7 +273,7 @@
 			{ 'material': new THREE.MeshLambertMaterial( { color: 0xff0000 } ) },
 
 		"Lambert Red + specular":
-			{ 'material': new THREE.MeshLambertMaterial( { color: 0xff0000 /*, specular: 0x111111 */ } ) },
+			{ 'material': new THREE.MeshLambertMaterial( { color: 0xff0000, specular: 0x111111 } ) },
 
 		"Lambert Green":
 			{ 'material': new THREE.MeshLambertMaterial( { color: 0x00ff00 } ) },
@@ -906,15 +906,15 @@
 
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js', function ( geometry ) { // scale 0.6 y 35
-//		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
+//		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js', function ( geometry ) { // scale 0.6 y 35
+		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
 
 			geometry.computeFaceNormals();
 			geometry.computeVertexNormals();
 
 			tree = new THREE.Mesh( geometry, material );
-			tree.position.set( 30, 35, 60 );
-			tree.scale.multiplyScalar( 0.6 );
+			tree.position.set( 30, 10, 60 );
+			tree.scale.multiplyScalar( 50 );
 			tree.castShadow = tree.receiveShadow = true;
 			scene.add( tree );
 
