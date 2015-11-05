@@ -33,12 +33,28 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+The Leap Motion device is a wonderful, natural addition to the user exoerience of computers.
+Many excellent apps are available for the device and the set of tool to build ne apps gets more powerful and more sophisticated with each release.
+
+Having a 'look-see' at the code takes quite a while. It can take days to get going.
+Because the code is highly sophisticated and built for full-stack developers, access by less skilled coders is less easy.
+Bashing out a quick demo turns out taking more time than you want because the developer tools are feature rich and the feature gods must be satiated before you code. ;-) 
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
+* To provide scripts you can learn how to do Leap-ish things in a few hours
+* To allow you to build Leap demos in minutes
+
+
 ### Vision
 <!--  a descriptive picture of a desired future state -->
+
+## The Scripts
+
+
+[Three.js Leap-enabled Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/ )  
+[Three.js Leap-enabled Template Read Me - Source Code]( https://github.com/jaanga/gestification-r2/ )  
 
 
 ## Things to Do / Road Map
