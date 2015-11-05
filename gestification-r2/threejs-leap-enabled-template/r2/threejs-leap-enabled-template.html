@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Leap Threejs Template R2</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://js.leapmotion.com/leap-0.6.4.js ></script>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	var fingerlings = {};
+	var handies = {};
+	var loop = {};
+
+	var info, stats, renderer, scene, camera, controls;
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+
+		info.style.cssText = 'left: 20px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=handData ></div>' +
+			'<div id=fingerData ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 500, 500, 500 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 1000;
+		scene = new THREE.Scene();
+
+
+
+
+// ground box
+		var geometry = new THREE.BoxGeometry( 500, 500, 500 );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -250, 0 );
+		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 250, 10 );
+		scene.add( mesh );
+
+// axes
+		var axis = new THREE.AxisHelper( 250 );
+		scene.add( axis );
+
+		renderer.render( scene, camera );
+
+	}
+
+	loop.animate = function( frame ) {
+
+		frame.hands.forEach( function( hand, index ) {
+
+			var handy = ( handies[index] || ( handies[index] = new Handy()) );
+			handy.outputData( index, hand );
+
+			hand.fingers.forEach( function( finger, index ) {
+
+				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );
+				fingerling.outputData( index, finger );
+
+			});
+
+		});
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+
+	}
+
+	var Handy = function() {
+
+		var handy = this;
+		var msg = handData.appendChild( document.createElement( 'div' ) );
+
+		var geometry = new THREE.BoxGeometry( 50, 20, 50 );
+		var material = new THREE.MeshNormalMaterial();
+		var box = new THREE.Mesh( geometry, material );
+		scene.add( box );
+
+		handy.outputData = function( index, hand  ) {
+
+			var hspp = hand.stabilizedPalmPosition;
+
+			msg.innerHTML = 'Hand id:' + index + ' x:' + hspp[0].toFixed(0) + ' y:' + hspp[1].toFixed(0) + ' z:' + hspp[2].toFixed(0);
+
+			box.position.set( hspp[0], hspp[1], hspp[2] );
+
+			box.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+
+		};
+
+	};
+
+
+// Bone Method
+	var Fingerling = function() {
+
+		var fingerling = this;
+		var msg = fingerData.appendChild( document.createElement( 'div' ) );
+		var geometry = new THREE.BoxGeometry( 20, 20, 1 );
+		var material = new THREE.MeshNormalMaterial();
+		var phalanges = [];
+
+		for (var i = 0; i < 4; i++) {
+
+			var phalange = new THREE.Mesh( geometry, material );
+			scene.add( phalange );
+			phalanges.push( phalange )
+
+		}
+
+		fingerling.outputData = function( index, finger ) {
+
+			msg.innerHTML = 'Bone Method ~ ' +
+				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) +
+				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
+
+//console.log( finger );
+
+			for ( var i = 0; i < 4; i++) {
+
+				var cen = finger.bones[ i ].center();
+				phalange = phalanges[ i ];
+				phalange.position.set( cen[0], cen[1], cen[2] );
+
+				if ( index > 0 || i > 0 ) {
+
+					phalange.scale.z = finger.bones[ i ].length;
+
+				}
+
+			}
+
+// Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
+			var p = finger.tipPosition;
+			phalanges[3].lookAt( v( p[0], p[1], p[2]  ) );
+
+			p = finger.dipPosition;
+			phalanges[2].lookAt( v( p[0], p[1], p[2]  ) );
+
+			p = finger.pipPosition;
+			phalanges[1].lookAt( v( p[0], p[1], p[2]  ) );
+
+			if ( index > 0 ) {
+				p = finger.mcpPosition;
+				phalanges[0].lookAt( v( p[0], p[1], p[2]  ) );
+			}
+
+		};
+
+	};
+
+	function v( x, y, z) { return new THREE.Vector3( x, y, z ); }
+
+	loop = Leap.loop( loop.animate );
+
+// This allows us to move even while in an iFrame.
+	Leap.loopController.setBackground(true)
+
+</script>
+</body>
+</html>
