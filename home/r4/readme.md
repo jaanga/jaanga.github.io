@@ -51,7 +51,6 @@ _Years indicate latest date when significant effort was made_
 	* In the mi[d]st of a complete reconstruction. 
 
 * [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs )
-	* [Templates]( http://jaanga.github.com/cookbook-threejs/templates/ ) [Utilities]( http://jaanga.github.com/cookbook-threejs/utilities/ ) [Viewers]( http://jaanga.github.com/cookbook-threejs/viewers/ )
 
 * [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) 2015
 
@@ -68,7 +67,7 @@ _Years indicate latest date when significant effort was made_
 * <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
 -->
 
-* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification]( http://jaanga.github.io/gestification/ ) 2013
+* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification R2]( http://jaanga.github.io/gestification-r2/ ) 2015 - [Gestification]( http://jaanga.github.io/gestification/ ) 2013
 	* Work that involves Three.js and the Leap Motion device.
 
 * [![Urdacha]( http://jaanga.github.io/home/images/3-Urdacha.png )<br>Urdacha]( http://jaanga.github.io/urdacha ) 2011

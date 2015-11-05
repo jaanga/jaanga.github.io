@@ -54,7 +54,21 @@ Bashing out a quick demo turns out taking more time than you want because the de
 
 
 [Three.js Leap-enabled Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/ )  
-[Three.js Leap-enabled Template Read Me - Source Code]( https://github.com/jaanga/gestification-r2/ )  
+[Three.js Leap-enabled Template Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/threejs-leap-enabled-template/ )
+
+[Flick to Select Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ )  
+[Flick to Select Leap Three.js  Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/flick-to-select-leap-threejs/ )
+
+  
+
+## Notes / Issues
+
+2015-11-05 ~ Gestification R2 has just been started
+
+Earlier work is here:
+
+[Gestification]( http://jaanga.github.io/gestification/ ) - Beware the overly complicated user experience
+
 
 
 ## Things to Do / Road Map
@@ -62,12 +76,10 @@ Bashing out a quick demo turns out taking more time than you want because the de
 
 ## Features
 
-
-## Issues
-
  
 ## Sources
 
+[Leap Moion]( http://leapmotion.com )
 
 ## Contact
 
