@@ -2,7 +2,6 @@
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/threejs-leap-enabled-template/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Gestification R2]( http://jaanga.github.io/gestification-r2/  ) »
--->
 
 [Three.js Leap-enabled Template Read Me]( index.html )
 ===
@@ -13,8 +12,8 @@
 
 ## Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/threejs-leap-enabled-template-r4.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/r4/threejs-leap-enabled-template-r4.html width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/r4/threejs-leap-enabled-template-r4.html  )
 
 
 ## Concept
