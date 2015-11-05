@@ -102,7 +102,7 @@ If you 'own' a thing - even if it's only in your imagination - have you not acqu
 The Apps
 ===
 
-_Every page lists the content that is available and associated with the page._
+_Every app has a read me file that lists the content that is available and associated with the app._
 
 
 ##  Moon
@@ -150,7 +150,7 @@ _Every page lists the content that is available and associated with the page._
 
 _Would you like to write about what we are doing? Here is some text you can copy and paste to help get you going._ 
 
-* Access that is free and easy to gigabytes of data from NASA and other sources that is otherwise highly inaccessible
+* Free and easy access to gigabytes of data from NASA and other sources that is otherwise highly inaccessible
 * Learn from dozens of short, easy JavaScript scripts
 * Pick up dozens of tips and insights for sourcing good info, mashing up data and building demos quickly
 * View NASA's GitHub repository of STL files of satellites in 3D
@@ -161,7 +161,7 @@ _Would you like to write about what we are doing? Here is some text you can copy
 
 ## Things to Do
 
-_Every page discusses thing to try or to do and builds a road map as to future possibilities._
+_Every app has read me files that discuss things to try or to do and builds a road map as to future possibilities._
 
 _We like things that are practical, pedagogical and provocative..._
 
@@ -188,7 +188,7 @@ _We like things that are practical, pedagogical and provocative..._
 
 _The following sections are very much a work in progress. 
 Text is in the process of being culled from a variety of sources and needs much editing.
-Eventually the following work will be split into several files._
+Eventually the following work will be removed from this page and split into several files._
 
 _Hey! Enough with the scrolling. Go back up and play with some stuff._
 
