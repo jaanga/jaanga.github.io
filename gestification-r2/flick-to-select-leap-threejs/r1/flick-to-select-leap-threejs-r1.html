@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset=utf-8 >
-<title>flick-to-select-leap-threejs-r1.html</title>
+<title>Flick to Select Leap Three.js R1.html</title>
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' >
 </head>
 <body>
@@ -17,9 +17,10 @@
 	var touches = [];
 	var loop = {};
 
-		var colors = [ 0xff0000, 0xff00ff, 0x00ff00, 0xffff00, 0x0000ff ];
-		colorsText = [ 'red','magenta','green','yellow', 'blue' ];
-		var positions = [ v( -40, -60, 20 ), v( -50, -50, 90 ), v( -20, -50, 120 ), v( -10, -50, 90 ), v( 40, -50, 50 ) ] 
+	var colors = [ 0xff0000, 0xff00ff, 0x00ff00, 0xffff00, 0x0000ff ];
+	colorsText = [ 'red','magenta','green','yellow', 'blue' ];
+	fingersText = [ 'thumb','index','middle','ring', 'little' ];
+	var positions = [ v( -40, -60, 20 ), v( -45, -50, 80 ), v( -30, -50, 100 ), v( -10, -50, 90 ), v( 35, -50, 40 ) ] 
 
 
 	var info, stats, renderer, scene, camera, controls, light;
@@ -32,11 +33,12 @@
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
 
-		info.style.cssText = 'left: 20px; position: absolute; ';
+		info.style.cssText = 'left: 20px; position: absolute; max-width: 450px;';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<p>To select a color, hold one hand flat over the Leap device and touch a colors using closest fingers</p>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
-			'<div id=touchData ></div>' +
+			'<div id=touchData style=padding:10px;  ></div>' +
 		'';
 
 		stats = new Stats();
@@ -51,7 +53,7 @@
 		scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.set( 500, 500, 500 );
+		camera.position.set( -500, 500, -500 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 1000;
@@ -289,7 +291,7 @@
 					if ( firstBB.isIntersectionBox( secondBB ) === true ) {
 
 						touches[ index ].material.opacity = 0.3;
-						touchData.innerHTML = colorsText[ index ];
+						touchData.innerHTML = colorsText[ index ] + ' / ' + fingersText[ index ];
 						touchData.style.backgroundColor = colorsText[ index ];
 
 					} else {

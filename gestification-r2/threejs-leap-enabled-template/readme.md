@@ -7,7 +7,6 @@
 ===
 
 
-
 [Three.js Leap-enabled Template  - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/dev/ )
 
 ## Web Page / Source Code

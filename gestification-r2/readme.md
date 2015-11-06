@@ -33,12 +33,14 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-The Leap Motion device is a wonderful, natural addition to the user exoerience of computers.
-Many excellent apps are available for the device and the set of tool to build ne apps gets more powerful and more sophisticated with each release.
+The [Leap Motion]( http://leapmotion.com ) device is a wonderful, natural addition to the user experience of computers.
+Many excellent apps are available for the device and the set of tool to build new apps gets more powerful and more sophisticated with each release.
 
-Having a 'look-see' at the code takes quite a while. It can take days to get going.
-Because the code is highly sophisticated and built for full-stack developers, access by less skilled coders is less easy.
-Bashing out a quick demo turns out taking more time than you want because the developer tools are feature rich and the feature gods must be satiated before you code. ;-) 
+On the other hand:
+
+* Having a 'look-see' at the code takes quite a while. It can take days to get going.
+* Because the code is highly sophisticated and built for full-stack developers, access by less skilled coders is less easy.
+* Bashing out a quick demo turns out taking more time than you want because the developer tools are feature rich and the feature gods must be satiated before you code. ;-) 
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
@@ -79,7 +81,7 @@ Earlier work is here:
  
 ## Sources
 
-[Leap Moion]( http://leapmotion.com )
+[Leap Motion]( http://leapmotion.com )
 
 ## Contact
 

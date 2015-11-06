@@ -1,9 +1,10 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ "View file as a web page." ) </span>
+ï»¿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/flick-to-select-leap-threejs/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [Gestification R2]( http://jaanga.github.io/gestification-r2/  ) »
+[Jaanga]( http://jaanga.github.io ) Â» [Gestification R2]( http://jaanga.github.io/gestification-r2/  ) Â»
 
 [Flick to Select Leap Three.js Read Me]( index.html )
+===
 
 [Flick to Select Leap Three.js - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/dev/ )
 
@@ -26,17 +27,21 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-
+When virtual hands, you may want to change or selections options fairly continuously without constantly having to look at where your hand is
 
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
+* Instead of having to move the hand to particular locations, you bring the selection objects to wherever the hand is
+* The action of selecting an object relies on your brain's excellent positional memory capabilities and not making the correct gesture or pose
 
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
+* Facilitate the fingers/old brain communication capabilities
+* Enable your fingers to talk
 
 ## Things to Do / Road Map
 
