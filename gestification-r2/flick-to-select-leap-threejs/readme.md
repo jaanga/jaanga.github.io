@@ -45,13 +45,22 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 ## Things to Do / Road Map
 
+* Capture the notion of two or more fingers selecting colors at the same time
+* Capture the notion of the hand moving forward and backward and thus exposing different choices
 
 ## Features
 
+* Selection options are close to the fingers regardles of the position of the hand
+* Each finger has only a single option thus mistakes no made easily
+ 
 
 ## Issues
 
+* Hand must be held relatively flat to work well
+* Much better if color boxes rotateted as one and not individually
  
+
+
 ## Sources
 
 
