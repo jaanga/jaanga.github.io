@@ -29,12 +29,17 @@
 
 	function init() {
 
-		document.body.style.cssText = 'font: 12pt monospace; margin: 0; overflow: hidden;' ;
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML ='body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'#aa {text-decoration: none; }' +
+		'';
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
 
 		info.style.cssText = 'left: 20px; position: absolute; max-width: 450px;';
-		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		info.innerHTML = '<h1><a href="" >' + document.title + '</a> ' +
+			'<a id=aa href=http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ >&#x24D8;</a></h1>' +
+
 			'<p>To select a color, hold one hand flat over the Leap device and touch the colors using closest fingers</p>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +

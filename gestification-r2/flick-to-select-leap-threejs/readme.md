@@ -57,9 +57,9 @@ When virtual hands, you may want to change or selections options fairly continuo
 ## Issues
 
 * Hand must be held relatively flat to work well
-* Much better if color boxes rotateted as one and not individually
- 
-
+	* Tilting hand causes options to be selected by accident
+	* Much better if color boxes rotated as one and not individually
+* Needs algorithmic ways of positioning selection options based on actual length of your fingers 
 
 ## Sources
 
