@@ -1,0 +1,559 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<title>Object to Object Raycasting R6</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://js.leapmotion.com/leap-0.6.4.js ></script>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/geometries/ConvexGeometry.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	var fingerlings = {};
+	var handies = {};
+	var loop = {};
+
+	var info, stats, renderer, scene, camera, controls;
+
+		var geometry, material, mesh;
+
+	var raycaster;
+	var touchables = [];
+	var objOne, objTwo;
+	var line;
+
+	var intersected1;
+	var intersected2;
+
+	init();
+//	animate();
+
+	function init() {
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+
+		info.style.cssText = 'margin: 20px; max-width: 320px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<small><i>All touches herin deemed to be fully consensual among all parties to this demo.</i></small>' +
+//			'<p>Slide the random object to see where it is a touchee: <input type=range id=inpSphereZ onmousemove=updateObjectRandom() min=-45 max=45 step=1 value=40 /></p>' +
+
+			'<p>Toucher 1:</p>' +
+			'<p>move X: <input type=range id=inpMoveX1 onmousemove=updateMoveX1() min=1 max=30 step=0.1 value=-15 /></p>' +
+			'<p>move Z: <input type=range id=inpMoveZ1 onmousemove=updateMoveZ1() min=-200 max=200 step=0.5 value=15 /></p>' +
+			'<p>move Y: <input type=range id=inpMoveY1 onmousemove=updateMoveY1() min=5 max=80 step=0.5 value=30 /></p>' +
+
+			'<p>Toucher 2:</p>' +
+			'<p>move X: <input type=range id=inpMoveX2 onmousemove=updateMoveX2() min=1 max=30 step=0.1 value=15 /></p>' +
+			'<p>move Z: <input type=range id=inpMoveZ2 onmousemove=updateMoveZ2() min=-200 max=200 step=0.5 value=-15 /></p>' +
+			'<p>move Y: <input type=range id=inpMoveY2 onmousemove=updateMoveY2() min=5 max=80 step=0.5 value=40 /></p>' +
+
+			'<div id=msg1 ></div>' +
+			'<div id=msg2 ></div>' +
+
+			'<div id=handData ></div>' +
+			'<div id=fingerData ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.shadowMap.enabled = true;
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 100, 500, 500 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 1000;
+		scene = new THREE.Scene();
+
+// Lights
+		light = new THREE.AmbientLight( 0x888888 );
+		scene.add( light );
+
+		light = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		light.position.set( -400, 400, 400 );
+
+		var d = 400;
+		light.shadowCameraLeft = -d;
+		light.shadowCameraRight = d;
+		light.shadowCameraTop = d;
+		light.shadowCameraBottom = -d;
+
+		light.shadowCameraNear = 300;
+		light.shadowCameraFar = 1000;
+
+// can help stop appearance of gridlines in objects with opacity < 1
+		light.shadowBias = -0.0002; // default 0 ~ distance fron corners?
+		light.shadowDarkness = 0.3; // default 0.5
+		light.shadowMapWidth = 2048;  // default 512
+		light.shadowMapHeight = 2048;
+
+		light.castShadow = true;
+//		light.shadowCameraVisible = true;
+		scene.add( light );
+
+		light = new THREE.PointLight( 0xffffff, 0.5 );
+		light.position = camera.position;
+		camera.add( light );
+
+
+// ground box
+		var geometry = new THREE.BoxGeometry( 500, 500, 500 );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -250, 0 );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 250, 10 );
+		scene.add( mesh );
+
+// axes
+		var axis = new THREE.AxisHelper( 250 );
+		scene.add( axis );
+
+
+// random convex objects
+		for ( var i = 0; i < 50; i++ ) {
+
+			randomObject = buildConvexObject();
+
+			randomObject.position.set( 30 * Math.random() - 5, 200 * Math.random() + 50, 500 * Math.random() - 250 );
+			randomObject.scale.set( 100 * Math.random() + 20, 100 * Math.random() + 20, 100 * Math.random() + 20 );
+
+		}
+
+// objOne
+		touch1 = buildTouch();
+//		objOne = touch1.children[ 2 ];
+		objOne = touch1.getObjectByName('toucher');
+		touch1.position.set( -200, 3, parseFloat( inpMoveZ1.value ) );
+
+// objTwo
+		touch2 = buildTouch();
+//		objTwo = touch2.children[ 2 ];
+		objTwo = touch2.getObjectByName('toucher');
+		touch2.rotation.y = 3.1415;
+		touch2.position.set( 200, -2, parseFloat( inpMoveZ2.value ) );
+
+		scene.updateMatrixWorld();
+
+		var material = new THREE.LineBasicMaterial({ color: 0xff00ff });
+
+		vector1 = objOne.localToWorld( objOne.geometry.vertices[ 33 ].clone() );
+		vector2 = objTwo.localToWorld( objTwo.geometry.vertices[ 33 ].clone() );
+
+		geometry = new THREE.Geometry();
+		geometry.vertices.push( vector1, vector2 );
+
+		line = new THREE.Line( geometry, material );
+		scene.add( line );
+
+		updateMoveY1();
+		updateMoveY2();
+
+		setRandomGradient();
+
+		renderer.render( scene, camera );
+
+	}
+
+	function buildConvexObject() {
+
+		var points = [];
+
+		for ( var i = 0; i < 12; i ++ ) {
+
+			points.push( new THREE.Vector3( ( Math.random() - 0.5 ), ( Math.random() - 0.5 ), ( Math.random() - 0.5 ) ) );
+
+		}
+
+		geometry = new THREE.ConvexGeometry( points );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+		objectRandom = new THREE.Mesh( geometry, material );
+		objectRandom.castShadow = true;
+		objectRandom.receiveShadow = true;
+		scene.add( objectRandom );
+
+		touchables.push( objectRandom );
+
+//		helper = new THREE.EdgesHelper( objectRandom, 0x444444 );
+//		scene.add( helper );
+
+		return objectRandom;
+
+	}
+
+	function buildTouch() {
+
+		obj = new THREE.Object3D();
+		geometry = new THREE.CylinderGeometry( 5, 6, 1, 17 );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.y = 30;
+		mesh.position.set( 0, 0.5 * mesh.scale.y , 0 );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.name = 'motionY';
+		obj.add( mesh );
+
+		helper = new THREE.EdgesHelper( mesh, 0x444444 );
+		scene.add( helper );
+
+		geometry = new THREE.CylinderGeometry( 2, 1, 60, 10 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 20, 0, 0 ) );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.name = 'motionX';
+		obj.add( mesh );
+
+		helper = new THREE.EdgesHelper( mesh, 0x444444 );
+//		scene.add( helper );
+
+		geometry = new THREE.CylinderGeometry( 3, 3.5, -5, 15 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 50, 0, 0 ) );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.name = 'toucher';
+		obj.add( mesh );
+
+		helper = new THREE.EdgesHelper( mesh, 0x444444 );
+//		scene.add( helper );
+
+		obj.scale.set( 5, 5, 5 );
+		scene.add( obj )
+
+		return obj;
+
+	}
+
+	function updateMoveX1( x ) {
+
+		touch1.getObjectByName('motionX').position.x = -  parseFloat( inpMoveX1.value ) + x;
+		objOne.position.x = - parseFloat( inpMoveX1.value ) + x;
+
+		updateLine();
+
+	}
+
+	function updateMoveZ1() {
+
+		touch1.position.z = parseFloat( inpMoveZ1.value );
+
+		updateLine();
+
+	}
+
+	function updateMoveY1() {
+
+		Y = touch1.getObjectByName('motionY');
+		Y.scale.y = parseFloat( inpMoveY1.value );
+		Y.position.y = 0.5 * Y.scale.y;
+		touch1.getObjectByName('motionX').position.y = Y.scale.y - 5;
+		objOne.position.y = Y.scale.y - 5;
+
+		updateLine();
+
+	}
+
+	function updateMoveX2( x ) {
+
+		touch2.getObjectByName('motionX').position.x = - parseFloat( inpMoveX2.value ) - x;
+		objTwo.position.x = - parseFloat( inpMoveX2.value ) - x;
+
+		updateLine();
+
+	}
+
+	function updateMoveZ2() {
+
+		touch2.position.z =  parseFloat( inpMoveZ2.value );
+
+		updateLine();
+
+	}
+
+	function updateMoveY2() {
+
+		Y = touch2.getObjectByName('motionY');
+		Y.scale.y =  parseFloat( inpMoveY2.value );
+		Y.position.y = 0.5 * Y.scale.y;
+		touch2.getObjectByName('motionX').position.y = Y.scale.y - 5;
+		objTwo.position.y = Y.scale.y - 5;
+
+		updateLine();
+
+	}
+
+
+	function updateLine() {
+
+		line.updateMatrixWorld();
+
+		line.geometry.vertices[0] = objOne.localToWorld( objOne.geometry.vertices[ 33 ].clone() );
+		line.geometry.vertices[1] = objTwo.localToWorld( objTwo.geometry.vertices[ 33 ].clone() );
+
+		v1 = line.geometry.vertices[0].clone();
+		v2 = line.geometry.vertices[1].clone();
+
+		line.geometry.verticesNeedUpdate = true;
+
+		raycasterOne = new THREE.Raycaster();
+		directionVectorOne = v2.clone().sub( v1 );
+		raycasterOne.set( v1, directionVectorOne.normalize() );
+
+		intersectsOne = raycasterOne.intersectObjects( touchables );
+
+		if ( intersectsOne.length > 0 ) {
+
+			if ( intersected1 != intersectsOne[ 0 ].object ) {
+
+				if ( intersected1 ) intersected1.material.emissive.setHex( intersected1.currentHex );
+
+				intersected1 = intersectsOne[ 0 ].object;
+				intersected1.currentHex = intersected1.material.emissive.getHex();
+				intersected1.material.emissive.setHex( 0xff0000 );
+				txt = 'id:' + intersectsOne[0].object.id + ' distance:' + intersectsOne[0].distance.toFixed(1);
+			}
+
+		} else {
+
+			if ( intersected1 ) intersected1.material.emissive.setHex( intersected1.currentHex );
+
+			txt = '&nbsp';
+
+			intersected1 = null;
+
+		}
+
+		msg1.innerHTML = '<h2>Toucher 1</h2> origin x:' + raycasterOne.ray.origin.x.toFixed(1) + ' y:' + raycasterOne.ray.origin.y.toFixed(1) + ' z:' + raycasterOne.ray.origin.z.toFixed(1) + '<br>' +
+			'intersectsOne.length:' +  intersectsOne.length + '<br>' +
+			txt +
+		'';
+
+		raycasterTwo = new THREE.Raycaster();
+		directionVectorTwo = v1.clone().sub( v2 );
+		raycasterTwo.set( v2, directionVectorTwo.normalize() );
+
+		intersectsTwo = raycasterTwo.intersectObjects( touchables );
+
+		if ( intersectsTwo.length > 0 ) {
+
+			if ( intersected2 != intersectsTwo[ 0 ].object ) {
+
+				if ( intersected2 ) intersected2.material.emissive.setHex( intersected2.currentHex );
+
+				intersected2 = intersectsTwo[ 0 ].object;
+				intersected2.currentHex = intersected2.material.emissive.getHex();
+				intersected2.material.emissive.setHex( 0x00ff00 );
+				txt = 'id:' + intersectsTwo[0].object.id + ' distance:' + intersectsTwo[0].distance.toFixed(1);
+
+			}
+
+		} else {
+
+			if ( intersected2 ) intersected2.material.emissive.setHex( intersected2.currentHex );
+			txt = '&nbsp';
+			intersected2 = null;
+
+		}
+
+		msg2.innerHTML = '<h2>Toucher 2</h2>origin x:' + raycasterTwo.ray.origin.x.toFixed(1) + ' y:' + raycasterTwo.ray.origin.y.toFixed(1) + ' z:' + raycasterTwo.ray.origin.z.toFixed(1) + '<br>' +
+			'intersectsTwo.length:' +  intersectsTwo.length + '<br>' +
+			txt +
+		'';
+
+	}
+
+	function setRandomGradient() {
+
+		cssBackround = document.body.appendChild( document.createElement('style') );
+
+		var col1 = "#" + Math.random().toString(16).slice(2, 8);
+		var col2 = "#" + Math.random().toString(16).slice(2, 8);
+		var col3 = "#" + Math.random().toString(16).slice(2, 8);
+		var X = ( Math.random() * window.innerWidth ).toFixed(0);
+		var Y = ( Math.random() * window.innerHeight ).toFixed(0);
+		var center =  20 + ( Math.random() * 60 ).toFixed(0);
+
+		cssBackround.innerText = 'body { ' +
+			'background: -webkit-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
+			'background: -moz-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
+			'background: radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); }' +
+		'';
+
+	};
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+/*
+	function animate() {
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+		requestAnimationFrame( animate );
+
+	}
+*/
+
+	loop.animate = function( frame ) {
+
+		frame.hands.forEach( function( hand, index ) {
+
+			var handy = ( handies[index] || ( handies[index] = new Handy()) );
+			handy.outputData( index, hand );
+
+/*
+			hand.fingers.forEach( function( finger, index ) {
+
+				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );
+				fingerling.outputData( index, finger );
+
+			});
+*/
+		});
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+
+	}
+
+	var Handy = function() {
+
+		var handy = this;
+		var msg = handData.appendChild( document.createElement( 'div' ) );
+
+		var geometry = new THREE.BoxGeometry( 50, 20, 50 );
+		var material = new THREE.MeshNormalMaterial();
+		var box = new THREE.Mesh( geometry, material );
+		scene.add( box );
+
+		handy.outputData = function( index, hand  ) {
+
+			var hspp = hand.stabilizedPalmPosition;
+
+			msg.innerHTML = 'Hand id:' + index + ' x:' + hspp[0].toFixed(0) + ' y:' + hspp[1].toFixed(0) + ' z:' + hspp[2].toFixed(0);
+
+//			box.position.set( hspp[0], hspp[1], hspp[2] );
+
+//			box.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+
+			inpMoveZ1.value = hspp[2]; // box.position.z;
+			inpMoveZ2.value = hspp[2]; // box.position.z;
+
+			updateMoveZ1();
+			updateMoveZ2();
+
+			inpMoveY1.value = 0.15 * hspp[1]; // box.position.y;
+			inpMoveY2.value = 0.15 * hspp[1]; // box.position.y;
+
+			updateMoveY1();
+			updateMoveY2();
+
+
+			p1 = hand.fingers[0].tipPosition;
+			p2 = hand.fingers[1].tipPosition;
+			p1 = v ( p1[0], p1[ 1 ], p1[ 2] );
+			p2 = v ( p2[0], p2[ 1 ], p2[ 2] );
+			distance = p1.distanceTo( p2 );
+
+
+			inpMoveX1.value = 0.9 * distance;
+			inpMoveX2.value = 0.9 * distance;
+
+			updateMoveX1( 0.2 * hspp[0] );
+			updateMoveX2( 0.2 * hspp[0] );
+
+		};
+
+	};
+
+
+
+// Bone Method
+	var Fingerling = function() {
+
+		var fingerling = this;
+		var msg = fingerData.appendChild( document.createElement( 'div' ) );
+		var geometry = new THREE.BoxGeometry( 20, 20, 1 );
+		var material = new THREE.MeshNormalMaterial();
+		var phalanges = [];
+
+		for ( var i = 0; i < 4; i++) {
+
+			var phalange = new THREE.Mesh( geometry, material );
+			scene.add( phalange );
+			phalanges.push( phalange )
+
+		}
+
+		fingerling.outputData = function( index, finger ) {
+
+			msg.innerHTML = 'Bone Method ~ ' +
+				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) +
+				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
+
+
+			for ( var i = 0; i < 4; i++) {
+
+				var cen = finger.bones[ i ].center();
+				phalange = phalanges[ i ];
+				phalange.position.set( cen[0], cen[1], cen[2] );
+
+				if ( index > 0 || i > 0 ) {
+
+					phalange.scale.z = finger.bones[ i ].length;
+
+				}
+
+			}
+
+// Eventually will look at using bone.basis XYZ-axis data; Will it produce more concise code?
+			var p = finger.tipPosition;
+			phalanges[3].lookAt( v( p[0], p[1], p[2]  ) );
+
+			p = finger.dipPosition;
+			phalanges[2].lookAt( v( p[0], p[1], p[2]  ) );
+
+			p = finger.pipPosition;
+			phalanges[1].lookAt( v( p[0], p[1], p[2]  ) );
+
+			if ( index > 0 ) {
+				p = finger.mcpPosition;
+				phalanges[0].lookAt( v( p[0], p[1], p[2]  ) );
+			}
+
+		};
+
+	};
+
+	loop = Leap.loop( loop.animate );
+
+// This allows us to move even while in an iFrame.
+	Leap.loopController.setBackground(true)
+
+</script>
+</body>
+</html>
