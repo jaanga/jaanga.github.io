@@ -1,21 +1,26 @@
 <!doctype html>
-<html lang=en >
+<html>
 <head>
+<meta charset=utf-8 >
 <title>Draw the Line Leap Three.js R2</title>
-<meta charset=utf-8 />
-<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' >
 </head>
 <body>
 <script src=http://js.leapmotion.com/leap-0.6.4.js ></script>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<!--
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+-->
+<script src=../../../cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+
 <script>
 
 	var fingerlings = {};
 	var handies = {};
 	var loop = {};
-	var touch;
+	var touchOn, touchOff;
 	var draw;
 	var drawing = false;
 	var vertices = [];
@@ -29,14 +34,14 @@
 	function init() {
 
 		var css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = 'body { font: 12pt monospace; margin: 0; overflow: auto; }' +
-			'h1, a { margin: 0; }' +
-			'#aa { text-decoration: none; }' +
-			'button { border: 2px solid silver; }' +
-			'button, input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; } ' +
-			'input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; } ' +
-			'input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; } ' +
-		'';
+		css.innerHTML = `body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h1, a { margin: 0; }
+			#aa { text-decoration: none; }
+			button { border: 2px solid silver; }
+			button, input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+		`;
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'left: 20px; position: absolute; ';
@@ -45,9 +50,9 @@
 				<a id=aa href=http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/ >&#x24D8;</a>
 			</h1>
 
-			<p><button onclick=saveFile(); >Save File</button></p>
+			<p><button onclick=saveFile(); >Save DXF File</button></p>
 			<div>
-DXF data<br>
+				DXF data:<br>
 				<textarea id=txtArea name="txt1" cols="30" rows="50" >
 
 0
@@ -55,7 +60,7 @@ SECTION
   2
 ENTITIES
 999
-This is just a line.
+This is just a sample line
   0
 LINE
   8
@@ -78,9 +83,6 @@ EOF
 			<div id=fingerData ></div>
 		`;
 
-// ### SAVE FILE
-//file:///C:/Users/Theo/Dropbox/Public/code-cookbook/0-cookbook-general/file-save-api/file-saver-2015-02-26/file-saver.html
-
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -94,35 +96,23 @@ EOF
 		scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.set( -500, 500, 500 );
+		camera.position.set( 0, 200, 800 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.target.set( 0, 200, 0 );
 		controls.maxDistance = 1000;
 
-// ground box
-		var geometry = new THREE.BoxGeometry( 500, 500, 500 );
-		var color = 0xffffff * Math.random();
-		var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-		mesh.position.set( 0, -250, 0 );
-		scene.add( mesh );
+// pretty but very non-essential assets
+		toggleGroundBoxLights( 500 );
+		toggleAxis( 250 );
+		toggleGradient();
+//		toggleAutoRotate();
+		addLights( 300 );
+		toggleTrylonPerisphere();
+		trylonPerisphere.scale.set( 2, 2, 2 );
 
-		mesh = new THREE.GridHelper( 250, 10 );
-		scene.add( mesh );
-
-// axes
-		var axis = new THREE.AxisHelper( 250 );
-		scene.add( axis );
-
-		getLights();
-		getTrylonPerisphere();
-		getRandomGradient();
-
-
-		geometry = new THREE.Geometry();
-		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+//		geometryLine = new THREE.Geometry();
+		materialLine = new THREE.LineBasicMaterial( { color: 0xff0000 } );
 
 	}
 
@@ -163,122 +153,11 @@ following means polyline is closed 70 = 1, not required
 
 	}
 
-	function getLights() {
-
-// Lights
-		var light = new THREE.AmbientLight( 0x888888 );
-		scene.add( light );
-
-		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.05 );
-		lightDirectional.position.set( -400, 400, 400 );
-
-		var d = 400;
-		lightDirectional.shadowCameraLeft = -d;
-		lightDirectional.shadowCameraRight = d;
-		lightDirectional.shadowCameraTop = d;
-		lightDirectional.shadowCameraBottom = -d;
-
-		lightDirectional.shadowCameraNear = 300;
-		lightDirectional.shadowCameraFar = 2000;
-
-// can help stop appearance of gridlines in objects with opacity < 1
-		lightDirectional.shadowBias = -0.0002; // default 0 ~ distance fron corners?
-		lightDirectional.shadowDarkness = 0.3; // default 0.5
-		lightDirectional.shadowMapWidth = 2048;  // default 512
-		lightDirectional.shadowMapHeight = 2048;
-
-		lightDirectional.castShadow = true;
-//		lightDirectional.shadowCameraVisible = true;
-		scene.add( lightDirectional );
-
-		pointLight = new THREE.PointLight( 0xffffff, 0.5 );
-		pointLight.position = camera.position;
-		camera.add( pointLight );
-		scene.add( camera );
-
-	}
-
-
-	function getTrylonPerisphere() {
-
-// Perisphere
-		geometry = new THREE.SphereGeometry( 25, 50, 50 );
-		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(), 
-			specular: 0xffffff * Math.random(),
-			shininess: 10
-		} );
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -100, 20, 0 );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-		scene.add( mesh );
-
-// Trylon
-		geometry = new THREE.CylinderGeometry( 0, 8, 100, 3 );
-		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(), 
-			specular: 0xffffff * Math.random(),
-			shininess: 1
-		} );
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -120, 50, -30 );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
-		scene.add( mesh );
-
-	}
-
-
-	function getRandomGradient() {
-
-		cssBackround = document.body.appendChild( document.createElement('style') );
-
-		var col1 = "#" + Math.random().toString(16).slice(2, 8);
-		var col2 = "#" + Math.random().toString(16).slice(2, 8);
-		var col3 = "#" + Math.random().toString(16).slice(2, 8);
-		var X = ( Math.random() * window.innerWidth ).toFixed(0);
-		var Y = ( Math.random() * window.innerHeight ).toFixed(0);
-		var center =  20 + ( Math.random() * 60 ).toFixed(0);
-
-		cssBackround.innerText = 'body { ' +
-			'background: -webkit-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
-			'background: -moz-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
-			'background: radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); }' +
-		'';
-
-	};
-
-
-	function v( x, y, z) { return new THREE.Vector3( x, y, z ); }
-
-	loop.animate = function( frame ) {
-
-		frame.hands.forEach( function( hand, index ) {
-
-			var handy = ( handies[index] || ( handies[index] = new Handy()) );
-			handy.outputData( index, hand );
-
-			hand.fingers.forEach( function( finger, index ) {
-
-				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );
-				fingerling.outputData( index, finger );
-
-			});
-
-		});
-
-		renderer.render( scene, camera );
-		controls.update();
-		stats.update();
-
-	}
-
 	var Handy = function() {
 
 		var handy = this;
 		var msg = handData.appendChild( document.createElement( 'div' ) );
-
+/*
 		palm = new THREE.Object3D();
 
 		var geometry = new THREE.BoxGeometry( 50, 20, 50 );
@@ -288,6 +167,7 @@ following means polyline is closed 70 = 1, not required
 		box.receiveShadow = true;
 		palm.add( box );
 
+
 		var geometry = new THREE.BoxGeometry( 30, 20, 60 );
 		var material = new THREE.MeshPhongMaterial( { color: 0x00ff00, emissive: 0x555555, transparent: true });
 		touchOn = new THREE.Mesh( geometry, material );
@@ -296,6 +176,7 @@ following means polyline is closed 70 = 1, not required
 		touchOn.castShadow = true;
 		touchOn.receiveShadow = true;
 		palm.add( touchOn );
+
 
 		var geometry = new THREE.BoxGeometry( 30, 20, 60 );
 		var material = new THREE.MeshPhongMaterial( { color: 0xff0000, emissive: 0x555555, transparent: true });
@@ -307,15 +188,15 @@ following means polyline is closed 70 = 1, not required
 		palm.add( touchOff );
 
 		scene.add( palm );
-
+*/
 		handy.outputData = function( index, hand  ) {
 
 			var hspp = hand.stabilizedPalmPosition;
 
 //			msg.innerHTML = 'Hand id:' + index + ' x:' + hspp[0].toFixed(0) + ' y:' + hspp[1].toFixed(0) + ' z:' + hspp[2].toFixed(0);
 
-			palm.position.set( hspp[0], hspp[1], hspp[2] );
-			palm.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
+//			palm.position.set( hspp[0], hspp[1], hspp[2] );
+//			palm.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
 
 		};
 
@@ -328,11 +209,11 @@ following means polyline is closed 70 = 1, not required
 		var fingerling = this;
 		var msg = fingerData.appendChild( document.createElement( 'div' ) );
 		var geometry = new THREE.BoxGeometry( 20, 20, 1 );
-		var material = new THREE.MeshNormalMaterial();
+
 		var phalanges = [];
 
-		for (var i = 0; i < 4; i++) {
-
+		for ( var i = 0; i < 4; i++) {
+			var material = new THREE.MeshNormalMaterial( { opacity: 0.25, transparent: true } );
 			var phalange = new THREE.Mesh( geometry, material );
 			phalange.castShadow = true;
 			phalange.receiveShadow = true;
@@ -347,7 +228,53 @@ following means polyline is closed 70 = 1, not required
 //				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) +
 //				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
-//console.log( finger );
+
+
+			if ( index === 0 && !touchOn ) {
+
+				var geometry = new THREE.BoxGeometry( 30, 20, 60 );
+				var material = new THREE.MeshPhongMaterial( { color: 0x00ff00, emissive: 0x555555, transparent: true });
+				touchOn = new THREE.Mesh( geometry, material );
+				touchOn.position.set( -40, -80, -20 );
+				touchOn.currentHex = touchOn.material.emissive.getHex();
+				touchOn.castShadow = true;
+				touchOn.receiveShadow = true;
+
+				touchOn.material.opacity = 0.5;
+				touchOn.material.emissive.setHex( 0x555555 );
+
+				scene.add( touchOn );
+
+				phalanges[ 3 ].material.opacity = 1;
+
+			}
+
+			if ( index === 1  && !touchOff ) {
+
+				var geometry = new THREE.BoxGeometry( 3, 0.5, 3 );
+				scene.remove( phalanges[ 3 ] );
+				phalanges[ 3 ] = new THREE.Mesh( geometry, material );
+				scene.add( phalanges[ 3 ] );
+
+			}
+
+			if ( index === 4 && !touchOff ) {
+
+				var geometry = new THREE.BoxGeometry( 30, 20, 60 );
+				var material = new THREE.MeshPhongMaterial( { color: 0xff0000, emissive: 0x555555, transparent: true });
+				touchOff = new THREE.Mesh( geometry, material );
+				touchOff.position.set( 40, -70, -20 );
+				touchOff.currentHex = touchOff.material.emissive.getHex();
+				touchOff.castShadow = true;
+				touchOff.receiveShadow = true;
+				scene.add( touchOff );
+
+				phalanges[ 3 ].material.opacity = 1;
+
+			}
+
+
+
 
 			for ( var i = 0; i < 4; i++) {
 
@@ -358,6 +285,12 @@ following means polyline is closed 70 = 1, not required
 				if ( index > 0 || i > 0 ) {
 
 					phalange.scale.z = finger.bones[ i ].length;
+
+				}
+
+				if ( i === 0 && index === 0 ) {
+
+					touchOn.position.set(  cen[0] + 20, cen[1] - 30, cen[2] - 70  );
 
 				}
 
@@ -375,11 +308,15 @@ following means polyline is closed 70 = 1, not required
 						touchOff.material.emissive.setHex( touchOn.currentHex );
 
 						draw = true;
+
 						if ( drawing === false ) { 
 							vertices = [];
 							drawing = true
 						}
+
 						drawVertices = vertices.slice();
+
+
 
 					} else {
 
@@ -391,14 +328,13 @@ following means polyline is closed 70 = 1, not required
 
 				}
 
-
 				if ( i === 3 && index === 4 ) {
 
 					firstBB = new THREE.Box3().setFromObject( phalange );
 					secondBB = new THREE.Box3().setFromObject( touchOff ); 
 
 					if ( firstBB.isIntersectionBox( secondBB ) === true ) {
-//console.log( touchOn );
+
 						touchOff.material.opacity = 1;
 						touchOff.material.emissive.setHex( 0x666666 );
 
@@ -408,24 +344,25 @@ following means polyline is closed 70 = 1, not required
 						draw = false;
 						drawing = false
 
-//						vertices = [];
-
 					} else {
 
 //						touchOff.material.opacity = 0.5;
 //						touchOff.material.emissive.setHex( touchOff.currentHex );
 //						touchOnData.innerHTML = 'not touching';
 
-
 					}
+
+				}
+
+				if ( i === 0 && index === 4 ) {
+
+					touchOff.position.set( cen[0] - 30, cen[1] - 40, cen[2] - 50  );
 
 				}
 
 				if ( i === 3 && index === 1 && draw === true ) {
 
 						drawLine( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] ) );
-
-//						draw = false;
 
 				}
 
@@ -455,19 +392,41 @@ following means polyline is closed 70 = 1, not required
 		if ( vertex.distanceTo( previousVertex ) > 5 ) {
 
 			vertices.push( vertex );
+
 			previousVertex = vertex;
 			var geometry = new THREE.Geometry();
-
 			geometry.vertices = vertices;
-//			material = new THREE.LineBasicMaterial( { color: 0x000000 } );
 
 			scene.remove( line )
-			line = new THREE.Line( geometry, material );
+			line = new THREE.Line( geometry, materialLine );
+			line.castShadow = true;
 			scene.add( line )
 
 		}
 
-// console.log( vertices );
+	}
+
+	function v( x, y, z) { return new THREE.Vector3( x, y, z ); }
+
+	loop.animate = function( frame ) {
+
+		frame.hands.forEach( function( hand, index ) {
+
+			var handy = ( handies[index] || ( handies[index] = new Handy()) );
+			handy.outputData( index, hand );
+
+			hand.fingers.forEach( function( finger, index ) {
+
+				var fingerling = ( fingerlings[index] || ( fingerlings[index] = new Fingerling() ) );
+				fingerling.outputData( index, finger );
+
+			});
+
+		});
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
 
 	}
 
