@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Draw the Line Leap Three.js R1</title>
+<title>Draw the Line Leap Three.js R2</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -17,6 +17,7 @@
 	var loop = {};
 	var touch;
 	var draw;
+	var drawing = false;
 	var vertices = [];
 	var line;
 	var previousVertex = v( 0, 0, 0 );
@@ -27,15 +28,59 @@
 
 	function init() {
 
-		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 12pt monospace; margin: 0; overflow: auto; }' +
+			'h1, a { margin: 0; }' +
+			'#aa { text-decoration: none; }' +
+			'button { border: 2px solid silver; }' +
+			'button, input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; } ' +
+			'input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; } ' +
+			'input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; } ' +
+		'';
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
-
 		info.style.cssText = 'left: 20px; position: absolute; ';
-		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-			'<div id=handData ></div>' +
-			'<div id=fingerData ></div>' +
-		'';
+		info.innerHTML = `<h1>
+				<a href="" >${document.title}</a> 
+				<a id=aa href=http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/ >&#x24D8;</a>
+			</h1>
+
+			<p><button onclick=saveFile(); >Save File</button></p>
+			<div>
+DXF data<br>
+				<textarea id=txtArea name="txt1" cols="30" rows="50" >
+
+0
+SECTION
+  2
+ENTITIES
+999
+This is just a line.
+  0
+LINE
+  8
+0
+ 10
+1.0
+20
+2.0
+11
+3.0
+21
+4.0
+  0
+ENDSEC
+  0
+EOF
+				</textarea>
+			</div>
+			<div id=handData ></div>
+			<div id=fingerData ></div>
+		`;
+
+// ### SAVE FILE
+//file:///C:/Users/Theo/Dropbox/Public/code-cookbook/0-cookbook-general/file-save-api/file-saver-2015-02-26/file-saver.html
+
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -49,7 +94,7 @@
 		scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
-		camera.position.set( -500, 500, -500 );
+		camera.position.set( -500, 500, 500 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 1000;
@@ -76,8 +121,45 @@
 		getRandomGradient();
 
 
-			geometry = new THREE.Geometry();
-			material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		geometry = new THREE.Geometry();
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+
+	}
+
+	function saveFile() {
+
+		txt = ` 0
+SECTION
+  2
+ENTITIES
+  0
+POLYLINE
+ 66
+1
+ 999
+following means polyline is closed 70 = 1, not required
+ 70
+1
+ 0
+`;
+
+		for ( var i = 0; i < vertices.length; i++ ) {
+
+			vert = vertices[ i ];
+			txt += `VERTEX\n 10\n${ vert.x }\n 20\n${ vert.y }\n 30\n${ vert.z }\n`;
+
+		}
+
+		txt += `SEQEND\n 0\nENDSEC\n 0`;
+
+		txtArea.innerHTML = txt;
+
+		var blob = new Blob( [ txtArea.innerHTML ] );
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = 'draw-the-line.dxf';
+		a.click();
+		delete a;
 
 	}
 
@@ -207,13 +289,22 @@
 		palm.add( box );
 
 		var geometry = new THREE.BoxGeometry( 30, 20, 60 );
+		var material = new THREE.MeshPhongMaterial( { color: 0x00ff00, emissive: 0x555555, transparent: true });
+		touchOn = new THREE.Mesh( geometry, material );
+		touchOn.position.set( -40, -80, -20 );
+		touchOn.currentHex = touchOn.material.emissive.getHex();
+		touchOn.castShadow = true;
+		touchOn.receiveShadow = true;
+		palm.add( touchOn );
+
+		var geometry = new THREE.BoxGeometry( 30, 20, 60 );
 		var material = new THREE.MeshPhongMaterial( { color: 0xff0000, emissive: 0x555555, transparent: true });
-		touch = new THREE.Mesh( geometry, material );
-		touch.position.set( -40, -60, -20 );
-		touch.currentHex = touch.material.emissive.getHex();
-		touch.castShadow = true;
-		touch.receiveShadow = true;
-		palm.add( touch );
+		touchOff = new THREE.Mesh( geometry, material );
+		touchOff.position.set( 40, -70, -20 );
+		touchOff.currentHex = touchOff.material.emissive.getHex();
+		touchOff.castShadow = true;
+		touchOff.receiveShadow = true;
+		palm.add( touchOff );
 
 		scene.add( palm );
 
@@ -221,7 +312,7 @@
 
 			var hspp = hand.stabilizedPalmPosition;
 
-			msg.innerHTML = 'Hand id:' + index + ' x:' + hspp[0].toFixed(0) + ' y:' + hspp[1].toFixed(0) + ' z:' + hspp[2].toFixed(0);
+//			msg.innerHTML = 'Hand id:' + index + ' x:' + hspp[0].toFixed(0) + ' y:' + hspp[1].toFixed(0) + ' z:' + hspp[2].toFixed(0);
 
 			palm.position.set( hspp[0], hspp[1], hspp[2] );
 			palm.rotation.set( hand.pitch(), -hand.yaw(), hand.roll() );
@@ -252,9 +343,9 @@
 
 		fingerling.outputData = function( index, finger ) {
 
-			msg.innerHTML = 'Bone Method ~ ' +
-				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) +
-				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
+//			msg.innerHTML = 'Bone Method ~ ' +
+//				'finger tip: ' + index + ' x:' + finger.tipPosition[0].toFixed(0) +
+//				' y:' + finger.tipPosition[1].toFixed(0) + ' z:' + finger.tipPosition[2].toFixed(0);
 
 //console.log( finger );
 
@@ -273,23 +364,57 @@
 				if ( i === 3 && index === 0 ) {
 
 					firstBB = new THREE.Box3().setFromObject( phalange );
-					secondBB = new THREE.Box3().setFromObject( touch ); 
+					secondBB = new THREE.Box3().setFromObject( touchOn ); 
 
 					if ( firstBB.isIntersectionBox( secondBB ) === true ) {
-//console.log( touch );
-						touch.material.opacity = 1;
-						touch.material.emissive.setHex( 0x666666 );
+//console.log( touchOn );
+						touchOn.material.opacity = 1;
+						touchOn.material.emissive.setHex( 0x666666 );
 
-//							touchData.innerHTML = colorsText[ index ] + ' / ' + fingersText[ index ];
-//							touchData.style.backgroundColor = colorsText[ index ];
+						touchOff.material.opacity = 0.5;
+						touchOff.material.emissive.setHex( touchOn.currentHex );
 
 						draw = true;
+						if ( drawing === false ) { 
+							vertices = [];
+							drawing = true
+						}
+						drawVertices = vertices.slice();
 
 					} else {
 
-						touch.material.opacity = 0.5;
-						touch.material.emissive.setHex( touch.currentHex );
-//						touchData.innerHTML = 'not touching';
+//						touchOn.material.opacity = 0.5;
+//						touchOn.material.emissive.setHex( touchOn.currentHex );
+//						touchOnData.innerHTML = 'not touching';
+
+					}
+
+				}
+
+
+				if ( i === 3 && index === 4 ) {
+
+					firstBB = new THREE.Box3().setFromObject( phalange );
+					secondBB = new THREE.Box3().setFromObject( touchOff ); 
+
+					if ( firstBB.isIntersectionBox( secondBB ) === true ) {
+//console.log( touchOn );
+						touchOff.material.opacity = 1;
+						touchOff.material.emissive.setHex( 0x666666 );
+
+						touchOn.material.opacity = 0.5;
+						touchOn.material.emissive.setHex( touchOff.currentHex );
+
+						draw = false;
+						drawing = false
+
+//						vertices = [];
+
+					} else {
+
+//						touchOff.material.opacity = 0.5;
+//						touchOff.material.emissive.setHex( touchOff.currentHex );
+//						touchOnData.innerHTML = 'not touching';
 
 
 					}
@@ -300,7 +425,7 @@
 
 						drawLine( v( finger.tipPosition[0], finger.tipPosition[1], finger.tipPosition[2] ) );
 
-						draw = false;
+//						draw = false;
 
 				}
 
@@ -327,12 +452,11 @@
 
 	function drawLine( vertex ) {
 
-		if ( vertex.distanceTo( previousVertex ) > 10 ) {
+		if ( vertex.distanceTo( previousVertex ) > 5 ) {
 
 			vertices.push( vertex );
 			previousVertex = vertex;
 			var geometry = new THREE.Geometry();
-
 
 			geometry.vertices = vertices;
 //			material = new THREE.LineBasicMaterial( { color: 0x000000 } );

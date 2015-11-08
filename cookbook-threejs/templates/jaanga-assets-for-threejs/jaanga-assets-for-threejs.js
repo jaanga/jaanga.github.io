@@ -1,3 +1,5 @@
+// <script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+
 
 	var axisHelper;
 	var groundBox;
