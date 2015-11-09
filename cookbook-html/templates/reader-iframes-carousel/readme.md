@@ -1,11 +1,12 @@
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read ee file as a web page]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/  "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
+
 [Jaanga]( http://jaanga.github.io/ ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) &raquo;  [Templates]( http://jaanga.github.io/cookbook-html/templates/ ) &raquo;  
 [Read Me with Iframe Carousel]( index.html )
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/  "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='http://jaanga.github.io/cookbook-html/templates/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-<iframe id=ifr src="iframe-carousel-r2.html" width=100% height=600px ></iframe>  
+<iframe id=ifr src="iframe-carousel-r3.html" width=100% height=600px ></iframe>  
 
 _Sample Jaanga Apps_
 

@@ -3,10 +3,6 @@
 
 [Jaanga]( http://jaanga.github.io ) »
  
-<!--
-[Gestification R2]( http://jaanga.github.io/gestification-r2/  ) » 
--->
-
 [Gestification R2 Read Me]( index.html )
 ===
 
@@ -53,25 +49,45 @@ On the other hand:
 <!--  a descriptive picture of a desired future state -->
 
 ## The Scripts
+_In alphbetical order_
+
 <!--
+
+### 
 [xxx Read Me - Web Page]( http://jaanga.github.io/gestification-r2/xxx/ )  
 [xxx Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/xxx/ )
+
 -->
+
+### Draw the Line
 
 [Draw the Line Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/ )  
 [Draw the Line Leap Three.js  Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/draw-the-line-leap-threejs/ )
 
+* Draw in 3D using your fingers and export the data into a DXF file
+
+
+### Flick to Select
 
 [Flick to Select Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ )  
 [Flick to Select Leap Three.js  Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/flick-to-select-leap-threejs/ )
 
+* Change or select options fairly continuously without constantly having to look at where your hand is
+
+### Object to Object Raycasting
+
 [Object to Object Raycasting Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/object-to-object-raycasting-leap-threejs/ )  
 [Object to Object Raycasting Leap Three.js Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/object-to-object-raycasting-leap-threejs/ )
 
+* Given asymmetrical 3D assets, randomly embedded within a group of objects, is it possible to determine if two or more test objects are both simultaneously in close proximity 
 
-[Three.js Leap Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/ )  
-[Three.js Leap Template Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/threejs-leap-enabled-template/ )
+
+### Leap Three.js Template
+
+[Leap Three.js Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/leap-threejs-template/ )  
+[Leap Three.js Template Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/leap-threejs-template/ )
   
+* Create Leap demos that are good, quick and easy
 
 ## Notes / Issues
 
