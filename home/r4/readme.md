@@ -50,6 +50,9 @@ _Years indicate latest date when significant effort was made_
 * [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) 2015
 	* In the mi[d]st of a complete reconstruction. 
 
+* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification R2]( http://jaanga.github.io/gestification-r2/ ) 2015 - [Gestification]( http://jaanga.github.io/gestification/ ) 2013
+	* Work that involves Three.js and the [Leap Motion]( http://leapmotion.com ) device.
+
 * [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs )
 
 * [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) 2015
@@ -67,8 +70,6 @@ _Years indicate latest date when significant effort was made_
 * <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
 -->
 
-* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification R2]( http://jaanga.github.io/gestification-r2/ ) 2015 - [Gestification]( http://jaanga.github.io/gestification/ ) 2013
-	* Work that involves Three.js and the Leap Motion device.
 
 * [![Urdacha]( http://jaanga.github.io/home/images/3-Urdacha.png )<br>Urdacha]( http://jaanga.github.io/urdacha ) 2011
 	* Entry for the Swiss Center _Urban Data Challenge_ in 2013.

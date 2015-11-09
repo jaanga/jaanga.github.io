@@ -69,8 +69,8 @@ On the other hand:
 [Object to Object Raycasting Leap Three.js Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/object-to-object-raycasting-leap-threejs/ )
 
 
-[Three.js Leap-enabled Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/ )  
-[Three.js Leap-enabled Template Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/threejs-leap-enabled-template/ )
+[Three.js Leap Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/ )  
+[Three.js Leap Template Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/threejs-leap-enabled-template/ )
   
 
 ## Notes / Issues
