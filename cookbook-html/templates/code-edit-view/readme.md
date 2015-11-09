@@ -9,7 +9,7 @@
 ## <center>Web Page / Source Code</center>
 
 <iframe class=ifr src=./dev/index.html width=100% height=500px >View thid reas me file as a web page to see the content of this iframe</iframe>
-######_Code Edit View - Dev version_ Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html )
+######_Code Edit View - Dev version_ [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html )
 
 
 ## Concept
