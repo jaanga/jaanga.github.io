@@ -60,7 +60,7 @@
 		but = document.getElementById( index );
 		but.style.backgroundColor = 'lightgreen';
 
-		ifr.onload = function(){ ifr.contentWindow.controls.autoRotate = true; }
+		ifr.onload = function(){ ifr.contentWindow.view.contentWindow.controls.autoRotate = true; }
 
 		ifr.src = sites[ index ][ 1 ];
 
