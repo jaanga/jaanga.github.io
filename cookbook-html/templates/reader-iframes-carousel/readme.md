@@ -1,5 +1,5 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read ee file as a web page]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/  "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes-carousel'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( http://jaanga.github.io/ ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) &raquo;  [Templates]( http://jaanga.github.io/cookbook-html/templates/ ) &raquo;  
 [Read Me with Iframe Carousel]( index.html )
