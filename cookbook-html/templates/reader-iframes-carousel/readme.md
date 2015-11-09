@@ -6,9 +6,9 @@
 ===
 
 
-## <center>Web Page / Source Code</center>
+## <center> Web Page / Source Code </center>
 
-<iframe class=ifr src="iframe-carousel-r3.html" width=100% height=600px ></iframe>  
+<iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
 
 ######_Sample Jaanga Scripts - [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
 
