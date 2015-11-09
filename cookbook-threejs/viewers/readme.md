@@ -1,7 +1,7 @@
-<span style=display:none; >[View as web page]( http://jaanga.github.io/libs "View file as a web page." ) </span>
-<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/libs/tree/gh-pages'; />
+<span style=display:none; >[View as web page]( http://jaanga.github.io/cookbook-threejs/viewers/ "View file as a web page." ) </span>
+<input type=button value='View file as source code on GitHub' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/viewers'; />
 
-[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  
+[Jaanga]( http://jaanga.github.io// ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) &raquo;  
 Viewers Read Me
 ===
 
@@ -9,7 +9,7 @@ Viewers Read Me
 
 [Viewer OBJ]( https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/viewers/viewer-obj )
 
-[View STL Files]( http://exploratoria.github.io/cookbook/viewers/view-stl-files/index.html )
+[View STL Files]( http://jaanga.github.io/cookbook-threejs/viewers/view-stl-files/index.html )
 
 [Viewer STL]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/ )
 
