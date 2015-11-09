@@ -7,6 +7,10 @@ Viewers Read Me
 
 ## Projects
 
+[Viewer OBJ]( https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/viewers/viewer-obj )
+
+[View STL Files]( http://exploratoria.github.io/cookbook/viewers/view-stl-files/index.html )
+
 [Viewer STL]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/ )
 
 Loads STL files by

@@ -1,5 +1,5 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://exploratoria.github.io/cookbook/viewers/view-stl-files/index.html "View file as a web page." ) </span>
-<input type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' onclick=window.location.href='https://github.com/exploratoria/exploratoria.github.io/tree/master/cookbook/viewers/view-stl-files/'; />
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-threejs/viewers//view-stl-files/index.html "View file as a web page." ) </span>
+<input type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/viewers/view-stl-files'; />
 
 [Jaanage]( http://jaanga.github.io ) » [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) »
 [Viewers]( http://jaanga.github.io/cookbook-threejs/viewers/ ) »
