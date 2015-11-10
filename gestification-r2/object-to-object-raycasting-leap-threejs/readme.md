@@ -20,7 +20,7 @@ but the over-arching guideline is to be able to recognize and display pinching a
 
 ## Demos
 
-[Object to Object Raycasting R6]( http://abantech.github.io/interaction-studies/threejs-object-to-object-raycasting/r6/threejs-object-to-object-raycasting.html )
+[Object to Object Raycasting R6]( http://jaanga.github.io/gestification-r2/object-to-object-raycasting-leap-threejs/r6/threejs-object-to-object-raycasting.html )
 
 * Adds Leap-enabled
 	* Which causes issues with the sliders
