@@ -9,7 +9,7 @@
 _Free, open source scripts that enable the wonderful [Leap Motion]( http://leapmotion.com ) device to do delightful things, 
 all built using the awesome [Three.js]( http://threejs.org ) JavaScript library and all hosted on glorious [GitHub]( http://githb.com )_
 
-_All the scripts here require a Lea Motion device in order to operate properly._
+_All the scripts here require a Leap Motion device in order to operate properly._
 
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
@@ -33,7 +33,7 @@ _All the scripts here require a Lea Motion device in order to operate properly._
 ### Issues / Problems
 <!--
 
-The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Patttern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
+The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
 
 Each pattern describes a problem which occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over, without ever doing it the same way twice.
 
@@ -61,7 +61,7 @@ On the other hand:
 <!--  a descriptive picture of a desired future state -->
 
 ## The Scripts
-_In alphbetical order_
+_In alphabetical order_
 
 <!--
 
@@ -92,6 +92,7 @@ _In alphbetical order_
 [jestHands Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/jest-hands-leap-threejs/ )
 
 * Create, record and replay character animations of hands
+* Four beautiful scripts and a lot of effort here
 
 
 ### Object to Object Raycasting
@@ -99,7 +100,8 @@ _In alphbetical order_
 [Object to Object Raycasting Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/object-to-object-raycasting-leap-threejs/ )  
 [Object to Object Raycasting Leap Three.js Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/object-to-object-raycasting-leap-threejs/ )
 
-* Given asymmetrical 3D assets, randomly embedded within a group of objects, is it possible to determine if two or more test objects are both simultaneously in close proximity 
+* Given asymmetrical 3D assets, randomly embedded within a group of objects, 
+is it possible to determine if two or more test objects are both simultaneously in close proximity 
 
 
 ### Template Leap Three.js

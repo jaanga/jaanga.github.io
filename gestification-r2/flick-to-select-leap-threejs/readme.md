@@ -79,6 +79,7 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 ## Issues
 
+* Error if mouse over 'Touch height' before hand is visible
 * Hand must be held relatively flat to work well
 	* Tilting hand causes options to be selected by accident
 	* Much better if color boxes rotated as one and not individually << fixed in R2
