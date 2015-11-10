@@ -39,6 +39,15 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## The Scripts
 
+### jestLive Skins BVH
+
+[jestLive Skins BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/jest-live-skins-bvh/dev/ )
+
+[jestLive Skins BVH - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/jest-hands-leap-threejs/jest-live-skins-bvh )
+
+* Capture Leap motion data in real time and use to create hand visualizations in real-time
+* Translates Leap data into BVH 'bones' which are then used to update Three.js geometry in the role or position of 'bones'
+which are then linked to a 3D mesh or 'skin' that reprsents a hand
 
 
 ### jestLive Bones BVH
