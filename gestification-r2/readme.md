@@ -6,6 +6,9 @@
 [Gestification R2 Read Me]( index.html )
 ===
 
+_Free, open source scripts that enable the wonderful [Leap Motion]( http://leapmotion.com ) device to do delightful things, 
+all built using the awesome [Three.js]( http://threejs.org ) JavaScript library and all hosted on glorious [GitHub]( http://githb.com )_
+
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
@@ -20,7 +23,7 @@
 
 <iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
 
-######_Sample Gestification R2 Scripts - - Code Edit View_ / [View full screen]( http://jaanga.github.io/gestification-r2/iframe-carousel-r4.html )_
+######_Sample Gestification R2 Scripts - Code Edit View_ / [View full screen]( http://jaanga.github.io/gestification-r2/iframe-carousel-r4.html )
 
 
 ## Concept
