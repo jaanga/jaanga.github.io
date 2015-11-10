@@ -1,5 +1,5 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r2/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) »
  
@@ -14,6 +14,13 @@
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html width=100% height=600px ></iframe>  
 ###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 -->
+
+
+## <center> Web Page / Source Code </center>
+
+<iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
+
+######_Sample Gestification R2 Scripts - - Code Edit View_ / [View full screen]( http://jaanga.github.io/gestification-r2/iframe-carousel-r4.html )_
 
 
 ## Concept
