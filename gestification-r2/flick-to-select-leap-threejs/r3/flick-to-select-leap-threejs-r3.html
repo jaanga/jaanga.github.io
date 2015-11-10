@@ -47,7 +47,7 @@
 			<a id=aa href=http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ >&#x24D8;</a></h1>
 
 			<p>To select a color, hold one hand flat over the Leap device and touch the colors using closest fingers</p>
-			<p>Touch height <input type=range min=-30 max=30 value=0 onmousemove=updateBoxes(this.valueAsNumber); ></p>
+			<p>Touch height <input type=range min=-30 max=30 value=0 onmousemove=updateTouches(this.valueAsNumber); ></p>
 			<div id=handData ></div>
 			<div id=fingerData ></div>
 			<div id=touchData style=padding:10px;  ></div>
@@ -123,6 +123,16 @@
 		};
 
 	};
+
+	function updateTouches( y ) {
+
+			for ( var i = 0; i < 5; i++ ) {
+
+				touches[ i ].position.set( positions[ i ].x, positions[ i ].y - y, positions[ i ].z );
+
+			}
+
+	}
 
 // Bone Method
 	var Fingerling = function() {
