@@ -6,7 +6,7 @@
 [Flick to Select Leap Three.js Read Me]( index.html )
 ===
 
-[Flick to Select Leap Three.js - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/dev/ )
+[Flick to Select Leap Three.js - Demo - Dev Revision - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/dev/ )
 
 ## Web Page / Source Code
 
@@ -47,22 +47,44 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 * Capture the notion of two or more fingers selecting colors at the same time
 * Capture the notion of the hand moving forward and backward and thus exposing different choices
+* Adds sounds when option is changed
+
+## The Scripts
+
+[Flick to Select Leap Three.js R3 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r2/flick-to-select-leap-threejs-r3.html )
+
+* Move non-essential assets to assets.js
+* Long strings to ES 6 style
+* Code clean-up
+
+[Flick to Select Leap Three.js R2 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r2/flick-to-select-leap-threejs-r2.html )
+
+* Options move as one entity
+* Slider to adjust distance between options and palm
+* Improved finger tacking
+   
+[Flick to Select Leap Three.js R1 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r1/flick-to-select-leap-threejs-r1.html )
+
+
+
 
 ## Features
 
-* Selection options are close to the fingers regardles of the position of the hand
-* Each finger has only a single option thus mistakes no made easily
+* Selection options are close to the fingers regardless of the position of the hand
+* Each finger has only a single option thus mistakes not made easily
  
 
 ## Issues
 
 * Hand must be held relatively flat to work well
 	* Tilting hand causes options to be selected by accident
-	* Much better if color boxes rotated as one and not individually
+	* Much better if color boxes rotated as one and not individually << R2
 * Needs algorithmic ways of positioning selection options based on actual length of your fingers 
 
 ## Sources
 
+[3D Jam: Virtual Guitar]( https://community.leapmotion.com/t/3d-jam-virtual-guitar/3193 )
+[VR Guitar]( http://zachkinstner.itch.io/vr-guitar )
 
 ## Contact
 
