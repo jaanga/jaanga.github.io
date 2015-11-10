@@ -51,16 +51,30 @@
 			button.id = i;
 			button.onclick = function(){ 
 
-				ifr.src = sites[ this.id ][ 1 ]; 
+				var but = document.getElementById( index );
+				but.style.backgroundColor = 'white';
+
+				index = this.id;
+				ifr.src = sites[ index ][ 1 ]; 
 				clearInterval( timer );
+
+				but = document.getElementById( index );
+				but.style.backgroundColor = 'lightgreen';
 			};
 
 		}
 
-		but = document.getElementById( index );
-		but.style.backgroundColor = 'lightgreen';
 
-		ifr.onload = function(){ ifr.contentWindow.view.contentWindow.controls.autoRotate = true; }
+		ifr.onload = function() {
+
+			ifr.contentWindow.view.onload = function(){ 
+
+				view.contentWindow.controls.autoRotate = true; 
+console.log( 'nnn',index );
+
+			}
+
+		}
 
 		ifr.src = sites[ index ][ 1 ];
 
@@ -76,6 +90,7 @@
 		but.style.backgroundColor = 'white';
 
 		index = ++index >= sites.length ? 0 : index;
+
 		ifr.src = sites[ index ][ 1 ];
 
 		but = document.getElementById( index );
