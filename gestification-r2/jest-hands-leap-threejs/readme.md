@@ -81,6 +81,17 @@ which are then linked to a 3D mesh or 'skin' that reprsents a hand
 
 ## Things to Do / Road Map
 
+_To be added: the record and replay Leap JSON files scripts_
+
+The majority of this effort was completed in 2013 and - sadly ~ much was left unfinished.
+The good news is that most everything still works even though much in Three.js and in JavaScript has changed.
+
+Things that need work include:
+
+* Improving the accuracy of the positions of the fingers
+* Adding more Bones demos
+* Adding more skinned hands demos
+
 
 ## Features
 
