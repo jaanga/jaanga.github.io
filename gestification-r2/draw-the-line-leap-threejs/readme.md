@@ -46,6 +46,12 @@ Are there no new ways of drawing?
 ## Things to Do / Road Map
 
 * Begin to consider methods of turning the data into 2D
+* Add ways of controlling the drawing
+	* Drawing on a grid
+	* Drawing straight lines only
+* Using the non-drawing hand
+	* To update the screen view
+	* To adjust drawing parameters such as line width and color
 
 ## Features
 
