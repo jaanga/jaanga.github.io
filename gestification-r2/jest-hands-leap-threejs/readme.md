@@ -39,11 +39,13 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## The Scripts
 
+
+
 ### jestLive Bones BVH
 
-[jestLive Bones BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/jest-live-bones/dev/ )
+[jestLive Bones BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/jest-live-bones-bvh/dev/ )
 
-[jestLive Bones BVH - Source Code]( http://jaanga.github.io/gestification-r2/jest-hands/jest-live-bones/dev/ )
+[jestLive Bones BVH - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/jest-hands-leap-threejs/jest-live-bones-bvh )
 
 * Capture Leap motion data in real time and use to create hand visualizations in real-time
 * Translates Leap data into BVH 'bones' which are then used to update Three.js geometry in the role or position of 'bones'
