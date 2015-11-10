@@ -60,6 +60,25 @@ which are then linked to a 3D mesh or 'skin' that reprsents a hand
 * Translates Leap data into BVH 'bones' which are then used to update Three.js geometry in the role or position of 'bones'
 
 
+### jestRecord BVH
+
+[jestRecord BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/jest-record-bvh/dev/ )
+
+[jestRecord BVH - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/jest-hands-leap-threejs/jest-record-bvh )
+
+* Capture Leap motion data in real time and use to create hand visualizations in real-time
+* Translates Leap data into 'bones' which are then translated to BVH data and can be saved to a file in BVH format
+
+
+### jestReplay BVH
+
+[jestReplay BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/jest-replay-bvh/dev/ )
+
+[jestReplay BVH - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/jest-hands-leap-threejs/jest-replay-bvh )
+
+* Read a BVH format data file, create a set of 3D 'bones', replay the data through the bones
+
+
 ## Things to Do / Road Map
 
 
