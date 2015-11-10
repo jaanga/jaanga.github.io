@@ -47,7 +47,8 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 * Capture the notion of two or more fingers selecting colors at the same time
 * Capture the notion of the hand moving forward and backward and thus exposing different choices
-* Adds sounds when option is changed
+* Adds sounds when an option is changed
+* Prevent background colors from being too dark 
 
 ## The Scripts
 
@@ -65,26 +66,32 @@ When virtual hands, you may want to change or selections options fairly continuo
    
 [Flick to Select Leap Three.js R1 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r1/flick-to-select-leap-threejs-r1.html )
 
-
-
+* First commit
 
 ## Features
 
 * Selection options are close to the fingers regardless of the position of the hand
 * Each finger has only a single option thus mistakes not made easily
+* Slider to adjust distance between options and palm
+* Colors update with each reload
+* Position data displayed in real-time
  
 
 ## Issues
 
 * Hand must be held relatively flat to work well
 	* Tilting hand causes options to be selected by accident
-	* Much better if color boxes rotated as one and not individually << R2
+	* Much better if color boxes rotated as one and not individually << fixed in R2
 * Needs algorithmic ways of positioning selection options based on actual length of your fingers 
+* Finger tips have gimbal lock issues
 
 ## Sources
+This effort arrises from questions on a Leap forum
 
-[3D Jam: Virtual Guitar]( https://community.leapmotion.com/t/3d-jam-virtual-guitar/3193 )
-[VR Guitar]( http://zachkinstner.itch.io/vr-guitar )
+* [3D Jam: Virtual Guitar]( https://community.leapmotion.com/t/3d-jam-virtual-guitar/3193 )
+
+* [VR Guitar]( http://zachkinstner.itch.io/vr-guitar )
+
 
 ## Contact
 
@@ -97,6 +104,6 @@ When virtual hands, you may want to change or selections options fairly continuo
 ***
 
 <center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >?</a>
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
 
