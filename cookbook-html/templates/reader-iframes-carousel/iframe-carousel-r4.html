@@ -65,11 +65,14 @@
 		}
 
 		ifr.onload = function() {
-console.log( 'first',index );
-			ifr.contentWindow.view.onload = function(){ 
-console.log( 'second',index );
-				ifr.contentWindow.view.contentWindow.controls.autoRotate = true; 
 
+			ifr.contentWindow.view.onload = function(){ 
+
+				if ( ifr.contentWindow.view.contentWindow.controls !== undefined ) {
+
+					ifr.contentWindow.view.contentWindow.controls.autoRotate = true; 
+
+				}
 
 			}
 
