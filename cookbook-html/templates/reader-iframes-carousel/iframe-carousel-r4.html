@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset=utf-8 >
-<title>Iframe Carousel R4</title>
+<title>Iframe Carousel R4 vv</title>
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
 <body>
@@ -64,13 +64,12 @@
 
 		}
 
-
 		ifr.onload = function() {
-
+console.log( 'first',index );
 			ifr.contentWindow.view.onload = function(){ 
+console.log( 'second',index );
+				ifr.contentWindow.view.contentWindow.controls.autoRotate = true; 
 
-				view.contentWindow.controls.autoRotate = true; 
-console.log( 'nnn',index );
 
 			}
 
