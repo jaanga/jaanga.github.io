@@ -84,6 +84,14 @@ _In alphbetical order_
 
 * Change or select options fairly continuously without constantly having to look at where your hand is
 
+### jestHands
+
+[jestHands Read Me - Web Page]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/ )  
+[jestHands Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/jest-hands-leap-threejs/ )
+
+* Create, record and replay character animations of hands
+
+
 ### Object to Object Raycasting
 
 [Object to Object Raycasting Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/object-to-object-raycasting-leap-threejs/ )  
@@ -92,10 +100,10 @@ _In alphbetical order_
 * Given asymmetrical 3D assets, randomly embedded within a group of objects, is it possible to determine if two or more test objects are both simultaneously in close proximity 
 
 
-### Leap Three.js Template
+### Template Leap Three.js
 
-[Leap Three.js Template Read Me - Web Page]( http://jaanga.github.io/gestification-r2/leap-threejs-template/ )  
-[Leap Three.js Template Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/leap-threejs-template/ )
+[Template Leap Three.js Read Me - Web Page]( http://jaanga.github.io/gestification-r2/template-leap-threejs/ )  
+[Template Leap Three.js Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/template-leap-threejs/ )
   
 * Create Leap demos that are good, quick and easy
 

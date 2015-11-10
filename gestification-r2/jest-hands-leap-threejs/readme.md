@@ -41,7 +41,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### jestLive Bones BVH
 
-[jestLive Bones BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands/jest-live-bones/dev/ )
+[jestLive Bones BVH - Dev - Demo]( http://jaanga.github.io/gestification-r2/jest-hands-leap-threejs/jest-live-bones/dev/ )
 
 [jestLive Bones BVH - Source Code]( http://jaanga.github.io/gestification-r2/jest-hands/jest-live-bones/dev/ )
 
