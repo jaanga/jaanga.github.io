@@ -41,6 +41,10 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Features
 
+* 1 finger / left button =  rotate
+* 2 finger / wheel = zoom in and out
+* 3 finger / right button = pan
+
 
 ## Issues
 

@@ -55,28 +55,28 @@
 				DXF data:<br>
 				<textarea id=txtArea name="txt1" cols="30" rows="50" >
 
-0
-SECTION
-  2
-ENTITIES
-999
-This is just a sample line
-  0
-LINE
-  8
-0
- 10
-1.0
-20
-2.0
-11
-3.0
-21
-4.0
-  0
-ENDSEC
-  0
-EOF
+Move your hand 
+over the Leap device
+
+To start drawing:
+
+  Touch the green box 
+  with your thumb
+
+To finish drawing:
+
+  Touch the red box 
+  with your little finger
+
+&bull; 1 finger / left button 
+  = rotate
+
+&bull; 2 fingers / wheel 
+  = zoom in and out
+
+&bull; 3 fingers / right button 
+  = move or pan
+
 				</textarea>
 			</div>
 			<div id=handData ></div>
@@ -157,6 +157,7 @@ following means polyline is closed 70 = 1, not required
 
 		var handy = this;
 		var msg = handData.appendChild( document.createElement( 'div' ) );
+
 /*
 		palm = new THREE.Object3D();
 
@@ -272,9 +273,6 @@ following means polyline is closed 70 = 1, not required
 				phalanges[ 3 ].material.opacity = 1;
 
 			}
-
-
-
 
 			for ( var i = 0; i < 4; i++) {
 

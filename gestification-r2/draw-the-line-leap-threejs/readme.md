@@ -6,15 +6,15 @@
 [Draw the Line Leap Three.js Read Me]( index.html )
 ===
 
+[Draw the Line Leap Three.js - Demo - Dev Revision - Full Screen]( http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/dev/ )
 
 [Draw the Line Leap Three.js - Demo - Build Revision - Full Screen]( http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/build/ )
 
-[Draw the Line Leap Three.js - Demo - Dev Revision - Full Screen]( http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/dev/ )
 
 ## Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/r1/draw-the-line-leap-threejs-r1.html width=100% height=600px ></iframe>  
-###### _Draw the Line Leap Three.js - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/r1/draw-the-line-leap-threejs-r1.html  )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/r2/draw-the-line-leap-threejs-r2.html width=100% height=600px ></iframe>  
+###### _Draw the Line Leap Three.js - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/draw-the-line-leap-threejs/r2/draw-the-line-leap-threejs-r2.html  )
 
 
 ## Concept
@@ -22,7 +22,7 @@
 ### Issues / Problems
 <!--
 
-The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Patttern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
+The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
 
 Each pattern describes a problem which occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over, without ever doing it the same way twice.
 
@@ -30,7 +30,8 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-
+People have been drawing for thousands of year, but always by having to hold tools in their hands - and by having to press against a flat surface.
+Are there no new ways of drawing?
 
 
 ### Mission
@@ -44,14 +45,28 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Things to Do / Road Map
 
+* Begin to consider methods of turning the data into 2D
 
 ## Features
+
+* Draws a line in 3D using the motion of your index finger
+* Start and finish drawing using your hand
+* Capture the Leap data, export and save to a DXF file
+* Update the screen in 3D
+	* 1 finger / left button =  rotate
+	* 2 finger / wheel = zoom in and out
+	* 3 finger / right button = pan
 
 
 ## Issues
 
+* Code is very r1. Needs a clean up
  
-## Sources
+## Sources / Links
+
+The source for this effort:
+
+[Looking for developer Urgently]( https://community.leapmotion.com/t/looking-for-a-developer-urgently/4249/4 )
 
 
 ## Contact
