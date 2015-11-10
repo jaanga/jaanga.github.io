@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>jestRecord BVH ~ record Leap data</title>
+<meta charset=utf-8>
+</head>
+<body>
+<script src = http://js.leapmotion.com/0.2.1/leap.min.js ></script>
+<script src = http://mrdoob.github.com/three.js/build/three.min.js ></script>
+<script src = http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js> </script>
+<script src = http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js ></script>
+<script src = ../../FileSaver.min.js >   // see https://github.com/eligrey/FileSaver.js/   </script>
+<script src = bvh-header.js ></script>
+<script>
+// copyright (c) 2013 jaanga authors ~ mit license
+
+	var renderer, scene, camera, controls, stats;
+	var clock = new THREE.Clock();
+	clock.previousTime = 1000000;
+	
+	var info, numbers, textareaStatus, textarea, tmpText = '';
+	var count = 0, frames = 0, tim;
+	var pausedFrame = null;
+	var latestFrame = null;	
+	
+	var pointableTips = [], pointableTargets = [], pointableKnuckles = [];
+	var data, hand3D, fingerTips = [],  fingerBases = [];
+	var pi = Math.PI, pi2 = 2 * Math.PI, pi05 = 0.5 * Math.PI;
+	var d2r = pi / 180, r2d = 180 / pi;
+
+	init();
+	animate();
+
+	function init() {
+		var css, light, geometry, material, mesh;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 600 12pt monospace; overflow: hidden; }' +
+			'h1 a {text-decoration: none;}' +
+			'input, button { font: 600 12pt monospace; }';
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = info.txt =  '<h1 style="display: inline;">jestRecord BVH ~ ' +
+			'<a href=# onclick=toggleInfo() ><large>&#x24D8;</large></a> </h1>' +
+			'Show one hand and fingers to trigger recording. ' +
+			'Press spacebar to pause updates.<br>' +
+			'<button onclick=frames=0;textarea.value=""; >Clear Data</button> - ' +
+			'<button onclick=saveFile() >Save Data to File</button>' +
+			'<scan id=numbers></scan>' +
+		'' ;
+
+		numbers = document.getElementById('numbers');
+		
+		textareaStatus = document.body.appendChild( document.createElement( 'textarea' ) );
+		textareaStatus.style.cssText = 'display: block; font-size:small; width: ' +  0.98 * window.innerWidth + 'px; ';
+		textareaStatus.rows =  2;
+		textareaStatus.value = '';
+
+		textarea = document.body.appendChild( document.createElement( 'textarea' ) );
+		textarea.style.cssText = 'height: ' + (window.innerHeight - 120) + 'px; width: ' +  0.49 * window.innerWidth + 'px; ';
+		textarea.placeholder = 'Data will appear here when you move a hand over the Leap /motion device...';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0px; zIndex: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		scene = new THREE.Scene();
+		renderer = new THREE.WebGLRenderer( { antialias: true }  );
+		renderer.setSize( 0.49 * window.innerWidth, window.innerHeight - 120 );
+		renderer.domElement.style.cssText = 'outline: 1px solid #000;';
+		renderer.shadowMapEnabled = true;
+		document.body.appendChild( renderer.domElement );
+		
+		camera = new THREE.PerspectiveCamera( 40, (0.45 * window.innerWidth) / (window.innerHeight - 150) , 1, 5000 );
+		camera.position.set( 0, 250, 600 );
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+		controls.target.set( 0, 100, 0 );
+		
+//  Lights
+		var light = new THREE.AmbientLight( 0x333333);
+		scene.add( light );
+
+		light = new THREE.DirectionalLight( 0xffffff, 1 );
+		light.position.set( 0, 500, 0 );
+		scene.add( light );
+		light.castShadow = true;
+		light.shadowMapWidth = 2048;
+		light.shadowMaHeight = 2048;
+		var d = 200;
+		light.shadowCameraLeft = -d;
+		light.shadowCameraRight = d;
+		light.shadowCameraTop = d * 2;
+		light.shadowCameraBottom = -d * 2;
+
+		light.shadowCameraNear = 100;
+		light.shadowCameraFar = 600;
+//		light.shadowCameraVisible = true;
+
+// Axes
+        scene.add( new THREE.ArrowHelper( v(1, 0, 0), v(0, 0, 0), 20, 0xcc0000) );
+        scene.add( new THREE.ArrowHelper( v(0, 1, 0), v(0, 0, 0), 20, 0x00cc00) );
+        scene.add( new THREE.ArrowHelper( v(0, 0, 1), v(0, 0, 0), 20, 0x0000cc) );
+		
+// Assets
+		material = new THREE.MeshBasicMaterial( { color: 0x999999 });
+		geometry = new THREE.CubeGeometry( 600, 10, 300 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -30, 0 );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		scene.add( mesh );
+		
+		geometry = new THREE.CubeGeometry( 8, 8, 8 );
+		material = new THREE.MeshBasicMaterial( { color: 0xcc0000 });
+		leapHand3D = new THREE.Mesh( geometry, material );
+		scene.add( leapHand3D );
+
+		vector = v( 1, 1, 1 );
+		leapHand3DDirection = new THREE.ArrowHelper( vector.clone().normalize(), v( 0, 0, 0), 50, 0x0000cc );
+		//scene.add( leapHand3DDirection );
+
+		leapHand3DNormal = new THREE.ArrowHelper( vector.clone().normalize(), v( 0, 0, 0), 50, 0x00cc00 );
+		scene.add( leapHand3DNormal );
+		hand3D =  new THREE.Object3D();
+		scene.add( hand3D );
+
+		var shape = new THREE.Shape( [ v2(-37, 25), v2(-15, 25), v2(-15, 15), v2( 13, 15), v2(13, 20), v2( 35, 20),  v2( 35, 38), v2( 53, 38), v2( 53, 100), v2( -33, 100) ] );
+		geometry = shape.extrude( { amount: 10, bevelEnabled: false} );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -pi05 ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -10, 0 ) );
+		material = new THREE.MeshBasicMaterial( { color: 0xcccccc, opacity: 0.5, side: THREE.DoubleSide, transparent: true } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		hand3D.add( mesh );
+		
+		var tranX = [ -30, -30, 0, 30, 50 ];
+		// var tranX = [ -45, -20, 10, 50, 90 ];
+		// var tranZ = [ -50, 1, 15, 11, -20];		
+		var tranZ = [ -40,  1, 15, 11, -20];	
+		var lenZ = [ 30, 30, 38, 35, 20 ];
+		material = new THREE.MeshNormalMaterial();
+		
+		for (var i = 0; i < 5; i++) {
+		
+			geometry = new THREE.CubeGeometry( 8, 8, 8 );
+			//geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -40 ) );
+			material = new THREE.MeshNormalMaterial( );
+			mesh = new THREE.Mesh( geometry, material );
+			pointableTips.push( mesh);
+			scene.add( mesh );
+			
+			geometry = new THREE.CubeGeometry( 3, 3, 3 );
+			mesh = new THREE.Mesh( geometry, material );
+			pointableTargets.push( mesh);
+			scene.add( mesh );	
+			
+			geometry = new THREE.CubeGeometry( 3, 10, 3 );
+			mesh = new THREE.Mesh( geometry, material );
+			pointableKnuckles.push( mesh);
+			scene.add( mesh );			
+
+			geometry = new THREE.CubeGeometry( 16, 12, lenZ[i] );
+			//geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -5, 0 ) );
+			material = new THREE.MeshBasicMaterial( { color: 0xcccccc, opacity: 0.7, side: THREE.DoubleSide, transparent: true } );
+			
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.x = tranX[ i ];
+			mesh.position.z = tranZ[ i ];
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+			fingerBases.push( mesh );
+			hand3D.add( mesh );			
+			
+			geometry = new THREE.CubeGeometry( 16, 12, lenZ[i] );
+			// geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -20 ) );
+			
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+			fingerTips.push( mesh );
+			hand3D.add( mesh );
+		}
+	}
+
+	function toggleInfo() {
+		info.innerHTML = info.txt +
+			'<div onclick=info.innerHTML=info.txt ' +
+			'style=background-color:#ccc;left:0;opacity:0.85;margin:auto;padding:15px;position:absolute;right:0;text-align:left;width:50%; >' +
+			'jestRecord BVH enables you to record Leap device data to a BVH file.<br><br>' +
+			'At any time, you can use your pointing device to pan, zoom and rotate the Leap display in the right panel.<br><br>' +
+			'Once data appears in the left panel, you may clear the data or save the data to a file. <br><br>' +
+			'This app is best used in conjunction with <a href="./jest-replay-bvh.html" target="_blank">jestReplay BVH</a><br><br>' +
+			'<a href="https://github.com/jaanga/gestification/tree/gh-pages/cookbook/jest-play" target="_blank">Source code.</a><br>' +
+			'<small>credits: <a href="http://threejs.org" target="_blank">three.js</a> - ' +
+			'<a href="http://leapmotion.com" target="_blank">leap motion</a> - ' +
+			'<a href="http://khronos.org/webgl/" target="_blank">webgl</a> - ' +
+			'<a href="http://jaanga.github.io" target="_blank">jaanga</a><br>' +
+			'copyright &copy; 2013 jaanga authors ~ mit license</small<br>' +
+			'<br><br><i>Click anywhere in this message to hide...</i>' +
+		'</div>';
+	}
+
+	window.onkeypress = function(e) {
+// you pressed the spacebar
+		if (e.charCode == 32) {
+			if (pausedFrame == null) {
+				pausedFrame = latestFrame; 
+			} else {
+				pausedFrame = null;
+			}
+		}
+// you pressed the letter x
+		if ( e.charCode == 120 ) {
+			frames = 0;
+			textarea.value = '';
+		}
+	};
+
+	function saveFile() {
+		var txt = bvhHeader;
+		txt += 'Frames: ' + frames + '\n';
+		txt += 'Frame Time: ' + tim + '\n';
+		txt += '0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \n'
+		txt += textarea.value.substr( 0, textarea.value.length - 2 );
+		var blob = new Blob( [ txt ] , {type: "text/plain;charset=utf-8"} );
+		saveAs(blob, 'leapmotion.bvh');
+	}
+
+	Leap.loop( function( frame ) {
+		var status, txt;
+		var handLeap, direction, len, finger, pointable;		
+		latestFrame = frame;
+		if ( !pausedFrame ) {
+			status = 'No motion detected - bytes recorded: ';	
+		} else {	
+			status = '### Paused ### - bytes recorded:  ';
+		}
+		if ( count++  % 3 > 0) return;
+		
+		if ( frame.hands.length > 0 ) {
+			handLeap = frame.hands[0];
+			position = v( handLeap.stabilizedPalmPosition[0], handLeap.stabilizedPalmPosition[1], handLeap.stabilizedPalmPosition[2] );
+
+			leapHand3D.position = position;
+			leapHand3D.rotation.set( handLeap.pitch(), -handLeap.yaw(), handLeap.roll() );
+			
+// console.log( handLeap );	
+			//hand3D.position.set( handLeap.stabilizedPalmPosition[0], handLeap.stabilizedPalmPosition[1], handLeap.stabilizedPalmPosition[2] );
+			hand3D.position = position;
+			direction = v( handLeap.direction[0], handLeap.direction[1], handLeap.direction[2] );
+			hand3D.lookAt( direction.add( hand3D.position ) );
+			hand3D.rotation.z = -handLeap.roll();
+			//hand3D.rotation.set( handLeap.pitch(), -handLeap.yaw(), handLeap.roll() );
+			
+			leapHand3D.visible = true;
+			hand3D.visible = true;
+		} else {
+			leapHand3D.visible = false;
+			hand3D.visible = false;
+		}
+		
+		len = frame.pointables.length;
+		
+		if ( len > 0 && handLeap ) {
+			hand3D.hasFingers = true;
+
+			if ( len > 4 ) {
+				var pointablesX;
+				var pointablesXsortedClone;
+				hand3D.hasFiveIds = true;
+				hand3D.positionPrevious = hand3D.position.clone();
+				pointablesX = [];
+
+				for (var i = 0; i < len; i++) {
+					pointablesX.push( frame.pointables[i].stabilizedTipPosition[0] );
+				}
+
+				pointablesXsortedClone = pointablesX.slice(0);
+				pointablesXsortedClone.sort( function( a, b ) { return a - b; } );
+
+				for (var i = 0; i < len; i++) {
+					index = pointablesX.indexOf( pointablesXsortedClone[ i ] );
+					pointable = frame.pointables[ index ];
+					fingerTips[ i ].pointableId = pointable.id;
+					fingerTips[ i ].pointableIndex = index;
+				}
+			}
+		} else if ( hand3D.hasFingers ) {
+			hand3D.hasFingers = false;
+			hand3D.hasFiveIds = false;
+			return;
+		}
+		
+		if ( hand3D.hasFiveIds ) {
+			var meaningOfLife = [ 4, 2, 0, 1, 3 ];
+			// var rotX = hand3D.rotation.x > 0 ? hand3D.rotation.x - pi: hand3D.rotation.x + pi;
+			
+			txt = '' + hand3D.position.x.toFixed(2) + ' ' + hand3D.position.y.toFixed(2) + ' ' + hand3D.position.z.toFixed(2) + ' ' +
+				(r2d * hand3D.rotation.z).toFixed(2) + ' ' + ( r2d * hand3D.rotation.y).toFixed(2) + ' ' + ( r2d * hand3D.rotation.x ).toFixed(2) + ' ';
+			txt += '0 0 0 ';
+			
+			var fingerTip, pointableTip, pointableTarget, pointableKnuckle, index;
+			for (var i = 0; i < 5; i++) {
+				fingerTip = fingerTips[ i ];
+				index = fingerTip.pointableIndex;
+				pointable = frame.pointables[ index  ];
+
+				if ( pointable && pointable.id === fingerTip.pointableId ) {
+
+					position = v( pointable.stabilizedTipPosition[0], pointable.stabilizedTipPosition[1], pointable.stabilizedTipPosition[2] );
+					direction = v( pointable.direction[0], pointable.direction[1], pointable.direction[2]);
+
+					pointableTip = pointableTips[ index ];
+					pointableTip.position.copy( position );
+					// pointableTip.lookAt( direction.clone().add( position ) );
+					pointableTip.lookAt( position.clone().add( direction ) );
+
+					pointableTarget = pointableTargets[ index ];
+					pointableTarget.position.copy( position );
+					pointableTarget.lookAt( direction.clone().add( position ) );
+					pointableTarget.translateZ( pointable.length );
+					
+					pointableKnuckle = pointableKnuckles[ index ];
+					pointableKnuckle.position.copy( position );
+					pointableKnuckle.lookAt( direction.clone().add( position ) );
+					pointableKnuckle.translateZ( -pointable.length );					
+					
+					fingerTip.position.copy( hand3D.worldToLocal( position.clone() ) );
+					fingerTip.lookAt( hand3D.worldToLocal( pointableTarget.position.clone() ) );	
+					
+					fingerBases[i].lookAt( hand3D.worldToLocal( pointableKnuckle.position.clone() ) );
+
+				}	
+				// txt += ' 0 0 0';	
+				txt += ' ' + (r2d * fingerBases[i].rotation.z).toFixed(2) + ' ' + (r2d * fingerBases[i].rotation.y).toFixed(2) + ' ' + (r2d * fingerBases[i].rotation.x).toFixed(2);				
+								
+				txt += ' ' + (r2d * fingerTip.rotation.z).toFixed(2) + ' ' + (r2d * fingerTip.rotation.y).toFixed(2) + ' ' + (r2d * fingerTip.rotation.x).toFixed(2);				
+				// txt += ' ' + (r2d * fingerTip.rotation.z).toFixed(2) + ' ' + (r2d * fingerTip.rotation.y).toFixed(2) + ' ' + (r2d * fingerTip.rotation.x).toFixed(2);
+				txt += ' 0 0 0 ';
+
+			}
+			tmpText += txt + '\n';
+			frames++;
+			tim = clock.getDelta().toFixed(3);
+			numbers.innerHTML = 'Frames: ' + frames + ' ' + tim+ ' - X: ' + (r2d * fingerTips[0].rotation.x ).toFixed(1) + ' y: ' + 
+				(r2d * fingerTips[0].rotation.y).toFixed(1) + ' z: ' + (r2d * fingerTips[0].rotation.z).toFixed(1);
+		} else {
+			textarea.value += tmpText;
+			tmpText  = '';	
+		}		
+		textareaStatus.value = status + textarea.value.length + ' - Latest frame: ' + JSON.stringify( ( pausedFrame || frame).data ) + '';	
+	});
+	
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update();
+		renderer.render( scene, camera );
+		stats.update();
+	}
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+	function v2( x, y ){ return new THREE.Vector2( x, y ); }	
+</script>
+</body>
+</html>
