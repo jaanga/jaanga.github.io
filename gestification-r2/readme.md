@@ -9,6 +9,8 @@
 _Free, open source scripts that enable the wonderful [Leap Motion]( http://leapmotion.com ) device to do delightful things, 
 all built using the awesome [Three.js]( http://threejs.org ) JavaScript library and all hosted on glorious [GitHub]( http://githb.com )_
 
+_All the scripts here require a Lea Motion device in order to operate properly._
+
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 

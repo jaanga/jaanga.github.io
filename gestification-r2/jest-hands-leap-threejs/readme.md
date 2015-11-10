@@ -89,8 +89,9 @@ The good news is that most everything still works even though much in Three.js a
 Things that need work include:
 
 * Improving the accuracy of the positions of the fingers
-* Adding more Bones demos
+* Adding more bones demos
 * Adding more skinned hands demos
+* Cleaning up the code and bringing all the files up to the latest state-of-the-art
 
 
 ## Features
