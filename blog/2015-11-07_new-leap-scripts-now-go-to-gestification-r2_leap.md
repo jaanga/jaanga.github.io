@@ -2,11 +2,11 @@ New Leap Scripts Now Go To Gestification R2
 ===
 
 
-Jaanga has had scripts for the [Leap Motion]( http://leapmotion.com ) from since before the device was reeased to the public.
+Jaanga has had scripts for the [Leap Motion]( http://leapmotion.com ) from since before the device was released to the public.
 
-During that that - because the device is a breakthrough device - Jaanga made attempt to create break throught interfaces.
+During that time - because the device is a breakthrough device - Jaanga made an attempt to create break through interfaces.
 
-See
+See [Jaanga Gestification]( http://jaanga.github.io/gestification/index.html )
 
 These interfaces have all been too much to maintain.
 
@@ -14,10 +14,13 @@ So now we going off to a simpler interface.
 
 With several new scripts
 
-draw-the-line-leap-threejs
+* draw-the-line-leap-threejs
+* flick-to-select-leap-threejs
+* object-to-object-raycasting-leap-threejs
+* template-leap-threejs
 
-flick-to-select-leap-threejs
+See [Jaanga Gestification R2]( http://jaanga.github.io/gestification-r2/index.html )
 
-object-to-object-raycasting-leap-threejs
+***
 
-threejs-leap-enabled-template
+Post updated 2015-11-11
