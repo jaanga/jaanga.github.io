@@ -6,7 +6,7 @@
 🔭 [Outer Space Read Me]( index.html )
 ===
 
-[Outer Space Blog]( ./blog/index.html )
+[Outer Space Blog]( ./get-posts.html )
 
 _2015-11-01 - welcome to a beta release of an ongoing mission_
 

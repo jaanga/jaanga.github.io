@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8 >
+<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
+<script src=bloder.js ></script>
+<script>
+
+//	var apuUrl = https://api.github.com/repositories/5941753/contents/blog
+
+	var apuUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/blog';
+	var postsFolder = 'http://jaanga.github.io/blog/';
+
+	init();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			`body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+			h2, a { margin: 0; }
+			h1 a, #i { text-decoration: none; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
+		`;
+
+		content = document.body.appendChild( document.createElement( 'div' ) );
+
+		content.innerHTML = header = 
+			'<p>' +
+				'<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/bloder/get-posts.html "View file as a web page." ) </span>' +
+				'<input onclick=window.location.href="https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/bloder/"; type=button value="You are now in a GitHub web page view - Click this button to view Blog Read Me file as source code" />' +
+			'</p>' +
+			'<a href=http://jaanga.github.io >Jaanga</a> » <a href=http://jaanga.github.io/cookbook-html/ >Cookbook HTML</a> »' +
+			'<h1>' +
+				'<a href="" >Jaanga Blog</a> ' +
+				'<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/bloder/ >&#x24D8;</a>' +
+			'</h1>' +
+			'<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>' +
+
+			'<hr>' +
+			'<div id=postsText ></div>' +
+		'';
+
+
+		window.addEventListener("hashchange", hashChange, false);
+
+		hashChange();
+
+	}
+
+	function hashChange() {
+
+		if ( location.hash !== '' ) {
+
+			content.innerHTML = header;
+			requestPost( postsFolder, location.hash.substr( 1 ) );
+
+		} else {
+
+			tags = '';
+
+			requestPostTitles();
+
+		}
+
+
+	}
+
+</script>
+</body>
+</html>
