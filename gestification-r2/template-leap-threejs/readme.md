@@ -17,7 +17,7 @@
 
 ## Concept
 
-### Issues / Problems
+### The Issues / Problems
 <!--
 
 The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
@@ -28,13 +28,17 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-* It's not easy enough to see how easy the Leap is to program
-
+* It's not easy enough to see how easy it is to program for the Leap Motion device
+* Much of the great available material requires that you are already a full-stack developer, there's not much for the newbs
+* Most programmers know at least a bit about JavaScript, but not many C++ coders may know jQuery and few Python peeps many know CoffeeScript. 
+Scripts written in JavaScript derivatives are not always readable by large groups of programmers
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-* To create a fast and easy Leap boilerplate temple
+* To create small, fast and easy Leap Three.js JavaScript boilerplate templates
+* To create a variety of Leap templates that suit a variety of needs
+* To write code that almost all programmers can read quite easily
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
