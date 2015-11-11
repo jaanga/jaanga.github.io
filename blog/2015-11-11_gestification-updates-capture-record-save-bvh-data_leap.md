@@ -19,4 +19,13 @@ The files to capture and record Leap JSON data have still to be added.
 
 This blog loads a subset of Jaanga blog posts that relate only to the Leap device and the Gestification project.
 
+## Phalanges R8
+
+In Gestification R1, the [Phalanges project]( http://jaanga.github.io/gestification/cookbook/phalanges/r7/phalanges.html ) mission was to: 
+
+> Phalanges, using Leap.js, parses incoming Leap Motion data then, using Three.js, creates and updates 3D objects  that mirror the live motion of hands and fingers on screen in real-time. 
+
+Phalanges R8 has been started and will continue the investigation.
+
+The interesting thing is that two years later, both the tools and our knowledge have much increased. There should be a lot of fun new stuff happening here in the future.
 

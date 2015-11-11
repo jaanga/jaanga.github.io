@@ -28,13 +28,11 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-* It's not easy enough to see how easy the Leap is to program
-
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-* To create a fast and easy Leap boilerplate temple
+* To view in 3D all Leap hands, fingers and pointables and more
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->

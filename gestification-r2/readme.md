@@ -69,6 +69,8 @@ _In alphabetical order_
 [xxx Read Me - Web Page]( http://jaanga.github.io/gestification-r2/xxx/ )  
 [xxx Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/xxx/ )
 
+*
+
 -->
 
 ### Draw the Line
@@ -103,6 +105,12 @@ _In alphabetical order_
 * Given asymmetrical 3D assets, randomly embedded within a group of objects, 
 is it possible to determine if two or more test objects are both simultaneously in close proximity 
 
+### Phalanges
+
+[Phalanges Read Me - Web Page]( http://jaanga.github.io/gestification-r2/phalanges-leap-threejs/ )  
+[Phalanges Read Me - Source Code]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/phalanges-leap-threejs/ )
+
+* To view in 3D all Leap hands, fingers and pointables and more
 
 ### Template Leap Three.js
 

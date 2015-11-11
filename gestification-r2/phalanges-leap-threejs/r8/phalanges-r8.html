@@ -19,6 +19,7 @@
 
 	var fingerlings = {};
 	var handies = {};
+	var pointers = {};
 	var loop = {};
 
 	var info, stats, renderer, scene, camera, controls, light;
@@ -33,8 +34,11 @@
 
 		info.style.cssText = 'left: 20px; position: absolute; ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=frameData ></div>' +
 			'<div id=handData ></div>' +
 			'<div id=fingerData ></div>' +
+			'<div id=pointablesData ></div>' +
+			'<div id=pointersData ></div>' +
 		'';
 
 		stats = new Stats();
@@ -155,9 +159,31 @@
 
 	};
 
+	var Pointer = function() {
+
+		var pointer = this;
+
+		var geometry = new THREE.SphereGeometry( 15 );
+		var material = new THREE.MeshNormalMaterial();
+		var sphere = new THREE.Mesh( geometry, material );
+		sphere.castShadow = true;
+		sphere.receiveShadow = true;
+		scene.add( sphere );
+
+		pointer.outputData = function( index, pointable ) {
+
+			sphere.position.set( pointable.tipPosition[ 0 ], pointable.tipPosition[ 1 ], pointable.tipPosition[ 2 ] );
+		}
+
+	}
+
+
 	function v( x, y, z) { return new THREE.Vector3( x, y, z ); }
 
 	loop.animate = function( frame ) {
+
+//		frameData.innerHTML = frame.dump();
+		frameData.innerHTML = frame.toString();
 
 		frame.hands.forEach( function( hand, index ) {
 
@@ -172,6 +198,30 @@
 			});
 
 		});
+
+		if ( frame.pointables.length > 0 ) {
+
+			var txt =  `pointables length: ${ frame.pointables.length } \n`;
+
+			for ( var i = 0; i < frame.pointables.length; i++ ) {
+
+				pointable = frame.pointables[ i ];
+				txt += `pointables ${ i }: ${ pointable } - ${ pointable.stabilizedTipPosition } \n`;
+
+				var pointer = ( pointers[ i ] || ( pointers[ i ] = new Pointer() ) );
+				pointer.outputData( i, pointable);
+
+			}
+
+			frameData.innerText = txt;
+
+
+
+
+//console.log( );
+
+		}
+
 
 		renderer.render( scene, camera );
 		controls.update();
