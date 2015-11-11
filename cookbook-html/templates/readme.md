@@ -9,6 +9,9 @@
 * [Basic HTML]( http://jaanga.github.io/cookbook-html/templates/basic-html/ )
 	* A good place to start
 
+* [Bloder]( http://jaanga.github.io/cookbook-html/templates/bloder/ )
+	* If a blog for code is a blode, then the app is a bloder.
+
 * [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )
 	* Derived from Exploratoria revisions
 
