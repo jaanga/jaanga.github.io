@@ -1,18 +1,18 @@
-﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/threejs-leap-enabled-template/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r2/template-leap-threejs/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/template-leap-threejs/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Gestification R2]( http://jaanga.github.io/gestification-r2/  ) »
 
-[Three.js Leap-enabled Template Read Me]( index.html )
+[Template Leap Three.js Read Me]( index.html )
 ===
 
 
-[Three.js Leap-enabled Template  - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/dev/ )
+[Template Leap Three.js  - Demo - Dev revision - Full Screen]( http://jaanga.github.io/gestification-r2/template-leap-threejs/dev/ )
 
 ## Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/r5/threejs-leap-enabled-template-r5.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/r5/threejs-leap-enabled-template-r5.html  )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/template-leap-threejs/session-r6/threejs-leap-template-session-r6.html width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/template-leap-threejs/session-r6/threejs-leap-template-session-r6.html  )
 
 
 ## Concept
@@ -20,7 +20,7 @@
 ### Issues / Problems
 <!--
 
-The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Patttern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
+The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
 
 Each pattern describes a problem which occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over, without ever doing it the same way twice.
 
