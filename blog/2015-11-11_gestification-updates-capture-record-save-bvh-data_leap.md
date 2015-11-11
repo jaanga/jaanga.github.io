@@ -1,8 +1,9 @@
 ﻿Gestification Updates - Capture, Record Save BVH Data
 ===
 
+## BVH Capture, Record and Save
 
-BVH is a wonderful way to save motion data. It's fast, simple and moderately easy to understand.
+[BVH]( http://research.cs.wisc.edu/graphics/Courses/cs-838-1999/Jeff/BVH.html ) is a wonderful - perhaps archaic - way to save motion data. It's fast, simple and moderately easy to understand.
 
 We made a big effort in 2013 to build a set of scripts that capture real-time Leap motion data, convert the data to BVH format 
 and save the data to files.

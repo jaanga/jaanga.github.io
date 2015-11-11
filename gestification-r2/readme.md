@@ -5,6 +5,7 @@
  
 [Gestification R2 Read Me]( index.html )
 ===
+_[Gestification Blog]( request-gestification-blog-posts.html )_
 
 _Free, open source scripts that enable the wonderful [Leap Motion]( http://leapmotion.com ) device to do delightful things, 
 all built using the awesome [Three.js]( http://threejs.org ) JavaScript library and all hosted on glorious [GitHub]( http://githb.com )_
