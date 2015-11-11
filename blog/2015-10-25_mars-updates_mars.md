@@ -1,4 +1,4 @@
-[Mars Updates]( http://jaanga.github.io/outer-space/blog/index.html#2015-10-25_mars-updates_mars.md )
+Mars Updates
 ===
 
 ![mars-heightmap-2d-1440x720.jpg]( http://jaanga.github.io/mars/images/mars-heightmap-2d-512x512.jpg =640x640 )  
