@@ -30,7 +30,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 * It's not easy enough to see how easy it is to program for the Leap Motion device
 * Much of the great available material requires that you are already a full-stack developer, there's not much for the newbs
-* Most programmers know at least a bit about JavaScript, but not many C++ coders may know jQuery and few Python peeps many know CoffeeScript. 
+* Most programmers know at least a bit about JavaScript, but not many C++ coders may know jQuery and few Python peeps may know CoffeeScript. 
 Scripts written in JavaScript derivatives are not always readable by large groups of programmers
 
 ### Mission
