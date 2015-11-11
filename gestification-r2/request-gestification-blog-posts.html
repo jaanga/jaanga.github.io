@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
 <meta charset=utf-8 >
@@ -10,7 +10,6 @@
 <script>
 
 //	var apuUrl = https://api.github.com/repositories/5941753/contents/blog
-
 	var apuUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/blog';
 	var postsFolder = 'http://jaanga.github.io/blog/';
 
@@ -27,22 +26,20 @@
 		`;
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
+		content.innerHTML = header = `<p>
+				<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/bloder/get-posts.html "View file as a web page." ) </span>
+				<input onclick=window.location.href="https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/"; type=button value="You are now in a GitHub web page view - Click this button to view Blog Read Me file as source code" />
+			</p>
+			<a href=http://jaanga.github.io >Jaanga</a> » <a href=http://jaanga.github.io/gestification-r2/ >Gestification R2</a> »
+			<h1>
+				<a href="" >Gestification Blog</a> 
+				<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r2/ >&#x24D8;</a>
+			</h1>
+			<p><i>the latest reports on JavaScripts that may come in handy with your <a href=http://leapmotion.com >Leap</a> device</i></p>
 
-		content.innerHTML = header = 
-			'<p>' +
-				'<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/outer-space/get-posts.html "View file as a web page." ) </span>' +
-				'<input onclick=window.location.href="https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/"; type=button value="You are now in a GitHub web page view - Click this button to view Blog Read Me file as source code" />' +
-			'</p>' +
-			'<a href=http://jaanga.github.io >Jaanga</a> » <a href=http://jaanga.github.io/outer-space/ >Outer Space</a> »' +
-			'<h1>' +
-				'<a href="" >Outer Space Blog</a> ' +
-				'<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/ >&#x24D8;</a>' +
-			'</h1>' +
-			'<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>' +
-
-			'<hr>' +
-			'<div id=postsText ></div>' +
-		'';
+			<hr>
+			<div id=postsText ></div>
+		`;
 
 		window.addEventListener("hashchange", hashChange, false);
 
@@ -59,12 +56,10 @@
 
 		} else {
 
-			tags = [ 'mars', 'moon', 'outer-space' ];
-
+			tags = [ 'leap' ];
 			requestPostTitles( tags );
 
 		}
-
 
 	}
 
