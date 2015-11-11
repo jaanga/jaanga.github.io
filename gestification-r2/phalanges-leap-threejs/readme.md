@@ -7,7 +7,7 @@
 ===
 
 
-[Three.js Leap-enabled Template  - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/phalanges/dev/ )
+[Phalanges - Demo - Dev revision - Full Screen]( http://jaanga.github.io/gestification-r2/phalanges-leap-threejs/dev/ )
 
 ## Web Page / Source Code
 
