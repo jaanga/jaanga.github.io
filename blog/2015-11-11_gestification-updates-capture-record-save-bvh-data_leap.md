@@ -15,3 +15,8 @@ The files are all in this folder:
 
 The files to capture and record Leap JSON data have still to be added.
 
+## Gestification Blog Started
+
+This blog loads a subset of Jaanga blog posts that relate only to the Leap device and the Gestification project.
+
+

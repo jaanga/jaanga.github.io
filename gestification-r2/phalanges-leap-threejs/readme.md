@@ -7,12 +7,12 @@
 ===
 
 
-[Three.js Leap-enabled Template  - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/dev/ )
+[Three.js Leap-enabled Template  - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/phalanges/dev/ )
 
 ## Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/r5/threejs-leap-enabled-template-r5.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/threejs-leap-enabled-template/r5/threejs-leap-enabled-template-r5.html  )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/phalanges-leap-threejs/r8/phalanges-r8.html width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/phalanges-leap-threejs/r8/phalanges-r8.html  )
 
 
 ## Concept
