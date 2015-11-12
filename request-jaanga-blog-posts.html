@@ -58,6 +58,7 @@
 		if ( location.hash !== '' ) {
 
 			content.innerHTML = header;
+			contents = [];
 			requestPost( location.hash.substr( 1 ), 0, 1 );
 
 		} else {

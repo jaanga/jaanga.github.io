@@ -1,6 +1,7 @@
 
 
 	var posts = [];
+	var contents = [];
 	var numberOfPostsToDisplay = 11;
 	var converter = new showdown.Converter();
 
@@ -43,6 +44,8 @@
 
 						}
 
+						numberOfPostsToDisplay = posts.length;
+
 					} else {
 
 						posts.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
@@ -59,7 +62,7 @@
 
 			for ( var i = 0; i < numberOfPostsToDisplay; i++ ) {
 
-				requestPost ( posts[ i ].name, i, numberOfPostsToDisplay);
+				requestPost ( posts[ i ].name, i, numberOfPostsToDisplay );
 
 			}
 
@@ -70,8 +73,6 @@
 	}
 
 	function requestPost ( fileName, index, number ) {
-
-		contents = [];
 
 		var xmlHttp = new XMLHttpRequest();
 		xmlHttp.open( 'GET', postsFolder + fileName, true );
@@ -100,9 +101,9 @@
 
 			contents[ index ] = txt;
 
-			postsText.innerHTML = '';
-
 			if ( contents.length >= number ) {
+
+				postsText.innerHTML = '';
 
 				for ( var i = 0 ; i < number; i++ ) {
 
