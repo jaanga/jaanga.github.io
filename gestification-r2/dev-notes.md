@@ -1,4 +1,4 @@
-dev notes
+[dev notes read me]( index.html#dev-notes.md )
 ===
 
 2015-11-11 ~ Theo
@@ -6,7 +6,8 @@ dev notes
 difference between leap.loop and controller.on for capturing the frame?
 
 * Add frame data etc to template
-[] Add info link to source code to template 
+* Add info link to source code to template 
+* Object to object read me needs bringing up to standard
 
 2015-11-10 ~ Theo
 
