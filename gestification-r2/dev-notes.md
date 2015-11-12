@@ -1,6 +1,10 @@
 [dev notes read me]( index.html#dev-notes.md )
 ===
 
+2015-11-12 ~ Theo
+
+Working on gimbal lock issues
+
 2015-11-11 ~ Theo
 
 difference between leap.loop and controller.on for capturing the frame?

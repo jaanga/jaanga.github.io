@@ -8,6 +8,10 @@
 
 * First post
 
+Three.js
+
+* measure amount of time between RAFs
+
 Jaanga
 
 * Add carousel to home page?
@@ -18,7 +22,7 @@ Blog
 * Add links to blog tags
 * Separate out Jaanga blog from template
 * Rename from 'get' to 'request'
-* Add links to dev notes where appropriate
-* Find way to force post to display in correct date order
+* Add links to dev notes where appropriate, from blog?
+* Find way to force post to display in correct date order << 2015-11-11 ~ looking good
 
 

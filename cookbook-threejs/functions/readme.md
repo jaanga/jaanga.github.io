@@ -6,16 +6,39 @@
 [Functions Read Me]( index.html )
 ===
 
+## Angles Normalize
+
+* Take a Three.js Mesh that has been rotated and positioned and bring it back to zero
+* Z axis only for the moment
+* Used in OpenDesk scripts
+
 [angles-normalize]( angles-normalize/angles-normalize-r1.html )
 
 
-[controls-device-orientation]( ./controls-device-orientation/misc_controls_deviceorientation-ta-r1.html )
+## Control Device Orientation
 
-[Drag and Drop]( ./drag-and-drop/index.html )
+* For apps on mobile devices
+
+[controls-device-orientation]( ./controls-device-orientation/misc_controls_deviceorientation-ta-r1.html )
 
 [VRMobileDemo.html]( ./controls-device-orientation/VRMobileDemo.html )
 
 [VRMobileDemo-r2.html]( ./controls-device-orientation/VRMobileDemo-r2.html )
+
+
+## Drag and Drop
+
+[Drag and Drop]( ./drag-and-drop/index.html )
+
+
+## Gimbal Lock
+
+[gimbal-lock-lookat-r1]( ./gimbal-lock/gimbal-lock-lookat-r1.html )
+
+* Use the sliders to move the box around the north pole. Watch the box spin.
+
+[vector-to-angle-r1]( ./gimbal-lock/vector-to-angle-r1.html )
+
 
 
 ## Links of Interest
