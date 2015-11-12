@@ -1,6 +1,9 @@
 bloder read me
 ==
 
+Template
+
+[get-posts.html]( get-posts.html )
 
 [request-posts-basic.html]( request-posts-basic.html )
 

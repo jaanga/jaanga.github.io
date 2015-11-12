@@ -11,6 +11,8 @@ bloder-dev looking good
 * Jaanga has its own HTML calling file
 * HTML file in bloder can now become a template
 
+Road Map added to Bloder Read Me
+
 
 ## 2015-11-11 ~ Theo
 
