@@ -5,7 +5,7 @@
 ===
 
 [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) ~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
-~ [Blog]( http://jaanga.github.io/cookbook-html/templates/bloder/get-posts.html )
+~ [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ## Concept
 
 [Jaanga.github.io]( http://jaanga.github.io ) is a [GitHub]( http://github.com ) [organization]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4 )

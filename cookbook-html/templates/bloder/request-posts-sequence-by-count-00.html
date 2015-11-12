@@ -57,13 +57,10 @@
 
 			for ( var i = 0; i < lines.length; i++ ) {
 
-//				if ( lines[ i ].indexOf( '"path"' ) > -1 && lines[ i ].indexOf( '.md' ) > -1 ) {
-				if ( lines[ i ].indexOf( '"name": "201' ) > -1 ) {
+				if ( lines[ i ].indexOf( '"path"' ) > -1 && lines[ i ].indexOf( '.md' ) > -1 ) {
 
 					line = lines[ i ];
-//					fname =  line.substr( line.lastIndexOf( '/' ) + 1 ).replace( '",','' );
-					fname = line.substr( 13 ).replace( '",', '' );
-
+					fname =  line.substr( line.lastIndexOf( '/' ) + 1 ).replace( '",','' );
 					posts.push( { date: fname.substr( 0, 10 ).replace( /-/g,'' ), name: fname } );
 					txt += fname + '<br>';
 
