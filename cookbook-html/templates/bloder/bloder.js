@@ -50,9 +50,6 @@ console.log( itemTag );
 
 					}
 
-
-
-
 				}
 
 			}
