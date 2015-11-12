@@ -6,9 +6,6 @@
 [Cookbook HTML Read Me]( index.html )
 ====
 
-Blogmire
-
-* [Blogmire]( http://jaanga.github.io/cookbook-html/blogmire/ )
 
 Short cookbook code examples
 

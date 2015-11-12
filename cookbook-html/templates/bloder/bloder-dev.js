@@ -2,7 +2,7 @@
 
 	var posts = [];
 	var contents = [];
-	var numberOfPostsToDisplay = 11;
+	var numberOfPostsToDisplay = 12;
 	var converter = new showdown.Converter();
 
 	function requestPostTitles( tags ) {

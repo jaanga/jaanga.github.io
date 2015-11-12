@@ -9,7 +9,8 @@ bloder-dev looking good
 
 * Always displays posts in correct order
 * Jaanga has its own HTML calling file
-* HTML file in bloder can now become a template
+* HTML file in Bloder can now become a template
+* Jaanga, Outer Space and Gestification all updated
 
 Road Map added to Bloder Read Me
 

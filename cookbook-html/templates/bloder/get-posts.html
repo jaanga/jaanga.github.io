@@ -6,7 +6,7 @@
 </head>
 <body>
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
-<script src=bloder.js ></script>
+<script src=bloder-dev.js ></script>
 <script>
 
 //	var apiUrl = https://api.github.com/repositories/5941753/contents/blog
@@ -34,7 +34,7 @@
 			'</p>' +
 			'<a href=http://jaanga.github.io >Jaanga</a> » <a href=http://jaanga.github.io/cookbook-html/ >Cookbook HTML</a> » <a href=http://jaanga.github.io/cookbook-html/templates/ >Templates</a> »' +
 			'<h1>' +
-				'<a href="" >Jaanga Blog</a> ' +
+				'<a href="" >Bloder</a> ' +
 				'<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/bloder/ >&#x24D8;</a>' +
 			'</h1>' +
 			'<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>' +
@@ -54,7 +54,8 @@
 		if ( location.hash !== '' ) {
 
 			content.innerHTML = header;
-			requestPost( postsFolder, location.hash.substr( 1 ) );
+			contents = [];
+			requestPost( location.hash.substr( 1 ), 0, 1 );
 
 		} else {
 
