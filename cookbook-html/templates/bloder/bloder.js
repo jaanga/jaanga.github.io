@@ -6,7 +6,7 @@
 	function requestPostTitles( tags ) {
 
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', apuUrl, true );
+		xmlHttp.open( 'GET', apiUrl, true );
 
 		xmlHttp.onreadystatechange = function() {
 

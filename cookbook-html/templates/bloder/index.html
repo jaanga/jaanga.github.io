@@ -8,6 +8,8 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
 <script>
 
+	var apiUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/cookbook-html/templates/bloder';
+	var postsFolder = 'http://jaanga.github.io/cookbook-html/templates/bloder/';
 	var arr = [];
 
 	init();
@@ -36,9 +38,9 @@
 
 	function getBlogPosts() {
 
-		var xx = 'https://api.github.com/repos/jaanga/cookbook/contents/blogmire';
+		var xx = 'https://api.github.com/repos/jaanga/cookbook-html/templates/blogmire';
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', xx, true );
+		xmlHttp.open( 'GET', apiUrl, true );
 
 		xmlHttp.onreadystatechange = function() {
 
@@ -79,16 +81,16 @@
 	}
 
 	function requestFile ( fileName ) {
-//console.log( arr[ i ].name );
+console.log( fileName );
 		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.open( 'GET', postsFolder + fileName, true );
 		xmlHttp.onreadystatechange = function() {
 
 			posts.innerHTML += xmlHttp.readyState === 4 ? new showdown.Converter().makeHtml( xmlHttp.responseText ) : '';
 
 		};
 
-		xmlHttp.send( null );
+//		xmlHttp.send( null );
 
 	}
 
