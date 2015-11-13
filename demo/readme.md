@@ -2,7 +2,10 @@
 ===
 <span style=display:none; >[View as web page]( http://jaanga.github.io/demo/ "View file as a web page." ) </span>
 
-##[WikiHouse]( http://wikihouse.github.io/viewer-experiments/ ) ~ [Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
+## [WikiHouse]( http://wikihouse.github.io/viewer-experiments/ ) ~ [Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
+
+## [WikiHouse]( http://wikihouse.github.io/viewer-experiments/ ) ~ [Studio2]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-studio2/latest/index.html ) [no shade]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-studio2/latest/index.html#intelhd )
+
 
 ##[OpenDesk]( http://opendesk.github.io/design-playground/ ) ~ [Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-half-sheet-table/latest/ )
 
@@ -31,7 +34,7 @@
 
 # Fun
 
-## [SP 500]( http://jaanga.github.io/sp500/dev/index.html )
+## [SP 500]( http://jaanga.github.io/sp500/dev/index.html ) [no shade]( http://jaanga.github.io/sp500/dev/index.html#intelhd )
 ## [Femur Heart UCSH]( http://theo-armour.github.io/ucsf/ )
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
