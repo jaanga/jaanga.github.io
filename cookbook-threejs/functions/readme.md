@@ -39,7 +39,9 @@
 
 [vector-to-angle-r1]( ./gimbal-lock/vector-to-angle-r1.html )
 
+## Plane Cuts Ellipsoid
 
+* [Plane Cuts Ellipsoid]( http://jaanga.github.io/cookbook-threejs/functions/plane-cuts-ellipsoid/plane-cuts-ellipsoid-r1.html )
 
 ## Links of Interest
 
