@@ -33,11 +33,15 @@
 
 ## Gimbal Lock
 
-[gimbal-lock-lookat-r1]( ./gimbal-lock/gimbal-lock-lookat-r1.html )
+[gimbal-lock-lookat-r2]( ./gimbal-lock/gimbal-lock-lookat-r2.html )
 
 * Use the sliders to move the box around the north pole. Watch the box spin.
+* Checkbox turns on fix using setting Up
+* Checkbox turns on fix using quaternians
 
-[vector-to-angle-r1]( ./gimbal-lock/vector-to-angle-r1.html )
+[vector-to-angle-r3]( ./gimbal-lock/vector-to-angle-r3.html )
+
+* How to set the rotation of a mesh by using a vector converted to rotation angles using a https://en.wikipedia.org/wiki/Quaternion
 
 ## Plane Cuts Ellipsoid
 

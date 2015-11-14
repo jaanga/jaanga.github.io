@@ -3,9 +3,7 @@
 <head>
 <meta charset=utf-8 >
 <title>gimbal-lock-lookat-r1</title>
-<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' >
 <meta name = viewport content = 'width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-
 </head>
 <body>
 <!--
@@ -18,6 +16,8 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script>
+
+	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -104,6 +104,8 @@
 
 		box.lookAt( v( 0, 0, 0 ) );
 
+		box.up.set( 1, 0, 0 )
+		box.rotation.z += Math.PI / 2
 	}
 
 	function updateX() {

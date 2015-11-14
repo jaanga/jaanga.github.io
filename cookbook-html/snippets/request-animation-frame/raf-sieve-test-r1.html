@@ -1,0 +1,120 @@
+<!doctype html>
+<html >
+<head>
+<meta charset=utf-8 >
+<title>raf-sieve-test-r1.html</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+
+	var css, menu;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML = `body { font: 12pt monospace; margin: 0; overflow: auto; }
+			h2, a { margin: 0; }
+			#aa { text-decoration: none; }
+
+			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute`;
+		menu.innerHTML = `<h2>
+				<a href="" > ${ document.title } </a> 
+				<a id=aa href=http://jaanga.github.io/ >&#x24D8;</a>
+			</h2>
+` +
+/*
+			<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 onmousemove=ontouchmove=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+			<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>
+			<p>Overlay: <select id=selList title="Select the 2D overlay" >select option<select></p>
+			<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>
+			<p>
+				<input type=radio name=field id=but1 />button 1 
+				<input type=radio name=field id=but2 checked />button 2 
+				<input type=radio name=field id=but3 />button 3 
+			</p>
+*/
+
+`			<div id=info ></div>
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		t0 = performance.now()
+//		info.innerText = performance.now() - t0 + ' ' + sieve( 100000 )
+
+	}
+
+
+	function sieve( max ) {
+
+		var D = [], primes = [];
+
+		for ( var q = 2; q < max; q++ ) {
+
+			if ( D[ q ] ) {
+
+				for ( var i = 0; i < D[q].length; i++) {
+
+					 var p = D[ q ][ i ];
+
+					 if ( D[ p + q ] ) {
+
+						D[ p + q ].push( p ); 
+
+					} else {
+
+						D[ p + q ] = [ p ];
+
+					}
+
+				}
+
+				delete D[ q ];
+
+			} else {
+
+				primes.push(q);
+
+				if (q *  q < max ) D[ q * q ] =[ q ];
+
+			}
+
+		}
+
+		return  performance.now() - t0 + ' ' + primes.length;
+
+	 }
+
+	function animate() {
+
+		stats.end();
+
+		requestAnimationFrame( animate );
+
+
+
+		t0 = performance.now();
+
+		info.innerText = sieve( 10000 );
+		stats.begin();
+
+	}
+</script>
+</body>
+</html>

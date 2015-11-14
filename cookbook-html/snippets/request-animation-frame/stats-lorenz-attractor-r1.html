@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<title>stats.js - basic example</title>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<style>
+body {
+margin: 0px;
+overflow: hidden;
+}
+</style>
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	var beta = 8 / 3;
+	var rho = 28;
+	var sigma = 10;
+
+	var x = 1;
+	var y = 1;
+	var z = 1;
+	var color, delta;
+
+	var stats, context;
+
+	init();
+	animate();
+
+	function init() {
+
+		stats = new Stats();
+		stats.setMode( 1 );
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		document.body.appendChild( canvas );
+
+		context = canvas.getContext( '2d' );
+		context.fillStyle = 'rgba(127,0,255,0.05)';
+		context.globalAlpha = 0.5; 
+
+		color = ( 256 * 256 * 256 - 10);
+		delta = -100;
+
+	}
+
+	function animate() {
+
+		stats.begin();
+
+		requestAnimationFrame( animate );
+//		var time = Date.now() * 0.001;
+		var dt = performance.now() * 0.00000002;
+//		context.clearRect( 0, 0, window.innerWidth, window.innerHeight );
+		delta = color < 0 ? -delta : delta;
+		delta = color > 16777215 ? -delta : delta ;
+		color += delta;
+		for ( var i = 0; i < 5; i ++ ) {
+
+//			var x = Math.cos( time + i * 0.01 ) * 196 + 256;
+//			var y = Math.sin( time + i * 0.01234 ) * 196 + 256;
+
+			dx = sigma * ( y - x ) * dt ;
+			var dy = ( x * ( rho - z ) - y ) * dt;
+			var dz = ( x * y - beta * z ) * dt;
+			
+			x += dx;
+			y += dy;
+			z += dz;
+
+			context.beginPath();
+
+			context.fillStyle = '#' + ( color ).toString( 16 );
+			context.arc( 30 * x + window.innerWidth * 0.5, 30 * y + window.innerHeight * 0.5, 10, 0, Math.PI * 2, true );
+			context.fill();
+
+		}
+
+		stats.end();
+
+	}
+
+</script>
+</body>
+</html>

@@ -6,17 +6,37 @@
 [Snippets Read Me]( index.html )
 ===
 
-Pretty colors in the background
-* Demo: [Gradient Background]( http://jaanga.github.io/cookbook-html/snippets/gradient-background/gradient-background-r1.html )
+## Gradient Background
 
-Sliding Menu
+[Gradient Background Demo ]( http://jaanga.github.io/cookbook-html/snippets/gradient-background/gradient-background-r1.html )
 
-* Demo: [Hamburger Menu]( http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child-menu-r3-fixed-width.html )
+* Pretty colors in the background
 
-Inter page communication
 
-* Demo: [Location Hash]( http://jaanga.github.io/cookbook-html/snippets/location-hash/location-hash-parse-variable-lengths-r1.html )
+## Hamburger Menu
 
-Early version of Code Edit View. Deprecated.
+[Hamburger Menu Demo]( http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child-menu-r3-fixed-width.html )
 
-* Demo: [Markdown]( http://jaanga.github.io/cookbook-html/snippets/markdown/index.html  )
+* Sliding Menu
+
+
+## Location Hash
+
+[Location Hash Demo]( http://jaanga.github.io/cookbook-html/snippets/location-hash/location-hash-parse-variable-lengths-r1.html )
+
+* Inter page communication
+
+
+## Request Animation Frame
+
+[raf-sieve-test-r1 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/raf-sieve-test-r1.html )
+
+[raf-sieve-test-r2 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/raf-sieve-test-r2.html )
+
+* How fast is your script running
+
+[stats-mrdoob Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-mrdoob.html )
+
+[stats-lorenz-attractor r1 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r1.html )
+
+* Building upon Mr.doob's stats.js
