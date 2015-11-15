@@ -39,19 +39,14 @@
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML = 
-<<<<<<< HEAD
 		`
 
 			<h2>
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/ >&#x24D8;</a>
 			</h2>
+
 			<p>Camera near: <input type=range id=inpCam min=1 max=300 value=1 oninput=updateCamera(this);outCam.value=this.value; > <output id=outCam >1</p>
-=======
-			`<h2><a href="" > ${ document.title } </a>
-			<a id=aa href=http://jaanga.github.io/ >&#x24D8;</a></h2>
-			<p>Camera near: <input type=range id=inpCam min=1 max=300 value=1 oninput=updateCamera(this); > <output id=outCam >1</p>
->>>>>>> origin/master
 			<p>Scale X: <input type=range id=inpScaleX min=0.5 max=3 step=0.01 oninput=sphere.scale.x=inpScaleX.valueAsNumber; ></p>
 			<p>Scale Y: <input type=range id=inpScaleY min=0.5 max=3 step=0.01 oninput=sphere.scale.y=inpScaleY.valueAsNumber; ></p>
 			<p>Scale Z: <input type=range id=inpScaleZ min=0.5 max=3 step=0.01 oninput=sphere.scale.z=inpScaleZ.valueAsNumber; ></p>
