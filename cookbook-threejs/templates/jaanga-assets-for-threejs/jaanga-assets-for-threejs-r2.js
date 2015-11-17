@@ -2,25 +2,9 @@
 
 
 	var axisHelper;
-	var backgroundGradient;
 	var groundBoxLights;
 	var trylonPerisphere;
-
-
-	function addWindowResize() {
-
-		window.addEventListener( 'resize', onWindowResize, false );
-
-	}
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
-
-	}
+	var backgroundGradient;
 
 	function toggleAxis( length ) {
 
@@ -72,26 +56,22 @@
 
 			scene.add( groundBoxLights );
 
+			return groundBoxLights;
+
 		} else {
 
 			scene.remove( groundBoxLights );
 
 		}
 
-		return groundBoxLights;
-
 	}
 
 
 	function toggleTrylonPerisphere() {
 
-// https://en.wikipedia.org/wiki/Trylon_and_Perisphere
-
 		if ( trylonPerisphere === undefined ) {
 
 			trylonPerisphere = new THREE.Object3D();
-
-			trylonPerisphere.name = 'trylonPerisphere';
 
 // Perisphere
 			geometry = new THREE.SphereGeometry( 25, 50, 50 );
@@ -113,31 +93,28 @@
 				specular: 0xffffff * Math.random(),
 				shininess: 1
 			} );
-
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( -115, 50, -30 );
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
 			trylonPerisphere.add( mesh );
 
-		}
+			scene.add( trylonPerisphere );
 
-		if ( scene.getObjectByName( 'trylonPerisphere' ) !== undefined ) {
-
-			scene.remove( trylonPerisphere );
+			return trylonPerisphere;
 
 		} else {
 
-			scene.add( trylonPerisphere );
+			scene.remove( trylonPerisphere );
 
 		}
 
 	}
 
-	function addLights( siz ) {
+	function addLights( size ) {
 
-		var size = siz ? siz : 100;
-//		renderer.shadowMap.enabled = true;
+		var size = size ? size : 100;
+		renderer.shadowMap.enabled = true;
 
 		var lightAmbient, lightDirectional, lightPoint;
 
@@ -173,26 +150,6 @@
 		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
 		scene.add( camera );
 
-/*
-		scene.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh ) {
-
-				child.castShadow = child.receiveShadow = true;
-//				child.material = material;
-
-			}
-
-		} );
-*/
-
-	}
-
-
-	function addShadows() {
-
-		renderer.shadowMap.enabled = true;
-
 		scene.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
@@ -206,16 +163,17 @@
 
 	}
 
-	function toggleBackgroundGradient () {
-
-			function col() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); }
-			function pt() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+	function toggleGradient () {
 
 		if ( backgroundGradient === undefined ) {
 
+				var col1 = Math.random().toString( 16 ).slice( 2, 8 );
+				var col2 = Math.random().toString( 16 ).slice( 2, 8 );
+				var col3 = Math.random().toString( 16 ).slice( 2, 8 );
+				var x = ( Math.random() * window.innerWidth ).toFixed(0);
+				var y = ( Math.random() * window.innerHeight ).toFixed(0);
 
-
-			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
+				backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
 
 		} else {
 
@@ -224,8 +182,6 @@
 		}
 
 	}
-
-	toggleGradient = toggleBackgroundGradient;
 
 	function toggleAutoRotate() {
 

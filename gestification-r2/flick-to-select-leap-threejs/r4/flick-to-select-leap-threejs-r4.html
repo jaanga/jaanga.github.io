@@ -1,0 +1,303 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>flick-to-select-leap-threejs-r4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://rawgit.com/mrdoob/three.js/r73/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://js.leapmotion.com/leap-0.6.4.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script>
+
+	var baseBoneRotation = ( new THREE.Quaternion ).setFromEuler( new THREE.Euler( 0, 0, Math.PI / 2 ) );
+	var armMeshes = [];
+	var boneMeshes = [];
+
+	var colors = [ 0xff0000, 0xff00ff, 0x00ff00, 0xffff00, 0x0000ff ];
+	colorsText = [ 'red','magenta','green','yellow', 'blue' ];
+	fingersText = [ 'thumb','index','middle','ring', 'little' ];
+
+	function v( x, y, z) { return new THREE.Vector3( x, y, z ); }
+
+	var positions = [ v( -40, -60, -20 ), v( -40, -50, -80 ), v( -10, -50, -100 ), v( 30, -50, -90 ), v( 50, -50, -40 ) ] 
+
+	var buttonMeshes = [];
+	var handMeshes = [];
+
+	var stats, renderer, scene, camera, controls;
+
+	init();
+	Leap.loop( {background: true}, leapAnimate ).connect();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/gestification-r2/template-leap-threejs/pehrlich-threejs-bones/ >&#x24D8;</a>
+			</h2>
+			<div id=info ></div>
+` +
+//			<p>To select a color, hold one hand flat over the Leap device and touch the colors using closest fingers</p>
+//			<p>Touch height <input type=range min=-30 max=30 value=0 onmousemove=updateButtons(this.valueAsNumber); ></p>
+`			<div id=handData ></div>
+			<div id=fingerData ></div>
+			<div id=touchData style=padding:10px;  ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( -500, 500, 500 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 1000;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// pretty but very non-essential assets. See jaanga-assets-for-threejs.js
+		toggleGroundBoxLights( 500 );
+		toggleAxis( 250 );
+		toggleGradient();
+//		toggleAutoRotate();
+		addLights( 300 );
+		toggleTrylonPerisphere();
+		trylonPerisphere.scale.set( 2, 2, 2 );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function updateButtons( y ) {
+
+			for ( var i = 0; i < 5; i++ ) {
+
+//				buttonMeshes[ i ].position.set( positions[ i ].x, positions[ i ].y - y, positions[ i ].z );
+
+			}
+
+	}
+
+	function makeMesh( meshes ) {
+
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		meshes.push( mesh );
+
+		return mesh;
+
+	}
+
+	function updateMesh( bone, mesh ) {
+
+			mesh.position.fromArray( bone.center() );
+			mesh.setRotationFromMatrix( ( new THREE.Matrix4 ).fromArray( bone.matrix() ) );
+			mesh.quaternion.multiply( baseBoneRotation );
+			mesh.scale.set( bone.width, bone.width, bone.length );
+
+			scene.add( mesh );
+
+	}
+
+	function addButton( i ) {
+
+		var geometry = new THREE.BoxGeometry( 30, 20, 30 );
+		var material = new THREE.MeshPhongMaterial( { color: colors[ i ], transparent: true });
+		button = new THREE.Mesh( geometry, material );
+		button.position.copy( positions[ i ] );
+		button.currentHex = button.material.emissive.getHex();
+		button.castShadow = button.receiveShadow = true;
+		handMesh.add( button );
+		buttonMeshes.push ( button );
+
+		return button;
+
+	}
+
+ghosts = [];
+
+	function addButtonGrid() {
+
+		var grid = new THREE.Object3D();
+
+		for ( var i = 0; i < 5; i++ ) {
+			for ( var j = 0; j < 6; j++ ) {
+
+				var geometry = new THREE.BoxGeometry( 25, 40, 25 );
+				var material = new THREE.MeshPhongMaterial( { color: colors[ i ], transparent: true });
+				var button = new THREE.Mesh( geometry, material );
+				button.position.set( i * 30 - 50, -50, j * 30 - 80 );
+				button.currentHex = button.material.emissive.getHex();
+				button.material.opacity = 0.15;
+				button.castShadow = button.receiveShadow = true;
+				grid.add( button );
+
+
+				geometry = new THREE.BoxGeometry( 2, 2, 2 );
+				material = new THREE.MeshNormalMaterial();
+				ghost =  new THREE.Mesh( geometry, material );
+
+				scene.add( ghost )
+				ghosts.push( ghost )
+
+			}
+		}
+
+		handMesh.add( grid );
+		buttonMeshes.push ( grid );
+		return  grid;
+
+	}
+
+
+	function leapAnimate( frame ) {
+
+		var countBones = 0;
+		var countButtons = 0;
+
+		for ( var i = 0; i < armMeshes.length; i++ ) {
+
+			scene.remove( armMeshes[ i ] );
+			scene.remove( handMeshes[ i ] );
+
+		}
+
+		for ( i = 0; i < boneMeshes.length; i++ ) {
+
+			scene.remove( boneMeshes[ i ] );
+			buttonMeshes[ 0 ].children[ i ].material.opacity = 0.15;
+			buttonMeshes[ 0 ].children[ i ].material.emissive.setHex( button.currentHex );
+
+		}
+
+		for ( i = 0; i < 30; i++ ) {
+
+			scene.remove( ghosts[ i ] );
+
+
+		}
+
+		for ( var i = 0; i < frame.hands.length; i++ ) {
+
+			hand = frame.hands[ i ];
+
+			for ( var j = 0; j < hand.fingers.length; j++ ) {
+
+				finger = hand.fingers[ j ];
+
+				for ( var k = 0; k < finger.bones.length; k++ ) {
+
+					if ( k === 0 && j === 0 ) continue;
+
+					var bone = finger.bones[ k ];
+					var boneMesh = boneMeshes [ countBones++ ] || makeMesh( boneMeshes );
+					updateMesh( bone, boneMesh );
+
+				}
+
+			}
+
+			handMesh = handMeshes [ i ] || ( makeMesh( handMeshes ) );
+			handMesh.position.fromArray( hand.palmPosition );
+//			handMesh.setRotationFromMatrix( ( new THREE.Matrix4 ).fromArray( hand.rotationMatrix() ) );
+//			handMesh.quaternion.multiply( baseBoneRotation );
+			handMesh.rotation.set( hand.pitch(), - hand.yaw(), hand.roll() );
+
+			scene.add( handMesh );
+
+			buttonMesh = buttonMeshes [ i ] || ( addButtonGrid() );
+			buttonMesh.position.y = 150 - hand.palmPosition[ 1 ];
+
+			for ( var tip = 0; tip < 5; tip++ ) {
+
+				boneM = boneMeshes[ 4 * tip + 2 ];
+				boneM.updateMatrixWorld();
+				boneM.material.opacity = 0.15;
+				firstBB = new THREE.Box3().setFromObject( boneM );
+
+				for ( var but = 0; but < buttonMeshes[ 0 ].children.length; but++ ) {
+
+						button = buttonMeshes[ 0 ].children[ but ];
+						button.updateMatrixWorld();
+
+						secondBB = new THREE.Box3().setFromObject( button );
+
+
+ghosts[ but ].position.copy( secondBB.max );
+scene.add( ghosts[ but ] )
+
+ 
+//info.innerText = `1: ${firstBB.max.toArray()}  ${firstBB.min.toArray()} \n 2: ${secondBB.max.toArray()}  ${secondBB.min.toArray()}`;
+
+						if ( firstBB.isIntersectionBox( secondBB ) === true ) {
+
+							button.material.opacity = 1;
+							button.material.emissive.setHex( 0x666666 );
+
+						} else {
+
+//							button.material.opacity = 0.15;
+//							button.material.emissive.setHex( button.currentHex );
+
+						}
+
+					}
+
+			}
+
+			var arm = hand.arm;
+			var armMesh = armMeshes [ i ] || makeMesh( armMeshes );
+			updateMesh( arm, armMesh );
+			armMesh.scale.set( arm.width / 4, arm.width / 2, arm.length );
+
+		}
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+
+	}
+
+</script>
+</body>
+</html>

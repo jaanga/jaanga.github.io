@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
@@ -14,6 +14,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
 <!--
 <script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
 -->
@@ -30,15 +31,27 @@
 	function init() {
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =`body { font: 12pt monospace; margin: 0; overflow: hidden; }
-#aa {text-decoration: none; }
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin:0; }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 30px; position: absolute; }
+
 		`;
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.style.cssText = 'margin: 0 30px; position: absolute; ';
-		menu.innerHTML = `<h2 style=margin:0; ><a href="" >${document.title}</a>
-			<a id=aa href=http://jaanga.github.io/ >&#x24D8;</a></h2>
+		menu.id= 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/ > &#x24D8; </a>
+			</h2>
 			<div id=info ></div>
+
 		`;
 
 		stats = new Stats();
@@ -57,28 +70,20 @@
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
-
 // see http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js
-
 
 		toggleGroundBoxLights();
 		toggleAxis();
-		toggleGradient();
+		toggleBackgroundGradient();
 		toggleAutoRotate();
 
-		addLights();
+		addWindowResize();
+		addLights( 200 );
+		addShadows();
+
 		toggleTrylonPerisphere();
 		trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );
 
-	}
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 

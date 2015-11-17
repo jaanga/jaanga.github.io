@@ -32,12 +32,15 @@
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
-			`body { font: 12pt monospace; margin: 0; overflow: hidden; }
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			#aa {text-decoration: none; }
 
 			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
 			input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
 			input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
 		`;
 
 		info = document.body.appendChild( document.createElement( 'div' ) );
@@ -51,6 +54,7 @@
 			<div id=handData ></div>
 			<div id=fingerData ></div>
 			<div id=touchData style=padding:10px;  ></div>
+
 		`;
 
 		stats = new Stats();

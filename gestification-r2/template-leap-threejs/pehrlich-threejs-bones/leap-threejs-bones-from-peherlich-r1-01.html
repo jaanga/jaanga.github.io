@@ -13,13 +13,13 @@
 <script>
 
 	var baseBoneRotation = ( new THREE.Quaternion ).setFromEuler( new THREE.Euler( 0, 0, Math.PI / 2 ) );
+
 	var armMeshes = [];
 	var boneMeshes = [];
 
 	var stats, renderer, scene, camera, controls;
 
 	init();
-	Leap.loop( {background: true}, leappAnimate ).connect();
 
 	function init() {
 
@@ -67,11 +67,13 @@
 
 // helpers
 		var gridHelper = new THREE.GridHelper( 150, 10 );
+		gridHelper.position.set( 0, 0, 0 );
 		scene.add( gridHelper );
 
 		var axisHelper = new THREE.AxisHelper( 150 );
 		scene.add( axisHelper );
 
+// assets
 		var geometry = new THREE.BoxGeometry( 300, 20, 300 );
 		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
@@ -100,18 +102,8 @@
 
 	}
 
-	function updateMesh( bone, mesh ) {
-
-			mesh.position.fromArray( bone.center() );
-			mesh.setRotationFromMatrix( ( new THREE.Matrix4 ).fromArray( bone.matrix() ) );
-			mesh.quaternion.multiply( baseBoneRotation );
-			mesh.scale.set( bone.width, bone.width, bone.length );
-
-			scene.add( mesh );
-
-	}
-
-	function leapAnimate( frame ) {
+	
+	function loopanimate( frame ) {
 
 		var count = 0;
 
@@ -141,16 +133,29 @@
 
 					var bone = finger.bones[ k ];
 					var boneMesh = boneMeshes [ count++ ] || makeMesh( boneMeshes );
-					updateMesh( bone, boneMesh );
+					boneMesh.position.fromArray( bone.center() );
+					boneMesh.setRotationFromMatrix( ( new THREE.Matrix4 ).fromArray( bone.matrix() ) );
+					boneMesh.quaternion.multiply( baseBoneRotation );
+					boneMesh.scale.set( bone.width, bone.width, bone.length );
+
+					scene.add( boneMesh );
 
 				}
 
 			}
 
-			var arm = hand.arm;
+		}
+
+		for ( i = 0; i < frame.hands.length; i++ ) {
+
+			var arm = frame.hands[ i ].arm;
 			var armMesh = armMeshes [ i ] || makeMesh( armMeshes );
-			updateMesh( arm, armMesh );
+			armMesh.position.fromArray( arm.center() );
+			armMesh.setRotationFromMatrix( ( new THREE.Matrix4 ).fromArray( arm.matrix() ) );
+			armMesh.quaternion.multiply( baseBoneRotation );
 			armMesh.scale.set( arm.width / 4, arm.width / 2, arm.length );
+
+			scene.add( armMesh );
 
 		}
 
@@ -159,6 +164,10 @@
 		stats.update();
 
 	}
+
+	loop = Leap.loop( loopanimate );
+
+	Leap.loopController.setBackground( true );
 
 </script>
 </body>
