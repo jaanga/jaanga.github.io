@@ -52,7 +52,30 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 ## The Scripts
 
-[Flick to Select Leap Three.js R3 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r2/flick-to-select-leap-threejs-r3.html )
+[Flick to Select Leap Three.js R4 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r4/flick-to-select-leap-threejs-r4.html )
+
+* Based on new Template Leap Three.js R9
+	* Bones placed more accurately
+	* No more gimbal lock issues
+	* Thanks to Peter Ehrlich for the linear algebra
+* Intent is that you can operate the device with your elbow resting on the table and only rotating your forearm and moving your hand
+	* Distance between finger tips and keys is relative to hand/palm height above Leap device
+		* Real-time self-adjusting
+		* The higher the hand the further away the keys/buttons and vice versa
+	Other controls and stability measures: to be added
+* Displays six rows of five buttons
+	* Intention is to help - but not limited to - simulate five fingers playing chords on a six string guitar
+	* The intent is that a guitar player experienced in looking at chord diagrams will instantly recognize what is going on and can start playing immediately
+	* Could be used in situations that require multiple simultaneous button pushes
+	* Think of it as multiple rows of radio buttons that you can press at once
+* Still at a very early stage of development
+	* Intersection of fingers and buttons not in sync with what you see
+	* Buttons lighting up not linked to anything
+* Intent is to display the needs/requirements scene and then see it the Leap data can be curated to suit the needs
+
+
+
+[Flick to Select Leap Three.js R3 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r3/flick-to-select-leap-threejs-r3.html )
 
 * Move non-essential assets to assets.js
 * Long strings to ES 6 style

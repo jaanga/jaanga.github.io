@@ -57,7 +57,7 @@
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/gestification-r2/template-leap-threejs/pehrlich-threejs-bones/ >&#x24D8;</a>
+				<a id=aa href=http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ >&#x24D8;</a>
 			</h2>
 			<div id=info ></div>
 ` +
@@ -81,29 +81,28 @@
 		camera.position.set( -500, 500, 500 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.enableKeys = false;
 		controls.maxDistance = 1000;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update(); 
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
+//		window.addEventListener( 'resize', onWindowResize, false );
 
 // pretty but very non-essential assets. See jaanga-assets-for-threejs.js
 		toggleGroundBoxLights( 500 );
 		toggleAxis( 250 );
 		toggleGradient();
 //		toggleAutoRotate();
+
+		addWindowResize();
 		addLights( 300 );
+		addShadows();
+
 		toggleTrylonPerisphere();
 		trylonPerisphere.scale.set( 2, 2, 2 );
-
-	}
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 
