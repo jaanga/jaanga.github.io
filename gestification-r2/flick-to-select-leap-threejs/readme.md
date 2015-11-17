@@ -10,8 +10,8 @@
 
 ## Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r4/flick-to-select-leap-threejs-r4.html width=100% height=600px ></iframe>  
-###### _Flick to Select Leap Three.js - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r4/flick-to-select-leap-threejs-r4.html   )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r5-spheres/flick-to-select-leap-threejs-r5.html width=100% height=600px ></iframe>  
+###### _Flick to Select Leap Three.js - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r5-spheres/flick-to-select-leap-threejs-r5.html   )
 
 
 ## Concept
@@ -51,6 +51,11 @@ When virtual hands, you may want to change or selections options fairly continuo
 * Prevent background colors from being too dark 
 
 ## The Scripts
+
+[Flick to Select Leap Three.js R5 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r5-spheres/flick-to-select-leap-threejs-r5.html )
+
+* Uses spheres as buttons and sphere.isntersevtionBox( sphere )
+	* Seems to be working quite well
 
 [Flick to Select Leap Three.js R4 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r4/flick-to-select-leap-threejs-r4.html )
 

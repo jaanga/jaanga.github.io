@@ -36,9 +36,8 @@ I have started investigating this idea - using the Three.js JavaScript library. 
 
 ![flick to select 3]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/images/flick-to-select-03.jpg )
 
-Items of interest:
-
-The typical way in Three.js - and many other apps - to interact with objects is with a ray caster. 
+One item of interest in the demo is it goes against the typical way in Three.js - and many other apps - 
+use to interact with objects  which is with a ray caster. 
 This works well, but it often means that you have to get the angle of the ray just right.
 My guess is that guitar players form innumerable angles when they compose their fingers into a chord. 
 Arriving a a typical solution is doable, but will eventually involve gathering huge amounts of statistics in order to discern what the typical patterns mean.
@@ -47,7 +46,7 @@ This will follow the ways Google have created to translate languages - by keepin
 Using ray casters is not wrong, I just think it might be interesting to explore other means. 
 One method is to see if one object is inside another object. 
 In a previous release I tried the Three.js isInterestionBox feature, but this was a fail when the button faces are non-orthogonal with the world coordinate system 
-In the latest release, the buttons are spheres and sphere.intersects( sphere ) appears to be working very well.
+In the latest release, the buttons are spheres and sphere.intersects( sphere ) appears to be working fairly well.
 
 If you play with the demo, you should be able tp make the buttons light up like a Christmas tree.
 
@@ -55,18 +54,18 @@ As you move your hand up and down the keyboard gets further and closer to your h
 Nonetheless it is still virtually impossible to hit all thirty keys.
 So there's a a ton more things to be done.
 
-But the idea is this: 
+But the eventual goal is this: 
 
 * You should be able to keep your elbow on the table or resting against your body and still be able to touch all the keys.
 In other words, using this script will not tire your arms in a few minutes.
 * You can do much playing without looking at the screen. Just knowing where to play your fingers in relation to each other is good enough.
 * Your skills playing cords on a guitar are transferable to the Leap and vice versa. The user experience looks and feels the same.
 
-Having said that, there's nothing stopping this effort - as Zach is already doing - at v=creating new and interesting multiple button pushing experiences.
+Having said that, there's nothing stopping this effort - as Zach is already doing - at creating new and interesting multiple button pushing experiences.
 For example, playing chords on a guitar is - in essence - based on a 2D X and Y selection system.
 This begs the questions: What does a 3D guitar look like?
 
-Demo: [Flick to Select Leap Three.js R4 - Demo - Full Screen]( )
+Demo: [Flick to Select Leap Three.js R5 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r5-spheres/flick-to-select-leap-threejs-r5.html)
 
 Source cose: [ Flick to Select Read Me]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ )
 
