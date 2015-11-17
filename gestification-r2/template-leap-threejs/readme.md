@@ -12,7 +12,7 @@
 ## Web Page / Source Code
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/template-leap-threejs/r9/template-leap-threejs-r9.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/template-leap-threejs/session-r6/template-leap-threejs-session-r6.html  )
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/gestification-r2/template-leap-threejs/r9/template-leap-threejs-r9.html  )
 
 
 ## Concept
@@ -49,6 +49,13 @@ Scripts written in JavaScript derivatives are not always readable by large group
 
 ## Features
 
+* 100% beginner JavaScript
+	* No need to know jQuery or anything besides JavaScript
+	* Real-time updates to 30 bones, palm and arm
+	* Minimal jerkiness or gimbal lock
+* 3D built on Three.js library
+	* Provides real-time zoom, pan and rotate
+
 
 ## Issues
 
@@ -59,6 +66,8 @@ Scripts written in JavaScript derivatives are not always readable by large group
 ## Contact
 
 * jaanga@googlegroups.com
+
+* https://github.com/jaanga/jaanga.github.io/issues
 
 ## Copyright and License
 
