@@ -34,7 +34,7 @@ Given thirty keys to push, can you press them in the correct pattern in a Leap s
 
 I have started investigating this idea - using the Three.js JavaScript library. Here is a screen capture of what I have so far:
 
-![]()
+![flick to select 3]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/images/flick-to-select-03.jpg )
 
 Items of interest:
 
@@ -65,6 +65,10 @@ In other words, using this script will not tire your arms in a few minutes.
 Having said that, there's nothing stopping this effort - as Zach is already doing - at v=creating new and interesting multiple button pushing experiences.
 For example, playing chords on a guitar is - in essence - based on a 2D X and Y selection system.
 This begs the questions: What does a 3D guitar look like?
+
+Demo: [Flick to Select Leap Three.js R4 - Demo - Full Screen]( )
+
+Source cose: [ Flick to Select Read Me]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/ )
 
 
 
