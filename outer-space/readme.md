@@ -169,7 +169,8 @@ _We like things that are practical, pedagogical and provocative..._
 
 * Think of ways of hooking up NASA photo locations with 3D
 * Add more celestial bodies
-
+* Build a virtual Galilean telescope and use it to view a virtual 3D moon
+* Build a 3D ptolemeic orrery
 
 ### Code
 
