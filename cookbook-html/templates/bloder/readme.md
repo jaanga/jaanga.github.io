@@ -40,6 +40,7 @@ _Is it OK to call a coder's blog a 'bloder'?_
 ### Reminders
 
 * Add links to dev notes where appropriate, from blogs?
+* Add fun [unicode emoji]( http://unicode.org/emoji/charts/full-emoji-list.html ) wherever
 
 ## Isues
 
