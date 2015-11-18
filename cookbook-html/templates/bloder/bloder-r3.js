@@ -1,7 +1,7 @@
 
 	var posts = [];
 	var postsStart = 0;
-	var postsNumberToDisplay = 2;
+	var postsNumberToDisplay = 8;
 	var contents = [];
 
 	var converter = new showdown.Converter();

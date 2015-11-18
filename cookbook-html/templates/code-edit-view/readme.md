@@ -44,6 +44,7 @@ Becomes wonderfully complicated when called upon to load itself - as shown above
 
 ## Things to Do / Road Map
 
+* Add ability to view the HTML file but code the JavaScript file
 
 ## Features
 

@@ -55,6 +55,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 ## Contact
 
 * jaanga@googlegroups.com
+* https://github.com/jaanga/jaanga.github.io/issues
 
 ## Copyright and License
 

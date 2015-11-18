@@ -1,9 +1,11 @@
-
+﻿
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/bloder/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/bloder'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[bloder read me]( index.html )
+[Bloder read me]( index.html )
 ==
+
+_Is it OK to call a coder's blog a 'bloder'?_
 
 ### Template
 
@@ -24,6 +26,7 @@
 	* Or will this slow things down
 	* Note: Showdown has frequent updates
 * Add copyright notice
+* Add Code Edit View to this read me
 
 ### Big Picture
 
@@ -38,7 +41,9 @@
 
 * Add links to dev notes where appropriate, from blogs?
 
+## Isues
 
+* What to do with next/previous buttons on single post pages 
 
 ## Change Log
 
@@ -57,3 +62,19 @@
 * Find way to force post to display in correct date order << 2015-11-11 ~ looking good
 * Separate out Jaanga blog from template << done
 * Rename from 'get' to 'request' << done
+
+
+## Contact
+
+* jaanga@googlegroups.com
+* https://github.com/jaanga/jaanga.github.io/issues
+
+## Copyright and License
+
+* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+
+***
+
+<center title="dingbat" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
+</center>
