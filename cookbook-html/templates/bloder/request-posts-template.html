@@ -42,34 +42,17 @@
 			<a href=http://jaanga.github.io >Jaanga</a> » <a href=http://jaanga.github.io/cookbook-html/ >Cookbook HTML</a> » <a href=http://jaanga.github.io/cookbook-html/templates/ >Templates</a> »
 			<h1>
 				<a href='' >💬 ${ document.title } </a> 
-				<a id=aa href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/bloder/ > 🛈 </a>
 
+				<a id=aa href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/bloder/ > 🛈 </a>
 			</h1>
 			<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>
+
+
 
 			<hr>
 			<div id=postsText ></div>
 
 		`;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		footer =
 		`
@@ -95,6 +78,8 @@
 
 		if ( location.hash !== '' ) {
 
+
+
 			requestPost( location.hash.substr( 1 ), 0, 1 );
 
 		} else {
@@ -102,6 +87,7 @@
 			tags = '';
 
 			posts = [];
+
 
 			requestPostTitles();
 
