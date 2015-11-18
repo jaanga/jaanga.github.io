@@ -52,13 +52,15 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 ## The Scripts
 
-[Flick to Select Leap Three.js R5 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r5-spheres/flick-to-select-leap-threejs-r5.html )
+### [Flick to Select Leap Three.js R5 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r5-spheres/flick-to-select-leap-threejs-r5.html )
 
+* See post on Leap Motion forum [A Leap Keypad - Flick to Select - an ongoing Three.js JavaScript project]( https://community.leapmotion.com/t/a-leap-keypad-flick-to-select-an-ongoing-three-js-javascript-project/4380 )
 * Uses spheres as buttons and sphere.isntersevtionBox( sphere )
 	* Seems to be working quite well
 
-[Flick to Select Leap Three.js R4 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r4/flick-to-select-leap-threejs-r4.html )
+### [Flick to Select Leap Three.js R4 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r4/flick-to-select-leap-threejs-r4.html )
 
+* See [3D Jam: Virtual Guitar]( https://community.leapmotion.com/t/3d-jam-virtual-guitar/3193/55 )
 * Based on new Template Leap Three.js R9
 	* Bones placed more accurately
 	* No more gimbal lock issues
@@ -80,19 +82,19 @@ When virtual hands, you may want to change or selections options fairly continuo
 
 
 
-[Flick to Select Leap Three.js R3 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r3/flick-to-select-leap-threejs-r3.html )
+### [Flick to Select Leap Three.js R3 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r3/flick-to-select-leap-threejs-r3.html )
 
 * Move non-essential assets to assets.js
 * Long strings to ES 6 style
 * Code clean-up
 
-[Flick to Select Leap Three.js R2 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r2/flick-to-select-leap-threejs-r2.html )
+### [Flick to Select Leap Three.js R2 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r2/flick-to-select-leap-threejs-r2.html )
 
 * Options move as one entity
 * Slider to adjust distance between options and palm
 * Improved finger tacking
    
-[Flick to Select Leap Three.js R1 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r1/flick-to-select-leap-threejs-r1.html )
+### [Flick to Select Leap Three.js R1 - Demo - Full Screen]( http://jaanga.github.io/gestification-r2/flick-to-select-leap-threejs/r1/flick-to-select-leap-threejs-r1.html )
 
 * First commit
 
@@ -115,7 +117,8 @@ When virtual hands, you may want to change or selections options fairly continuo
 * Finger tips have gimbal lock issues
 
 ## Sources
-This effort arrises from questions on a Leap forum
+
+This effort arises from questions on a Leap forum
 
 * [3D Jam: Virtual Guitar]( https://community.leapmotion.com/t/3d-jam-virtual-guitar/3193 )
 

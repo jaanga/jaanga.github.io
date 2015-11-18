@@ -1,7 +1,15 @@
 [dev notes read me]( index.html#dev-notes.md )
 ===
 
-2015-11-12 ~ Theo
+
+### 2015-11-17 ~ Theo
+
+* Flick to Select
+* Template
+* Blog Post
+* General clean-up
+
+### 2015-11-12 ~ Theo
 
 Working on gimbal lock issues
 

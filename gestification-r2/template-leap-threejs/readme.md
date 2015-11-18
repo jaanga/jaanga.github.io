@@ -51,11 +51,22 @@ Scripts written in JavaScript derivatives are not always readable by large group
 
 * 100% beginner JavaScript
 	* No need to know jQuery or anything besides JavaScript
-	* Real-time updates to 30 bones, palm and arm
+	* Real-time updates to 30 bones per hand
 	* Minimal jerkiness or gimbal lock
-* 3D built on Three.js library
+* 3D built on Three.js library features
 	* Provides real-time zoom, pan and rotate
-
+	* Provides frames per second statistics
+* Follows closely the Three.js coding style
+	* If you are familiar with the [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ) then you can move here seamlessly
+	* Follows the [Mr.doob Coding Style]( https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2 )
+	* Uses the Init() function and repplaces the animate() function with the loop() function
+	* All function are functions - not variables
+	* Follows the [Three.js aim]( https://github.com/mrdoob/three.js ): 
+The aim of the project is to create a lightweight 3D library with a very low level of complexity — in other words, for dummies.
+* Exposes the minimum Leap technology that still give plenty of room to play
+	* No Leap plugins required
+	* Yet full access to all Leap components
+	* inspired by Peter Ehrlich's [Three.js Bones]( view-source:http://leapmotion.github.io/leapjs/examples/threejs-bones.html )
 
 ## Issues
 
