@@ -7,28 +7,45 @@
 
 ### Template
 
-* [get-posts.html]( get-posts.html )
+* [request-posts-template.html]( request-posts-template.html )
 
-### Snippets
+### Users
 
-[request-posts-basic.html]( request-posts-basic.html )
+* [Jaanga Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
+* [Outer Space Blog]( http://jaanga.github.io/outer-space/get-posts.html )
+* [Gestification Blog]( http://jaanga.github.io/gestification-r2/request-gestification-blog-posts.html )
 
-[request-posts-sequence-by-id.html]( request-posts-sequence-by-id.html )
 
 ## Things to Do / Road Map
 
+* Add links to blog tags
+* Enable multiple tags in post titles
+* load Showdown from bloder
+	* Or will this slow things down
+	* Note: Showdown has frequent updates
+* Add copyright notice
+
+### Big Picture
+
+* Add a special font, colors, zippier layout?
 * Think of using GitHub gists as an alternative
 	* Inbuilt comments
 	* Inbuilt Markdown interpreter
-	* Godd API support
-* Add a special font, colors, zippier layout?
-* Add next/previous number of posts capability >> urgent
-* Add links to blog tags
-* Add links to dev notes where appropriate, from blog?
-* load showdown from bloder
-* Add copyright notice
+	* Good API support
+* But Gists are tied to people not organizations maybe
+
+### Reminders
+
+* Add links to dev notes where appropriate, from blogs?
+
+
 
 ## Change Log
+
+### 2015-11-18 ~ Theo
+
+* Add next/previous number of posts capability >> urgent << easier than I thought, just update the start in the for loop
+* Added style to next/previous
 
 ### 2015-11-17 ~ Theo
 
