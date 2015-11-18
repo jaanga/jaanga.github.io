@@ -95,7 +95,7 @@
 
 			titleLength = xmlHttp.responseText.indexOf( '===' );
 
-			title = '[' + xmlHttp.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )';
+			title = '[' + xmlHttp.responseText.substr( 0, titleLength - 1 ) + ']( #' + postsFolder + fileName + ' )';
 
 			txt = converter.makeHtml( txt + title + xmlHttp.responseText.substr( titleLength - 1 )  ) + '<hr>';
 

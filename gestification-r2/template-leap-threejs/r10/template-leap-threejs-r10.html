@@ -60,9 +60,6 @@
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 1000;
-		controls.dampingFactor = 0.25;
-		controls.enableDamping = true;
-		controls.update();
 
 		scene = new THREE.Scene();
 
@@ -116,34 +113,21 @@
 
 	function leapAnimate( frame ) {
 
-		var count = 0;
+		var countBones = 0;
+		var countArms = 0;
 
-		for ( i = 0; i < armMeshes.length; i++ ) {
+		armMeshes.forEach( function( item ) { scene.remove( item ) } );
+		boneMeshes.forEach( function( item ) { scene.remove( item ) } );
 
-			scene.remove( armMeshes[ i ] )
+		for ( var hand of frame.hands ) {
 
-		}
+			for ( var finger of hand.fingers ) {
 
-		for ( i = 0; i < boneMeshes.length; i++ ) {
+				for ( var bone of finger.bones ) {
 
-			scene.remove( boneMeshes[ i ] )
+					if ( countBones++ === 0 ) { continue; }
 
-		}
-
-		for ( i = 0; i < frame.hands.length; i++ ) {
-
-			hand = frame.hands[ i ];
-
-			for ( var j = 0; j < hand.fingers.length; j++ ) {
-
-				finger = hand.fingers[ j ];
-
-				for ( var k = 0; k < finger.bones.length; k++ ) {
-
-					if ( k === 0 && j === 0 ) continue;
-
-					var bone = finger.bones[ k ];
-					var boneMesh = boneMeshes [ count++ ] || addMesh( boneMeshes );
+					var boneMesh = boneMeshes [ countBones ] || addMesh( boneMeshes );
 					updateMesh( bone, boneMesh );
 
 				}
@@ -151,7 +135,7 @@
 			}
 
 			var arm = hand.arm;
-			var armMesh = armMeshes [ i ] || addMesh( armMeshes );
+			var armMesh = armMeshes [ countArms++ ] || addMesh( armMeshes );
 			updateMesh( arm, armMesh );
 			armMesh.scale.set( arm.width / 4, arm.width / 2, arm.length );
 
