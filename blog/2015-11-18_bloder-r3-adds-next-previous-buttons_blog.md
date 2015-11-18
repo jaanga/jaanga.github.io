@@ -1,5 +1,5 @@
 Bloder R3 Adds Next and Previous Buttons
-==
+===
 
 The following Jaanga blogs have been updated to call the [Bloder R3]( http://jaanga.github.io/cookbook-html/templates/bloder/ ) script
 
