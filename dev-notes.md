@@ -3,6 +3,11 @@
 [jaanga dev notes]( index.html#dev-notes )
 ==
 
+## 2015-11-18 ~ Theo
+
+* Update blog scripts
+
+
 ## 2015-11-17 ~ Theo
 
 * Much effort on Leap
