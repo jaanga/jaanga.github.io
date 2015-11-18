@@ -9,33 +9,38 @@
 <script src=bloder-dev.js ></script>
 <script>
 
-//	var apiUrl = https://api.github.com/repositories/5941753/contents/blog
+//	var apiUrl = 'https://api.github.com/repositories/5941753/contents/blog';
 	var apiUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/blog';
 
-	if ( document.location.origin === 'http://' ) {
+//	if ( document.location.origin === 'http://' ) {
 
 		var postsFolder = 'http://jaanga.github.io/blog/';
 
+/*
+// mucks up title
 	} else {
 
 		postsFolder = '../../../blog/';
 
 	}
-
+*/
 	init();
 
 	function init() {
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML =
-			`body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+		`
+
+			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
 			h2, a { margin: 0; }
 			h1 a, #i { text-decoration: none; }
 			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
+
 		`;
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
-
+		content.id = 'content'
 		content.innerHTML = header = 
 			'<p>' +
 				'<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/bloder/get-posts.html "View file as a web page." ) </span>' +
@@ -52,7 +57,7 @@
 			'<div id=postsText ></div>' +
 		'';
 
-		window.addEventListener("hashchange", hashChange, false);
+		window.addEventListener( 'hashchange', hashChange, false );
 
 		hashChange();
 

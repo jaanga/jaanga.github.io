@@ -23,14 +23,17 @@
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML =
-			`body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+		`
+
+			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
 			h2, a { margin: 0; }
 			h1 a, #i { text-decoration: none; }
 			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
+
 		`;
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
-
+		content.id = 'content';
 		content.innerHTML = header = 
 		`
 
@@ -38,10 +41,10 @@
 				<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/bloder/get-posts.html "View file as a web page." ) </span>
 				<input onclick=window.location.href="https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/bloder/"; type=button value="You are now in a GitHub web page view - Click this button to view Blog Read Me file as source code" />
 			</p>
-			<a href=http://jaanga.github.io >Jaanga</a> » <a href=http://jaanga.github.io/cookbook-html/ >Cookbook HTML</a> » <a href=http://jaanga.github.io/cookbook-html/templates/ >Templates</a> »
+			<a href=http://jaanga.github.io >Jaanga</a> »
 			<h1>
 				<a href="" >Jaanga Blog</a> 
-				<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/bloder/ >&#x24D8;</a>
+				<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/blog/ >🛈</a>
 			</h1>
 			<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>
 
@@ -50,7 +53,7 @@
 
 		`;
 
-		window.addEventListener("hashchange", hashChange, false);
+		window.addEventListener( 'hashchange', hashChange, false );
 
 		hashChange();
 
