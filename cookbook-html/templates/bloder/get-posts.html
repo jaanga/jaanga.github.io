@@ -5,13 +5,22 @@
 <meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script src=bloder-dev.js ></script>
 <script>
 
 //	var apiUrl = https://api.github.com/repositories/5941753/contents/blog
 	var apiUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/blog';
-	var postsFolder = 'http://jaanga.github.io/blog/';
+
+	if ( document.location.origin === 'http://' ) {
+
+		var postsFolder = 'http://jaanga.github.io/blog/';
+
+	} else {
+
+		postsFolder = '../../../blog/';
+
+	}
 
 	init();
 
@@ -64,7 +73,6 @@
 			requestPostTitles();
 
 		}
-
 
 	}
 

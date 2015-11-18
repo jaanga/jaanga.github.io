@@ -2,7 +2,7 @@
 
 	var posts = [];
 	var contents = [];
-	var numberOfPostsToDisplay = 12;
+	var numberOfPostsToDisplay = 13;
 	var converter = new showdown.Converter();
 
 	function requestPostTitles( tags ) {
@@ -59,7 +59,7 @@
 			}
 
 			posts.sort( function( a, b ){return b.date - a.date } );
-
+console.log( posts );
 			for ( var i = 0; i < numberOfPostsToDisplay; i++ ) {
 
 				requestPost ( posts[ i ].name, i, numberOfPostsToDisplay );
@@ -95,7 +95,7 @@
 
 			titleLength = xmlHttp.responseText.indexOf( '===' );
 
-			title = '[' + xmlHttp.responseText.substr( 0, titleLength - 1 ) + ']( #' + postsFolder + fileName + ' )';
+			title = '[' + xmlHttp.responseText.substr( 0, titleLength - 2 ) + ']( #' + fileName + ' )';
 
 			txt = converter.makeHtml( txt + title + xmlHttp.responseText.substr( titleLength - 1 )  ) + '<hr>';
 
