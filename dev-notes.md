@@ -3,6 +3,13 @@
 [jaanga dev notes]( index.html#dev-notes )
 ==
 
+## 2015-11-17 ~ Theo
+
+* Much effort on Leap
+* Blog post out
+* Bloder played with
+
+
 ## 2015-11-12 ~ Theo
 
 bloder-dev looking good

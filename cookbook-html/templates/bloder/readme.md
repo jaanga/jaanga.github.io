@@ -5,25 +5,38 @@
 [bloder read me]( index.html )
 ==
 
-Template
+### Template
 
-[get-posts.html]( get-posts.html )
+* [get-posts.html]( get-posts.html )
+
+### Snippets
 
 [request-posts-basic.html]( request-posts-basic.html )
 
 [request-posts-sequence-by-id.html]( request-posts-sequence-by-id.html )
 
-## Road Map
+## Things to Do / Road Map
 
+* Think of using GitHub gists as an alternative
+	* Inbuilt comments
+	* Inbuilt Markdown interpreter
+	* Godd API support
+* Add a special font, colors, zippier layout?
 * Add next/previous number of posts capability >> urgent
 * Add links to blog tags
 * Add links to dev notes where appropriate, from blog?
-* Find way to force post to display in correct date order << 2015-11-11 ~ looking good
 * load showdown from bloder
 * Add copyright notice
 
 ## Change Log
 
+### 2015-11-17 ~ Theo
 
+* Tidied/updated things up a bit
+
+
+### older
+
+* Find way to force post to display in correct date order << 2015-11-11 ~ looking good
 * Separate out Jaanga blog from template << done
 * Rename from 'get' to 'request' << done
