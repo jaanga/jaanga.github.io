@@ -5,6 +5,8 @@
 [Tutorials Read Me]( ./index.html )
 ===
 
+Welcome Isaac Kendell, ace quality assurance specialist!
+
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
@@ -27,39 +29,45 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-Learning how to program is an educational process. As with most educational processes, the task is to open up your mind to new ways of thinking.
-The processes may take a long time, have many false directions and much may end up not be that useful.
+Learning how to program is an educational process. 
+As with most educational processes, the task is to open up your mind to new ways of thinking.
+The processes, however, may take a long time, have many false directions and much effort may end up not being that useful.
  
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-To create a just-in-time learning system, where you learn just enough to get some useful things done.
-
+To create a just-in-time free, open source learning system, where you learn just enough to design some useful things.
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
+To get more things designed better, faster and cheaper
+
 ## The Lessons
 
-[Three.js Lesson 1]( jaanga.github.io/tutorials/threejs-lesson-01/ )
+[Three.js Lesson 1]( http://jaanga.github.io/tutorials/threejs-lesson-01/ )
 
 
 ## Things to Do / Road Map
 
-
-## Features
+* To create a dozen or so lessons that get you to the stage where you can build Three.js scripts such as [Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
+and [Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html )
 
 <!--
+## Features
+
+
 * 1 finger / left button =  rotate
 * 2 finger / wheel = zoom in and out
 * 3 finger / right button = pan
--->
+
 
 ## Issues
 
  
 ## Sources
 
+-->
 
 ## Contact
 

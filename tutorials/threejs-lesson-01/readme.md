@@ -11,7 +11,7 @@
 ## <center>Web Page / Source Code</center>
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html )
+###### _Three.js Lesson 1 - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html )
 
 
 ## Concept
@@ -27,13 +27,12 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-Learning how to program is an educational process. As with most educational processes, the task is to open up your mind to new ways of thinking.
-The processes may take a long time, have many false directions and much may end up not be that useful.
- 
+If you are a an engineer or designer, the first thing you want to do is to create or edit new things. 
+
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-To create a just-in-time learning system, where you learn just enough to get some useful things done.
+To get you adding and editing objects in 3D ASAP
 
 
 ### Vision
@@ -42,6 +41,19 @@ To create a just-in-time learning system, where you learn just enough to get som
 
 ## Things to Try
 
+### 'Code Edit View' Editor
+
+* Change the view to horizontal and then back to vertical
+* Use the slider bar to shrink and expand the views
+* Edit the code and then click 'Update View' to see the results of your edits
+* Click the 'Edit full screen' link to get a big picture
+	* Watch out: you will lose your edits ( until we figure out how to keep them)
+* When things get really messed up, reload the page
+* If you like what you have done, click the 'Save to File' button
+	* Also use this button if you prefer to download the file and work with your own editor.
+
+
+### Drawing
 * Copy and paste the code for one of the boxes and use the code to add a new box in a new position
 * Add more boxes in more places, in more sizes with varying rotation
 * Add your name to the title of the lesson
@@ -59,9 +71,14 @@ To create a just-in-time learning system, where you learn just enough to get som
 
 ## Issues / Things to note
 
+* These lessons are built and test on the Google Chrome browse. They may/will have issues on other browsers
+	* Let us know if you really must use another browser and we will try to help 
 * Three.js inserts objects using the center point of the object - not using a corner as most CAD apps do
 * Three.js uses traditional computer graphics XYZ - the Z comes out of the screen and the Y points up
+* Any HTML file you download, can be clicked on to view in your browser
  
+
+
 ## Sources
 
 
