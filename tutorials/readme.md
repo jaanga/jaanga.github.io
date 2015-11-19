@@ -2,7 +2,7 @@
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/tutorials/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) »
-[Tutorials Read Me]( ./index.html#readme.md )
+[Tutorials Read Me]( ./index.html )
 ===
 
 <!--
