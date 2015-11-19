@@ -1,17 +1,17 @@
-﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/tutorials/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/tutorials/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/tutorials/threejs-lesson-01/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/tutorials/threejs-lesson-01/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Tutorials]( http://jaanga.github.io/tutorials/ ) »
 [Three.js Lesson 1 Read Me]( ./index.html#readme.md )
 ===
 
 
-[Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+[Three.js Lesson 1 - Full Screen]( http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html )
 
 ## <center>Web Page / Source Code</center>
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html )
 
 
 ## Concept
@@ -40,21 +40,31 @@ To create a just-in-time learning system, where you learn just enough to get som
 <!--  a descriptive picture of a desired future state -->
 
 
-## Things to Do / Road Map
+## Things to Try
+
+* Copy and paste the code for one of the boxes and use the code to add a new box in a new position
+* Add more boxes in more places, in more sizes with varying rotation
+* Add your name to the title of the lesson
+	* Change the text size to 24 point text
+* Make the sizes of the grid and axis indicator much larger and different from each other
+* Move the initial camera position so that you look almost straight down or from the side
 
 
 ## Features
 
-<!--
-* 1 finger / left button =  rotate
-* 2 finger / wheel = zoom in and out
-* 3 finger / right button = pan
--->
+* Rotate, Zoom and Pan
+	* 1 finger / left button =  rotate
+	* 2 finger / wheel = zoom in and out
+	* 3 finger / right button = pan
 
-## Issues
+## Issues / Things to note
 
+* Three.js inserts objects using the center point of the object - not using a corner as most CAD apps do
+* Three.js uses traditional computer graphics XYZ - the Z comes out of the screen and the Y points up
  
 ## Sources
+
+
 
 
 ## Contact

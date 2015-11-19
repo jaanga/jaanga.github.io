@@ -11,7 +11,7 @@
 <script>
 
 	var css, menu, stats, renderer, scene, camera, controls;
-	var geometry, material, mesh;
+	var geometry, material, box;
 
 	init();
 	animate();
@@ -47,28 +47,28 @@
 // assets
 		geometry = new THREE.BoxGeometry( 20, 20, 20 );
 		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 40, 10, 0 );
-		scene.add( mesh );
+		box = new THREE.Mesh( geometry, material );
+		box.position.set( 40, 10, 0 );
+		scene.add( box );
 
 		geometry = new THREE.BoxGeometry( 20, 50, 20 );
 		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, 25, -40 );
-		scene.add( mesh );
+		box = new THREE.Mesh( geometry, material );
+		box.position.set( 0, 25, -40 );
+		scene.add( box );
 
 		geometry = new THREE.BoxGeometry( 30, 30, 10 );
 		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -35, 15, 0 );
-		scene.add( mesh );
+		box = new THREE.Mesh( geometry, material );
+		box.position.set( -35, 15, 0 );
+		scene.add( box );
 
 		geometry = new THREE.BoxGeometry( 20, 10, 20 );
 		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, 15, 40 );
-		mesh.rotation.y = Math.PI / 4;  // JavaScript andles are in radians
-		scene.add( mesh );
+		box = new THREE.Mesh( geometry, material );
+		box.position.set( 0, 15, 40 );
+		box.rotation.y = Math.PI / 4;  // JavaScript angles are in radians
+		scene.add( box );
 
 	}
 
