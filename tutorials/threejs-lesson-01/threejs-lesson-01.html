@@ -24,7 +24,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
-		menu.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ';
+		menu.innerHTML = '<h2>' + document.title + '</h2>';
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );

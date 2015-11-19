@@ -6,7 +6,7 @@
 ===
 
 
-[Three.js Lesson 1 - Full Screen]( http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html )
+[Three.js Lesson 1 - just the drawing - Full Screen]( http://jaanga.github.io/tutorials/threejs-lesson-01/threejs-lesson-01.html )
 
 ## <center>Web Page / Source Code</center>
 
@@ -32,7 +32,7 @@ If you are a an engineer or designer, the first thing you want to do is to creat
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-To get you adding and editing objects in 3D ASAP
+To get you drawing and editing objects in 3D ASAP
 
 
 ### Vision
@@ -41,25 +41,32 @@ To get you adding and editing objects in 3D ASAP
 
 ## Things to Try
 
-### 'Code Edit View' Editor
+### 'Code Edit View' Editor (the two windows just above)
 
-* Change the view to horizontal and then back to vertical
+* Change the views to horizontal and then back to vertical
 * Use the slider bar to shrink and expand the views
+	* Click 'Update View' to center the drawing
 * Edit the code and then click 'Update View' to see the results of your edits
+	* See 'Drawing and Editing' just below for some ideas
 * Click the 'Edit full screen' link to get a big picture
-	* Watch out: you will lose your edits ( until we figure out how to keep them)
+	* Watch out: you will lose your edits (until we figure out how to keep them)
 * When things get really messed up, reload the page
 * If you like what you have done, click the 'Save to File' button
 	* Also use this button if you prefer to download the file and work with your own editor.
 
 
-### Drawing
-* Copy and paste the code for one of the boxes and use the code to add a new box in a new position
+### Drawing and Editing
+* Copy and paste the code (in the code view on the right) for one of the boxes and use the code to add a new box in a new position
 * Add more boxes in more places, in more sizes with varying rotation
 * Add your name to the title of the lesson
 	* Change the text size to 24 point text
 * Make the sizes of the grid and axis indicator much larger and different from each other
 * Move the initial camera position so that you look almost straight down or from the side
+
+A bit harder - do these only if you have the time
+
+* Can you add three blocks that are co-planar so that there is a hole in the middle that looks like a door?
+* Using four blocks can you make a wall with a window?
 
 
 ## Features
