@@ -77,6 +77,10 @@ _Years indicate latest date when significant effort was made_
 * [![Brain of Richard]( http://jaanga.github.io/home/images/4-Brain-of-Richard.png )<br>The Brain of Richard]( http://jaanga.github.io/brainofrichard/ ) 2012
 	* 3D compilations of hundreds of 2D scanned MRI images.
 
+
+* [![threejslesson-01]( http://jaanga.github.io/home/tutorials/images/threejs-lesson-01.jpg )<br>Tutorials]( http://jaanga.github.io/tutorials/ ) 2015
+	* Lessons to help you learn how to design things using Three.js
+
 ## Spin-Offs
 
 * [![WikiHouse]( http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png )<br>WikiHouse]( http://wikihouse.github.io/viewer-experiments/ ) 2015
