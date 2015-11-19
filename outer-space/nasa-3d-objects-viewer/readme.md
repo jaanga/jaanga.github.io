@@ -12,7 +12,7 @@
 ## Web Page / Source Code
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space//nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html width=100% height=600px ></iframe>  
-###### _NASA 3D Objects - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html  )
+###### _NASA 3D Objects - Dev revision - loading models in here fails - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/nasa-3d-objects-viewer-v-0-1-1.html  )
 
 
 ## Concept
@@ -31,11 +31,11 @@
 * Link objects to related NASA and Wikipedia pages
 * Show the trajectory of each object in a model of the solar system
 * Create a menu of curated objects that load quickly and look good
-
+* Bring external menu file into main HTML file
 
 ## Issues
 
-* Need a good code clean-up
+* Needs a good code clean-up
 
 ## Contact
 

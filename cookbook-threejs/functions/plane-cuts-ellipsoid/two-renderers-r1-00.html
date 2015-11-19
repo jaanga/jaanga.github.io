@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
@@ -17,9 +17,6 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script>
 
-	var width = 512
-	var height = 512;
-
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
@@ -32,7 +29,7 @@
 		css.innerHTML =
 		`
 
-			body { font: 12pt monospace; margin: 0; /* overflow: hidden; */ }
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			h2 { margin: 0 }
 			#aa {text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
@@ -46,7 +43,7 @@
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/ > 🛈 </a>
+				<a id=aa href=http://jaanga.github.io/ >&#x24D8;</a>
 			</h2>
 			<div id=info ></div>
 
@@ -57,7 +54,7 @@
 		document.body.appendChild( stats.domElement );
 
 		renderer1 = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-		renderer1.setSize( width, height );
+		renderer1.setSize( 512, 512 );
 		renderer1.domElement.style.cssText = 'border: 1px red solid; ';
 		document.body.appendChild( renderer1.domElement );
 
@@ -68,27 +65,25 @@
 		controls1.maxDistance = 800;
 
 		scene1 = new THREE.Scene();
-		scene1.add( camera1 );
 
 		renderer2 = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
-		renderer2.setSize( width, height );
-		renderer2.domElement.style.cssText = 'border: 1px green solid; left: 0; position: absolute; top: 0; z-index: 10; ';
+		renderer2.setSize( 512, 512 );
+		renderer2.domElement.style.cssText = 'border: 1px green solid; left: 0; position: absolute; z-index: -1; ';
 		document.body.appendChild( renderer2.domElement );
 
-		camera2 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera2.position.set( 100, 100, 100 );
+//		camera2 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+//		camera2.position.set( 100, 100, 100 );
 
-		controls2 = new THREE.OrbitControls( camera2, renderer2.domElement );
-		controls2.maxDistance = 800;
+//		controls2 = new THREE.OrbitControls( camera1, renderer2.domElement );
+//		controls2.maxDistance = 800;
 
 		scene2 = new THREE.Scene();
-		scene2.add( camera2 );
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
 // helpers
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, 12, 0 );
+		gridHelper.position.set( 0, 10, 0 );
 		scene1.add( gridHelper );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
@@ -118,34 +113,21 @@
 
 	function onWindowResize() {
 
-		camera1.aspect = window.innerWidth / window.innerHeight;
-		camera1.updateProjectionMatrix();
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
 
-		camera2.aspect = window.innerWidth / window.innerHeight;
-		camera2.updateProjectionMatrix();
-
-		renderer1.setSize( window.innerWidth, window.innerHeight );
-		renderer2.setSize( window.innerWidth, window.innerHeight );
+		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 
 	function animate() {
 
 		requestAnimationFrame( animate );
-
 		controls1.update();
-		controls2.update();
-
-		camera1.rotation.copy( camera2.rotation );
-		camera1.position.copy( camera2.position );
-
+//		controls2.update();
 		stats.update();
-
 		renderer1.render( scene1, camera1 );
-		renderer2.render( scene2, camera2 );
-
-
-
+		renderer2.render( scene2, camera1 );
 	}
 
 </script>

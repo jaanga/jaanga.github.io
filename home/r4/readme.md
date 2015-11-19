@@ -78,7 +78,7 @@ _Years indicate latest date when significant effort was made_
 	* 3D compilations of hundreds of 2D scanned MRI images.
 
 
-* [![threejs-lesson-01]( http://jaanga.github.io/home/tutorials/images/threejs-lesson-01.jpg )<br>Tutorials]( http://jaanga.github.io/tutorials/ ) 2015
+* [![threejs-lesson-01]( http://jaanga.github.io/tutorials/images/threejs-lesson-01.jpg =240x180 )<br>Tutorials]( http://jaanga.github.io/tutorials/ ) 2015
 	* Lessons to help you learn how to design things using Three.js
 
 ## Spin-Offs

@@ -52,20 +52,18 @@ h1, a { margin: 0; }
 		camera.position.set( 100, 100, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 5000;
 
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
-
-		window.addEventListener( 'hashchange', hashChange, false );
+		window.addEventListener( 'hashchange', onHashChange, false );
 
 		hashChange();
 
 	}
 
-	function hashChange() {
+	function onHashChange() {
 
 		hashes = location.hash.split ( '#' );
 
