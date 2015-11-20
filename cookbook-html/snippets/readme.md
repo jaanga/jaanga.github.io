@@ -29,14 +29,6 @@
 
 ## Request Animation Frame
 
-[raf-sieve-test-r1 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/raf-sieve-test-r1.html )
+* [Request Animation Frame Read Me]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/ )
 
-[raf-sieve-test-r2 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/raf-sieve-test-r2.html )
 
-* How fast is your script running
-
-[stats-mrdoob Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-mrdoob.html )
-
-[stats-lorenz-attractor r1 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r1.html )
-
-* Building upon Mr.doob's stats.js

@@ -13,6 +13,26 @@
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2.html width=100% height=600px ></iframe>  
 ###### _Stats/js - Lorenz Attractor - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2.html )
 
+## Scripts
+
+[stats-lorenz-attractor r2 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2.html )
+
+* Dual stats display
+
+[stats-lorenz-attractor r1 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r1.html )
+
+* Building upon Mr.doob's stats.js
+
+
+[raf-sieve-test-r1 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/raf-sieve-test-r1.html )
+
+[raf-sieve-test-r2 Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/raf-sieve-test-r2.html )
+
+* How fast is your script running
+
+[stats-mrdoob Demo]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-mrdoob.html )
+
+
 
 ## Concept
 
@@ -50,6 +70,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 
  
 ## Sources
+
+* Mr.doob's [Stat.js]( https://github.com/mrdoob/stats.js/ )
+
 
 
 ## Contact
