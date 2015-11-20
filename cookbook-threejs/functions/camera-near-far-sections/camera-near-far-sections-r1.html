@@ -10,6 +10,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
 <script>
 
 	var renderers = [];
@@ -155,7 +156,7 @@
 		controlers.push( controls )
 
 		scene = new THREE.Scene();
-		scenes.push( scene );
+
 
 		var size = 300;
 //		renderer.shadowMap.enabled = true;
@@ -207,7 +208,11 @@
 //		trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );
 
 
-		addAssets( i );
+		//addAssets( i );
+
+drawThings();
+
+		scenes.push( scene );
 
 	}
 

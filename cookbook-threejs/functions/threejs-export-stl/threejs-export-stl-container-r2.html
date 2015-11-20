@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Three.js Export STL Container R2</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/exporters/STLExporter.js ></script>
+<script>
+
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'#i {text-decoration: none; }' +
+		'';
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
+		menu.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
+//			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
+			'<p><button onclick=saveSTL(); >Save to STL file</button></p>' +
+			'<div id=info ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 30, 10, 30 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// assets
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		mesh = new THREE.GridHelper( 50, 10 );
+		mesh.position.set( 0, -9, 0 );
+		scene.add( mesh );
+
+		material = new THREE.MeshNormalMaterial();
+
+// floor
+		geometry = new THREE.BoxGeometry( 40, 0.5, 8 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 0.25, 0 );
+		scene.add( mesh );
+
+// ceiling
+		geometry = new THREE.BoxGeometry( 40, 0.5, 8 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 7.75, 0 );
+		scene.add( mesh );
+
+// sude walls
+		geometry = new THREE.BoxGeometry( 9, 8, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 4, -3.75 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 2, 2, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 5.5, 7, -3.75 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 2, 4, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 5.5, 2, -3.75 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 9, 8, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 11, 4, -3.75 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 10, 8, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -12, 4, -3.75 );
+		scene.add( mesh );
+
+// end wall
+		geometry = new THREE.BoxGeometry( 0.5, 8, 8 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -20, 4, 0 );
+		scene.add( mesh );
+
+// end wall
+		geometry = new THREE.BoxGeometry( 0.5, 8, 2 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 19.75, 4, 3 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 0.5, 2, 2 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 19.75, 7, 1 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 0.5, 8, 3 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 19.75, 4, -1.5 );
+		scene.add( mesh );
+
+// internal partitions
+		geometry = new THREE.BoxGeometry( 0.25, 8, 5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 4, -1 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 6, 8, 0.25 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 13, 4, 1 );
+		scene.add( mesh );
+
+// fixtures
+		geometry = new THREE.BoxGeometry( 6, 3, 1 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -13, 1.5, -3 );
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 6, 2, 6 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -13, 1, 0 );
+		scene.add( mesh );
+
+
+		bit1 = corrugation( 10, 8 );
+		bit1.position.set( 3, 4, 15 );
+		bit1.rotation.y = 0.5 * Math.PI;
+
+		bit2 = corrugation( 2, 2 );
+		bit2.position.set( 8, 7, 15 );
+		bit2.rotation.y = 0.5 * Math.PI;
+
+		bit3 = corrugation( 2, 4 );
+		bit3.position.set( 8, 2, 15 );
+		bit3.rotation.y = 0.5 * Math.PI;
+
+	}
+
+	function corrugation( length, height ) {
+
+		obj = new THREE.Object3D();
+
+		geometry = new THREE.BoxGeometry( length, height, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		obj.add( mesh );
+
+		for ( var i = 0; i < length; i++ ) {
+
+			geometry = new THREE.BoxGeometry( 0.5, height, 0.2 );
+			geometry.applyMatrix( new THREE.Matrix4().makeTranslation( i * 1 - 0.5 * length + 0.25, 0, 0.35 ) );
+			mesh = new THREE.Mesh( geometry, material );
+			obj.add( mesh );
+
+		}
+
+		scene.add( obj );
+
+		return obj;
+	}
+
+
+
+
+
+	function saveSTL() {
+
+		var exporter = new THREE.STLExporter();
+		var blob = new Blob( [ exporter.parse( scene ) ] );
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = document.title + '.stl';
+		a.click();
+		delete a;
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

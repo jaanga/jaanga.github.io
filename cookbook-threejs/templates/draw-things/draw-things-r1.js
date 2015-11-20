@@ -1,4 +1,5 @@
 // 2015-11-03
+// <script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
 
 	function drawThings() {
 

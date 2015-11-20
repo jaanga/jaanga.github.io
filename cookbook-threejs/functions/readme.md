@@ -16,7 +16,7 @@
 
 ## Camera Near Far Sections
 
-* [Camera Near Far Sections]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/functions/camera-near-far-sections-r1.html )
+* [Camera Near Far Sections]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r1.html )
 * [two-renderers-r1]( ./camera-near-far-sections/two-renderers-r1.html )
 
 ## Control Device Orientation

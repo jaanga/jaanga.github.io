@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>item touched add handles r1.html</title>
+<meta charset=utf-8 >
+<meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 >
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=item-touched-add-handles-r1.js ></script>
+<script>
+
+	var VH = VH || {};
+	var objects = [];
+
+	var stats, camera, controls, scene, renderer;
+
+	init();
+	animate();
+
+	function init() {
+		var light, geometry, material, mesh;
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'left: 20px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<p>Move cursor over on object to see it highlighted and with handles on its vertices</p>' +
+			'<p>Objects that are highlighted may be dragged to new positions</p>' +
+			'<div id=msg ></div>' +
+		'';
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera );
+
+		scene = new THREE.Scene();
+
+// Lights
+		light = new THREE.AmbientLight( 0x888888 );
+		scene.add( light );
+
+		light = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		light.position.set( 0, 200, 0 );
+
+		var d = 50;
+		light.shadowCameraLeft = -d;
+		light.shadowCameraRight = d;
+		light.shadowCameraTop = d;
+		light.shadowCameraBottom = -d;
+
+		light.shadowCameraNear = 100;
+		light.shadowCameraFar = 300;
+
+// can help stop appearance of gridlines in objects with opacity < 1
+		light.shadowBias = -0.002; // default 0 ~ distance from corners?
+		light.shadowDarkness = 0.3; // default 0.5
+
+		light.shadowMapWidth = 2048;  // default 512
+		light.shadowMapHeight = 2048;
+
+		light.castShadow = true;
+//		light.shadowCameraVisible = true;
+		scene.add( light );
+
+		light = new THREE.PointLight( 0xffffff, 0.5 );  // color intensity distance 0 = infinity
+		light.position = camera.position;
+		camera.add( light );
+		scene.add( camera );
+
+// Ground Plane
+		geometry = new THREE.BoxGeometry( 100, 5, 100 );
+
+//		var material.color = 0x202099; 
+//		var material = new THREE.MeshNormalMaterial();
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0xffffff * Math.random(), 
+//			ambient: 0xffffff * Math.random(),
+			specular: 0xffffff * Math.random(),
+			shininess: 50,
+			side: THREE.DoubleSide
+
+		} );
+
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -2.5, 0 );
+//		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		scene.add( mesh );
+
+		scene.add( new THREE.BoxHelper( mesh ) );
+
+// Boxes to be dragged
+		geometry = new THREE.BoxGeometry( 1, 1, 1 );
+
+		for ( var i = 0; i < 20; i ++ ) {
+
+			mesh = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+
+			mesh.material.ambient = mesh.material.color;
+
+			mesh.position.x = Math.random() * 100 - 50;
+			mesh.position.y = Math.random() * 60;
+			mesh.position.z = Math.random() * 80 - 40;
+
+			mesh.rotation.x = Math.random() * 2 * Math.PI;
+			mesh.rotation.y = Math.random() * 2 * Math.PI;
+			mesh.rotation.z = Math.random() * 2 * Math.PI;
+
+			mesh.scale.x = Math.random() * 10;
+			mesh.scale.y = Math.random() * 10;
+			mesh.scale.z = Math.random() * 10 ;
+
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+
+			scene.add( mesh );
+
+			objects.push( mesh );
+
+		}
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xf0f0f0 } );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
+		document.body.appendChild( renderer.domElement );
+
+		VH.dragcontrols = new VH.DragObjects( objects );
+
+		VH.dragcontrols.onDragged = function() { msg.innerHTML = 'Item ID: ' + VH.selected.id ; }
+
+	}
+
+	function animate() {
+
+		renderer.render( scene, camera );
+		controls.update();
+		requestAnimationFrame( animate );
+
+	}
+
+</script>
+</body>
+</html>

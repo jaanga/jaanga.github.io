@@ -1,0 +1,107 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset=utf-8 >
+<title>Stats.js - Lorenz Attractor Example R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/stats.js/r14/Stats.min.js ></script>
+<script>
+
+	var beta = 8 / 3;
+	var rho = 28;
+	var sigma = 10;
+
+	var x = 1;
+	var y = 1;
+	var z = 1;
+	var color, delta;
+
+	var stats1, starts2, context;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML = `body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2, a { margin: 0; }
+			#aa { text-decoration: none; }
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute`;
+		menu.innerHTML =
+		`	<h2>
+				<a href='' > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/ > 🛈 </a>
+			</h2>
+			<p><input type=checkbox id=inpClear > Clear Rectangle</p>
+		`;
+
+		stats1 = new Stats();
+		stats1.setMode( 1 );
+		stats1.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats1.domElement );
+
+		stats2 = new Stats();
+		stats2.setMode( 1 );
+		stats2.domElement.style.cssText = 'position: absolute; right: 0; top: 60px; z-index: 100; ';
+		document.body.appendChild( stats2.domElement );
+
+		var canvas = document.createElement( 'canvas' );
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		document.body.appendChild( canvas );
+
+		context = canvas.getContext( '2d' );
+		context.fillStyle = 'rgba(127,0,255,0.05)';
+		context.globalAlpha = 0.5;
+
+		color = ( 256 * 256 * 256 - 10);
+		delta = -100;
+
+	}
+
+	function animate() {
+
+		stats1.end();
+		stats2.begin();
+
+		requestAnimationFrame( animate );
+
+		var dt = performance.now() * 0.00000002;
+
+		if ( inpClear.checked === true ) { context.clearRect( 0, 0, window.innerWidth, window.innerHeight ); }
+
+		delta = color < 0 ? -delta : delta;
+		delta = color > 16777215 ? -delta : delta ;
+		color += delta;
+		for ( var i = 0; i < 2000; i ++ ) {
+
+			dx = sigma * ( y - x ) * dt ;
+			var dy = ( x * ( rho - z ) - y ) * dt;
+			var dz = ( x * y - beta * z ) * dt;
+
+			x += dx;
+			y += dy;
+			z += dz;
+
+			context.beginPath();
+
+			context.fillStyle = '#' + ( color ).toString( 16 );
+			context.arc( 30 * x + window.innerWidth * 0.5, 30 * y + window.innerHeight * 0.5, 10, 0, Math.PI * 2, true );
+			context.fill();
+
+		}
+
+		stats2.end();
+		stats1.begin();
+
+	}
+
+</script>
+</body>
+</html>
