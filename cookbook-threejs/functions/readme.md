@@ -14,6 +14,10 @@
 
 [angles-normalize]( angles-normalize/angles-normalize-r1.html )
 
+## Camera Near Far Sections
+
+* [Camera Near Far Sections]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/functions/camera-near-far-sections-r1.html )
+* [two-renderers-r1]( ./camera-near-far-sections/two-renderers-r1.html )
 
 ## Control Device Orientation
 
@@ -30,6 +34,9 @@
 
 [Drag and Drop]( ./drag-and-drop/index.html )
 
+## Enable Rotate Camera After Delay
+
+[enable-rotate-camera-after-delay-r1]( enable-rotate-camera-after-delay/enable-rotate-camera-after-delay-r1.html )
 
 ## Gimbal Lock
 
@@ -43,10 +50,15 @@
 
 * How to set the rotation of a mesh by using a vector converted to rotation angles using a https://en.wikipedia.org/wiki/Quaternion
 
-## Plane Cuts Ellipsoid
 
-* [Plane Cuts Ellipsoid]( http://jaanga.github.io/cookbook-threejs/functions/plane-cuts-ellipsoid/plane-cuts-ellipsoid-r1.html )
+## Remove and Add Lights
+
+[remove-and-add-lights-r1.html]( ./remove-and-add-lights/remove-and-add-lights-r1.html )
+
 
 ## Links of Interest
+
+[Dirksen 3]( http://www.smartjava.org/content/all-80-recipes-threejs-cookbook-online )
+[Dirksen 1]( http://www.smartjava.org/content/all-109-examples-my-book-threejs-threejs-version-r63 )
 
 <http://codedan.net/MonkeyX/WebGL/three.js/Example_0006/WebGL/MonkeyGame.html>

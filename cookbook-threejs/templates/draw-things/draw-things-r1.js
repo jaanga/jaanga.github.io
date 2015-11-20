@@ -2,7 +2,6 @@
 
 	function drawThings() {
 
-
 		material = material === undefined ? new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true } ) : material;
 
 		var ground, helper, axis, cylinder, cube, sphere, torus, wave, loader, stl, female, suzanne, tree;
