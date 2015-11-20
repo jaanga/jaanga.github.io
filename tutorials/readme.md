@@ -50,8 +50,20 @@ To get more things designed better, faster and cheaper
 
 ## Things to Do / Road Map
 
-* To create a dozen or so lessons that get you to the stage where you can build Three.js scripts such as [Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
+* To create a dozen or so lessons that get you to the stage where you can 
+	* build Three.js scripts such as [Step Up]( http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2-phone.html )
 and [Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html )
+	* Export the user-generated data tto SVG or DXF files  
+
+## Hints
+
+
+### Saving files
+
+* Any work you create - especially HTML files - will most likely be kept and accessed from a server. 
+Servers like to see file names with extensions - such as '.html' or '.js'. So remember too add the correct extension when saving files
+* A good rule when saving files for the Internet is to have file-names-that-are-all-lower-case-with-words-separated-by-hyphens. OK?
+
 
 <!--
 ## Features
@@ -62,7 +74,6 @@ and [Half Sheet Table]( http://opendesk.github.io/design-playground/opendesk-hal
 * 3 finger / right button = pan
 
 
-## Issues
 
  
 ## Sources

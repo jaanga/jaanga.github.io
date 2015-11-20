@@ -148,7 +148,7 @@
 //		obj2.position.set( 0, 0, 0 );
 
 		obj2 = obj1.clone();
-		obj2.material = new THREE.MeshNormalMaterial( { opacity: 0.2, side: 2, transparent: true, wireframe: false } );
+		obj2.material = new THREE.MeshNormalMaterial( { opacity: 0.5, side: 2, transparent: true, wireframe: true } );
 		scene2.add( obj2 );
 
 //		geometry = new THREE.SphereGeometry( 50, 100, 50 );
@@ -157,7 +157,7 @@
 //		obj3.position.set( 0, 0, 0 );
 
 		obj3 = obj1.clone();
-		obj3.material = new THREE.MeshNormalMaterial( { opacity: 0.2, side: 2, transparent: true, wireframe: false } );
+		obj3.material = new THREE.MeshNormalMaterial( { opacity: 0.5, side: 2, transparent: true, wireframe: true } );
 		scene3.add( obj3  );
 
 //		edges = new THREE.EdgesHelper( obj3, 0xff0000 );
@@ -183,7 +183,7 @@
 
 		var points = [];
 
-		for ( var i = 0; i < 12; i ++ ) {
+		for ( var i = 0; i < 500; i ++ ) {
 
 			points.push( new THREE.Vector3( ( 200 * Math.random() - 100 ), ( 100 * Math.random() - 50 ), ( 200 * Math.random() - 100 ) ) );
 
