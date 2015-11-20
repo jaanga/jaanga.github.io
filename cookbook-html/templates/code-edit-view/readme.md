@@ -37,6 +37,7 @@ Defaults to loading the local index.html file.
 
 Becomes wonderfully complicated when called upon to load itself - as shown above.
 
+
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
@@ -54,6 +55,10 @@ Becomes wonderfully complicated when called upon to load itself - as shown above
  
 ## Sources
 
+* Mr.doob's [HTML Editor]( http://mrdoob.com/projects/htmleditor/ )
+* [jsFiddle]( http://jsfiddle.net/ )
+* [jsBin]( https://jsbin.com/ )
+* [Monkey Game]( http://codedan.net/MonkeyX/WebGL/three.js/Example_0006/WebGL/MonkeyGame.html )
 
 ## Contact
 

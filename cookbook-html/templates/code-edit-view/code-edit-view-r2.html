@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
 <head>
 <meta charset=utf-8>
@@ -16,7 +16,8 @@
 	function init() {
 
 		css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = `
+		css.innerHTML =
+		`
 			* { box-sizing: border-box; vertical-align:top; }
 			html, body { height: 100%; }
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
@@ -34,14 +35,15 @@
 
 		buttons = document.body.appendChild( document.createElement( 'div' ) );
 		buttons.style.cssText = ' position: absolute; right: 1%; top: 95%; ';
-		buttons.innerHTML = `
+		buttons.innerHTML = 
+		`
 			<input type=range class=bb id=inpSplit min=1 max=99 step=1 value=50 onchange=updateSplit(); />
 			<button class=bb onclick=splitVertical(); >vertical</button>
 			<button class=bb onclick=splitHorizontal(); >horizontal</button>
 			<input class=bb type=file id=inpFile onchange=openFile(this); />
 			<button class=bb class=bb onclick=updateView(); >Update View</button>
 			<button class=bb onclick=saveFile(); >Save to File</button>
-			<a id=info href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/code-edit-view-r2/ >&#x24D8;</a>
+			<a id=info href=https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/code-edit-view-r2/ > 🛈 </a>
 		`;
 
 		window.addEventListener( 'hashchange', hashChange, false );
