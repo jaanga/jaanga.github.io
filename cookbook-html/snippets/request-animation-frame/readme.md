@@ -6,7 +6,7 @@
 [Request Animation Frame Read Me]( index.html )
 ===
 
-[Stats/js - Lorenz Attractor - Demo - Full Screen]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2.html )
+[Stats.js - Lorenz Attractor - Demo - Full Screen]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2.html )
 
 ## <center>Web Page / Source Code</center>
 
@@ -47,9 +47,14 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+    Our web app feels laggy on low-end machines because it does a lot of GPU-side work.  
+    In extreme cases, we'd like the app to detect poor performance at run time, and automatically drop into a simplified state.
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
+
+Looking for something that just pops out a simple number telling me that a script is running slowly. 
+This should be part of the script and have no need to access the console.
 
 
 ### Vision
@@ -61,10 +66,6 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Features
 
-* Zoom, pan and rotate
-	* 1 finger / left button =  rotate
-	* 2 finger / wheel = zoom in and out
-	* 3 finger / right button = pan
 
 ## Issues
 
@@ -87,11 +88,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 ***
 
 <center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ? </a>
-</center>
-
-<center title="dingbat" >
-# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >?</span>
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
 </center>
 
 
