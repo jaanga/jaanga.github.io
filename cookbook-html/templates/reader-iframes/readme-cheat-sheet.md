@@ -7,8 +7,40 @@
 
 [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
 ===
-Interesting this you can dow with Markdown.
+Interesting things you can do with Markdown.
 
+### Figures
+
+<figure>
+<a href=http://google.com >
+<img src=http://lorempixel.com/200/200/ >
+<figcaption>Fig1. - A view of image 1</figcaption>
+<a>
+</figure>
+
+<figure >
+<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
+<figcaption>Fig2. - A view of the caption</figcaption>
+</a>
+</figure>
+
+<figure >
+<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
+<figcaption>Fig3. - A view of the caption</figcaption>
+</a>
+</figure>
+
+<figure >
+<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
+<figcaption>Fig4. - A view of the caption</figcaption>
+</a>
+</figure>
+
+<figure >
+<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
+<figcaption>Fig5. - A view of the caption</figcaption>
+</a>
+</figure>
 
 ### Horizontal rules
 
@@ -35,7 +67,7 @@ http://google.com
 ### Strike through
 
 ```
-	~~Strike through~~
+~~Strike through~~
 ```
 ~~Strike through~~
 
@@ -43,15 +75,19 @@ http://google.com
 
 ### Tables
 ```
-	| h1    |    h2   |      h3 |
-	|:------|:-------:|--------:|
-	| 100   | [a][1]  | ![b][2] |
-	| *foo* | **bar** | ~~baz~~ |
+| h1    |    h2   |      h3 |
+|:------|:-------:|--------:|
+| 100   | [a][1]  | ![b][2] |
+| *foo* | **bar** | ~~baz~~ |
 ```
 | h1    |    h2   |      h3 |
 |:------|:-------:|--------:|
 | 100   | [a][1]  | ![b][2] |
 | *foo* | **bar** | ~~baz~~ |
+
+### Lists
+
+```
 
 * item
 * item
@@ -60,8 +96,16 @@ http://google.com
 	* item
 		* item
 * item
+```
+* item
+* item
+* item
+	* item
+	* item
+		* item
+* item
 
-###### Heading 6 - use as caption to a full screen iframe
+### Text
 
 	_italics_
 
@@ -71,6 +115,7 @@ _italics_
 
 **Bold**
 
+### Code
 ```
 	line of code with 3 backquote characters
 	line of code 
@@ -85,11 +130,21 @@ text with `back quote` characters
 
 text text text
 
+### Quotes
+```
+> quote
+> quote
+> quote
+```
+
 > quote
 > quote
 > quote
 
 <br>
+
+###### Heading 6 - use as caption to a full screen iframe
+
 
 ***
 
