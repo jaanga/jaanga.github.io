@@ -10,6 +10,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
 <script>
 
 	var renderers = [];
@@ -120,12 +121,17 @@
 
 		var materials = [ material2, material1 ];
 		obj = THREE.SceneUtils.createMultiMaterialObject( geometry, materials );
-//		obj = new THREE.Mesh( geometry, material );
+
+		obj = new THREE.Mesh( geometry, material2 );
+
 		obj.position.set( 0, 0, 0 );
 		obj.castShadow = true;
 		obj.receiveShadow = true;
 		objects.push( obj )
 		scenes[ i ].add( obj );
+
+		edges = new THREE.EdgesHelper( obj );
+		scenes[ i ].add( edges );
 
 		updateObjects();
 
@@ -136,6 +142,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
 		renderer.domElement.style.cssText = 'left: 0; position: absolute; top: 0; ';
 		document.body.appendChild( renderer.domElement );
 		renderers.push( renderer );
@@ -149,23 +156,63 @@
 		controlers.push( controls )
 
 		scene = new THREE.Scene();
-		scenes.push( scene );
 
 
-		toggleGroundBoxLights();
+		var size = 300;
+//		renderer.shadowMap.enabled = true;
+
+		var lightAmbient, lightDirectional, lightPoint;
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -200, 200, 200 );
+
+		var d = size;
+		lightDirectional.shadowCameraLeft = -d;
+		lightDirectional.shadowCameraRight = d;
+		lightDirectional.shadowCameraTop = d;
+		lightDirectional.shadowCameraBottom = -d;
+
+		lightDirectional.shadowCameraNear = 20;
+		lightDirectional.shadowCameraFar = 2 * size;
+
+// can help stop appearance of gridlines in objects with opacity < 1
+		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
+		lightDirectional.shadowDarkness = 0.5; // default 0.5
+		lightDirectional.shadowMapWidth = 2048;  // default 512
+		lightDirectional.shadowMapHeight = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		lightHelper = new THREE.DirectionalLightHelper( lightDirectional, size )
+//		scene.add( lightHelper )
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+		toggleGroundBoxLights( 150 );
 //		toggleAxis();
 //		toggleBackgroundGradient();
-		toggleAutoRotate();
+//		toggleAutoRotate();
 
-		addWindowResize();
-		addLights( 400 );
-		addShadows();
+//		addWindowResize();
+//		addLights( 400 );
+//		addShadows();
 
-		toggleTrylonPerisphere();
-		trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );
+//		toggleTrylonPerisphere();
+//		trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );
 
 
-		addAssets( i );
+		//addAssets( i );
+
+drawThings();
+
+		scenes.push( scene );
 
 	}
 

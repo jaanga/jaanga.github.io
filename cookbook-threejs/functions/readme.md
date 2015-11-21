@@ -16,7 +16,15 @@
 
 ## Camera Near Far Sections
 
+* [Camera Near Far Sections R2]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r2.html )
+
+	* Still broken
+
 * [Camera Near Far Sections]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r1.html )
+
+	* Needs work
+
+
 * [two-renderers-r1]( ./camera-near-far-sections/two-renderers-r1.html )
 
 ## Control Device Orientation
@@ -28,6 +36,10 @@
 [VRMobileDemo.html]( ./controls-device-orientation/VRMobileDemo.html )
 
 [VRMobileDemo-r2.html]( ./controls-device-orientation/VRMobileDemo-r2.html )
+
+## Constructive Solid Geometry
+
+[constructive-solid-geometry]( ./constructive-solid-geometry/r1/constructive-solid-geometry.html )
 
 
 ## Drag and Drop
