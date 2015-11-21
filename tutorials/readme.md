@@ -47,6 +47,12 @@ To get more things designed better, faster and cheaper
 
 [Three.js Lesson 1]( http://jaanga.github.io/tutorials/threejs-lesson-01/ )
 
+* Draw 3D boxes
+
+[Three.js Lesson 2]( http://jaanga.github.io/tutorials/threejs-lesson-02/ )
+
+* Vary the dimensions and positions of boxes
+
 
 ## Things to Do / Road Map
 
