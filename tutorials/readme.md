@@ -71,6 +71,16 @@ Servers like to see file names with extensions - such as '.html' or '.js'. So re
 * A good rule when saving files for the Internet is to have file-names-that-are-all-lower-case-with-words-separated-by-hyphens. OK?
 
 
+### Browser
+* These lessons are built and test on the Google Chrome browse. They may/will have issues on other browsers
+	* Let us know if you really must use another browser and we will try to help 
+
+### Three.js
+* Three.js inserts objects using the center point of the object - not using a corner as most CAD apps do
+* Three.js uses traditional computer graphics XYZ - the Z comes out of the screen and the Y points up
+* Any HTML file you download, can be clicked on to view in your browser
+
+
 <!--
 ## Features
 
@@ -78,13 +88,20 @@ Servers like to see file names with extensions - such as '.html' or '.js'. So re
 * 1 finger / left button =  rotate
 * 2 finger / wheel = zoom in and out
 * 3 finger / right button = pan
-
+-->
 
 
  
-## Sources
+## Sources / Links
 
--->
+* [Three.js[( http://threejs.org )
+* [Three.js Documentation]( http://mrdoob.github.io/three.js/docs/ )
+* [W3Schools HTML]( http://www.w3schools.com/tags/default.asp )
+* [Joe Dirksen's book]( http://www.smartjava.org/content/my-books )
+	* [80 Recipes from Three.js Cookbook]( http://www.smartjava.org/content/all-80-recipes-threejs-cookbook-online )
+	* [109 Examples from Learning Three.js]( http://www.smartjava.org/content/all-109-examples-my-book-threejs-threejs-version-r63 )
+	* [Examples from Essential Three.js]( https://github.com/josdirksen/essential-threejs )
+
 
 ## Contact
 
