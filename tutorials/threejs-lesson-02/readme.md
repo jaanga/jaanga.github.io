@@ -61,7 +61,7 @@ Designers create cool apps so normal peeps have access to unique well designed p
 * Function Key 12 or Control/Command Shift J brings up the JavaScript Console
 * The JavaScript Console is your friend. 
 * It finds the errors in you code and tells you which tile the error is on
-* More info at [Google Developers]( https://developers.google.com/web/tools/chrome-devtools/debug/console/console-ui?hl=en
+* More info at [Google Developers]( https://developers.google.com/web/tools/chrome-devtools/debug/console/console-ui?hl=en )
 * There are many debugging tools in your browser. You can ignore just about all of them - except the basic elements of the Console
 
 
