@@ -20,7 +20,7 @@
 
 	* Still broken
 
-* [Camera Near Far Sections]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r1.html )
+* [Camera Near Far Sections R1]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r1.html )
 
 	* Needs work
 
