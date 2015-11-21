@@ -3,16 +3,9 @@
 
 [Jaanga]( index.html ) 
 ===
-_Your 3D happy place_
 
 [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) ~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 ~ [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
-
-<iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
-
-######_Sample Jaanga Scripts - [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
-
-
 ## Concept
 
 [Jaanga.github.io]( http://jaanga.github.io ) is a [GitHub]( http://github.com ) [organization]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4 )

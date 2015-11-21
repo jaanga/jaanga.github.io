@@ -2,9 +2,10 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes-carousel'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( http://jaanga.github.io/ ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) &raquo;  [Templates]( http://jaanga.github.io/cookbook-html/templates/ ) &raquo;  
-[Read Me with Iframe Carousel]( index.html )
+[Iframe Carousel Read Me]( index.html )
 ===
 
+[Iframe Carousel - Demo - Full Screen ]( http://jaanga.github.io/cookbook-html/templates/reader-iframes-carousel/iframe-carousel-r4.html )
 
 ## <center> Web Page / Source Code </center>
 
@@ -12,9 +13,7 @@
 
 ######_Sample Jaanga Scripts - [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
 
-see also:
 
-* <http://exploratoria.github.io/sandbox/templates/readme-with-iframe-sequence/>
 
 ## Concept
 
@@ -34,6 +33,13 @@ Enable GitHub readme Markdown files to be read as HTML and displayed as web page
 
 ## Road Map
 
+
+## Links
+
+see also:
+
+* <http://exploratoria.github.io/sandbox/templates/readme-with-iframe-sequence/>
+
 ## Contact
 
 * jaanga@googlegroups.com
@@ -47,13 +53,3 @@ Enable GitHub readme Markdown files to be read as HTML and displayed as web page
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
-
-<center title="dingbat" >
-# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
-</center>
-
-
-<center>
-# &#x2766;
-</center>
-<style>iframe { border-width: 0; }</style>
