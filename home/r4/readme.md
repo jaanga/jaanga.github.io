@@ -131,7 +131,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <div class=figure >
 <a href=http://jaanga.github.io/tutorials/ >
-<img src=http://jaanga.github.io/home/images/threejs-lesson-01-240x180>
+<img src=http://jaanga.github.io/home/images/threejs-lesson-01-240x180.png >
 <h2>Tutorials</h2></a> 2015
 <li>Lessons to help you learn how to design things using <a href=http://threejs.org >Three.js</a>
 </div>
