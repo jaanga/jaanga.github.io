@@ -41,33 +41,69 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 
 _Years indicate latest date when significant effort was made_
 
-* [![nerbous]( http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png )<br>Demo]( http://jaanga.github.com/demo ) 2015
-	* Links to just the good stuff - nothing more - the collection of fun scripts - built to work on your mobile device
+<div class=figure >
+<a href=http://jaanga.github.com/demo ><img src=http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png>
+<h2>Demo</h2><a>
+Links to just the good stuff - nothing more - the collection of fun scripts - built to work on your mobile device. 2015
+</div>
 
-* [ ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =240x180 )<br>Outer Space]( http://jaanga.github.io/outer-space/ ) 2015
-	* Explore the surfaces of the Moon and Mars in 3D - and much more 
-	* Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap files
+<div class=figure >
+<a href=http://jaanga.github.io/outer-space/ >
+<img src=http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg width=240 height=180 >
+<h2>Outer Space</h2></a>
+Explore the surfaces of the Moon and Mars in 3D - and much more 
+Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap files. 2015
+</div>
 
-* [![SP500]( http://jaanga.github.io/home/images/sp500-r2-240x180.png )<br>SP500]( http://jaanga.github.io/sp500/index.html ) 2015
-	* All 500 stocks all at once in 3D with frequent updates
-	* Access web resources in real-time
+<div class=figure >
+<a href=http://jaanga.github.io/sp500/index.html >
+<img src=http://jaanga.github.io/home/images/sp500-r2-240x180.png width=240 height=180 >
+<h2>SP500</h2></a>2015
+<li>All 500 stocks all at once in 3D with frequent updates
+<li>Access web resources in real-time
+</div>
 
-* [![algeSurf]( http://jaanga.github.io/home/images/2-Algesurf.png )<br>algeSurf]( http://jaanga.github.io/algesurf ) 2015
-	* Mathematics with a 3D perspective
+<div class=figure >
+<a href=http://jaanga.github.io/algesurf >
+<img src=http://jaanga.github.io/home/images/2-Algesurf.png >
+<h2>algeSurf</h2></a> 2015
+<li>Mathematics with a 3D perspective
+</div>
 
-* [![terrain sf]( http://jaanga.github.io/home/images/terrain-sf-240x180.png )<br>Terrain R2]( http://jaanga.github.io/terrain-r2/terrain.html ) 2015
-	* In the mi[d]st of a complete reconstruction. 
+<div class=figure >
+<a href=http://jaanga.github.io/terrain-r2/terrain.html >
+<img src=http://jaanga.github.io/home/images/terrain-sf-240x180.png >
+<h2>Terrain R2</h2></a> 2015
+<li>In the mi[d]st of a complete reconstruction. 
+</div>
 
-* [![Gestification]( http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png )<br>Gestification R2]( http://jaanga.github.io/gestification-r2/ ) 2015 - [Gestification]( http://jaanga.github.io/gestification/ ) 2013
-	* Work that involves Three.js and the [Leap Motion]( http://leapmotion.com ) device.
+<div class=figure >
+<a href=http://jaanga.github.io/gestification-r2/ >
+<img src=http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png >
+<h2>Gestification R2</h2></a>
+<li><a href=http://jaanga.github.io/gestification/>Gestification]</a>2013
+<li>Work that involves Three.js and the <a href=http://leapmotion.com >Leap Motion</a> device.
+</div>
 
-* [![Template]( http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png )<br>Cookbook Three.js]( http://jaanga.github.com/cookbook-threejs )
+<div class=figure >
+<a href=http://jaanga.github.com/cookbook-threejs >
+<img src=http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png >
+<h2>Cookbook Three.js</h2></a>
+<li>Lots of templates, utilities and viewers for <a href=http://threejs.org >Three.js</a>
+</div>
 
-* [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) 2015
+<div class=figure >
+<a href=http://jaanga.github.io/cookbook-html/>
+<h2>Cookbook HTML</h2></a>
+<li>Templates and code snippets for doing stuff with JavaScript and HTML
+</div>
 
-* [![Rubiks Cube]( http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png )<br>Cookbook]( http://jaanga.github.com/cookbook )
-	* Various and sundry code cookbook projects and files used for presentations or in blog posts.
-
+<div class=figure >
+<a href=http://jaanga.github.com/cookbook >
+<img src=http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png >
+<h2>Cookbook</h2></a>
+<li>Various and sundry code cookbook projects and files used for presentations or in blog posts.
+</div>
 
 <!--
 
@@ -79,41 +115,100 @@ _Years indicate latest date when significant effort was made_
 -->
 
 
-* [![Urdacha]( http://jaanga.github.io/home/images/3-Urdacha.png )<br>Urdacha]( http://jaanga.github.io/urdacha ) 2011
-	* Entry for the Swiss Center _Urban Data Challenge_ in 2013.
+<div class=figure >
+<a href=http://jaanga.github.io/urdacha >
+<img src=http://jaanga.github.io/home/images/3-Urdacha.png >
+<h2>Urdacha</h2></a>2011
+<li>Entry for the Swiss Center _Urban Data Challenge_ in 2013.
+</div>
+<div class=figure >
+<a href=http://jaanga.github.io/brainofrichard/>
+<img src=http://jaanga.github.io/home/images/4-Brain-of-Richard.png ) >
+<h2>The Brain of Richard</h2></a> 2012
+<li>3D compilations of hundreds of 2D scanned MRI images.
+</div>
 
-* [![Brain of Richard]( http://jaanga.github.io/home/images/4-Brain-of-Richard.png )<br>The Brain of Richard]( http://jaanga.github.io/brainofrichard/ ) 2012
-	* 3D compilations of hundreds of 2D scanned MRI images.
-
-
-* [![threejs-lesson-01]( http://jaanga.github.io/tutorials/images/threejs-lesson-01.jpg =240x180 )<br>Tutorials]( http://jaanga.github.io/tutorials/ ) 2015
-	* Lessons to help you learn how to design things using Three.js
+<div class=figure >
+<a href=http://jaanga.github.io/tutorials/ >
+<img src=http://jaanga.github.io/tutorials/images/threejs-lesson-01.jpg width=240 height=180 >
+<h2>Tutorials</h2></a> 2015
+<li>Lessons to help you learn how to design things using <a href=http://threejs.org >Three.js</a>
+</div>
 
 ## Spin-Offs
 
-* [![WikiHouse]( http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png )<br>WikiHouse]( http://wikihouse.github.io/viewer-experiments/ ) 2015
+<div class=figure >
+<a href=http://wikihouse.github.io/viewer-experiments/ >
+<img src= http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png  >
+<h2>WikiHouse</h2></a> 2015
+<li><a href=http://www.wikihouse.cc/ >WikiHouse</a> is an open source building system. Many designers, collaborating to make it simple for everyone to design, print and assemble beautiful, low-energy homes, customised to their needs.
 
-* [![Half Sheet Table]( http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png )<br>OpenDesk]( http://opendesk.github.io/design-playground/ ) 2015
-	* A global platform for local making. You may use the to download, make and buy work space furniture.
+</div>
 
-* [![va3c r1]( http://jaanga.github.io/home/images/va3c-r1-240x180.png )<br>vA3C]( http://va3c.github.io/ )  2014
+<div class=figure >
+<a href=http://opendesk.github.io/design-playground/ >
+<img src=http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png  >
+<h2>OpenDesk</h2></a>2015
+<li>Fit out your workspace with open furniture, designed to be made locally anywhere in the world.
+</div>
 
-* [![FGx]( http://jaanga.github.io/home/images/6-FGx.png )<br>FGx]( http://fgx.github.io/ ) 2014
+<div class=figure >
+<a href=http://va3c.github.io/ >
+<img src=http://jaanga.github.io/home/images/va3c-r1-240x180.png  >
+<h2>vA3C</h2></a> 2014
+<li>Visualize your Architecture, Engineering, Construction (AEC) Building Models on any web browser using Three.js.
+<li>This project was developed at the AEC Technology Symposium + Hackathon in New York City May 2014.
+</div>
 
-* [![soundviz]( http://jaanga.github.io/home/images/soundviz-240x180.png )<br>SoundViz]( http://soundviz.github.io/ ) 2014
+<div class=figure >
+<a href=http://fgx.github.io/  >
+<img src=http://jaanga.github.io/home/images/6-FGx.png >
+<h2>FGx</h2></a> 2014
+<li>FGx creates open source projects for FlightGear - the open-source, multi-platform, cooperative flight simulator development project.
+</div>
 
-* [![atechathon]( http://jaanga.github.io/home/images/atechathon-240x180.png )<br>aTechathon]( http://atechathon.github.io/ )  2014
+<div class=figure >
+<a href=http://soundviz.github.io/ >
+<img src=http://jaanga.github.io/home/images/soundviz-240x180.png >
+<h2>SoundViz</h2></a>2014
+<li>Translate numeric sound data in ASCII format to 3D animations viewable in your browser
+<li>Data from Dr Michele Ducceschi's research on wave turbulence in elastic plates
+</div>
 
-* [![aechack]( http://jaanga.github.io/home/images/aechack-240x180.png)<br>aeChack]( http://aechack.github.io/ ) 2013
+<div class=figure >
+<a href=http://atechathon.github.io/ >
+<img src=http://jaanga.github.io/home/images/atechathon-240x180.png >
+<h2>aTechathon</h2></a> 2014
+<li>Investigate walls, floors and openings on various terrains
+<li>Can a dialectic between code and brain create designs that neither could create without the other?
+</div>
 
+<div class=figure >
+<a href=http://aechack.github.io/  >
+<img src=http://jaanga.github.io/home/images/aechack-240x180.png >
+<h2>aeChack</h2></a>2013
+<li>The web site for Team aeCkack's high energy entry to the AEC Hackathon held at Facebook HQ in Menlo Park CA, November 8-10, 2013.
+<li>The team entry was a winner. Then again, so were all the entries from the other half dozen teams.
+</div>
 
  
 ## Contacts
 
-jaanga@googlegroups.com
+* jaanga@googlegroups.com
+* https://github.com/jaanga/jaanga.github.io/issues
+
+## Copyright and License
+
+* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+
+***
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
 ===
-<style> img { border: 1px solid black; } </style>
+<style> 
+img { border: 1px solid black; } 
+
+.figure { display: inline-block; margin: 0 20px 50px 0 ; vertical-align: top; width: 240px;}
+</style>
