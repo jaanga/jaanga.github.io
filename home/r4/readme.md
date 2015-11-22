@@ -49,7 +49,7 @@ Links to just the good stuff - nothing more - the collection of fun scripts - bu
 
 <div class=figure >
 <a href=http://jaanga.github.io/outer-space/ >
-<img src=http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg width=240 height=180 >
+<img src=http://jaanga.github.io/home/images/star-spotter-screen-stars-240x180.png >
 <h2>Outer Space</h2></a>
 Explore the surfaces of the Moon and Mars in 3D - and much more 
 Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap files. 2015
@@ -57,7 +57,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <div class=figure >
 <a href=http://jaanga.github.io/sp500/index.html >
-<img src=http://jaanga.github.io/home/images/sp500-r2-240x180.png width=240 height=180 >
+<img src=http://jaanga.github.io/home/images/sp500-r2-240x180.png >
 <h2>SP500</h2></a>2015
 <li>All 500 stocks all at once in 3D with frequent updates
 <li>Access web resources in real-time
@@ -94,7 +94,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <div class=figure >
 <a href=http://jaanga.github.io/cookbook-html/>
-<img src=http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2-240x180.png >
+<img src=http://jaanga.github.io/home/images/stats-lorenz-attractor-r2-240x180.png >
 <h2>Cookbook HTML</h2></a>
 <li>Templates and code snippets for doing stuff with JavaScript and HTML
 </div>
@@ -131,7 +131,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <div class=figure >
 <a href=http://jaanga.github.io/tutorials/ >
-<img src=http://jaanga.github.io/tutorials/images/threejs-lesson-01.jpg width=240 height=180 >
+<img src=http://jaanga.github.io/home/images/threejs-lesson-01-240x180>
 <h2>Tutorials</h2></a> 2015
 <li>Lessons to help you learn how to design things using <a href=http://threejs.org >Three.js</a>
 </div>
