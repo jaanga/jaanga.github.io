@@ -3,6 +3,17 @@
 [jaanga dev notes]( index.html#dev-notes )
 ==
 
+2015-11-21 ~ Theo
+
+* New front page
+	* Carousel
+	* links in inline-blocks
+* Should be home r5 but I forgot to fork
+* Message with link to stats demo sent out
+* readme-reader-iframes.js
+	* can probably get styles out of JavaScript and into css 
+
+
 ## 2015-11-18 ~ Theo
 
 * Update blog scripts

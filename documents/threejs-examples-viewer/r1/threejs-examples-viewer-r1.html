@@ -1,0 +1,152 @@
+﻿<!doctype html>
+<html >
+<head>
+<meta charset=utf-8 >
+<title>Threej.s Examples Viewer R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+
+</head>
+<body>
+<script>
+
+	var css, menu;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`	body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2, a { margin: 0; }
+			#ifr { left: 0; position: absolute; top: 0; width: ${ window.innerWidth }px; height: ${ window.innerHeight }px; z-index: -1; }
+			#info {  }
+			#aa { text-decoration: none; }
+			#menu { background-color: #ccc;  height: ${ window.innerHeight }px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; }
+
+			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`	<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/documents/threejs-examples-viewer/ > 🛈</a>
+			</h2>
+			<div id=info ></div>
+		`;
+
+		ifr = document.body.appendChild( document.createElement( 'iframe' ) );
+		ifr.id = 'ifr';
+
+		getThreejsFileNames();
+
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+		onHashChange();
+
+	}
+
+	function getThreejsFileNames() {
+
+		titles = [];
+		topics = [];
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', 'https://api.github.com/repos/mrdoob/three.js/contents/examples/', true );
+
+		xmlHttp.onreadystatechange = function() {
+
+			if ( xmlHttp.readyState !== 4 ) { return; }
+
+			response =  xmlHttp.responseText;
+
+			var lines = response.split(/\r\n|\n/);
+			var text = '';
+
+			for ( var i = 0; i < lines.length; i++ ) {
+
+				line = lines[ i ];
+				if ( line.indexOf( '"name"' ) > -1 && line.indexOf( '.html' ) > -1 && line.indexOf( 'index.html' ) === -1 ) {
+
+					fileName = line.substr( 13, line.length - 15 )
+					title = fileName.split( '_' )
+					topic = title[ 0 ];
+					if ( topics.indexOf( topic ) === -1 ) { 
+
+						topics.push( topic ); 
+
+						text += `<h3> ${ topic } </h3>\n`;
+
+					}
+
+					text += `<a href=#${ fileName } > ${ fileName.substr( fileName.indexOf( '_' ) + 1 ).replace( '.html','').replace( /_/g,'/' ) }</a><br>\n`;
+				}
+
+			}
+
+			info.innerHTML = text;
+
+//			onHashChange();
+
+
+		};
+
+		xmlHttp.send( null );
+
+	}
+
+	function onHashChange() {
+
+		fileName = location.hash ? location.hash.split( '#' )[1] : '';
+
+		if ( fileName === '' ) { return; }
+
+		document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+
+		fileType = fileName.substr( fileName.lastIndexOf( '.' )).toLowerCase();
+
+		requestFile ( 'http://mrdoob.github.io/three.js/examples/' + fileName );
+
+	}
+
+	function requestFile ( fileName ) {
+
+		xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.onreadystatechange = function() {
+
+			if ( xmlHttp.readyState !== 4 ) { return; }
+
+			text = xmlHttp.responseText;
+
+			text = text.replace( /\.\.\/build\//i, 'https://rawgit.com/mrdoob/three.js/r73/build/' );
+			text = text.replace( /files\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/files/' );
+			text = text.replace( /fonts\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/fonts/' );
+			text = text.replace( /"js\//gi, '"https://rawgit.com/mrdoob/three.js/r73/examples/js/' );
+			text = text.replace( /models\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/models\/' );
+			text = text.replace( /obj\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/obj/' );
+			text = text.replace( /scenes\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/scenes/' );
+			text = text.replace( /sounds\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/sounds/' );
+			text = text.replace( /textures\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/textures/' );
+
+			text = text.replace( /function init\(\) \{/i, 'function init() {\n\n\t\t\t\tTHREE.ImageUtils.crossOrigin = "anonymous";' );
+
+//console.log( text );
+
+
+			ifr.srcdoc = text;
+
+			
+
+		};
+
+		xmlHttp.send( null );
+
+	}
+
+
+</script>
+</body>
+</html>
