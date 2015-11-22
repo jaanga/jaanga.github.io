@@ -9,6 +9,8 @@ _Your 3D happy place_
 ~ [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 
 <!--
+## <center>Web Page / Source Code</center>
+
 <iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
 
 ######_Sample Jaanga Scripts - [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
@@ -24,6 +26,7 @@ This is because Jaanga is about writing software that is fun, easy and gets thin
 
 ### Mission  
 <!-- a statement of a rationale, applicable now as well as in the future -->
+
 * To supply scripts that are useful, written in code that is simple to understand
 * To help people get into science, technology, engineering and math ([STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ) )
 * To help designers, engineers, scientists - non-programmers - create new types of domain-specific apps
