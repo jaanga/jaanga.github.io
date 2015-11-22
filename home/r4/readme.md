@@ -94,6 +94,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <div class=figure >
 <a href=http://jaanga.github.io/cookbook-html/>
+<img src=http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/stats-lorenz-attractor-r2-240x180.png >
 <h2>Cookbook HTML</h2></a>
 <li>Templates and code snippets for doing stuff with JavaScript and HTML
 </div>
