@@ -1,5 +1,5 @@
 
-	var converter, content;
+	var converter;
 
 	init();
 
@@ -8,13 +8,12 @@
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = `
 			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; position: absolute: right: 0; }
-			figure { display: inline-block; width: 200px;}
-			h1 a { text-decoration: none;  }
+			h1 a { text-decoration: none; }
 			iframe { border: 0px solid; }
 			img { vertical-align: top; }
 			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
-			ul li { list-style-type: square; }
-			ul li ul li { list-style-type: circle; }
+			ul li {list-style-type: square;}
+			ul li ul li {list-style-type: circle;}
 		`;
 
 		var reader = document.body.appendChild( document.createElement( 'script' ) );
@@ -34,7 +33,7 @@
 
 		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
 
-		content = content ? content : document.body.appendChild( document.createElement( 'div' ) );
+		var content = document.body.appendChild( document.createElement( 'div' ) );
 
 		document.title = document.title ? document.title : fileName;
 
@@ -67,20 +66,6 @@
 
 					caption[ i ].style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
 					caption[ i ].style.width = ( window.innerWidth - 20 ) + 'px';
-
-				}
-
-			}
-
-
-			figures = content.getElementsByTagName( 'figure' );
-
-			if ( figures !== undefined ) {
-
-				for ( var i = 0; i < figures.length; i++ ) {
-
-					figures[ i ].style.cssText = 'display: inline-block; margin: 0 50px 50px 0 ;'; 
-
 
 				}
 
