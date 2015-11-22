@@ -8,8 +8,7 @@ _Your 3D happy place_
 [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) ~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 ~ [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 
-
-## <center>Web Page / Source Code</center>
+## Sample Web Pages / Source Code
 
 <iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
 
