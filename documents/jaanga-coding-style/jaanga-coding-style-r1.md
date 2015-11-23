@@ -4,7 +4,7 @@ Jaanga Coding Style
 ## Coding Style Guidelines
 
 
-The code should be as close as possible to readable English
+The code should be as close as possible to readable English. 
 
 The coding style of an app should follow the style of the most-used library of the app.
 
@@ -39,9 +39,14 @@ In the instance of a [Three.js]( http://threejs.org ) script, the style generall
 * Lots of small apps
 	* Not one big app
 * Emphasis on astronomy, physics, math but not coding
-	We seek great visualizations not great code
+	* We seek great visualizations not great code
+	* The code is not there to impress programmers or to show off programming skills
+		* Unless that skill is about making code simpler and easier to digest
+	* The code must be easy to read so that the physics, math, engineering or whatever stands out not the techie bits
+	* Typically you are looking at two screens or windows - one showing the simulation anfd the other showing the code
+		* The task is to reduce the multi-tasking to a minimum
 * Sharing is of the essence
-	* Fork, improve, share is the mantra
+	* Fork, edit/improve, share is the mantra
 	* GitHub is the platform
 
 ### Various Other Coding Quirks

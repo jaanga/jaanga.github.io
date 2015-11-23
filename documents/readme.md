@@ -6,7 +6,9 @@
 [Documents Read Me]( index.html )
 ===
 
-[Jaanga Coding Style]( coding-styles-viewer/r1/coding-styles-viewer-r1.html )
+[Jaanga Coding Style]( jaanga-coding-style/r1/jaanga-coding-style-viewer-r1.html )
+
+[Coding Style Viewer]( coding-styles-viewer/r1/coding-styles-viewer-r1.html )
 
 [Three.ja Examples Viewer]( threejs-examples-viewer/r1/threejs-examples-viewer-r1.html )
 

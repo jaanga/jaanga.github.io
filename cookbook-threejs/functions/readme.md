@@ -62,6 +62,9 @@
 
 * How to set the rotation of a mesh by using a vector converted to rotation angles using a https://en.wikipedia.org/wiki/Quaternion
 
+## Mouse Over
+
+[Mouse Over]( http://jaanga.github.io/cookbook-threejs/functions/mouseover/r1/threejs-mouseover.html )
 
 ## Remove and Add Lights
 
