@@ -1,17 +1,25 @@
-﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/XXXXX/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/XXXXX/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/documents/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [XXXXXX]( http://jaanga.github.io/XXXXXX/  ) » 
+[Jaanga]( http://jaanga.github.io ) »
 
-[XXXXX Read Me]( index.html )
+[Documents Read Me]( index.html )
 ===
 
+[Jaanga Coding Style]( coding-styles-viewer/r1/coding-styles-viewer-r1.html )
+
+[Three.ja Examples Viewer]( threejs-examples-viewer/r1/threejs-examples-viewer-r1.html )
+
+
+
+<!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 ## <center>Web Page / Source Code</center>
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html width=100% height=600px ></iframe>  
 ###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+-->
 
 
 ## Concept
@@ -31,6 +39,10 @@ patterns are descriptions of common problems and proposal for the solutions that
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
+* Easy ways to view /browse lots of documents
+* You don;t go to the documents, the documents come to you
+	* like radio buttons
+	* like changing channels
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
@@ -38,18 +50,19 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Things to Do / Road Map
 
-* Three,js Examples Viewr
+* Three.js Examples Viewer
 	* Highlight currently viewed
 	* Hamburger menu
 
 
 ## Features
 
+<!--
 * Zoom, pan and rotate
 	* 1 finger / left button =  rotate
 	* 2 finger / wheel = zoom in and out
 	* 3 finger / right button = pan
-
+-->
 ## Issues
 
  
