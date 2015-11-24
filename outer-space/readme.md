@@ -6,7 +6,7 @@
 🔭 [Outer Space Read Me]( index.html )
 ===
 
-[Outer Space Blog]( ./get-posts.html )
+[Outer Space Blog]( http://jaanga.github.io/outer-space/get-posts.html ) ~ [Documents]( http://jaanga.github.io/documents/ )
 
 _2015-11-01 - welcome to a beta release of an ongoing mission_
 

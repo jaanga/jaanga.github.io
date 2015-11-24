@@ -7,6 +7,8 @@
 
 _Is it OK to call a coder's blog a 'bloder'?_
 
+[Read Me]( http://jaanga.github.io/cookbook-html/templates/bloder/index.html ) ~ [Documents]( http://jaanga.github.io/documents )
+
 ### Template
 
 * [request-posts-template.html]( request-posts-template.html )
@@ -20,12 +22,12 @@ _Is it OK to call a coder's blog a 'bloder'?_
 
 ## Things to Do / Road Map
 
+* Write header and footer in Showdown?
 * Add links to blog tags
 * Enable multiple tags in post titles
-* load Showdown from bloder
+* Load Showdown from Bloder
 	* Or will this slow things down
 	* Note: Showdown has frequent updates
-* Add copyright notice
 * Add Code Edit View to this read me
 
 ### Big Picture
@@ -47,6 +49,14 @@ _Is it OK to call a coder's blog a 'bloder'?_
 * What to do with next/previous buttons on single post pages 
 
 ## Change Log
+
+2015-11-24 ~ Theo
+
+* Fix issues with blog posts with badly formatted names breaking the entire blog
+	* Now only the badly-named post will not sho and a message appears in the console
+
+* Add copyright notice
+
 
 ### 2015-11-18 ~ Theo
 

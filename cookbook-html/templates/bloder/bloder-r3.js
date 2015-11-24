@@ -8,14 +8,14 @@
 
 	function requestPostTitles( tags ) {
 
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', apiUrl, true );
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', apiUrl, true );
 
-		xmlHttp.onreadystatechange = function() {
+		xhr.onreadystatechange = function() {
 
-			if ( xmlHttp.readyState !== 4 ) { return; }
+			if ( xhr.readyState !== 4 ) { return; }
 
-			var response =  xmlHttp.responseText;
+			var response =  xhr.responseText;
 			var lines = response.split(/\r\n|\n/);
 			var txt = '';
 
@@ -29,9 +29,17 @@
 
 					if ( tags !== undefined ) {
 
-						itemTag = items[2].substr( 0, items[ 2 ].length - 5 );
+						tag = items[ 2 ];
 
-//console.log( itemTag );
+						if ( tag ) {
+							itemTag = items[2].substr( 0, items[ 2 ].length - 5 );
+
+						} else {
+
+console.log( 'oops here:', items );
+
+						}
+
 
 						if ( typeof tags === 'string' ) { tags = [ tags ]; }
 
@@ -80,21 +88,19 @@
 
 		}
 
-		xmlHttp.send( null );
+		xhr.send( null );
 
 	}
 
 	function requestPost ( fileName, index, number ) {
 
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', postsFolder + fileName, true );
-		xmlHttp.onreadystatechange = function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', postsFolder + fileName, true );
+		xhr.onreadystatechange = function() {
 
-			if ( xmlHttp.readyState !== 4 ) { return; }
+			if ( xhr.readyState !== 4 ) { return; }
 
 			items = fileName.split( '_' );
-
-
 
 			if ( items.length > 1 ) {
 
@@ -107,11 +113,11 @@
 
 			}
 
-			titleLength = xmlHttp.responseText.indexOf( '===' );
+			titleLength = xhr.responseText.indexOf( '===' );
 
-			title = '[' + xmlHttp.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )';
+			title = '[' + xhr.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )';
 
-			txt = converter.makeHtml( txt + title + xmlHttp.responseText.substr( titleLength - 1 )  ) + '<hr>';
+			txt = converter.makeHtml( txt + title + xhr.responseText.substr( titleLength - 1 )  ) + '<hr>';
 
 			contents[ index ] = txt;
 
@@ -127,11 +133,10 @@
 
 				postsText.innerHTML += footer
 
-
 			}
 
 		};
 
-		xmlHttp.send( null );
+		xhr.send( null );
 
 	}
