@@ -41,10 +41,10 @@ patterns are descriptions of common problems and proposal for the solutions that
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-* Easy ways to view /browse lots of documents
-* You don;t go to the documents, the documents come to you
-	* like radio buttons
-	* like changing channels
+* Easy ways to view/browse lots of documents
+* You don't go to the documents, the documents come to you
+	* Like radio buttons
+	* Like changing channels
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
@@ -53,7 +53,6 @@ patterns are descriptions of common problems and proposal for the solutions that
 ## Things to Do / Road Map
 
 * Three.js Examples Viewer
-	* Highlight currently viewed
 	* Hamburger menu
 
 
@@ -84,10 +83,6 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
-</center>
-
-<center title="dingbat" >
-# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
 </center>
 
 

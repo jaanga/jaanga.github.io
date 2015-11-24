@@ -5,8 +5,10 @@
 ===
 _Your 3D happy place_
 
-[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) ~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
+[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 ~ [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
+~ [Documents]( http://jaanga.github.io/documents ) 
+~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 
 ## Sample Web Pages / Source Code
 
