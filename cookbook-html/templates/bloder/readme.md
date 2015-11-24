@@ -29,7 +29,13 @@ _Is it OK to call a coder's blog a 'bloder'?_
 
 * Write header and footer in Showdown?
 * Add links to blog tags
+	* Needs moving parsing of location hash to bloder.js
+	* Can then handle
+		* Individual posts
+		* Tags
+		* Dates? More?
 * Enable multiple tags in post titles
+	* Separate by ampersands? Hash marks?
 * Load Showdown from Bloder
 	* Or will this slow things down
 	* Note: Showdown has frequent updates
@@ -49,16 +55,18 @@ _Is it OK to call a coder's blog a 'bloder'?_
 * Add links to dev notes where appropriate, from blogs?
 * Add fun [unicode emoji]( http://unicode.org/emoji/charts/full-emoji-list.html ) wherever
 
-## Isues
+## Issues
 
-* What to do with next/previous buttons on single post pages 
-
+* What to do with next/previous buttons on single post pages?
+* Could/should location.hash parameters be separated by hash marks?
 ## Change Log
 
 2015-11-24 ~ Theo
 
 * Fix issues with blog posts with badly formatted names breaking the entire blog
 	* Now only the badly-named post will not sho and a message appears in the console
+* Updates to read me and template.html
+
 
 * Add copyright notice
 
