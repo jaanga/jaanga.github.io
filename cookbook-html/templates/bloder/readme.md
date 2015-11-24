@@ -11,9 +11,14 @@ _Is it OK to call a coder's blog a 'bloder'?_
 
 ### Template
 
-* [request-posts-template.html]( request-posts-template.html )
+* [request-posts-template.html - Demo - Full Screen]( request-posts-template.html )
 
-### Users
+## <center>Web Page / Source Code</center>
+
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/bloder/request-posts-template.html width=100% height=600px ></iframe>  
+###### _Request Posts Template - Needs more work to display the posts - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/bloder/request-posts-template.html )
+
+### Users of Bloder
 
 * [Jaanga Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 * [Outer Space Blog]( http://jaanga.github.io/outer-space/get-posts.html )

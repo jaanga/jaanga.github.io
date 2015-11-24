@@ -105,6 +105,7 @@ console.log( 'oops here:', items );
 			if ( items.length > 1 ) {
 
 //				txt = `<div><i>${ items[ 0 ] } - tags: ${ items[ 2 ].replace( '.md', '' ) } </i></div>`;
+
 				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( # "not working yet" )_\n`;
 
 			} else {
