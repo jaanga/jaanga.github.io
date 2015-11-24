@@ -6,9 +6,11 @@
 🔭 [Outer Space Read Me]( index.html )
 ===
 
-[Outer Space Blog]( http://jaanga.github.io/outer-space/get-posts.html ) ~ [Documents]( http://jaanga.github.io/documents/ )
+[Outer Space Blog]( http://jaanga.github.io/outer-space/request-outer-space-posts.html ) ~ [Documents]( http://jaanga.github.io/documents/ ) ~
+[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md )
 
-_2015-11-01 - welcome to a beta release of an ongoing mission_
+_Moon, Mars, missions and more - 
+stuff to simulate, stimulate and [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics)ulate_
 
 
 ## Web Page / Source Code
@@ -24,7 +26,7 @@ _This page - as do most all pages here - begins by defining what issues we need 
 <!--
 
 The general format is an adaptation of the ideas developed in Alexander's _et al_ 
-[A Patttern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as summarized on page 10.
+[A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as summarized on page 10.
 
 Each pattern describes a problem which occurs over and over again in our environment, 
 and then describes the core of the solution to that problem, 
@@ -55,6 +57,13 @@ Beginners wanting to know about STEM have little access to good places to start.
 User Experience
 
 * Web sites appear on your computer as if by magic. You have no idea who makes what you see, how it is made or where it comes from. 
+
+Access to Reviews, Critiques and Mentors
+
+* Finding people who will ignore you, tell you not to bother them, or give you bad advice is easy. 
+* Finding people who are warm, encouraging, engaged an informed s not easy
+
+
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
@@ -183,6 +192,7 @@ _We like things that are practical, pedagogical and provocative..._
 * Research existing astronomy apps for ideas
 
 
+<!--
 
 <br>
 <hr>
@@ -432,6 +442,7 @@ By playing and manipulating the concept you become intimate with its nuances.
  
 <!-- bring in? Transcendental apperception  / http://plato.stanford.edu/entries/kant-mind/ -->
 
+<!--
 ### Source Code Visible and Editable
 
 Source code is not magic. Source code is something you edit.
@@ -539,10 +550,15 @@ To the extent possible under law, <a rel="dct:publisher" href="http://jaanga.git
 This work is published from: <span property="vcard:Country" datatype="dct:ISO3166" content="US" about="http://jaanga.github.io"> United States</span>.
 </p>
 
-<br>
+-->
 <hr>
+<br>
 
-<center title="glowing star" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >&#127775;</a>
+<center>
+[Astronomy Picture of the Day]( http://apod.nasa.gov/apod/astropix.html )
+
+<br>
+
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >🌟</a>
 </center>
 

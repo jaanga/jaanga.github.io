@@ -94,7 +94,7 @@ Servers like to see file names with extensions - such as '.html' or '.js'. So re
  
 ## Sources / Links
 
-* [Three.js[( http://threejs.org )
+* [Three.js]( http://threejs.org )
 * [Three.js Documentation]( http://mrdoob.github.io/three.js/docs/ )
 * [W3Schools HTML]( http://www.w3schools.com/tags/default.asp )
 * [Joe Dirksen's book]( http://www.smartjava.org/content/my-books )
