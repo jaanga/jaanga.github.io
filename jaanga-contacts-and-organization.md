@@ -27,6 +27,10 @@ Many of the apps have read me pages that enable you to edit, update and save the
 
 If you see something you like, it's easy for you to take it, make it your own, improve it an share your results with the world.
 
+
+The name 'Jaanga' was chosen because it sounds jazzy, it is short and search results indicate uniqueness.
+This is because Jaanga is about writing software that is fun, easy and gets things done.
+
 <br>
 <hr>
 

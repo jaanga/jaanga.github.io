@@ -7,7 +7,8 @@
 ===
 
 [Outer Space Blog]( http://jaanga.github.io/outer-space/request-outer-space-posts.html ) ~ [Documents]( http://jaanga.github.io/documents/ ) ~
-[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md )
+[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) ~
+[Contacts and Organication]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md )
 
 _Moon, Mars, missions and more - 
 stuff to simulate, stimulate and [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics)ulate_

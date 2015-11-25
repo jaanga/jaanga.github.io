@@ -5,10 +5,12 @@
 ===
 _Your 3D happy place_
 
-[Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
-~ [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
+
+[Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
 ~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
+~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
 
 ## Sample Web Pages / Source Code
 
@@ -22,8 +24,8 @@ _Your 3D happy place_
 [Jaanga.github.io]( http://jaanga.github.io ) is a [GitHub]( http://github.com ) [organization]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4 )
 with source code at [github.com/jaanga]( http://github.com/jaanga ).
 
-The name 'Jaanga' was chosen because it sounds jazzy, it is short and search results indicate uniqueness.
-This is because Jaanga is about writing software that is fun, easy and gets things done.
+The name 'Jaanga' was chosen for this effort because it sounds jazzy, it is short and search results indicate uniqueness.
+Similarly the concept of Jaanga is to be a place to help you write software that is fun, easy and gets things done.
 
 ### Mission  
 <!-- a statement of a rationale, applicable now as well as in the future -->
@@ -145,9 +147,9 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 <div class=figure >
 <a href=http://wikihouse.github.io/viewer-experiments/ >
 <img src= http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png  >
-<h2>WikiHouse</h2></a> 2015
+<h2>WikiHouse</h2>
+</a> 2015
 <li><a href=http://www.wikihouse.cc/ >WikiHouse</a> is an open source building system. Many designers, collaborating to make it simple for everyone to design, print and assemble beautiful, low-energy homes, customised to their needs.
-
 </div>
 
 <div class=figure >
@@ -197,21 +199,15 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 </div>
 
  
-## Contacts
-
-* jaanga@googlegroups.com
-* https://github.com/jaanga/jaanga.github.io/issues
-
-## Copyright and License
-
-* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
-
 ***
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
+
+[GRE Question of the Day]( http://www.grequestionaday.com/ )
+
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
-===
+
 <style> 
 img { border: 1px solid black; } 
 

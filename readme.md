@@ -1,18 +1,30 @@
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+﻿<span style=display:none; >[You are now in GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io/ ) »
 
-[Jaanga Read Me]( index.html )
+[Jaanga Read Me]( index.html#../../readme.md )
 ===
 
-The Jaanga Read Me - which is also the source of the web page document - is updated fairly frequently.
-Click on one of the above links to go to the read me document for the current release.
+[Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
+~ [Documents]( http://jaanga.github.io/documents ) 
+~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
 
+***
 
-## Contacts
+## Note
 
-jaanga@googlegroups.com
+In most (all other?) instances the read me document of a Jaanga repository is also its home page when viewed using the GitHub [Pages]( https://pages.github.com/ ) feature.
+
+This read me does not follow the typical example.
+
+There have been so many fun updates to the Jaanga home page that we decided to keep them all in their [Jaanga Home Page]( https://github.com/jaanga/jaanga.github.io/tree/master/home ) folder.
+
+Therefore the [index.html]( https://github.com/jaanga/jaanga.github.io/blob/master/index.html ) file - that would normally link to this read me file is set 
+to punt to the latest revision in the home folder. And this read me file is kind of bogus - and the material below is archaic.
+
+All this confuses us too!
 
 
 ## System Requirements
@@ -28,17 +40,11 @@ The apps here are currently being built and tested with the Google Chrome browse
 Bugs on browsers other than Chrome need not be reported until such time as the work settles down and an effort to support more browsers is initiated.
 
 
-##Organization
-
-Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins. 
-All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ).
-
-
-## Copyright Notice and License
-[ Copyright Notice and License ]( http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md)
-
-
 ## Change Log
+
+2015-11-24 ~ Theo
+
+* Many changes
 
 2015-11-01 ~ Theo
 
@@ -158,8 +164,18 @@ All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-sourc
 * algesurf-api: slider css much better/prettier
 * Player.html: adding sliders, css and fixes etc to menu
 
+<br>
+
+---
 
 <br>
-<center><h2>&#x2766;</h2></center>
+
+<center>
+
+[readme]( https://en.wikipedia.org/wiki/README )
+
+<h2><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a></h2>
+
+</center>
 
 
