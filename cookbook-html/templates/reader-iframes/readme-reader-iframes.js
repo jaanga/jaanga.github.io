@@ -74,9 +74,6 @@
 
 			}
 
-
-
-
 		};
 
 		xmlHttp.send( null );
