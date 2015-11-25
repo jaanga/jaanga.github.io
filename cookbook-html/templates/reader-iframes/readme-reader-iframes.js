@@ -1,15 +1,18 @@
 
-	var converter, content;
+	var converter, contents;
 
 	init();
 
 	function init() {
 
-		var css = document.body.appendChild( document.createElement('style') );
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+
 		css.innerHTML =
 		`
 			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; position: absolute: right: 0; }
+
 /*			.figure { display: inline-block; margin: 0 20px 50px 0 ; vertical-align: top; width: 240px;} */
+
 			h1 a { text-decoration: none; }
 			iframe { border: 0px solid; }
 			img { vertical-align: top; }
@@ -19,14 +22,17 @@
 
 		`;
 
+
 		var reader = document.body.appendChild( document.createElement( 'script' ) );
 		reader.onload = function() {
 
 			converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
 			hashChange();
 
 		};
-		reader.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
+
+		reader.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js';
 
 		window.addEventListener( 'hashchange', hashChange, false );
 
@@ -36,7 +42,7 @@
 
 		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
 
-		content = content ? content : document.body.appendChild( document.createElement( 'div' ) );
+		contents = contents ? contents : document.body.appendChild( document.createElement( 'div' ) );
 
 		document.title = document.title ? document.title : fileName;
 
@@ -46,9 +52,9 @@
 
 			if ( xmlHttp.readyState !== 4 ) { return; }
 
-			content.innerHTML = converter.makeHtml( xmlHttp.responseText );
+			contents.innerHTML = converter.makeHtml( xmlHttp.responseText );
 
-			var ifr = content.getElementsByClassName( 'ifr' );
+			var ifr = document.getElementsByClassName( 'ifr' );
 
 			if ( ifr !== undefined ) {
 
@@ -61,7 +67,7 @@
 
 			}
 
-			caption = content.getElementsByTagName( 'h6' );
+			caption = document.getElementsByTagName( 'h6' );
 
 			if ( caption !== undefined ) {
 
@@ -73,6 +79,7 @@
 				}
 
 			}
+
 
 		};
 

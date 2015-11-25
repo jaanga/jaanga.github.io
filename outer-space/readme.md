@@ -7,9 +7,9 @@
 ===
 
 [Outer Space Blog]( http://jaanga.github.io/outer-space/request-outer-space-posts.html ) 
-~ [Documents]( http://jaanga.github.io/documents/ ) 
-~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
-~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md )
+\- [Documents]( http://jaanga.github.io/documents/ ) 
+\- [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+\- [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md )
 
 _Moon, Mars, missions and more - 
 stuff to simulate, stimulate and [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics)ulate_
@@ -161,11 +161,12 @@ _Every app has a read me file that lists the content that is available and assoc
 
 _Would you like to write about what we are doing? Here is some text you can copy and paste to help get you going._ 
 
-* Free and easy access to gigabytes of data from NASA and other sources that is otherwise highly inaccessible
-* Learn from dozens of short, easy JavaScript scripts
+* Free and easy access to gigabytes of planetary heightmap data from NASA and other sources that is otherwise highly inaccessible
+* View the data in 3D in your browser while learning how to do this from dozens of short, easy JavaScript scripts
 * Pick up dozens of tips and insights for sourcing good info, mashing up data and building demos quickly
 * View NASA's GitHub repository of STL files of satellites in 3D
-* Source code provided for everything that is short and easy fork, edit and share 
+* Source code provided for everything that is short and easy to fork, edit and share 
+* Accessibility, mentoring and pedagogical tools included from the get-go. 
 
 <br>
 <hr>
@@ -181,7 +182,7 @@ _We like things that are practical, pedagogical and provocative..._
 * Think of ways of hooking up NASA photo locations with 3D
 * Add more celestial bodies
 * Build a virtual Galilean telescope and use it to view a virtual 3D moon
-* Build a 3D ptolemeic orrery
+* Build a 3D ptolemeic [orrery]( https://en.wikipedia.org/wiki/Orrery )
 
 ### Code
 
@@ -195,6 +196,8 @@ _We like things that are practical, pedagogical and provocative..._
 
 
 <!--
+
+Moved to http://jaanga.github.io/documents/
 
 <br>
 <hr>
@@ -552,7 +555,11 @@ To the extent possible under law, <a rel="dct:publisher" href="http://jaanga.git
 This work is published from: <span property="vcard:Country" datatype="dct:ISO3166" content="US" about="http://jaanga.github.io"> United States</span>.
 </p>
 
+end of moved bits, just here for back up
+
 -->
+
+
 <hr>
 <br>
 
