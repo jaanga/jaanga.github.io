@@ -1,4 +1,4 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/basic-html/ "View file as a web page." ) </span>
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/basic-html/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/basic-html'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) » 
@@ -7,10 +7,13 @@
 [Basic HTML Template Read Me]( ./index.html )
 ===
 
-<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html" width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html )
+_something fun_
 
 [Basic HTML Template - Demo - Full Screen]( http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html )
+
+
+<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html" width=100% height=600px ></iframe>  
+###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-html/templates/basic-html/basic-html.html )
 
 
 ## Concept
@@ -55,11 +58,11 @@ patterns are descriptions of common problems and proposal for the solutions that
 * [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 
 <center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >?</a>
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
 
 <center title="dingbat" >
-# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >?</span>
+# <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
 </center>
 
 
