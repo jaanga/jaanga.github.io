@@ -227,6 +227,7 @@
 
 	toggleGradient = toggleBackgroundGradient;
 
+
 	function toggleAutoRotate() {
 
 		controls.autoRotate = controls.autoRotate === true ? false : true ;

@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>slotted-sphere-sections R1</title>
+<title>Sphere Slicer R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -15,6 +15,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
 <script>
 
 	var sphere;
@@ -39,11 +40,16 @@
 			#aa {text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
 
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type="range"]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+
 		`;
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -54,7 +60,7 @@
 			<p>slices: <input type=range id=inpSlices max=50 min=2 step=1 value=${ numberOfSlices } oninput=drawSphere();outSlices.value=inpSlices.value; title="20 to 150: OK" > <output id=outSlices >${ numberOfSlices }</output></p>
 			<p>thickness: <input type=range id=inpThickness max=25 min=1 step=1 value=${ thickness } oninput=drawSphere();outThickness.value=inpThickness.value; title="1 to 25: OK" > <output id=outThickness >${ thickness }</output></p>
 			<p>bulge: <input type=range id=inpBulge max=250 min=10 step=1 value=${ bulge } oninput=drawSphere();outBulge.value=inpBulge.value; title="1 to 250: OK" > <output id=outBulge >${ bulge }</output></p>
-
+			<p>rotation: <input type=checkbox id=inpRotation onchange=toggleAutoRotate(); checked ></p>
 			<div id=info ></div>
 
 		`;
@@ -78,18 +84,28 @@
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshBasicMaterial();
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
 
-// helpers
-		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
-		scene.add( gridHelper );
-
-		var axisHelper = new THREE.AxisHelper( 100 );
-		scene.add( axisHelper );
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+//		textureCube.format = THREE.RGBFormat;
+		material.envMap = textureCube;
+		material.reflectivity = 0.85;
 
 		drawSphere();
 
+		toggleGroundBoxLights();
+		groundBoxLights.position.y = -50;
+
+		toggleAxis();
+		toggleBackgroundGradient();
+		toggleAutoRotate();
+
+		addWindowResize();
+		addLights( 200 );
+		addShadows();
 	}
 
 	function drawSphere() {
@@ -123,8 +139,8 @@
 			v.x = ( rad + v.z ) * sin( xx * v.x );
 			v.y = v.y;
 			v.z = ( rad + v.z ) * cos( xx * v.y );
- 
-		} 
+
+		}
 
 /*
 			var rc = ( rad + v.z ) * cos( xx * v.y );
@@ -140,12 +156,12 @@
 			rc * sin( lon)
 		);
 */
-//		geometry.verticesNeedUpdate = true;  
+//		geometry.verticesNeedUpdate = true;
 //		geometry.normalsNeedUpdate = true;
 
 		geometry.center();
 
-		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
+//		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
 		sphere = new THREE.Mesh( geometry, material );
 		sphere.castShadow = true;
 		sphere.receiveShadow = true;
@@ -172,22 +188,13 @@
 		holePath.quadraticCurveTo( 0.5 * radOut * cos( angle + 3 * delta ), 0.5 * radOut * sin( angle + 3 * delta ),
 			radOut * cos( angle + delta ), radOut * sin( angle + delta ) );
 
-		holePath.quadraticCurveTo( ( radOut + 2 ) * cos( angle ), ( radOut + 2 ) * sin( angle ), 
+		holePath.quadraticCurveTo( ( radOut + 2 ) * cos( angle ), ( radOut + 2 ) * sin( angle ),
 			radOut * cos( angle - delta ), radOut * sin( angle - delta ) );
 
 		holePath.quadraticCurveTo( 0.75 * radOut * cos( angle + 0 ), 0.75 * radOut * sin( angle + 0 ),
 			radIn * ca, radIn * sa );
 
 		return holePath;
-
-	}
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 
