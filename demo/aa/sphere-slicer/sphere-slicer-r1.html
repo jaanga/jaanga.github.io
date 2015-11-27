@@ -6,11 +6,6 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
-<!--
-<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
--->
 
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
@@ -54,7 +49,7 @@
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+				<a id=aa href=http://jaanga.github.io/demo/aa/sphere-slicer/ >🛈</a>
 			</h2>
 			<p>radius: <input type=range id=inpRadius max=150 min=20 step=1 value=50 oninput=drawSphere();out.value=inpRadius.value; title="20 to 150: OK" > <output id=out >value</output></p>
 			<p>slices: <input type=range id=inpSlices max=50 min=2 step=1 value=${ numberOfSlices } oninput=drawSphere();outSlices.value=inpSlices.value; title="20 to 150: OK" > <output id=outSlices >${ numberOfSlices }</output></p>
@@ -90,7 +85,6 @@
 		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
 
 		textureCube = THREE.ImageUtils.loadTextureCube( urls );
-//		textureCube.format = THREE.RGBFormat;
 		material.envMap = textureCube;
 		material.reflectivity = 0.85;
 
@@ -106,6 +100,7 @@
 		addWindowResize();
 		addLights( 200 );
 		addShadows();
+
 	}
 
 	function drawSphere() {
@@ -131,11 +126,10 @@
 		verts = geometry.vertices;
 		xx = 0.01;
 
-
+// needs work
 		for ( var i = 0; i < verts.length; i++ ) {
 
 			v = verts[ i ];
-
 			v.x = ( rad + v.z ) * sin( xx * v.x );
 			v.y = v.y;
 			v.z = ( rad + v.z ) * cos( xx * v.y );
@@ -156,9 +150,9 @@
 			rc * sin( lon)
 		);
 */
+
 //		geometry.verticesNeedUpdate = true;
 //		geometry.normalsNeedUpdate = true;
-
 		geometry.center();
 
 //		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
@@ -174,16 +168,13 @@
 		radIn = 5;
 		radOut = inpRadius.valueAsNumber - 8;
 
-		var delta = 0.15 * 2 * Math.PI / numberOfSlices;
+		var delta = 0.35 * 2 * Math.PI / numberOfSlices;
 		ca = cos( angle );
 		sa = sin( angle );
 
 		var holePath = new THREE.Path();
 
 		holePath.moveTo( radIn * ca, radIn * sa );
-
-//console.log( radIn * ca, radIn * sa  );
-
 
 		holePath.quadraticCurveTo( 0.5 * radOut * cos( angle + 3 * delta ), 0.5 * radOut * sin( angle + 3 * delta ),
 			radOut * cos( angle + delta ), radOut * sin( angle + delta ) );

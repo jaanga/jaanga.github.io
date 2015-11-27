@@ -7,7 +7,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [Sphere Slicer]( index.html )
 ===
 
-_Say something funny_
+_The food slicer and dicer of the future_
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
@@ -19,17 +19,18 @@ _Say something funny_
 
 ##Overview
 
-### [Sphere Slicer - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+### [Sphere Slicer - Demo - Full Screen]( http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html )
 
 ### Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html  width=100% height=600px ></iframe>  
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html width=100% height=600px ></iframe>  
 ###### _Sphere Slicer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html )
 
-
+<!--
 ## Concept
 
 ### Issues / Problems
+-->
 <!--
 
 The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
@@ -40,17 +41,17 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-
+<!--
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-
+<!--
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
-
+<!--
 ## Things to Do / Road Map
-
+-->
 
 ## Features
 
@@ -60,6 +61,10 @@ patterns are descriptions of common problems and proposal for the solutions that
 	* 3 finger / right button = pan
 
 ## Issues
+
+* The bulging is cylindrical - not yet fully spherical
+* The curvature of the slices need much work
+
 
  
 ## Sources
