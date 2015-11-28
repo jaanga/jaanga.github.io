@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Moving Manuals Logo R1</title>
+<title>Moving Manuals Logo Render R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -11,6 +11,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
 <!--
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
@@ -18,10 +19,13 @@
 -->
 <script>
 
+	var logo;
+
+	var height = 50;
 	var thickness = 18;
 	var pi = Math.PI;
 
-	var components = [];
+	var components;
 	var raycaster;
 	var mouse;
 
@@ -58,6 +62,11 @@
 			<div><small>Touch any component</small></div>
 			<div><button onclick=returnAllToStartTween(); >Return all to start</button>
 			<button onclick=assembleQuicklyTween(); >Assemble Quickly</button></div>
+
+			<p>thickness: <input type=range id=inpThickness max=50 min=1 step=1 value=${ thickness } oninput=drawLogo();outThickness.value=inpThickness.value; title="1 to 25: OK" > <output id=outThickness >${ thickness }</output></p>
+			<p>height: <input type=range id=inpHeight max=70 min=20 step=1 value=${ height } oninput=drawLogo();outHeight.value=inpHeight.value; title="1 to 25: OK" > <output id=outHeight >${ height }</output></p>
+			<p>rotation: <input type=checkbox id=inpRotation onchange=toggleAutoRotate(); checked ></p>
+
 			<div id=info ></div>
 
 		`;
@@ -81,40 +90,18 @@
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
-
-// helpers
-		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -5, 0 );
-		scene.add( gridHelper );
-
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
-
 // assets
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -6, 0 );
-		scene.add( mesh );
 
-//		geometry = new THREE.BoxGeometry( 5, 50, 5 );
-		vertices = [ v2( 0, 0 ), v2( 8, 0 ), v2( 8, 5 ), v2( 5, 5 ), v2( 5, 45 ),  v2( 8, 45 ),  v2( 8, 50 ), v2( 0, 50 ) ];
-		geometry = createGeometryFromVerices( vertices );
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshBasicMaterial();
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
 
-		drawBar( geometry, 0, v( -40, 0, -20), v( -40, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( -30, 0, -20), v( -10, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
-		drawBar( geometry, 0, v( -20, 0, -20), v( 10, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( -10, 0, -20), v( 40, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		material.envMap = textureCube;
+		material.reflectivity = 0.85;
 
-//		geometry = new THREE.BoxGeometry( 5, 52, 5 );
-		vertices = [ v2( 12.5, 0 ), v2( 15, 0 ), v2( 15, 5 ), v2( 0, 50 ),  v2( 0, 38 ) ];
-		geometry = createGeometryFromVerices( vertices );
-
-		drawBar( geometry, 0, v( -5, 5, -20), v( -10, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( 5, 5, -20), v( -40, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
-		drawBar( geometry, 0, v( 15, 5, -20), v( 40, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( 25, 5, -20), v( 10, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
+		drawLogo();
 
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
@@ -122,9 +109,50 @@
 		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // for mobile
 
+		toggleGroundBoxLights();
+		toggleAxis();
+		toggleBackgroundGradient();
+		toggleAutoRotate();
+
+		addWindowResize();
+		addLights( 200 );
+		addShadows();
+
 	}
 
-	function createGeometryFromVerices( vertices ) {
+
+	function drawLogo() {
+
+		scene.remove( logo );
+		logo = new THREE.Object3D();
+		components = [];
+		height = inpHeight.valueAsNumber;
+		thickness = inpThickness.valueAsNumber;
+
+
+//		geometry = new THREE.BoxGeometry( 5, 50, 5 );
+		vertices = [ v2( 0, 0 ), v2( 8, 0 ), v2( 8, 5 ), v2( 5, 5 ), v2( 5, height - 5 ),  v2( 8, height - 5 ),  v2( 8, height ), v2( 0, height ) ];
+		geometry = createGeometryFromVertices( vertices );
+
+		drawBar( geometry, 0, v( -40, 0, -20), v( -40, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( -30, 0, -20), v( -10, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+		drawBar( geometry, 0, v( -20, 0, -20), v( 10, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( -10, 0, -20), v( 40, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+
+//		geometry = new THREE.BoxGeometry( 5, 52, 5 );
+		vertices = [ v2( 12.5, 0 ), v2( 15, 0 ), v2( 15, 5 ), v2( 0, height ),  v2( 0, height - 12 ) ];
+		geometry = createGeometryFromVertices( vertices );
+
+		drawBar( geometry, 0, v( -5, 5, -20), v( -10, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( 5, 5, -20), v( -40, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
+		drawBar( geometry, 0, v( 15, 5, -20), v( 40, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( 25, 5, -20), v( 10, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
+
+		scene.add( logo );
+
+	}
+
+	function createGeometryFromVertices( vertices ) {
 
 		shape = new THREE.Shape();
 		shape.fromPoints( vertices );
@@ -135,7 +163,7 @@
 
 	function drawBar( geometry, id, startPosition, endPosition, startRotation, endRotation ) {
 
-		material = new THREE.MeshNormalMaterial();
+//		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.copy( startPosition );
 		mesh.rotation.x = startRotation.x;
@@ -150,11 +178,13 @@
 
 		mesh.userData.index = id;
 
-		scene.add( mesh );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		logo.add( mesh );
 		components.push( mesh );
 
 		edges = new THREE.EdgesHelper( mesh, 0xff0000 );
-		scene.add( edges );
+		logo.add( edges );
 
 		return mesh;
 
@@ -321,16 +351,6 @@
 //console.log(  'name', cc[ i ].name );
 
 		}
-
-	}
-
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 
