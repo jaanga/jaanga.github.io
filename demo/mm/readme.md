@@ -1,13 +1,13 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/demo/aa/sphere-slicer/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/aa/sphere-slicer'; 
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/demo/mm/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/mm/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
 
-[Sphere Slicer]( index.html )
+[Moving Manuals]( index.html )
 ===
 
-_The food slicer and dicer of the future_
+_The product assembly manuals of the future - now_
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
@@ -19,12 +19,12 @@ _The food slicer and dicer of the future_
 
 ##Overview
 
-### [Sphere Slicer - Demo - Full Screen]( http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html )
+### [Moving Materials Logo - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-r1.html )
 
 ### Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html width=100% height=600px ></iframe>  
-###### _Sphere Slicer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-r1.html width=100% height=600px ></iframe>  
+###### _Sphere Slicer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-r1.html )
 
 <!--
 ## Concept
@@ -61,9 +61,6 @@ patterns are descriptions of common problems and proposal for the solutions that
 	* 3 finger / right button = pan
 
 ## Issues
-
-* The bulging is cylindrical - not yet fully spherical
-* The curvature of the slices need much work
 
 
  
