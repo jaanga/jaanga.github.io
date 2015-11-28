@@ -19,12 +19,14 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
-### [Moving Materials Logo - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-r1.html )
+### [Moving Materials Logo Basic R1- Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html )
+
+### [Moving Materials Logo Render R1- Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-render-r1.html )
 
 ### Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-r1.html width=100% height=600px ></iframe>  
-###### _Sphere Slicer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-r1.html )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html width=100% height=600px ></iframe>  
+###### _Moving Manuals Basic - Revision 1 - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html )
 
 <!--
 ## Concept
