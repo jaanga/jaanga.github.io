@@ -38,6 +38,8 @@
 ## [Femur Heart UCSH]( http://theo-armour.github.io/ucsf/ )
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
+## [aa]( http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html ) [mm]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-render-r1.html )
+
 # [Terrain]( http://jaanga.github.io/terrain-viewer/readme-reader.html )
 
 ## [unFlatland R11]( http://jaanga.github.io/terrain-viewer/un-flatland/latest/ ) &nbsp; [GH]( https://github.com/jaanga/terrain-viewer/tree/gh-pages/un-flatland )
