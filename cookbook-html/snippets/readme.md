@@ -31,4 +31,6 @@
 
 * [Request Animation Frame Read Me]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/ )
 
+## Text to Voice
 
+### Text to Voice]( http://jaanga.github.io/cookbook-html/snippets/text-to-voice/speech-synth-basic.html )
