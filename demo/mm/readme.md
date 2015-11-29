@@ -24,7 +24,7 @@ _2015-11-29_
 
 * Play a step-by-step construction
 
-### [Kallax 2x2 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-basic-r1.html )
+### [Kallax 2x2 Play R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-play-r1.html )
 
 * Play a step-by-step construction
 
@@ -76,6 +76,10 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
+
+* Build many very small scripts - each with different features
+* Eventually decide which features to keep and which to discard
+* Much easier than trying to build one big app all at once
 
 
 ### Vision
