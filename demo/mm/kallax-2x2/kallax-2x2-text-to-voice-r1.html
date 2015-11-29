@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Kallax 2x2 opacity R1</title>
+<title>Kallax 2x2 Text To Voice R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -19,6 +19,26 @@
 -->
 <script>
 
+	var utterance = new SpeechSynthesisUtterance();
+	utterance.lang = 'en-US';
+//	utterance.lang = 'fr-FR';
+
+	phrases ='\
+		Welcome to the Moving Manuals demo.\
+		Every time you click I will say something.\
+		Click any object and watch where it goes.\
+		Click it again and watch it go home.\
+		Click \'Assemble Quickly\' if you are in a hurry.\
+		Click \'Return all to start\' and begin again.\
+		There are more demos. Click the info icon.\
+		Use one finger to rotate.\
+		Use two fingers to zoom.\
+		Use three fingers to pan.\
+		Well, now let\'s rewind\
+	';
+	var sentences = phrases.split( '.' )
+	var count = 0;
+
 	var kallax;
 	var edges;
 	var components;
@@ -29,7 +49,6 @@
 
 	var thicknessCase = 4;
 	var thicknessShelf = 2;
-	var opacity = 0.9;
 
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
@@ -85,11 +104,6 @@
 
 			<p>rotation: <input type=checkbox id=inpRotation onchange=toggleAutoRotate(); checked ></p>
 
-			<p>
-			Acquire X-ray vision,<br>Use the slides to update the opacity.<br>
-			opacity: <input type=range id=inpOpacity max=1 min=0 step=0.05 value=${ opacity } oninput=updateOpacity(); title="0 to 1: OK" > 
-			 <output id=outOpacity >${ opacity }</output></p>
-
 			<div id=info ></div>
 
 		`;
@@ -137,22 +151,6 @@
 
 	}
 
-	function updateOpacity() {
-
-		scene.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh && child.material && child.material.transparent === true ) {
-
-				child.material.opacity = inpOpacity.valueAsNumber;
-				child.material.needsUpdate = true;
-
-			}
-		} );
-
-		outOpacity.value = inpOpacity.value;
-
-	}
-
 	function updateVariables() {
 
 		outWidth.value=width=inpWidth.valueAsNumber;
@@ -188,10 +186,10 @@
 		drawObject( obj, 0, v( 0, 15 + 3.5 * thicknessCase, -30 ), v( 0.5 * width - 0.5 * thicknessCase, 0.5 * height, 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
 
 		obj = buildShelfVertical ();
-		drawObject( obj, 0, v( -0.25 * width, 20 + 4.5 * thicknessCase, -30 ), v( 0, height - thicknessCase - 0.5 * ( 0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
+		drawObject( obj, 0, v( -0.25 * width, 20 + 4.5 * thicknessCase, -30), v( 0, height - thicknessCase - 0.5 * (0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
 
 		obj = buildShelfVertical ();
-		drawObject( obj, 0, v( 0.25 * width, 20 + 4.5 * thicknessCase, -30 ), v( 0, thicknessCase + 0.5 * ( 0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
+		drawObject( obj, 0, v( 0.25 * width, 20 + 4.5 * thicknessCase, -30), v( 0, thicknessCase + 0.5 * (0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
 
 		obj = buildShelfHorizontal ();
 		drawObject( obj, 0, v( 0, 20 + 5.5 * thicknessCase, -30), v( 0, 0.5 * height, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
@@ -300,11 +298,11 @@
 
 	function buildShelfHorizontal () {
 
-		var obj = new THREE.Object3D();
-
 		var geometry = new THREE.BoxGeometry( width - 2 * thicknessCase, thicknessShelf, depth );
-		var material = new THREE.MeshNormalMaterial( { opacity: opacity, transparent: true } );
+		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
+
+		var obj = new THREE.Object3D();
 		obj.add( mesh);
 		components.push( mesh );
 
@@ -325,13 +323,14 @@
 
 	}
 
+
 	function buildShelfVertical () {
 
-		var obj = new THREE.Object3D();
-
 		var geometry = new THREE.BoxGeometry( 0.5 * width - thicknessCase - 0.5 * thicknessShelf, thicknessShelf, depth );
-		var material = new THREE.MeshNormalMaterial( { opacity: opacity, transparent: true } );
+		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
+
+		var obj = new THREE.Object3D();
 		obj.add( mesh);
 		components.push( mesh )
 
@@ -352,13 +351,12 @@
 
 	}
 
-
 	function buildCasevertical () {
 
 		var obj = new THREE.Object3D();
 
 		var geometry = new THREE.BoxGeometry( height - 2 * thicknessCase, thicknessCase, depth );
-		var material = new THREE.MeshNormalMaterial( { opacity: opacity, transparent: true } );
+		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
 		obj.add( mesh);
 		components.push( mesh )
@@ -385,7 +383,7 @@
 		var obj = new THREE.Object3D();
 
 		var geometry = new THREE.BoxGeometry( width, thicknessCase, depth );
-		var material = new THREE.MeshNormalMaterial( { opacity: opacity, transparent: true } );
+		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
 		obj.add( mesh);
 		components.push( mesh )
@@ -464,6 +462,8 @@
 
 		if ( intersects.length > 0 ) {
 
+			sayIt();
+
 			intersected = intersects[ 0 ].object;
 
 // console.log( intersected );
@@ -475,6 +475,17 @@
 			intersected = null;
 
 		}
+
+	}
+
+	function sayIt() {
+
+			window.speechSynthesis.cancel();
+			utterance.text = sentences[ count];
+			speechSynthesis.speak( utterance );
+			info.innerHTML = sentences[ count++ ];
+			count = count < sentences.length ? count : 0;
+
 
 	}
 

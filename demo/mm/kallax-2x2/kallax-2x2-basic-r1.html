@@ -278,11 +278,11 @@
 
 	function buildShelfHorizontal () {
 
-		var obj = new THREE.Object3D();
-
 		var geometry = new THREE.BoxGeometry( width - 2 * thicknessCase, thicknessShelf, depth );
 		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
+
+		var obj = new THREE.Object3D();
 		obj.add( mesh);
 		components.push( mesh );
 
@@ -306,11 +306,11 @@
 
 	function buildShelfVertical () {
 
-		var obj = new THREE.Object3D();
-
 		var geometry = new THREE.BoxGeometry( 0.5 * width - thicknessCase - 0.5 * thicknessShelf, thicknessShelf, depth );
 		var material = new THREE.MeshNormalMaterial();
 		var mesh = new THREE.Mesh( geometry, material );
+
+		var obj = new THREE.Object3D();
 		obj.add( mesh);
 		components.push( mesh )
 
@@ -327,11 +327,9 @@
 		drawHole( obj, -0.25 * width + 0.5 * thicknessCase + 0.25 * thicknessShelf, 0, 0.5 * depth - 1 * thicknessCase, 0, pi05, 0, 0 );
 		drawHole( obj, -0.25 * width + 0.5 * thicknessCase + 0.25 * thicknessShelf, 0, -0.5 * depth + 1 * thicknessCase, 0, pi05, 0, 0 );
 
-
 		return obj;
 
 	}
-
 
 	function buildCasevertical () {
 
