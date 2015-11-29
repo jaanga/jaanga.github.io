@@ -18,6 +18,19 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_2015-11-29_
+
+### [Moving Materials Logo Play R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-play-r1.html )
+
+* Play a step-by-step construction
+
+### [Kallax 2x2 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-basic-r1.html )
+
+* Play a step-by-step construction
+
+_There is a fun bug right now: Click play and rotate - then click on some of the parts. Lots of action starts to happen!_
+
+
 _2015-11-28_
 
 ### [Kallax 2x2 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-basic-r1.html )
@@ -72,6 +85,11 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 
 ## Things to Do / Road Map
+
+### Animation series
+
+* Issue: Reset counter to start with each new replay
+* Issue: prevent multiple replays from going on at the same time
 
 
 ### Kallax

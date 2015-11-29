@@ -19,6 +19,7 @@
 <script>
 
 	var thickness = 18;
+	var count = 0;
 
 	var pi = Math.PI;
 	var components = [];
@@ -58,6 +59,7 @@
 			<div><small>Touch any component</small></div>
 			<div><button onclick=returnAllToStartTween(); >Return all to start</button>
 			<button onclick=assembleQuicklyTween(); >Assemble Quickly</button></div>
+			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play</p>
 			<div id=info ></div>
 
 		`;
@@ -100,7 +102,7 @@
 
 //		geometry = new THREE.BoxGeometry( 5, 50, 5 );
 		vertices = [ v2( 0, 0 ), v2( 8, 0 ), v2( 8, 5 ), v2( 5, 5 ), v2( 5, 45 ),  v2( 8, 45 ),  v2( 8, 50 ), v2( 0, 50 ) ];
-		geometry = createGeometryFromVerices( vertices );
+		geometry = createGeometryFromVertices( vertices );
 
 		drawBar( geometry, 0, v( -40, 0, -20), v( -40, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
 		drawBar( geometry, 0, v( -30, 0, -20), v( -10, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
@@ -109,7 +111,7 @@
 
 //		geometry = new THREE.BoxGeometry( 5, 52, 5 );
 		vertices = [ v2( 12.5, 0 ), v2( 15, 0 ), v2( 15, 5 ), v2( 0, 50 ),  v2( 0, 38 ) ];
-		geometry = createGeometryFromVerices( vertices );
+		geometry = createGeometryFromVertices( vertices );
 
 		drawBar( geometry, 0, v( -5, 5, -20), v( -10, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
 		drawBar( geometry, 0, v( 5, 5, -20), v( -40, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
@@ -124,7 +126,25 @@
 
 	}
 
-	function createGeometryFromVerices( vertices ) {
+	function togglePlay() {
+
+		if ( chkPlay.checked === false ) { return; }
+
+		if ( count >= components.length ) {
+
+			returnAllToStartTween();
+			count = 0;
+
+		}
+
+		movRotTween( components[ count ] );
+		count++;
+
+console.log( count );
+
+	}
+
+	function createGeometryFromVertices( vertices ) {
 
 		shape = new THREE.Shape();
 		shape.fromPoints( vertices );
@@ -213,7 +233,10 @@
 				x: oData.endRotation.x,
 				y: oData.endRotation.y,
 				z: oData.endRotation.z }, 2000 )
-			.easing( TWEEN.Easing.Elastic.Out).start();
+			.easing( TWEEN.Easing.Elastic.Out)
+			.onComplete( function() {
+				togglePlay();
+			} ).start();
 
 		} else {
 
@@ -228,7 +251,10 @@
 				x: oData.startRotation.x,
 				y: oData.startRotation.y,
 				z: oData.startRotation.z }, 2000 )
-			.easing( TWEEN.Easing.Elastic.Out).start();
+			.easing( TWEEN.Easing.Elastic.Out)
+			.onComplete( function() {
+				togglePlay();
+			} ).start();
 
 		}
 

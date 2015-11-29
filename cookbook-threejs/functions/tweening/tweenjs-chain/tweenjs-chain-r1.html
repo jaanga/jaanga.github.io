@@ -2,25 +2,26 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Moving Manuals Logo Basic R1</title>
+<title>Tween.js Chain R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
-
+<!--
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
-<!--
+-->
+
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
--->
+<script src=http://rawgit.com/mrdoob/three.js/dev//examples/js/libs/tween.min.js ></script>
 <script>
 
-	var thickness = 18;
+	var count = 0;
 
 	var pi = Math.PI;
+	var pi05 = 0.5 * pi;
 	var components = [];
 	var raycaster;
 	var mouse;
@@ -38,11 +39,11 @@
 		`
 
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			button { border: 0px silver; background-color: #ddd; height: 25px; }
 			h2 { margin: 0 }
+
 			#aa {text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
-
-			button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
 		`;
 
@@ -53,11 +54,14 @@
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
+				<a id=aa href=http://jaanga.github.io/cookbook-threejs/functions/tweening/ >🛈</a>
 			</h2>
-			<div><small>Touch any component</small></div>
-			<div><button onclick=returnAllToStartTween(); >Return all to start</button>
-			<button onclick=assembleQuicklyTween(); >Assemble Quickly</button></div>
+			<p>
+			<button onclick=returnAllToStartTween(); >Return all to start</button> 
+			 <button onclick=assembleQuicklyTween(); >Assemble quickly</button>
+			</p>
+			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
+			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play</p>
 			<div id=info ></div>
 
 		`;
@@ -85,7 +89,7 @@
 
 // helpers
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -5, 0 );
+		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
 		var axisHelper = new THREE.AxisHelper( 50 );
@@ -95,26 +99,8 @@
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -6, 0 );
+		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
-
-//		geometry = new THREE.BoxGeometry( 5, 50, 5 );
-		vertices = [ v2( 0, 0 ), v2( 8, 0 ), v2( 8, 5 ), v2( 5, 5 ), v2( 5, 45 ),  v2( 8, 45 ),  v2( 8, 50 ), v2( 0, 50 ) ];
-		geometry = createGeometryFromVerices( vertices );
-
-		drawBar( geometry, 0, v( -40, 0, -20), v( -40, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( -30, 0, -20), v( -10, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
-		drawBar( geometry, 0, v( -20, 0, -20), v( 10, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( -10, 0, -20), v( 40, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
-
-//		geometry = new THREE.BoxGeometry( 5, 52, 5 );
-		vertices = [ v2( 12.5, 0 ), v2( 15, 0 ), v2( 15, 5 ), v2( 0, 50 ),  v2( 0, 38 ) ];
-		geometry = createGeometryFromVerices( vertices );
-
-		drawBar( geometry, 0, v( -5, 5, -20), v( -10, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( 5, 5, -20), v( -40, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
-		drawBar( geometry, 0, v( 15, 5, -20), v( 40, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
-		drawBar( geometry, 0, v( 25, 5, -20), v( 10, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
 
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
@@ -122,18 +108,47 @@
 		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // for mobile
 
+		geometry = new THREE.BoxGeometry( 5, 50, 5 );
+		b1 = drawBox( geometry, 0, v( 0, 25, 0 ), v( 30, 0, 30 ), v( 0, 0, 0.75 ), v( pi05, 0, 0 ) );
+
+		geometry = new THREE.BoxGeometry( 50, 50, 5 );
+		b2 = drawBox( geometry, 0, v( 0, 25, -30 ), v( -30, 0, 30 ), v( 0, 0, 0 ), v( 0.5, 0, 0.5 ) );
+
+		geometry = new THREE.BoxGeometry( 5, 50, 50 );
+		b3 = drawBox( geometry, 0, v( 30, 25, -10 ), v( 30, 0, 10 ), v( 0, 0, 0 ), v( -0.5, 0.5, 0.5 ) );
+
 	}
 
-	function createGeometryFromVerices( vertices ) {
+	function togglePlay() {
 
-		shape = new THREE.Shape();
-		shape.fromPoints( vertices );
+		if ( chkPlay.checked === false ) { return; }
 
-		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
-		return geometry;
+		if ( count >= components.length ) {
+
+			returnAllToStartTween();
+			count = 0;
+
+		}
+
+		movRotTween( components[ count ] );
+		count++;
+
+console.log( count );
+
 	}
 
-	function drawBar( geometry, id, startPosition, endPosition, startRotation, endRotation ) {
+
+	function togglePositions() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			movRotTween( components[ i ] );
+
+		}
+
+	}
+
+	function drawBox( geometry, id, startPosition, endPosition, startRotation, endRotation ) {
 
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
@@ -183,8 +198,6 @@
 
 			intersected = intersects[ 0 ].object;
 
-// console.log( intersected );
-
 			movRotTween( intersected );
 
 		} else {
@@ -197,7 +210,7 @@
 
 	function movRotTween( obj ) {
 
-		var tween = new TWEEN.Tween( obj.position );
+		tween = new TWEEN.Tween( obj.position );
 		var oData = obj.userData;
 
 		if ( obj.position.distanceTo( obj.userData.startPosition ) < 1 ) {
@@ -213,7 +226,11 @@
 				x: oData.endRotation.x,
 				y: oData.endRotation.y,
 				z: oData.endRotation.z }, 2000 )
-			.easing( TWEEN.Easing.Elastic.Out).start();
+			.easing( TWEEN.Easing.Elastic.Out)
+			.onComplete( function() {
+				togglePlay();
+			} )
+			.start();
 
 		} else {
 
@@ -228,7 +245,11 @@
 				x: oData.startRotation.x,
 				y: oData.startRotation.y,
 				z: oData.startRotation.z }, 2000 )
-			.easing( TWEEN.Easing.Elastic.Out).start();
+			.easing( TWEEN.Easing.Elastic.Out)
+			.onComplete( function() {
+				togglePlay();
+			} )
+			.start();
 
 		}
 
@@ -236,6 +257,7 @@
 
 	function returnAllToStartTween() {
 
+		TWEEN.removeAll();
 		for ( var i = 0; i < components.length; i++ ) {
 
 			obj = components[ i ];
@@ -243,7 +265,7 @@
 			var tween = new TWEEN.Tween( obj.position );
 			var oData = obj.userData;
 
-			if ( obj.position.distanceTo( obj.userData.startPosition ) != 0 ) {
+//			if ( obj.position.distanceTo( obj.userData.startPosition ) > 0 ) {
 
 				tween.to( {
 					x: oData.startPosition.x,
@@ -258,7 +280,7 @@
 					z: oData.startRotation.z }, 2000 )
 				.easing( TWEEN.Easing.Elastic.Out).start();
 
-			}
+//			}
 
 		}
 
@@ -273,7 +295,7 @@
 			var tween = new TWEEN.Tween( obj.position );
 			var oData = obj.userData;
 
-			if ( obj.position.distanceTo( obj.userData.endPosition ) != 0 ) {
+			if ( obj.position.distanceTo( obj.userData.endPosition ) > 0 ) {
 
 				tween.to( {
 					x: oData.endPosition.x,
@@ -322,6 +344,8 @@
 
 	}
 
+	function v2( x, y ){ return new THREE.Vector2( x, y ); }
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
 
 	function onWindowResize() {
 
@@ -331,9 +355,6 @@
 		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
-
-	function v2( x, y ){ return new THREE.Vector2( x, y ); }
-	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
 
 	function animate() {
 
