@@ -76,6 +76,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### Kallax
 
+* Set up so works on phone very nicely
 * Add real colors
 * Add accessories, coordinated products and links to buy
 * Add typical things that go on bookcases
@@ -84,7 +85,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 * Show demo functioning in an iframe
 * Add animation where components fly in one by one in order 
 * Add color coding - next item to be installed is highlighted red
-* Export as STL file fo use in CAD program
+* Export as STL file for use in CAD program
 * Add exploded view
 * Add more fun and lively things 
 
