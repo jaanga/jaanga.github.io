@@ -41,11 +41,11 @@ _2015-11-27_
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html width=100% height=600px ></iframe>  
 ###### _Moving Manuals Basic - Revision 1 - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html )
 
-<!--
+
 ## Concept
 
 ### Issues / Problems
--->
+
 <!--
 
 The general format is an adaptation of the ideas developed in Alexander's _et al_ [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as sammarized on page 10.
@@ -61,19 +61,17 @@ patterns are descriptions of common problems and proposal for the solutions that
 * The furniture is 3D but the manuals are only 3D
 
 
-<!--
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-<!--
+
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
 * To create manuals that are fun
 
-<!--
+
 ## Things to Do / Road Map
--->
 
 
 ### Kallax
@@ -88,7 +86,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 * Add color coding - next item to be installed is highlighted red
 * Export as STL file fo use in CAD program
 * Add exploded view
- 
+* Add more fun and lively things 
 
 ## Features
 
@@ -102,7 +100,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 ### Kallax
 
 * Shown in upright position, but should in on ground while being built position
-* Shpwn with screws on top, but they should be on side
+* Shown with screws on top, but they should be on side
 * Show with screws partially screwed in. Need better ways of shoeing final position
 * Still missing a number of screw holes
 * Still missing wall brackets
@@ -110,6 +108,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Sources
 
+[Ikea Kallax]( http://www.ikea.com/us/en/catalog/products/60275812/ )
+
+[Ikea Kallax Assembly Manual]( http://www.ikea.com/us/en/assembly_instructions/kallax-shelving-unit__AA-1009450-6_pub.pdf )
 
 <br>
 
