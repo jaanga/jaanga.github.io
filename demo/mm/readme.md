@@ -19,9 +19,19 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_2015-11-28_
+
 ### [Kallax 2x2 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-basic-r1.html )
 
 ### [Kallax 2x2 Opacity R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-opacity-r1.html )
+
+* Gain X-ray vision
+
+### [Kallax 2x2 Text to Voice R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-text-to-voice-r1.html )
+
+* Let me tell you a story
+
+_2015-11-27_
 
 ### [Moving Materials Logo Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html )
 
