@@ -11,7 +11,6 @@ _The product assembly manuals of the future - now_
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
-~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 ~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 ~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
 
@@ -37,7 +36,7 @@ _2015-11-27_
 
 ### [Moving Materials Logo Render R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-render-r1.html )
 
-### Web Page / Source Code
+### Sample Web Page / Source Code
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html width=100% height=600px ></iframe>  
 ###### _Moving Manuals Basic - Revision 1 - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/demo/mm/mm-logo/mm-logo-basic-r1.html )
@@ -57,6 +56,11 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+* Ikea assemble manuals can be PDF files of twenty pages or more. Do we really have to download and print them out?
+* Even with all the drawings there are still places you can't see
+* The furniture is 3D but the manuals are only 3D
+
+
 <!--
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
@@ -65,9 +69,26 @@ patterns are descriptions of common problems and proposal for the solutions that
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
+* To create manuals that are fun
+
 <!--
 ## Things to Do / Road Map
 -->
+
+
+### Kallax
+
+* Add real colors
+* Add accessories, coordinated products and links to buy
+* Add typical things that go on bookcases
+* Add room and people and zombies
+* Add more realistic screws and pegs
+* Show demo functioning in an iframe
+* Add animation where components fly in one by one in order 
+* Add color coding - next item to be installed is highlighted red
+* Export as STL file fo use in CAD program
+* Add exploded view
+ 
 
 ## Features
 
@@ -78,8 +99,15 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Issues
 
+### Kallax
 
- 
+* Shown in upright position, but should in on ground while being built position
+* Shpwn with screws on top, but they should be on side
+* Show with screws partially screwed in. Need better ways of shoeing final position
+* Still missing a number of screw holes
+* Still missing wall brackets
+
+
 ## Sources
 
 
