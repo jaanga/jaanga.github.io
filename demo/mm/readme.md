@@ -22,13 +22,15 @@ _2015-11-29_
 
 ### [Moving Materials Logo Play R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-play-r1.html )
 
-* Play a step-by-step construction
+* Play a step-by-step construction animation
 
 ### [Kallax 2x2 Play R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-2x2/kallax-2x2-play-r1.html )
 
-* Play a step-by-step construction
+* Play a step-by-step construction animation
+* The order of the steps does not yet follow the Ikea assembly manner order
 
 _There is a fun bug right now: Click play and rotate - then click on some of the parts. Lots of action starts to happen!_
+
 
 
 _2015-11-28_
@@ -94,7 +96,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 * Issue: Reset counter to start with each new replay
 * Issue: prevent multiple replays from going on at the same time
-
+* Make time between animation frames adjustable
+* Animate multiple pegs/screws moving at once
+ 
 
 ### Kallax
 
