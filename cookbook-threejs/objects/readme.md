@@ -3,30 +3,24 @@
 
 
 [Jaanga]( http://jaanga.github.io/ ) » [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/ ) »
-[Utilities]( http://jaanga.github.io/cookbook-threejs/utilities/ ) »
 
-[Materials Sandbox Read Me]( index.html )
+
+[Objects Read Me]( index.html )
 ===
 
 
-
+<!--
 ## Web Page / Source Code
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/materials-sandbox/materials-library-add-lights-r1.html width=100% height=600px ></iframe>  
 ###### _Materials Library Add Lights R1 - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/materials-sandbox/materials-library-add-lights-r1.html )
+-->
 
 ## The Scripts
 
 
-* [Load Texture]( load-texture/load-texture-r1.html )
-* [materials-library-add-lights-r1.html]( materials-library-add-lights-r1.html )
-* [materials-library-no-lights-r1.html]( materials-library-no-lights-r1.html )
-* [materials-lights-things]( materials-lights-things )
-* [materials-reflection-simple-r1.html]( materials-reflection-simple-r1.html )
-* [materials-sandbox-generate-textures-r1.html]( materials-sandbox-generate-textures-r1.html )
-* [materials-sandbox-r1-01.html]( materials-sandbox-r1.html )
-* [materials-sandbox-texgen-r1.html]( materials-sandbox-texgen-r1.html )
-
+* [column-verona-r1.html]( http://jaanga.github.io/cookbook-threejs/objects/column-verona/column-verona-r1.html )
+* [slotted-sphere-sections]( http://jaanga.github.io/cookbook-threejs/objects/slotted-sphere-sections/slotted-sphere-sections-r1.html )
 
 materials-sandbox-generate-textures-r1-00.html
 
