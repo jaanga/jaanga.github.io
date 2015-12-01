@@ -34,6 +34,12 @@
 			#aa {text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
 
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
 		`;
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
@@ -45,6 +51,7 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/ > 🛈 &#x24D8;</a>
 			</h2>
+			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
 			<div id=info ></div>
 
 		`;

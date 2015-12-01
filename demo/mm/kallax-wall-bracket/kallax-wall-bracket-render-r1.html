@@ -53,6 +53,12 @@
 			#aa {text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
 
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
 		`;
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
@@ -64,6 +70,7 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+			<p>height: <input type=range id=inpHeight max=100 min=25 step=1 value=${ height } oninput=buildKallaxWallBracket();outHeight.value=inpHeight.value; title="0 to 10: OK" > <output id=outHeight >value</output></p>
 			<p><input type=checkbox onchange=toggleAxis() checked> Axis</p>
 			<p><input type=checkbox onchange=toggleAutoRotate() checked> Rotation</p>
 			<div id=info ></div>
@@ -79,7 +86,7 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( -100, 100, 100 );
+		camera.position.set( -60, 60, 60 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
@@ -109,33 +116,43 @@
 
 	function buildKallaxWallBracket() {
 
-		scene.remove( bracket )
+		scene.remove( bracket );
+
+		outHeight.value = height = inpHeight.valueAsNumber;
+
 		bracket = new THREE.Object3D();
 
-		material = new THREE.MeshNormalMaterial();
+//		material = new THREE.MeshNormalMaterial();
+
+		material = addMaterialTextureSwedishRoyalCastle();
 
 		mesh = buildKallaxWallBracketSide1();
 		mesh.position.set( - 0.5 * widthCorner - 0.5 * widthLeaf1, 0.5 * height, 0 );
+		mesh.castShadow = mesh.receiveShadow = true;
 		bracket.add( mesh );
 
 		mesh = buildKallaxWallBracketSide2();
 		mesh.position.set( 0.5 * widthCorner - thickness, 0.5 * height, widthCorner + 0.5 * widthLeaf2 );
 		mesh.rotation.set( 0, pi05, 0 );
+		mesh.castShadow = mesh.receiveShadow = true;
 		bracket.add( mesh );
 
 		buildKallaxWallBracketCorner( 4 );
 		mesh.position.set( - 0.5 * widthCorner, height - 4, 0.5 * widthCorner );
 		mesh.rotation.set( -pi05, 0, -pi05);
+		mesh.castShadow = mesh.receiveShadow = true;
 		bracket.add( mesh );
 
 		buildKallaxWallBracketCorner( 4 );
 		mesh.position.set( - 0.5 * widthCorner, 0, 0.5 * widthCorner );
 		mesh.rotation.set( -pi05, 0, -pi05);
+		mesh.castShadow = mesh.receiveShadow = true;
 		bracket.add( mesh );
 
 		buildKallaxWallBracketCorner( height - 12 );
 		mesh.position.set( 0, height - 6, 0 );
 		mesh.rotation.set( pi05, 0, 0 );
+		mesh.castShadow = mesh.receiveShadow = true;
 		bracket.add( mesh );
 
 		buildKallaxWallBracketSide1Lines();
@@ -149,6 +166,21 @@
 		bracket.add( obj );
 
 		scene.add( bracket );
+
+	}
+
+	function addMaterialTextureSwedishRoyalCastle() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
+
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		material.envMap = textureCube;
+		material.reflectivity = 0.45;
+
+		return material;
 
 	}
 

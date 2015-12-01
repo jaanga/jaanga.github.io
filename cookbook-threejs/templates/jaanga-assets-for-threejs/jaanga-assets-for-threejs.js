@@ -79,7 +79,6 @@
 
 	}
 
-
 	function addShadows() {
 
 		renderer.shadowMap.enabled = true;
@@ -94,6 +93,38 @@
 			}
 
 		} );
+
+	}
+
+
+	function addMaterialTextureSkybox() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshBasicMaterial();
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
+
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		material.envMap = textureCube;
+		material.reflectivity = 0.85;
+
+		return material;
+
+	}
+
+
+	function addMaterialTextureSwedishRoyalCastle() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshBasicMaterial();
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
+
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		material.envMap = textureCube;
+		material.reflectivity = 0.85;
+
+		return material;
 
 	}
 
