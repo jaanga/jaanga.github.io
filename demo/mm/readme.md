@@ -71,8 +71,10 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-* Ikea assemble manuals can be PDF files of twenty pages or more. Do we really have to download and print them out?
-* Even with all the drawings there are still places you can't see
+* Assembly manuals are frequently PDF files with twenty pages or more. Do we really have to download and print them out?
+* Assembly manuals need to display text in many languages.
+* Assembly manuals must be accessible to people who have difficulty reading text.
+* Even with all the drawings there are frequently still places you can't see
 * The furniture is 3D but the manuals are only 3D
 
 
@@ -91,6 +93,13 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 
 ## Things to Do / Road Map
+
+### Coming up next
+
+* Front page with text warnings and advice in images
+* The screw driver
+* The animated assembly sequence for a large object
+	* Can you see everything even on a phone screen?
 
 ### Animation series
 
