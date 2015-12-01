@@ -18,6 +18,17 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_2015-12-01_
+
+[Kallax Wall Bracket Render R1]
+
+* Has reflections of the Swedish royal castle
+* Slider bar to control the height
+
+[Kallax Wall Bracket Basic R1]
+
+* Small metal piece for fixing Kallax to wall
+
 _2015-11-29_
 
 ### [Moving Materials Logo Play R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/mm-logo/mm-logo-play-r1.html )
@@ -30,7 +41,6 @@ _2015-11-29_
 * The order of the steps does not yet follow the Ikea assembly manner order
 
 _There is a fun bug right now: Click play and rotate - then click on some of the parts. Lots of action starts to happen!_
-
 
 
 _2015-11-28_
@@ -144,9 +154,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Sources
 
-[Ikea Kallax]( http://www.ikea.com/us/en/catalog/products/60275812/ )
+[Ikea Kallax 2x2 ]( http://www.ikea.com/us/en/catalog/products/60275812/ )
 
-[Ikea Kallax Assembly Manual]( http://www.ikea.com/us/en/assembly_instructions/kallax-shelving-unit__AA-1009450-6_pub.pdf )
+[Ikea Kallax 2x2 Assembly Manual]( http://www.ikea.com/us/en/assembly_instructions/kallax-shelving-unit__AA-1009450-6_pub.pdf )
 
 <br>
 
