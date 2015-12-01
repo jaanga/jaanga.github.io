@@ -51,7 +51,8 @@
 				<a id=aa href=http://jaanga.github.io/ > &#x24D8; </a>
 			</h2>
 			<div id=info ></div>
-			<p><input type=checkbox onchange=toggleAutoRotate() ></p>
+			<p><input type=checkbox onchange=toggleAxis() checked> Axis</p>
+			<p><input type=checkbox onchange=toggleAutoRotate() checked> Rotation</p>
 
 		`;
 
@@ -73,14 +74,14 @@
 
 // see http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js
 
-		toggleGroundBoxLights();
-		toggleAxis();
-		toggleBackgroundGradient();
-		toggleAutoRotate();
-
-		addWindowResize();
 		addLights( 200 );
 		addShadows();
+		addWindowResize();
+
+		toggleAxis();
+		toggleAutoRotate();
+		toggleBackgroundGradient();
+		toggleGroundBoxLights();
 
 		toggleTrylonPerisphere();
 		trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );

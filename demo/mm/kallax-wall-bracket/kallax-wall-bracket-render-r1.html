@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Kallax Wall Bracket R1</title>
+<title>Kallax Wall Bracket Render R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -15,6 +15,8 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
 <script>
 
 	var bracket;
@@ -62,6 +64,8 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+			<p><input type=checkbox onchange=toggleAxis() checked> Axis</p>
+			<p><input type=checkbox onchange=toggleAutoRotate() checked> Rotation</p>
 			<div id=info ></div>
 
 		`;
@@ -85,25 +89,21 @@
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
+		addLights( 200 );
+		addShadows();
+		addWindowResize();
 
-// helpers
-		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -20, 0 );
-		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		toggleAutoRotate();
+		toggleBackgroundGradient();
+		toggleGroundBoxLights();
+		groundBoxLights.position.y = -2;
 
-// assets
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -21, 0 );
-		scene.add( mesh );
+		toggleAxis();
 
 // bracket
 		buildKallaxWallBracket();
+
 
 	}
 

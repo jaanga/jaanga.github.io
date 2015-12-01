@@ -31,7 +31,6 @@
 
 	function cos( a ){ return Math.cos( a ); }
 	function sin( a ){ return Math.sin( a ); }
-	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
 	function v2( x, y ){ return new THREE.Vector2( x, y ); }
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -112,8 +111,6 @@
 		scene.remove( bracket )
 		bracket = new THREE.Object3D();
 
-		material = new THREE.MeshNormalMaterial();
-
 		mesh = buildKallaxWallBracketSide1();
 		mesh.position.set( - 0.5 * widthCorner - 0.5 * widthLeaf1, 0.5 * height, 0 );
 		bracket.add( mesh );
@@ -138,17 +135,8 @@
 		mesh.rotation.set( pi05, 0, 0 );
 		bracket.add( mesh );
 
-		buildKallaxWallBracketSide1Lines();
-		line.position.set( - 0.5 * widthCorner - 0.5 * widthLeaf1, 0 * height, thickness + 0.01 );
-		bracket.add( line );
-
-		obj = buildKallaxWallBracketSide2Taper()
-
-		obj.position.set( 0.5 * widthCorner - thickness, 0.5 * height, widthCorner + 0.5 * widthLeaf2 );
-		obj.rotation.set( 0, pi05, 0 );
-		bracket.add( obj );
-
 		scene.add( bracket );
+
 
 	}
 
@@ -167,6 +155,7 @@
 		}
 
 		pts = pts.concat( [
+//			v2( width05, 0 ),
 			v2( width05, width),
 			v2( width05 - thickness, width ),
 			v2( width05 - thickness, thickness + thickness / segments),
@@ -176,8 +165,10 @@
 
 		shape = new THREE.Shape();
 		shape.fromPoints( pts );
+//		shape.holes.push( holePath );
 		geometry = shape.extrude( { amount: amount, bevelEnabled: false} );
 
+		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 
 		return mesh;
@@ -206,40 +197,13 @@
 		shape = new THREE.Shape();
 		shape.fromPoints( pts );
 		shape.holes.push( holePath );
-
 		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
+
+		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 
 		return mesh;
 
-	}
-
-	function buildKallaxWallBracketSide1Lines() {
-
-		number = 9;
-		diff = 1;
-
-		var width = widthLeaf1;
-		var width05 = 0.5 * width;
-
-		var height05 = 0.5 * height;
-
-		geometry = new THREE.Geometry();
-
-		for ( var i = 0; i < number ; i++ ) {
-
-			geometry.vertices.push( v( -width05 + diff, height - diff - i * diff, 0 ) );
-			geometry.vertices.push( v( width05 - diff, height - diff - i * diff, 0 ) );
-
-			geometry.vertices.push( v( -width05 + diff, diff + i * diff, 0 ) );
-			geometry.vertices.push( v( width05 - diff, diff + i * diff, 0 ) );
-
-		}
-
-		var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-		line = new THREE.LineSegments( geometry, material  );
-
-		return line;
 	}
 
 	function buildKallaxWallBracketSide2() {
@@ -276,37 +240,14 @@
 		}
 
 		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
-		mesh = new THREE.Mesh( geometry, material );
 
-		return mesh;
+		material = new THREE.MeshNormalMaterial();
+		mesh2 = new THREE.Mesh( geometry, material );
 
-	}
-
-	function buildKallaxWallBracketSide2Taper() {
-
-		var obj = new THREE.Object3D();
-
-		for ( var i = 0; i < 2; i++ ) {
-
-			x = i === 0 ? width05 - 2.25 * radiusLeaf2 : -width05 + 2.25 * radiusLeaf2;
-			for ( var j = 0; j < 2; j++ ) {
-
-				y = j === 0 ? height05 - 3 * radiusLeaf2 : -height05 + 3 * radiusLeaf2;
-
-				pts = [ v( radiusLeaf2, 0, thickness ) , v( radiusLeaf2 - thickness, 0, thickness ), v( radiusLeaf2, 0, 0 ) ];
-
-				geometry = new THREE.LatheGeometry( pts, 4 * segments );
-				mesh = new THREE.Mesh( geometry, material );
-				mesh.position.set( x, y, 0 );
-
-				obj.add( mesh );
-
-			}
-		}
-
-		return obj;
+		return mesh2;
 
 	}
+
 
 	function onWindowResize() {
 
