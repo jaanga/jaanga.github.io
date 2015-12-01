@@ -20,12 +20,12 @@ _The product assembly manuals of the future - now_
 
 _2015-12-01_
 
-[Kallax Wall Bracket Render R1]
+[Kallax Wall Bracket Render R1]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-render-r1.html )
 
 * Has reflections of the Swedish royal castle
 * Slider bar to control the height
 
-[Kallax Wall Bracket Basic R1]
+[Kallax Wall Bracket Basic R1]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r1.html )
 
 * Small metal piece for fixing Kallax to wall
 
