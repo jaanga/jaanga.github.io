@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>kallax-wall-braket R1</title>
+<title>Kallax Wall Bracket R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -20,8 +20,8 @@
 	var height = 30;
 	var widthLeaf1 = 15;
 	var widthLeaf2 = 12;
-	var widthCorner = 10;
-	var thickness = 3;
+	var widthCorner = 4;
+	var thickness = 1;
 	var radiusLeaf1 = 5;
 	var radiusLeaf2 = 2;
 	var segments = 6;
@@ -236,9 +236,9 @@
 		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
 
 		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
+		mesh2 = new THREE.Mesh( geometry, material );
 
-		return mesh;
+		return mesh2;
 
 	}
 
