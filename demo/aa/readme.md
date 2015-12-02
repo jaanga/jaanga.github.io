@@ -6,6 +6,9 @@ _2015-12-01_
 
 [Spirals go to Pisa]( http://jaanga.github.io/demo/aa/spiral/spirals-go-to-pisa-r1.html )
 
+[Spiral Aristotle R1]( http://jaanga.github.io/demo/aa/spiral/spiral-aristotle-r1.html )
+
+[Spiral Plato R1]( http://jaanga.github.io/demo/aa/spiral/spiral-plato-r1.html )
 
 
 _2015-11-27_
