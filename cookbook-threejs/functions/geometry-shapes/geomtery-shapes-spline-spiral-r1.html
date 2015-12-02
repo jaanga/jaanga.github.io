@@ -1,8 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>geometry-shapes-spline-sharp-corners R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -16,6 +16,17 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script>
+
+var segments = 20;
+
+	var pi = Math.PI, pi2 = 2 * Math.PI, pi05 = 0.5 * Math.PI;
+	var d2r = pi / 180, r2d = 180 / pi;  // degrees / radians
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+	function v2( x, y ){ return new THREE.Vector2( x, y ); }
+
+	function cos( a ){ return Math.cos( a ); }
+	function sin( a ){ return Math.sin( a ); }
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -49,13 +60,14 @@
 
 			<h2>
 				<a href="" > ${ document.title }</a> 
-				<a id=aa href=http://jaanga.github.io/ > 🛈  ℹ &#x24D8; &#8505; &#8253; ‽ &#8520</a>
+				<a id=aa href=http://jaanga.github.io/ > ?? ? &#x24D8; &#8505; &#8253; ? &#8520</a>
 			</h2>
-			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
-			<div id=info ></div>
+` +
+//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+`			<div id=info ></div>
 
 		`;
-
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -80,7 +92,7 @@
 
 // helpers
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
+		gridHelper.position.set( 0, -20, 0 );
 		scene.add( gridHelper );
 
 		var axisHelper = new THREE.AxisHelper( 50 );
@@ -90,10 +102,86 @@
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
+		mesh.position.set( 0, -21, 0 );
+		scene.add( mesh );
+
+//		drawHeart2();
+
+//		drawBezier();
+
+//		drawQuadratic();
+
+//		drawSplineThru();
+
+		drawSpiral();
+
+	}
+
+
+
+	function drawSpiral() {
+
+		turns = 2;
+		radius = 0;
+		delta = -pi2 / segments;
+		geometry = new THREE.Geometry();
+		pts = geometry.vertices;
+
+		for ( var i = 0; i < turns * segments +1; i++ ) {
+
+			radius = i * 0.75;
+			angle = delta * i;
+			pts.push( v2( radius * cos( angle ), radius * sin( angle ) ) ); 
+
+		}
+
+
+		pts.push( v2( 26, 6 ) );
+		pts.push( v2( 20, 12 ) );
+		pts.push( v2( 10, 17 ) );
+		pts.push( v2( 0, 18 ) );
+
+		pts.push( v2( -5, 15 ) );
+
+		pts.push( v2( -10, 10 ) );
+		pts.push( v2( -12, 5 ) );
+		pts.push( v2( -13, 0 ) );
+
+		pts.push( v2( -13, -8 ) );
+
+		pts.push( v2( 0, -10 ) );
+
+
+		pts.push( v2( 10, 0 ) );
+
+		pts.push( v2( 0, 5 ) );
+
+		pts.push( v2( -3, 0 ) );
+
+		pts.push( v2( 0, -1 ) );
+
+//console.log( pts );
+
+//		shape = new THREE.Shape();
+//		shape.fromPoints( pts );
+//		var geometry = new THREE.ShapeGeometry( shape );
+
+		var shape = new THREE.Shape();
+		shape.moveTo( 0, 0 );
+		shape.splineThru( pts );
+		var geometry = new THREE.ShapeGeometry( shape );
+
+		geometry = shape.extrude( { amount: 10, bevelEnabled: false} );
+
+		material = new THREE.MeshNormalMaterial( { wireframe: true } );
+
+		var mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
 	}
+
+// http://mrdoob.github.io/three.js/docs/#Reference/Extras.Core/Path
+
 
 	function onWindowResize() {
 
