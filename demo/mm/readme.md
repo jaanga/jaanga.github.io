@@ -147,7 +147,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 * Shown in upright position, but should in on ground while being built position
 * Shown with screws on top, but they should be on side
-* Show with screws partially screwed in. Need better ways of shoeing final position
+* Show with screws partially screwed in. Need better ways of showing final position
 * Still missing a number of screw holes
 * Still missing wall brackets
 
