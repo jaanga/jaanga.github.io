@@ -18,6 +18,11 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_2015-12-02_
+
+### [Kallax 4x4 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r1.html )
+
+
 _2015-12-01_
 
 [Kallax Wall Bracket Render R1]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-render-r1.html )
