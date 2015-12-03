@@ -421,9 +421,7 @@
 	function drawObject( obj, id, startPosition, endPosition, startRotation, endRotation ) {
 
 		obj.position.copy( startPosition );
-		obj.rotation.x = startRotation.x;
-		obj.rotation.y = startRotation.y;
-		obj.rotation.z = startRotation.z;
+		obj.rotation.setFromVector3( startRotation );
 
 		obj.userData.startPosition = startPosition;
 		obj.userData.endPosition = endPosition;
