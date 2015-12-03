@@ -15,6 +15,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
 <script>
 
 	var kallax;
@@ -24,17 +25,26 @@
 	var width = 147;
 	var width05 = 0.5 * width;
 
-	var widthUnit = 34;
+	var widthUnit = 33.5;
 	var widthUnit05 = 0.5 * widthUnit;
 
 	var height = 147;
+	var height05 = 0.5 * height;
+
 	var depth = 39;
 	var depth05 = 0.5 * depth;
 
 	var thicknessCase = 3;
 	var thicknessCase05 = 0.5 * thicknessCase;
+
 	var thicknessShelf = 2;
 	var thicknessShelf05 = 0.5 * thicknessShelf;
+
+	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
+	var materialHole = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+
+	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
 
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
@@ -48,7 +58,6 @@
 	var components;
 	var raycaster;
 	var mouse;
-
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -84,6 +93,9 @@
 				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
 			</h2>
+			<p>Click on an object to toggle between assembled and unassembled location...</p>
+			<p><button onclick=returnAllToStartTween(); >Return all to start</button></p>
+			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button>
 			<div id=info ></div>
 
 		`;
@@ -124,8 +136,16 @@
 // assets
 		drawKallax();
 
+		raycaster = new THREE.Raycaster();
+		mouse = new THREE.Vector2();
+
+		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
 	}
 
+
+	
 	function drawKallax() {
 
 //		updateVariables();
@@ -140,29 +160,32 @@
 		material = new THREE.MeshNormalMaterial();
 
 		obj = buildCaseHorizontal();
-		drawObject( obj, 0, v( 0, 0 + thicknessCase05, -100 ), v( 0, thicknessCase05, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+		drawObject( obj, 0, v( 0, 0 + thicknessCase05, -100 ), v( 0, depth05, -height05 + thicknessCase05 ), v( 0, 0, 0 ), v( pi05, 0, 0 ));
 
 		obj = buildCaseVertical();
-		drawObject( obj, 0, v( - 0.5 * width - 30, 0 + thicknessCase05, 0 ), v( 0, thicknessCase05, 20 ), v( 0, pi05, 0 ), v( 0, 0, 0 ));
+		drawObject( obj, 0, v( - 0.5 * width - 30, 0 + thicknessCase05, 0 ), v( -width05 + thicknessCase05, depth05, 0 ), v( 0, pi05, 0 ), v( pi05, 0, pi_05 ));
 
 		obj = buildCaseVertical();
-		drawObject( obj, 0, v( 0.5 * width + 30, 0 + thicknessCase05, 0 ), v( 0, thicknessCase05, 20 ), v( 0, pi_05, 0 ), v( 0, 0, 0 ));
+		drawObject( obj, 0, v( 0.5 * width + 30, 0 + thicknessCase05, 0 ), v( width05 - thicknessCase05, depth05, 0  ), v( 0, pi_05, 0 ), v( pi05, 0, pi05  ));
 
 		obj = buildCaseHorizontal();
-		drawObject( obj, 0, v( 0, 0 + thicknessCase05, 100 ), v( 0, thicknessCase05, 20 ), v( 0, pi, 0 ), v( 0, 0, 0 ));
+		drawObject( obj, 0, v( 0, 0 + thicknessCase05, 100 ), v( 0, depth05, height05 - thicknessCase05 ), v( 0, pi, 0 ), v( pi_05, pi, 0 ));
 
+		for ( var i = 0; i < 3; i++ ) {
+			for ( var j = 0; j < 4; j++ ) {
 
-		for ( var i = 0; i < 12; i++ ) {
+				obj = buildShelfVertical ();
+				drawObject( obj, 0, v( -0.5 * width, i * 1.5 * thicknessCase, -160 ), 
+					v( i * widthUnit - widthUnit, depth05, j * ( widthUnit + 1.125 * thicknessShelf ) - 1.5 * widthUnit - 1.75 * thicknessShelf ), v( 0, 0, 0 ), v( pi05, 0, pi05 ));
 
-			obj = buildShelfVertical ();
-			drawObject( obj, 0, v( -0.5 * width, i * 1.5 * thicknessCase, -160 ), v( 0, height - thicknessCase - 0.5 * (0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
-
+			}
 		}
 
 		for ( var i = 0; i < 3; i++ ) {
 
 			obj = buildShelfHorizontal ();
-			drawObject( obj, 0, v( 30, i * 1.5 * thicknessCase, -160 ), v( 0, 0.5 * height, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+			drawObject( obj, 0, v( 30, i * 1.5 * thicknessCase, -160 ), 
+				v( 0, depth05, i * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( 0, 0, 0 ), v( pi05, 0, 0 ));
 
 		}
 
@@ -175,6 +198,34 @@
 
 		scene.add( kallax );
 		scene.add( edges );
+
+//		findStuff();
+
+	}
+
+	function findStuff() {
+// http://stackoverflow.com/questions/21557341/three-js-get-world-rotation-from-matrixworld
+
+		things = [];
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.geometry instanceof THREE.CircleBufferGeometry) {
+
+				things.push( child );
+
+				child.parent.updateMatrixWorld();
+
+				geometry = new THREE.BoxGeometry( 2, 2, 20 );
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.quaternion.copy( child.getWorldQuaternion() );
+				mesh.position.copy( child.getWorldPosition() );
+				scene.add( mesh );
+
+			}
+		} );
+
+		info.innerHTML = 'things.length ' + things.length
 
 	}
 
@@ -255,16 +306,16 @@
 		drawHole( obj, 0, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
 
 // down the plus
-		drawHole( obj, widthUnit, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
-		drawHole( obj, widthUnit, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
-		drawHole( obj, widthUnit, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
-		drawHole( obj, widthUnit, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
 
 // down the minus
-		drawHole( obj, -widthUnit, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
-		drawHole( obj, -widthUnit, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
-		drawHole( obj, -widthUnit, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
-		drawHole( obj, -widthUnit, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
 
 		return obj;
 
@@ -345,17 +396,13 @@
 
 	function buildPeg() {
 
-		var obj = new THREE.Object3D();
+		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
+//		components.push( mesh );
 
-//	radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded
-		var geometry = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
 
-		var mesh = new THREE.Mesh( geometry, material );
-
-		obj.add( mesh);
-		components.push( mesh );
-
-		return obj;
+		return mesh;
 
 	}
 
@@ -379,20 +426,137 @@
 
 	function drawHole( obj, x, y, z, aX, aY, aZ ) {
 
-		var geometry = new THREE.CircleBufferGeometry( 1, 12 );
-		var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-		var mesh = new THREE.Mesh( geometry, material );
+		var mesh = new THREE.Mesh( geometryHole, materialHole );
 		mesh.position.set( x + sign( x ) * 0.1 , y + sign( y ) * 0.1, z  + sign( z ) * 0.1); // to stop shimmering
 		mesh.rotation.set( aX, aY, aZ );
 		obj.add( mesh );
 
 	}
 
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		intersects = raycaster.intersectObjects( components );
+
+		if ( intersects.length > 0 ) {
+
+			movRotTween( intersects[ 0 ].object );
+
+		}
+
+	}
+
+	function movRotTween( obj ) {
+
+		obj = obj.parent;
+		if ( obj.position.distanceTo( obj.userData.startPosition ) < 1 ) {
+
+			send2end( obj );
+
+		} else {
+
+			send2start( obj )
+
+		}
+
+	}
+
+	function returnAllToStartTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			var obj = components[ i ].parent;
+
+			if ( obj.position.distanceTo( obj.userData.startPosition ) !== 0 ) {
+
+				send2start( obj );
+
+			}
+
+		}
+
+	}
+
+	function assembleQuicklyTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			var obj = components[ i ].parent;
+
+			if ( obj.position.distanceTo( obj.userData.endPosition ) !== 0 ) {
+
+				send2end( obj );
+
+			}
+
+		}
+
+	}
+
+	function send2start( obj ) {
+
+		var oData = obj.userData;
+		var tween = new TWEEN.Tween( obj.position );
+		tween.to( {
+			x: oData.startPosition.x,
+			y: oData.startPosition.y,
+			z: oData.startPosition.z }, 2000 )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation ).to( {
+			x: oData.startRotation.x,
+			y: oData.startRotation.y,
+			z: oData.startRotation.z }, 2000 )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+	}
+
+	function send2end( obj ) {
+
+		var oData = obj.userData;
+		var tween = new TWEEN.Tween( obj.position );
+		tween.to( {
+			x: oData.endPosition.x,
+			y: oData.endPosition.y,
+			z: oData.endPosition.z }, 2000 )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation ).to( {
+			x: oData.endRotation.x,
+			y: oData.endRotation.y,
+			z: oData.endRotation.z }, 2000 )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+	}
+
+
 	function animate() {
 
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();
+		TWEEN.update();
 		renderer.render( scene, camera );
 
 	}
