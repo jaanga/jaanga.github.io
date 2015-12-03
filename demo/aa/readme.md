@@ -18,6 +18,13 @@ _Shiny new things_
 
 ##Overview
 
+
+_2015-12-02_
+
+[Niche Basic Petals R1]( http://jaanga.github.io/demo/aa/niche/niche-basic-petals-r1.html )
+
+[Niche Basic Spiral R1]( jaanga.github.io/demo/aa/niche/niche-basic-spiral-r1.html )
+
 _2015-12-01_
 
 [Spirals go to Pisa]( http://jaanga.github.io/demo/aa/spiral/spirals-go-to-pisa-r1.html )
