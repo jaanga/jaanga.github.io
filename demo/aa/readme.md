@@ -19,6 +19,15 @@ _Shiny new things_
 ##Overview
 
 
+[Niche Basic Petals R2]( http://jaanga.github.io/demo/aa/niche/niche-basic-petals-r2.html )
+
+* Centered sculpture, constrained controls
+
+[Niche Basic Spiral R2]( http://jaanga.github.io/demo/aa/niche/niche-basic-spiral-r2.html )
+
+* Centered sculpture, constrained controls
+
+
 _2015-12-02_
 
 [Niche Basic Petals R1]( http://jaanga.github.io/demo/aa/niche/niche-basic-petals-r1.html )
