@@ -51,7 +51,43 @@ To get more things designed better, faster and cheaper
 
 [Three.js Lesson 2]( http://jaanga.github.io/tutorials/threejs-lesson-02/ )
 
-* Vary the dimensions and positions of boxes
+* Vary the dimensions and positions of 3D boxes
+
+[Three.js Lesson 3]( http://jaanga.github.io/tutorials/threejs-lesson-03/ )
+
+* Draw arbitrary 3D shapes
+
+Three.js Lesson 4: TBD
+
+* Vary the dimensions and positions of arbitrary 3D Shapes
+
+Three.js Lesson 5: TBD
+
+* Toggle positions of 3D shapes from position in raw material sheet to assembled position in 3D
+
+Three.js Lesson 6: TBD
+ 
+* Add tweening
+
+Three.js Lesson 7: TBD
+ 
+* Add export data to STL file
+* Add export to DXF file
+
+Three.js Lesson 8: TBD
+ 
+* Add cutting holes in object
+* Add drawing splines and curves to shapes
+
+Three.js Lesson 9: TBD
+ 
+* Hosting projects on GitHb
+
+Three.js Lesson 10: TBD
+ 
+* Prettifying your work
+
+
 
 
 ## Things to Do / Road Map

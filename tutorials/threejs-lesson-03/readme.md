@@ -27,12 +27,11 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-If everything you make takes a drawing to make it and every drawing needs a designer to create new design then making many things takes many drawings which takes a lot of designer time
-
+It takes more than boxes and cylinders to make a design
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-To help you create many designs on the fly
+To help you create arbitrary shapes with specifc dimensions
 
 
 ### Vision
@@ -44,36 +43,21 @@ Designers create cool apps so normal peeps have access to unique well designed p
 
 ### Drawing and Editing
 
-* Add an extra slider bar in each menu that adds scaling in an additional direction
-	* Add the appropriate box#.scale.# line to the suitable box
-* Add an extra position changing slider to each menu
-	* Add the appropriate variable to the box#.position.set() parameter
-* Edit the allowable min and max for the boxes
-* Alter the default value of the boxes 
-* Add a new box with an appropriate menu
-* Add your name to the menu under the title
-* Change the font size from 12 point to 10 point
+* Edit the dimensions of the existing objects
+* Edit the position and rotation of the existing objects
+* Add some new vertices to the existing objects
+* Add a new object
+	* reposition and rotate the new object
+
 
 
 ## Issues / Things to note
 
 ### JavaScript Console
-* Function Key 12 or Control/Command Shift J brings up the JavaScript Console
-* The JavaScript Console is your friend. 
-* It finds the errors in you code and tells you which tile the error is on
-* More info at [Google Developers]( https://developers.google.com/web/tools/chrome-devtools/debug/console/console-ui?hl=en )
-* There are many debugging tools in your browser. You can ignore just about all of them - except the basic elements of the Console
-
-
-### Back Quotes
-
-* Lesson 2 uses the back quote - ` - to contain strings of HTML text
-* Use of the back quote helps making creating and editing text much easier
-* This feature is new in JavaScript 6 and only works in browsers that are up to date
-* And being new almost no textbooks or guides mention its use.
-
-
-
+* Find where thickness is set and change it?
+	* Can you see its value using the JavaScript console ( F12 )?
+* Can you find out what JavaScript knows about the last shape you made?
+	* Type 'shape' in the console and then click on the arrows
 
 ## Features
 
