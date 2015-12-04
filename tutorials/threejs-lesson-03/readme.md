@@ -1,17 +1,17 @@
-﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/tutorials/threejs-lesson-02/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/tutorials/threejs-lesson-02/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/tutorials/threejs-lesson-03/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/tutorials/threejs-lesson-03/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Tutorials]( http://jaanga.github.io/tutorials/ ) »
-[Three.js Lesson 2 Read Me]( index.html )
+[Three.js Lesson 3 Read Me]( index.html )
 ===
 
 
-[Three.js Lesson 2 - just the drawing - Full Screen]( http://jaanga.github.io/tutorials/threejs-lesson-02/threejs-lesson-02.html )
+[Three.js Lesson 3 - just the drawing - Full Screen]( http://jaanga.github.io/tutorials/threejs-lesson-03/threejs-lesson-03.html )
 
 ## <center>Web Page / Source Code</center>
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-02/threejs-lesson-02.html width=100% height=600px ></iframe>  
-###### _Three.js Lesson 2 - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-02/threejs-lesson-02.html )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-03/threejs-lesson-03.html width=100% height=600px ></iframe>  
+###### _Three.js Lesson 2 - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r3.html#http://jaanga.github.io/tutorials/threejs-lesson-02/threejs-lesson-03.html )
 
 
 ## Concept
