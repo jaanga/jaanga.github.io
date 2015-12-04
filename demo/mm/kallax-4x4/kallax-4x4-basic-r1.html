@@ -27,7 +27,7 @@
 
 	var shelves = [];
 	var dividers = [];
- 
+
 	var steps;
 
 	var edges;
@@ -60,6 +60,10 @@
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
 	var pi_05 = -0.5 * pi;
+	var pi2 = 2 * pi;
+
+	var cos = function( a ){ return Math.cos( a ); };
+	var sin = function( a ){ return Math.sin( a ); };
 
 	var ran = function( n ) { return n * Math.random(); };
 	var sign = function( n ) { return Math.sign( n ); };
@@ -105,7 +109,7 @@
 				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
 			</h2>
 			<p>Click on an object to toggle between assembled and unassembled location...</p>
-			<p><button onclick=returnAllToStartTween(); >Return all to start</button> 
+			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
 			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
 			<p><button onclick=animation=true;stepByStepTween(true); >Assemble Step-by-step</button></p>
 			<div id=info ></div>
@@ -157,7 +161,6 @@
 	}
 
 
-	
 	function drawKallax() {
 
 //		updateVariables();
@@ -172,23 +175,23 @@
 		material = new THREE.MeshNormalMaterial();
 
 		caseTop = buildCaseHorizontal();
-		drawObject( caseTop, 0, v( 0, 0 + thicknessCase05, -100 ), v( 0, depth05, -height05 + thicknessCase05 ), v( 0, 0, 0 ), v( pi05, 0, 0 ));
+		drawObject( caseTop, 0, v( 0, 0 + thicknessCase05, -100 ), v( 0, depth05, -height05 + thicknessCase05 ), v( 0, ran( 0.2 ) - 0.1, 0 ), v( pi05, 0, 0 ));
 
 		caseLeft = buildCaseVertical();
-		drawObject( caseLeft, 0, v( - 0.5 * width - 30, 0 + thicknessCase05, 0 ), v( -width05 + thicknessCase05, depth05, 0 ), v( 0, pi05, 0 ), v( pi05, 0, pi_05 ));
+		drawObject( caseLeft, 0, v( - 0.5 * width - 30, 0 + thicknessCase05, 0 ), v( -width05 + thicknessCase05, depth05, 0 ), v( 0, pi05 + ran( 0.2 ) -0.1, 0 ), v( pi05, 0, pi_05 ));
 
 		caseRight = buildCaseVertical();
-		drawObject( caseRight, 0, v( 0.5 * width + 30, 0 + thicknessCase05, 0 ), v( width05 - thicknessCase05, depth05, 0  ), v( 0, pi_05, 0 ), v( pi05, 0, pi05  ));
+		drawObject( caseRight, 0, v( 0.5 * width + 30, 0 + thicknessCase05, 0 ), v( width05 - thicknessCase05, depth05, 0  ), v( 0, pi_05 + ran( 0.2 ) - 0.1, 0 ), v( pi05, 0, pi05  ));
 
 		caseBottom = buildCaseHorizontal();
-		drawObject( caseBottom, 0, v( 0, 0 + thicknessCase05, 100 ), v( 0, depth05, height05 - thicknessCase05 ), v( 0, pi, 0 ), v( pi_05, pi, 0 ));
+		drawObject( caseBottom, 0, v( 0, 0 + thicknessCase05, 100 ), v( 0, depth05, height05 - thicknessCase05 ), v( 0, pi + ran( 0.2 ) - 0.1, 0 ), v( pi_05, pi, 0 ));
 
 		for ( var i = 0; i < 3; i++ ) {
 			for ( var j = 0; j < 4; j++ ) {
 
 				obj = buildShelfVertical ();
-				drawObject( obj, 0, v( -0.5 * width, i * 1.5 * thicknessCase, -160 ), 
-					v( i * widthUnit - widthUnit, depth05, j * ( widthUnit + 1.125 * thicknessShelf ) - 1.5 * widthUnit - 1.75 * thicknessShelf ), v( 0, 0, 0 ), v( pi05, 0, pi05 ));
+				drawObject( obj, 0, v( -0.5 * width, ( i * 4 + j ) * 1.5 * thicknessCase, -160 ),
+					v( i * widthUnit - widthUnit, depth05, j * ( widthUnit + 1.125 * thicknessShelf ) - 1.5 * widthUnit - 1.75 * thicknessShelf ), v( 0, ran( 0.2 ) - 0.1, 0 ), v( pi05, 0, pi05 ));
 				dividers.push( obj );
 
 			}
@@ -197,15 +200,17 @@
 		for ( var i = 0; i < 3; i++ ) {
 
 			obj = buildShelfHorizontal ();
-			drawObject( obj, 0, v( 30, i * 1.5 * thicknessCase, -160 ), 
-				v( 0, depth05, i * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( 0, 0, 0 ), v( pi05, 0, 0 ));
+			drawObject( obj, 0, v( 30, i * 1.5 * thicknessCase, -160 ),
+				v( 0, depth05, i * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( 0, + ran( 0.2 ) - 0.1, 0 ), v( pi05, 0, 0 ));
 			shelves.push( obj );
 		}
 
 		for ( i = 0; i < 54; i++ ) {
 
-			obj = buildPeg()
-			drawObject( obj, 0, v( ran( 50 ), ran( 5 ), ran( 50 ) ), v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, ran( 3 ), -pi05 ), v( 0, 0, -pi05 ));
+			obj = buildPeg();
+			a = ran( pi2 ); r = ran( 25 )
+			drawObject( obj, 0, v( 95 + r * cos( a ), ran( 5 ),  -100 + r * sin ( a ) ),
+				v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, ran( 3 ), -pi05 ), v( 0, 0, -pi05 ));
 
 		}
 

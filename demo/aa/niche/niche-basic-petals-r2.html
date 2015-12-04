@@ -23,7 +23,7 @@
 	var thickness = 20;
 
 
-	var widthWall = 600;
+	var widthWall = 900;
 	var widthWall05 = 0.5 * widthWall;
 	var widthNiche = 80;
 	var widthNiche05 = 0.5 * widthNiche;
@@ -97,10 +97,21 @@
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
 		camera.position.set( -50, 170, -30 );
+//		camera.position.set( 5, 5, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.target.set( -40, 170, -100 );
-		controls.maxDistance = 400;
+		controls.maxDistance = 250;
+
+		controls.maxPolarAngle = 2;
+		controls.minPolarAngle = 1; 
+
+		controls.maxAzimuthAngle = 0.02;
+		controls.minAzimuthAngle = -0.7; 
+
+		controls.rotateSpeed = 0.05;
+		controls.zoomSpeed = 0.5;
+
 		controls.dampingFactor = 0.25;
 		controls.enableDamping = true;
 		controls.update();
@@ -117,6 +128,96 @@
 		scene.add( axisHelper );
 
 // assets
+
+		drawAssets();
+
+		loadBackground();
+
+		petals = drawPetals();
+		petals.scale.set( 0.75, 0.75, 0.75 );
+		petals.position.set( 0, heightDoorTop - 0.5 * heightNiche, - widthWall05 - 30 );
+
+	}
+
+	function drawPetals() {
+
+		petals = new THREE.Object3D();
+
+		petal = drawPetal();
+
+		for ( var i = 0; i < numberOfSlices; i++ ) {
+
+			mesh = petal.clone();
+			mesh.rotation.z = i * angle;
+			petals.add( mesh );
+
+		}
+
+		scene.add( petals );
+
+		return petals;
+
+	}
+
+	function drawPetal() {
+
+		radIn = 2;
+		radOut = 50;
+		var delta = 0.6 * 2 * Math.PI / numberOfSlices;
+		ca = cos( -delta );
+		sa = sin( -delta );
+
+		shape = new THREE.Shape();
+
+
+		shape.moveTo( radIn, 0 );
+		shape.quadraticCurveTo ( 0.7 * radOut, 15, radOut, 0 );
+		shape.absarc ( 0, 0, radOut, 0, -delta, true );
+		shape.quadraticCurveTo ( 0.7 * radOut, 5, radIn, 0 );
+
+		geometry = shape.extrude( { amount: thickness, bevelEnabled: false, steps: 12} );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		return mesh;
+
+	}
+
+	function cos( a ){ return Math.cos( a ); }
+	function sin( a ){ return Math.sin( a ); }
+	function v3( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+	function loadBackground() {
+
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load(
+			'../images/guadi-ceramics.jpg',
+			function ( texture ) {
+
+				geometry = new THREE.PlaneBufferGeometry( 80, 128 );
+				var material = new THREE.MeshBasicMaterial( { map: texture } );
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.set( 0, heightDoorTop - 64, -widthWall05 - 20 );
+				scene.add( mesh );
+
+			}
+
+		);
+
+	}
+
+
+	function drawAssets() {
+
 		geometry = new THREE.BoxGeometry( 600, 20, 600 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
@@ -176,95 +277,7 @@
 
 		}
 
-		loadBackground();
-
-		petals = drawPetals();
-		petals.scale.set( 0.85, 0.85, 0.85 );
-		petals.position.set( 0, heightDoorTop - 50, - widthWall05 - 30 );
-
 	}
-
-	function drawPetals() {
-
-		petals = new THREE.Object3D();
-
-		petal = drawPetal();
-
-		for ( var i = 0; i < numberOfSlices; i++ ) {
-
-			mesh = petal.clone();
-			mesh.rotation.z = i * angle;
-			petals.add( mesh );
-
-		}
-
-		scene.add( petals );
-
-		return petals;
-
-	}
-
-	function drawPetal() {
-
-		radIn = 5;
-		radOut = 42;
-		var delta = 0.25 * 2 * Math.PI / numberOfSlices;
-		ca = cos( angle );
-		sa = sin( angle );
-
-		shape= new THREE.Shape();
-
-		shape.moveTo( radIn * ca, radIn * sa );
-
-		shape.quadraticCurveTo( 0.5 * radOut * cos( angle + 3 * delta ), 0.5 * radOut * sin( angle + 3 * delta ),
-			radOut * cos( angle + delta ), radOut * sin( angle + delta ) );
-
-		shape.quadraticCurveTo( ( radOut + 2 ) * cos( angle ), ( radOut + 2 ) * sin( angle ),
-			radOut * cos( angle - delta ), radOut * sin( angle - delta ) );
-
-		shape.quadraticCurveTo( 0.75 * radOut * cos( angle + 0 ), 0.75 * radOut * sin( angle + 0 ),
-			radIn * ca, radIn * sa );
-
-		geometry = shape.extrude( { amount: thickness, bevelEnabled: false, steps: 12} );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		return mesh;
-
-	}
-
-	function cos( a ){ return Math.cos( a ); }
-	function sin( a ){ return Math.sin( a ); }
-	function v3( x, y, z ){ return new THREE.Vector3( x, y, z ); }
-
-	function animate() {
-
-		requestAnimationFrame( animate );
-		controls.update();
-		stats.update();
-		renderer.render( scene, camera );
-
-	}
-
-	function loadBackground() {
-
-		loader = new THREE.TextureLoader();
-		loader.crossOrigin = 'anonymous';
-		loader.load(
-			'../images/guadi-ceramics.jpg',
-			function ( texture ) {
-
-				geometry = new THREE.PlaneBufferGeometry( 80, 128 );
-				var material = new THREE.MeshBasicMaterial( { map: texture } );
-				mesh = new THREE.Mesh( geometry, material );
-				mesh.position.set( 0, heightDoorTop - 64, -widthWall05 - 20 );
-				scene.add( mesh );
-
-			}
-
-		);
-
-	}
-
 // v2( 0, 0 )
 
 	function drawWallHole() {
