@@ -11,7 +11,7 @@
 ## <center>Web Page / Source Code</center>
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-03/threejs-lesson-03.html width=100% height=600px ></iframe>  
-###### _Three.js Lesson 2 - Code Edit View_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r3.html#http://jaanga.github.io/tutorials/threejs-lesson-02/threejs-lesson-03.html )
+###### _Three.js Lesson 2 - Code Edit View: very alpha, use only for experiments_ / [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/tutorials/threejs-lesson-03/threejs-lesson-03.html )
 
 
 ## Concept
