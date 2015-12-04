@@ -1,5 +1,5 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/demo/mm/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/mm/'; 
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/demo/aa/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/aa/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
@@ -18,6 +18,9 @@ _Shiny new things_
 
 ##Overview
 
+[Petals Basic R2]( http://jaanga.github.io/demo/aa/petals/petals-basic-r2.html )
+
+& Design your own petals
 
 [Niche Basic Petals R2]( http://jaanga.github.io/demo/aa/niche/niche-basic-petals-r2.html )
 
