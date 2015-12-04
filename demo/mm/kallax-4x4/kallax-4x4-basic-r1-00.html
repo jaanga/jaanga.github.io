@@ -19,16 +19,9 @@
 <script>
 
 	var kallax;
-	var count = 0;
-	var animation;
 
-	var caseTop, caseBottom, caseLeft, caseRight, shelfTop, shelfMiddle, shelfBottom;
+	var caseTop, caseBottom, caseLeft, caseRight, shelfTop, shelfMiddle, shelfBotton;
 	var dividerTopLeft, dividerMiddleLeft, dividerBottomLeft; // row and column
-
-	var shelves = [];
-	var dividers = [];
- 
-	var steps;
 
 	var edges;
 	var components;
@@ -107,7 +100,7 @@
 			<p>Click on an object to toggle between assembled and unassembled location...</p>
 			<p><button onclick=returnAllToStartTween(); >Return all to start</button> 
 			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
-			<p><button onclick=animation=true;stepByStepTween(true); >Assemble Step-by-step</button></p>
+			<p><button onclick=stepByStepTween(); >Assemble Step-by-step</button></p>
 			<div id=info ></div>
 
 		`;
@@ -189,7 +182,6 @@
 				obj = buildShelfVertical ();
 				drawObject( obj, 0, v( -0.5 * width, i * 1.5 * thicknessCase, -160 ), 
 					v( i * widthUnit - widthUnit, depth05, j * ( widthUnit + 1.125 * thicknessShelf ) - 1.5 * widthUnit - 1.75 * thicknessShelf ), v( 0, 0, 0 ), v( pi05, 0, pi05 ));
-				dividers.push( obj );
 
 			}
 		}
@@ -199,10 +191,10 @@
 			obj = buildShelfHorizontal ();
 			drawObject( obj, 0, v( 30, i * 1.5 * thicknessCase, -160 ), 
 				v( 0, depth05, i * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( 0, 0, 0 ), v( pi05, 0, 0 ));
-			shelves.push( obj );
+
 		}
 
-		for ( i = 0; i < 54; i++ ) {
+		for ( var i = 0; i < 54; i++ ) {
 
 			obj = buildPeg()
 			drawObject( obj, 0, v( ran( 50 ), ran( 5 ), ran( 50 ) ), v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, ran( 3 ), -pi05 ), v( 0, 0, -pi05 ));
@@ -468,7 +460,7 @@
 
 		if ( intersects.length > 0 ) {
 
-			movRotTween( intersects[ 0 ].object.parent );
+			movRotTween( intersects[ 0 ].object );
 
 		}
 
@@ -476,7 +468,7 @@
 
 	function movRotTween( obj ) {
 
-		obj = obj;
+		obj = obj.parent;
 		if ( obj.position.distanceTo( obj.userData.startPosition ) < 1 ) {
 
 			send2end( obj );
@@ -502,7 +494,7 @@
 			}
 
 		}
-		count = 0;
+
 	}
 
 	function assembleQuicklyTween() {
@@ -545,8 +537,9 @@
 
 	}
 
-	function send2end( obj ) {
+	function send2end( obj, next ) {
 
+		var n = next ? next : function(){};
 		var oData = obj.userData;
 		var tween = new TWEEN.Tween( obj.position );
 		tween.to( {
@@ -554,9 +547,7 @@
 			y: oData.endPosition.y,
 			z: oData.endPosition.z }, 2000 )
 		.easing( TWEEN.Easing.Elastic.Out)
-		.onComplete( function() {
-//			stepByStepTween(true)
-		} )
+		.onComplete( n )
 		.start();
 
 		new TWEEN.Tween( obj.rotation ).to( {
@@ -564,40 +555,19 @@
 			y: oData.endRotation.y,
 			z: oData.endRotation.z }, 2000 )
 		.easing( TWEEN.Easing.Elastic.Out)
-		.onComplete( function() {
-
-			stepByStepTween();
-
-		} )
+		.onComplete( n )
 		.start();
 
 	}
 
 	function stepByStepTween() {
 
-		if ( animation !== true ) return;
+console.log( 'hwg' );
 
-		steps = [ caseTop, caseLeft, caseRight, caseBottom, shelves[ 0 ], shelves[ 1 ], shelves[ 2 ] ];
+		send2end( caseTop );
 
-		for ( var i = 0; i < dividers.length; i++ ) {
+		send2end( caseLeft );
 
-			steps.push( dividers[ i ] );
-
-		}
-
-		if ( count >= steps.length ) {
-
-			animation = false;
-			count = 0;
-return;
-//			returnAllToStartTween();
-
-		}
-
-		movRotTween( steps[ count ] );
-		count++;
-
-//console.log( count );
 
 	}
 
