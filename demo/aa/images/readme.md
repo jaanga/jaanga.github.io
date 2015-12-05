@@ -34,7 +34,7 @@ _Is the space at the end of the rill toward the left between two columns a 'nich
 
 View 5
 
-_Is the space at the end of the upper rill between two columns a 'niche'?_
+_Is the space at the end of the upper rill between two columns a 'niche' (same as previous)?_
 
 <br>
 
