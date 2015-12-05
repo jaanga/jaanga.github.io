@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Kallax 4x4 R1</title>
+<title>Kallax 4x4 R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -19,19 +19,21 @@
 <script>
 
 	var kallax;
-	var count = 0;
-	var animation;
+	var edges;
 
 	var caseTop, caseBottom, caseLeft, caseRight, shelfTop, shelfMiddle, shelfBottom;
-	var dividerTopLeft, dividerMiddleLeft, dividerBottomLeft; // row and column
+//	var dividerTopLeft, dividerMiddleLeft, dividerBottomLeft; // row and column
 
-	var shelves = [];
-	var dividers = [];
-
-	var steps;
-
-	var edges;
 	var components;
+	var shelves;
+	var dividers;
+
+	var screws;
+	var pegs;
+
+	var count = 0;
+	var animation;
+	var steps;
 
 	var width = 147;
 	var width05 = 0.5 * width;
@@ -53,6 +55,9 @@
 
 	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
 	var materialHole = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+
+	var geometryScrew = new THREE.CylinderGeometry( 1, 0.3, 10 );
+	var materialScrew = new THREE.MeshNormalMaterial();
 
 	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
 	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
@@ -172,6 +177,12 @@
 		edges = new THREE.Object3D();
 
 		components = [];
+		shelves = [];
+		dividers = [];
+
+		screws = [];
+		pegs = [];
+
 		material = new THREE.MeshNormalMaterial();
 
 		caseTop = buildCaseHorizontal();
@@ -203,14 +214,26 @@
 			drawObject( obj, 0, v( 30, i * 1.5 * thicknessCase, -160 ),
 				v( 0, depth05, i * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( 0, + ran( 0.2 ) - 0.1, 0 ), v( pi05, 0, 0 ));
 			shelves.push( obj );
+
+		}
+
+		for ( i = 0; i < 8; i++ ) {
+
+			obj = buildScrew();
+			a = ran( pi2 ); r = ran( 10 )
+			drawObject( obj, 0, v( -90 + r * cos( a ), ran( 5 ), 90 + r * sin ( a ) ),
+				v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, ran( 3 ), -pi05 ), v( 0, 0, -pi05 ));
+			screws.push( obj );
+
 		}
 
 		for ( i = 0; i < 54; i++ ) {
 
 			obj = buildPeg();
 			a = ran( pi2 ); r = ran( 25 )
-			drawObject( obj, 0, v( 95 + r * cos( a ), ran( 5 ),  -100 + r * sin ( a ) ),
+			drawObject( obj, 0, v( 95 + r * cos( a ), ran( 5 ), -100 + r * sin ( a ) ),
 				v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, ran( 3 ), -pi05 ), v( 0, 0, -pi05 ));
+			pegs.push( obj );
 
 		}
 
@@ -410,10 +433,17 @@
 
 	}
 
+	function buildScrew() {
+
+		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
+
+		return mesh;
+
+	}
+
 	function buildPeg() {
 
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
-//		components.push( mesh );
 
 		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );

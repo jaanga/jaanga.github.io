@@ -478,6 +478,97 @@
 
 	function movRotTween( obj ) {
 
+		oud = obj.userData.places;
+
+		if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) === 0 ) {
+
+			send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000 );
+
+		} else {
+
+			send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+		}
+
+	}
+
+	function returnAllToStartTween() {
+
+		for ( var i = 0; i < objects.length; i++ ) {
+
+			var obj = objects[ i ], oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+	}
+
+	function assembleQuicklyTween() {
+
+		for ( var i = 0; i < objects.length; i++ ) {
+
+			var obj = objects[ i ], oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ oud.length - 1 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+	}
+
+	function movRotTweenIndex( list ) {
+
+		itemCount = 0;
+
+		for ( var i = 0; i < list.length; i++ ) {
+
+			item = list[ i ];
+			obj = item[ 0 ];
+			index = item[ 1 ];
+			oud = obj.userData.places;
+			send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], 2000 )
+
+		}
+
+	}
+
+	function send2location( obj, pos, rot, ms ) {
+
+		new TWEEN.Tween( obj.position )
+		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation )
+		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.onComplete( function() {
+
+			itemCount++;
+
+			if ( itemCount > 2 ) {
+
+				itemCount = 0;
+				togglePlay();
+
+			}
+
+		} )
+		.start();
+
+	}
+
+/*
+	function movRotTween( obj ) {
+
 		obj = obj.parent;
 		var tween = new TWEEN.Tween( obj.position );
 		var oData = obj.userData;
@@ -583,6 +674,8 @@
 		}
 
 	}
+
+*/
 
 	function setExplodeStructure() {
 
