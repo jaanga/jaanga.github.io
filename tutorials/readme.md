@@ -57,7 +57,7 @@ To get more things designed better, faster and cheaper
 
 * Draw arbitrary 3D shapes
 
-Three.js Lesson 4: TBD
+[Three.js Lesson 4 ! Parametric Components]( http://jaanga.github.io/tutorials/threejs-lesson-04/ )
 
 * Vary the dimensions and positions of arbitrary 3D Shapes
 
