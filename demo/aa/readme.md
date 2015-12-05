@@ -30,7 +30,7 @@ _2015-12-03_
 
 [Petals Basic R2]( http://jaanga.github.io/demo/aa/petals/petals-basic-r2.html )
 
-& Design your own petals
+* Design your own petals
 
 [Niche Basic Petals R2]( http://jaanga.github.io/demo/aa/niche/niche-basic-petals-r2.html )
 

@@ -226,9 +226,8 @@
 				obj.userData.places.push( [ v( -0.5 * width, ( i * 3 + j ) * 1.5 * thicknessCase, -160 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
 
 				obj.userData.places.push( [ v( j * widthUnit + 20, 0, 0 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
-
 //				obj.userData.places.push( [ v( i * widthUnit - widthUnit, depth05, j * ( widthUnit + 1.125 * thicknessShelf ) - 1.5 * widthUnit - 1.75 * thicknessShelf ), v( pi05, 0, pi05 ) ] );
-				obj.userData.places.push( [ v( i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * widthUnit - 1 * thicknessCase , depth05, j * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( pi05, 0, 0 ) ] );
+				obj.userData.places.push( [ v( i * ( widthUnit + 0.5 * thicknessCase ) - 1.5 * widthUnit - 1 * thicknessCase , depth05, j * ( widthUnit + 0.75 * thicknessCase ) - widthUnit - 0.75 * thicknessCase ), v( pi05, 0, 0 ) ] );
 
 				obj.position.copy( obj.userData.places[ 0 ][ 0 ] );
 				obj.rotation.setFromVector3( obj.userData.places[ 0 ][ 1 ] );
