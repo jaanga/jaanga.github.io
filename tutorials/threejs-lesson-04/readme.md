@@ -27,11 +27,14 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-It takes more than boxes and cylinders to make a design
+Designs are built with parts, The parts must fit together. This is not always easy to do.
+The frint and back should have the same width and the sides equal depth. A change of thickness changes all the parts
+
+
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-To help you create arbitrary shapes with specifc dimensions
+To help you create [parametric components]( https://en.wikipedia.org/wiki/Parametric_design )
 
 
 ### Vision
@@ -43,21 +46,23 @@ Designers create cool apps so normal peeps have access to unique well designed p
 
 ### Drawing and Editing
 
-* Edit the dimensions of the existing objects
-* Edit the position and rotation of the existing objects
-* Add some new vertices to the existing objects
-* Add a new object
-	* reposition and rotate the new object
-
+* Edit the default dimensions of the existing objects
+* Edit the default position of the existing objects
+* Add some new parametric vertices to the existing objects
+* Add a new object to be the 'top'
+	* reposition the new object
+* There are a number of design errors with the current components. Can you fix any of them? Not easy.
 
 
 ## Issues / Things to note
 
 ### JavaScript Console
-* Find where thickness is set and change it?
-	* Can you see its value using the JavaScript console ( F12 )?
-* Can you find out what JavaScript knows about the last shape you made?
-	* Type 'shape' in the console and then click on the arrows
+
+* Can you see what's inside the front, back and bottom variables?
+* Absolutely everything is inside: windows
+* Three.js is in: THREE, but we mostly look at scene and scene.children
+	* Type a . after a variable to see what it contains
+
 
 ## Features
 

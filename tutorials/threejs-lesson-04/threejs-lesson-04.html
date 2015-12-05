@@ -13,6 +13,7 @@
 // Anything on same line after two slashes is a comment and has no effect on the code
 
 	var shapes;
+	var front, back, bottom;
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, box1, box2, box3;
@@ -106,45 +107,45 @@
 		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 		var material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
 
-// side 1
-		shape = new THREE.Shape();
-		shape.fromPoints( [
+// front
+		front = new THREE.Shape();
+		front.fromPoints( [
 
 			v2( 0, 0 ), v2( width, 0 ), v2( width, height ),
 			v2( tabWidth, height ), v2( tabWidth, height - tabHeight ), v2( 0, height - tabHeight )
 
 		] );
 
-		geometry = shape.extrude( { amount: thickness, bevelEnabled: false } );
+		geometry = front.extrude( { amount: thickness, bevelEnabled: false } );
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( -20 - width, 10, -10 );
 		shapes.add( mesh );
 
-// side 2
-		shape = new THREE.Shape();
-		shape.fromPoints( [
+// back
+		back = new THREE.Shape();
+		back.fromPoints( [
 
 			v2( 0, 0 ), v2( width - tabWidth, 0 ), v2( width - tabWidth, tabHeight ), v2( width, tabHeight ),  
 			v2( width, height ), v2( 0, height )
 
 		] );
 
-		geometry = shape.extrude( { amount: thickness, bevelEnabled: false } );
+		geometry = back.extrude( { amount: thickness, bevelEnabled: false } );
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( -20 - width, -20 - height, -10 );
 		shapes.add( mesh );
 
 
 // bottom
-		shape = new THREE.Shape();
-		shape.fromPoints( [
+		bottom = new THREE.Shape();
+		bottom.fromPoints( [
 
 			v2( 0, 0 ), v2( width - tabWidth, 0 ), v2( width - tabWidth, thickness ), v2( width, thickness ),
 			v2( width, depth ), v2( tabWidth, depth ), v2( tabWidth, depth - thickness ), v2( 0, depth - thickness ),
 
 		] );
 
-		geometry = shape.extrude( { amount: thickness, bevelEnabled: false } );
+		geometry = bottom.extrude( { amount: thickness, bevelEnabled: false } );
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 10, -10 - depth, -10 );
 		shapes.add( mesh );
