@@ -102,22 +102,13 @@
 		scene.add( mesh );
 
 
-		pts = [ v( 35, 0, 0 ) , v( 36, 0, 0 ), v( 36, 0, 4 ), v( 35, 0, 4 ), v( 35, 0, 0 ) ];
-		geometry = new THREE.LatheGeometry( pts, 80 );
-		mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+		drawAD()
 
-		pts = [ v( 37, 0, 0 ) , v( 38, 0, 0 ), v( 38, 0, 4 ), v( 37, 0, 4 ), v( 37, 0, 0 ) ];
-		geometry = new THREE.LatheGeometry( pts, 80 );
-		mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+	}
 
-// // TorusGeometry(radius, tube, radialSegments, tubularSegments, arc)
-//		geometry = new THREE.TorusGeometry( 35, 0.5, 12, 50 );
-//		material = new THREE.MeshNormalMaterial();
-//		mesh = new THREE.Mesh( geometry, material );
-//		mesh.position.set( 0, -11, 0 );
-//		scene.add( mesh );
+	function drawAD() {
+
+		drawRingOuter()
 
 		geometry = new THREE.TorusGeometry( 30, 0.5, 12, 50 );
 		material = new THREE.MeshNormalMaterial();
@@ -132,9 +123,46 @@
 //		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
+	}
+
+	function drawRingOuter() {
+
+		outerRing = new THREE.Object3D();
+
+		material = new THREE.MeshNormalMaterial();
+
+		pts = [ v( 35, 0, 0 ) , v( 36, 0, 0 ), v( 36, 0, 4 ), v( 35, 0, 4 ), v( 35, 0, 0 ) ];
+		geometry = new THREE.LatheGeometry( pts, 80 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = -2;
+		outerRing.add( mesh );
+
+		pts = [ v( 37, 0, 2 ) , v( 38, 0, -2 ), v( 38, 0, 2 ), v( 37, 0, 2 ), v( 37, 0, -2 ) ];
+		geometry = new THREE.LatheGeometry( pts, 80 );
+		mesh = new THREE.Mesh( geometry, material );
+		outerRing.add( mesh );
+
+// THREE.CylinderGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded );
+		geometry = new THREE.CylinderGeometry( 0, 2, 2, 4, 1, true );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 39, 0 ) );
+		mesh = new THREE.Mesh( geometry, material );
+
+		var spikes = 50
+		for ( var i = 0; i < spikes; i++ ) {
+			r = mesh.clone();
+			r.rotation.z = i * ( Math.PI * 2 / spikes );
+			outerRing.add( r );
+		}
 
 
+// // TorusGeometry(radius, tube, radialSegments, tubularSegments, arc)
+//		geometry = new THREE.TorusGeometry( 35, 0.5, 12, 50 );
+//		material = new THREE.MeshNormalMaterial();
+//		mesh = new THREE.Mesh( geometry, material );
+//		mesh.position.set( 0, -11, 0 );
+//		scene.add( mesh );
 
+		scene.add( outerRing )
 	}
 
 	function onWindowResize() {
