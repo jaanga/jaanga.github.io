@@ -136,21 +136,6 @@
 		}
 		shape.splineThru( pts );
 
-/*
-		pts = []; 
-		shape.moveTo( 0, 26.25 );
-		x = 0
-		for ( var i = turns * segments - 4.25 ; i < turns * segments ;  i++ ) {
-
-			radius = i * 0.75 - x - 1.7;
-			x += 1.3;
-			angle = delta * i;
-			pts.push( v2( radius * cos( angle ), radius * sin( angle ) ) ); 
-
-		}
-		shape.splineThru( pts );
-*/
-
 		pts2 = []; 
 		shape.moveTo( 23, 0 );
 		for ( var i = turns * segments; i > 9; i--) {

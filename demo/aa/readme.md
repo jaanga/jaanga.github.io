@@ -18,6 +18,10 @@ _Shiny new things_
 
 ##Overview
 
+_2015-12-06_
+
+[Spiral Aristotle R2]( http://jaanga.github.io/demo/aa/spiral/spiral-aristotle-r3.html )
+
 _2015-12-04_
 
 [Nautilus Basic R1]( http://jaanga.github.io/demo/aa/nautilus/nautilus-basic-r1.html )
@@ -61,3 +65,4 @@ _2015-11-27_
 [Rills Brief]( http://jaanga.github.io/demo/aa/rills-brief/rills-brief-r1.html )
 
 [Sphere Slicer R1 ]( http://jaanga.github.io/demo/aa/sphere-slicer/sphere-slicer-r1.html )
+
