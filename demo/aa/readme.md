@@ -20,7 +20,7 @@ _Shiny new things_
 
 _2015-12-06_
 
-[Spiral Aristotle R2]( http://jaanga.github.io/demo/aa/spiral/spiral-aristotle-r3.html )
+[Spiral Aristotle R3]( http://jaanga.github.io/demo/aa/spiral/spiral-aristotle-r3.html )
 
 _2015-12-04_
 
