@@ -214,16 +214,6 @@
 		caseBottom.position.copy( caseBottom.userData.places[ 0 ][ 0 ] );
 		caseBottom.rotation.setFromVector3( caseBottom.userData.places[ 0 ][ 1 ] );
 
-		for ( var i = 0; i < 3; i++ ) {
-
-			obj = buildShelf ();
-			obj.userData.places.push( [ v( 30, i * 1.5 * thicknessCase, -160 ), v( 0, + ran( 0.2 ) - 0.1, 0 ) ] );
-			obj.userData.places.push( [ v( i * ( widthUnit + thicknessShelf )- widthUnit - 2, depth05, 0 ), v( pi05, 0, pi05 ) ] );
-
-			obj.position.copy( obj.userData.places[ 0 ][ 0 ] );
-			obj.rotation.setFromVector3( obj.userData.places[ 0 ][ 1 ] );
-
-		}
 
 		for ( var i = 0; i < 4; i++ ) {
 			for ( var j = 0; j < 3; j++ ) {
@@ -241,7 +231,6 @@
 			}
 		}
 
-/*
 		for ( var i = 0; i < 3; i++ ) {
 
 			obj = buildShelf ();
@@ -267,7 +256,6 @@
 			obj.rotation.setFromVector3( obj.userData.places[ 0 ][ 1 ] );
 
 		}
-*/
 
 /*
 		for ( i = 0; i < 54; i++ ) {
@@ -556,13 +544,13 @@
 
 		if ( type === 'pegHole' ) {
 
-			buildPeg( mesh );
+			peg = buildPeg( mesh );
 //			pegHoles.push( mesh );
 //			mesh.name = 'pegHole';
 
 		} else if ( type === 'screwHole' ) {
 
-			buildScrew( mesh );
+
 		}
 
 		obj.add( mesh );
@@ -574,18 +562,14 @@
 		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
 		mesh.userData.holeParent = hole;
 
-		a = ran( pi2 ); r = ran( 10 );
-		mesh.userData.places = [];
-		mesh.userData.places.push( [ v( -90 + r * cos( a ), ran( 5 ), 90 + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
-		mesh.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
-
-		mesh.position.copy( mesh.userData.places[ 0 ][ 0 ] );
-		mesh.rotation.setFromVector3( mesh.userData.places[ 0 ][ 1 ] );
+		var obj = new THREE.Object3D();
+		obj.userData.places = [];
+		obj.add( mesh);
 
 		screws.push( mesh );
-		kallax.add( mesh );
+		kallax.add( obj );
 
-		return mesh;
+		return obj;
 
 	}
 
@@ -611,6 +595,9 @@
 		edges.add( edge );
 
 	}
+
+
+
 
 	function onDocumentTouchStart( event ) {
 
