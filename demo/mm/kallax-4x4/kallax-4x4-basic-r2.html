@@ -638,7 +638,15 @@
 
 		if ( chkPlay.checked === false ) { return; }
 
-		if ( count >= playList.length ) {
+		if ( count === 0 ) {
+
+			returnAllToStartTween();
+			itemCount = 0;
+
+			movRotTweenIndex( playList[ count ] );
+			count = 1;
+
+		} else if ( count >= playList.length ) {
 
 			chkPlay.checked = false
 			count = 0;
