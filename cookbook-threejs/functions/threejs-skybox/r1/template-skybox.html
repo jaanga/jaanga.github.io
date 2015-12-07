@@ -86,11 +86,69 @@
 		scene.add( mesh );
 
 
-// Sky box
+
+		addSkyBox2();
+
+	}
+
+	function addSkyBoxNew() {
+
+		THREE.CubeTextureLoader.crossOrigin = 'anonymous';
+		var p = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var files = [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ];
+		var materials = [];
+
+		loader = new THREE.CubeTextureLoader();
+		loader.setCrossOrigin = 'anonymous';
+
+// load a resource
+		loader.load(
+
+// resource URL
+			files,
+
+// Function when resource is loaded
+			function ( materials ) {
+
+console.log( 'mat', materials );
+// do something with the texture
+			geometry = new THREE.BoxGeometry( 800, 800, 800 )
+			material =  new THREE.MeshFaceMaterial( { map: materials } );
+			mesh = new THREE.Mesh( geometry, material );
+
+			scene.add( mesh );
+
+			},
+
+// Function called when download progresses
+			function ( xhr ) {
+
+				msg1.innerHTML = ( xhr.loaded / xhr.total * 100 ) + '% loaded';
+
+			},
+
+// Function called when download errors
+			function ( xhr ) {
+
+				msg1.innerHTML = 'An error happened';
+
+			}
+
+		);
+
+	}
+
+	function addSkyBox() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+
 		var files = ['px','nx','py','ny','pz','nz'], materials = [];
+
 		for (var i = 0, image; i < 6; i++) {
-			image = THREE.ImageUtils.loadTexture( '../../textures/cubes/skybox1/' + files[ i ] + '.jpg' );
+
+			image = THREE.ImageUtils.loadTexture( 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/' + files[ i ] + '.jpg' );
 			materials.push( new THREE.MeshBasicMaterial( { map: image, side: THREE.BackSide } ) ); 
+
 		}
 
 		geometry = new THREE.BoxGeometry( 800, 800, 800 )
@@ -100,6 +158,36 @@
 		scene.add( mesh );
 
 	}
+
+	function addSkyBox2() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+
+		var p = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var urls = [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ];
+
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		textureCube.format = THREE.RGBFormat;
+
+				var shader = THREE.ShaderLib[ "cube" ];
+				shader.uniforms[ "tCube" ].value = textureCube;
+
+				var material = new THREE.ShaderMaterial( {
+
+					fragmentShader: shader.fragmentShader,
+					vertexShader: shader.vertexShader,
+					uniforms: shader.uniforms,
+					side: THREE.BackSide
+
+				} ),
+		geometry = new THREE.BoxGeometry( 800, 800, 800 )
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		scene.add( mesh );
+
+	}
+
 
 	function animate() {
 

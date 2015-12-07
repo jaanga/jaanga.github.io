@@ -70,13 +70,13 @@
 		scene = new THREE.Scene();
 
 		camera = new THREE.PerspectiveCamera( 55, window.innerWidth / window.innerHeight, 0.5, 3000000 );
-		camera.position.set( 2000, 750, 2000 );
+		camera.position.set( 1000, 750, 400 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.enablePan = false;
 		controls.minDistance = 1000.0;
 		controls.maxDistance = 5000.0;
-		controls.maxPolarAngle = Math.PI * 0.495;
+//		controls.maxPolarAngle = Math.PI * 0.495;
 		controls.target.set( 0, 500, 0 );
 
 		scene.add( new THREE.AmbientLight( 0x444444 ) );
@@ -96,19 +96,20 @@
 			waterNormals: waterNormals,
 			alpha: 	1.0,
 			sunDirection: light.position.clone().normalize(),
-			sunColor: 0xffffff,
+			sunColor: 0xff0000,
 			waterColor: 0x001e0f,
-			distortionScale: 50.0,
+			distortionScale: 8.0,
+			NoiseScale: 1.0,
 		} );
 
 
 		mirrorMesh = new THREE.Mesh(
-			new THREE.PlaneBufferGeometry( parameters.width * 500, parameters.height * 500 ),
+			new THREE.SphereGeometry( 800, 256, 256 ),
 			water.material
 		);
 
 		mirrorMesh.add( water );
-		mirrorMesh.rotation.x = - Math.PI * 0.5;
+//		mirrorMesh.rotation.x = - Math.PI * 0.5;
 		scene.add( mirrorMesh );
 
 
@@ -161,7 +162,7 @@
 			skyBoxMaterial
 		);
 
-//		scene.add( skyBox );
+		scene.add( skyBox );
 
 
 		var geometry = new THREE.IcosahedronGeometry( 400, 4 );
@@ -204,6 +205,7 @@
 		controls.update();
 		water.render();
 		renderer.render( scene, camera );
+		mirrorMesh.lookAt( camera.position )
 
 	}
 
