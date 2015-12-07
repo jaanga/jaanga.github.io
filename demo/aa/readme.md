@@ -18,7 +18,12 @@ _Shiny new things_
 
 ##Overview
 
+
 _2015-12-06_
+
+[Spiral Aristotle R4]( http://jaanga.github.io/demo/aa/spiral/spiral-aristotle-r4.html )
+
+_2015-12-05_
 
 [Spiral Aristotle R3]( http://jaanga.github.io/demo/aa/spiral/spiral-aristotle-r3.html )
 
