@@ -155,6 +155,7 @@
 			scene.add( axisHelper );
 
 		}
+
 	}
 
 	function toggleBackgroundGradient () {
