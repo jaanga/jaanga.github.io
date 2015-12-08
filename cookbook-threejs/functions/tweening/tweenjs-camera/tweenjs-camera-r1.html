@@ -2,20 +2,21 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>Tween.js Camera R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
-<!--
-<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
--->
-
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://tweenjs.github.io/tween.js/build/tween.min.js ></script>
 <script>
+
+// https://github.com/tweenjs/tween.js/
+// https://github.com/tweenjs/tween.js/blob/master/docs/user_guide.md
+
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	var position, target;
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -34,7 +35,7 @@
 			#aa {text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
 
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+			button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
 			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
 			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
@@ -51,11 +52,14 @@
 				<a href="" > ${ document.title }</a> 
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+			<p><button onclick=cameraTween1(); >Camera Tween 1</button></p>
+			<p><button onclick=cameraTween2(); >Camera Tween 2</button></p>
+			<p><button onclick=cameraTween3(); >Camera Tween 3</button></p>
 			<div id=info ></div>
 
 		`;
 
-//			<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>
+//
 //			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
 
 
@@ -95,6 +99,70 @@
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
+		position = v( -100, 50, 100 );
+		target = v( 100, 0, 0 );
+
+	}
+
+
+	function send2location( obj, pos, rot, ms, func ) {
+
+		onComplete = func ? func : function() {};
+
+		new TWEEN.Tween( obj.position )
+		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation )
+		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.onComplete( onComplete )
+		.start();
+
+	}
+
+	function cameraTween1() {
+
+		position = v( -100, 50, 100 );
+		target = v( 100, 0, 0 );
+		cameraTween( position, target );
+	}
+
+	function cameraTween2() {
+
+		position = v( -100, 120, -100 );
+		target = v( 50, 0, 50 );
+		cameraTween( position, target )
+
+	}
+
+	function cameraTween3() {
+
+		position = v( 100, 100, 100 );
+		target = v( 0, 0, 0 );
+		cameraTween( position, target )
+
+	}
+
+	function cameraTween( position, target ) {
+
+		new TWEEN.Tween( camera.position )
+		.to( {
+			x: position.x,
+			y: position.y,
+			z: position.z}, 5000 )
+		.easing( TWEEN.Easing.Sinusoidal.InOut )
+		.start();
+
+		new TWEEN.Tween( controls.target ).to( {
+			x: target.x,
+			y: target.y,
+			z: target.z}, 5000 )
+		.easing( TWEEN.Easing.Sinusoidal.InOut)
+		.start();
+
+
 	}
 
 	function onWindowResize() {
@@ -111,6 +179,7 @@
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();
+		TWEEN.update();
 		renderer.render( scene, camera );
 
 	}

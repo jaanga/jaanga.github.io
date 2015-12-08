@@ -1,4 +1,7 @@
 ﻿
+// https://github.com/tweenjs/tween.js/
+// https://github.com/tweenjs/tween.js/blob/master/docs/user_guide.md
+
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
 	var pi_05 = -0.5 * pi;

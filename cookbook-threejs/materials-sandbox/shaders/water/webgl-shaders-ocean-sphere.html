@@ -96,7 +96,7 @@
 			waterNormals: waterNormals,
 			alpha: 	1.0,
 			sunDirection: light.position.clone().normalize(),
-			sunColor: 0xff0000,
+			sunColor: 0xffffff,
 			waterColor: 0x001e0f,
 			distortionScale: 8.0,
 			NoiseScale: 1.0,
@@ -154,7 +154,7 @@
 			vertexShader: cubeShader.vertexShader,
 			uniforms: cubeShader.uniforms,
 			depthWrite: false,
-			side: 2 //THREE.BackSide
+			side: THREE.BackSide
 		} );
 
 		var skyBox = new THREE.Mesh(
@@ -163,8 +163,7 @@
 		);
 
 		scene.add( skyBox );
-
-
+/*
 		var geometry = new THREE.IcosahedronGeometry( 400, 4 );
 
 		for ( var i = 0, j = geometry.faces.length; i < j; i ++ ) {
@@ -175,12 +174,13 @@
 
 		var material = new THREE.MeshPhongMaterial( {
 			vertexColors: THREE.FaceColors,
-			shininess: 100,
+			shininess: 10,
 			envMap: cubeMap
 		} );
 
 		sphere = new THREE.Mesh( geometry, material );
 //		scene.add( sphere );
+*/
 
 	}
 
@@ -195,13 +195,13 @@
 
 	function render() {
 
-		var time = performance.now() * 0.001;
+		var time = performance.now() * 0.5;
 
 //		sphere.position.y = Math.sin( time ) * 500 + 250;
 //		sphere.rotation.x = time * 0.5;
 //		sphere.rotation.z = time * 0.51;
 
-		water.material.uniforms.time.value += 1.0 / 60.0;
+		water.material.uniforms.time.value += -1.0 / 60.0;
 		controls.update();
 		water.render();
 		renderer.render( scene, camera );
