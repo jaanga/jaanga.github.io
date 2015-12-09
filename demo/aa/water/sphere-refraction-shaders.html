@@ -115,12 +115,10 @@
 		var gridHelper = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
-*/
 
 		var axisHelper = new THREE.AxisHelper( 80 );
 		scene.add( axisHelper );
 
-/*
 // assets
 
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
@@ -176,7 +174,7 @@ controls.autoRotateSpeed = 0.025;
 
 		scene.remove( sphere );
 
-		geometry = new THREE.SphereBufferGeometry( 50, 75, 12 );
+		geometry = new THREE.SphereBufferGeometry( 50, 75, 10 );
 		material = new THREE.MeshNormalMaterial();
 
 		material = new THREE.MeshBasicMaterial( { color: 0xaaaaaa, envMap: textureCube, refractionRatio: 0.01 } ),
@@ -222,7 +220,7 @@ controls.autoRotateSpeed = 0.025;
 		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
-		sphere.rotation.x += 0.008;
+		sphere.rotation.x -= 0.008;
 		sphere.rotation.y += 0.0005;
 
 	}
