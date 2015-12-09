@@ -18,9 +18,15 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
-_2015-12-02_
+_2015-12-08_
 
-### [Kallax 4x4 Basic R3 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/r3/kallax-4x4-basic-r3.html )
+* [Kallax 4x1 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x1/kallax-4x1-basic-r1.html )
+
+* [Kallax 4x4 Basic R4 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r4.html )
+
+_2015-12-06_
+
+* [Kallax 4x4 Basic R3 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/r3/kallax-4x4-basic-r3.html )
 
 _2015-12-02_
 
