@@ -206,8 +206,12 @@
 		scene.add( edges );
 
 		camera.userData.places = [];
-		camera.userData.places.push( [ v( 159, 150 ), v( 0, 0, 0 ) ] );
-		camera.userData.places.push( [ v( 200, 200, 200 ), v( 0, 0, pi05 ) ] );
+		camera.userData.places.push( [ camera.position.clone(), controls.target.clone() ] );
+		camera.userData.places.push( [ v( 150, 150, 150 ), v( 0, 0, 0 ) ] ); // 1. home
+		camera.userData.places.push( [ v( 95, 154, 84 ), v( 3, 3, -11 ) ] ); // 2 assembled
+		camera.userData.places.push( [ v( 130, 400, 30 ), v( 2, 12, -11 ) ] ); // 3
+		camera.userData.places.push( [ v( 80, 140, 140 ), v( 2, 12, -11 ) ] ); // 4
+		camera.userData.places.push( [ v( 210, 150, -150 ), v( -40, 60, 30 ) ] ); // 5 final anim
 
 		playList = [
 
