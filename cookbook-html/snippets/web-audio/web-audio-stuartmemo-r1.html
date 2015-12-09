@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Play Success</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+// http://code.tutsplus.com/tutorials/the-web-audio-api-adding-sound-to-your-web-app--cms-23790
+
+// http://stuartmemo.com/tutsplus/adding-sound-to-your-web-app/
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<button onclick=playSuccessSound(); >play scuccess</button>' +
+		'<div id=msg1 ></div>' +
+
+	'';
+
+	var context = new AudioContext();
+
+// Play oscillators at certain frequency and for a certain time
+
+	function playNote( frequency, startTime, duration) {
+
+		var osc1 = context.createOscillator();
+		var osc2 = context.createOscillator();
+		var volume = context.createGain();
+
+// Set oscillator wave type
+		osc1.type = 'triangle';
+		osc2.type = 'triangle';
+
+		volume.gain.value = 0.1;
+
+// Set up node routing
+		osc1.connect( volume );
+		osc2.connect( volume );
+		volume.connect(context.destination);
+
+// Detune oscillators for chorus effect
+		osc1.frequency.value = frequency + 1;
+		osc2.frequency.value = frequency - 2;
+
+// Fade out
+		volume.gain.setValueAtTime( 0.1, startTime + duration - 0.05 );
+		volume.gain.linearRampToValueAtTime( 0, startTime + duration );
+
+// Start oscillators
+		osc1.start( startTime );
+		osc2.start( startTime );
+
+// Stop oscillators
+		osc1.stop( startTime + duration );
+		osc2.stop( startTime + duration );
+
+	};
+
+	function playSuccessSound() {
+
+// Play a 'B' now that lasts for 0.116 seconds
+		playNote(493.883, context.currentTime, 0.116);
+
+// Play an 'E' just as the previous note finishes, that lasts for 0.232 seconds
+		playNote(659.255, context.currentTime + 0.116, 0.232);
+
+	};
+
+</script>
+</body>
+</html>
