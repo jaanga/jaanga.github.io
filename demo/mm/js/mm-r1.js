@@ -24,8 +24,85 @@
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
+	var context = new AudioContext();
+
 	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+
+	function drawHole( obj, x, y, z, aX, aY, aZ, type ) {
+
+		var mesh = new THREE.Mesh( geometryHole, materialHole );
+		mesh.name = 'hole';
+		mesh.position.set( x + sign( x ) * 0.1 , y + sign( y ) * 0.1, z  + sign( z ) * 0.1); // to stop shimmering
+		mesh.rotation.set( aX, aY, aZ );
+
+		holes.push( mesh );
+
+		if ( type === 'pegHole' ) {
+
+			buildPeg( mesh );
+
+		} else if ( type === 'screwHole' ) {
+
+			buildScrew( mesh );
+		}
+
+		obj.add( mesh );
+
+	}
+
+	function buildScrew( hole ) {
+
+		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
+		var offsetX = - height05 - 10;
+		var offsetZ =  width05 + 10;
+		var a = ran( pi2 ); 
+		var r = ran( 10 );
+		var mud = mesh.userData;
+
+		mud.places = [];
+		mud.places.push( [ v( offsetX + r * cos( a ), ran( 5 ), offsetZ + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
+		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+
+		mesh.name = 'screw';
+		mud.holeParent = hole;
+		hole.name = 'screw location' + screws.length;
+		hole.userData.screw = mesh;
+
+		screws.push( mesh );
+		kallax.add( mesh );
+
+		return mesh;
+
+	}
+
+	function buildPeg( hole ) {
+
+		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
+		var offsetX = height05 + 20;
+		var offsetZ =  - width05 - 20;
+		var a = ran( pi2 ); 
+		var r = ran( 25 );
+		var mud = mesh.userData;
+
+		mud.places = [];
+		mud.places.push( [ v( offsetX + r * cos( a ), ran( 5 ), offsetZ + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
+		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+
+		mesh.name = 'peg';
+		mud.holeParent = hole;
+		hole.name = 'peg location' + pegs.length;
+		hole.userData.peg = mesh;
+
+		pegs.push( mesh );
+		kallax.add( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+	}
+
 
 	function onDocumentTouchStart( event ) {
 
@@ -51,6 +128,7 @@
 		if ( intersects.length > 0 ) {
 
 			movRotTween( intersects[ 0 ].object );
+			playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 		}
 
@@ -261,6 +339,7 @@
 		}
 
 		cameraTween( camera.userData.places[ 1 ][ 0 ], camera.userData.places[ 1 ][ 1 ], 1500 );
+		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -268,7 +347,7 @@
 
 		var obj, ohp, oud;
 
-		cameraTween( camera.userData.places[ 2 ][ 0 ], camera.userData.places[ 2 ][ 1 ], 1500 );
+//		cameraTween( camera.userData.places[ 2 ][ 0 ], camera.userData.places[ 2 ][ 1 ], 1500 );
 
 		for ( var i = 0; i < components.length; i++ ) {
 
@@ -309,6 +388,7 @@
 
 		}
 
+			playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 	}
 
 	function send2location( obj, pos, rot, ms, func ) {
@@ -368,6 +448,62 @@
 
 
 	}
+
+	function loadTexture() {
+
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+
+		loader.load(
+			'http://mrdoob.github.io/three.js/examples/textures/water.jpg',
+			function ( tex ) {
+
+				texture = tex;
+
+				updateMaterial( materialCaseColor );
+
+			}
+
+		);
+
+	}
+
+	function updateMaterial( color ) {
+
+				materialCase = new THREE.MeshBasicMaterial( { color: color, map: texture } );
+
+				kallax.traverse( function ( child ) {
+
+					if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
+
+						child.material = new THREE.MeshBasicMaterial( { color: color, map: texture } );
+						child.material.name = 'materialCase';
+						child.material.needsUpdate = true;
+
+					}
+				} );
+
+	}
+
+	var context = new AudioContext();
+
+	function playNote( frequency, startTime, duration) {
+
+		var osc1 = context.createOscillator();
+		var volume = context.createGain();
+
+		osc1.connect( volume );
+		osc1.type = 'triangle';
+		osc1.frequency.value = frequency + 1;
+
+		volume.connect( context.destination );
+		volume.gain.linearRampToValueAtTime( 0, startTime + duration );
+		volume.gain.value = 0.01;
+
+		osc1.start( startTime );
+		osc1.stop( startTime + duration );
+
+	};
 
 	function findStuff() {
 // http://stackoverflow.com/questions/21557341/three-js-get-world-rotation-from-matrixworld

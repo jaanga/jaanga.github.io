@@ -1,0 +1,480 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Kallax 5x5 R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
+<script src=../js/mm-r1.js ></script>
+<script>
+
+	var kallax;
+	var edges;
+
+	var caseTop, caseBottom, caseLeft, caseRight;
+	var components;
+	var holes;
+	var shelves;
+	var dividers;
+	var screws;
+	var pegs;
+
+	var width = 182;
+	var width05 = 0.5 * width;
+
+	var widthUnit = 33.5;
+	var widthUnit05 = 0.5 * widthUnit;
+
+	var height = 182;
+	var height05 = 0.5 * height;
+
+	var depth = 39;
+	var depth05 = 0.5 * depth;
+
+	var thicknessCase = 3;
+	var thicknessCase05 = 0.5 * thicknessCase;
+
+	var thicknessShelf = 2;
+	var thicknessShelf05 = 0.5 * thicknessShelf;
+
+	var divisions = Math.floor( ( width - 2 * thicknessCase ) / 35.2 );
+
+	var materialCase = new THREE.MeshNormalMaterial();
+	materialCase.name = 'materialCase';
+	var materialCaseColor = 0x333333;
+
+	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
+	var materialHole = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+
+	var geometryScrew = new THREE.CylinderGeometry( 1, 0.3, 10 );
+	var materialScrew = new THREE.MeshNormalMaterial();
+
+	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
+	var countPegs = 0;
+	var pegHoles = [];
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a>
+				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
+			</h2>
+			<p>Click any object to move between assembled and disassembled positions...</p>
+			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
+			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
+			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
+			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play Step-by-Step Assembly</p>
+			<p>
+				<input type=radio name=field id=birch onchange=updateMaterial(0xf8dfa1); />birch
+				<input type=radio name=field id=black onchange=updateMaterial(0x333333); checked />black
+				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); />white
+			</p>
+			<div id=info ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 150, 150, 150 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+// helpers
+		var gridHelper = new THREE.GridHelper( height05 + 50, 10 );
+		gridHelper.position.set( 0, -1, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( height05 + 50 );
+		scene.add( axisHelper );
+
+		geometry = new THREE.BoxGeometry( height + 100, 2, width + 200 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -2, -50 );
+		scene.add( mesh );
+
+// assets
+
+		drawKallax();
+		loadTexture();
+
+
+	}
+
+	function drawKallax() {
+
+		scene.remove( kallax, edges );
+
+		kallax = new THREE.Object3D();
+		edges = new THREE.Object3D();
+
+		components = [];
+		shelves = [];
+		dividers = [];
+		holes = [];
+		screws = [];
+		pegs = [];
+
+		caseRight = buildCaseVertical();
+		caseRight.userData.places.push( [ v( 0, thicknessCase05, -100 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+		caseRight.userData.places.push( [ v( 0, depth05, -width05 + thicknessCase05 - 30 ), v( pi05, 0, 0 ) ] );
+		caseRight.userData.places.push( [ v( 0, depth05, -width05 + thicknessCase05 ), v( pi05, 0, 0 ) ] );
+
+		caseLeft = buildCaseVertical();
+		caseLeft.userData.places.push( [ v( 0, thicknessCase05, 100 ), v( 0, pi + ran( 0.2 ) - 0.1, 0 ) ] );
+		caseLeft.userData.places.push( [ v( 0, depth05, width05 - thicknessCase05  + 30 ), v( pi_05, pi, 0 ) ] );
+		caseLeft.userData.places.push( [ v( 0, depth05, width05 - thicknessCase05 ), v( pi_05, pi, 0 ) ] );
+
+		caseTop = buildCaseHorizontal();
+		caseTop.userData.places.push( [ v( - height05 - 30, thicknessCase05, 0 ), v( 0, pi05 + ran( 0.2 ) -0.1, 0 ) ] );
+		caseTop.userData.places.push( [ v( - height05 + thicknessCase05, depth05, 0 ), v( pi05, 0, pi_05 ) ] );
+
+		caseBottom = buildCaseHorizontal();
+		caseBottom.userData.places.push( [ v( height05 + 30, thicknessCase05, 0 ), v( 0, pi_05 + ran( 0.2 ) - 0.1, 0 ) ] );
+		caseBottom.userData.places.push( [ v( height05 - thicknessCase05, depth05, 0  ), v( pi05, 0, pi05 ) ] );
+
+		for ( var i = 0; i < divisions - 1; i++ ) {
+
+			obj = buildShelf ( i );
+
+		}
+
+		for ( var i = 0; i < divisions; i++ ) {
+
+			for ( var j = 0; j < divisions - 1; j++ ) {
+
+				obj = buildDivider ( i, j );
+
+			}
+
+		}
+
+		kallax.userData.places = [];
+		kallax.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		kallax.userData.places.push( [ v( 0, height05, 0 ), v( 0, 0, pi05 ) ] );
+
+		scene.add( kallax, edges );
+
+		camera.userData.places = [];
+		camera.userData.places.push( [ camera.position.clone(), controls.target.clone() ] );
+		camera.userData.places.push( [ v( 150, 150, 150 ), v( 0, 0, 0 ) ] ); // 1. home
+		camera.userData.places.push( [ v( 95, 154, 84 ), v( 3, 3, -11 ) ] ); // 2 assembled
+		camera.userData.places.push( [ v( 130, 400, 30 ), v( 2, 12, -11 ) ] ); // 3
+		camera.userData.places.push( [ v( 80, 140, 140 ), v( 2, 12, -11 ) ] ); // 4
+		camera.userData.places.push( [ v( 210, 150, -150 ), v( -40, 60, 30 ) ] ); // 5 final anim
+
+		playList = [
+
+			[ [ caseRight, 1, 2000 ] ],
+			[ [ caseTop, 1, 2000 ] ],
+			[ [ dividers[ 0 ], 1, 2000 ], [ dividers[ 1 ], 1, 2500 ], [ dividers[ 2 ], 1, 3000 ] ],
+			[ [ dividers[ 0 ], 2, 2000 ], [ dividers[ 1 ], 2, 2500 ], [ dividers[ 2 ], 2, 3000 ] ],
+			[ [ shelves[ 0 ], 1, 2000 ] ],
+			[ [ dividers[ 3 ], 1, 2000 ], [ dividers[ 4 ], 1, 2500 ], [ dividers[ 5 ], 1, 2500 ] ],
+			[ [ dividers[ 3 ], 2, 1000 ], [ dividers[ 4 ], 2, 1000 ], [ dividers[ 5 ], 2, 1000 ] ],
+			[ [ shelves[ 1 ], 1 ] ],
+			[ [ dividers[ 6 ], 1 ], [ dividers[ 7 ], 1 ], [ dividers[ 8 ], 1 ] ],
+			[ [ dividers[ 6 ], 2 ], [ dividers[ 7 ], 2 ], [ dividers[ 8 ], 2 ] ],
+			[ [ shelves[ 2 ], 1 ] ],
+			[ [ dividers[ 9 ], 1 ], [ dividers[ 10 ], 1 ], [ dividers[ 11 ], 1 ] ],
+			[ [ dividers[ 9 ], 2 ], [ dividers[ 10 ], 2 ], [ dividers[ 11 ], 2 ] ],
+			[ [ caseLeft, 1, 2000 ] ],
+			[ [ caseBottom, 1, 2000 ] ],
+			[ [ kallax, 1, 5000 ] ],
+
+		];
+
+		returnAllToStartTween();
+	}
+
+	function buildCaseHorizontal () {
+
+		var geometry = new THREE.BoxGeometry( width, thicknessCase, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'caseHorizontal';
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		components.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+// four corners top
+		drawHole( mesh, -width05 + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -width05 + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, width05 - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, width05 - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+
+// four corners bottom
+		drawHole( mesh, -width05 + thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		drawHole( mesh, -width05 + thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+		drawHole( mesh, width05 - thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		drawHole( mesh, width05 - thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+
+		for ( var i = 0; i < divisions ; i++ ) {
+			w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+			drawHole( mesh, w, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			drawHole( mesh, w, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			drawHole( mesh, w, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			drawHole( mesh, w, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+		}
+
+/*
+// down the middle
+		drawHole( mesh, 0, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the left
+		drawHole( mesh, -widthUnit, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the right
+		drawHole( mesh, widthUnit, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+*/
+
+		return mesh;
+
+	}
+
+	function buildCaseVertical () {
+
+		var geometry = new THREE.BoxGeometry( height - 2 * thicknessCase, thicknessCase, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'caseVertical';
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		components.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+// four corners
+		drawHole( mesh, 0.5 * height - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0, 'screwHole' );
+		drawHole( mesh, 0.5 * height - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0, 'screwHole' );
+		drawHole( mesh, -0.5 * height + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0, 'screwHole' );
+		drawHole( mesh, -0.5 * height + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0, 'screwHole' );
+
+// wall brackets
+		drawHole( mesh, 0.5 * height - 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		drawHole( mesh, 0.5 * height - 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		drawHole( mesh, -0.5 * height + 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		drawHole( mesh, -0.5 * height + 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+
+		for ( var i = 0; i < divisions - 1; i++ ) {
+
+			w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+			drawHole( mesh, w, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			drawHole( mesh, w, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			drawHole( mesh, w, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			drawHole( mesh, w, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+		}
+
+/*
+// down the middle
+		drawHole( mesh, 0, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the plus
+		drawHole( mesh, widthUnit + 0.75 * thicknessCase, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit + 0.75 * thicknessCase, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit + 0.75 * thicknessCase, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit + 0.75 * thicknessCase, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the minus
+		drawHole( mesh, -widthUnit - 0.75 * thicknessCase, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit - 0.75 * thicknessCase, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit - 0.75 * thicknessCase, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit - 0.75 * thicknessCase, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+*/
+
+		return mesh;
+
+	}
+
+	function buildDivider ( i, j ) {
+
+		var geometry = new THREE.BoxGeometry( widthUnit, thicknessShelf, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'divider';
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		mesh.userData.places = [];
+
+		mesh.userData.places.push( [ v( -width05, ( i * 3 + j ) * 1.5 * thicknessCase, - width + 10 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+		mesh.userData.places.push( [ v( j * widthUnit + 20, 0, 0 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+			w = j * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+			h = i * ( widthUnit + 0.75 * thicknessCase ) - 2 * ( widthUnit + 0.75 * thicknessCase );
+//		mesh.userData.places.push( [ v( i * ( widthUnit + thicknessCase05 + 0.75 ) - 2 * widthUnit - thicknessCase05 - thicknessShelf - 0.5,
+		mesh.userData.places.push( [ v( h,
+
+			depth05, w ), v( pi05, 0, 0 ) ] );
+
+		components.push( mesh );
+		dividers.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+		if ( dividers.length < 4 ) {
+
+			drawHole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( mesh, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( mesh, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+			drawHole( mesh, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0,  'pegHole' );
+
+		} else if ( dividers.length > 9 ) {
+
+			drawHole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+			drawHole( mesh, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+			drawHole( mesh, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0 );
+			drawHole( mesh, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0 );
+
+		} else {
+
+			drawHole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( mesh, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( mesh, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0 );
+			drawHole( mesh, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0 );
+
+		}
+
+		drawHole( mesh, widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi05, 0 );
+		drawHole( mesh, widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0 );
+		drawHole( mesh, -widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0 );
+		drawHole( mesh, -widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0 );
+
+		return mesh;
+
+	}
+
+	function buildShelf ( i ) {
+
+		var geometry = new THREE.BoxGeometry( width - 2 * thicknessCase, thicknessShelf, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'shelf ' + i;
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		mesh.userData.places.push( [ v( 30, i * 1.5 * thicknessCase, - width + 10 ), v( 0, + ran( 0.2 ) - 0.1, 0 ) ] );
+		mesh.userData.places.push( [ v( i * ( widthUnit + thicknessShelf ) - 1.75 * ( widthUnit - thicknessShelf ) + thicknessShelf, depth05, 0 ), v( pi05, 0, pi05 ) ] );
+
+		components.push( mesh );
+		shelves.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+// four corners plus
+		drawHole( mesh, width05 - thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		drawHole( mesh, width05 - thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		drawHole( mesh, width05 - thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		drawHole( mesh, width05 - thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+
+// four corners minus
+		drawHole( mesh, -width05 + thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		drawHole( mesh, -width05 + thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		drawHole( mesh, -width05 + thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		drawHole( mesh, -width05 + thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+
+
+		for ( var i = 0; i < divisions -1; i++ ) {
+			w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+		drawHole( mesh, w, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( mesh, w, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, w, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, w, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		}
+
+
+/*
+// down the middle
+		drawHole( mesh, 0, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( mesh, 0, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, 0, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+
+// down the right
+		drawHole( mesh, widthUnit, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( mesh, widthUnit, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, widthUnit, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+
+// down the left
+		drawHole( mesh, -widthUnit, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( mesh, -widthUnit, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( mesh, -widthUnit, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+*/
+
+		return mesh;
+
+	}
+
+
+</script>
+</body>
+</html>

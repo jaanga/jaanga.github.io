@@ -18,6 +18,17 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_2015-12-09_
+
+* [Kallax 5x5 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-5x5/kallax-5x5-basic-r1.html )
+
+* Most code in standalone JavaScript file that may be used with all Kallax models
+	* Should soon be able to make any Kallax with 1 to n vertical and horizontal divisions 
+* Basic notion of color and texture added - still very primitive
+* Basic notion of click sound added
+	* Uses Web Audio
+
+
 _2015-12-08_
 
 * [Kallax 4x1 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x1/kallax-4x1-basic-r1.html )

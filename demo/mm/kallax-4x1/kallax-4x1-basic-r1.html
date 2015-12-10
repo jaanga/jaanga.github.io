@@ -42,6 +42,8 @@
 	var thicknessShelf = 2;
 	var thicknessShelf05 = 0.5 * thicknessShelf;
 
+	var divisions = Math.floor( ( width - 2 * thicknessCase ) / 35.2 );
+
 	var materialCase = new THREE.MeshNormalMaterial();
 
 	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
