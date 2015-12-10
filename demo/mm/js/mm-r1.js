@@ -26,9 +26,27 @@
 
 	var context = new AudioContext();
 
-	document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-	document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+	function drawHelpers() {
 
+		w = height > width ? height05 : width05;
+
+//		var gridHelper = new THREE.GridHelper( w + 50, 10 );
+//		gridHelper.position.set( 0, -1, 0 );
+//		helpers.add( gridHelper );
+
+
+		var axisHelper = new THREE.AxisHelper( w + 50 );
+		helpers.add( axisHelper );
+
+		geometry = new THREE.BoxGeometry( height + 100, 2, width + 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -2, 0 );
+		helpers.add( mesh );
+
+		scene.add( helpers );
+
+	}
 
 	function drawHole( obj, x, y, z, aX, aY, aZ, type ) {
 
@@ -102,7 +120,6 @@
 		edges.add( edge );
 
 	}
-
 
 	function onDocumentTouchStart( event ) {
 
@@ -425,6 +442,31 @@
 
 	}
 
+	function dispatchScrewsPegs2Kallax() {
+
+		if ( screws.length > 0 ) {
+
+			for ( var i = 0; i < screws.length; i++ ) {
+
+				kallax.add( screws[ i ] );
+
+			}
+
+		}
+
+		if ( pegs.length > 0 ) {
+
+			for ( var i = 0; i < pegs.length; i++ ) {
+
+				kallax.add( pegs[ i ] );
+
+			}
+
+		}
+
+
+	}
+
 	function cameraTween( position, target, milleseconds, func ) {
 
 		var ms = milleseconds ? milleseconds : 1000;
@@ -470,17 +512,16 @@
 
 	function updateMaterial( color ) {
 
-				materialCase = new THREE.MeshBasicMaterial( { color: color, map: texture } );
+				materialCase = new THREE.MeshBasicMaterial( { color: color, map: texture, name: 'materialCase', needsUpdate: true } );
 
 				kallax.traverse( function ( child ) {
 
 					if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
 
-						child.material = new THREE.MeshBasicMaterial( { color: color, map: texture } );
-						child.material.name = 'materialCase';
-						child.material.needsUpdate = true;
+						child.material = materialCase; // new THREE.MeshBasicMaterial( { color: color, map: texture } );
 
 					}
+
 				} );
 
 	}

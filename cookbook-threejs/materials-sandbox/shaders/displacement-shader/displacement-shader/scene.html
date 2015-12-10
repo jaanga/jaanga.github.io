@@ -1,0 +1,55 @@
+<html>
+   <head>
+      <title>GLSL Displacement Shader in Three.js</title>
+      <meta name="Author" content="Ben Chung - benchung.com">
+      <link rel="stylesheet" type="text/css" media="all" href="css/normalize.css" />
+      <link rel="stylesheet" type="text/css" media="all" href="css/foundation.css" />
+      <link rel="stylesheet" type="text/css" media="all" href="css/media-queries.css" />
+      <link rel="stylesheet" type="text/css" media="all" href="style.css" />
+      
+      <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+   </head>
+   <body>
+        <div class="row media-spacer-med">
+           <div class="medium-12 columns header">
+               <header>
+                   <h1>GLSL Displacement Shader in Three.js</h1>
+               </header>
+           </div>
+       </div>
+       <div class="row media-spacer-med">
+           <div class="medium-8 columns ">
+               <div class = "loading-container">
+                   <div id="container">                     
+                   </div>
+               </div>
+           </div>
+           <div class="medium-4 columns col-right">
+               <div id="debug">
+                   <!--dynamically populated in javascript-->
+               </div>
+           </div>
+       </div>
+       <div class="clear"></div>
+
+      <!-- make sure this is just below the closing </body> tag -->
+      <!-- for some reason the latest three.js doesn't work, so we use the one from the example file-->
+      <script src="js/three.min.js"></script>
+      <script type="text/javascript" src="js/stats.min.js"></script>
+      <script type="text/javascript" src="js/Detector.js"></script>
+      <script src="js/shaders/SimpleShader.js"></script>
+      <script src="js/shaders/DisplacementShader.js"></script>
+      <script src="http://heartcode-canvasloader.googlecode.com/files/heartcode-canvasloader-min-0.9.1.js"></script>
+      
+      <!-- load onepix scripts-->
+      <script src="OnepixDebug.js"></script>
+      <script src="OnepixMouseTracking.js"></script>
+      <script src="OnepixMaterials.js"></script>
+      
+      <!--make sure this is loaded last-->
+      <script src="scene.js"></script> 
+      
+
+      
+   </body>
+</html>    

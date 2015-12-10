@@ -1,0 +1,42 @@
+/* ============================= */
+/* ! media queries-------------  */
+/* ============================= */
+
+/*adds an initial space to the bottom of any media spacer when not in mobile mode*/
+.media-spacer-lg, .media-spacer-med, .media-spacer-sml  {
+    margin-bottom: 25px !important;
+}
+
+/*iPad Landscape Width 	1024px*/
+@media only screen and (max-width: 1025px) {
+    /*-------this centers anything within a container with the "media-center-lg" class*/
+
+    .media-center-lg {
+        text-align: center;
+        width: 100%;
+    }
+
+    .media-center-lg > * {
+        display: inline-block !important;
+        float: none !important;
+    }
+
+    /*-------end media center*/
+
+    /*-------Ben - this spaces anything within a container with the "media-spacer-lg" class*/
+
+    .media-spacer-lg > * {
+        margin-bottom: 35px;
+    }
+
+    .media-spacer-lg > *:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    /*-------end media spacer*/
+}
+
+
+    
+
+
