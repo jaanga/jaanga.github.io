@@ -9,7 +9,6 @@
 <script>
 
 	var color;
-
 	var css, menu;
 
 	init();
@@ -20,13 +19,11 @@
 		css.innerHTML =
 		`
 
-			body { font: 12pt monospace; margin: 0; overflow: auto; }
-			h2, a { margin: 0; }
+			body { font: 12pt monospace; }
 			button { background-color: #eee; border: 2px #eee solid; color: #888; }
-			#aa { text-decoration: none; }
-			#menu { margin: 0 20px; position: absolute; }
-			#info { position: relative; }
 			.box { border: solid 1px green; color: white; height: 20px; position: absolute; width: 20px; }
+			#aa { text-decoration: none; }
+			#info { position: relative; }
 
 		`;
 
@@ -60,7 +57,7 @@
 				box.className = 'box';
 				box.style.backgroundColor = 'white';
 				box.style.left = i * 25 + 'px';
-				box.style.top = 10 + j * 25 + 'px';
+				box.style.top = j * 25 + 'px';
 				box.onmouseover = function() { event.preventDefault(); this.style.backgroundColor = this.style.backgroundColor === 'white' ? color : 'white'; }
 				boxes.push( box )
 
@@ -72,13 +69,9 @@
 
 	function send() {
 
-		txt = '';
+		for ( i = 0, txt = ''; i < boxes.length; i++ ) {
 
-		for ( var i = 0; i < boxes.length; i++ ) {
-
-			col = boxes[ i ].style.backgroundColor;
-			col = col.replace('rgb(','').replace(')','').replace( / /g,'');
-			txt += col  + '#';
+			txt += boxes[ i ].style.backgroundColor.replace( /rgb|\(|\)| /gi, '' ) + '#';
 
 		}
 
