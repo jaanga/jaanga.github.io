@@ -20,15 +20,22 @@ _The product assembly manuals of the future - now_
 
 _2015-12-10_
 
-* [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
+### [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
 
+* Creates any Kallax with from 1 to 6 rows and and 1 to 7 columns
+* Creates the fixing holes be code
+* Creates the screw and peg locations by code
+* Creates the assembly positions and sequences by code
+* Creates the camera movements by code
+* Note: many small bugs remain to be fixed
+ 
 _2015-12-09_
 
 * [Kallax 5x5 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-5x5-basic-r1.html )
 
 * Most code in standalone JavaScript file that may be used with all Kallax models
 	* Should soon be able to make any Kallax with 1 to n vertical and horizontal divisions 
-* Basic notion of color and texture added - still very primitive
+* Basic notion of selecting color and texture added - still very primitive
 * Basic notion of click sound added
 	* Uses Web Audio
 
