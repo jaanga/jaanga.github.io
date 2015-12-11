@@ -18,9 +18,13 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_2015-12-10_
+
+* [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
+
 _2015-12-09_
 
-* [Kallax 5x5 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-5x5/kallax-5x5-basic-r1.html )
+* [Kallax 5x5 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-5x5-basic-r1.html )
 
 * Most code in standalone JavaScript file that may be used with all Kallax models
 	* Should soon be able to make any Kallax with 1 to n vertical and horizontal divisions 
