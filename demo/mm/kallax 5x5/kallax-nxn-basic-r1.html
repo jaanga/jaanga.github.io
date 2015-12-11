@@ -15,7 +15,8 @@
 
 	var kallax, edges, helpers;
 
-	var rows, columns;
+	var rows = 4;
+	var columns = 4;
 	var caseTop, caseBottom, caseLeft, caseRight;
 	var components;
 	var holes = [];
@@ -56,8 +57,6 @@
 
 	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
 	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
-//	var countPegs = 0;
-//	var pegHoles = [];
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -77,7 +76,7 @@
 			#menu { background-color: #eee; margin: 0 20px; max-width: 250px; opacity: 0.85; padding: 0 8px; position: absolute; }
 			select { z-index: 20; }
 
-			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+			button { background-color: #ddd; border: 2px #eee solid; color: #888; }
 			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
 			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
@@ -97,8 +96,8 @@
 			</h2>
 			<p>Click objects to move between assembled and disassembled positions...</p>
 			<p>
-				Rows:<br><input type=range id=inpRows max=6 min=1 step=1 value=2 oninput=drawKallax(); title="1 to 6: OK" > <output id=outRows >value</output><br>
-				Columns: <br><input type=range id=inpColumns max=7 min=1 step=1 value=2 oninput=drawKallax(); title="1 to 6: OK" > <output id=outColumns >value</output>
+				Rows:<br><input type=range id=inpRows max=6 min=1 step=1 value=${ rows } oninput=drawKallax(); title="1 to 6: OK" > <output id=outRows >value</output><br>
+				Columns: <br><input type=range id=inpColumns max=7 min=1 step=1 value=${ columns } oninput=drawKallax(); title="1 to 6: OK" > <output id=outColumns >value</output>
 			</p>
 
 			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
@@ -126,6 +125,7 @@
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.name = 'camera';
 		camera.position.set( 150, 150, 150 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -218,7 +218,6 @@
 		scene.add( kallax, edges );
 
 		p = 0.05 * Math.pow( height + width, 1.4 ) + 50;
-//		camera.position.set( p, p, p );
 
 		camera.userData.places = [];
 		camera.userData.places.push( [ camera.position.clone(), controls.target.clone() ] );
@@ -226,28 +225,62 @@
 		camera.userData.places.push( [ v( 95, 154, 84 ), v( 3, 3, -11 ) ] ); // 2 assembled
 		camera.userData.places.push( [ v( 130, 400, 30 ), v( 2, 12, -11 ) ] ); // 3
 		camera.userData.places.push( [ v( 80, 140, 140 ), v( 2, 12, -11 ) ] ); // 4
-		camera.userData.places.push( [ v( 210, 150, -150 ), v( -40, 60, 30 ) ] ); // 5 final anim
+		camera.userData.places.push( [ v( 210, height, -150 ), v( -40, height05, 30 ) ] ); // 5 final anim
 
 		playList = [
 
 			[ [ caseRight, 1, 2000 ] ],
 			[ [ caseTop, 1, 2000 ] ],
-			[ [ dividers[ 0 ], 1, 2000 ], [ dividers[ 1 ], 1, 2500 ], [ dividers[ 2 ], 1, 3000 ] ],
-			[ [ dividers[ 0 ], 2, 2000 ], [ dividers[ 1 ], 2, 2500 ], [ dividers[ 2 ], 2, 3000 ] ],
-			[ [ shelves[ 0 ], 1, 2000 ] ],
-			[ [ dividers[ 3 ], 1, 2000 ], [ dividers[ 4 ], 1, 2500 ], [ dividers[ 5 ], 1, 2500 ] ],
-			[ [ dividers[ 3 ], 2, 1000 ], [ dividers[ 4 ], 2, 1000 ], [ dividers[ 5 ], 2, 1000 ] ],
-			[ [ shelves[ 1 ], 1 ] ],
-			[ [ dividers[ 6 ], 1 ], [ dividers[ 7 ], 1 ], [ dividers[ 8 ], 1 ] ],
-			[ [ dividers[ 6 ], 2 ], [ dividers[ 7 ], 2 ], [ dividers[ 8 ], 2 ] ],
-			[ [ shelves[ 2 ], 1 ] ],
-			[ [ dividers[ 9 ], 1 ], [ dividers[ 10 ], 1 ], [ dividers[ 11 ], 1 ] ],
-			[ [ dividers[ 9 ], 2 ], [ dividers[ 10 ], 2 ], [ dividers[ 11 ], 2 ] ],
-			[ [ caseLeft, 1, 2000 ] ],
-			[ [ caseBottom, 1, 2000 ] ],
-			[ [ kallax, 1, 5000 ] ],
-
+			[ [ caseRight, 2, 2000 ], [ camera, 4, 3000 ] ]
 		];
+
+		arr = [];
+
+		for ( i = 0; i < columns - 1; i++ ) {
+
+			arr.push( [ dividers[ i ], 1, 2000 ] );
+
+		}
+
+		playList.push( arr );
+
+		arr = [];
+
+		for ( i = 0; i < columns - 1; i++ ) {
+
+			arr.push( [ dividers[ i ], 2, 1000 ] );
+
+		}
+
+		playList.push( arr );
+
+		index = columns - 1;
+
+
+		for ( i = 0; i < rows - 1; i++ ) {
+
+			if ( i < shelves.length ) {
+
+				playList.push( [ [ shelves[ i ], 1, 2000 ] ] );
+
+			}
+
+			arr = [];
+
+			for ( j = 0; j < columns - 1; j++ ) {
+
+				arr.push( [ dividers[ index++ ], 2, 1000 ] );
+
+			}
+
+			playList.push( arr );
+
+		}
+
+		playList.push( [[ caseLeft, 1, 2000 ] ]);
+		playList.push( [[ caseLeft, 2, 2000 ] ]);
+		playList.push( [[ caseBottom, 1, 2000 ], [ camera, 5, 3000 ] ] );
+		playList.push( [ [ kallax, 1, 5000 ] ]);
 
 
 		returnAllToStartTween();
@@ -340,8 +373,8 @@
 
 		mesh.userData.places = [];
 
-		mesh.userData.places.push( [ v( -width05, ( i * 3 + j ) * 1.5 * thicknessCase, - width + 10 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
-		mesh.userData.places.push( [ v( j * widthUnit + 20, 0, 0 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+		mesh.userData.places.push( [ v( - height05 - 30, ( i * 3 + j ) * 1.5 * thicknessCase, - width05 - 90 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+		mesh.userData.places.push( [ v( j * ( widthUnit + 15 ) - 30, 0, 0 ), v( 0, pi05 + ran( 0.2 ) - 0.1, 0 ) ] );
 
 		var w = j * ( widthUnit + 0.75 * thicknessCase ) - ( columns05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
 		var h = i * ( widthUnit + 0.75 * thicknessCase ) - ( rows05 - 0.5 ) * ( widthUnit + 0.75 * thicknessCase );
@@ -394,7 +427,7 @@
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
 
-		mesh.userData.places.push( [ v( 30, i * 1.5 * thicknessCase, - width + 10 ), v( 0, + ran( 0.2 ) - 0.1, 0 ) ] );
+		mesh.userData.places.push( [ v( width05 - 40, i * 1.5 * thicknessCase, - width05 - 90 ), v( 0, + ran( 0.2 ) - 0.1, 0 ) ] );
 
 		var h = i * ( widthUnit + 0.75 * thicknessCase ) - ( rows05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
 		mesh.userData.places.push( [ v( h, depth05, 0 ), v( pi05, 0, pi05 ) ] );

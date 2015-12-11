@@ -30,11 +30,6 @@
 
 		w = height > width ? height05 : width05;
 
-//		var gridHelper = new THREE.GridHelper( w + 50, 10 );
-//		gridHelper.position.set( 0, -1, 0 );
-//		helpers.add( gridHelper );
-
-
 		var axisHelper = new THREE.AxisHelper( w + 50 );
 		helpers.add( axisHelper );
 
