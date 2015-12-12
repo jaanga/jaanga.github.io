@@ -16,20 +16,22 @@
 	function init() {
 
 		css = document.body.appendChild( document.createElement( 'style' ) );
-		css.innerHTML = '
-
+		css.innerHTML =
+		`
+		
 			body { font: 12pt monospace; }
 			button { background-color: #eee; border: 2px #eee solid; color: #888; }
 			.box { border: solid 1px green; color: white; height: 20px; position: absolute; width: 20px; }
 			#aa { text-decoration: none; }
 			#info { position: relative; }
 
-		';
+		`;
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = '
-
+		menu.innerHTML =
+		`
+		
 			<h2>
 				<a href="" >${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/demo/pm >🛈</a>
@@ -40,7 +42,7 @@
 				<input type=color id=inpColor oninput=updateColor(); >
 			<p>
 
-		';
+		`;
 
 		info.style.height = 10 + 28 * 25 + 'px';
 		color = '#000000';
