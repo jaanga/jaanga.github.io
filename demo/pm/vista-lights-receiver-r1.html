@@ -23,7 +23,7 @@
 		`
 
 			body { font: 12pt monospace; }
-			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+			button { background-color: #eee; border: 2px #eee solid; color: #555; }
 			.box { border: solid 1px green; color: white; display: inline-block; height: 20px; margin: 0 10px; width: 20px; }
 			#aa { text-decoration: none; }
 			#lights { width: 420px; }
@@ -40,6 +40,10 @@
 				<a id=aa href=http://jaanga.github.io/demo/pm/ >🛈</a>
 			</h2>
 			<div id=lights ></div>
+			<p>
+				<button onclick=location.hash=test >test</button> 
+				<a href=http://jaanga.github.io/demo/pm/vista-lights-image-resize-r1.html >send image</a>
+			</p>
 			<div id=info ></div>
 
 		`;
@@ -70,6 +74,8 @@
 
 	function onHashChange() {
 
+		if ( !location.hash ) { return; }
+
 		hashes = location.hash.substr( 1).split( '#' );
 
 		for ( var i = 0, txt = ''; i < boxes.length; i++ ) {
@@ -80,6 +86,7 @@
 
 		}
 		info.innerHTML = txt;
+
 	}
 
 </script>
