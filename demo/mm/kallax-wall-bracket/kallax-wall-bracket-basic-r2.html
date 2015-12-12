@@ -13,13 +13,23 @@
 
 	var bracket;
 	var height = 30;
-	var widthLeaf1 = 15;
+	var widthLeaf1 = 18;
 	var widthLeaf2 = 12;
 	var widthCorner = 4;
 	var thickness = 1;
-	var radiusLeaf1 = 5;
+	var radiusLeaf1 = 4;
 	var radiusLeaf2 = 2;
 	var segments = 6;
+
+	var part103693;
+
+	var startX;
+	var startY;
+	var rectWidth;
+	var rectWidth05;
+	var rectHeight;
+	var radius1;
+	var radius2;
 
 	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
 
@@ -27,6 +37,7 @@
 	function sin( a ){ return Math.sin( a ); }
 	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
 	function v2( x, y ){ return new THREE.Vector2( x, y ); }
+//	var v = function ( x, y ){ return new THREE.Vector2( x, y ); }
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -98,6 +109,108 @@
 
 // bracket
 		buildKallaxWallBracket();
+
+//		bracket.position.set( -20, 0, -20 );
+
+
+		draw103693()
+
+		part103693.position.set( -20, 5, 10 );
+
+	}
+
+// http://mrdoob.github.io/three.js/docs/#Reference/Extras.Core/Path
+// http://threejs.org/docs/#Reference/Extras.Core/Shape
+
+
+	function draw103693() {
+
+		scene.remove( part103693 )
+		part103693 = new THREE.Object3D();
+
+		material = new THREE.MeshNormalMaterial();
+
+		startX = 0
+		startY = 0;
+		rectWidth = 15;
+		rectWidth05 = 0.5 * rectWidth;
+		rectHeight = 20;
+		radius1 = 2.25;
+		radius2 = 3.5;
+		radius3 = 1;
+
+		pts = [ 
+			v2( startX, startY ), 
+			v2( startX + rectWidth, startY ),
+			v2( startX + rectWidth, startY + rectHeight ),
+			v2( startX, startY + rectHeight ),
+		];
+
+		shape = new THREE.Shape();
+		shape.fromPoints( pts );
+
+		holePath = new THREE.Path();
+
+		holePath.absarc( startX + rectWidth05, startY + 5 * radius1, radius1,  0, pi );
+		holePath.moveTo( startX + rectWidth05 + radius1, startY + 8.25 );
+		holePath.absarc( startX + rectWidth05, startY + radius1 + radius2, radius2, pi - 0.8, pi2 + 0.8 );
+
+		shape.holes.push( holePath );
+
+		geometry = shape.extrude( { amount: thickness, bevelEnabled: false } );
+//		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		mesh = new THREE.Mesh( geometry, material );
+		part103693.add( mesh );
+
+
+		shape = new THREE.Shape();
+
+		shape.absarc( startX + radius1, startY + rectHeight - 1 * radius1, radius3, 0, pi );
+		shape.absarc( startX + radius1, startY + 1 * radius1, radius3, pi, pi2 );
+
+		geometry = shape.extrude( { amount: thickness, bevelEnabled: false } );
+//		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = thickness;
+		part103693.add( mesh );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( rectWidth - 2 * radius1, 0, thickness );
+		part103693.add( mesh );
+
+
+
+		shape = new THREE.Shape();
+
+		shape.absarc( startX + 2 * thickness, 0, thickness + 2, pi, 1.25 * pi );
+		shape.moveTo( startX, 0 );
+		shape.absarc( startX + 2 * thickness, 0, 2, 1.25 * pi, pi );
+
+		geometry = shape.extrude( { amount: rectWidth, bevelEnabled: false } );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( pi05) );
+
+		mesh = new THREE.Mesh( geometry, material );
+//		mesh.position.z = - 2 * thickness;
+		part103693.add( mesh );
+
+
+
+		shape = new THREE.Shape();
+
+		shape.absarc( startX + 2 * thickness, rectHeight, thickness + 2, pi, 0.75 * pi );
+		shape.moveTo( startX, rectHeight );
+		shape.absarc( startX + 2 * thickness, rectHeight, 2, 0.75 * pi, pi );
+
+		geometry = shape.extrude( { amount: rectWidth, bevelEnabled: false } );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( pi05) );
+
+		mesh = new THREE.Mesh( geometry, material );
+		part103693.add( mesh );
+
+		scene.add( part103693 );
+		return part103693;
 
 	}
 
@@ -210,15 +323,15 @@
 
 	function buildKallaxWallBracketSide1Lines() {
 
-		number = 9;
-		diff = 1;
+		var number = 9;
+		var diff = 1;
 
 		var width = widthLeaf1;
 		var width05 = 0.5 * width;
 
 		var height05 = 0.5 * height;
 
-		geometry = new THREE.Geometry();
+		var geometry = new THREE.Geometry();
 
 		for ( var i = 0; i < number ; i++ ) {
 
@@ -234,6 +347,7 @@
 		line = new THREE.LineSegments( geometry, material  );
 
 		return line;
+
 	}
 
 	function buildKallaxWallBracketSide2() {
