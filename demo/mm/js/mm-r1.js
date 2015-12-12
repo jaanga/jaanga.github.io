@@ -2,6 +2,8 @@
 // https://github.com/tweenjs/tween.js/
 // https://github.com/tweenjs/tween.js/blob/master/docs/user_guide.md
 
+	var rows, columns;
+
 	var playList;
 	var count = 0;
 	var itemCount = 0;
@@ -351,7 +353,8 @@
 		}
 
 		cameraTween( camera.userData.places[ 1 ][ 0 ], camera.userData.places[ 1 ][ 1 ], 1500 );
-		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
+//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -400,7 +403,8 @@
 
 		}
 
-			playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
 	}
 
 	function send2location( obj, pos, rot, ms, func ) {
@@ -417,6 +421,7 @@
 		.onComplete( onComplete )
 		.start();
 
+		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 	}
 
 	function switchParent( type, arr ) {
@@ -483,6 +488,7 @@
 		.onComplete( onComplete )
 		.start();
 
+playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -507,17 +513,31 @@
 
 	function updateMaterial( color ) {
 
-				materialCase = new THREE.MeshBasicMaterial( { color: color, map: texture, name: 'materialCase', needsUpdate: true } );
+		materialCaseColor = color;
 
-				kallax.traverse( function ( child ) {
+		kallax.traverse( function ( child ) {
 
-					if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
+			if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
 
-						child.material = materialCase; // new THREE.MeshBasicMaterial( { color: color, map: texture } );
+				t = texture.clone();
+				t.wrapS = t.wrapT = THREE.RepeatWrapping;
+				t.needsUpdate = true;
 
-					}
+				if ( child.name === 'shelf' || child.name === 'caseTop' || child.name === 'caseBottom' ) {
 
-				} );
+					t.repeat.set( columns, 1 );
+
+				} else if ( child.name === 'caseLeft' || child.name === 'caseRight' ) {
+
+					t.repeat.set( rows, 1 );
+
+				}
+
+				child.material = new THREE.MeshBasicMaterial( { color: materialCaseColor, map: t, name: 'materialCase' } );
+
+			}
+
+		} );
 
 	}
 

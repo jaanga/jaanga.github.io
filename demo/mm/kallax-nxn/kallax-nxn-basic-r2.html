@@ -44,7 +44,7 @@
 	var thicknessShelf = 2;
 	var thicknessShelf05 = 0.5 * thicknessShelf;
 
-	var divisions = columns - 1;
+	var texture;
 
 	var materialCase = new THREE.MeshNormalMaterial();
 	materialCase.name = 'materialCase';
@@ -96,7 +96,7 @@
 				<a href="" >${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
 			</h2>
-			<p>Click objects to move between assembled and disassembled positions...</p>
+			<p>Click objects to move between assembled and disassembled...</p>
 			<p>
 				Rows:<br><input type=range id=inpRows max=6 min=1 step=1 value=${ rows } oninput=drawKallax(); title="1 to 6: OK" > <output id=outRows >value</output><br>
 				Columns: <br><input type=range id=inpColumns max=7 min=1 step=1 value=${ columns } oninput=drawKallax(); title="1 to 6: OK" > <output id=outColumns >value</output>
@@ -108,8 +108,8 @@
 			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play Step-by-Step Assembly</p>
 			<p>
 				<input type=radio name=field id=birch onchange=updateMaterial(0xf8dfa1); />birch
-				<input type=radio name=field id=black onchange=updateMaterial(0x333333); checked />black
-				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); />white
+				<input type=radio name=field id=black onchange=updateMaterial(0x333333); />black
+				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); checked />white
 			</p>
 			<div id=info ></div>
 
@@ -218,6 +218,8 @@
 		kallax.userData.places = [];
 		kallax.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
 		kallax.userData.places.push( [ v( 0, height05, 0 ), v( 0, 0, pi05 ) ] );
+
+		if ( texture ) { updateMaterial( materialCaseColor ); }
 
 		scene.add( kallax, edges );
 
@@ -415,7 +417,7 @@
 
 		var geometry = new THREE.BoxGeometry( width - 2 * thicknessCase, thicknessShelf, depth );
 		var mesh = new THREE.Mesh( geometry, materialCase );
-		mesh.name = 'shelf ' + i;
+		mesh.name = 'shelf';
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
 
