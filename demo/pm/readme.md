@@ -7,6 +7,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 Vista Lights Read Me
 ===
 
+[Vista Lights Receiver R1]( http://jaanga.github.io/demo/pm/vista-lights-receiver-r1.html )
+
 [Vista Lights Image Resize R1]( http://jaanga.github.io/demo/pm/vista-lights-image-resize-r1.html )
 
 [PM Lights R1]( http://jaanga.github.io/demo/pm/pm-lights-r1.html )
