@@ -18,6 +18,21 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+
+_2015-12-12_
+
+[Kallax Wall Bracket Basic R3]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r3.html )
+
+* Adds wood screws
+	* Includes shiny new draw helix routine
+
+_2015-12-12_
+
+[Kallax Wall Bracket Basic R2]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r2.html )
+
+* Adds screw mask part
+
+
 _2015-12-10_
 
 ### [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
