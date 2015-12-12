@@ -12,6 +12,7 @@
 // the scream
 // http://i.imgur.com/03y3pov.jpg
 
+	var image, canvas1, context1, canvas2, context2, boxes, box;
 
 	var css, menu;
 
@@ -23,18 +24,12 @@
 		css.innerHTML =
 		`
 
-			body { font: 12pt monospace; margin: 0; overflow: auto; }
+			body { font: 12pt monospace; }
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
 			h2, a { margin: 0; }
+			.box { border: solid 1px green; color: white; display: inline-block; height: 20px; margin: 0 10px; width: 20px; }
 			#aa { text-decoration: none; }
-			#menu { margin: 0 20px; position: absolute; }
-
-			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
-
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
-
-			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
-			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
-			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+			#lights { width: 420px; }
 
 		`;
 
@@ -50,61 +45,80 @@
 			<p>
 
 			</p>
+			<div id=lights ></div>
+			<p><button onclick=send() >Send</button><p> 
 			<div id=info ></div>
 
 		`;
-//				<img id=image >
-//				<img id=imagePi >
-
-		window.addEventListener ( 'hashchange', onHashChange, false );
 
 		image = document.createElement( 'img' );
 
-		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
-		canvas.width = 200;
-		canvas.height = 300;
-		canvas.style.cssText = 'border:5px solid #d3d3d3; ';
-		context = canvas.getContext("2d");
+		canvas1 = info.appendChild( document.createElement( 'canvas' ) );
+		context1 = canvas1.getContext("2d");
 
-		canvas2 = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas2 = info.appendChild( document.createElement( 'canvas' ) );
 		canvas2.width = 10;
 		canvas2.height = 28;
-		canvas2.style.cssText = 'border:5px solid #d3d3d3; ';
+		canvas2.style.cssText = 'border: 5px solid #d3d3d3; ';
 		context2 = canvas2.getContext("2d");
 
-		canvas3 = document.body.appendChild( document.createElement( 'canvas' ) );
-		canvas3.width = 100;
-		canvas3.height = 280;
-		canvas3.style.cssText = 'border:5px solid #d3d3d3; ';
-		context3 = canvas3.getContext("2d");
+		boxes = [];
+
+		for ( var i = 0; i < 28; i++ ) {
+
+			for ( var j = 0; j < 10; j++ ) {
+
+				box = lights.appendChild( document.createElement( 'div' ) );
+				box.className = 'box';
+				box.style.top = i * 25 + 'px';
+				box.style.left = j * 50 + 'px';
+				boxes.push( box )
+
+			}
+
+		}
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		location.hash = 'http://i.imgur.com/03y3pov.jpg'
 
 		onHashChange();
-
 
 	}
 
 	function onHashChange() {
-		image.crossOrigin = 'anonymous';
 
+		image.crossOrigin = 'anonymous';
 		image.onload = function() {
 
-			canvas.width = image.width;
-			canvas.height = image.height;
-			context.drawImage( image, 0, 0 );
-
-//			imageData = context.getImageData( 0, 0, image.width, image.height );
+			context1.drawImage( image, 0, 0 );
 			context2.drawImage( image, 0, 0, image.width, image.height, 0, 0, 10, 28 );
+			iDD = context2.getImageData( 0, 0, 10, 28 ).data;
 
-			imageData = context2.getImageData( 0, 0, 10, 28 );
-			context3.scale( 10, 10);
-			context3.drawImage( image, 0, 0 );
+			for ( var i = 0, j = 0; i < boxes.length; i++, j++ ) {
+
+					boxes[ i ].style.backgroundColor = `rgb( ${ iDD[ j++ ] } , ${ iDD[ j++ ] }, ${ iDD[ j++ ] } )`;
+
+				}
 
 		}
 
 		image.src = location.hash.substr( 1 );
 
+	}
+
+	function send() {
+
+		for ( i = 0, txt = ''; i < boxes.length; i++ ) {
+
+			txt += boxes[ i ].style.backgroundColor.replace( /rgb|\(|\)| /gi, '' ) + '#';
+
+		}
+
+console.log( txt );
 
 	}
+
 </script>
 </body>
 </html>
