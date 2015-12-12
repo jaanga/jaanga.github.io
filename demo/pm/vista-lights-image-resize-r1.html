@@ -56,15 +56,14 @@
 
 		image = document.createElement( 'img' );
 
-		canvas1 = info.appendChild( document.createElement( 'canvas' ) );
-		context1 = canvas1.getContext("2d");
-
 		canvas2 = info.appendChild( document.createElement( 'canvas' ) );
 		canvas2.width = 10;
 		canvas2.height = 28;
-		canvas2.style.cssText = 'border: 5px solid #d3d3d3; ';
+		canvas2.style.cssText = 'border: 5px solid #d3d3d3; display: block; ';
 		context2 = canvas2.getContext("2d");
 
+		canvas1 = info.appendChild( document.createElement( 'canvas' ) );
+		context1 = canvas1.getContext("2d");
 		boxes = [];
 
 		for ( var i = 0; i < 28; i++ ) {
@@ -94,6 +93,8 @@
 		image.crossOrigin = 'anonymous';
 		image.onload = function() {
 
+			canvas1.width = image.width;
+			canvas1.height = image.height;
 			context1.drawImage( image, 0, 0 );
 			context2.drawImage( image, 0, 0, image.width, image.height, 0, 0, 10, 28 );
 			iDD = context2.getImageData( 0, 0, 10, 28 ).data;
