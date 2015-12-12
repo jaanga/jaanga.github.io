@@ -18,13 +18,28 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+_This is all still a work-in-progress. In particular: sounds and textures need much effort._
+_If you would like to see a 'prettified' version in the near future, please let us know._
+
 
 _2015-12-12_
 
-[Kallax Wall Bracket Basic R3]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r3.html )
+### [Kallax NxN Basic R2 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r2.html )
+
+* Fixed non-appearance of holes issues
+* Updated positions of pegs
+* Code clean-up
+* Improved scaling of textures
+* Worked on sounds
+* Coming soon: improved animation sequencing?
+
+
+### [Kallax Wall Bracket Basic R3]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r3.html )
 
 * Adds wood screws
 	* Includes shiny new draw helix routine
+* Coming soon: animation
+
 
 _2015-12-12_
 
@@ -35,7 +50,7 @@ _2015-12-12_
 
 _2015-12-10_
 
-### [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
+* [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
 
 * Creates any Kallax with from 1 to 6 rows and and 1 to 7 columns
 * Creates the fixing holes be code

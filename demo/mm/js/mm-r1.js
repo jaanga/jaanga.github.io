@@ -177,6 +177,12 @@
 			count = 0;
 //			itemCount = 0;
 
+// Play a 'B' now
+			playNote(493.883, context.currentTime, 0.232 );
+
+// Play an 'E' just as the previous note finishes
+			playNote(659.255, context.currentTime + 0.232, 0.464);
+
 		} else {
 
 			movRotTweenIndex( playList[ count ] );
