@@ -504,7 +504,8 @@ playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 		loader.crossOrigin = 'anonymous';
 
 		loader.load(
-			'http://mrdoob.github.io/three.js/examples/textures/water.jpg',
+//			'http://mrdoob.github.io/three.js/examples/textures/water.jpg',
+			'../textures/birch-256x256.png',
 			function ( tex ) {
 
 				texture = tex;
