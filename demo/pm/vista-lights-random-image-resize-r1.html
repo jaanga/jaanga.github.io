@@ -12,6 +12,10 @@
 // the scream
 // http://i.imgur.com/03y3pov.jpg
 
+
+// the files can be URLs from any location.
+// They are local here just to avoide CORS issues while writing the script.
+
 	images = [
 
 		'images/ornament-clip-art-holidays_christmas_ornament_blue.png',
@@ -53,14 +57,11 @@
 				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
-			<p>
-
-			</p>
+			<p><i>
+				Loads a random image every time its called
+			</i></p>
 			<div id=lights ></div>
-			<p>
-				<button onclick=send() >Send</button>
-				<a href=#http://i.imgur.com/QTzoKdp.jpg >tree</a> <a href=http://i.imgur.com/03y3pov.jpg >scream</a>
-			<p> 
+			<p>For testing:</p>
 			<div id=info ></div>
 
 		`;

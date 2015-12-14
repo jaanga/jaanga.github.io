@@ -2,6 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
+<meta http-equiv=refresh content=10 >
 <title>URL Hash Reader R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
@@ -19,14 +20,14 @@
 		css.innerHTML =
 		`
 
-			body { font: 12pt monospace; margin: 0; overflow: auto; }
+			body { font: 12pt monospace; }
 			h2, a { margin: 0; }
+
+			.box { border: solid 1px green; color: white; display: inline-block; height: 20px; margin: 0 10px; width: 20px; }
+
 			#aa { text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
-			.box { border: solid 1px green; color: white; display: inline-block; height: 20px; margin: 0 10px; width: 20px; }
-			#aa { text-decoration: none; }
 			#lights { width: 420px; }
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
 		`;
 
@@ -39,18 +40,26 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+			<i>This is the script - or rather its Python equivalent - that would be on the rPI.<br>
+			It opens an iframe with the remote file and, using iframe.contentWindow, reads the remote file's location hash.<br>
+			It then parses the hash and displays the result.<br>
+			A meta tag refresh reloads the script every ten seconds.<br>
+			</i>
+			<p>Location.hash from remote file:</p>
 			<p id=info ></p>
+			<p>Image generated from remote location.hash</p>
 			<p id=lights ></p>
+			<p>Iframe with remote file:</p>
 
 		`;
 
-		boxes = [];
+		var boxes = [];
 
 		for ( var i = 0; i < 28; i++ ) {
 
 			for ( var j = 0; j < 10; j++ ) {
 
-				box = lights.appendChild( document.createElement( 'div' ) );
+				var box = lights.appendChild( document.createElement( 'div' ) );
 				box.className = 'box';
 				box.style.top = i * 25 + 'px';
 				box.style.left = j * 50 + 'px';
@@ -59,7 +68,6 @@
 			}
 
 		}
-
 
 		ifr = menu.appendChild( document.createElement( 'iframe' ) );
 		ifr.onload = function() {
@@ -70,6 +78,7 @@
 			triplets = hash.split( '#' )
 
 			for ( var i = 0, j = 0, txt = ''; i < boxes.length; i++, j++ ) {
+
 				colors = triplets[ i + 1].split( ',' );
 				boxes[ i ].style.backgroundColor = `rgb( ${ colors[ 0 ] } , ${ colors[ 1 ] }, ${ colors[ 2 ] } )`;
 
@@ -79,9 +88,7 @@
 
 		ifr.src = fileName;
 
-
 	}
-
 
 </script>
 </body>
