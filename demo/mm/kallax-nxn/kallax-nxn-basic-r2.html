@@ -107,13 +107,14 @@
 			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
 			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play Step-by-Step Assembly</p>
 			<p>
-				<input type=radio name=field id=birch onchange=updateMaterial(0xf8dfa1); />birch
+				<input type=radio name=field id=birch onchange=updateMaterial(0xffffff); checked />birch
 				<input type=radio name=field id=black onchange=updateMaterial(0x333333); />black
-				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); checked />white
+				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); />white
 			</p>
 			<div id=info ></div>
 
 		`;
+// 0xf8dfa1
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
