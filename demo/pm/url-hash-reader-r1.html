@@ -2,64 +2,59 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<meta http-equiv=refresh content=10 >
-<title>URL Hash Reader R2</title>
+<title>Vista Lights Receiver R1</title>
+
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+
 </head>
 <body>
 <script>
 
-	var fileName = 'https://jaanga.github.io/demo/pm/vista-lights-random-image-resize-r1.html';
-	var fileName = 'vista-lights-random-image-resize-r1.html';
+	var css, menu;
+
+	var test = '#221,161,89#213,154,98#205,111,66#231,146,93#176,124,78#151,91,51#177,133,97#180,122,83#197,147,97#191,145,89#212,95,49#86,124,88#231,196,125#200,151,94#193,116,47#161,147,105#137,129,92#216,144,86#225,155,76#202,141,82#220,112,58#203,120,66#181,105,55#237,128,70#223,150,96#234,97,51#228,158,106#227,166,105#213,134,95#195,150,102#222,94,45#216,125,69#183,113,51#207,107,58#215,82,39#214,96,56#236,101,53#219,121,67#223,119,67#209,118,70#203,138,80#196,174,122#158,85,45#228,112,61#203,154,91#225,180,58#193,151,76#215,165,96#235,170,37#184,139,80#218,105,51#224,180,84#198,135,64#215,154,65#234,168,25#206,181,119#226,126,68#227,108,56#244,87,48#236,149,54#218,104,59#207,96,50#207,80,39#224,135,34#239,141,47#211,84,47#215,99,46#235,165,15#231,154,36#181,100,61#232,144,60#205,133,61#212,133,37#214,119,32#220,111,58#216,119,13#125,59,48#28,35,46#29,44,61#36,14,13#49,33,26#32,38,36#41,47,47#83,39,31#109,68,48#28,26,29#31,34,43#37,44,53#47,70,88#32,24,37#169,146,114#78,112,103#70,88,79#65,114,121#157,136,99#49,95,102#64,104,112#65,55,60#17,58,89#47,19,26#160,148,113#97,105,78#188,140,50#167,147,93#116,130,119#27,33,35#53,78,98#39,30,35#47,60,77#63,48,38#118,83,56#201,162,90#223,161,33#180,154,66#185,120,22#105,90,69#11,13,24#43,44,56#54,48,58#3,11,6#172,125,84#98,67,56#41,89,120#43,71,77#54,57,63#60,112,142#69,93,113#22,24,19#60,77,73#10,21,12#160,114,57#128,96,80#71,74,85#72,67,65#35,58,66#46,61,63#19,22,30#59,70,71#158,132,106#19,23,15#198,133,44#93,54,43#178,114,67#47,48,51#38,39,45#153,124,58#40,35,30#60,76,72#119,103,91#22,31,21#179,125,73#82,41,25#55,52,47#61,62,81#63,71,52#207,156,81#65,62,53#140,110,88#151,126,95#23,28,19#108,84,64#61,47,41#31,24,8#31,35,23#132,114,67#161,130,71#128,110,82#103,90,68#154,125,105#17,25,17#127,70,51#84,72,59#23,31,20#55,77,74#123,93,63#164,126,49#95,82,71#63,74,57#110,93,82#109,111,84#106,89,59#130,89,64#49,61,54#45,39,30#38,41,32#66,57,38#90,78,60#66,78,62#115,109,92#44,57,47#95,78,53#85,72,56#30,43,35#60,52,37#42,28,13#31,37,23#51,44,23#66,83,65#139,137,99#22,34,21#96,84,67#84,74,61#80,67,48#63,57,36#39,41,38#11,14,11#131,65,28#82,79,56#76,88,80#20,27,15#137,97,67#120,96,77#80,74,58#34,38,28#29,44,46#24,27,18#18,21,12#171,132,65#89,78,60#21,26,13#148,111,75#131,108,80#131,102,72#21,23,16#12,12,8#37,40,33#55,50,44#61,77,69#99,69,43#14,32,23#110,81,58#140,100,80#73,67,61#70,64,54#26,23,16#9,14,8#211,155,113#19,25,17#182,107,53#19,24,13#95,68,49#132,96,61#124,96,69#119,94,70#38,38,30#17,22,18#13,23,18#71,63,56#56,34,23#185,142,76#97,78,64#97,85,69#110,101,87#75,72,62#17,19,12#42,30,7#29,17,5#188,131,92#25,18,11#138,60,48#140,106,76#77,70,62#122,91,72#138,118,99#36,36,28#32,32,24#115,92,79#34,27,22#86,55,41#83,27,29#130,113,97#76,54,53#148,113,93#133,94,74#105,85,69#28,23,18#60,52,46#29,15,12#113,75,51#16,9,6#'
 
 	init();
 
 	function init() {
 
-		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 		`
 
 			body { font: 12pt monospace; }
-			h2, a { margin: 0; }
-
+			button { background-color: #eee; border: 2px #eee solid; color: #555; }
 			.box { border: solid 1px green; color: white; display: inline-block; height: 20px; margin: 0 10px; width: 20px; }
-
 			#aa { text-decoration: none; }
-			#menu { margin: 0 20px; position: absolute; }
 			#lights { width: 420px; }
 
 		`;
 
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
 		`
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+				<a id=aa href=http://jaanga.github.io/demo/pm/ >🛈</a>
 			</h2>
-			<i>This is the script - or rather its Python equivalent - that would be on the rPI.<br>
-			It opens an iframe with the remote file and, using iframe.contentWindow, reads the remote file's location hash.<br>
-			It then parses the hash and displays the result.<br>
-			A meta tag refresh reloads the script every ten seconds.<br>
-			</i>
-			<p>Location.hash from remote file:</p>
-			<p id=info ></p>
-			<p>Image generated from remote location.hash</p>
-			<p id=lights ></p>
-			<p>Iframe with remote file:</p>
+			<div id=lights ></div>
+			<p>
+				<button onclick=location.hash=test >test</button> 
+				<a href=http://jaanga.github.io/demo/pm/vista-lights-image-resize-r1.html >send image</a>
+			</p>
+			<div id=info ></div>
 
 		`;
 
-		var boxes = [];
+		boxes = [];
 
 		for ( var i = 0; i < 28; i++ ) {
 
 			for ( var j = 0; j < 10; j++ ) {
 
-				var box = lights.appendChild( document.createElement( 'div' ) );
+				box = lights.appendChild( document.createElement( 'div' ) );
 				box.className = 'box';
 				box.style.top = i * 25 + 'px';
 				box.style.left = j * 50 + 'px';
@@ -69,24 +64,28 @@
 
 		}
 
-		ifr = menu.appendChild( document.createElement( 'iframe' ) );
-		ifr.onload = function() {
+		window.addEventListener ( 'hashchange', onHashChange, false );
 
-			hash = ifr.contentWindow.location.hash;
-			info.innerHTML = hash;
+//		location.hash = test;
 
-			triplets = hash.split( '#' )
+		onHashChange();
 
-			for ( var i = 0, j = 0, txt = ''; i < boxes.length; i++, j++ ) {
+	}
 
-				colors = triplets[ i + 1].split( ',' );
-				boxes[ i ].style.backgroundColor = `rgb( ${ colors[ 0 ] } , ${ colors[ 1 ] }, ${ colors[ 2 ] } )`;
+	function onHashChange() {
 
-			}
- 
+		if ( !location.hash ) { return; }
+
+		hashes = location.hash.substr( 1).split( '#' );
+
+		for ( var i = 0, txt = ''; i < boxes.length; i++ ) {
+
+				rgb = hashes[ i ].split( ',' );
+				txt += boxes[ i ].style.backgroundColor = `rgb( ${ rgb[ 0 ] } , ${ rgb[ 1 ] }, ${ rgb[ 2 ] } )`;
+
+
 		}
-
-		ifr.src = fileName;
+		info.innerHTML = txt;
 
 	}
 
