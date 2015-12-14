@@ -8,19 +8,14 @@
 <body>
 <script>
 
-	var fileName = 'https://jaanga.github.io/demo/pm/vista-lights-image-resize-r1.html';
-
+	var fileName = 'https://jaanga.github.io/demo/pm/vista-lights-random-image-resize-r1.html';
 	var fileName = 'vista-lights-random-image-resize-r1.html';
-	var boxes;
-
-
-	var css, menu;
 
 	init();
 
 	function init() {
 
-		css = document.body.appendChild( document.createElement( 'style' ) );
+		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 		`
 
@@ -35,7 +30,7 @@
 
 		`;
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
 		`
