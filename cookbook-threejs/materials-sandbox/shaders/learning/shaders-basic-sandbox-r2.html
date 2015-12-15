@@ -12,11 +12,16 @@
 
 <!-- Shaders -->
 <script type="x-shader/x-vertex" id="vertexShader">
+// http://code.tutsplus.com/tutorials/webgl-with-threejs-shaders--net-36054
 
+		uniform float time;
+			varying vec2 vUv;
 
 		void main() {
 
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			vUv = uv;
+			vec3 newPosition = position + normal * vec3( sin( time ) );
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 		}
 
@@ -108,8 +113,14 @@
 		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
 //		material = new THREE.MeshNormalMaterial();
 
-		var shaderMaterial = new THREE.ShaderMaterial({
+uniforms = {
 
+    time: { type: "f", value: 0 }
+
+};
+
+		var shaderMaterial = new THREE.ShaderMaterial({
+			uniforms: uniforms,
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 
@@ -135,6 +146,7 @@
 
 	function animate() {
 
+		uniforms.time.value += 0.05;
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();

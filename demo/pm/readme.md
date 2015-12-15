@@ -12,7 +12,7 @@ _2015-12-13_
 
 [Vista Lights URL Hash Reader R2]( http://jaanga.github.io/demo/pm/url-hash-reader-r2.html )
 
-[Vista Lights Random Image Resize R1]( http://jaanga.github.io/demo/pm/vista-lights-random-image-resize-r1.html )
+[Vista Lights Random Image Resize R2]( http://jaanga.github.io/demo/pm/vista-lights-random-image-resize-r2.html )
 
 _2015-12-12_
 

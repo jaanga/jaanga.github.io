@@ -13,10 +13,25 @@
 <!-- Shaders -->
 <script type="x-shader/x-vertex" id="vertexShader">
 
+	varying vec2 vUv;
+
+	uniform float scale;
+
+	uniform float alpha;
 
 		void main() {
 
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			vUv = uv;
+
+			vec3 p = position;
+
+			p.x += 40;
+
+			p.z += 40;
+
+			vec4 mvPosition = modelViewMatrix * vec4( scale * p, 1.0 );
+
+			gl_Position = projectionMatrix * mvPosition;
 
 		}
 
@@ -25,6 +40,8 @@
 <script type="x-shader/x-fragment" id="fragmentShader">
 
 		void main() {
+
+
 
 			gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 ); // rgb
 
@@ -108,8 +125,16 @@
 		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
 //		material = new THREE.MeshNormalMaterial();
 
-		var shaderMaterial = new THREE.ShaderMaterial({
+uniforms = {
 
+  scale: {type: 'f', value: 1.0},
+
+  alpha: {type: 'f', value: 1.0}
+
+};
+
+		var shaderMaterial = new THREE.ShaderMaterial({
+			uniforms: uniforms,
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 
