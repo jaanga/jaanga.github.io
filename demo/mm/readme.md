@@ -34,7 +34,7 @@ _2015-12-12_
 * Coming soon: improved animation sequencing?
 
 
-### [Kallax Wall Bracket Basic R3]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r3.html )
+### [Kallax Wall Bracket Basic R4]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r4.html )
 
 * Adds wood screws
 	* Includes shiny new draw helix routine
