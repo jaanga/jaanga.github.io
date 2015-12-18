@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic R1 edankwan </title>
+<title>Shaders Cookbook Fragment Normals Color R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -11,41 +11,16 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <!-- Shaders -->
+
 <script type=x-shader/x-vertex id=vertexShader >
-// http://blog.edankwan.com/post/three-js-advanced-tips-shadow
 
-	varying vec3 vNormal;
-	varying vec3 vWorldPosition;
-
-	uniform float time;
+	varying vec3 transformedNormal;
 
 	void main() {
 
-		// adding some displacement based on the vertex position
-		vec3 offset = vec3(
+		transformedNormal = normalMatrix * normal;
 
-//			sin(position.x * 10.0 + time) * 15.0,
-//			sin(position.y * 10.0 + time + 31.512) * 15.0,
-//			sin(position.z * 10.0 + time + 112.512) * 15.0
-
-
-			position.x + sin(  0.5 + time ) * 15.0,
-			position.y,
-			position.z
-
-		);
-
-		vec3 pos = position + offset;
-
-// just add some noise to the normal
-		vNormal = normalMatrix * vec3( normal + normalize( offset ) * 0.2);
-
-		vec4 worldPosition = modelMatrix * vec4( pos, 1.0 );
-
-		// store the world position as varying for lighting
-		vWorldPosition = worldPosition.xyz;
-
-		gl_Position = projectionMatrix * viewMatrix * worldPosition;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 
 	}
 
@@ -53,21 +28,16 @@
 
 <script type=x-shader/x-fragment id=fragmentShader >
 
-	varying vec3 vNormal;
-	varying vec3 vWorldPosition;
-	uniform vec3 lightPosition;
+	varying vec3 transformedNormal;
 
 	void main(void) {
 
-		vec3 lightDirection = normalize( lightPosition - vWorldPosition );
+		gl_FragColor = vec4( transformedNormal, 1.0 );
 
-// simpliest hardcoded lighting ^^
-		float c = 0.35 + max( 0.0, dot( vNormal, lightDirection ) ) * 0.4;
-
-		gl_FragColor = vec4( c, c, c, 1.0);
 	}
 
 </script>
+
 <script>
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -134,23 +104,15 @@
 
 // helpers
 
-		var axisHelper = new THREE.AxisHelper( 250 );
+		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
-
-
 		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
 //		material = new THREE.MeshNormalMaterial();
 
-		uniforms = {
-			lightPosition: { type: 'v3', value: new THREE.Vector3( 700, 700, 700) },
-			time: {type: 'f', value: 0}
-		}
-
 		var shaderMaterial = new THREE.ShaderMaterial({
 
-			uniforms: uniforms,
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 
@@ -176,7 +138,6 @@
 
 	function animate() {
 
-		uniforms.time.value += 0.05;
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();

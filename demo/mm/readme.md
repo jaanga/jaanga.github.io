@@ -22,6 +22,11 @@ _The product assembly manuals of the future - now_
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
+_2015-12-18_
+
+### [Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r4.html )
+
+* Begiining to add animation/tweening
 
 _2015-12-12_
 
@@ -35,7 +40,7 @@ _2015-12-12_
 * Coming soon: improved animation sequencing?
 
 
-### [Kallax Wall Bracket Basic R4]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r4.html )
+* [Kallax Wall Bracket Basic R4]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r4.html )
 
 * Adds wood screws
 	* Includes shiny new draw helix routine

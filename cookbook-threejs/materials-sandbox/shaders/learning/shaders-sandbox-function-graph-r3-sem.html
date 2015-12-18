@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic R1 edankwan </title>
+<title>Shaders Sandbox Function Graph R3 SEM</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -12,59 +12,96 @@
 
 <!-- Shaders -->
 <script type=x-shader/x-vertex id=vertexShader >
-// http://blog.edankwan.com/post/three-js-advanced-tips-shadow
 
-	varying vec3 vNormal;
-	varying vec3 vWorldPosition;
-
-	uniform float time;
+	uniform float delta;
+//	varying vec2 vUv;
+	varying vec2 vN;
 
 	void main() {
 
-		// adding some displacement based on the vertex position
-		vec3 offset = vec3(
+//		vUv = uv;
 
-//			sin(position.x * 10.0 + time) * 15.0,
-//			sin(position.y * 10.0 + time + 31.512) * 15.0,
-//			sin(position.z * 10.0 + time + 112.512) * 15.0
+		vec3 pos = position;
+		pos.y = sin( 0.002 * pos.x * pos.z + delta ) * 9.0;
 
+		vec4 p = vec4( position, 1. );
+		vec3 e = normalize( vec3( modelViewMatrix * p ) );
+		vec3 n = normalize( normalMatrix * normal );
 
-			position.x + sin(  0.5 + time ) * 15.0,
-			position.y,
-			position.z
-
+		vec3 r = reflect( e, n );
+		float m = 2. * sqrt( //rx * r.x + r.y * r.y + ( r.z + 1 ) * ( r.z + 1 ) );
+			pow( r.x, 2. ) + 
+			pow( r.y, 2. ) + 
+			pow( r.z + 1., 2. ) 
 		);
+		vN = r.xy / m + .5;
 
-		vec3 pos = position + offset;
-
-// just add some noise to the normal
-		vNormal = normalMatrix * vec3( normal + normalize( offset ) * 0.2);
-
-		vec4 worldPosition = modelMatrix * vec4( pos, 1.0 );
-
-		// store the world position as varying for lighting
-		vWorldPosition = worldPosition.xyz;
-
-		gl_Position = projectionMatrix * viewMatrix * worldPosition;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( pos, 1.0 );;
 
 	}
 
-</script>
+/*
 
-<script type=x-shader/x-fragment id=fragmentShader >
+	varying vec2 vN;
 
-	varying vec3 vNormal;
-	varying vec3 vWorldPosition;
-	uniform vec3 lightPosition;
+	void main() {
 
-	void main(void) {
+		vec4 p = vec4( position, 1. );
 
-		vec3 lightDirection = normalize( lightPosition - vWorldPosition );
+		vec3 e = normalize( vec3( modelViewMatrix * p ) );
+		vec3 n = normalize( normalMatrix * normal );
 
-// simpliest hardcoded lighting ^^
-		float c = 0.35 + max( 0.0, dot( vNormal, lightDirection ) ) * 0.4;
+		vec3 r = reflect( e, n );
+		float m = 2. * sqrt( //rx * r.x + r.y * r.y + ( r.z + 1 ) * ( r.z + 1 ) );
+			pow( r.x, 2. ) + 
+			pow( r.y, 2. ) + 
+			pow( r.z + 1., 2. ) 
+		);
+		vN = r.xy / m + .5;
 
-		gl_FragColor = vec4( c, c, c, 1.0);
+		gl_Position = projectionMatrix * modelViewMatrix * p;
+
+	}
+
+*/
+
+  </script>
+  
+<script id=fragmentShader type=x-shader/x-fragment >
+
+/*
+	uniform vec3 color1;
+	uniform vec3 color2;
+	uniform float scale;
+	varying vec2 vUv;
+
+	void main() {
+// view-source:http://blog.2pha.com/demos/threejs/shaders/checker.html
+
+		vec2 center = -1.0 + 2.0 * vUv;
+		vec2 uv = floor( center.xy * scale );
+		if( mod( uv.x + uv.y, 2.0 ) > 0.5 ){
+
+			gl_FragColor = vec4( color1, 1.0 );
+
+		} else {
+
+		gl_FragColor = vec4( color2, 1.0 );
+
+		}
+
+	}
+*/
+
+	uniform sampler2D tMatCap;
+
+	varying vec2 vN;
+
+	void main() {
+		
+		vec3 base = texture2D( tMatCap, vN ).rgb;
+		gl_FragColor = vec4( base, 1. );
+
 	}
 
 </script>
@@ -134,30 +171,59 @@
 
 // helpers
 
-		var axisHelper = new THREE.AxisHelper( 250 );
+		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
 
-
-		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
-//		material = new THREE.MeshNormalMaterial();
-
+/*
 		uniforms = {
-			lightPosition: { type: 'v3', value: new THREE.Vector3( 700, 700, 700) },
-			time: {type: 'f', value: 0}
+
+			delta: {type: 'f', value: 0.0},
+			color1 : { type : 'c', value : new THREE.Color( 0xfff00 ) },
+			color2 : { type : 'c', value : new THREE.Color( 0xff00ff ) },
+			scale : { type : 'f', value : 5 },
+
 		}
 
 		var shaderMaterial = new THREE.ShaderMaterial({
 
 			uniforms: uniforms,
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+			side: THREE.DoubleSide
 		});
+*/
 
-		mesh = new THREE.Mesh( geometry, shaderMaterial );
-		mesh.position.set( 0, 0, 0 );
+		material = new THREE.ShaderMaterial( {
+
+			uniforms: { 
+				delta: {type: 'f', value: 0.0},
+				tMatCap: { 
+					type: 't', 
+					value: THREE.ImageUtils.loadTexture( 'matcap.jpg' ) 
+				},
+			},
+			vertexShader: document.getElementById( 'vertexShader' ).textContent,
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+			shading: THREE.SmoothShading,
+			side: THREE.DoubleSide
+
+		} );
+
+		material.uniforms.tMatCap.value.wrapS = 
+		material.uniforms.tMatCap.value.wrapT = 
+		THREE.ClampToEdgeWrapping;
+
+
+		geometry = new THREE.SphereGeometry( 50, 50, 25 );
+//		geometry = new THREE.PlaneBufferGeometry( 100, 100, 100, 100 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - 0.5 * Math.PI ) );
+//		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 0 ) );
+
+//		material = new THREE.MeshNormalMaterial();
+
+		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
 		var edgesHelper = new THREE.EdgesHelper( mesh );
@@ -176,7 +242,8 @@
 
 	function animate() {
 
-		uniforms.time.value += 0.05;
+		material.uniforms.delta.value += 0.05;
+
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();

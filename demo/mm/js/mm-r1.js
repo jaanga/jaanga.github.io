@@ -28,6 +28,7 @@
 
 	var context = new AudioContext();
 
+
 	function drawHelpers() {
 
 		w = height > width ? height05 : width05;
@@ -44,6 +45,19 @@
 		scene.add( helpers );
 
 	}
+
+	function drawHelpers2( length ) {
+
+		var axisHelper = new THREE.AxisHelper( length );
+		helpers.add( axisHelper );
+
+		var gridHelper = new THREE.GridHelper( length, 10 );
+		gridHelper.position.set( 0, 0, 0 );
+		helpers.add( gridHelper );
+
+	}
+
+
 
 	function drawHole( obj, x, y, z, aX, aY, aZ, type ) {
 

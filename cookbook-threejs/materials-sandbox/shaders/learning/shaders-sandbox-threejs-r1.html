@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic R1 edankwan </title>
+<title>Shaders Basic R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -12,63 +12,110 @@
 
 <!-- Shaders -->
 <script type=x-shader/x-vertex id=vertexShader >
-// http://blog.edankwan.com/post/three-js-advanced-tips-shadow
-
-	varying vec3 vNormal;
-	varying vec3 vWorldPosition;
-
-	uniform float time;
-
-	void main() {
-
-		// adding some displacement based on the vertex position
-		vec3 offset = vec3(
-
-//			sin(position.x * 10.0 + time) * 15.0,
-//			sin(position.y * 10.0 + time + 31.512) * 15.0,
-//			sin(position.z * 10.0 + time + 112.512) * 15.0
 
 
-			position.x + sin(  0.5 + time ) * 15.0,
-			position.y,
-			position.z
+			varying vec2 vUv;
 
-		);
+			void main()
+			{
 
-		vec3 pos = position + offset;
+				vUv = uv;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_Position = projectionMatrix * mvPosition;
 
-// just add some noise to the normal
-		vNormal = normalMatrix * vec3( normal + normalize( offset ) * 0.2);
+			}
+</script>
 
-		vec4 worldPosition = modelMatrix * vec4( pos, 1.0 );
+<script type=x-shader/x-fragment id=fragmentShader >
 
-		// store the world position as varying for lighting
-		vWorldPosition = worldPosition.xyz;
 
-		gl_Position = projectionMatrix * viewMatrix * worldPosition;
+			uniform float time;
+			uniform vec2 resolution;
 
-	}
+			varying vec2 vUv;
+
+			void main( void ) {
+
+				vec2 position = -1.0 + 2.0 * vUv;
+
+				float red = abs( sin( position.x * position.y + time / 5.0 ) );
+				float green = abs( sin( position.x * position.y + time / 4.0 ) );
+				float blue = abs( sin( position.x * position.y + time / 3.0 ) );
+				gl_FragColor = vec4( red, green, blue, 1.0 );
+
+			}
 
 </script>
 
 <script type=x-shader/x-fragment id=fragmentShader >
 
-	varying vec3 vNormal;
-	varying vec3 vWorldPosition;
-	uniform vec3 lightPosition;
 
-	void main(void) {
+			uniform float time;
+			uniform vec2 resolution;
 
-		vec3 lightDirection = normalize( lightPosition - vWorldPosition );
+			uniform sampler2D texture;
 
-// simpliest hardcoded lighting ^^
-		float c = 0.35 + max( 0.0, dot( vNormal, lightDirection ) ) * 0.4;
+			varying vec2 vUv;
 
-		gl_FragColor = vec4( c, c, c, 1.0);
-	}
+			void main( void ) {
+
+				vec2 position = -1.0 + 2.0 * vUv;
+
+				float a = atan( position.y, position.x );
+				float r = sqrt( dot( position, position ) );
+
+				vec2 uv;
+				uv.x = cos( a ) / r;
+				uv.y = sin( a ) / r;
+				uv /= 10.0;
+				uv += time * 0.05;
+
+				vec3 color = texture2D( texture, uv ).rgb;
+
+				gl_FragColor = vec4( color * r * 1.5, 1.0 );
+
+			}
 
 </script>
+
+<script type=x-shader/x-fragment id=fragmentShader >
+
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+resolution = vec2( 512, 512 ); //resolution;
+vec2 R = vec2( 512, 512 ); //resolution;
+vec2 Offset;
+vec2 Scale=vec2(0.005,0.005);
+float Saturation = 0.4; // 0 - 1;
+
+
+vec3 lungth(vec2 x,vec3 c){
+       return vec3(length(x+c.r),length(x+c.g),length(x+c.b));
+}
+
+void main( void ) {
+//    Offset = mouse.xy;
+    vec2 x = gl_FragCoord.xy;
+    vec4 c=vec4(0,0,0,0);
+    x=x*Scale*R/R.x; // +Offset;
+    x+=sin(x.yx*sqrt(vec2(13,9)))/5.4;
+    c.rgb=lungth(sin(x*sqrt(vec2(33,43))),vec3(3,1,9)*Saturation);
+    x+=sin(x.yx*sqrt(vec2(17,19)))/5.1;
+    c.rgb=1.5*lungth(sin(time+x*sqrt(vec2(13.7,47.7))),c.rgb/9.2);
+    x+=sin(x.yx*sqrt(vec2(89,51)))/2.2;
+    c.rgb=lungth(sin(x*sqrt(vec2(11.1,1.1))),c.rgb/3.1);
+    c=.4+.4*sin(c*8.);
+    c.a=1.;
+    gl_FragColor = c;
+}
+</script>
+
 <script>
+
+var clock = new THREE.Clock();
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -117,6 +164,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setPixelRatio( window.devicePixelRatio );
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -134,29 +182,39 @@
 
 // helpers
 
-		var axisHelper = new THREE.AxisHelper( 250 );
+		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
 
 
-		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
+		geometry = new THREE.BoxGeometry( 100, -20, 100 );
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -60, 0 );
+		scene.add( mesh );
+
+
+				uniforms = {
+					time: { type: "f", value: 1.0 },
+					resolution: { type: "v2", value: new THREE.Vector2() },
+					texture: { type: "t", value: THREE.ImageUtils.loadTexture( "water.jpg" ) }
+				};
+
+
+				material = new THREE.ShaderMaterial( {
+
+					uniforms: uniforms,
+					vertexShader: document.getElementById( 'vertexShader' ).textContent,
+					fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+
+				} );
+
+		geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+//		geometry = new THREE.IcosahedronGeometry( 30, 3 );
 //		material = new THREE.MeshNormalMaterial();
 
-		uniforms = {
-			lightPosition: { type: 'v3', value: new THREE.Vector3( 700, 700, 700) },
-			time: {type: 'f', value: 0}
-		}
-
-		var shaderMaterial = new THREE.ShaderMaterial({
-
-			uniforms: uniforms,
-			vertexShader: document.getElementById( 'vertexShader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-
-		});
-
-		mesh = new THREE.Mesh( geometry, shaderMaterial );
+		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );
 
@@ -176,7 +234,9 @@
 
 	function animate() {
 
-		uniforms.time.value += 0.05;
+
+		uniforms.time.value += 0.02;
+
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();

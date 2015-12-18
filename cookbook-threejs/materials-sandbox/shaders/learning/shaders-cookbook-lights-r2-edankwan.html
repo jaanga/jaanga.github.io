@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic R1 edankwan </title>
+<title>Shaders Cookbook Lights R2 edankwan </title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -19,19 +19,21 @@
 
 	uniform float time;
 
+// chunk(shadowmap_pars_vertex);
+
 	void main() {
 
-		// adding some displacement based on the vertex position
+// adding some displacement based on the vertex position
 		vec3 offset = vec3(
 
-//			sin(position.x * 10.0 + time) * 15.0,
-//			sin(position.y * 10.0 + time + 31.512) * 15.0,
-//			sin(position.z * 10.0 + time + 112.512) * 15.0
+			sin( position.x * 10.0 + time ) * 15.0 + sin(  0.1 * time ) * 550.0,
+			sin( position.y * 10.0 + time + 31.512 ) * 15.0,
+			sin( position.z * 10.0 + time + 112.512 ) * 15.0
 
 
-			position.x + sin(  0.5 + time ) * 15.0,
-			position.y,
-			position.z
+//			position.x + sin(  0.1 * time ) * 550.0,
+//			position.y,
+//			position.z
 
 		);
 
@@ -42,7 +44,7 @@
 
 		vec4 worldPosition = modelMatrix * vec4( pos, 1.0 );
 
-		// store the world position as varying for lighting
+// store the world position as varying for lighting
 		vWorldPosition = worldPosition.xyz;
 
 		gl_Position = projectionMatrix * viewMatrix * worldPosition;
@@ -57,18 +59,29 @@
 	varying vec3 vWorldPosition;
 	uniform vec3 lightPosition;
 
+// chunk(shadowmap_pars_fragment);
+
 	void main(void) {
 
-		vec3 lightDirection = normalize( lightPosition - vWorldPosition );
+    vec3 lightDirection = normalize(lightPosition - vWorldPosition);
 
-// simpliest hardcoded lighting ^^
+    vec3 outgoingLight = vec3( 1.0 );
+
+// chunk(shadowmap_fragment);
+
+// simplest hardcoded lighting ^^
 		float c = 0.35 + max( 0.0, dot( vNormal, lightDirection ) ) * 0.4;
 
-		gl_FragColor = vec4( c, c, c, 1.0);
+		gl_FragColor = vec4( 1, c, c, 1.0 );
+
 	}
 
 </script>
+
 <script>
+
+	var time = 0;
+	var spot;
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -116,14 +129,16 @@
 		document.body.appendChild( stats.domElement );
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.shadowMap.enabled = true;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 500, 500, -2000 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+		controls.maxDistance = 12000;
+		controls.minDistance = 500;
 		controls.dampingFactor = 0.25;
 		controls.enableDamping = true;
 		controls.update();
@@ -139,29 +154,106 @@
 
 // assets
 
+		initLights();
 
-		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
-//		material = new THREE.MeshNormalMaterial();
+		vs = document.getElementById( 'vertexShader' ).textContent,
+		fs = document.getElementById( 'fragmentShader' ).textContent
 
-		uniforms = {
-			lightPosition: { type: 'v3', value: new THREE.Vector3( 700, 700, 700) },
-			time: {type: 'f', value: 0}
-		}
+		var geometry = new THREE.IcosahedronGeometry( 200, 5 );
+		var material = new THREE.ShaderMaterial({
 
-		var shaderMaterial = new THREE.ShaderMaterial({
+// apply the shaderParse to the shaders
+		vertexShader: shaderParse(vs),
+		fragmentShader: shaderParse(fs),
 
-			uniforms: uniforms,
-			vertexShader: document.getElementById( 'vertexShader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-
+// merge the shadow map uniforms to the uniforms we had
+		uniforms: THREE.UniformsUtils.merge([
+			THREE.UniformsLib.shadowmap,
+				{
+					lightPosition: {type: 'v3', value: new THREE.Vector3( 700, 700, 700 )},
+					time: {type: 'f', value: 0}
+				}
+			])
 		});
 
-		mesh = new THREE.Mesh( geometry, shaderMaterial );
-		mesh.position.set( 0, 0, 0 );
-		scene.add( mesh );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
 
-		var edgesHelper = new THREE.EdgesHelper( mesh );
-		scene.add( edgesHelper );
+		mesh.customDepthMaterial = new THREE.ShaderMaterial({
+			vertexShader: shaderParse(vs),
+			fragmentShader: THREE.ShaderLib.depthRGBA.fragmentShader,
+			uniforms: material.uniforms
+		});
+
+	   scene.add( mesh);
+
+		var geometry = new THREE.BoxGeometry( 150, 150, 150 );
+		var material = new THREE.MeshPhongMaterial( {
+			color: new THREE.Color(0x777777),
+			shininess: 5
+		});
+
+		box = new THREE.Mesh( geometry, material );
+		box.position.set( 400, 200, 250);
+		box.rotation.set( 1, 3, 5 );
+		box.castShadow = true;
+		box.receiveShadow = true;
+		scene.add( box);
+
+
+		var geometry = new THREE.PlaneGeometry( 3000, 3000, 10, 10 );
+		var material = new THREE.MeshPhongMaterial( {
+			color: new THREE.Color(0xaaaaaa),
+			shininess: 5
+		});
+
+		ground = new THREE.Mesh( geometry, material );
+		ground.position.y = -250;
+		ground.rotation.x = -1.57;
+		ground.castShadow = false;
+		ground.receiveShadow = true;
+		scene.add( ground);
+
+
+	}
+
+	function initLights() {
+
+		var ambient = new THREE.AmbientLight( 0xcccccc );
+		scene.add( ambient );
+
+		spot = new THREE.SpotLight( 0x999999, 1, 0, Math.PI , 1 );
+		spot.position.x = 3000;
+		spot.position.y = 3000;
+		spot.position.z = 3000;
+		spot.target.position.set( 0, 100, 0 );
+
+		spot.castShadow = true;
+
+		spot.shadowCameraNear = 50;
+		spot.shadowCameraFar = 9000;
+		spot.shadowCameraFov = 60;
+
+		spot.shadowBias = 0.0003;
+		spot.shadowDarkness = 1;
+
+		spot.shadowMapWidth = 1024;
+		spot.shadowMapHeight = 2048;
+
+		scene.add( spot );
+
+	}
+
+	function replaceThreeChunkFn( a, b ) {
+
+		return THREE.ShaderChunk[ b ] + '\n';
+
+	}
+
+	function shaderParse( glsl ) {
+
+		return glsl.replace(/\/\/\s?chunk\(\s?(\w+)\s?\);/g, replaceThreeChunkFn);
 
 	}
 
@@ -176,7 +268,11 @@
 
 	function animate() {
 
-		uniforms.time.value += 0.05;
+		time += 0.1;
+		box.rotation.x += 0.1;
+		mesh.position.y = Math.sin( time * 0.5 ) * 50;
+		mesh.material.uniforms.time.value = time;
+
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();

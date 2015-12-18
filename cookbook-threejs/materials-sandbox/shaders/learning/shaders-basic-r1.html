@@ -11,7 +11,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <!-- Shaders -->
-<script type="x-shader/x-vertex" id="vertexShader">
+<script type=x-shader/x-vertex id=vertexShader >
 
 
 		void main() {
@@ -22,7 +22,7 @@
 
 </script>
 
-<script type="x-shader/x-fragment" id="fragmentShader">
+<script type=x-shader/x-fragment id=fragmentShader >
 
 		void main() {
 
@@ -31,6 +31,7 @@
 		}
 
 </script>
+
 <script>
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -80,6 +81,7 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setPixelRatio( window.devicePixelRatio );
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -103,19 +105,24 @@
 // assets
 
 
+		geometry = new THREE.BoxGeometry( 100, -20, 100 );
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -30, 0 );
+		scene.add( mesh );
 
 
-		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
-//		material = new THREE.MeshNormalMaterial();
-
-		var shaderMaterial = new THREE.ShaderMaterial({
+		material = new THREE.ShaderMaterial({
 
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 
 		});
 
-		mesh = new THREE.Mesh( geometry, shaderMaterial );
+		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
+//		material = new THREE.MeshNormalMaterial();
+
+		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );
 

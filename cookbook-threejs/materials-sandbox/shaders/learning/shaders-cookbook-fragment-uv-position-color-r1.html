@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic Vertex R1</title>
+<title>Shaders 2pha uv-position-color R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -11,90 +11,33 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <!-- Shaders -->
-<script type="x-shader/x-vertex" id="vertexShader">
-// file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/cookbook-threejs/materials-sandbox/shaders/learning/shaders-basic-vertex-r1.html
+<script type=x-shader/x-vertex id=vertexShader>
+// http://blog.2pha.com/demos/threejs/shaders/uv_position_color.html
 
-//	varying vec2 vUv;
-
-	uniform float delta;
-	uniform float scale;
-	uniform float alpha;
-
-	varying vec3 vNormal;
+	varying vec3 color;
 
 	void main() {
 
+		color = vec3( uv, 1.0 );
 
-		vNormal = normal;
-
-//		vUv = uv;
-
-		vec3 p = position;
-
-		p.z = sin( 0.01 * p.x * p.y + delta) * 5.0;
-
-	//    p.z += cos(2.0 * p.z + delta / 2.0) * 5.0;
-
-	 //   p.z += cos(2.0 * p.x + delta) * 5.0;
-
-//			p.x += sin( p.y + delta / 2.0) * 10.0;
-
-		vec4 mvPosition = modelViewMatrix * vec4( scale * p, 1.0 );
-
-		gl_Position = projectionMatrix * mvPosition;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0);
 
 	}
-
-  </script>
-  
-<script id="fragmentShader" type="x-shader/x-fragment">
-
-	uniform float delta;
-	uniform float alpha;
-	varying vec2 vUv;        
-
-/*
-	void main(void)
-
-	{
-
-		vec2 position = vUv;
-
-		float red = 1.0;
-		float green = 0.25 + sin( delta ) * 0.25;
-		float blue = 0.0;
-		vec3 rgb = vec3( red, green, blue);
-
-		vec4 color = vec4( rgb, alpha );
-
-		gl_FragColor = color;
-
-	}
-*/
-
-		varying vec3 vNormal;
-
-		void main() {
-
-			// calc the dot product and clamp
-			// 0 -> 1 rather than -1 -> 1
-			vec3 light = vec3( 0.5, 0.2 , 1.0);
-			  
-			// ensure it's normalized
-			light = normalize( light );
-
-			// calculate the dot product of
-			// the light to the vertex normal
-			float dProd = max( 0.0, dot( vNormal, light ) );
-
-			// feed into our frag colour
-			gl_FragColor = vec4( dProd, dProd, dProd, 1.0 );
-
-//			gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 ); // rgb
-
-		}
 
 </script>
+
+<script type=x-shader/x-fragment id=fragmentShader >
+
+	varying vec3 color;
+
+	void main() {
+
+		gl_FragColor = vec4( color, 1.0 );
+
+	}
+
+</script>
+
 <script>
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -165,20 +108,11 @@
 		scene.add( axisHelper );
 
 // assets
-		geometry = new THREE.PlaneBufferGeometry( 100, 100, 512, 512 );
+		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
 //		material = new THREE.MeshNormalMaterial();
-
-		uniforms = {
-
-			delta: {type: 'f', value: 0.0},
-			scale: {type: 'f', value: 1.0},
-			alpha: {type: 'f', value: 1.0}
-
-		};
 
 		var shaderMaterial = new THREE.ShaderMaterial({
 
-			uniforms: uniforms,
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
 			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 
@@ -203,8 +137,6 @@
 	}
 
 	function animate() {
-
-		uniforms.delta.value += 0.05;
 
 		requestAnimationFrame( animate );
 		controls.update();

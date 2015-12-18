@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic R1</title>
+<title>Shaders Cookbook Vertex Scaling R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -11,43 +11,30 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <!-- Shaders -->
-<script type="x-shader/x-vertex" id="vertexShader">
+<script type=x-shader/x-vertex id=vertexShader >
 
-	varying vec2 vUv;
 
-	uniform float scale;
-
-	uniform float alpha;
+		uniform float delta;
 
 		void main() {
 
-			vUv = uv;
-
-			vec3 p = position;
-
-			p.x += 40;
-
-			p.z += 40;
-
-			vec4 mvPosition = modelViewMatrix * vec4( scale * p, 1.0 );
-
-			gl_Position = projectionMatrix * mvPosition;
+			vec3 newPosition = position + normal * vec3( sin( delta ) );
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
 
 		}
 
 </script>
 
-<script type="x-shader/x-fragment" id="fragmentShader">
+<script type=x-shader/x-fragment id=fragmentShader >
 
 		void main() {
-
-
 
 			gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 ); // rgb
 
 		}
 
 </script>
+
 <script>
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -127,9 +114,7 @@
 
 uniforms = {
 
-  scale: {type: 'f', value: 1.0},
-
-  alpha: {type: 'f', value: 1.0}
+    delta: { type: "f", value: 0 }
 
 };
 
@@ -160,6 +145,7 @@ uniforms = {
 
 	function animate() {
 
+		uniforms.delta.value += 0.05;
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();
