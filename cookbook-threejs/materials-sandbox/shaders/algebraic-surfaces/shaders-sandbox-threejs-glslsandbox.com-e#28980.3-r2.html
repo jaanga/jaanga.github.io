@@ -10,8 +10,6 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
-<!-- Shaders -->
-
 <script>
 // http://glslsandbox.com/e#28980.3
 
@@ -29,14 +27,11 @@
 			}
 `;
 
-
-
-
 var fs =
 `
-//#ifdef GL_ES
-//precision highp float;
-//#endif
+#ifdef GL_ES
+precision highp float;
+#endif
 
 /*
 Raytracer for algebraic surfaces (maximal cubic)

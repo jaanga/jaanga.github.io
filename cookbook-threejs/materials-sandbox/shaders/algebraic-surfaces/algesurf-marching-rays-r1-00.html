@@ -1,0 +1,636 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>AlgeSurf Marching Rays R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+// http://glslsandbox.com/e#28980.3
+
+	var vs =
+`
+
+		varying vec2 vUv;
+
+		void main() {
+
+			vUv = uv;
+
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );;
+
+		}
+
+`;
+
+var eqn1 =
+
+`
+// Cayley surface
+	float Equation( vec3 v, float alpha )
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return x*x + y*y + z*z + alpha * x*y*z - 1.;
+	}
+
+`;
+
+
+var eqn2 =
+`
+
+	// also nice
+	float Equation(vec3 v, float alpha)
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  float s = x+y+z + 1.;
+//	  alpha = 1.4;
+	  return 4.0 * ( x*x*x * alpha * alpha * alpha + y*y*y + z*z*z + 1.0 ) - alpha * s*s*s;
+	}
+
+`
+
+	// Columpius
+
+var eqn3 =
+`
+	float Equation(vec3 v, float alpha )
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return 10.0 * ( x * x * x * y * alpha + x * z * z * z + y * z * z * z + z * z * z + 7.0 * z * z + 5.0 * z );
+	}
+`;
+
+
+
+
+	// surfer.Zeck
+
+var eqn4 =
+`
+	float Equation(vec3 v, float alpha ) {
+	  float x2 = v.x*v.x;
+	  float y2 = v.y*v.y;
+	  float z2 = v.z*v.z;
+	  return x2 + y2 - z2 * v.z * ( 1. - v.z);
+	}
+`
+
+var eqn5 =
+`
+	// should look like surfer.Helix
+	float Equation(vec3 v, float alpha ) {
+	  float x2 = v.x*v.x;
+	  float y2 = v.y*v.y;
+	  float z2 = v.z*v.z;
+	  return 6.*x2 -2.*x2*x2 -y2*z2;
+	}
+`
+
+
+var eqn6 =
+`
+	// cube
+	float Equation(vec3 v, float alpha ) {
+
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return alpha * x * x * x * x * x + y * y * y * y * y + z * z * z * z * z - 1.0;
+
+	}
+`;
+
+var eqn7 =
+`
+// calyx
+//eqn:'x^2 + y^2 * z^3 - z^4',
+	float Equation(vec3 v, float alpha ) {
+
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return alpha * x * x + y * y * z * z * z - z * z * z * z ;
+
+	}
+`;
+
+
+
+var eqn = eqn1;
+
+
+var fsPrefix =
+`
+#ifdef GL_ES
+precision highp float;
+#endif
+
+/*
+Raytracer for algebraic surfaces (maximal cubic)
+by Aaron Montag
+Idea from RealSurf (http://realsurf.informatik.uni-halle.de/)
+*/
+
+	uniform float time;
+	uniform vec2 mouse;
+	uniform float R;
+	uniform vec2 resolution;
+
+	// const float R = 4.0; // container sphere radius
+	const float oo = 100.;
+	const int IT = 10;
+
+
+	// select current function here:
+	#define Equation f3d
+
+`;
+
+	var fsSuffix =
+
+`
+/*
+	//#define F2 f3d
+	//#define F3 f3d
+	//#define F4 f3d
+	// #define F5 f3d
+	//#define F6 f3d
+	//#define F7 f3d
+
+
+	// cube
+
+	float F7(vec3 v, float alpha )
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return alpha * x * x * x * x * x + y * y * y * y * y + z * z * z * z * z - 1.0;
+	}
+
+
+	// calyx
+	//eqn:'x^2 + y^2 * z^3 - z^4',
+	float F5(vec3 v, float alpha )
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return alpha * x * x + y * y * z * z * z - z * z * z * z ;
+	}
+
+
+	// Columpius
+
+	float F6(vec3 v, float alpha )
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return 10.0 * ( x * x * x * y + x * z * z * z + y * z * z * z + z * z * z + 7.0 * z * z + 5.0 * z );
+	}
+
+	// Cayley surface
+	float F1(vec3 v, float alpha )
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  return alpha * x*x + y*y + z*z + alpha*x*y*z - 1.;
+	}
+
+	// also nice
+	float F2(vec3 v, float alpha)
+	{
+	  float x = v.x;
+	  float y = v.y;
+	  float z = v.z;
+	  float s = x+y+z+1.;
+	  alpha = 1.4;
+	  return 4.*( alpha * x*x*x+y*y*y+z*z*z+1.)-alpha*s*s*s;
+	}
+
+	// should look like surfer.Helix
+	float F3(vec3 v, float alpha)
+	{
+	  float x2 = v.x*v.x;
+	  float y2 = v.y*v.y;
+	  float z2 = v.z*v.z;
+	  return 6.*x2 -2.*x2*x2 -y2*z2;
+	}
+
+	// surfer.Zeck
+	float F4(vec3 v, float alpha)
+	{
+	  float x2 = v.x*v.x;
+	  float y2 = v.y*v.y;
+	  float z2 = v.z*v.z;
+	  return x2 +y2 -z2*v.z*(1.-v.z);
+	}
+
+*/
+
+/*
+	// 100: all black / 10: muted colors / 1: default / 0.001: high moiré
+	vec3 dF( vec3 v, float alpha) {
+
+		return vec3(
+
+			f3d( v + vec3( 1.0, 0.0, 0.0 ), alpha ),
+			f3d( v + vec3( 0.0, 1.0, 0.0 ), alpha ), 
+			f3d( v + vec3( 0.0, 0.0, 1.0 ), alpha ) 
+
+		);
+
+	}
+*/
+
+vec3 dF(vec3 v, float alpha) {
+	float x = v.x;
+	float y = v.y;
+	float z = v.z;
+	float s = x+y+z+1.;
+
+  /*
+for F = 4.*(x*x*x+y*y*y+z*z*z+1.)-alpha*s*s*s
+return vec3(
+    12.*x*x-3.*alpha*s*s,
+    12.*y*y-3.*alpha*s*s,
+    12.*z*z-3.*alpha*s*s
+  );*/
+
+	return vec3(
+
+		2.*x + alpha * y*z,
+		2.*y + alpha * x*z,
+		2.*z + alpha * x*y
+
+	);
+
+}
+
+	// Zoom
+	float SR( vec3 v ) {
+
+	  return dot( v, v ) - R * R;
+
+	}
+
+	// spin and rotation
+	vec3 ray(vec2 pos, float t) {
+
+	//  float th = time * 0.2 - 4.0 * mouse.x;
+	//  float phi = time * 0.1321 + 3. * mouse.y;
+
+	  float th = time * 0.2 - 3.0 * mouse.x;
+	  float phi = time * 0.1321 + 2. * mouse.y;
+
+	  return
+
+		mat3(
+		  vec3( cos( th ), 0.0, sin(th)),
+		  vec3( 0.,1.,0.),
+		  vec3(-sin( th ), 0.0, cos(th))
+		) *
+
+		(
+		mat3(
+		  vec3(1.,0,0.),
+		  vec3(0,cos(phi),sin(phi)),
+		  vec3(0,-sin(phi),cos(phi))
+		)
+		*
+		(vec3( pos, 1.) * t + vec3( mouse-vec2(.5),-18.)));
+	}
+
+
+
+	float eval(vec4 poly, float t) {
+
+	  return ( ( ( poly[3])*t+poly[2])*t+poly[1] ) * t + poly[0]; //horner scheme
+
+	}
+
+
+	vec4 d( vec4 p ) {
+	  vec4 r = vec4(0.);
+	  for(int i=0; i<3; i++) {
+		r[i] = p[i+1]*float(i+1);
+	  }
+	  return r;
+	}
+
+
+	float bisect(vec4 p, float l, float u, float def) {
+	  if(l==u) return def;
+	  float lv = eval(p, l);
+	  float uv = eval(p, u);
+	  if(lv*uv>=0.) return def;
+
+	  float m, mv;
+	  for(int i=0; i<IT; i++) {
+		m = (l+u)/2.;
+		mv = eval(p, m);
+		if(lv*mv>0.) {
+		  l = m;
+		  //lv = mv;
+		} else {
+		  u = m;
+		  //bv = cv; //nobody cares
+		}
+	  }
+	  return m;
+	}
+
+	float firstroot(vec4 poly, float l, float u) { //finds first root of poly in interval [l, u]
+	  vec4 p[4];//derivatives
+	  p[3] = poly; //deg 3
+	  for(int i=2; i>=1; i--) {
+		p[i] = d(p[i+1]);
+	  }
+	  vec4 roots = vec4(u); //always consider u as root
+	  vec4 oroots = vec4(u);
+	  for(int i=1; i<4; i++) { //i: degree
+		roots[0] = bisect(p[i], l, oroots[0], l);
+		for(int j=1; j<4; j++) { if(j<i)
+		  roots[j] = bisect(p[i], oroots[j-1], oroots[j],roots[j-1]);
+		}
+		oroots = roots;
+	  }
+	  for(int i=0; i<4; i++) {
+		if(roots[i]!=l && roots[i]!=u) return roots[i];
+		//if(abs(eval(poly,roots[i]))<.01) return roots[i];
+	  }
+	  return oo;
+	}
+
+
+	mat4 A = mat4( //polynomial interpolation for basepoints 0, 5, 10, 15 (better use chebyshev nodes)
+	vec4(  1.000000000000000, -0.366666666666667,  0.040000000000000, -0.001333333333333),
+	vec4( -0.000000000000000,  0.600000000000000, -0.100000000000000,  0.004000000000000),
+	vec4(  0.000000000000000, -0.300000000000000,  0.080000000000000, -0.004000000000000),
+	vec4( -0.000000000000000,  0.066666666666667, -0.020000000000000,  0.001333333333333)
+	);
+	//octave: inv(fliplr(vander([0,5,10,15])))'
+
+
+	void main( void ) {
+
+	  float alpha = 2.3 + 0.85 * sin( time );
+	  vec2 pos = ( gl_FragCoord.xy / resolution.xy ) - vec2( 0.5 ); // centering in x and y
+	  pos.y *= resolution.y/resolution.x;
+
+	  vec4 vals;
+	  vec4 rvals;
+	  for(int i=0; i<4; i++) {
+		vec3 p = ray(pos, 5.*float(i));
+		vals[i] = f3d(p, alpha);
+		rvals[i] = SR(p);
+	  }
+
+	  vec4 poly = A*vals;//interpolate
+	  vec4 rpoly = A*rvals;
+
+	  //rpoly is quadratic
+	  float D = (rpoly[1]*rpoly[1])-4.*rpoly[2]*rpoly[0];
+
+	  float froot = oo;
+	  if(D>=0.)
+		froot = firstroot(poly, max(0.,(-rpoly[1]-sqrt(D))/(2.*rpoly[2])), max(0.,(-rpoly[1]+sqrt(D))/(2.*rpoly[2])));
+
+	  gl_FragColor = vec4(.8);
+
+	  if ( froot != oo ) {
+
+		vec3 n = normalize(dF(ray(pos,froot), alpha));
+
+		vec3 l[5]; //position of light
+		vec3 c[5]; //color of light
+		l[0] = -vec3(-1.,1.,0.);
+		l[1] = -vec3(0.,-1.,1.);
+		l[2] = -vec3(1.,0.,-1.);
+		l[3] = -ray(vec2(.0,.0),-10.);
+		l[4] = ray(vec2(.0,.0),-10.);
+
+		c[0] = vec3(1.,.6,.3)*.6;
+		c[1] = vec3(.3,1.,.6)*.6;
+		c[2] = vec3(.6,.3,1.)*.6;
+		c[3] = vec3(.9,.3,.0);
+		c[4] = vec3(0.,.8,.8);
+
+
+		gl_FragColor = vec4( 0., 0., 0., 1. );
+
+		for(int i=0; i<5; i++) {
+		  float illumination = max(0.,dot(normalize(l[i]),n));
+		  gl_FragColor.rgb += illumination*illumination*c[i];
+		}
+	  }
+	}
+
+`;
+
+	var surface;
+	var mouse = new THREE.Vector2();
+	var radis = 6.0;
+
+	var css, menu, stats, renderer, scene, camera;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			button{ background-color: #eee; border: 2px #eee solid; color: #888; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; max-width: 250px; overflow: auto; position: absolute; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a>
+				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<p><button onclick=eqn=eqn1;updateSurface(eqn); >Cayley</button></p>
+			<p><button onclick=eqn=eqn2;updateSurface(eqn); >also nice</button></p>
+			<p><button onclick=eqn=eqn3;updateSurface(eqn); >Columpius</button></p>
+			<p><button onclick=eqn=eqn4;updateSurface(eqn); >Zeck</button></p>
+			<p><button onclick=eqn=eqn5;updateSurface(eqn); >surfer: Helix</button></p>
+			<p><button onclick=eqn=eqn6;updateSurface(eqn); >Cube</button></p>
+			<p><button onclick=eqn=eqn6;updateSurface(eqn); >Calyx</button></p>
+			<p><input type=checkbox id=chkRotation checked> auto rotation</p>
+			<div id=info ></div>
+
+		`;
+
+
+//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.Camera();
+		camera.position.z = -1;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
+		renderer.domElement.addEventListener( 'mousewheel', onMouseWheel, false );
+		renderer.domElement.addEventListener( 'MozMousePixelScroll', onMouseWheel, false ); // firefox
+
+
+		updateSurface( eqn ) ;
+
+	}
+
+	function updateSurface( eqn ) {
+
+		equation = eqn ? eqn : '';
+
+		scene.remove( surface );
+
+		uniforms = {
+
+			time: { type: "f", value: 1.0 },
+			resolution: { type: "v2", value: new THREE.Vector2( renderer.domElement.width, renderer.domElement.height ) },
+			mouse: { type: "v2", value: new THREE.Vector2( 0, 0 ) },
+			R: { type: "f", value: 6.0 },
+
+		};
+
+		material = new THREE.ShaderMaterial( {
+
+			uniforms: uniforms,
+			vertexShader: vs,
+			fragmentShader: fsPrefix + equation + fsSuffix
+
+		} );
+
+		geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+		surface = new THREE.Mesh( geometry, material );
+		scene.add( surface );
+
+		info.innerHTML = eqn.toString();
+	}
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseMove( event ) {
+
+		event.preventDefault();
+
+		uniforms.mouse.value.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		uniforms.mouse.value.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+	}
+
+	function onWindowResize( event ) {
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		uniforms.resolution.value.x = renderer.domElement.width;
+		uniforms.resolution.value.y = renderer.domElement.height;
+
+	}
+
+	function onMouseWheel( event ) {
+
+		event.preventDefault();
+		event.stopPropagation();
+
+		handleMouseWheel( event );
+
+	}
+
+	function handleMouseWheel( event ) {
+
+		var delta = 0;
+
+		if ( event.wheelDelta !== undefined ) {
+
+// WebKit / Opera / Explorer 9
+
+			delta = event.wheelDelta;
+
+		} else if ( event.detail !== undefined ) {
+
+// Firefox
+
+			delta = - event.detail;
+
+		}
+
+		if ( delta > 0 ) {
+
+//console.log( '++', delta );
+
+			uniforms.R.value += 0.5;
+
+		} else if ( delta < 0 ) {
+
+//console.log( '--', delta );
+
+			uniforms.R.value -= 0.5;
+
+		}
+
+	}
+
+	function animate() {
+
+		uniforms.time.value += chkRotation.checked ? 0.02 : 0;
+
+		requestAnimationFrame( animate );
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
