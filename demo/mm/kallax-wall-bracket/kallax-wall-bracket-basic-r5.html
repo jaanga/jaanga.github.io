@@ -130,7 +130,7 @@
 		edges = new THREE.Object3D();
 		edges.name = 'edges';
 
-		helpers = new THREE.Object3D();
+//		helpers = new THREE.Object3D();
 
 		components = [];
 		holes = [];
@@ -151,7 +151,7 @@
 //		part103693.rotation.set( -pi05, 0, ran( 3 ) );
 //		part103693.position.set( 30, 0, 20 );
 
-		part103693.userData.places.push( [ v( 30, 0, 20  ), v( -pi05, 0, ran( 3 ) ) ] );
+		part103693.userData.places.push( [ v( 40, 0, 40 - ran( 10 ) ), v( -pi05, 0, ran( 3 ) ) ] );
 		bracketAssembly.add( part103693 );
 
 		screw = drawScrew100372();

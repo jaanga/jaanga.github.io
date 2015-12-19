@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic Sandbox R1</title>
+<title>Shaders Cookbook Texture Lights AeroTwist R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -11,53 +11,78 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <!-- Shaders -->
-<script type="x-shader/x-vertex" id="vertexShader">
+<script type=x-shader/x-vertex id=vertexShader >
+// http://blog.edankwan.com/post/three-js-advanced-tips-shadow
 
-		attribute float displacement;
+		varying vec2 vUV;
 		varying vec3 vNormal;
+		varying vec3 vWorldPosition;
 
 		void main() {
 
-			vNormal = normal;
+			vUV = 0.75 * uv;
 
-			vec3 newPosition = position + normal * vec3( displacement );
+			vNormal = normalMatrix * vec3( normal );
 
-			gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+//			vec4 worldPosition = modelMatrix * vec4( position, 1.0 ); 
+
+//			vWorldPosition = worldPosition.xyz;
+
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 
 		}
 
 </script>
 
-<script type="x-shader/x-fragment" id="fragmentShader">
+<script type=x-shader/x-fragment id=fragmentShader >
 
-
+		varying vec2 vUV;
 		varying vec3 vNormal;
+		uniform sampler2D texture;
 
 		void main()
 		{
 
-			// calc the dot product and clamp
-			// 0 -> 1 rather than -1 -> 1
+// calc the dot product and clamp 0 -> 1 rather than -1 -> 1
 			vec3 light = vec3( 0.5, 0.2 , 1.0 );
 			  
-			// ensure it's normalized
+// ensure it's normalized
 			light = normalize( light );
 
-			// calculate the dot product of
-			// the light to the vertex normal
-			float dProd = max( 0.0, dot( vNormal, light ) );
+// calculate the dot product of the light to the vertex normal
+			float dProd = 1.15 * max( 0.0, dot( vNormal, light ) );
 
-			// feed into our frag colour
-			gl_FragColor = vec4( dProd, dProd, dProd, 1.0 );
+			vec4 pixel = texture2D( texture, vUV );
 
-//			gl_FragColor = vec4( 1.0, 0.0, 1.0, 1.0 ); // rgb
+// feed into our frag colour
+			gl_FragColor = vec4( pixel.x * dProd + 0.25, pixel.y * dProd, pixel.z * dProd, 1.0 );
 
 		}
 
+/*
+		varying vec2 vUV;
+		varying vec3 vNormal;
+		varying vec3 vWorldPosition;
+		uniform vec3 lightPosition;
+		uniform sampler2D texture;
+
+		void main() {
+
+			vec3 lightDirection = normalize( lightPosition - vWorldPosition );
+
+			float c = 0.15 + max( 0.0, dot( vNormal, lightDirection ) ) * 0.8;
+
+			vec4 pixel = texture2D( texture, vUV );
+
+			gl_FragColor = vec4( pixel.x + 0.5, pixel.y - c, pixel.z - c, 1.0 ); // rgb
+
+		}
+*/
 </script>
+
 <script>
 
-// https://aerotwist.com/tutorials/an-introduction-to-shaders-part-2/
+	var time = 0;
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -106,6 +131,10 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+
+		renderer.shadowMap.enabled = true;
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -127,22 +156,78 @@
 		scene.add( axisHelper );
 
 // assets
-		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
-//		material = new THREE.MeshNormalMaterial();
 
-		var shaderMaterial = new THREE.ShaderMaterial({
+		addLights();
 
+		geometry = new THREE.BoxGeometry( 100, 10, 100 );
+		material = new THREE.MeshPhongMaterial( { color: 0x885544 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.position.set( 0, -40, 0 );
+		scene.add( mesh );
+
+		var texture = THREE.ImageUtils.loadTexture( 'water.jpg' );
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.anisotropy = 16;
+
+		uniforms = THREE.UniformsUtils.merge([
+			THREE.UniformsLib['lights'],
+			{
+				lightPosition: {type: 'v3', value: new THREE.Vector3( 700, 700, 700 ) },
+				color: {type: 'f', value: 0.0},
+				texture: {type: 't', value: texture }
+			}
+		]),
+
+
+		material = new THREE.ShaderMaterial({
+
+			uniforms: uniforms,
 			vertexShader: document.getElementById( 'vertexShader' ).textContent,
-			fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+			fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
 
 		});
 
-		mesh = new THREE.Mesh( geometry, shaderMaterial );
+		uniforms.texture.value = texture;
+
+		geometry = new THREE.SphereBufferGeometry( 30, 24, 12 );
+//		material = new THREE.MeshNormalMaterial();
+
+		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
+		mesh.castShadow = mesh.receiveShadow = true;
 		scene.add( mesh );
 
 		var edgesHelper = new THREE.EdgesHelper( mesh );
 		scene.add( edgesHelper );
+
+	}
+
+	function addLights() {
+
+			scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+			light = new THREE.DirectionalLight( 0xdfebff, 1.75 );
+			light.position.set( 50, 200, 100 );
+			light.position.multiplyScalar( 1.3 );
+
+			light.castShadow = true;
+			// light.shadowCameraVisible = true;
+
+			light.shadowMapWidth = 1024;
+			light.shadowMapHeight = 1024;
+
+			var d = 300;
+
+			light.shadowCameraLeft = -d;
+			light.shadowCameraRight = d;
+			light.shadowCameraTop = d;
+			light.shadowCameraBottom = -d;
+
+			light.shadowCameraFar = 1000;
+
+			scene.add( light );
 
 	}
 
@@ -156,6 +241,12 @@
 	}
 
 	function animate() {
+
+		time += 0.1;
+		mesh.rotation.x += 0.01;
+		mesh.position.y = Math.sin( time * 0.05 ) * 50;
+//		uniforms.time.value = time;
+
 
 		requestAnimationFrame( animate );
 		controls.update();

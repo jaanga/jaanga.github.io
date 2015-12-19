@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Basic R1</title>
+<title>Shaders Algebraic Surfaces 28980.3 R12</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -11,8 +11,12 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <!-- Shaders -->
-<script type=x-shader/x-vertex id=vertexShader >
 
+<script>
+// http://glslsandbox.com/e#28980.3
+
+	var vs =
+`
 			varying vec2 vUv;
 
 			void main()
@@ -23,99 +27,132 @@
 				gl_Position = projectionMatrix * mvPosition;
 
 			}
-</script>
-
-<script type=x-shader/x-fragment id=fragmentShader >
-
-#ifdef GL_ES
-precision highp float;
-#endif
+`;
 
 
-/* AlgebraicSurface_Caley
-Raytracer for algebraic surfaces up to deg 4
+
+
+var fs =
+`
+//#ifdef GL_ES
+//precision highp float;
+//#endif
+
+/*
+Raytracer for algebraic surfaces (maximal cubic)
 by Aaron Montag
 Idea from RealSurf (http://realsurf.informatik.uni-halle.de/)
 */
+
+// question: is there a chance to create a version
+// where we don't have to adapt function 'dF'
+// so that we only must define 'F' like 'Surfer' does ?
+// 'Surfer': http://imaginary.org/program/surfer
 
 uniform float time;
 uniform vec2 mouse;
 uniform vec2 resolution;
 
-
-// vec2 ttt;
-float xxx = 0.5;
-float yyy = 0.5;
-//mouse.x = xxx;
-//mouse.y = yyy;
-
-//#define F1 F
-//#define dF1 dF
-
-#define F2 F
-#define dF2 dF
-
-const float R = 4.;
-const float oo = 1000.;
-
+const float R = 4.; // container sphere radius
+const float oo = 100.;
 const int IT = 10;
-float alpha = .5 + 0.1; //mouse.y;
-//float alpha = 2.;
 
-float F1(vec3 v) 
+// select current function here:
+//#define F1 f3d
+#define F2 f3d
+//#define F3 f3d
+//#define F4 f3d
+// #define F5 f3d
+//#define F6 f3d
+//#define F7 f3d
+
+
+// cube
+
+float F7(vec3 v, float alpha )
+{
+  float x = v.x;
+  float y = v.y;
+  float z = v.z;
+  return alpha * x * x * x * x * x + y * y * y * y * y + z * z * z * z * z - 1.0;
+}
+
+
+// calyx
+//eqn:'x^2 + y^2 * z^3 - z^4',
+float F5(vec3 v, float alpha )
+{
+  float x = v.x;
+  float y = v.y;
+  float z = v.z;
+  return alpha * x * x + y * y * z * z * z - z * z * z * z ;
+}
+
+
+// Columpius
+
+float F6(vec3 v, float alpha )
+{
+  float x = v.x;
+  float y = v.y;
+  float z = v.z;
+  return 10.0 * ( x * x * x * y + x * z * z * z + y * z * z * z + z * z * z + 7.0 * z * z + 5.0 * z );
+}
+
+// Cayley surface
+float F1(vec3 v, float alpha )
+{
+  float x = v.x;
+  float y = v.y;
+  float z = v.z;
+  return alpha * x*x + y*y + z*z + alpha*x*y*z - 1.;
+}
+
+// also nice
+float F2(vec3 v, float alpha)
 {
   float x = v.x;
   float y = v.y;
   float z = v.z;
   float s = x+y+z+1.;
-  return 4.*(x*x*x+y*y*y+z*z*z+1.)-alpha*s*s*s;
+  alpha = 1.4;
+  return 4.*( alpha * x*x*x+y*y*y+z*z*z+1.)-alpha*s*s*s;
 }
 
-vec3 dF1(vec3 v) 
+// should look like surfer.Helix
+float F3(vec3 v, float alpha)
 {
-  float x = v.x;
-  float y = v.y;
-  float z = v.z;
-	float s = x+y+z+1.;
-  return vec3(
-    12.*x*x-3.*alpha*s*s,
-    12.*y*y-3.*alpha*s*s,
-    12.*z*z-3.*alpha*s*s
-  );
+  float x2 = v.x*v.x;
+  float y2 = v.y*v.y;
+  float z2 = v.z*v.z;
+  return 6.*x2 -2.*x2*x2 -y2*z2;
 }
 
-float F2(vec3 v) 
+// surfer.Zeck
+float F4(vec3 v, float alpha)
 {
-  float x = v.x;
-  float y = v.y;
-  float z = v.z;
-  float s = x+y+z+1.;
-  float alpha = 2.3+.35*sin(time);
-  return x*x+y*y+z*z+alpha*x*y*z-1.;
+  float x2 = v.x*v.x;
+  float y2 = v.y*v.y;
+  float z2 = v.z*v.z;
+  return x2 +y2 -z2*v.z*(1.-v.z);
 }
 
-	vec3 dF2(vec3 v) {
-		float x = v.x;
-		float y = v.y;
-		float z = v.z;
-		float s = x + y + z + 1.0;
-		return vec3(
 
-			2.0 * x + alpha * y * z,
-			2.0 * y + alpha * x * z,
-			2.0 * z + alpha * x * y
-
-		);
-	}
+vec3 dF(vec3 v, float alpha)
+{
+  return vec3(f3d(v+vec3(1.,0.,0.),alpha)
+	, f3d(v+vec3(0.,1.,0.),alpha)
+	, f3d(v+vec3(0.,0.,1.),alpha));
+}
 
 float SR(vec3 v) {
-  return dot(v,v)-R*R;  
+  return dot(v,v)-R*R;
 }
 
 vec3 ray(vec2 pos, float t) {
   float th = time*.2-4.*mouse.x;
   float phi = time*.1321+3.*mouse.y;
-  return 
+  return
     mat3(
       vec3(cos(th),0.,sin(th)),
       vec3(0.,1.,0.),
@@ -126,11 +163,10 @@ vec3 ray(vec2 pos, float t) {
       vec3(1.,0,0.),
       vec3(0,cos(phi),sin(phi)),
       vec3(0,-sin(phi),cos(phi))
-    )  
+    )
     *(vec3(pos,1.)*t+vec3(mouse-vec2(.5),-18.)));
 }
 
-  
 
 
 float eval(vec4 poly, float t) {
@@ -142,7 +178,7 @@ float eval(vec4 poly, float t) {
 vec4 d(vec4 p) {
   vec4 r = vec4(0.);
   for(int i=0; i<3; i++) {
-    r[i] = p[i+1]*float(i+1);  
+    r[i] = p[i+1]*float(i+1);
   }
   return r;
 }
@@ -153,7 +189,7 @@ float bisect(vec4 p, float l, float u, float def) {
   float lv = eval(p, l);
   float uv = eval(p, u);
   if(lv*uv>=0.) return def;
-  
+
   float m, mv;
   for(int i=0; i<IT; i++) {
     m = (l+u)/2.;
@@ -173,7 +209,7 @@ float firstroot(vec4 poly, float l, float u) { //finds first root of poly in int
   vec4 p[4];//derivatives
   p[3] = poly; //deg 3
   for(int i=2; i>=1; i--) {
-    p[i] = d(p[i+1]);  
+    p[i] = d(p[i+1]);
   }
   vec4 roots = vec4(u); //always consider u as root
   vec4 oroots = vec4(u);
@@ -203,60 +239,62 @@ vec4( -0.000000000000000,  0.066666666666667, -0.020000000000000,  0.00133333333
 
 void main( void ) {
 
+  float alpha = 2.3+.35*sin(time);
   vec2 pos = ( gl_FragCoord.xy / resolution.xy ) -vec2(.5);
   pos.y *= resolution.y/resolution.x;
-  
+
   vec4 vals;
   vec4 rvals;
   for(int i=0; i<4; i++) {
     vec3 p = ray(pos, 5.*float(i));
-    vals[i] = F(p);
+    vals[i] = f3d(p, alpha);
     rvals[i] = SR(p);
   }
-  
+
   vec4 poly = A*vals;//interpolate
-  vec4 rpoly = A*rvals; 
-  
-//rpoly is quadratic
-  float D = (rpoly[1]*rpoly[1])-4.*rpoly[2]*rpoly[0]; 
-  
+  vec4 rpoly = A*rvals;
+
+  //rpoly is quadratic
+  float D = (rpoly[1]*rpoly[1])-4.*rpoly[2]*rpoly[0];
+
   float froot = oo;
-  if(D>=0.) 
+  if(D>=0.)
     froot = firstroot(poly, max(0.,(-rpoly[1]-sqrt(D))/(2.*rpoly[2])), max(0.,(-rpoly[1]+sqrt(D))/(2.*rpoly[2])));
 
-  gl_FragColor = vec4(.1);
-  
+  gl_FragColor = vec4(.8);
+
   if(froot != oo) {
-    vec3 n = normalize(dF(ray(pos,froot)));
-    
-    
+    vec3 n = normalize(dF(ray(pos,froot), alpha));
+
+
     vec3 l[5]; //position of light
     vec3 c[5]; //color of light
-    l[0] = vec3(-1.,1.,0.);
-    l[1] = vec3(0.,-1.,1.);
-    l[2] = vec3(1.,0.,-1.);
+    l[0] = -vec3(-1.,1.,0.);
+    l[1] = -vec3(0.,-1.,1.);
+    l[2] = -vec3(1.,0.,-1.);
     l[3] = -ray(vec2(.0,.0),-10.);
     l[4] = ray(vec2(.0,.0),-10.);
-    
-    c[0] = vec3(1.,.6,.3);
-    c[1] = vec3(.3,1.,.6);
-    c[2] = vec3(.6,.3,1.);
+
+    c[0] = vec3(1.,.6,.3)*.6;
+    c[1] = vec3(.3,1.,.6)*.6;
+    c[2] = vec3(.6,.3,1.)*.6;
     c[3] = vec3(.9,.3,.0);
     c[4] = vec3(0.,.8,.8);
-    
-    
+
+
     gl_FragColor = vec4(0.,0.,0.,1.);
-    
+
     for(int i=0; i<5; i++) {
       float illumination = max(0.,dot(normalize(l[i]),n));
       gl_FragColor.rgb += illumination*illumination*c[i];
     }
-  } 
+  }
 }
 
-</script>
+`;
 
-<script>
+
+	var mouse = new THREE.Vector2();
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -320,6 +358,8 @@ void main( void ) {
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+
 
 // helpers
 
@@ -330,38 +370,60 @@ void main( void ) {
 
 
 		geometry = new THREE.BoxGeometry( 100, -20, 100 );
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
+//		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -60, 0 );
 		scene.add( mesh );
 
+		var edgesHelper = new THREE.EdgesHelper( mesh, 0x000000 );
+		scene.add( edgesHelper );
 
-				uniforms = {
-					time: { type: "f", value: 1.0 },
-					resolution: { type: "v2", value: new THREE.Vector2( 1024, 768 ) },
+		uniforms = {
+			time: { type: "f", value: 1.0 },
+			resolution: { type: "v2", value: new THREE.Vector2( 1024, 1024 ) },
+			mouse: { type: "v2", value: new THREE.Vector2( 0, 0 ) },
 //					texture: { type: "t", value: THREE.ImageUtils.loadTexture( "water.jpg" ) }
-				};
+		};
 
 
-				material = new THREE.ShaderMaterial( {
+		material = new THREE.ShaderMaterial( {
 
-					uniforms: uniforms,
-					vertexShader: document.getElementById( 'vertexShader' ).textContent,
-					fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+			uniforms: uniforms,
+			vertexShader: vs,
+			fragmentShader: fs
 
-				} );
+		} );
 
-		geometry = new THREE.PlaneBufferGeometry( 100, 100 );
-		geometry = new THREE.BoxGeometry( 100, 100, 50 );
-//		geometry = new THREE.IcosahedronGeometry( 30, 3 );
-//		material = new THREE.MeshNormalMaterial();
+;
 
+//		geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+//		geometry = new THREE.BoxGeometry( 100, 100, 50 );
+		geometry = new THREE.IcosahedronGeometry( 50, 3 );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );
 
-		var edgesHelper = new THREE.EdgesHelper( mesh );
+		var edgesHelper = new THREE.EdgesHelper( mesh, 0xff0000 );
 		scene.add( edgesHelper );
+
+	}
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseMove( event ) {
+
+//		event.preventDefault();
+
+		uniforms.mouse.value.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		uniforms.mouse.value.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
 
 	}
 

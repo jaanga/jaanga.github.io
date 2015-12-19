@@ -48,12 +48,16 @@
 
 	function drawHelpers2( length ) {
 
+		helpers = new THREE.Object3D();
+
 		var axisHelper = new THREE.AxisHelper( length );
 		helpers.add( axisHelper );
 
 		var gridHelper = new THREE.GridHelper( length, 10 );
 		gridHelper.position.set( 0, 0, 0 );
 		helpers.add( gridHelper );
+
+		scene.add( helpers );
 
 	}
 

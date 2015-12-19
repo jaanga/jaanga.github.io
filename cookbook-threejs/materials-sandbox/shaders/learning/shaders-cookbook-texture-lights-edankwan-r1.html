@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Shaders Cookbook Texture Lights R1</title>
+<title>Shaders Cookbook Texture Lights edankwan R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -21,6 +21,7 @@
 		void main() {
 
 			vUV = 0.75 * uv;
+
 			vNormal = normalMatrix * vec3( normal );
 
 			vec4 worldPosition = modelMatrix * vec4( position, 1.0); 
