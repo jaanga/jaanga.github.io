@@ -28,6 +28,8 @@
 
 # [Math]( http://jaanga.github.io/algesurf/home-page/r3/index.html )
 
+## [Marching Rays]( http://jaanga.github.io/cookbook-threejs/materials-sandbox/shaders/algebraic-surfaces/algesurf-marching-rays-r1.html )
+
 ## [algeSurf]( http://jaanga.github.io/algesurf/function-graph/latest/ )
 
 ## [Lorenz Attractor]( http://jaanga.github.io/algesurf/chaotic-maps/lorenz-attractor/r2/lorenz-attractor.html )
