@@ -1,0 +1,246 @@
+﻿<!doctype html>
+<html >
+<head>
+<meta charset=utf-8 >
+<title>CS482 Viewer R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js ></script>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	var defaultFile = '../page-001.md';
+	var lecturesPath = 'https://www.cs.uaf.edu/2015/spring/cs482/lecture/';
+	var lectures = [
+
+		'01_15_integration.html',
+		'01_21_vec3.html',
+		'01_23_THREE.html',
+		'01_26_boids.html',
+		'01_28_gravity.html',
+		'02_02_models.html',
+		'02_04_tets.html',
+		'02_11_collision.html',
+		'02_13_FEM.html',
+		'02_16_rotation.html',
+		'02_18_rotation_rate.html',
+		'02_20_boundary.html',
+		'02_23_GLSL.html',
+		'02_27_gVector1D.html',
+		'03_02_GPU_newton.html',
+		'03_06_waves.html',
+		'03_25_advection.html',
+		'03_27_navier_stokes.html',
+		'03_30_multigrid.html',
+		'04_08_reaction_diffusion.html',
+		'04_10_growth.html',
+		'04_20_scientific_data.pdf',
+		'04_22_spectral.html',
+		'02_20_boundary/Fast%20and%20accurate%20computation%20of%20polyhedral%20mass%20properties.pdf',
+
+	];
+
+
+	var demosPath = 'https://www.cs.uaf.edu/2015/spring/cs482/demo/';
+	var demos = [
+
+		'01_16_newton.html',
+		'01_21_vec3.html',
+		'01_23_volcano.html',
+		'01_25_flocking.html',
+		'01_26_lectureflock.html',
+		'01_28_gravity.html',
+		'01_28_gravity_hash.html',
+		'01_28_gravity_hash_mass.html',
+		'01_28_gravity_mega.html',
+		'01_30_springs.html',
+		'02_04_spring_model.html',
+		'02_06_shaded_model.html',
+		'02_09_obstacle.html',
+		'02_11_collide.html',
+		'02_11a_two_bodies_no_collide.html',
+		'02_11b_hashtable_mystery_hang.html',
+		'02_11c_hashtable_OK.html',
+		'02_11d_pushback.html',
+		'02_11e_tuned.html',
+		'02_11f_point_polygon_fail.html',
+		'02_13_FEM.html',
+		'02_16_keyboard_move.html',
+		'02_16_rotation_euler.html',
+		'02_16_rotation_matrix.html',
+		'02_16_rotation_quaternion.html',
+		'02_18_rotation_rate.html',
+		'02_18_rotation_rate_matrix.html',
+		'02_23_GLSL.html',
+		'02_27_simple1D.html',
+		'02_27_snake1D.html',
+		'03_02_gravity_GPU.html',
+		'03_02_particles.html',
+		'03_02_simplePV.html',
+		'03_04_field.html',
+		'03_06_gas_particle.html',
+		'03_06_gas_particle.png',
+		'03_06_gas_wave.html',
+		'03_09_game_of_life.html',
+		'03_23_boundaries.html',
+		'03_23_wave_reflections.html',
+		'03_25_advect0.html',
+		'03_25_advect1.html',
+		'03_25_advect2.html',
+		'03_27_navier_stokes.html',
+		'03_30_multigrid.html',
+		'04_03_blue_channel.html',
+		'04_03_fireball.html',
+		'04_03_mushroom.html',
+		'04_03_reaction.html',
+		'04_03_two_textures.html',
+		'04_06_ice.html',
+		'04_08_reaction_diffusion.html',
+		'04_08_turk_turing.html',
+		'04_08_turk_turing.png',
+		'04_08_turk_turing_slow.html',
+		'04_10_branch.html',
+		'04_10_growth.html',
+		'04_10_growth.png',
+		'04_15_erosion.html',
+		'04_15_erosion3D.html',
+		'04_17_erode_particles.html',
+		'midterm_corp.html',
+		'test.html',
+
+];
+
+
+	var menuMarkdown =
+
+`
+
+[Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/documents/ )
+
+## [${ document.title }]( cs482-viewer-r1.html ) [🛈]( http://jaanga.github.io/documents/ )
+
+***
+
+[Introduction ]( #../page-001.md )
+
+`;
+
+	menuMarkdown += '<h2>Lectures</h2>';
+
+	menuMarkdown += makeMenuMD( lectures, lecturesPath );
+
+	menuMarkdown += '<h2>Demos</h2>';
+
+	menuMarkdown += makeMenuMD( demos, demosPath, '#' );
+
+
+	var footer =
+
+`
+***
+
+<center title="dingbat" >
+## <a href=javascript:content.scrollTop=0; >❦</a>
+</center>
+
+`;
+
+	var converter, content;
+
+	init();
+
+	function init() {
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+`
+
+			* { box-sizing: border-box; }
+			html { height: 100%; }
+			body { font: 12pt monospace; margin: 0; }
+			h2 a { text-decoration: none; }
+			#menu p { margin: 0 10px; }
+
+			#menu { background-color: #ccc;  height: 100%; max-width: 310px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; top: 0;}
+			#content { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
+			#ifr { height: 100%; width:800px; }
+`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = converter.makeHtml( menuMarkdown );
+
+		content = document.body.appendChild( document.createElement( 'div' ) );
+		content.id = 'content';
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+		onHashChange();
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash.split( '#' );
+
+		fileName = hashes[ 1 ] ? hashes[ 1 ] : defaultFile;
+
+		document.title = fileName.split( '/' ).pop();
+
+		requestFile ( fileName );
+
+	}
+
+	function requestFile ( url ) {
+
+		if ( url.substr( -3 ) === '.md' ) {
+
+			var xhr = new THREE.XHRLoader();
+			xhr.load( url, onLoad ) ;
+
+			function onLoad( text ) {
+
+				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text + footer ) + '</div>';
+
+			}
+
+		} else {
+
+			css = hashes.length > 2 ? 'style=width:100%;' : '';
+
+			content.innerHTML = '<iframe src=' + url + ' id=ifr ' + css + ' ></iframe>';
+
+		}
+
+		content.scrollTop = 0;
+
+	}
+
+	function makeMenuMD( arr, path, style ) {
+
+		var css = style ? style : '';
+		var txt = '';
+
+		for ( var i = 0; i < arr.length; i++ ) {
+
+			txt += '[' + arr[ i ] + ']( #' + path + arr[ i ] + css + ' )<br>';
+
+		}
+
+		return txt;
+
+	}
+
+	function onWindowResize() {
+
+		content.style.width = ( window.innerWidth - 330 ) + 'px';
+
+	}
+
+</script>
+</body>
+</html>
