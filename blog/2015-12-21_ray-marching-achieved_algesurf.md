@@ -19,14 +19,6 @@ We are highly indebted to:
 * Íñgo Quílez and many more
 	* http://www.iquilezles.org/
 
-This work is still very preliminary, but will definitely become part of the algeSurf toolkit.
-All the various ways of rendering equations can use ray marching - and other types of shaders - to make things faster and better.
-
-On the other hand ray marching and shaders in general add an extra level of complexity to the code.
-We can see two types of code being developed in algeSurf:
-
-* Very simple code without shaders - great for the first quick demo
-* Code with shaders for the demos that need to [knock your socks off]( http://idioms.thefreedictionary.com/knock+socks+off )
 
 ### What The Future Holds
 
@@ -35,14 +27,24 @@ In Marching cubes the equation is static, the motion is simple, single axis rota
 With the current ray marching algorithm it's all changing all the time.
 Often happens is that you see the equation as looks in Marching Cubes, but only for a brief moment.
 
-Two thoughts:
+Some thoughts:
 
-1. It's going to take a good effort to take an equation such as Columpius appear the same in ray marching as it does in marching cubea.
+1: It's going to take a good effort to take an equation such as Columpius appear the same in ray marching as it does in marching cubea.
 The goal would be for Columpius to start off - when you first load it 
 - looking like its old static version then let it go on and do its own new wild thing moves.
-2. We have hardly begun to scratch the surface as to the possibilities. In the next few years, math viz is going to be disrupted big time.
 
 
+2: We have hardly begun to scratch the surface as to the possibilities. In the next few years, math viz is going to be disrupted big time.
+
+
+3: This work is still very preliminary, but will definitely become part of the algeSurf toolkit.
+All the various ways of rendering equations can use ray marching - and other types of shaders - to make things faster and better.
+
+On the other hand ray marching and shaders in general add an extra level of complexity to the code.
+We can see two types of code being developed in algeSurf:
+
+* Very simple code without shaders - great for the first quick demo
+* Code with shaders for the demos that need to [knock your socks off]( http://idioms.thefreedictionary.com/knock+socks+off )
 
  
 
@@ -105,5 +107,5 @@ So we are taking the spaces when things are multiplied by themselves, as in
 
 ### Links
 
-* Demo: http://jaanga.github.io/algesurf/ray-marching/dev/
-* Read Me: http://jaanga.github.io/algesurf/ray-marching/
+* Demo: <http://jaanga.github.io/algesurf/ray-marching/dev/>
+* Read Me: <http://jaanga.github.io/algesurf/ray-marching/>
