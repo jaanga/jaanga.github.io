@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>AlgeSurf Marching Rays R1</title>
+<title>AlgeSurf Marching Rays R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -51,7 +51,7 @@ var eqn2 =
 	  float z = v.z;
 	  float s = x+y+z + 1.;
 //	  alpha = 1.4;
-	  return 4.0 * ( x*x*x * alpha * alpha * alpha + y*y*y + z*z*z + 1.0 ) - alpha * s*s*s;
+	  return 4.0 * ( x*x*x * alpha *  alpha + y*y*y + z*z*z + 1.0 ) - alpha * s*s*s;
 	}
 
 `;
@@ -59,23 +59,24 @@ var eqn2 =
 // Columpius
 var eqn3 =
 `
-	float Equation(vec3 v, float alpha )
-	{
-	  float x = v.x;
-	  float y = v.y;
-	  float z = v.z;
-	  return 10.0 * ( x*x*x * y * alpha + x*z*z*z + y * z*z*z + z*z*z + 7.0 * z*z + 5.0 * z );
+	float Equation(vec3 v, float alpha ) {
+
+		float x = v.x;
+		float y = v.y;
+		float z = v.z;
+		return x*x*x * y + x * z*z*z + y * z*z*z + z*z*z + 7.0 * z*z + 5.0 * z;
 	}
 `;
 
 	// surfer.Zeck
 var eqn4 =
 `
+//surfer.Zeck
 	float Equation(vec3 v, float alpha ) {
-	  float x2 = v.x * v.x;
-	  float y2 = v.y * v.y;
-	  float z2 = v.z * v.z;
-	  return x2 + y2 - z2 * v.z * ( 1. - v.z);
+		float x2 = v.x * v.x;
+		float y2 = v.y * v.y;
+		float z2 = v.z * v.z;
+		return x2 + y2 - z2 * v.z * ( 1. - v.z ) - 5.0;
 	}
 `
 
@@ -93,13 +94,13 @@ var eqn5 =
 
 var eqn6 =
 `
-	// cube
+// cube
 	float Equation(vec3 v, float alpha ) {
 
 	  float x = v.x;
 	  float y = v.y;
 	  float z = v.z;
-	  return alpha * x * x * x * x * x + y * y * y * y * y + z * z * z * z * z - 1.0;
+	  return x * x * x * x * x * x + y * y * y * y * y * y + z * z * z * z * z * z - alpha * 1.0;
 
 	}
 `;
@@ -110,10 +111,42 @@ var eqn7 =
 //eqn:'x^2 + y^2 * z^3 - z^4',
 	float Equation(vec3 v, float alpha ) {
 
-	  float x = v.x;
-	  float y = v.y;
-	  float z = v.z;
-	  return alpha * x * x + y * y * z * z * z - z * z * z * z ;
+		float x = v.x;
+		float y = v.y;
+		float z = v.z;
+
+		return x*x + y*y * z*z*z - z * z*z*z - 10.0;
+
+	}
+`;
+
+
+var eqn8 =
+// eqn:'x^2*y^2*z^2 + 3*x^2 + 3*y^2 + z^2 - 1',
+
+`
+//leopold
+	float Equation(vec3 v, float alpha ) {
+
+		float x = 1.0 * v.x ;
+		float y = 1.0 * v.y;
+		float z = 1.0 * v.z;
+		return ( 3.0 * x*x + 3.0 * y*y + z*z - 20.0 );
+
+	}
+`;
+
+
+
+var eqn9 =
+`
+// Sphere
+	float Equation(vec3 v, float alpha ) {
+
+		float x = 1.0 * v.x + 1.0;
+		float y = 1.0 * v.y;
+		float z = 1.0 * v.z;
+		return ( x*x + y*y + z*z - alpha * 10.0 );
 
 	}
 `;
@@ -137,10 +170,11 @@ Idea from RealSurf (http://realsurf.informatik.uni-halle.de/)
 	uniform vec2 mouse;
 	uniform float R;
 	uniform vec2 resolution;
+	uniform float zoom;
 
 	// const float R = 4.0; // container sphere radius
-	const float oo = 100.;
-	const int IT = 10;
+	const float oo = 100.; // 100
+	const int IT = 10; // 10 iterations? higher slows things down, lower reduces quality 
 
 
 	// select current function here:
@@ -152,48 +186,35 @@ Idea from RealSurf (http://realsurf.informatik.uni-halle.de/)
 
 `
 
+// dF affects color only? Can't tell difference between two routines
+
 /*
-	// 100: all black / 10: muted colors / 1: default / 0.001: high moiré
-	vec3 dF( vec3 v, float alpha) {
+vec3 dF( vec3 v, float alpha ) {
+  return vec3(
 
-		return vec3(
-
-			f3d( v + vec3( 1.0, 0.0, 0.0 ), alpha ),
-			f3d( v + vec3( 0.0, 1.0, 0.0 ), alpha ), 
-			f3d( v + vec3( 0.0, 0.0, 1.0 ), alpha ) 
-
-		);
-
-	}
+	f3d( v+vec3(1.,0.,0.),alpha), 
+	f3d( v+vec3(0.,1.,0. ),alpha),
+	f3d( v+vec3(0.,0.,1. ),alpha));
+}
 */
 
-vec3 dF(vec3 v, float alpha) {
+
+vec3 dF( vec3 v, float alpha) {
 	float x = v.x;
 	float y = v.y;
 	float z = v.z;
-	float s = x+y+z+1.;
-
-/*
-for F = 4.*(x*x*x+y*y*y+z*z*z+1.)-alpha*s*s*s
-return vec3(
-    12.*x*x-3.*alpha*s*s,
-    12.*y*y-3.*alpha*s*s,
-    12.*z*z-3.*alpha*s*s
-  );
-
-*/
 
 	return vec3(
 
-		2.*x + alpha * y*z,
-		2.*y + alpha * x*z,
-		2.*z + alpha * x*y
+		2.0 * x + alpha * y * z,
+		2.0 * y + alpha * x * z,
+		2.0 * z + alpha * x * y
 
 	);
-
 }
 
-	// Zoom
+
+// Zoom
 	float SR( vec3 v ) {
 
 	  return dot( v, v ) - R * R;
@@ -201,135 +222,167 @@ return vec3(
 	}
 
 	// spin and rotation
-	vec3 ray(vec2 pos, float t) {
+	vec3 ray( vec2 pos, float t) {
 
 	//  float th = time * 0.2 - 4.0 * mouse.x;
 	//  float phi = time * 0.1321 + 3. * mouse.y;
 
 // amount of spinning
-	  float th = time * 0.2 - 3.0 * mouse.x;
-	  float phi = time * 0.1321 + 2. * mouse.y;
+		float th = time * 1.0 - 3.0 * mouse.x;
+		float phi = time * 1.0 + 2. * mouse.y;
 
-	  return
+		return
 
 		mat3(
-		  vec3( cos( th ), 0.0, sin(th) ),
-		  vec3( 0.,1.,0.),
-		  vec3(- sin( th ), 0.0, cos(th) )
-		) *
+			vec3( cos( th ), 0.0, sin(th) ),
+			vec3( 0., 1.,0.),
+			vec3(- sin( th ), 0.0, cos(th) )
+		)
+
+		*
 
 		(
-		mat3(
-		  vec3( 1., 0, 0.),
-		  vec3( 0, cos(phi), sin(phi)),
-		  vec3( 0, -sin(phi), cos(phi))
+		mat3( // changing numbers skews
+			vec3( 1.0, 0., 0.),
+			vec3( 0., cos(phi), sin(phi)),
+			vec3( 0., -sin(phi), cos(phi))
 		)
+
 		*
-		( vec3( pos, 1. ) * t + vec3( mouse - vec2( -0.5 ), -18.0 ) ) );
+
+		( vec3( pos, 1 ) * t + vec3( mouse - vec2( -0.5 ), -18.0 ) ) );
+
 	}
 
 
 	float eval(vec4 poly, float t) {
 
-	  return ( ( ( poly[3])*t + poly[2])*t + poly[1] ) * t + poly[0]; //horner scheme
+	  return ( ( ( poly[3]) * t + poly[2]) * t + poly[1] ) * t + poly[0]; //horner scheme
 
 	}
 
 
 	vec4 d( vec4 p ) {
+
 	  vec4 r = vec4(0.);
 	  for(int i=0; i<3; i++) {
 		r[i] = p[i+1]*float(i+1);
 	  }
-	  return r;
+	return r;
+
 	}
 
 
 	float bisect(vec4 p, float l, float u, float def) {
-	  if(l==u) return def;
+	  if( l==u ) return def;
 	  float lv = eval(p, l);
 	  float uv = eval(p, u);
 	  if( lv * uv >= 0.) return def;
 
 	  float m, mv;
 	  for(int i=0; i<IT; i++) {
-		m = (l+u)/2.;
-		mv = eval(p, m);
-		if(lv*mv>0.) {
-		  l = m;
-		  //lv = mv;
+		m = (l+u) / 2.;
+		mv = eval( p, m );
+		if( lv * mv > 0.0 ) {
+
+			l = m;
+			//lv = mv;
+
 		} else {
-		  u = m;
-		  //bv = cv; //nobody cares
+			u = m;
+			//bv = cv; //nobody cares
 		}
-	  }
-	  return m;
+
+		}
+		return m;
+
 	}
 
-	float firstroot(vec4 poly, float l, float u) { //finds first root of poly in interval [l, u]
+	float firstroot( vec4 poly, float l, float u ) { //finds first root of poly in interval [l, u]
 
 		vec4 p[4];//derivatives
 		p[3] = poly; //deg 3
-		for(int i=2; i>=1; i--) {
+		for( int i = 2 ; i >= 1; i-- ) {
+
 			p[i] = d(p[i+1]);
+
 		}
+
 		vec4 roots = vec4(u); //always consider u as root
 		vec4 oroots = vec4(u);
-		for(int i=1; i<4; i++) { //i: degree
-		roots[0] = bisect(p[i], l, oroots[0], l);
-		for(int j=1; j<4; j++) { if(j<i)
-			roots[j] = bisect(p[i], oroots[j-1], oroots[j],roots[j-1]);
+		for( int i=1; i<4; i++) { //i: degree
+
+			roots[0] = bisect(p[i], l, oroots[0], l);
+
+			for(int j=1; j<4; j++) { 
+
+				if ( j < i ) {
+
+					roots[j] = bisect(p[i], oroots[j-1], oroots[j],roots[j-1]);
+
+				}
+			}
+
+				oroots = roots;
 		}
-			oroots = roots;
+
+		for (int i=0; i<4; i++) {
+
+			if ( roots[i] !=l && roots[i] != u ) return roots[i];
+			//if(abs(eval(poly,roots[i]))<.01) return roots[i];
+
 		}
-		for(int i=0; i<4; i++) {
-		if(roots[i]!=l && roots[i]!=u) return roots[i];
-		//if(abs(eval(poly,roots[i]))<.01) return roots[i];
-		}
+
 		return oo;
 
 	}
 
-
 	mat4 A = mat4( //polynomial interpolation for basepoints 0, 5, 10, 15 ( better use chebyshev nodes )
-		vec4(  1.000000000000000, -0.366666666666667,  0.040000000000000, -0.001333333333333),
+		vec4(  1.00000000000000, -0.366666666666667,  0.040000000000000, -0.001333333333333),
 		vec4( -0.000000000000000,  0.600000000000000, -0.100000000000000,  0.004000000000000),
-		vec4(  0.000000000000000, -0.300000000000000,  0.080000000000000, -0.004000000000000),
+		vec4(  0.000000000000000, -0.300000000000000,  0.080000000000000, -0.00400000000000),
 		vec4( -0.000000000000000,  0.066666666666667, -0.020000000000000,  0.001333333333333)
 	);
 	//octave: inv(fliplr(vander([0,5,10,15])))'
 
-
 	void main( void ) {
 
-	//	float alpha = 2.3 + 0.35 * sin( time );
-		float alpha = 2.3 + 1.35 * sin( time );
-		vec2 pos = ( gl_FragCoord.xy / resolution.xy ) - vec2( 0.5 ); // centering in x and y
-		pos.y *= resolution.y/resolution.x;
+	//	float alpha = 2.3 + 0.35 * sin( time ); // speed of deformation
+		float alpha = 2.3 + sin( time );
+		vec2 pos = zoom * ( ( gl_FragCoord.xy / resolution.xy ) - vec2( 0.5 ) ); // centering in x and y
+		pos.y *= resolution.y / resolution.x;
 
 		vec4 vals;
 		vec4 rvals;
-		for(int i=0; i<4; i++) {
-			vec3 p = ray(pos, 5.*float(i));
-			vals[i] = f3d(p, alpha);
-			rvals[i] = SR(p);
-		  }
 
-		vec4 poly = A*vals;//interpolate
-		vec4 rpoly = A*rvals;
+		for ( int i = 0; i < 4; i++) {
 
-		//rpoly is quadratic
-		float D = (rpoly[1]*rpoly[1])-4.*rpoly[2]*rpoly[0];
+			vec3 p = ray( pos, 5. * float(i) ); // specular
+			vals[i] = f3d( p, alpha );
+			rvals[i] = SR( p );
+
+		}
+
+		vec4 poly = A * vals;//interpolate
+		vec4 rpoly = A * rvals;
+
+//rpoly is quadratic
+		float D = ( rpoly[1] * rpoly[1]) -4.0 * rpoly[2] * rpoly[0];
 
 		float froot = oo;
-		if(D>=0.)
-			froot = firstroot(poly, max(0.,(-rpoly[1]-sqrt(D))/(2.*rpoly[2])), max(0.,(-rpoly[1]+sqrt(D))/(2.*rpoly[2])));
 
-		gl_FragColor = vec4(.8);
+		if ( D >= 0.0 ) {
+
+			froot = firstroot( poly, max( 0.0, ( -rpoly[1] - sqrt(D) ) / ( 2.0 * rpoly[2]) ), max( 0.0, (-rpoly[1] + sqrt(D) ) / ( 2.0 * rpoly[2])  ) );
+
+		}
+
+		gl_FragColor = vec4( 0.8 );
+
 
 		if ( froot != oo ) {
 
-			vec3 n = normalize(dF(ray(pos,froot), alpha));
+			vec3 n = normalize( dF( ray( pos, froot ), alpha ) );
 
 			vec3 l[5]; //position of light
 			vec3 c[5]; //color of light
@@ -339,27 +392,32 @@ return vec3(
 			l[3] = -ray(vec2(.0,.0),-10.);
 			l[4] = ray(vec2(.0,.0),-10.);
 
-			c[0] = vec3(1.,.6,.3)*.6;
-			c[1] = vec3(.3,1.,.6)*.6;
-			c[2] = vec3(.6,.3,1.)*.6;
-			c[3] = vec3(.9,.3,.0);
-			c[4] = vec3(0.,.8,.8);
+			c[0] = vec3( 1., .6,.3) * .6;
+			c[1] = vec3( .3, 1.,.6) * .6;
+			c[2] = vec3( .6, .3,1.) * .6;
+			c[3] = vec3( 0.9, 0.3, 0.0 );
+			c[4] = vec3( 0.0, 0.8, 0.8 );
 
 
 			gl_FragColor = vec4( 0., 0., 0., 1. );
 
 			for ( int i = 0; i < 5; i++ ) {
+
 				float illumination = max( 0., dot( normalize( l[i]), n ) );
 				gl_FragColor.rgb += illumination*illumination*c[i];
+
 			}
-	  }
+
+		}
+
 	}
 
 `;
 
 	var surface;
 	var mouse = new THREE.Vector2();
-	var radis = 6.0;
+	var mouseDown = false;
+	var radius = 6.0;
 
 	var css, menu, stats, renderer, scene, camera;
 	var geometry, material, mesh;
@@ -400,14 +458,17 @@ return vec3(
 			<p><button onclick=eqn=eqn4;updateSurface(eqn); >Zeck</button></p>
 			<p><button onclick=eqn=eqn5;updateSurface(eqn); >surfer: Helix</button></p>
 			<p><button onclick=eqn=eqn6;updateSurface(eqn); >Cube</button></p>
-			<p><button onclick=eqn=eqn6;updateSurface(eqn); >Calyx</button></p>
+			<p><button onclick=eqn=eqn7;updateSurface(eqn); >Calyx</button></p>
+			<p><button onclick=eqn=eqn8;updateSurface(eqn); >Leopold</button></p>
+			<p><button onclick=eqn=eqn9;updateSurface(eqn); >Sphere</button></p>
+			<p>Radius: <input type=range id=inpRadius max=20.0 min=0 step=0.1 value=6.0 oninput=outRadius.value=inpRadius.value;updateSurface(eqn); title="0 to 10: OK" > <output id=outRadius >value</output></p>
+			<p>Zoom: <br><input type=range id=inpZoom max=3 min=0 step=0.05 value=1 oninput=outZoom.value=inpZoom.value;updateSurface(eqn); title="0 to 10: OK" > <output id=outZoom >value</output></p>
 			<p><input type=checkbox id=chkRotation checked> auto rotation</p>
 			<div id=info ></div>
 
 		`;
 
-
-//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+//			<p>Zoom: <input type=range id=inp max=50 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
 
 
 		stats = new Stats();
@@ -425,7 +486,11 @@ return vec3(
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
+
 		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
 
 		renderer.domElement.addEventListener( 'mousewheel', onMouseWheel, false );
 		renderer.domElement.addEventListener( 'MozMousePixelScroll', onMouseWheel, false ); // firefox
@@ -446,7 +511,8 @@ return vec3(
 			time: { type: "f", value: 1.0 },
 			resolution: { type: "v2", value: new THREE.Vector2( renderer.domElement.width, renderer.domElement.height ) },
 			mouse: { type: "v2", value: new THREE.Vector2( 0, 0 ) },
-			R: { type: "f", value: 6.0 },
+			R: { type: "f", value: inpRadius.valueAsNumber },
+			zoom: { type: "f", value: inpZoom.valueAsNumber },
 
 		};
 
@@ -475,23 +541,39 @@ return vec3(
 
 	}
 
-	function onDocumentMouseMove( event ) {
+	function onDocumentMouseMove() {
 
 		event.preventDefault();
 
+		if ( mouseDown ) {
+
+//console.log( '', 0.01 * ( ( event.clientX / renderer.domElement.width ) * 2 - 1  ) );
+
+//		uniforms.mouse.value.x += 0.01 * ( ( event.clientX / renderer.domElement.width ) * 2 - 1 );
+//		uniforms.mouse.value.y -= 0.01 * ( ( event.clientY / renderer.domElement.height ) * 2 + 1 );
+
+// issue: returns rotation to start every time
 		uniforms.mouse.value.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
 		uniforms.mouse.value.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
 
-	}
 
-	function onWindowResize( event ) {
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
-
-		uniforms.resolution.value.x = renderer.domElement.width;
-		uniforms.resolution.value.y = renderer.domElement.height;
+		}
 
 	}
+
+
+	function onDocumentMouseDown() {
+
+		mouseDown = true;
+
+	}
+
+	function onDocumentMouseUp() {
+
+		mouseDown = false;
+
+	}
+
 
 	function onMouseWheel( event ) {
 
@@ -524,21 +606,33 @@ return vec3(
 
 //console.log( '++', delta );
 
-			uniforms.R.value += 0.5;
+//			uniforms.zoom.value += 0.05;
+
+			inpZoom.valueAsNumber += 0.05;
+updateSurface(eqn);
 
 		} else if ( delta < 0 ) {
 
 //console.log( '--', delta );
 
-			uniforms.R.value -= 0.5;
-
+			inpZoom.valueAsNumber -= 0.05;
+			updateSurface(eqn);
 		}
+
+	}
+
+	function onWindowResize( event ) {
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		uniforms.resolution.value.x = renderer.domElement.width;
+		uniforms.resolution.value.y = renderer.domElement.height;
 
 	}
 
 	function animate() {
 
-		uniforms.time.value += chkRotation.checked ? 0.02 : 0;
+		uniforms.time.value += chkRotation.checked ? 0.005 : 0;
 
 		requestAnimationFrame( animate );
 		stats.update();
