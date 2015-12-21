@@ -1,5 +1,6 @@
 ﻿Ray Marching Achieved
 ===
+![]( http://jaanga.github.io/algesurf/ray-marching/ray-marching-r3.jpg =800x600 )
 
 Displaying math equations in 3D is a great way to make math more accessible to more people, 
 but rendering equations with speed, precision and beauty is difficult.
