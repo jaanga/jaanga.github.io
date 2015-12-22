@@ -12,12 +12,12 @@ That's in fact the beauty of the technique - an increibly simple code that produ
 We are highly indebted to:
 
 * Aaron Montag
-	* https://www-m10.ma.tum.de/bin/view/Lehrstuhl/AaronMontag
-	* http://home.in.tum.de/~montaga/fract/inversion2.html
+	* <https://www-m10.ma.tum.de/bin/view/Lehrstuhl/AaronMontag>
+	* <http://home.in.tum.de/~montaga/fract/inversion2.html>
 * Mr.doob
-	* http://threejs.org
+	* <http://threejs.org>
 * Íñgo Quílez and many more
-	* http://www.iquilezles.org/
+	* <http://www.iquilezles.org/>
 
 
 ### What The Future Holds
