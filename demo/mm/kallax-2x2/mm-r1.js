@@ -4,10 +4,6 @@
 
 	var rows, columns;
 
-	var holes = [];
-	var screws = [];
-	var pegs = [];
-
 	var playList;
 	var count = 0;
 	var itemCount = 0;
@@ -54,12 +50,12 @@
 
 		helpers = new THREE.Object3D();
 
+		var axisHelper = new THREE.AxisHelper( length );
+		helpers.add( axisHelper );
+
 		var gridHelper = new THREE.GridHelper( length, 10 );
 		gridHelper.position.set( 0, 0, 0 );
 		helpers.add( gridHelper );
-
-		var axisHelper = new THREE.AxisHelper( length );
-		helpers.add( axisHelper );
 
 		scene.add( helpers );
 
@@ -78,12 +74,11 @@
 
 		if ( type === 'pegHole' ) {
 
-			obj.add( buildPeg( mesh ) );
+			buildPeg( mesh );
 
 		} else if ( type === 'screwHole' ) {
 
-			obj.add( buildScrew( mesh ) );
-
+			buildScrew( mesh );
 		}
 
 		obj.add( mesh );
@@ -109,7 +104,7 @@
 		hole.userData.screw = mesh;
 
 		screws.push( mesh );
-//		kallax.add( mesh );
+		kallax.add( mesh );
 
 		return mesh;
 
@@ -134,12 +129,10 @@
 		hole.userData.peg = mesh;
 
 		pegs.push( mesh );
-//		kallax.add( mesh );
+		kallax.add( mesh );
 
 		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
-
-		return mesh;
 
 	}
 
@@ -288,14 +281,16 @@
 
 	function movRotTweenIndex( list ) {
 
+		itemCount = 0;
+
 		for ( var i = 0; i < list.length; i++ ) {
 
-			var item = list[ i ];
-			var obj = item[ 0 ];
-			var index = item[ 1 ];
-			var ms = item[ 2 ] ? item[ 2 ] : duration;
-			var oud = obj.userData.places;
-console.log( '', obj );
+			item = list[ i ];
+			obj = item[ 0 ];
+			index = item[ 1 ];
+			ms = item[ 2 ] ? item[ 2 ] : duration;
+			oud = obj.userData.places;
+
 			if ( obj.name !== 'camera' ) {
 
 				send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], ms, frameDispath );
@@ -304,7 +299,6 @@ console.log( '', obj );
 
 			} else {
 
-console.log( 'got here', obj );
 				cameraTween( camera.userData.places[ index ][ 0 ], camera.userData.places[ index ][ 1 ], 1000, frameDispath );
 
 			}
@@ -331,12 +325,14 @@ console.log( 'got here', obj );
 
 	function returnAllToStartTween() {
 
-		var obj, oud;
+		var oud = kallax.userData.places;
+		var obj, ohp;
+
+		send2location( kallax, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
 
 		for ( var i = 0; i < components.length; i++ ) {
 
-			obj = components[ i ];
-			oud = obj.userData.places;
+			obj = components[ i ], oud = obj.userData.places;
 
 			if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) !== 0 ) {
 
@@ -390,7 +386,7 @@ console.log( 'got here', obj );
 
 		var obj, ohp, oud;
 
-
+//		cameraTween( camera.userData.places[ 2 ][ 0 ], camera.userData.places[ 2 ][ 1 ], 1500 );
 
 		for ( var i = 0; i < components.length; i++ ) {
 
@@ -431,7 +427,6 @@ console.log( 'got here', obj );
 
 		}
 
-		cameraTween( camera.userData.places[ 2 ][ 0 ], camera.userData.places[ 2 ][ 1 ], 1500 );
 //		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
@@ -457,10 +452,10 @@ console.log( 'got here', obj );
 
 		for ( var i = 0; i < arr.length; i++ ) {
 
-				var obj = type[ arr[ i ] ];
+				obj = type[ arr[ i ] ];
 				scene.remove( obj );
 
-				var hole = obj.userData.holeParent;
+				hole = obj.userData.holeParent;
 				hole.add( obj );
 
 				obj.position.set( 0, 0, 0 );
@@ -471,13 +466,13 @@ console.log( 'got here', obj );
 
 	}
 
-	function dispatchScrewsPegs2Parent( parent ) {
+	function dispatchScrewsPegs2Kallax() {
 
 		if ( screws.length > 0 ) {
 
 			for ( var i = 0; i < screws.length; i++ ) {
 
-				parent.add( screws[ i ] );
+				kallax.add( screws[ i ] );
 
 			}
 
@@ -485,9 +480,9 @@ console.log( 'got here', obj );
 
 		if ( pegs.length > 0 ) {
 
-			for ( i = 0; i < pegs.length; i++ ) {
+			for ( var i = 0; i < pegs.length; i++ ) {
 
-				parent.add( pegs[ i ] );
+				kallax.add( pegs[ i ] );
 
 			}
 
@@ -571,7 +566,7 @@ playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
-
+	var context = new AudioContext();
 
 	function playNote( frequency, startTime, duration) {
 
@@ -589,7 +584,7 @@ playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 		osc1.start( startTime );
 		osc1.stop( startTime + duration );
 
-	}
+	};
 
 	function findStuff() {
 // http://stackoverflow.com/questions/21557341/three-js-get-world-rotation-from-matrixworld

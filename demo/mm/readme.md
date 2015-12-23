@@ -24,7 +24,7 @@ _If you would like to see a 'prettified' version in the near future, please let 
 
 _2015-12-18_
 
-### [Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r4.html )
+### [Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r5.html )
 
 * Begiining to add animation/tweening
 
