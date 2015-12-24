@@ -217,6 +217,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### Kallax
 
+* Send t0 customer upon purchase
 * Show items in the positions as they are in the box
 * Set up so works on phone very nicely
 * Add real colors
