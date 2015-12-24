@@ -37,7 +37,7 @@ _2015-12-23_
 
 * Re-engineered. Components now follow same principles as components in Kallax NxN. Should make life easier
 
-[Design Notes]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/mm/index.html#design-notes.md )
+[Design Notes]( http://jaanga.github.io/demo/mm/index.html#design-notes.md )
 
 * A start at identifying all the criteria that need satisfying in building an online assembly manual.
 
@@ -217,7 +217,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### Kallax
 
-* Send t0 customer upon purchase
+* Send link to customer upon purchase
 * Show items in the positions as they are in the box
 * Set up so works on phone very nicely
 * Add real colors
