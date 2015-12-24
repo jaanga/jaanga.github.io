@@ -29,7 +29,7 @@ _2015-12-24_
 
 * Add placards with part ID numbers
 * Add beginning of pencil
-
+* Add beginning of screwdriver
 
 _2015-12-23_
 

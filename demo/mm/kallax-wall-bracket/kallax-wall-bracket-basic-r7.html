@@ -193,10 +193,17 @@
 
 
 		var pencil = drawPencil();
-		pencil.userData.places.push( [ v( ran( 30 ), radiusScrew, - ran( 80 ) + 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
+		pencil.userData.places.push( [ v( ran( 30 ), radiusScrew, - ran( 80 ) + 40  ), v( 0, ran( 6 ), 0 ) ] );
 		pencil.userData.places.push( [ v( ran( 30 ), 2, - ran( 80 ) + 40  ), v( 0, ran( 6 ), 0 ) ] );
 		components.push( pencil );
 		scene.add( pencil );
+
+		var screwdriver = drawScrewdriver();
+		screwdriver.userData.places.push( [ v( ran( -30 ), radiusScrew, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver.userData.places.push( [ v( ran( -30 ), 4, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
+		components.push( screwdriver );
+		scene.add( screwdriver );
+
 
 		camera.userData.places = [];
 		camera.name = 'camera';
@@ -619,6 +626,18 @@
 
 	}
 
+	function drawScrewdriver() {
+
+		var points = [ v( 0, 0, 0 ) , v( 1, 0, 0 ), v( 1, 0, 50 ), v( 5, 0, 50 ), v( 5, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( 5, 0, 55), v( 5, 0, 80 ), v( 0, 0, 81 ) ];
+		var geometry = new THREE.LatheGeometry( points, 8 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.name = 'pencil';
+		mesh.userData.places = [];
+
+		return mesh;
+
+	}
 
 	function drawPlacard( text, scale, color, x, y, z ) {
 
