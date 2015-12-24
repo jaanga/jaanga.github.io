@@ -22,11 +22,30 @@ _The product assembly manuals of the future - now_
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
+
+_2015-12-24_
+
+###[Kallax Wall Bracket Basic R7]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r7.html )
+
+* Add placards with part ID numbers
+* Add beginning of pencil
+
+
+_2015-12-23_
+
+[Kallax Wall Bracket Basic R6]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r6.html )
+
+* Re-engineered. Components now follow same principles as components in Kallax NxN. Should make life easier
+
+[Design Notes]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/mm/index.html#design-notes.md )
+
+* A start at identifying all the criteria that need satisfying in building an online assembly manual.
+
 _2015-12-18_
 
-### [Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r5.html )
+* [Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r5.html )
 
-* Begiining to add animation/tweening
+* Beginning to add animation/tweening
 
 _2015-12-12_
 
@@ -162,7 +181,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 * Assembly manuals need to display text in many languages.
 * Assembly manuals must be accessible to people who have difficulty reading text.
 * Even with all the drawings there are frequently still places you can't see
-* The furniture is 3D but the manuals are only 3D
+* The furniture is 3D but the manuals are only 2D
 
 
 ### Mission
@@ -198,6 +217,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### Kallax
 
+* Show items in the positions as they are in the box
 * Set up so works on phone very nicely
 * Add real colors
 * Add accessories, coordinated products and links to buy
@@ -236,6 +256,11 @@ patterns are descriptions of common problems and proposal for the solutions that
 [Ikea Kallax 2x2 Assembly Manual]( http://www.ikea.com/us/en/assembly_instructions/kallax-shelving-unit__AA-1009450-6_pub.pdf )
 
 <br>
+
+## Notes
+
+Apart from sharing a deep delight with putting things together, Jaanga is not in anyway associated with the Ikea.
+
 
 ***
 

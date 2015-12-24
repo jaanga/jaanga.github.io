@@ -64,21 +64,35 @@
 		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
-		sprite = drawSprite( 'Hello, world!', 0.1, 120, 0, 40, 0 )
+		sprite = drawPlacard( 'Hello, world!', 0.1, 120, 0, 40, 0 )
+		scene.add( sprite );
+
+		sprite = drawPlacard( 'Hello, world! 2', 0.1, 120, 20, 40, 40 )
 		scene.add( sprite );
 
 	}
 
 
-	function drawSprite( text, scale, color, x, y, z) {
+	function drawPlacard( text, scale, color, x, y, z) {
+
+		placard = new THREE.Object3D();
 
 		texture = canvasMultilineText( text, { backgroundColor: color }  );
 		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
 		var sprite = new THREE.Sprite( spriteMaterial );
 		sprite.position.set( x, y, z ) ;
 		sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
+		placard.add( sprite );
 
-		return sprite;
+		var geometry = new THREE.Geometry();
+		geometry.vertices = [ v( x, 0, z ),  v( x, y, z ) ];
+		var material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
+		var line = new THREE.Line( geometry, material );
+		placard.add( line );
+
+		return placard;
+
+		function v( x, y, z){ return new THREE.Vector3( x, y, z ); }
 
 	}
 
