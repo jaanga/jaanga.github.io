@@ -64,13 +64,11 @@
 			<a class=aa  href=""  ><pre style=font-size:6pt; >${ logo }</pre></a>
 			<h2>
 				<a class=aa href="" >Examples Viewer R3</a>
-` +
-//				<a class=aa href=http://jaanga.github.io/documents/threejs-examples-viewer/ >🛈</a>
-`
 			</h2>
+			<p><a href=#readme.md >Read Me</a></p>
 			<div id=list ></div>
 		`;
-
+//				<a class=aa href=http://jaanga.github.io/documents/threejs-examples-viewer/ >🛈</a>
 		viewer = document.body.appendChild( document.createElement( 'iframe' ) );
 		viewer.id = 'viewer';
 
@@ -138,6 +136,8 @@
 
 				}
 
+
+
 			}
 
 			for ( var i = 0; i < topics.length; i++ ) {
@@ -159,33 +159,44 @@
 
 			list.innerHTML = text + footer;
 
+onHashChange();
 		}
 
 	}
 
 	function onHashChange() {
 
-		fileName = location.hash ? location.hash.split( '#' )[1] : '';
+		fileName = location.hash ? location.hash.split( '#' )[1] : 'readme.md';
 
 		if ( fileName === '' || fileName === 'top' ) { return; }
 
-		document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+		if ( fileName === 'readme.md' ) {
 
-		var url = 'http://mrdoob.github.io/three.js/examples/'
+console.log( 'here' );
 
-		requestFile ( url + fileName );
+viewer.src = 'readme.md';
 
-		button.style.display = '';
-		button.onclick = function() {
+		} else {
 
-			window.open( 'view-source:' + url +  fileName );
+			document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+
+			var url = 'http://mrdoob.github.io/three.js/examples/'
+
+			requestFile ( url + fileName );
+
+			button.style.display = '';
+			button.onclick = function() {
+
+				window.open( 'view-source:' + url +  fileName );
+
+			}
+
+			if ( previousFile.style ) { previousFile.style.color = ''; }
+			file = document.getElementById( fileName.replace( '.html', '') );
+			file.style.color = 'red';
+			previousFile = file;
 
 		}
-
-		if ( previousFile.style ) { previousFile.style.color = ''; }
-		file = document.getElementById( fileName.replace( '.html', '') );
-		file.style.color = 'red';
-		previousFile = file;
 
 	}
 

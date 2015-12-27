@@ -14,7 +14,7 @@
 	var documentsPath = '';
 	var documents = [
 
-		[ 'Mr.doob\'s Code Style™', '#https://raw.githubusercontent.com/mrdoob/three.js/wiki/Mr.doob\'s-Code-Style%E2%84%A2'  ],
+		[ 'Mr.doob\'s Code Style™', 'https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2'  ],
 		[ 'Showdown Coding Style', '#https://raw.githubusercontent.com/showdownjs/code-style/master/README.md' ],
 		[ 'Google HTML/CSS Style Guide', '#https://google.github.io/styleguide/htmlcssguide.xml' ],
 		[ 'Google JavaScript Style Guide', '#https://google.github.io/styleguide/javascriptguide.xml' ],
@@ -120,9 +120,9 @@
 
 		} else {
 
-//			css = hashes.length > 2 ? 'style=width:100%;' : '';
+			css = hashes.length > 2 ? 'style=width:100%;' : '';
 
-			content.innerHTML = '<iframe src=' + hashes[ 1 ] + hashes[ 2 ] + ' id=ifr  ></iframe>';
+			content.innerHTML = '<iframe src=' + url + ' id=ifr + css + ></iframe>';
 
 		}
 
