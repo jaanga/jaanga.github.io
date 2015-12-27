@@ -8,11 +8,11 @@
 
 [Jaanga Practice Note]( jaanga-practice-notes/r1/jaanga-practice-notes-viewer-r2.html )
 
-[Coding Style Viewer]( coding-styles-viewer/r1/coding-styles-viewer-r1.html )
+[Coding Styles]( coding-styles-viewer/r1/coding-styles-viewer-r1.html )
 
-[Three.ja Examples Viewer]( threejs-examples-viewer/threejs-examples-viewer-r3.html )
+[Three.js Examples Viewer]( threejs-examples-viewer/threejs-examples-viewer-r3.html )
 
-
+[CS482 Viewer]( cs482/viewer/cs482-viewer-r1.html )
 
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
