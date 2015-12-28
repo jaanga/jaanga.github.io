@@ -35,12 +35,14 @@ Acquiring a good education takes forever, but that shouldn't stop you from learn
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-This folder contains a number of guides to sources you can use to help learn aspects of [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ).
-
-* Easy ways to view/browse lots of documents
-* You don't go to the documents, the documents come to you
+* To supply a number of guides to sources you can use to help learn aspects of [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ).
+* Provide easy ways to view/browse lots of original source documents very quickly 
+	* You don't go to the documents, the documents come to you
 	* Like radio buttons
 	* Like changing channels
+* Everything is FOSS forkable
+	* Very open licenses
+	* Very easy to access, mash-up, re-appropriate, whatever
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->

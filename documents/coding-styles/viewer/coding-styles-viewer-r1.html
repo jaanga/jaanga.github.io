@@ -10,7 +10,7 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-	var defaultFile = '../introduction.md';
+	var defaultFile = '../readme.md';
 	var documentsPath = '';
 	var documents = [
 
@@ -36,8 +36,6 @@
 ## [${ document.title }]( coding-styles-viewer-r1.html ) [🛈]( http://jaanga.github.io/documents/ )
 
 ***
-
-[Introduction ]( #../introduction.md )
 
 [Read Me]( #../readme.md )
 
@@ -128,7 +126,7 @@
 
 			function onLoad( text ) {
 
-				container.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text + footer ) + '</div>';
+				container.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
 
 			}
 
