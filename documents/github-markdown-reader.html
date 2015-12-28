@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 >
+<meta name=viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' >
+</head>
+<body>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js' ></script>
+<script>
+
+	var fileName = 'https://raw.githubusercontent.com/mrdoob/three.js/master/README.md';
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: 12pt monospace; left: 0; margin: 0 auto; max-width: 900px; position: absolute; right: 0; ';
+
+		document.title = document.title ? document.title : fileName.split( '/' ).pop();
+
+		var content = document.body.appendChild( document.createElement( 'div' ) );
+		var converter = new showdown.Converter();
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'get', fileName, true );
+		xmlHttp.onreadystatechange = function() {
+
+			content.innerHTML = xmlHttp.readyState === 4 ? converter.makeHtml( xmlHttp.responseText ) : '';
+
+		};
+
+		xmlHttp.send( null );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+	}
+
+
+	function onWindowResize() {
+
+		content.style.width = ( window.innerWidth - 330 ) + 'px';
+
+	}
+</script>
+</body>
+</html>

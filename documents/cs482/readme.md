@@ -12,14 +12,14 @@ The mission of this document is to help make the syllabus even more accessible.
 
 Topic covered include include:
 
-* Spectral Simulation (FFT). Video FFT filtering (now working!)
+* Spectral Simulation (FFT). Video FFT filtering
 * Data Structures for Scientific Simulations
 * Coupled multiphysics simulations. Terrain erosion via particles
 * Terrain erosion mechanisms. Terrain erosion in 2D and 3D
 * Volcano simulation, and solving PDEs in screen space. Screen space simulation
 * Plant growth and differentiation. Tip-driven growth
 * Reaction-diffusion equations. Turk-Turing equations simple fract() reaction-diffusion
-* Reactive simulations. Ice solidification.for 5 minutes on your project topic. Project 1 Grades and comments are on NetRun
+* Reactive simulations. Ice solidification.
 * Multi-phase reactive flow. Simulating burning fluids
 * Robot simulation: two-wheeled vehicles and sensor simulations. Simulated mobile robot with sensors
 * Multigrid for pressure-free Navier-Stokes. Multigrid Navier-Stokes fluid simulation

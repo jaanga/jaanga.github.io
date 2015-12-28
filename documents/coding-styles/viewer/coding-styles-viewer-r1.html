@@ -15,13 +15,15 @@
 	var documents = [
 
 		[ 'Mr.doob\'s Code Style™', 'https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2'  ],
-		[ 'Showdown Coding Style', '#https://raw.githubusercontent.com/showdownjs/code-style/master/README.md' ],
+//		[ 'Showdown Coding Style', '#https://raw.githubusercontent.com/showdownjs/code-style/master/README.md' ],
+		[ 'Showdown Coding Style', '#../github-markdown-reader-showdown-coding-style.html' ],
 		[ 'Google HTML/CSS Style Guide', '#https://google.github.io/styleguide/htmlcssguide.xml' ],
 		[ 'Google JavaScript Style Guide', '#https://google.github.io/styleguide/javascriptguide.xml' ],
 		[ 'GitHub', 'https://github.com/styleguide/javascript ' ],
-		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md' ],
-		[ 'Airbnb JavaScript Style Guide', '#https://raw.githubusercontent.com/airbnb/javascript/master/README.md' ],
-
+//		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md' ],
+		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#../github-markdown-reader-rwaldron-coding-style.html' ],
+//		[ 'Airbnb JavaScript Style Guide', '#https://raw.githubusercontent.com/airbnb/javascript/master/README.md' ],
+		[ 'Airbnb JavaScript Style Guide 2', '#../github-markdown-reader-airbnb-coding-style.html' ],
 	];
 //		[ '', '' ],
 
@@ -51,12 +53,12 @@
 ***
 
 <center title="dingbat" >
-## <a href=javascript:content.scrollTop=0; >❦</a>
+## <a href=javascript:container.scrollTop=0; >❦</a>
 </center>
 
 `;
 
-	var converter, content;
+	var converter, container;
 
 	init();
 
@@ -65,26 +67,38 @@
 		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 		var css = document.body.appendChild( document.createElement( 'style' ) );
+
+// http://stackoverflow.com/questions/18168286/how-can-i-style-external-links-like-wikipedia
 		css.innerHTML =
 `
 
-			* { box-sizing: border-box; }
-			html { height: 100%; }
-			body { font: 12pt monospace; margin: 0; }
-			h2 a { text-decoration: none; }
-			#menu p { margin: 0 10px; }
+		* { box-sizing: border-box; }
 
-			#menu { background-color: #ccc;  height: 100%; max-width: 310px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; top: 0;}
-			#content { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
-			#ifr { height: 100%; width:800px; }
+		a[href^="https://"]:after {
+/*CSS for external links */
+			content: url( http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png );
+			margin: 0 0 0 5px;
+
+		}
+
+		html { height: 100%; }
+		body { font: 12pt monospace; margin: 0; }
+		h2 a { text-decoration: none; }
+
+		#menu { background-color: #ccc;  height: 100%; max-width: 310px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; top: 0;}
+/*		#menu p { margin: 0 10px; } */
+
+
+		#container { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
+		#ifr { border-width: 0px; height: 100%; width:100%; }
 `;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML = converter.makeHtml( menuMarkdown );
 
-		content = document.body.appendChild( document.createElement( 'div' ) );
-		content.id = 'content';
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
 
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'hashchange', onHashChange, false );
@@ -114,7 +128,7 @@
 
 			function onLoad( text ) {
 
-				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text + footer ) + '</div>';
+				container.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text + footer ) + '</div>';
 
 			}
 
@@ -122,11 +136,11 @@
 
 			css = hashes.length > 2 ? 'style=width:100%;' : '';
 
-			content.innerHTML = '<iframe src=' + url + ' id=ifr + css + ></iframe>';
+			container.innerHTML = '<iframe src=' + url + ' id=ifr + css + ></iframe>';
 
 		}
 
-		content.scrollTop = 0;
+		container.scrollTop = 0;
 
 	}
 
@@ -137,7 +151,7 @@
 
 		for ( var i = 0; i < arr.length; i++ ) {
 
-			txt += '[' + arr[ i ][ 0 ] + ']( ' + path + arr[ i ][ 1 ] + css + ' )<br>';
+			txt += '[' + arr[ i ][ 0 ] + ']( ' + path + arr[ i ][ 1 ] + css + ' ) <br><br>';
 
 		}
 
@@ -147,7 +161,7 @@
 
 	function onWindowResize() {
 
-		content.style.width = ( window.innerWidth - 330 ) + 'px';
+		container.style.width = ( window.innerWidth - 330 ) + 'px';
 
 	}
 
