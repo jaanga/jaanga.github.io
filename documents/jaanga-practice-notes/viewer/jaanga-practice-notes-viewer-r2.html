@@ -10,7 +10,7 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-	var defaultFile = '../jaanga-coding-style-r1.md';
+	var defaultFile = '../readme.md';
 	var menuMarkdown = 
 `
 [Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/documents/ )
@@ -23,9 +23,11 @@
 `
 ***
 
-[Coding Style ]( #../jaanga-coding-style-r1.md )
+[Read Me]( #../readme.md )
 
-[Technology ]( #../jaanga-tech-r1.md )
+[Coding Style]( #../jaanga-coding-style-r1.md )
+
+[Technology]( #../jaanga-tech-r1.md )
 
 [User Experience ]( #../jaanga-user-experience-r1.md )
 
@@ -79,7 +81,7 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'hashchange', onHashChange, false );
 
-		requestFile ( '../jaanga-coding-style-r1.md' );
+		requestFile ( defaultFile );
 
 		onHashChange();
 
@@ -111,12 +113,12 @@
 
 			if ( url.substr( -3 ) === '.md' ) {
 
-					content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text + footer ) + '</div>';
+					content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
 
 
 			} else {
 
-					content.innerHTML = text + footer;
+					content.innerHTML = text;
 
 			}
 

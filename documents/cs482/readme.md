@@ -1,16 +1,22 @@
 CS 482
 ===
 
-[CS 482/681: Simulations in Computer Graphics]( https://www.cs.uaf.edu/courses/cs482/2015-spring/ ) is a computer science course offered by the College of Engineering and Mines
-at the University of Alaska Fairbanks. The course is taught by [Dr Orion Lawlor]( https://www.cs.uaf.edu/faculty/lawlor/).
+[CS 482/681: Simulations in Computer Graphics]( https://www.cs.uaf.edu/courses/cs482/2015-spring/ ) is a computer science course 
+offered by the College of Engineering and Mines at the University of Alaska Fairbanks. 
+The course is taught by [Dr Orion Lawlor]( https://www.cs.uaf.edu/faculty/lawlor/).
 
-The course uses WebGL and Three.js to create computer simulations for a variety of STEM topics.
+The course uses [WebGL]( https://en.wikipedia.org/wiki/WebGL ) and [Three.js[( http://threejs.org ) 
+to assist in creating computer simulations for a variety of [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ) topics.
 
-It is the most concise yet far-ranging introduction to STEM simulations that we know of.
+The lecture notes and demos provided with the course syllabus provides a most concise yet far-ranging introduction to STEM simulations.
 
-The mission of this document is to help make the syllabus even more accessible.
+* Difficult to read math notation becomes easy to read code
+* Concepts that are hard to comprehend as text come alive as simulations
+* Symbols formerly immutably affixed to paper become things you can edit on the fly
 
-Topic covered include include:
+The mission of this document is to help make the CS 482 syllabus even more accessible and more lively.
+
+Topic covered in CS 482 include:
 
 * Spectral Simulation (FFT). Video FFT filtering
 * Data Structures for Scientific Simulations

@@ -10,7 +10,7 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-	var defaultFile = './introduction.md';
+	var defaultFile = './readme.md';
 	var documentsPath = 'http://jaanga.github.io/documents/';
 	var documents = [
 
@@ -29,13 +29,11 @@
 
 [Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/documents/ )
 
-## [${ document.title }]( documents-viewer-r1.html ) [🛈]( http://jaanga.github.io/documents/ )
+## [${ document.title }]( documents-viewer-r1.html )<!-- [🛈]( http://jaanga.github.io/documents/ ) -->
 
 ***
 
-[Introduction ]( #./introduction.md )
-
-[Read Me]( #./readme.md )
+<!-- [Read Me]( #./readme.md ) -->
 
 `;
 
@@ -43,6 +41,7 @@
 
 	menuMarkdown += makeMenuMD( documents, documentsPath );
 
+/*
 	var footer =
 
 `
@@ -53,6 +52,7 @@
 </center>
 
 `;
+*/
 
 	var converter, content;
 
@@ -112,7 +112,7 @@
 
 			function onLoad( text ) {
 
-				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text + footer ) + '</div>';
+				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
 
 			}
 

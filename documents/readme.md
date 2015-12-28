@@ -1,18 +1,10 @@
 ﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/documents/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) »
+<!-- [Jaanga]( http://jaanga.github.io ) » -->
 
 [Documents Read Me]( index.html )
 ===
-
-[Jaanga Practice Note]( jaanga-practice-notes/r1/jaanga-practice-notes-viewer-r2.html )
-
-[Coding Styles]( coding-styles-viewer/r1/coding-styles-viewer-r1.html )
-
-[Three.js Examples Viewer]( threejs-examples-viewer/threejs-examples-viewer-r3.html )
-
-[CS482 Viewer]( cs482/viewer/cs482-viewer-r1.html )
 
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
@@ -37,9 +29,13 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+Acquiring a good education takes forever, but that shouldn't stop you from learning.
+
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
+
+This folder contains a number of guides to sources you can use to help learn aspects of [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ).
 
 * Easy ways to view/browse lots of documents
 * You don't go to the documents, the documents come to you
@@ -48,10 +44,15 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
+A fast way of learning a skill is by looking at an example, editing it and coming up with something new.
+
+Provide just-in-time learning for a variety of STEM topics
+	* Just what you need to know to complete the next action in your project
 
 
 ## Things to Do / Road Map
-
+This document viewer is a an early stage work-in-progress. 
+There is much to fix with regards to displaying the data inside an iframe.
 * Three.js Examples Viewer
 	* Hamburger menu
 
