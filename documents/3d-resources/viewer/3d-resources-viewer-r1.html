@@ -1,0 +1,168 @@
+﻿<!doctype html>
+<html >
+<head>
+<meta charset=utf-8 >
+<title>3D Resources Viewer R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js ></script>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	var defaultFile = '../readme.md';
+	var documentsPath = '';
+	var documents = [
+
+		[ 'WebGL Fundamentals', '#http://webglfundamentals.org/'  ],
+		[ 'Mozilla Demo Studio', 'https://developer.mozilla.org/en-US/demos/tag/tech:webgl' ],
+		[ 'Mozilla Developer Network: WebGL', 'https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API' ],
+
+		[ 'Dirksen', '#http://www.smartjava.org/ltjs/chapter-02/07-both-cameras.html' ],
+		[ 'GitHub', 'https://github.com/styleguide/javascript ' ],
+//		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md' ],
+		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#../github-markdown-reader-rwaldron-coding-style.html' ],
+//		[ 'Airbnb JavaScript Style Guide', '#https://raw.githubusercontent.com/airbnb/javascript/master/README.md' ],
+		[ 'Airbnb JavaScript Style Guide 2', '#../github-markdown-reader-airbnb-coding-style.html' ],
+	];
+//		[ '', '' ],
+
+	var menuMarkdown =
+
+`
+
+[Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/documents/ )
+
+## [${ document.title }]( 3d-resources-viewer-r1.html ) [🛈]( http://jaanga.github.io/documents/ )
+
+***
+
+[Read Me]( #../readme.md )
+
+`;
+
+	menuMarkdown += '<h2>Documents</h2>';
+
+	menuMarkdown += makeMenuMD( documents, documentsPath );
+
+	var footer =
+
+`
+***
+
+<center title="dingbat" >
+## <a href=javascript:container.scrollTop=0; >❦</a>
+</center>
+
+`;
+
+	var converter, container;
+
+	init();
+
+	function init() {
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+
+// http://stackoverflow.com/questions/18168286/how-can-i-style-external-links-like-wikipedia
+		css.innerHTML =
+`
+
+		* { box-sizing: border-box; }
+
+		a[href^="https://"]:after {
+/*CSS for external links */
+			content: url( http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png );
+			margin: 0 0 0 5px;
+
+		}
+
+		html { height: 100%; }
+		body { font: 12pt monospace; margin: 0; }
+		h2 a { text-decoration: none; }
+
+		#menu { background-color: #ccc;  height: 100%; max-width: 310px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; top: 0;}
+/*		#menu p { margin: 0 10px; } */
+
+
+		#container { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
+		#ifr { border-width: 0px; height: 100%; width:100%; }
+`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = converter.makeHtml( menuMarkdown );
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+		onHashChange();
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash.split( '#' );
+
+		fileName = hashes[ 1 ] ? hashes[ 1 ] : defaultFile;
+
+		document.title = fileName.split( '/' ).pop();
+
+		requestFile ( fileName );
+
+	}
+
+	function requestFile ( url ) {
+
+		if ( url.substr( -3 ) === '.md' ) {
+
+			var xhr = new THREE.XHRLoader();
+			xhr.load( url, onLoad ) ;
+
+			function onLoad( text ) {
+
+				container.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
+
+			}
+
+		} else {
+
+			css = hashes.length > 2 ? 'style=width:100%;' : '';
+
+			container.innerHTML = '<iframe src=' + url + ' id=ifr + css + ></iframe>';
+
+		}
+
+		container.scrollTop = 0;
+
+	}
+
+	function makeMenuMD( arr, path, style ) {
+
+		var css = style ? style : '';
+		var txt = '';
+
+		for ( var i = 0; i < arr.length; i++ ) {
+
+			txt += '[' + arr[ i ][ 0 ] + ']( ' + path + arr[ i ][ 1 ] + css + ' ) <br><br>';
+
+		}
+
+		return txt;
+
+	}
+
+	function onWindowResize() {
+
+		container.style.width = ( window.innerWidth - 330 ) + 'px';
+
+	}
+
+</script>
+</body>
+</html>

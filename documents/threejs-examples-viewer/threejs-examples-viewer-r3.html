@@ -6,6 +6,7 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js ></script>
 <script>
 
@@ -31,11 +32,14 @@
 
 	`;
 
+	var converter;
 	var previousFile = '';
 
 	init();
 
 	function init() {
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -52,7 +56,7 @@
 			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 20px; padding: 10px; position: absolute; }
 			#menu { background-color: #ccc;  height: 100%; max-width: 310px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; }
 			#top { outline: none; }
-			#viewer { border-width: 0px; left: 310px; position: absolute; top: 0; width: ${ window.innerWidth - 310 }px; height: 100%; z-index: -1; }
+			#viewer { border-width: 0px; font: 12pt monospace; left: 310px; position: absolute; top: 0; width: ${ window.innerWidth - 310 }px; height: 100%; z-index: -1; }
 
 		`;
 
@@ -69,6 +73,7 @@
 			<div id=list ></div>
 		`;
 //				<a class=aa href=http://jaanga.github.io/documents/threejs-examples-viewer/ >🛈</a>
+
 		viewer = document.body.appendChild( document.createElement( 'iframe' ) );
 		viewer.id = 'viewer';
 
@@ -82,7 +87,7 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'hashchange', onHashChange, false );
 
-		onHashChange();
+//		onHashChange();
 
 	}
 
@@ -136,8 +141,6 @@
 
 				}
 
-
-
 			}
 
 			for ( var i = 0; i < topics.length; i++ ) {
@@ -159,7 +162,8 @@
 
 			list.innerHTML = text + footer;
 
-onHashChange();
+			onHashChange();
+
 		}
 
 	}
@@ -174,7 +178,8 @@ onHashChange();
 
 console.log( 'here' );
 
-viewer.src = 'readme.md';
+//viewer.src = 'readme.md';
+		requestFile ( 'readme.md' );
 
 		} else {
 
@@ -207,6 +212,13 @@ viewer.src = 'readme.md';
 
 		function onLoad( text ) {
 
+
+			if ( url === 'readme.md' ) {
+
+				text = converter.makeHtml( text );
+
+			} else {
+
 			text = text.replace( /\.\.\/build\//i, 'https://rawgit.com/mrdoob/three.js/r73/build/' );
 			text = text.replace( /files\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/files/' );
 			text = text.replace( /fonts\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/fonts/' );
@@ -225,6 +237,8 @@ viewer.src = 'readme.md';
 			text = text.replace( /textures\//gi, 'https://rawgit.com/mrdoob/three.js/r73/examples/textures/' );
 
 			text = text.replace( /function init\(\) \{/i, 'function init() {\n\n\t\t\t\tTHREE.ImageUtils.crossOrigin = "anonymous";' );
+
+			}
 
 			viewer.srcdoc = text;
 

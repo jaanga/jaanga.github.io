@@ -58,5 +58,7 @@ Topic covered in CS 482 include:
 * Integrating Differential Equations. Simple object framework
 
 
-
+<center title="dingbat" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+</center>
 

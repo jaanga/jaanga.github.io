@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title></title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js' ></script>
+<script>
+
+	var fileName = 'http://webglfundamentals.org/';
+
+	var txt =
+
+`
+
+link:
+###[WebGL Fundamentals]( http://webglfundamentals.org/ )
+
+A very nice introduction to a complicated topic
+
+
+`;
+
+	init();
+
+	function init() {
+
+		var converter = new showdown.Converter();
+
+		document.title = fileName.split( '/' ).pop();
+		document.body.style.cssText = 'font: 12pt monospace; margin: 0; overflow: hide;';
+
+		var container = document.body.appendChild( document.createElement( 'div' ) );
+		container.innerHTML =
+
+`
+			<div id=box ></div>
+			<iframe id=contents src=${ fileName } ></iframe>
+
+`;
+
+		var box.id = 'box';
+		box.style.cssText = 'background-color: #eee; position: absolute; right: 0; padding: 10px; top: 0; ';
+		box.innerHTML = converter.makeHtml( txt );
+
+		var contents.id = 'contents';
+		contents.style.cssText = `border: 0 solid; height: ${ window.innerHeight }px; position: absolute; width: 800px; `;
+
+	}
+
+</script>
+</body>
+</html>

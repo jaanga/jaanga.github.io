@@ -9,13 +9,13 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js' ></script>
 <script>
 
-	var fileName = 'https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md ';
+	var fileName = 'http://webglfundamentals.org/';
 
 		txt =
 `
 
 Link:
-###[Principles of Writing Consistent, Idiomatic JavaScript]( https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md )
+###[WebGL Fundamentals]( http://webglfundamentals.org/ )
 
 A very complete and descriptive style guide
 
@@ -35,7 +35,7 @@ A very complete and descriptive style guide
 		container.innerHTML =
 `
 			<div id=box ></div>
-			<div id=contents ></div>
+			<iframe id=contents src=${ fileName }></iframe>
 
 `;
 
