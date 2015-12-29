@@ -5,16 +5,19 @@ CS 482
 offered by the College of Engineering and Mines at the University of Alaska Fairbanks. 
 The course is taught by [Dr Orion Lawlor]( https://www.cs.uaf.edu/faculty/lawlor/).
 
-The course uses [WebGL]( https://en.wikipedia.org/wiki/WebGL ) and [Three.js[( http://threejs.org ) 
+The course uses [WebGL]( https://en.wikipedia.org/wiki/WebGL ) and [Three.js]( http://threejs.org ) 
 to assist in creating computer simulations for a variety of [STEM]( https://en.wikipedia.org/wiki/Science,_Technology,_Engineering,_and_Mathematics ) topics.
 
-The lecture notes and demos provided with the course syllabus provides a most concise yet far-ranging introduction to STEM simulations.
+Dr Lawlor's lecture notes and demos - available online with the course syllabus - 
+provide a most concise yet far-ranging introduction to a variety STEM simulations.
+
+The material is of interest because:
 
 * Difficult to read math notation becomes easy to read code
 * Concepts that are hard to comprehend as text come alive as simulations
 * Symbols formerly immutably affixed to paper become things you can edit on the fly
 
-The mission of this document is to help make the CS 482 syllabus even more accessible and more lively.
+The mission of this documentation is to help make the CS 482 syllabus even more accessible and more lively.
 
 Topic covered in CS 482 include:
 
