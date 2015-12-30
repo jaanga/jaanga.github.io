@@ -83,7 +83,7 @@ In the instance of a [Three.js]( http://threejs.org ) script, the style generall
 	* In other words to load and display something ASAP
 	* 'Just-in-time' library and data loading
 * Code style
-	* Generally follows ['MDCS']( https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2 ) 
+	* Generally follows '[MDCS]( https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2 )'
 	* As generous horizontally but much more greedy vertically
 	* Also passes jsHint
 * Code is designed to be seriously easy
@@ -94,3 +94,11 @@ In the instance of a [Three.js]( http://threejs.org ) script, the style generall
 	* Every HTML file contains all its associated CSS, HTML data - as well as the JavaScript
 	* No need to keep three files open. It's all in one file just in front of you
 	* This is part of techniques that help you become more accustomed to the DOM
+
+
+
+***
+
+<center title="dingbat" >
+# ❦
+</center>

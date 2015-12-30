@@ -190,3 +190,8 @@ Remember [Hanlon's razor]( https://en.wikipedia.org/wiki/Hanlon%27s_razor ):
 [#35 – How to give and receive criticism]( http://scottberkun.com/essays/35-how-to-give-and-receive-criticism/ )
 
 [It’s supposed to be constructive criticism: Art student destroys her own painting in front of class after bad review]( http://www.dailymail.co.uk/news/article-2329518/Art-student-destroys-painting-class-bad-review.html )
+
+
+<center title="dingbat" >
+# ❦
+</center>

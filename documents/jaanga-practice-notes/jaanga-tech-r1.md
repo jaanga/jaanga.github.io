@@ -69,3 +69,7 @@ The use of PNG files as heightmaps solves many problems and provides many benefi
 * You can actually look at the file and see something
 * The scope and range of tools to process PNG files is huge
 
+
+<center title="dingbat" >
+# ❦
+</center>

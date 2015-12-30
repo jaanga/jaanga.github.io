@@ -67,3 +67,6 @@ But if you are holding down the the movement might bump up to 32 or 64 pixels pe
 
 Good camera movement takes good coding, tools that have excellent user experience and excellent camera peeps. Let's make this happen!
 
+<center title="dingbat" >
+# ❦
+</center>

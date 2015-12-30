@@ -3,8 +3,18 @@
 
 <!-- [Jaanga]( http://jaanga.github.io ) » -->
 
-[Documents Read Me]( index.html )
+Documents Read Me
 ===
+
+_Documenting what you know is the proof of how little you know_
+
+[Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
+~ [Documents]( http://jaanga.github.io/documents ) 
+~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
+~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
+
+***
 
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
@@ -39,48 +49,35 @@ Acquiring a good education takes forever, but that shouldn't stop you from learn
 * Provide easy ways to view/browse lots of original source documents very quickly 
 	* You don't go to the documents, the documents come to you
 	* Like radio buttons
-	* Like changing channels
+	* Like changing TV channels
 * Everything is FOSS forkable
 	* Very open licenses
 	* Very easy to access, mash-up, re-appropriate, whatever
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
-A fast way of learning a skill is by looking at an example, editing it and coming up with something new.
 
-Provide just-in-time learning for a variety of STEM topics
+* To supply a fast way of learning a skill is by looking at an example, editing it and coming up with something new
+* Provide just-in-time learning for a variety of STEM topics
 	* Just what you need to know to complete the next action in your project
 
 
 ## Things to Do / Road Map
 This document viewer is a an early stage work-in-progress. 
 There is much to fix with regards to displaying the data inside an iframe.
-* Three.js Examples Viewer
-	* Hamburger menu
-
-
-## Features
 
 <!--
+## Features
+
+
 * Zoom, pan and rotate
 	* 1 finger / left button =  rotate
 	* 2 finger / wheel = zoom in and out
 	* 3 finger / right button = pan
--->
+
 ## Issues
-
+-->
  
-## Sources
-
-
-## Contact
-
-* jaanga@googlegroups.com
-* https://github.com/jaanga/jaanga.github.io/issues
-
-## Copyright and License
-
-* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 
 ***
 

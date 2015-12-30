@@ -84,3 +84,7 @@ Often it is not an important use...
 ### GitHub
 
 An example of an excellent pedagogical playground.
+
+<center title="dingbat" >
+# ❦
+</center>

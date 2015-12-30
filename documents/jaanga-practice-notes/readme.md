@@ -3,10 +3,10 @@
 
 <!-- [Jaanga]( http://jaanga.github.io ) » [XXXXXX]( http://jaanga.github.io/XXXXXX/  ) »  -->
 
-[Jaanga Practice Notes Read Me]( index.html )
+Jaanga Practice Notes Read Me
 ===
 
-_Documenting what you know is the proof of how little you know_
+_You can't enjoy the show without a program_
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
@@ -17,6 +17,8 @@ _Documenting what you know is the proof of how little you know_
 ***
 
 ##Overview
+
+Five pages to help you to help others
 
 <!--
 ### [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
@@ -40,15 +42,20 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
+Writing software in a collaboration is not easy. Trying to teach others how to collaborate is even trickier
+
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
+To provide a safety net of checklists based on lessons learned from personal experiences and the wisdom of the net.
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
+To help multiple programmers to collaborate
 
+<!--
 ## Things to Do / Road Map
 
 
@@ -63,14 +70,14 @@ patterns are descriptions of common problems and proposal for the solutions that
 
  
 ## Sources
-
+-->
 
 <br>
 
 ***
 
 <center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+# <a href=javascript:window.scroll(0,0); style=text-decoration:none; > ❦ </a>
 </center>
 
 
