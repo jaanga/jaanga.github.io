@@ -19,7 +19,7 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
-### [Kallax Wall Bracket Basic - Demo - Full Screen - Latest] http://jaanga.github.io/demo/mm/kallax-wall-bracket/index.html )
+### [Kallax Wall Bracket Basic - Demo - Full Screen - Latest]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/index.html )
 
 ### [Kallax NxN Basic - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/index.html )
 
@@ -58,13 +58,13 @@ _2015-12-23_
 
 _2015-12-18_
 
-* [Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r5.html )
+[Kallax Wall Bracket Basic R5]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r5.html )
 
 * Beginning to add animation/tweening
 
 _2015-12-12_
 
-### [Kallax NxN Basic R2 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r2.html )
+[Kallax NxN Basic R2 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r2.html )
 
 * Fixed non-appearance of holes issues
 * Updated positions of pegs
@@ -90,7 +90,7 @@ _2015-12-12_
 
 _2015-12-10_
 
-* [Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
+[Kallax NxN Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r1.html )
 
 * Creates any Kallax with from 1 to 6 rows and and 1 to 7 columns
 * Creates the fixing holes be code
@@ -101,7 +101,7 @@ _2015-12-10_
  
 _2015-12-09_
 
-* [Kallax 5x5 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-5x5-basic-r1.html )
+[Kallax 5x5 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-5x5-basic-r1.html )
 
 * Most code in standalone JavaScript file that may be used with all Kallax models
 	* Should soon be able to make any Kallax with 1 to n vertical and horizontal divisions 
@@ -112,21 +112,21 @@ _2015-12-09_
 
 _2015-12-08_
 
-* [Kallax 4x1 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x1/kallax-4x1-basic-r1.html )
+[Kallax 4x1 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x1/kallax-4x1-basic-r1.html )
 
-* [Kallax 4x4 Basic R4 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r4.html )
+[Kallax 4x4 Basic R4 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r4.html )
 
 _2015-12-06_
 
-* [Kallax 4x4 Basic R3 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/r3/kallax-4x4-basic-r3.html )
+[Kallax 4x4 Basic R3 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/r3/kallax-4x4-basic-r3.html )
 
 _2015-12-02_
 
-* [Kallax 4x4 Basic R2 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r2.html )
+[Kallax 4x4 Basic R2 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r2.html )
 
 _2015-12-02_
 
-* [Kallax 4x4 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r1.html )
+[Kallax 4x4 Basic R1 - Demo - Full Screen]( http://jaanga.github.io/demo/mm/kallax-4x4/kallax-4x4-basic-r1.html )
 
 
 _2015-12-01_
