@@ -102,14 +102,7 @@
 			var xhr = new THREE.XHRLoader();
 			xhr.load( fileName, onLoad ) ;
 
-			function onLoad( text ) {
 
-				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
-//				content.scrollTop = 0;
-
-				button.style.display = 'none';
-
-			}
 
 		} else {
 
@@ -123,6 +116,16 @@
 			previousFile = file;
 
 		}
+
+			function onLoad( text ) {
+
+				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
+//				content.scrollTop = 0;
+
+				button.style.display = 'none';
+
+			}
+
 
 	}
 

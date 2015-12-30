@@ -124,11 +124,7 @@
 			var xhr = new THREE.XHRLoader();
 			xhr.load( url, onLoad ) ;
 
-			function onLoad( text ) {
 
-				container.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
-
-			}
 
 		} else {
 
@@ -139,6 +135,12 @@
 		}
 
 		container.scrollTop = 0;
+
+		function onLoad( text ) {
+
+			container.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
+
+		}
 
 	}
 
