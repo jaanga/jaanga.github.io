@@ -15,15 +15,23 @@
 	var documents = [
 
 		[ 'Mr.doob\'s Code Style™', 'https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2'  ],
+		[ 'Does MrDoob Approve?', '#https://raw.githubusercontent.com/zz85/mrdoobapproves/gh-pages/README.md'  ],
 //		[ 'Showdown Coding Style', '#https://raw.githubusercontent.com/showdownjs/code-style/master/README.md' ],
 		[ 'Showdown Coding Style', '#../github-markdown-reader-showdown-coding-style.html' ],
 		[ 'Google HTML/CSS Style Guide', '#https://google.github.io/styleguide/htmlcssguide.xml' ],
 		[ 'Google JavaScript Style Guide', '#https://google.github.io/styleguide/javascriptguide.xml' ],
-		[ 'GitHub', 'https://github.com/styleguide/javascript ' ],
-//		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md' ],
-		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#../github-markdown-reader-rwaldron-coding-style.html' ],
+		[ 'GitHub Stuleguide', 'https://github.com/styleguide/javascript ' ],
+		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md' ],
+//		[ 'Principles of Writing Consistent, Idiomatic JavaScript', '#../github-markdown-reader-rwaldron-coding-style.html' ],
 //		[ 'Airbnb JavaScript Style Guide', '#https://raw.githubusercontent.com/airbnb/javascript/master/README.md' ],
 		[ 'Airbnb JavaScript Style Guide 2', '#../github-markdown-reader-airbnb-coding-style.html' ],
+		[ 'Node.js Style Guide', '#https://raw.githubusercontent.com/felixge/node-style-guide/master/Readme.md' ],
+		[ 'Pragmatic Standards: JavaScript Coding Standards and Best Practices', '#https://raw.githubusercontent.com/stevekwan/best-practices/master/javascript/best-practices.md' ],
+
+		[ 'W3schools Style Guide', 'http://www.w3schools.com/js/js_conventions.asp' ],
+		[ 'jQuery JavaScript Style Guide', 'https://contribute.jquery.org/style-guide/js/' ],
+		[ '10 Best JavaScript Style Guides Including Airbnb and Idiomatic', 'http://noeticforce.com/best-javascript-style-guide-for-maintainable-code' ] ,
+
 	];
 //		[ '', '' ],
 
@@ -33,28 +41,18 @@
 
 [Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/documents/ )
 
-## [${ document.title }]( coding-styles-viewer-r1.html ) [🛈]( http://jaanga.github.io/documents/ )
+## [${ document.title }]( coding-styles-viewer-r1.html )
 
 ***
 
 [Read Me]( #../readme.md )
 
-`;
-
-	menuMarkdown += '<h2>Documents</h2>';
-
-	menuMarkdown += makeMenuMD( documents, documentsPath );
-
-	var footer =
-
-`
-***
-
-<center title="dingbat" >
-## <a href=javascript:container.scrollTop=0; >❦</a>
-</center>
+## Documents
 
 `;
+
+//  [🛈]( http://jaanga.github.io/documents/ )
+
 
 	var converter, container;
 
@@ -90,6 +88,8 @@
 		#container { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
 		#ifr { border-width: 0px; height: 100%; width:100%; }
 `;
+
+		menuMarkdown += makeMenuMD( documents, documentsPath );
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';

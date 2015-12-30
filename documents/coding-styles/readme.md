@@ -18,6 +18,10 @@ _Coding without style is a recipe for making something un-fashionable_
 
 ##Overview
 
+We like style guides.
+
+Our intent here is to make many style guides visible to you as quickly as possible.
+The idea is to be able to help you compare and contrast different styles,
 
 
 <!--
@@ -55,6 +59,8 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Things to Do / Road Map
 
+* Ascertain if there are common ways to categorize the various elements of a style
+* Ascertain if there are research projects devoted to identifying best working practices
 
 ## Features
 <!--

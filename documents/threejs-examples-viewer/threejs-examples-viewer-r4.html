@@ -54,10 +54,10 @@
 			* { box-sizing: border-box; }
 			html { height: 100%; }
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 			p { margin: 0 10px; text-indent: -10px; }
 			.aa { text-decoration: none; }
 
-			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 20px; padding: 10px; position: absolute; }
 			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 330px; overflow: hidden; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
 			#ifr { border-width: 0px; height: 100%; margin: 0; width: 100%; }
@@ -102,8 +102,6 @@
 			var xhr = new THREE.XHRLoader();
 			xhr.load( fileName, onLoad ) ;
 
-
-
 		} else {
 
 			content.innerHTML = '<iframe src=' + urlThreejs + fileName + ' id=ifr ></iframe>';
@@ -117,15 +115,13 @@
 
 		}
 
-			function onLoad( text ) {
+		function onLoad( text ) {
 
-				content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
-//				content.scrollTop = 0;
+			content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
 
-				button.style.display = 'none';
+			button.style.display = 'none';
 
-			}
-
+		}
 
 	}
 
