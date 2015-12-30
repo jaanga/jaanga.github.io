@@ -9,7 +9,7 @@
 	var pegs = [];
 
 	var playList;
-	var count = 0;
+	var frameIndex = 0;
 	var itemCount = 0;
 	var duration = 500;
 
@@ -188,18 +188,23 @@
 
 		if ( chkPlay.checked === false ) { return; }
 
-		if ( count === 0 ) {
+		if ( frameIndex === 0 ) {
 
 			returnAllToStartTween();
 //			itemCount = 0;
 
-			movRotTweenIndex( playList[ count ] );
-			count = 1;
+			movRotTweenIndex( playList[ frameIndex ] );
+			frameIndex++;
 
-		} else if ( count >= playList.length ) {
+		} else if ( frameIndex < playList.length ) {
+
+			movRotTweenIndex( playList[ frameIndex ] );
+			frameIndex++;
+
+		} else {
 
 			chkPlay.checked = false;
-			count = 0;
+			frameIndex = 0;
 //			itemCount = 0;
 
 // Play a 'B' now
@@ -207,15 +212,10 @@
 
 // Play an 'E' just as the previous note finishes
 			playNote(659.255, context.currentTime + 0.232, 0.464);
-
-		} else {
-
-			movRotTweenIndex( playList[ count ] );
-			count++;
-
 		}
 
 	}
+
 
 	function movRotTween( obj ) {
 
@@ -286,46 +286,97 @@
 
 	}
 
-	function movRotTweenIndex( list ) {
+	function togglePlayClip( clip, checkbox ) {
 
-		for ( var i = 0; i < list.length; i++ ) {
+		if ( checkbox.checked === false ) { return; }
 
-			var item = list[ i ];
+		if ( frameIndex === 0 ) {
+
+			returnAllToStartTween();
+//			itemCount = 0;
+
+			movRotTweenIndex( clip[ frameIndex ] );
+			frameIndex++ ;
+
+		} else if ( frameIndex < clip.length ) {
+
+			movRotTweenIndex( clip[ frameIndex ] );
+			frameIndex++;
+
+		} else {
+
+			checkbox.checked = false;
+			frameIndex = 0;
+//			itemCount = 0;
+
+// Play a 'B' now --- Ta
+			playNote(493.883, context.currentTime, 0.232 );
+
+// Play an 'E' just as the previous note finishes -- Da
+			playNote(659.255, context.currentTime + 0.232, 0.464);
+		}
+
+	}
+
+	function movRotTweenIndex( assets ) {
+
+		for ( var i = 0; i < assets.length; i++ ) {
+
+			var item = assets[ i ];
 			var obj = item[ 0 ];
 			var index = item[ 1 ];
 			var ms = item[ 2 ] ? item[ 2 ] : duration;
 			var oud = obj.userData.places;
-console.log( '', obj );
-			if ( obj.name !== 'camera' ) {
 
-				send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], ms, frameDispath );
+//console.log( '', obj );
 
-				dispatchScrewsPegs( obj );
+			if ( obj.name === 'camera' ) {
+
+// console.log( 'camera', obj );
+				cameraTween( oud[ index ][ 0 ], oud[ index ][ 1 ], ms, itemDispatch );
+
+			} else if ( obj.name === 'pencilLine' ) {
+
+// console.log( 'pencil line', obj );
+
+				drawPencilLine( oud[ index ][ 0 ], oud[ index + 1 ][ 0 ] );
+				itemCount++;
 
 			} else {
 
-console.log( 'got here', obj );
-				cameraTween( camera.userData.places[ index ][ 0 ], camera.userData.places[ index ][ 1 ], 1000, frameDispath );
+				send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], ms, itemDispatch );
+
+				dispatchScrewsPegs( obj );
 
 			}
 
 		}
 
-	}
+		function itemDispatch() {
 
-	function frameDispath() {
+			if ( chkPlay.checked === true ) { 
 
-//			if ( chkPlay.checked === false ) { return; }
+				if ( frameIndex < playList.length && itemCount < playList[ frameIndex ].length ) {
 
-			itemCount++;
+					itemCount++;
 
-			if ( itemCount >= playList[ count - 1 ].length ) {
+				}
 
-				itemCount = 0;
-				togglePlay();
+					togglePlay();
+
+			} else {
+
+				if ( frameIndex < pencilDrawClip.length && itemCount < pencilDrawClip[ frameIndex ].length ) {
+
+					itemCount++;
+
+				}
+
+				togglePlayClip( pencilDrawClip, chkDraw );
 
 			}
 
+		}
 
 	}
 
@@ -518,6 +569,24 @@ console.log( 'got here', obj );
 		.start();
 
 playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
+	}
+
+	function drawPencilLine( startPoint, endPoint, func ) {
+
+		onComplete = func ? func : function() {} ;
+
+		var geometry = new THREE.Geometry();
+
+		geometry.vertices.push( startPoint );
+		geometry.vertices.push( endPoint);
+
+		var material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+		var line = new THREE.LineSegments( geometry, material  );
+
+		scene.add( line );
+
+		onComplete();
 
 	}
 

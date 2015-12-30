@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Kallax Wall Bracket Basic R7</title>
+<title>Kallax Wall Bracket Basic R8</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -25,6 +25,8 @@
 	var bracket115753;
 	var part103693; // bracket screw mask
 	var screw100372;
+	var pencil;
+	var screwdriver;
 
 	var heightBracket = 30;
 	var thickness = 1;
@@ -75,6 +77,7 @@
 			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
 			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
 			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play Step-by-Step Assembly</p>
+			<p><input type=checkbox id=chkDraw onchange=togglePlayClip(pencilDrawClip,chkDraw); > Draw Screw Position</p>
 			<div id=info ></div>
 
 		`;
@@ -112,7 +115,7 @@
 		scene.add( mesh );
 
 		fixture = drawFixture();
-		fixture.position.set( 80, 0, 20 );
+		fixture.position.set( 80, 20, 30 );
 		fixture.rotation.set( 0, pi05, 0 );
 		scene.add( fixture );
 
@@ -137,7 +140,10 @@
 
 		bracket115753 = buildKallaxWallBracket();
 		bracket115753.userData.places.push( [ v( 40 - ran( 10 ), 10, -20 ), v( -pi05, 0, ran( 3 ) ) ] );
-		bracket115753.userData.places.push( [ v( 80, 17, -76.5 ), v( 0, 0, 0 ) ] );
+
+//		bracket115753.userData.places.push( [ v( 80, 0 + 0.5 * heightBracket, -76.5 ), v( 0, 0, 0 ) ] );
+		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );
+
 
 		var placard = drawPlacard( '115753', 0.05, 120, 0, 0, 20 )
 		bracket115753.add( placard );
@@ -148,9 +154,9 @@
 
 		part103693 = drawPart103693();
 		part103693.userData.places.push( [ v( 40, 0, 40 - ran( 10 ) ), v( -pi05, 0, ran( 3 ) ) ] );
-		part103693.userData.places.push( [ v( 59, 7, -85 ), v( 0, 0, 0 ) ] );
+		part103693.userData.places.push( [ v( fixture.position.x - 20, fixture.position.y - 9,  fixture.position.z - 100 - 4 ), v( 0, 0, 0 ) ] );
 
-		var placard = drawPlacard( '103693', 0.05, 120, 0, 0, 20 )
+		placard = drawPlacard( '103693', 0.05, 120, 0, 0, 20 )
 		part103693.add( placard );
 
 		bracketAssembly.add( part103693 );
@@ -160,9 +166,9 @@
 			var screw = drawScrew100372();
 
 			screw.userData.places.push( [ v( - 15 - ran( 30 ), radiusScrew, ran( 80 ) - 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
-			screw.userData.places.push( [ v( 92, 6 + i * 21, -73 ), v( 0, -pi05, 0 ) ] );
+			screw.userData.places.push( [ v( fixture.position.x, fixture.position.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] );
 
-			var placard = drawPlacard( '100372', 0.05, 120, 0, 20, 0 )
+			placard = drawPlacard( '100372', 0.05, 120, 0, 20, 0 )
 			screw.add( placard );
 
 			bracketAssembly.add( screw );
@@ -175,15 +181,21 @@
 		drawHelpers2( 50 );
 
 
-		var pencil = drawPencil();
-		pencil.userData.places.push( [ v( ran( 30 ), radiusScrew, - ran( 80 ) + 40  ), v( 0, ran( 6 ), 0 ) ] );
-		pencil.userData.places.push( [ v( ran( 30 ), 2, - ran( 80 ) + 40  ), v( 0, ran( 6 ), 0 ) ] );
+		pencil = drawPencil();
+		pencil.userData.places.push( [ v( ran( 30 ), pencil.userData.radius, - ran( 80 ) + 40  ), v( 0, ran( 6 ), 0 ) ] );
+		pencil.userData.places.push( [ v(  fixture.position.x - 15, fixture.position.y,  fixture.position.z - 50  ), v( 0, 0, 0 ) ] );  // 1
+		pencil.userData.places.push( [ v(  fixture.position.x - 16, fixture.position.y,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 2 drawLine
+		pencil.userData.places.push( [ v(  fixture.position.x - 10, fixture.position.y,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] );
+		pencil.userData.places.push( [ v(  fixture.position.x - 14, fixture.position.y,  fixture.position.z - 100  ), v( 0, 0, 0 ) ] );
+		pencil.userData.places.push( [ v(  fixture.position.x - 13, fixture.position.y + 2,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 5 drawLine
+		pencil.userData.places.push( [ v(  fixture.position.x - 13, fixture.position.y - 2,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 6
 		components.push( pencil );
 		scene.add( pencil );
 
-		var screwdriver = drawScrewdriver();
-		screwdriver.userData.places.push( [ v( ran( -30 ), radiusScrew, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver = drawScrewdriver();
+		screwdriver.userData.places.push( [ v( ran( -30 ), screwdriver.userData.radius, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
 		screwdriver.userData.places.push( [ v( ran( -30 ), 4, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver.userData.places.push( [ v( ran( -30 ), 40, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
 		components.push( screwdriver );
 		scene.add( screwdriver );
 
@@ -193,11 +205,20 @@
 		camera.userData.places.push( [ camera.position.clone(), controls.target.clone() ] );
 		camera.userData.places.push( [ v( -100, 100, 100 ), v( 0, 0, 0 ) ] ); // 1. home
 		camera.userData.places.push( [ v( 30, 100, -50 ), v( 80, 16, -73 ) ] ); // 2 assembled
-
+		camera.userData.places.push( [ v( 50, 40, 20 ), v( fixture.position.x , fixture.position.y, fixture.position.z - 100 ) ] ); // 2 assembled
 		returnAllToStartTween();
 
-		createScreenPlay();
+		pencilLine = {};
+		pencilLine.name ='pencilLine';
+		pencilLine.userData = {};
+		pencilLine.userData.places = [];
+		pencilLine.userData.places.push( [ v(  fixture.position.x - 16, fixture.position.y,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 2 drawLine
+		pencilLine.userData.places.push( [ v(  fixture.position.x - 10, fixture.position.y,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] );
+		pencilLine.userData.places.push( [ v(  fixture.position.x - 13, fixture.position.y + 2,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 5 drawLine
+		pencilLine.userData.places.push( [ v(  fixture.position.x - 13, fixture.position.y - 2,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 6
 
+		createAssembleAll();
+		createPencilDraw();
 	}
 
 // http://mrdoob.github.io/three.js/docs/#Reference/Extras.Core/Path
@@ -337,17 +358,17 @@
 
 			for ( var i = 0; i < 2; i++ ) {
 
-				var x = i === 0 ? width05 - 1.75 * radiusScrew : -width05 + 1.75 * radiusScrew;
+				var x = i === 0 ? width05 - 2.2 * radiusScrew : -width05 + 2.2 * radiusScrew;
 
 				for ( var j = 0; j < 2; j++ ) {
 
 					y = j === 0 ? height05 - 3 * radiusScrew : -height05 + 3 * radiusScrew;
 
 					var holePath = new THREE.Path();
-					holePath.absarc( x, y, radiusScrew, 0, Math.PI * 2, true );
+					holePath.absarc( x, y, radiusScrew + thickness, 0, Math.PI * 2, true );
 					shape.holes.push( holePath );
 
-					pts = [ v( radiusScrew, 0, thickness ) , v( radiusScrew - thickness, 0, thickness ), v( radiusScrew, 0, 0 ) ];
+					pts = [ v( radiusScrew + thickness, 0, thickness ) , v( radiusScrew, 0, thickness ), v( radiusScrew + thickness, 0, 0 ) ];
 
 					geo2 = new THREE.LatheGeometry( pts, 4 * segments );
 					geo2.applyMatrix( new THREE.Matrix4().makeTranslation( x, y, 0  ) );
@@ -480,12 +501,9 @@
 	function drawScrew100372() {
 
 		var radiusScrew05 = 0.5 * radiusScrew;
-
 		var delta = 2;
-
 		var height = 20;
 		var height05 = 0.5 * height;
-
 		var pitch = 2;
 		var segments = 12;
 
@@ -563,7 +581,7 @@
 	function drawFixture() {
 
 		var width = 100;
-		var height = 500;
+		var height = 300;
 		var thickness = 10;
 
 		var pts = [
@@ -578,12 +596,14 @@
 		var shape = new THREE.Shape();
 		shape.fromPoints( pts );
 
+		var holeTop = v( + width - 5 * radiusScrew, 0, 0 )
+
 		var holePath = new THREE.Path();
-		holePath.absarc( + width - 5 * radiusScrew, 6, radiusScrew, 0, Math.PI * 2, true );
+		holePath.absarc( holeTop.x, holeTop.y + 0.5 * heightBracket - 3 * radiusScrew, radiusScrew, 0, Math.PI * 2, true );
 		shape.holes.push( holePath );
 
 		holePath = new THREE.Path();
-		holePath.absarc( + width - 5 * radiusScrew, 6 + 21, radiusScrew, 0, Math.PI * 2, true );
+		holePath.absarc( holeTop.x, holeTop.y - 0.5 * heightBracket + 3 * radiusScrew, radiusScrew, 0, Math.PI * 2, true );
 		shape.holes.push( holePath );
 
 		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
@@ -596,12 +616,14 @@
 
 	function drawPencil() {
 
-		var points = [ v( 0, 0, 0 ) , v( 2, 0, 10 ), v( 2, 0, 70 ), v( 0, 0, 70 ) ];
+		var radius = 2;
+		var points = [ v( 0, 0, 0 ) , v( radius, 0, 10 ), v( radius, 0, 70 ), v( 0, 0, 70 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
 
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'pencil';
 		mesh.userData.places = [];
+		mesh.userData.radius = radius;
 
 		return mesh;
 
@@ -609,12 +631,14 @@
 
 	function drawScrewdriver() {
 
-		var points = [ v( 0, 0, 0 ) , v( 1, 0, 0 ), v( 1, 0, 50 ), v( 5, 0, 50 ), v( 5, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( 5, 0, 55), v( 5, 0, 80 ), v( 0, 0, 81 ) ];
+		var radius = 5;
+		var points = [ v( 0, 0, 0 ) , v( 1, 0, 0 ), v( 1, 0, 50 ), v( radius, 0, 50 ), v( radius, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radius, 0, 55), v( radius, 0, 80 ), v( 0, 0, 81 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
 
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'pencil';
 		mesh.userData.places = [];
+		mesh.userData.radius = radius;
 
 		return mesh;
 
@@ -690,18 +714,35 @@
 
 	}
 
-	function createScreenPlay() {
+	function createAssembleAll() {
 
 		playList = [
 
 			[ [ bracket115753, 1, 2000 ] ],
-			[ [ part103693, 1, 2000 ] ],
+			[ [ part103693, 1, 2000 ], [ camera, 2, 1000 ] ],
 			[ [ components[ 2 ], 1, 2000 ] ],
-			[ [ components[ 3 ], 1, 2000 ], [ camera, 2, 1000 ] ]
+			[ [ components[ 3 ], 1, 2000 ] ]
 
 		];
 
 	}
+
+	function createPencilDraw() {
+
+		pencilDrawClip = [
+
+			[ [ bracket115753, 1, 2000 ] ],
+			[ [ pencil, 1, 2000 ] ],
+			[ [ pencil, 2, 2000 ], [ camera, 3, 1000 ] ],
+			[ [ pencil, 3, 2000 ], [ pencilLine, 0, 1000 ] ],
+			[ [ pencil, 4, 1000 ] ],
+			[ [ pencil, 5, 1000 ], [ pencilLine, 2, 1000 ] ],
+			[ [ pencil, 6, 2000 ] ],
+			[ [ pencil, 0, 2000 ], [ camera, 1, 1000 ] ]
+		];
+
+	}
+
 
 	function onWindowResize() {
 

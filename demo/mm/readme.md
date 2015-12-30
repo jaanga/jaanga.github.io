@@ -19,13 +19,28 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+### [Kallax Wall Bracket Basic - Demo - Full Screen - Latest] http://jaanga.github.io/demo/mm/kallax-wall-bracket/index.html )
+
+### [Kallax NxN Basic - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/index.html )
+
+### 
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
+_2015-12-29_
+
+[Kallax Wall Bracket Basic R8]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r8.html )
+
+* More objects find their positions by algorithm ( rather than by eye )
+* Fewer global variables
+* Adds ability to draw 'pencil lines' - still at an early stage
+* Adds new 'Draw Screw position' checkbox and 'film clip'
+
+
 _2015-12-24_
 
-###[Kallax Wall Bracket Basic R7]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r7.html )
+[Kallax Wall Bracket Basic R7]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r7.html )
 
 * Add placards with part ID numbers
 * Add beginning of pencil
