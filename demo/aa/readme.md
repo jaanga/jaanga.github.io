@@ -18,9 +18,9 @@ _Shiny new things_
 
 ##Overview
 
-(Sphere Refraction Shaders )[ http://jaanga.github.io/demo/aa/water/sphere-refraction-shaders.html)
+[Sphere Refraction Shaders]( http://jaanga.github.io/demo/aa/water/sphere-refraction-shaders.html )
 
-(WebGL Shaders Ocean Sphere)[ http://jaanga.github.io/demo/aa/water/webgl-shaders-ocean-sphere.html )
+[WebGL Shaders Ocean Sphere]( http://jaanga.github.io/demo/aa/water/webgl-shaders-ocean-sphere.html )
 
 _2015-12-06_
 

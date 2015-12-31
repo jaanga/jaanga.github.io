@@ -7,7 +7,9 @@ value='You are now in a GitHub web page view - Click this button to view this re
 Vista Lights Read Me
 ===
 
+_2015-12-30_
 
+[Multiple Views R1]( http://jaanga.github.io/demo/multiple-views/multiple-views-r1.html )
 _2015-12-13_
 
 [Vista Lights URL Hash Reader R2]( http://jaanga.github.io/demo/pm/url-hash-reader-r2.html )

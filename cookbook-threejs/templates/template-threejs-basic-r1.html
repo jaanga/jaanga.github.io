@@ -63,7 +63,9 @@
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
 		document.body.appendChild( stats.domElement );
 
-		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
