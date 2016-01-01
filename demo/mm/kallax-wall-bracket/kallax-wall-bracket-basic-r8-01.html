@@ -580,172 +580,222 @@ drawPhillipsScrewHead();
 
 	}
 
-	function drawPhillipsScrewHead( rIn, rInT, rOut, ht ) {
+	function drawPhillipsScrewHead( rIn, rInT, rOut, seg ) {
 
-		var radiusInside = rIn ? rIn : 10;
-		var radiusInsideTip = rInT ? rInT : 5;
+		var radiusInside = rIn ? rIn : 3;
+		var radiusInsideTip = rInT ? rInT : 1;
 		var radiusOutside = rOut ? rOut : 15;
-		var height = ht ? ht : 20;
-
-		var rows = 3;
-		var columns = 24;
-
-		var tipTop = 0;
-		var tipBottom = 0.25 * ht;
-
+		var segments = seg ? seg : 24;
+		var tipTop = -25;
+		var tipBottom = 0;
 		var base = 20;
+		
+		var angleDelta = pi2 / segments;
 
-//		var angleDelta = pi2 / segments;
-
-		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		var geometry = new THREE.PlaneGeometry( 1, 1, 2, segments );
+console.log( '', geometry.vertices );
 		vertices = geometry.vertices;
-		var count = 0;
+		j = 0;
+		for ( var i = 0; i < vertices.length; i++ ) {
 
-		for ( var i = 0; i <= rows; i++ ) {
+			var v = vertices[ i ];
 
-			var theta = pi2 / columns;
+			if ( j === 0 || j === 12 || j === 24 ) {
 
-			for ( var j = 0; j <= columns; j++ ) {
+				y = -30;
 
-				vt = vertices[ count++ ];
+				if ( v.x > 0 ) {
 
-				if ( i === 0 ) {
+					v.x = radiusInsideTip * cos( angleDelta * ( j + 1 ) );
+					v.y = tipTop;
+					v.z = radiusInside * sin( angleDelta * ( j + 1 ) );
 
-					if ( j === 0 || j === 12 || j === 24 ) {
-
-						vt.x = radiusInsideTip * cos( theta * ( j + 1 ) );
-						vt.y = tipTop;
-						vt.z = radiusInside * sin( theta * ( j + 1 ) );
-
-					} else if ( j === 1 || j === 13 ) {
-
-						vt.x = radiusInsideTip * cos( theta * ( j ) );
-						vt.y = tipTop;
-						vt.z = radiusInside * sin( theta * ( j ) );
-
-					} else if ( j === 4 || j === 16 ) {
-
-						vt.x = radiusInside * cos( theta * ( j ) );
-						vt.y = tipTop;
-						vt.z = radiusInsideTip * sin( theta * ( j )  );
-
-					} else if ( j === 5 || j === 17 ) {
-
-						vt.x = radiusInside * cos( theta * ( j ) );
-						vt.y = tipTop;
-						vt.z = radiusInsideTip * sin( theta * ( j )  );
-
-					} else if ( j === 6 || j === 18 ) {
-
-						vt.x = radiusInside * cos( theta * ( j + 1 ) );
-						vt.y = tipTop;
-						vt.z = radiusInsideTip * sin( theta * ( j + 1 ) );
-
-					} else if ( j == 7 || j === 19 ) {
-
-						vt.x = radiusInside * cos( theta * ( j ) );
-						vt.y = tipTop;
-						vt.z = radiusInsideTip * sin( theta * ( j  )  );
-
-					} else if ( j == 10 || j === 22 ) {
-
-						vt.x = radiusInsideTip * cos( theta * ( j ) );
-						vt.y = tipTop;
-						vt.z = radiusInside * sin( theta * ( j  )  );
-
-					} else if ( j === 11 || j === 23 ) {
-
-						vt.x = radiusInsideTip * cos( theta * ( j - 1 ) );
-						vt.y = tipTop;
-						vt.z = radiusInside * sin( theta * ( j - 1 )  );
-
-					} else {
-
-						vt.x = radiusInside * cos( theta * j );
-						vt.y = tipTop;
-						vt.z = radiusInside * sin( theta * j );
-
-					}
-
-				} else if ( i === 1 ) {
-
-					if ( j === 0 || j === 12 || j === 24 ) {
-
-						vt.x = radiusOutside * cos( theta * ( j + 1 ) );
-						vt.y = tipBottom;
-						vt.z = radiusInside * sin( theta * ( j + 1 ) );
-
-					} else if ( j === 1 || j === 13 ) {
-
-						vt.x = radiusOutside * cos( theta * ( j ) );
-						vt.y = tipBottom;
-						vt.z = radiusInside * sin( theta * ( j ) );
-
-					} else if ( j === 4 || j === 16 ) {
-
-						vt.x = radiusInside * cos( theta * ( j ) );
-						vt.y = tipBottom;
-						vt.z = radiusOutside * sin( theta * ( j + 3 ) );
-
-					} else if ( j === 5 || j === 17 ) {
-
-						vt.x = radiusInside * cos( theta * ( j ) );
-						vt.y = tipBottom;
-						vt.z = radiusOutside * sin( theta * ( j + 2 ) );
-
-					} else if ( j === 6 || j === 18 ) {
-
-						vt.x = radiusInside * cos( theta * ( j + 1 ) );
-						vt.y = tipBottom;
-						vt.z = radiusOutside * sin( theta * ( j + 1 ) );
-
-					} else if ( j == 7 || j === 19 ) {
-
-						vt.x = radiusInside * cos( theta * ( j  ) );
-						vt.y = tipBottom;
-						vt.z = radiusOutside * sin( theta * ( j ) );
-
-					} else if ( j == 10 || j === 22 ) {
-
-						vt.x = radiusOutside * cos( theta * ( j + 3 ) );
-						vt.y = tipBottom;
-						vt.z = radiusInside * sin( theta * ( j  ) );
-
-					} else if ( j === 11 || j === 23 ) {
-
-						vt.x = radiusOutside * cos( theta * ( j + 2 ) );
-						vt.y = tipBottom;
-						vt.z = radiusInside * sin( theta * ( j - 1 ) );
-
-					}
 
 				} else {
 
-					vt.x = radiusOutside * cos( theta * j );
-					vt.y = i * height / rows;
-					vt.z = radiusOutside * sin( theta * j );
+					v.x = radiusOutside * cos( angleDelta * ( j + 1 ) );
+					v.y = tipBottom;
+					v.z = radiusInside * sin( angleDelta * ( j + 1 ) );
+					j++;
+
+				}
+
+			} else if ( j === 1 || j === 13 ) {
+
+				y = -20;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInsideTip * cos( angleDelta * ( j ) );
+					v.y = tipTop;
+					v.z = radiusInside * sin( angleDelta * ( j ) );
+
+
+				} else {
+
+					v.x = radiusOutside * cos( angleDelta * ( j ) );
+					v.y = tipBottom;
+					v.z = radiusInside * sin( angleDelta * ( j ) );
+					j++;
+
+				}
+
+			} else if ( j === 4 || j === 16 ) {
+
+				y = -20;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * ( j ) );
+					v.y = tipTop;
+					v.z = radiusInsideTip * sin( angleDelta * ( j )  );
+
+
+				} else {
+
+					v.x = radiusInside * cos( angleDelta * ( j ) );
+					v.y = tipBottom;
+					v.z = radiusOutside * sin( angleDelta * ( j + 3 ) );
+					j++;
+
+				}
+
+			} else if ( j === 5 || j === 17 ) {
+
+				y = -30;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * ( j ) );
+					v.y = tipTop;
+					v.z = radiusInsideTip * sin( angleDelta * ( j )  );
+
+
+				} else {
+
+					v.x = radiusInside * cos( angleDelta * ( j ) );
+					v.y = tipBottom;
+					v.z = radiusOutside * sin( angleDelta * ( j + 2 ) );
+					j++;
+
+				}
+
+			} else if ( j === 6 || j === 18 ) {
+
+				y = -30;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * ( j + 1 ) );
+					v.y = tipTop;
+					v.z = radiusInsideTip * sin( angleDelta * ( j + 1 ) );
+
+
+				} else {
+
+					v.x = radiusInside * cos( angleDelta * ( j + 1 ) );
+					v.y = tipBottom;
+					v.z = radiusOutside * sin( angleDelta * ( j + 1 ) );
+					j++;
+
+				}
+
+			} else if ( j == 7 || j === 19 ) {
+
+				y = -20;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * ( j ) );
+					v.y = tipTop;
+					v.z = radiusInsideTip * sin( angleDelta * ( j  )  );
+
+
+				} else {
+
+					v.x = radiusInside * cos( angleDelta * ( j  ) );
+					v.y = tipBottom;
+					v.z = radiusOutside * sin( angleDelta * ( j ) );
+					j++;
+
+				}
+
+
+			} else if ( j == 10 || j === 22 ) {
+
+				y = -20;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInsideTip * cos( angleDelta * ( j ) );
+					v.y = tipTop;
+					v.z = radiusInside * sin( angleDelta * ( j  )  );
+
+
+				} else {
+
+					v.x = radiusOutside * cos( angleDelta * ( j + 3 ) );
+					v.y = tipBottom;
+					v.z = radiusInside * sin( angleDelta * ( j  ) );
+					j++;
+
+				}
+
+			} else if ( j === 11 || j === 23 ) {
+
+				y = -30;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInsideTip * cos( angleDelta * ( j - 1 ) );
+					v.y = tipTop;
+					v.z = radiusInside * sin( angleDelta * ( j - 1 )  );
+
+
+				} else {
+
+					v.x = radiusOutside * cos( angleDelta * ( j + 2 ) );
+					v.y = tipBottom;
+					v.z = radiusInside * sin( angleDelta * ( j - 1 ) );
+					j++;
+
+				}
+
+
+
+			} else {
+
+				y = base;
+
+				if ( v.x > 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * j );
+					v.y = y;
+					v.z = radiusInside * sin( angleDelta * j );
+
+
+				} else {
+
+					v.x = radiusOutside * cos( angleDelta * j );
+					v.y = y;
+					v.z = radiusOutside * sin( angleDelta * j++ );
 
 				}
 
 			}
-
 		}
 
 //		geometry.center();
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
-
-/*
-		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
+		material = new THREE.MeshNormalMaterial( { side: 2 });
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.y = 10;
+		mesh.position.y = 30;
 
 		scene.add( mesh );
-*/
-
-		return geometry;
 
 	}
+
 
 	function drawFixture() {
 
@@ -804,13 +854,6 @@ drawPhillipsScrewHead();
 		var points = [ v( 0, 0, 0 ) , v( 1, 0, 0 ), v( 1, 0, 50 ), v( radius, 0, 50 ), v( radius, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radius, 0, 55), v( radius, 0, 80 ), v( 0, 0, 81 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
 
-		var geo2 = drawPhillipsScrewHead( 0.5, 0.75, 1, 5 );
-		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -5 ) ); 
-		geometry.merge( geo2 );
-
-
-		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'pencil';
 		mesh.userData.places = [];
@@ -819,7 +862,7 @@ drawPhillipsScrewHead();
 		return mesh;
 
 	}
-
+	
 
 	function drawPlacard( text, scale, color, x, y, z ) {
 

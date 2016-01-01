@@ -11,6 +11,11 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script>
 
+	var urlThreejs = 'http://mrdoob.github.io/three.js/examples/'
+	var url = 'https://api.github.com/repos/mrdoob/three.js/contents/examples/';
+
+//  https://api.github.com/repos/josdirksen/learning-threejs/contents/
+
 	var scenes = [];
 	var renderers = [];
 	var renderersIndex = 0;
@@ -35,10 +40,91 @@
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<div id=info ></div>
-			<p>Maximum limit of 16 scenes</p>
 `;
 
-		createMultipleViews();
+//		createMultipleViews();
+
+		requestThreejsFileNames();
+
+
+	}
+
+	function requestThreejsFileNames() {
+
+
+//  https://api.github.com/repos/josdirksen/learning-threejs/contents/
+
+		var webgl = [];
+		var webglAdvanced = [];
+		var vr = [];
+		var css3d = [];
+		var css3dStereo = [];
+		var misc = [];
+		var canvas = [];
+		var raytracing = [];
+		var software = [];
+		var svg = [];
+		var topics = [ webgl, webglAdvanced, vr, css3d, css3dStereo, misc, canvas, raytracing, software, svg ];
+		var topicOrder = ['webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
+
+		var xhr = new THREE.XHRLoader();
+		xhr.load( url, onLoad ) ;
+
+		function onLoad( response ) {
+
+			var lines = response.split(/\r\n|\n/);
+			var text = '';
+
+			for ( var i = 0; i < lines.length; i++ ) {
+
+				line = lines[ i ];
+
+				if ( line.indexOf( '"name"' ) > -1 && line.indexOf( '.html' ) > -1 && line.indexOf( 'index.html' ) === -1 ) {
+
+					var fileName = line.substr( 13, line.length - 15 );
+
+					var topic = fileName.split( '_' );
+					topic = topic.shift();
+					var index = topicOrder.indexOf( topic );
+
+					if ( fileName.indexOf( 'webgl_buffergeometry' ) > -1 || fileName.indexOf( 'webgl_custom' ) > -1 ) index = 1;
+					if ( fileName.indexOf( 'css3dstereo' ) > -1 ) index = 4;
+
+					topics[ index ].push( fileName );
+
+				}
+
+			}
+
+			for ( var i = 0; i < topics.length; i++ ) {
+
+				topic = topics[ i ];
+
+				text += `<h2>${ topicOrder[ i ] }</h2>`;
+
+				for ( var j = 0; j < topic.length; j++ ) {
+
+
+					fileName = topic[ j ];
+					var id = fileName.replace( '.html', '')
+					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
+					text += `
+
+			scene.div = document.body.appendChild( document.createElement( 'div' ) );
+			scene.div.style.cssText = ' border: 1px solid black; height: 512px; width: 512px; ';
+
+
+						<p><a class=aa id=${ id } href=#${ fileName } > ${ title }</a>
+						<a class=aa href=${urlThreejs}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
+					</p>\n`;
+
+				}
+
+			}
+
+			info.innerHTML += text;
+
+		}
 
 	}
 
@@ -166,3 +252,4 @@ console.log( 'scene index', scene.userData.index );
 </script>
 </body>
 </html>
+

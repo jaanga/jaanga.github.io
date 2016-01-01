@@ -2,7 +2,7 @@
 <html >
 <head>
 <meta charset=utf-8 >
-<title>Three.js Examples Viewer R4</title>
+<title>Dirksen Examples Viewer R4</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -12,27 +12,15 @@
 
 	var defaultFile = './readme.md';
 
-	var urlThreejs = 'http://mrdoob.github.io/three.js/examples/'
-// logo from view-source:http://mrdoob.github.io/three.js/docs/
-
-	var logo = [
-		'    __     __',
-		' __/ __\\  / __\\__   ____   _____   _____',
-		'/ __/  /\\/ /  /___\\/ ____\\/ _____\\/ _____\\',
-		'\\/_   __/ /   _   / /  __/ / __  / / __  /_   __   _____',
-		'/ /  / / /  / /  / /  / / /  ___/ /  ___/\\ _\\/ __\\/ _____\\',
-		'\\/__/  \\/__/\\/__/\\/__/  \\/_____/\\/_____/\\/__/ /  / /  ___/',
-		'                                         / __/  /  \\__  \\',
-		'                                         \\/____/\\/_____/'
-	].join('\n');
+	var urlDirksen = 'http://rawgit.com/josdirksen/learning-threejs/master/';
 
 	var menuHeader =
 
 `
 		<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br> 
-		<a class=aa  href=""  ><pre style=font-size:6pt; >${ logo }</pre></a>
+
 		<h2>
-			<a class=aa href="" >Examples Viewer R4</a>
+			<a class=aa href="" >Dirksen Examples Viewer R1</a>
 		</h2>
 		<p><a href=#readme.md >Read Me</a></p>
 		<div id=list ></div>
@@ -76,14 +64,14 @@
 		button.style.display = 'none';
 		button.onclick = function() {
 
-			window.open( 'view-source:' + urlThreejs + fileName );
+			window.open( 'view-source:' + urlDirksen + fileName );
 
 		}
 
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'hashchange', onHashChange, false );
 
-		requestThreejsFileNames();
+		requestDirksenFileNames();
 
 		onHashChange();
 
@@ -104,7 +92,7 @@
 
 		} else {
 
-			content.innerHTML = '<iframe src=' + urlThreejs + fileName + ' id=ifr ></iframe>';
+			content.innerHTML = '<iframe src=' + urlDirksen + fileName + ' id=ifr ></iframe>';
 
 			button.style.display = '';
 
@@ -126,11 +114,9 @@
 	}
 
 
-	function requestThreejsFileNames() {
+	function requestDirksenFileNames() {
 
-		var url = 'https://api.github.com/repos/mrdoob/three.js/contents/examples/';
-
-//  https://api.github.com/repos/josdirksen/learning-threejs/contents/
+		var url = 'https://api.github.com/repos/josdirksen/learning-threejs/git/trees/master?recursive=1';
 
 		var webgl = [];
 		var webglAdvanced = [];
@@ -145,53 +131,56 @@
 		var topics = [ webgl, webglAdvanced, vr, css3d, css3dStereo, misc, canvas, raytracing, software, svg ];
 		var topicOrder = ['webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
 
+
+		files = [];
 		var xhr = new THREE.XHRLoader();
 		xhr.load( url, onLoad ) ;
 
 		function onLoad( response ) {
 
-			var lines = response.split(/\r\n|\n/);
+			lines = response.split(/\r\n|\n/);
 			var text = '';
 
 			for ( var i = 0; i < lines.length; i++ ) {
 
-				line = lines[ i ];
+				var line = lines[ i ];
 
-				if ( line.indexOf( '"name"' ) > -1 && line.indexOf( '.html' ) > -1 && line.indexOf( 'index.html' ) === -1 ) {
+				if ( line.indexOf( '"path"' ) > -1 && line.indexOf( '.html' ) > -1 && line.indexOf( 'index.html' ) === -1 ) {
 
-					var fileName = line.substr( 13, line.length - 15 );
-
+					var fileName = line.substr( 15, line.length - 17 );
+/*
 					var topic = fileName.split( '_' );
 					topic = topic.shift();
 					var index = topicOrder.indexOf( topic );
 
 					if ( fileName.indexOf( 'webgl_buffergeometry' ) > -1 || fileName.indexOf( 'webgl_custom' ) > -1 ) index = 1;
 					if ( fileName.indexOf( 'css3dstereo' ) > -1 ) index = 4;
+*/
 
-					topics[ index ].push( fileName );
+					files.push( fileName );
 
 				}
 
 			}
 
-			for ( var i = 0; i < topics.length; i++ ) {
+//			for ( var i = 0; i < files.length; i++ ) {
 
-				topic = topics[ i ];
+//				topic = files[ i ];
 
-				text += `<h2>${ topicOrder[ i ] }</h2>`;
+//				text += `<h2>${ topicOrder[ i ] }</h2>`;
 
-				for ( var j = 0; j < topic.length; j++ ) {
+				for ( var j = 0; j < files.length; j++ ) {
 
-					fileName = topic[ j ];
+					fileName = files[ j ];
 					var id = fileName.replace( '.html', '')
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 					text += `<p><a class=aa id=${ id } href=#${ fileName } > ${ title }</a>
-						<a class=aa href=${urlThreejs}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
+						<a class=aa href=${urlDirksen}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
 					</p>\n`;
 
 				}
 
-			}
+//			}
 
 			menu.innerHTML += text;
 
