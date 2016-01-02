@@ -37,9 +37,14 @@ _2016-01-02 & 2016-01-01 & 2015-12-29_
 * Both screw and screwdriver not finished, not even beginning to be finished
 * More objects find their positions by algorithm ( rather than by eye )
 * Fewer global variables
+* Play step-by-step assembly has more detailed film clip
 * Adds ability to draw 'pencil lines' - still at an early stage
 * Adds new 'Draw Screw position' checkbox and 'film clip'
 
+Coming soon? 
+
+* Screwdriver and screw rotating into fnal position
+* Rounde-headed screw and flat blade screwdriver 
 
 _2015-12-24_
 
