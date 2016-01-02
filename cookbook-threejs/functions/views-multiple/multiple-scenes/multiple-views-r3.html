@@ -24,11 +24,15 @@
 	function init() {
 
 		var css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML = `body { font: 12pt monospace; } 
+		css.innerHTML = 
+`
+
+		body { font: 12pt monospace; } 
 		button { background-color: #eee; border: 2px #eee solid; color: #888; }
 		#aa { text-decoration: none; }
 		#menu { margin: 0; position: absolute; max-width: 200px; }
 		#content { left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+
 `;
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
@@ -45,12 +49,10 @@
 			<p>Maximum limit of ${ renderersLimit } views updating at same time</p>
 			<div id=info ></div>
 
-
 `;
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
 		content.id = 'content';
-
 
 		createListView();
 //		createGallery();
@@ -141,8 +143,6 @@
 
 	function createView( scene, width, height ) {
 
-// console.log( 'scene index', scene.userData.index );
-
 		if ( !renderers[ renderersIndex ] && renderers.length < renderersLimit ) {
 
 			renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
@@ -157,11 +157,7 @@
 		renderersIndex = renderersIndex < renderersLimit ? renderersIndex : 0;
 		renderer = renderers[ renderersIndex++ ];
 
-		if ( renderer !== scene.renderer ) {
-
-			scenes[ renderer.index ].renderer = undefined;
-
-		}
+		if ( renderer !== scene.renderer ) { scenes[ renderer.index ].renderer = undefined; }
 
 		renderer.index = scene.userData.index;
 		renderer.setSize( width, height );
@@ -192,22 +188,11 @@
 
 			rect = scene.div.getBoundingClientRect();
 
-			if ( rect.bottom < 0 || rect.top > window.innerHeight ) {
-
-				continue;
-
-			}
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
 
 			if ( ! scene.renderer ) { createView( scene, rect.width, rect.height ); }
 
-			scene.traverse( function ( child ) {
-
-				if ( child instanceof THREE.Mesh ) {
-
-					child.rotation.x += 0.01;
-				}
-			} );
-
+			scene.traverse( function ( child ) { if ( child instanceof THREE.Mesh ) { child.rotation.x += 0.01; } } );
 			scene.controls.update();
 			scene.renderer.render( scene, scene.camera );
 
