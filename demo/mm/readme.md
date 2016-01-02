@@ -28,11 +28,13 @@ _This is all still a work-in-progress. In particular: sounds and textures need m
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
-_2015-12-29 & 2016-01-01_
+_2016-01-02 & 2016-01-01 & 2015-12-29_
 
 [Kallax Wall Bracket Basic R8]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r8.html )
 
 * Phillips screwdriver tip starting to look OK (big learning curve here)
+* Ditto Phillips screw head
+* Both screw and screwdriver not finished, not even beginning to be finished
 * More objects find their positions by algorithm ( rather than by eye )
 * Fewer global variables
 * Adds ability to draw 'pencil lines' - still at an early stage

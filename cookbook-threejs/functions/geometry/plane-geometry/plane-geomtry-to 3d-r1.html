@@ -4,6 +4,7 @@
 <meta charset=utf-8 >
 <title>Plane Geometry to 3D R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description contents='Create 3D objects derived from the topology of cylinders and spheres' >
 </head>
 <body>
 
@@ -34,7 +35,7 @@
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			h2 { margin: 0 }
 			#aa {text-decoration: none; }
-			#menu { margin: 0 20px; position: absolute; }
+			#menu { margin: 0 20px; max-width: 200px; position: absolute; }
 
 			button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
@@ -53,9 +54,12 @@
 				<a href="" > ${ document.title }</a> 
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
-			<p><button onclick=createPlane(3,10); >create plane</button></p>
-			<p><button onclick=createCylinder(5,30,20,5); >create cylinder</button></p>
-			<p><button onclick=createCylinderVariable(20,70,20,5); >create cylinder variable</button></p>
+			<p><button onclick=createPlane(); >create plane</button></p>
+			<p><button onclick=createCylinder(); >create cylinder</button></p>
+			<p><button onclick=createCross(); >create cross</button></p>
+			<p><button onclick=createCylinderVariable(); >create cylinder variable</button></p>
+			<p><button onclick=createPhillipsTip(); >create phillips tip</button></p>
+			<p><button onclick=createPhillipsHead(); >create phillips head</button></p>
 			<p><button onclick=createSphere(25,20,10); >create sphere</button></p>
 			<p><button onclick=createPillows(20,20); >create pillows</button></p>
 			<p><input type=checkbox id=chkWire checked > wireframe</p>
@@ -88,6 +92,10 @@
 
 		scene = new THREE.Scene();
 
+		light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 ); // 0xffbbbb, 0x444488
+		light.position.set( - 0.5, 0.8, 1 ); // - 0.5, 0.8, 1
+		scene.add( light );
+
 		window.addEventListener( 'resize', onWindowResize, false );
 
 // helpers
@@ -105,49 +113,33 @@
 		mesh.position.set( 0, -21, 0 );
 		scene.add( mesh );
 
-		createCylinderVariable( 20,70,20,5);
+//		createCylinder();
+//		createCylinderVariable();
+//		createCross();
+//		createPhillipsTip();
+		createPhillipsHead();
 
 	}
 
-	function createCylinderVariable( radius, height, columns, rows ) {
+	function createPlane( width, height, columns, rows ) {
 
-		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
-		vertices = geometry.vertices;
-		var count = 0;
+		var width = width ? width : 20;
+		var height = height ? height : 20;
+		var columns = columns ? columns : 3;
+		var rows = rows ? rows : 5;
 
-		for ( var i = 0; i <= rows; i++ ) {
-
-			var theta = pi2 / columns;
-			dx = 10 * Math.random();
-			dz = 10 * Math.random();
-			for ( var j = 0; j <= columns; j++ ) {
-
-				x = dx + radius * cos( theta * j );
-				y = 5 * Math.random() + i * height / rows;
-				z = dz + radius * sin( theta * j );
-				vertices[ count++ ] = v( x + 30 * Math.random() - 5, y, z + 30 * Math.random() - 5 );
-
-//console.log( '', count);
-
-			}
-
-		}
-
-		updateObj( geometry );
-
-	}
-
-	function createPlane( columns, rows ) {
-
-
-		geometry = new THREE.PlaneGeometry( 1, 1, columns, rows );
+		geometry = new THREE.PlaneGeometry( width, height, columns, rows );
 
 		mesh = updateObj( geometry );
-		mesh.scale.set( 20, 20, 20 );
 
 	}
 
 	function createCylinder( radius, height, columns, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 50;
+		var columns = columns ? columns : 12;
+		var rows = rows ? rows : 5;
 
 		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
 		vertices = geometry.vertices;
@@ -174,7 +166,217 @@
 
 	}
 
+	function createCylinderVariable( radius, height, columns, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 70;
+		var columns = columns ? columns : 20;
+		var rows = rows ? rows : 5;
+
+		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		vertices = geometry.vertices;
+		var count = 0;
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi2 / columns;
+			dx = 10 * Math.random();
+			dz = 10 * Math.random();
+			for ( var j = 0; j <= columns; j++ ) {
+
+				x = dx + radius * cos( theta * j );
+				y = 5 * Math.random() + i * height / rows;
+				z = dz + radius * sin( theta * j );
+				vertices[ count++ ] = v( x + 30 * Math.random() - 5, y, z + 30 * Math.random() - 5 );
+
+			}
+
+		}
+
+		updateObj( geometry );
+
+	}
+
+	function createCross( radius, height, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 50;
+		var columns = 12;
+		var rows = rows ? rows : 5;
+
+		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		vertices = geometry.vertices;
+		var count = 0;
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi2 / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				if ( i < rows - 1 ) {
+
+					radius = j % 3 === 0 ? 7 : 20;
+
+				} else {
+
+					radius = 22;
+
+				}
+
+				x = radius * cos( theta * j );
+				y = i * height / rows;
+				z = radius * sin( theta * j );
+				vertices[ count++ ] = v( x, y, z );
+
+			}
+
+		}
+
+		updateObj( geometry );
+
+	}
+
+
+	function createPhillipsTip( radius, height, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 50;
+		var columns = 12;
+		var rows = rows ? rows : 4;
+
+		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		vertices = geometry.vertices;
+		var count = 0;
+		var raddii = [ 0.2, 0.5, 0.5 ];
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi2 / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				if ( i < raddii.length ) {
+
+					r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
+
+				} else {
+
+					r = radius;
+
+				}
+
+				vt = vertices[ count++ ];
+				vt.x = r * cos( theta * j );
+				vt.y = i * height / rows;
+				vt.z = r * sin( theta * j );
+
+			}
+
+		}
+
+		updateObj( geometry );
+
+	}
+
+
+	function createPhillipsTip2( radius, height, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 50;
+		var columns = 12;
+		var rows = rows ? rows : 4;
+
+		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		vertices = geometry.vertices;
+		var count = 0;
+		var raddii = [ 0.2, 0.5, 0.5 ];
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi2 / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				if ( i < raddii.length ) {
+
+					if ( i === 0 ) {
+
+						r = 0;
+						offset = 0;
+
+					} else {
+
+						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
+						offset = - height / rows;
+					}
+
+				} else {
+
+					r = radius;
+
+				}
+
+				vt = vertices[ count++ ];
+				vt.x = r * cos( theta * j );
+				vt.y = i * height / rows + offset;
+				vt.z = r * sin( theta * j );
+
+			}
+
+		}
+
+		updateObj( geometry );
+
+	}
+
+	function createPhillipsHead( radius, height, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : -20;
+		var columns = 12;
+		var rows = rows ? rows : 2;
+
+		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		vertices = geometry.vertices;
+		var count = 0;
+		var raddii = [ 1, 0.75, 0.25 ];
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi2 / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				if ( i === 0 ) {
+
+					r = radius * raddii[ i ];
+					offset = 0;
+
+				} else {
+
+					r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
+					offset = - height / rows;
+				}
+
+				vt = vertices[ count++ ];
+				vt.x = r * cos( theta * j );
+				vt.y = i * height / rows + offset;
+				vt.z = r * sin( theta * j );
+
+			}
+
+		}
+
+		obj = updateObj( geometry );
+		obj.position.y = 30;
+
+	}
+
+
 	function createSphere( radius, rows, columns ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 70;
+		var columns = columns ? columns : 20;
+		var rows = rows ? rows : 5;
 
 		geometry = new THREE.PlaneGeometry( 1, 1, columns, rows );
 		vertices = geometry.vertices;
@@ -237,14 +439,13 @@
 
 	}
 
-
 	function updateObj( geometry ) {
 
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 
-		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: chkWire.checked } );
-
+		var material = new THREE.MeshNormalMaterial( { side: 2, wireframe: chkWire.checked } );
+		var material = new THREE.MeshPhongMaterial( { side: 2, color: 0x222222 * Math.random() + 0xcccccc, shading: THREE.FlatShading } ); // color: 0xffffff * Math.random()
 		scene.remove( obj );
 		obj = new THREE.Mesh( geometry, material );
 		scene.add( obj );

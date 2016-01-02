@@ -122,14 +122,7 @@
 // assets
 		drawWallBracketAssembly();
 
-/*
-		geometry = drawPhillipsTip();
-		material = new THREE.MeshNormalMaterial( { side: 2 });
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, 10, 0 );
-		scene.add( mesh );
-*/
-
+drawPhillipsScrewHead();
 
 	}
 
@@ -151,11 +144,10 @@
 		bracket115753.userData.places.push( [ v( 40 - ran( 10 ), 10, -20 ), v( -pi05, 0, ran( 3 ) ) ] );
 
 //		bracket115753.userData.places.push( [ v( 80, 0 + 0.5 * heightBracket, -76.5 ), v( 0, 0, 0 ) ] );
-		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 1
-		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 5.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 2
+		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );
 
 
-		var placard = drawPlacard( '115753', 0.05, 120, -10, 20, 0 )
+		var placard = drawPlacard( '115753', 0.05, 120, 0, 0, 20 )
 		bracket115753.add( placard );
 
 		bracketAssembly.add( bracket115753 );
@@ -166,7 +158,7 @@
 		part103693.userData.places.push( [ v( 40, 0, 40 - ran( 10 ) ), v( -pi05, 0, ran( 3 ) ) ] );
 		part103693.userData.places.push( [ v( fixture.position.x - 20, fixture.position.y - 9,  fixture.position.z - 100 - 4 ), v( 0, 0, 0 ) ] );
 
-		placard = drawPlacard( '103693', 0.05, 120, 0, 20, 0 )
+		placard = drawPlacard( '103693', 0.05, 120, 0, 0, 20 )
 		part103693.add( placard );
 
 		bracketAssembly.add( part103693 );
@@ -177,9 +169,8 @@
 
 			screw.userData.places.push( [ v( - 15 - ran( 30 ), radiusScrew, ran( 80 ) - 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
 			screw.userData.places.push( [ v( fixture.position.x, fixture.position.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] );
-			screw.userData.places.push( [ v( fixture.position.x + 10, fixture.position.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] );
 
-			placard = drawPlacard( '100372', 0.05, 120, 0, 20, 10 )
+			placard = drawPlacard( '100372', 0.05, 120, 0, 20, 0 )
 			screw.add( placard );
 
 			bracketAssembly.add( screw );
@@ -205,12 +196,8 @@
 
 		screwdriver = drawScrewdriver();
 		screwdriver.userData.places.push( [ v( ran( -30 ), screwdriver.userData.radius, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
-//		screwdriver.userData.places.push( [ v( ran( -30 ), 4, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
-		screwdriver.userData.places.push( [ v( fixture.position.x - 20, fixture.position.y  - 0.5 * heightBracket + 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 1
-		screwdriver.userData.places.push( [ v( fixture.position.x - 5, fixture.position.y  - 0.5 * heightBracket + 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 2
-		screwdriver.userData.places.push( [ v( fixture.position.x - 20, fixture.position.y  + 0.5 * heightBracket - 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 3
-		screwdriver.userData.places.push( [ v( fixture.position.x - 5, fixture.position.y  + 0.5 * heightBracket - 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 4
-
+		screwdriver.userData.places.push( [ v( ran( -30 ), 4, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver.userData.places.push( [ v( ran( -30 ), 40, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
 		components.push( screwdriver );
 		scene.add( screwdriver );
 
@@ -525,14 +512,12 @@
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		points = [
 
-// head
-//			v( 5, 0, height05 + 2) ,
-//			v( delta, 0, height05 + 2 ),
-//			v( de, 0, height05 + delta),
-			v( radiusScrew05 + delta, 0, height05 + delta ),
+			v( 0, 0, height05 + 2) ,
+			v( delta, 0, height05 + 2 ),
+			v( delta, 0, height05 + delta + 1),
+			v( radiusScrew05 + delta, 0, height05 + delta + 1 ),
 			v( radiusScrew05, 0, height05 ),
 
-// body and tip
 			v( radiusScrew05, 0, -height05 ),
 			v( 0, 0, -height05 - delta )
 
@@ -540,15 +525,8 @@
 
 		geometry = new THREE.LatheGeometry( points, segments );
 
-		geo2 = drawPhillipsHead( radiusScrew + 1.25, radiusScrew + 1.25 ); // createPhillipsHead( radius, height, rows );
-		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( -pi05 ) );
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, height05 + delta ) ); 
-
-		geometry.merge( geo2 );
-
 		geo2 = drawSpiralAlongZ( radiusScrew05, radiusScrew05 + 1, segments, height / pitch, pitch );
 		geometry.merge( geo2 );
-
 
 		mesh = new THREE.Mesh( geometry, material );
 
@@ -556,50 +534,6 @@
 		mesh.userData.places = [];
 
 		return mesh;
-
-		function drawPhillipsHead( radius, height, rows ) {
-
-			var radius = radius ? radius : 20;
-			var height = height ? height : -20;
-			var columns = 12;
-			var rows = rows ? rows : 2;
-
-			var geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
-			vertices = geometry.vertices;
-			var count = 0;
-			var raddii = [ 1, 0.75, 0.25 ];
-			for ( var i = 0; i <= rows; i++ ) {
-
-				var theta = pi2 / columns;
-
-				for ( var j = 0; j <= columns; j++ ) {
-
-					if ( i === 0 ) {
-
-						r = radius * raddii[ i ];
-						offset = 0;
-
-					} else {
-
-						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
-						offset = - height / rows;
-					}
-
-					vt = vertices[ count++ ];
-					vt.x = r * cos( theta * j );
-					vt.y = i * height / rows + offset;
-					vt.z = r * sin( theta * j );
-
-				}
-
-			}
-
-			geometry.computeFaceNormals();
-			geometry.computeVertexNormals();
-
-			return geometry;
-
-		}
 
 		function drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
@@ -646,6 +580,172 @@
 
 	}
 
+	function drawPhillipsScrewHead( rIn, rInT, rOut, ht ) {
+
+		var radiusInside = rIn ? rIn : 10;
+		var radiusInsideTip = rInT ? rInT : 5;
+		var radiusOutside = rOut ? rOut : 15;
+		var height = ht ? ht : 20;
+
+		var rows = 3;
+		var columns = 24;
+
+		var tipTop = 0;
+		var tipBottom = 0.25 * ht;
+
+		var base = 20;
+
+//		var angleDelta = pi2 / segments;
+
+		geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+		vertices = geometry.vertices;
+		var count = 0;
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi2 / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				vt = vertices[ count++ ];
+
+				if ( i === 0 ) {
+
+					if ( j === 0 || j === 12 || j === 24 ) {
+
+						vt.x = radiusInsideTip * cos( theta * ( j + 1 ) );
+						vt.y = tipTop;
+						vt.z = radiusInside * sin( theta * ( j + 1 ) );
+
+					} else if ( j === 1 || j === 13 ) {
+
+						vt.x = radiusInsideTip * cos( theta * ( j ) );
+						vt.y = tipTop;
+						vt.z = radiusInside * sin( theta * ( j ) );
+
+					} else if ( j === 4 || j === 16 ) {
+
+						vt.x = radiusInside * cos( theta * ( j ) );
+						vt.y = tipTop;
+						vt.z = radiusInsideTip * sin( theta * ( j )  );
+
+					} else if ( j === 5 || j === 17 ) {
+
+						vt.x = radiusInside * cos( theta * ( j ) );
+						vt.y = tipTop;
+						vt.z = radiusInsideTip * sin( theta * ( j )  );
+
+					} else if ( j === 6 || j === 18 ) {
+
+						vt.x = radiusInside * cos( theta * ( j + 1 ) );
+						vt.y = tipTop;
+						vt.z = radiusInsideTip * sin( theta * ( j + 1 ) );
+
+					} else if ( j == 7 || j === 19 ) {
+
+						vt.x = radiusInside * cos( theta * ( j ) );
+						vt.y = tipTop;
+						vt.z = radiusInsideTip * sin( theta * ( j  )  );
+
+					} else if ( j == 10 || j === 22 ) {
+
+						vt.x = radiusInsideTip * cos( theta * ( j ) );
+						vt.y = tipTop;
+						vt.z = radiusInside * sin( theta * ( j  )  );
+
+					} else if ( j === 11 || j === 23 ) {
+
+						vt.x = radiusInsideTip * cos( theta * ( j - 1 ) );
+						vt.y = tipTop;
+						vt.z = radiusInside * sin( theta * ( j - 1 )  );
+
+					} else {
+
+						vt.x = radiusInside * cos( theta * j );
+						vt.y = tipTop;
+						vt.z = radiusInside * sin( theta * j );
+
+					}
+
+				} else if ( i === 1 ) {
+
+					if ( j === 0 || j === 12 || j === 24 ) {
+
+						vt.x = radiusOutside * cos( theta * ( j + 1 ) );
+						vt.y = tipBottom;
+						vt.z = radiusInside * sin( theta * ( j + 1 ) );
+
+					} else if ( j === 1 || j === 13 ) {
+
+						vt.x = radiusOutside * cos( theta * ( j ) );
+						vt.y = tipBottom;
+						vt.z = radiusInside * sin( theta * ( j ) );
+
+					} else if ( j === 4 || j === 16 ) {
+
+						vt.x = radiusInside * cos( theta * ( j ) );
+						vt.y = tipBottom;
+						vt.z = radiusOutside * sin( theta * ( j + 3 ) );
+
+					} else if ( j === 5 || j === 17 ) {
+
+						vt.x = radiusInside * cos( theta * ( j ) );
+						vt.y = tipBottom;
+						vt.z = radiusOutside * sin( theta * ( j + 2 ) );
+
+					} else if ( j === 6 || j === 18 ) {
+
+						vt.x = radiusInside * cos( theta * ( j + 1 ) );
+						vt.y = tipBottom;
+						vt.z = radiusOutside * sin( theta * ( j + 1 ) );
+
+					} else if ( j == 7 || j === 19 ) {
+
+						vt.x = radiusInside * cos( theta * ( j  ) );
+						vt.y = tipBottom;
+						vt.z = radiusOutside * sin( theta * ( j ) );
+
+					} else if ( j == 10 || j === 22 ) {
+
+						vt.x = radiusOutside * cos( theta * ( j + 3 ) );
+						vt.y = tipBottom;
+						vt.z = radiusInside * sin( theta * ( j  ) );
+
+					} else if ( j === 11 || j === 23 ) {
+
+						vt.x = radiusOutside * cos( theta * ( j + 2 ) );
+						vt.y = tipBottom;
+						vt.z = radiusInside * sin( theta * ( j - 1 ) );
+
+					}
+
+				} else {
+
+					vt.x = radiusOutside * cos( theta * j );
+					vt.y = i * height / rows;
+					vt.z = radiusOutside * sin( theta * j );
+
+				}
+
+			}
+
+		}
+
+//		geometry.center();
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+/*
+		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.y = 10;
+
+		scene.add( mesh );
+*/
+
+		return geometry;
+
+	}
 
 	function drawFixture() {
 
@@ -701,13 +801,12 @@
 	function drawScrewdriver() {
 
 		var radius = 5;
-		var points = [ /* v( 0, 0, 0 ) , */ v( 1, 0, 0 ), v( 1, 0, 50 ), v( radius, 0, 50 ), v( radius, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radius, 0, 55), v( radius, 0, 80 ), v( 0, 0, 81 ) ];
+		var points = [ v( 0, 0, 0 ) , v( 1, 0, 0 ), v( 1, 0, 50 ), v( radius, 0, 50 ), v( radius, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radius, 0, 55), v( radius, 0, 80 ), v( 0, 0, 81 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
 
-
-		var geo2 = drawPhillipsTip();
+		var geo2 = drawPhillipsScrewHead( 0.5, 0.75, 1, 5 );
 		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -4 ) ); 
+		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -5 ) ); 
 		geometry.merge( geo2 );
 
 
@@ -719,50 +818,8 @@
 
 		return mesh;
 
-		function drawPhillipsTip( radius, height, rows ) {
-
-			var radius = radius ? radius : 1;
-			var height = height ? height : 4;
-			var columns = 12;
-			var rows = rows ? rows : 3;
-
-			var geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
-			var vertices = geometry.vertices;
-			var count = 0;
-			var raddii = [ 0.2, 0.5, 1 ];
-			for ( var i = 0; i <= rows; i++ ) {
-
-				var theta = pi2 / columns;
-
-				for ( var j = 0; j <= columns; j++ ) {
-
-					if ( i < raddii.length ) {
-
-						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
-
-					} else {
-
-						r = radius;
-
-					}
-
-					var vt = vertices[ count++ ];
-					vt.x = r * cos( theta * j );
-					vt.y = i * height / rows;
-					vt.z = r * sin( theta * j );
-
-				}
-
-			}
-
-				geometry.computeFaceNormals();
-				geometry.computeVertexNormals();
-
-				return geometry;
-
-		}
-
 	}
+
 
 	function drawPlacard( text, scale, color, x, y, z ) {
 
@@ -776,7 +833,7 @@
 		placard.add( sprite );
 
 		var geometry = new THREE.Geometry();
-		geometry.vertices = [ v( x, 0, z ),  v( x, y, z ) ];
+		geometry.vertices = [ v( x, 0, 0 ),  v( x, y, z ) ];
 		var material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
 		var line = new THREE.Line( geometry, material );
 		placard.add( line );
@@ -839,19 +896,10 @@
 		playList = [
 
 			[ [ bracket115753, 1, 2000 ] ],
-			[ [ bracket115753, 2, 1000 ] ],
-			[ [ bracket115753, 1, 500 ] ],
-			[ [ bracket115753, 2, 1000 ] ],
-			[ [ bracket115753, 1, 500 ] ],
+			[ [ part103693, 1, 2000 ], [ camera, 2, 1000 ] ],
 			[ [ components[ 2 ], 1, 2000 ] ],
-			[ [ screwdriver, 1, 2000 ] ],
-			[ [ components[ 2 ], 2, 2000 ], [ screwdriver, 2, 2000 ] ],
-			[ [ components[ 3 ], 1, 2000 ] ],
-			[ [ camera, 2, 2000 ] ], 
-			[ [ screwdriver, 4, 2000 ] ],
-			[ [ screwdriver, 3, 3000 ] ],
-			[ [ components[ 3 ], 2, 2000 ], [ screwdriver, 4, 2000 ] ],
-			[ [ screwdriver, 0, 3000 ] ],
+			[ [ components[ 3 ], 1, 2000 ] ]
+
 		];
 
 	}
@@ -860,10 +908,9 @@
 
 		pencilDrawClip = [
 
-			[ [ bracket115753, 1, 2000 ], [ components[ 2 ], 2, 2000 ], [ components[ 3 ], 2, 2000 ] ],
+			[ [ bracket115753, 1, 2000 ] ],
 			[ [ pencil, 1, 2000 ] ],
-			[ [ pencil, 2, 2000 ] ], 
-			[ [ camera, 3, 1000 ] ],
+			[ [ pencil, 2, 2000 ], [ camera, 3, 1000 ] ],
 			[ [ pencil, 3, 2000 ], [ pencilLine, 0, 1000 ] ],
 			[ [ pencil, 4, 1000 ] ],
 			[ [ pencil, 5, 1000 ], [ pencilLine, 2, 1000 ] ],
