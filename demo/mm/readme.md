@@ -4,7 +4,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
 
-[Moving Manuals]( index.html )
+[Moving Manuals Read Me]( index.html )
 ===
 
 _The product assembly manuals of the future - now_
