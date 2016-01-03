@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Simple Lights</title>
+<title>Move into Position R1</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -100,7 +100,7 @@
 		mesh.receiveShadow = true;
 		scene.add( mesh );
 
-		helper = new THREE.BoxHelper( mesh );
+		helper = new THREE.EdgesHelper( mesh );
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
@@ -159,7 +159,7 @@
 			scene.add( mesh );
 			cubes.push( mesh );
 
-			helper = new THREE.BoxHelper( mesh );
+			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 

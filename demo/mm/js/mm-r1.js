@@ -4,6 +4,7 @@
 
 	var rows, columns;
 
+	var components = [];
 	var holes = [];
 	var screws = [];
 	var pegs = [];
@@ -441,8 +442,6 @@
 
 		var obj, ohp, oud;
 
-
-
 		for ( var i = 0; i < components.length; i++ ) {
 
 			obj = components[ i ];
@@ -502,6 +501,7 @@
 		.start();
 
 		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
 	}
 
 	function switchParent( type, arr ) {

@@ -13,9 +13,9 @@
 <script src=../js/mm-r1.js ></script>
 <script>
 
-//	var components;
-//	var screws;
-//	var holes;
+	var components;
+	var screws;
+	var holes;
 
 	var bracketAssembly;
 	var edges;
@@ -148,10 +148,12 @@
 
 		bracket115753 = buildKallaxWallBracket();
 		bracket115753.userData.places.push( [ v( 40 - ran( 10 ), 10, -20 ), v( -pi05, 0, ran( 3 ) ) ] );
-		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 1
-		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 6.6 * radiusScrew ), v( 0, 0, 0 ) ] );  // 2
 
+//		bracket115753.userData.places.push( [ v( 80, 0 + 0.5 * heightBracket, -76.5 ), v( 0, 0, 0 ) ] );
 		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 1
+		bracket115753.userData.places.push( [ v( fixture.position.x, fixture.position.y, fixture.position.z - 100 + 5.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 2
+
+
 		var placard = drawPlacard( '115753', 0.05, 120, -10, 20, 0 )
 		bracket115753.add( placard );
 
@@ -171,16 +173,15 @@
 		for ( var i = 0; i < 2; i++ ) {
 
 			var screw = drawScrew100372();
-//			var radiusScrew = screw.userData.radiusScrew;
+			var radiusScrew = screw.userData.radiusScrew;
 			screw.userData.places.push( [ v( - 15 - ran( 30 ), radiusScrew, ran( 80 ) - 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
 			screw.userData.places.push( [ v( fixture.position.x, fixture.position.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] );
-			screw.userData.places.push( [ v( fixture.position.x + 10, fixture.position.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 5 * pi ) ] );
+			screw.userData.places.push( [ v( fixture.position.x + 10, fixture.position.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] );
 
 			placard = drawPlacard( '100372', 0.05, 120, 0, 20, 10 )
 			screw.add( placard );
 
 			bracketAssembly.add( screw );
-//			screws.push( screw );
 			components.push( screw );
 
 		}
@@ -201,12 +202,12 @@
 		scene.add( pencil );
 
 		screwdriver = drawScrewdriver();
-		screwdriver.userData.places.push( [ v( ran( -30 ), screwdriver.userData.radiusHandle, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver.userData.places.push( [ v( ran( -30 ), screwdriver.userData.radius, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
 //		screwdriver.userData.places.push( [ v( ran( -30 ), 4, - ran( 80 ) + 40  ), v( 0, ran( 3 ), 0 ) ] );
 		screwdriver.userData.places.push( [ v( fixture.position.x - 20, fixture.position.y  - 0.5 * heightBracket + 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 1
-		screwdriver.userData.places.push( [ v( fixture.position.x - 5, fixture.position.y  - 0.5 * heightBracket + 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 5 * pi ) ] ); // 2
+		screwdriver.userData.places.push( [ v( fixture.position.x - 5, fixture.position.y  - 0.5 * heightBracket + 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 2
 		screwdriver.userData.places.push( [ v( fixture.position.x - 20, fixture.position.y  + 0.5 * heightBracket - 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 3
-		screwdriver.userData.places.push( [ v( fixture.position.x - 5, fixture.position.y  + 0.5 * heightBracket - 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 5 * pi ) ] ); // 4
+		screwdriver.userData.places.push( [ v( fixture.position.x - 5, fixture.position.y  + 0.5 * heightBracket - 3 * radiusScrew, fixture.position.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 4
 
 		components.push( screwdriver );
 		scene.add( screwdriver );
@@ -549,7 +550,6 @@
 		mesh.name = 'screw100372';
 		mesh.userData.places = [];
 		mesh.radiusScrew = radiusScrew;
-//		screws.push( mesh );
 
 		return mesh;
 
@@ -661,8 +661,6 @@
 		var shape = new THREE.Shape();
 		shape.fromPoints( pts );
 
-//		var radiusScrew = screws[ 0 ].userData.radiusScrew;
-
 		var holeTop = v( + width - 5 * radiusScrew, 0, 0 )
 
 		var holePath = new THREE.Path();
@@ -697,29 +695,29 @@
 
 	function drawScrewdriver() {
 
-		var radiusHandle = 5;
-		var radiusShaft = 1;
-		var tipLength = 8;
-		var points = [ /* v( 0, 0, 0 ) , */ v( 1, 0, 0 ), v( 1, 0, 50 ), v( radiusHandle, 0, 50 ), v( radiusHandle, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radiusHandle, 0, 55), v( radiusHandle, 0, 80 ), v( 0, 0, 81 ) ];
+		var radius = 5;
+		var points = [ /* v( 0, 0, 0 ) , */ v( 1, 0, 0 ), v( 1, 0, 50 ), v( radius, 0, 50 ), v( radius, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radius, 0, 55), v( radius, 0, 80 ), v( 0, 0, 81 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
-		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, tipLength ) ); 
 
-		var geo2 = drawPhillipsTip( radiusShaft, tipLength );
+
+		var geo2 = drawPhillipsTip();
 		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
+		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -4 ) ); 
 		geometry.merge( geo2 );
+
 
 		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'pencil';
 		mesh.userData.places = [];
-		mesh.userData.radiusHandle = radiusHandle;
+		mesh.userData.radius = radius;
 
 		return mesh;
 
-		function drawPhillipsTip( radiusShaft, tipLength, rows ) {
+		function drawPhillipsTip( radius, height, rows ) {
 
-			var radiusShaft = radiusShaft ? radiusShaft : 1;
-			var tipLength = tipLength ? tipLength : 5;
+			var radius = radius ? radius : 1;
+			var height = height ? height : 4;
 			var columns = 12;
 			var rows = rows ? rows : 3;
 
@@ -727,7 +725,6 @@
 			var vertices = geometry.vertices;
 			var count = 0;
 			var raddii = [ 0.2, 0.5, 1 ];
-			var lengths = [ 0, 0, 0.5, 1 ];
 			for ( var i = 0; i <= rows; i++ ) {
 
 				var theta = pi2 / columns;
@@ -736,17 +733,17 @@
 
 					if ( i < raddii.length ) {
 
-						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radiusShaft : raddii[ i ] * radiusShaft;
+						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
 
 					} else {
 
-						r = radiusShaft;
+						r = radius;
 
 					}
 
 					var vt = vertices[ count++ ];
 					vt.x = r * cos( theta * j );
-					vt.y = lengths[ i ] * tipLength
+					vt.y = i * height / rows;
 					vt.z = r * sin( theta * j );
 
 				}
@@ -843,12 +840,12 @@
 			[ [ bracket115753, 1, 500 ] ],
 			[ [ components[ 2 ], 1, 2000 ] ],
 			[ [ screwdriver, 1, 2000 ] ],
-			[ [ components[ 2 ], 2, 8000 ], [ screwdriver, 2, 8000 ] ],
+			[ [ components[ 2 ], 2, 2000 ], [ screwdriver, 2, 2000 ] ],
 			[ [ components[ 3 ], 1, 2000 ] ],
 			[ [ camera, 2, 2000 ] ], 
 			[ [ screwdriver, 4, 2000 ] ],
 			[ [ screwdriver, 3, 3000 ] ],
-			[ [ components[ 3 ], 2, 8000 ], [ screwdriver, 4, 8000 ] ],
+			[ [ components[ 3 ], 2, 2000 ], [ screwdriver, 4, 2000 ] ],
 			[ [ screwdriver, 0, 3000 ] ],
 		];
 
