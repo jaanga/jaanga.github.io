@@ -139,6 +139,7 @@
 		scene.add( screwdriver );
 
 		var screw = drawScrew100372();
+		var radiusScrew = screw.userData.radiusScrew;
 		screw.userData.places.push( [ v( - 15 - ran( 30 ), radiusScrew, ran( 80 ) - 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
 		screw.userData.places.push( [ v(  0, 0, -10  ), v( 0, 0, 0 ) ] );
 		screw.userData.places.push( [ v(  0, 0, -20  ), v( 0, 0, -5 * pi2 ) ] );
@@ -267,7 +268,7 @@
 
 		mesh.name = 'screw100372';
 		mesh.userData.places = [];
-		mesh.radiusScrew = radiusScrew;
+		mesh.userData.radiusScrew = radiusScrew;
 
 		return mesh;
 
@@ -369,6 +370,7 @@
 
 	}
 
+/*
 	function animate() {
 
 		requestAnimationFrame( animate );
@@ -378,6 +380,7 @@
 		renderer.render( scene, camera );
 
 	}
+*/
 
 </script>
 </body>

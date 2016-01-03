@@ -168,6 +168,7 @@
 		if ( intersects.length > 0 ) {
 
 			movRotTween( intersects[ 0 ].object );
+
 			playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 		}
@@ -182,6 +183,8 @@
 			movRotTween( components[ i ] );
 
 		}
+
+		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -315,6 +318,7 @@
 
 // Play an 'E' just as the previous note finishes -- Da
 			playNote(659.255, context.currentTime + 0.232, 0.464);
+
 		}
 
 	}
@@ -434,7 +438,7 @@
 
 		cameraTween( camera.userData.places[ 1 ][ 0 ], camera.userData.places[ 1 ][ 1 ], 1500 );
 
-//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -482,7 +486,8 @@
 		}
 
 		cameraTween( camera.userData.places[ 2 ][ 0 ], camera.userData.places[ 2 ][ 1 ], 1500 );
-//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
+		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -500,7 +505,7 @@
 		.onComplete( onComplete )
 		.start();
 
-		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
@@ -568,7 +573,7 @@
 		.onComplete( onComplete )
 		.start();
 
-playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+// playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 	}
 
