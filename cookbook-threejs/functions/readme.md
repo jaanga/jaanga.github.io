@@ -72,7 +72,7 @@
 
 ## Multiple Files
 
-[Multiple Views R4]( ./views-multiple/multiple-scenes/multiple-views-r3.html )
+[Multiple Views R3]( ./views-multiple/multiple-scenes/multiple-views-r3.html )
 
 * Reuses 16 renderers to allow unlimited scenes in a single page
 * Avoids the complexity of viewports and scissoring for new programmers
