@@ -72,12 +72,11 @@
 
 ## Multiple Files
 
-[Multiple Views R3]( ./views-multiple/multiple-scenes/multiple-views-r3.html )
+[Multiple Views R4]( ./views-multiple/multiple-scenes/multiple-views-r4.html )
 
 * Reuses 16 renderers to allow unlimited scenes in a single page
-	* 256 views each with 256 Three.js meshes: no issues
-	* 1024 views each with 512 objects with 32 vertices: a bit slow
-* Each view may have its own zoom, pan and rotation maintained throughout the session
+	* 1024 views each with 256 Three.js meshes: no issues / every view at 60fps
+* Each view may have its own stats, zoom, pan and rotation maintained throughout the session
 * Avoids the complexity of viewports and scissoring for new programmers
 * Two demos
 	* List view shows mixed text and views
