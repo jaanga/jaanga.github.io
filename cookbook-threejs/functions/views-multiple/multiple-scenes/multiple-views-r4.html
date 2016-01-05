@@ -1,0 +1,231 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Multiple Views R4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	var scenes = [];
+	var renderers = [];
+	var renderersIndex = 0;
+	var renderersLimit = 16;
+	var views = 1024;
+	var objects = 256;
+
+	var geometries = [
+
+		new THREE.BoxGeometry( 10, 10, 10 ),
+		new THREE.CylinderGeometry( 5, 5, 1, 12 ),
+		new THREE.DodecahedronGeometry( 05 ),
+		new THREE.SphereGeometry( 5, 12, 8 ),
+		new THREE.TorusGeometry( 10, 5 ),
+
+	];
+
+
+	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML = 
+`
+
+		body { font: 12pt monospace; } 
+		button { background-color: #eee; border: 2px #eee solid; color: #888; }
+		#aa { text-decoration: none; }
+		#menu { margin: 0; position: absolute; max-width: 200px; }
+		#content { left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+
+`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+`
+
+			<h2>
+				<a href="" > ${ document.title }</a> 
+				<a id=aa href=http://jaanga.github.io/cookbook-threejs/functions/ >🛈</a>
+			</h2>
+			<p><button onclick=createListView(); >List View</button></p>
+			<p><button onclick=createGalleryView(); >Gallery View</button></p>
+			<p>${ views } views with ${ objects } objects each with ${ renderersLimit } views updating simultaneously.</p>
+			<div id=info ></div>
+
+`;
+
+		content = document.body.appendChild( document.createElement( 'div' ) );
+		content.id = 'content';
+
+		createListView();
+//		createGalleryView();
+
+	}
+
+
+	function createScene( i ) {
+
+		var scene = new THREE.Scene();
+		scene.userData.index = i;
+
+		scenes.push( scene );
+
+		return scene;
+
+	}
+
+
+	function createListView() {
+
+		content.innerHTML = '';
+		scenes = [];
+
+		for ( var i = 0; i < views; i++ ) {
+
+			scene = createScene( i );
+
+			var geometry = geometries[ geometries.length * Math.random() | 0 ]; // wtf is the single vertical bar in JavaScript!?!
+			var material = new THREE.MeshNormalMaterial();
+
+			for ( var j = 0; j < objects; j++ ) {
+
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.position.set( Math.random() * 100 - 50, Math.random() * 50, Math.random() * 100 - 50 );
+				mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
+				scene.add( mesh );
+
+			}
+
+			var gridHelper = new THREE.GridHelper( 50, 10 );
+			gridHelper.position.set( 0, -10, 0 );
+			scene.add( gridHelper );
+
+			var axisHelper = new THREE.AxisHelper( 50 );
+			scene.add( axisHelper );
+
+			scene.div = content.appendChild( document.createElement( 'div' ) );
+			scene.div.style.cssText = 'height: 512px; position: relative; width: 512px; ';
+
+			var list = content.appendChild( document.createElement( 'div' ) );
+			list.innerHTML = '<h2>header ' + ( i + 1 ) + '</h2>' + text;
+
+		}
+
+	}
+
+	function createGalleryView() {
+
+		content.innerHTML = '';
+		scenes = [];
+
+		for ( var i = 0; i < views; i++ ) {
+
+			scene = createScene( i );
+
+			var geometry = geometries[ geometries.length * Math.random() | 0 ]; // wtf is the single vertical bar in JavaScript!?!
+			var material = new THREE.MeshNormalMaterial();
+
+			for ( var j = 0; j < objects; j++ ) {
+
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.position.set( Math.random() * 100 - 50, Math.random() * 50, Math.random() * 100 - 50 );
+				scene.add( mesh );
+
+			}
+
+			var gridHelper = new THREE.GridHelper( 50, 10 );
+			gridHelper.position.set( 0, -10, 0 );
+			scene.add( gridHelper );
+
+			var axisHelper = new THREE.AxisHelper( 50 );
+			scene.add( axisHelper );
+
+			var gallery = content.appendChild( document.createElement( 'div' ) );
+			gallery.style.cssText = ' border: 0px solid black; display: inline-block; margin: 20px; position: relative;';
+			gallery.innerHTML = '<h2>item ' + ( i + 1 ) + '</h2>';
+
+			scene.div = gallery.appendChild( document.createElement( 'div' ) );
+			scene.div.style.cssText = ' height: 180px; width: 180px; ';
+
+		}
+
+	}
+
+
+	function createView( scene, width, height ) {
+
+		if ( !renderers[ renderersIndex ] && renderers.length < renderersLimit ) {
+
+			renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+			renderer.setClearColor( 0xfffffff * Math.random());
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderers.push( renderer );
+			renderer.index = scene.userData.index;
+			scene.renderer = renderer;
+
+		}
+
+		renderersIndex = renderersIndex < renderersLimit ? renderersIndex : 0;
+		renderer = renderers[ renderersIndex++ ];
+
+		if ( renderer !== scene.renderer ) { scenes[ renderer.index ].renderer = undefined; }
+
+		renderer.index = scene.userData.index;
+		renderer.setSize( width, height );
+		scene.div.appendChild( renderer.domElement );
+
+		scene.stats = new Stats();
+		scene.stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		scene.div.appendChild( scene.stats.domElement );
+
+		var camera = new THREE.PerspectiveCamera( 40, width / height, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		var controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.update();
+
+		scene.renderer = renderer;
+		scene.camera = camera;
+		scene.controls = controls;
+
+		return renderer;
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < scenes.length; i++ ) {
+
+			scene = scenes[ i ];
+
+			rect = scene.div.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			if ( ! scene.renderer ) { createView( scene, rect.width, rect.height ); }
+
+			scene.traverse( function ( child ) { if ( child instanceof THREE.Mesh ) { child.rotation.x += 0.03 * Math.random(); } } );
+			scene.controls.update();
+			scene.renderer.render( scene, scene.camera );
+			scene.stats.update();
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

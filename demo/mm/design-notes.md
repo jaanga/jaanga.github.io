@@ -41,3 +41,7 @@ When you prepare to assemble things you tend to group similar components in rand
 It is easy with computers to group similar items in perfectly arranged pies and stacks.
 It is equally easy to group items like humans do.
 So do it the human way.
+
+Is it better to have several 10 to 20 second clips than to have a single one minute clip?
+Perhaps getting you to push the buttons to continue make things feel mpre interactive...
+

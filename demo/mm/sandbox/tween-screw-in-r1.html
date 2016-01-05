@@ -14,6 +14,9 @@
 <script src=../js/mm-r1.js ></script>
 <script>
 
+	var screwdriver, screw;
+	var chkPlay;
+
 //	var radiusScrew = 1.5;
 	var components = [];
 
@@ -54,6 +57,7 @@
  			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
 			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
 			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
+			<p><input type=checkbox id=chkScrew onchange=togglePlayClip(screwInClip,chkScrew,itemDispatch); > Draw Screw Position</p>
 			<p><button onclick=screwIn(); >Screw In</button></p>
 			<div id=info ></div>
 
@@ -132,13 +136,14 @@
 
 		screwdriver = drawScrewdriver();
 		screwdriver.userData.places.push( [ v( ran( -30 ), screwdriver.userData.radius, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver.userData.places.push( [ v( 0, 0, 10 ), v( 0, 0, 0 ) ] );
 		screwdriver.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
 		screwdriver.userData.places.push( [ v( 0, 0, -10 ), v( 0, 0, -5 * pi2 ) ] );
 		screwdriver.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
 		components.push( screwdriver );
 		scene.add( screwdriver );
 
-		var screw = drawScrew100372();
+		screw = drawScrew100372();
 		var radiusScrew = screw.userData.radiusScrew;
 		screw.userData.places.push( [ v( - 15 - ran( 30 ), radiusScrew, ran( 80 ) - 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
 		screw.userData.places.push( [ v(  0, 0, -10  ), v( 0, 0, 0 ) ] );
@@ -151,12 +156,30 @@
 		camera.name = 'camera';
 		camera.userData.places.push( [ camera.position.clone(), controls.target.clone() ] );
 		camera.userData.places.push( [ v( -100, 100, 100 ), v( 0, 0, 0 ) ] ); // 1. home
-		camera.userData.places.push( [ v( -80, 80, 80 ), v( 0, 0, 0 ) ] ); // 2 assembled
+		camera.userData.places.push( [ v( -50, 80, 80 ), v( 0, 0, 0 ) ] ); // 2 assembled
+
+		createScrewInClip();
 
 		returnAllToStartTween(); // mm-r1.js
 
 
 	}
+
+		function itemDispatch() {
+
+			if ( chkScrew.checked === true ) { 
+
+				if ( frameIndex < screwInClip.length && itemCount < screwInClip[ frameIndex ].length ) {
+
+					itemCount++;
+
+				}
+
+				togglePlayClip( screwInClip, chkScrew, itemDispatch );
+
+			}
+
+		}
 
 	function drawScrewdriver() {
 
@@ -358,6 +381,20 @@
 			return geometry
 
 		}
+
+	}
+
+	function createScrewInClip() {
+
+		screwInClip = [
+
+			[ [ screw, 1, 2000 ] ],
+			[ [ screwdriver, 1, 2000 ] ],
+			[ [ screwdriver, 2, 2000 ] ],
+			[ [ camera, 2, 2000 ]  ],
+			[ [ screwdriver, 3, 8000 ], [ screw, 2, 8000 ] ],
+			[ [ screwdriver, 0, 5000 ] ]
+		];
 
 	}
 

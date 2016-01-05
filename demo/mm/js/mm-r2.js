@@ -190,39 +190,6 @@
 
 	}
 
-	function togglePlay() {
-
-		if ( chkPlay.checked === false ) { return; }
-
-		if ( frameIndex === 0 ) {
-
-			returnAllToStartTween();
-//			itemCount = 0;
-
-			movRotTweenIndex( playList[ frameIndex ] );
-			frameIndex++;
-
-		} else if ( frameIndex < playList.length ) {
-
-			movRotTweenIndex( playList[ frameIndex ] );
-			frameIndex++;
-
-		} else {
-
-			chkPlay.checked = false;
-			frameIndex = 0;
-//			itemCount = 0;
-
-// Play a 'B' now
-			playNote(493.883, context.currentTime, 0.232 );
-
-// Play an 'E' just as the previous note finishes
-			playNote(659.255, context.currentTime + 0.232, 0.464);
-		}
-
-	}
-
-
 	function movRotTween( obj ) {
 
 		oud = obj.userData.places;
@@ -301,13 +268,15 @@
 			returnAllToStartTween();
 //			itemCount = 0;
 
-			movRotTweenIndex( clip[ frameIndex ], checkbox );
+			movRotTweenIndex( clip, checkbox );
 			frameIndex++ ;
 
 		} else if ( frameIndex < clip.length ) {
 
-			movRotTweenIndex( clip[ frameIndex ], checkbox );
+			movRotTweenIndex( clip, checkbox );
 			frameIndex++;
+
+			playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
 
 		} else {
 
@@ -325,7 +294,9 @@
 
 	}
 
-	function movRotTweenIndex( assets, checkbox ) {
+	function movRotTweenIndex( clip, checkbox ) {
+
+		var assets = clip[ frameIndex ];
 
 		for ( var i = 0; i < assets.length; i++ ) {
 
@@ -351,37 +322,29 @@
 
 			} else {
 
+console.log( '', obj.name );
+
 				send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], ms, itemDispatch );
 
-				dispatchScrewsPegs( obj );
+//				dispatchScrewsPegs( obj );
 
 			}
 
 		}
 
-		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
 
 		function itemDispatch() {
 
-			if ( chkPlay.checked === true ) { 
+			if ( checkbox.checked === true ) { 
 
-				if ( frameIndex < playList.length && itemCount < playList[ frameIndex ].length ) {
-
-					itemCount++;
-
-				}
-
-				togglePlay();
-
-			} else if ( pencilDrawClip ) {
-
-				if ( frameIndex < pencilDrawClip.length && itemCount < pencilDrawClip[ frameIndex ].length ) {
+				if ( frameIndex < clip.length && itemCount < clip[ frameIndex ].length ) {
 
 					itemCount++;
 
 				}
 
-				togglePlayClip( pencilDrawClip, checkbox );
+				togglePlayClip( clip, checkbox );
 
 			}
 
@@ -495,23 +458,6 @@
 
 	}
 
-	function send2location( obj, pos, rot, ms, func ) {
-
-		onComplete = func ? func : function() {} ;
-		new TWEEN.Tween( obj.position )
-		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
-		.easing( TWEEN.Easing.Elastic.Out)
-		.start();
-
-		new TWEEN.Tween( obj.rotation )
-		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
-		.easing( TWEEN.Easing.Elastic.Out)
-		.onComplete( onComplete )
-		.start();
-
-//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
-
-	}
 
 	function switchParent( type, arr ) {
 
@@ -556,6 +502,27 @@
 
 	}
 
+	function send2location( obj, pos, rot, ms, func ) {
+
+console.log( '', obj.name, pos );
+
+		onComplete = func ? func : function() {} ;
+
+		new TWEEN.Tween( obj.position )
+		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation )
+		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out )
+		.onComplete( onComplete )
+		.start();
+
+//		playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
+
+	}
+
 	function cameraTween( position, target, milleseconds, func ) {
 
 		var ms = milleseconds ? milleseconds : 1000;
@@ -573,7 +540,7 @@
 			x: target.x,
 			y: target.y,
 			z: target.z}, ms )
-		.easing( TWEEN.Easing.Sinusoidal.InOut)
+		.easing( TWEEN.Easing.Sinusoidal.InOut )
 		.onComplete( onComplete )
 		.start();
 

@@ -76,7 +76,7 @@
 			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
 			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
 			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play Step-by-Step Assembly</p>
-			<p><input type=checkbox id=chkPencilDraw onchange=togglePlayClip(pencilDrawClip,chkPencilDraw); > Draw Screw Position</p>
+			<p><input type=checkbox id=chkDraw onchange=togglePlayClip(pencilDrawClip,chkDraw); > Draw Screw Position</p>
 			<div id=info ></div>
 
 		`;
@@ -187,7 +187,7 @@
 
 		var screwWall = drawScrew100372();
 		screwWall.userData.places.push( [ v( - ran( 45 ), radiusScrew, -10 - ran( 30 ) ), v( - ran( 0.1 ), ran( 1.05 ) - 0.5, 0 ) ] );
-		screwWall.userData.places.push( [ v( fixture.position.x - 12.5, fixture.position.y, fixture.position.z - 95  ), v( 0, 0, 0 ) ] );  // 1
+		screwWall.userData.places.push( [ v( fixture.position.x - 15, fixture.position.y, fixture.position.z - 50  ), v( 0, 0, 0 ) ] );  // 1
 		placard = drawPlacard( 'wall screw', 0.05, 120, 0, 20, 10 );
 		screwWall.add( placard );
 		bracketAssembly.add( screwWall );
@@ -236,7 +236,8 @@
 		pencilLine.userData.places.push( [ v(  fixture.position.x - 13, fixture.position.y + 2,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 5 drawLine
 		pencilLine.userData.places.push( [ v(  fixture.position.x - 13, fixture.position.y - 2,  fixture.position.z - 107  ), v( 0, 0, 0 ) ] ); // 6
 
-		createClips();
+		createAssembleAll();
+		createPencilDraw();
 
 		returnAllToStartTween(); // mm-r1.js
 
@@ -840,7 +841,7 @@
 
 	}
 
-	function createClips() {
+	function createAssembleAll() {
 
 		playList = [
 
@@ -860,6 +861,10 @@
 			[ [ screwdriver, 0, 3000 ] ],
 		];
 
+	}
+
+	function createPencilDraw() {
+
 		pencilDrawClip = [
 
 			[ [ bracket115753, 1, 2000 ], [ components[ 2 ], 2, 2000 ], [ components[ 3 ], 2, 2000 ] ],
@@ -873,16 +878,7 @@
 			[ [ pencil, 0, 2000 ], [ camera, 1, 1000 ] ]
 		];
 
-		moveShelfFixWallScrew = [
-
-
-
-
-
-		];
-
 	}
-
 
 
 	function onWindowResize() {
