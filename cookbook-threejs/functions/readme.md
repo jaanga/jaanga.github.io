@@ -82,6 +82,12 @@
 	* List view shows mixed text and views
 	* Gallery view shows views only
 
+
+## Tweening
+
+[Tween.js Film Clips R1]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r1.html )
+
+
 ## Links of Interest
 
 [Dirksen 3]( http://www.smartjava.org/content/all-80-recipes-threejs-cookbook-online )
