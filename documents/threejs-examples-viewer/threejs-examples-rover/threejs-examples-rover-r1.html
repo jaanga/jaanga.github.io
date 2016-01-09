@@ -196,12 +196,15 @@
 
 				for ( var j = 0; j < topic.length; j++ ) {
 
-					fileName = topic[ j ];
+					var fileName = topic[ j ];
 					var id = fileName.replace( '.html', '')
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
-					text += `<p><a class=aa id=${ id } href=#${ fileName } > ${ title }</a>
+
+					text += `
+						<p><a class=aa id=${ id } href=#${ fileName } > ${ title }</a>
 						<a class=aa href=${urlThreejs}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
-					</p>\n`;
+						</p>\n
+					`;
 
 				}
 
@@ -218,7 +221,7 @@
 
 				for ( var j = 0; j < topic.length; j++ ) {
 
-					fileName = topic[ j ];
+					var fileName = topic[ j ];
 					var id = fileName.replace( '.html', '')
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 
@@ -256,8 +259,6 @@
 			var id = view.id;
 			var i = id.substr( 4, 1 );
 			var j = id.substr( 6 );
-
-console.log( 'id', topics[ i ][ j ] );
 
 			view.innerHTML = `<iframe src=${ urlThreejs + topics[ i ][ j ] } class=ifr  ></iframe>`;
 
