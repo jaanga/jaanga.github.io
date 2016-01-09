@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>Template Three.js Basic R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -22,12 +22,13 @@
 <script>
 
 	var indexFrame = 0;
-	var indexItem = 0;
+	var indexObjects = 0;
 
 	var easings;
 	var delta = 1;
 	var objectsCount = 8;
-	var frames = 5;
+	var framesDefault = 5;
+	var frames = framesDefault;
 
 	var geometries = [
 
@@ -88,14 +89,13 @@
 				oninput=tweenSelect(inpFrame.valueAsNumber); title="0 to 10: OK" > 
 				<output id=outFrame >value</output></p>
 
-			<p><button onclick=tweenIt(); >tween it</button></p>
-			<p><button onclick=initTweenClip(); >tween clip</button></p>
+			<p><button onclick=createClipRandom(); >create clip random</button></p>
+			<p><button onclick=initTweenClipScript(); >tween clip script</button></p>
+			<p><button onclick=initTweenClipRandom(); >tween clip random</button></p>
 
 			<div id=info ></div>
 
 		`;
-
-
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -109,7 +109,7 @@
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
 		camera.position.set( 100, 100, 100 );
-
+		camera.name = 'camera';
 		camera.userData.places = [];
 
 		for ( var i = 0; i < frames; i++ ) {
@@ -179,7 +179,21 @@
 			scene.add( mesh );
 			objects.push( mesh );
 
-			mesh.userData.places = [];
+		}
+
+		createClipRandom();
+		createClipScript();
+
+	}
+
+	function createClipRandom() {
+
+		frames = framesDefault;
+
+		for ( var i = 0; i < objectsCount; i++ ) {
+
+			object = objects[ i ];
+			object.userData.places = [];
 
 			for ( var j = 0; j < frames; j++ ) {
 
@@ -199,7 +213,7 @@
 					eR: eRotType 
 				};
 
-				mesh.userData.places.push( p );
+				object.userData.places.push( p );
 
 			}
 
@@ -207,107 +221,193 @@
 
 	}
 
+	function initTweenClipRandom() {
 
-	function tweenIt() {
+		indexFrame = 0;
+		indexObjects = 0;
 
+		tweenSelect( 0 );
 
-		for ( var i = 0; i < objects.length; i++ ) {
+		indexFrame = 0;
+		indexObjects = 0;
 
-			var obj = objects[ i ];
-
-			ePosType = easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-			eRotType = easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-
-			ePos = TWEEN.Easing[ ePosType ];
-			eRot = TWEEN.Easing[ eRotType ];
-
-			tween2location( obj, v( delta * obj.position.x , obj.position.y, delta * -obj.position.z ), v( delta * pi05, delta * pi, 0), 2000, ePos.InOut, eRot.InOut );
-
-			delta *= -1;
-
-		}
-
-		info.innerHTML =
-`
-ePos ${ ePosType } <br>
-eRot ${ eRotType } <br>
-
-`;
+		tweenClipRandom();
 
 	}
 
+	function tweenClipRandom( indexObjects ) {
 
-	function tweenSelect( index ) {
+		if ( indexObjects >= objects.length ) {
 
-		var index = index ? index : 0;
-
-		for ( var i = 0; i < objects.length; i++ ) {
-
-			tween2location2( objects[ i ], index );
+			indexObjects = 0;
+			indexFrame++;
 
 		}
 
-		tweenCamera( camera, index );
+		if ( indexFrame < frames && indexObjects === 0 ) {
+
+//console.log( 'inside', indexFrame, indexObjects );
+
+			tweenSelect( indexObjects, tweenClipRandom );
+
+		}
+
+//console.log( 'frame', indexFrame, frames, indexObjects );
+
+	}
+
+	function tweenSelect( index, onComplete ) {
+
+		var index = index ? index : 0;
+		var onComplete = onComplete ? onComplete : function(){};
+
+		for ( var i = 0; i < objects.length; i++ ) {
+
+			object = objects[ i ];
+
+			if ( object.userData.places.length && object.userData.places[ index ] && object.userData.places[ index ].fr === index ) {
+
+console.log( 'tweenSelect', i, object.userData, index );
+
+				tween2location( object, object.userData.places[ index ], onComplete, index );
+
+			} else {
+
+				indexObjects++;
+
+			}
+
+		}
+
+		if ( camera.userData.places[ index ] && camera.userData.places[ index ].fr === index ) {
+
+//			tweenCamera( camera, index );
+
+		}
 
 		inpFrame.value = outFrame.value = index;
 
 	}
 
-	function initTweenClip() {
+	function createClipScript() {
 
-		tweenSelect( 0 );
+		var f = 0;
+		for ( var i = 0; i < objects.length; i++ ) {
 
-		indexFrame = 0;
-		indexItem = 0;
+			objects[ i ].userData.script = [];
+			objects[ i ].userData.script.push( { fr: f, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
 
-		tweenClip();
+		}
+		f++;
+
+		object = objects[ 0 ];
+
+		object.userData.script.push( { fr: f++, pX: -50, pY: 20, pZ: -50, rX: 0, rY: 0, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
+		object.userData.script.push( { fr: f++, pX: -50, pY: 20, pZ: 50, rX: 0, rY: 0, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
+		object.userData.script.push( { fr: f++, pX: 50, pY: 20, pZ: -50, rX: 0, rY: 0, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
+
+		var p = {
+			fr: f++,
+			pX: Math.random() * 100 - 50,
+			pY: Math.random() * 100 - 50,
+			pZ: Math.random() * 100 - 50,
+			rX: Math.random() * pi,
+			rY: Math.random() * pi,
+			rZ: Math.random() * pi,
+			ms: Math.random() * 3000,
+			eP: ePosType, 
+			eR: eRotType 
+		};
+
+		object.userData.script.push( p );
+
+		var p = {
+			fr: f++,
+			pX: Math.random() * 100 - 50,
+			pY: Math.random() * 100 - 50,
+			pZ: Math.random() * 100 - 50,
+			rX: Math.random() * pi,
+			rY: Math.random() * pi,
+			rZ: Math.random() * pi,
+			ms: Math.random() * 3000,
+			eP: ePosType, 
+			eR: eRotType 
+		};
+
+		object.userData.script.push( p );
+
+		frames = object.userData.script.length ;
+
+		object = objects[ 3 ];
+
+		object.userData.script.push( { fr: 3, pX: 0, pY: 80, pZ: 0, rX: 0, rY: 2, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
+
+
+		clipScript = [
+
+			[ [ objects[ 0 ], 0 ], [camera, 1 ]  ],
+			[ [ objects[ 0 ], 1 ], [ objects[ 3 ], 0 ], [camera, 2 ] ],
+			[ [ objects[ 0 ], 2 ], [camera, 3 ]  ],
+			[ [ objects[ 0 ], 3 ] ]
+ 
+		];
 
 	}
 
+	function initTweenClipScript() {
+
+		indexFrame = 0;
+		indexObjects = 0;
+		script = clipScript;
+
+		tweenClipScriptFrame( 0, clipScript );
+
+	}
+
+	function tweenClipScriptFrame( indexObjects ) {
+
+			if ( indexObjects === 0 ) {
+
+console.log( 'indexFrame', indexFrame, 'indexObjects', indexObjects );
+
+				frame = script[ indexFrame ];
+
+				for ( var i = 0; i < frame.length; i++ ) {
+
+					obj = frame[ i ][ 0 ];
 
 
-	function tweenClip() {
 
-		if ( indexItem >= objects.length ) {
+					if ( obj.name === 'camera' ) {
+console.log( 'camera', frame );
+						tweenCamera( camera, frame[ i ][ 1 ] );
 
-			indexItem = 0;
-			indexFrame++;
+					} else {
+console.log( 'index', i, frame[ i ][ 0 ].userData.script[ indexFrame ]  );
+						tween2location( obj, obj.userData.script[ frame[ i ][ 1 ] ], tweenClipScriptFrame, indexObjects );
 
-		}
-
-		if ( indexFrame < frames && indexItem === 0 ) {
-
-			for ( var j = 0; j < objects.length; j++ ) {
-
-				if ( objects[ j ].userData.places[ indexFrame ].fr === indexFrame ) {
-
-					tween2location2( objects[ j ], indexFrame, tweenClip );
-
-				} else {
-
-					indexItem++;
+					}
 
 				}
 
-				if ( camera.userData.places[ indexFrame ].fr === indexFrame ) {
+			} else if ( indexFrame < script.length - 1 ) {
 
-					tweenCamera( camera, indexFrame );
+				indexFrame++;
+				indexObjects = 0;
+				tweenClipScriptFrame( 0 );
 
-				}
+			} else {
+
+console.log( 'the end indexframe', indexFrame, 'indexObjects', indexObjects  );
 
 			}
 
-		}
-
-console.log( 'frame', indexFrame, indexItem );
-
 	}
 
-	function tween2location2( obj, indexF, onComplete ) {
+	function tween2location( obj, p, onComplete, index ) {
 
 		var onComplete = onComplete ? onComplete : function(){};
 
-		var p = obj.userData.places[ indexF ];
 		new TWEEN.Tween( obj.position )
 		.to( {x: p.pX, y: p.pY, z: p.pZ }, p.ms )
 		.easing( TWEEN.Easing[ p.eP ].InOut )
@@ -318,34 +418,16 @@ console.log( 'frame', indexFrame, indexItem );
 		.easing( TWEEN.Easing[ p.eR ].InOut )
 		.onComplete( function() {
 
-			indexItem++;
-			onComplete();
+			onComplete( ++index );
 
 		} )
 		.start();
 
 	}
 
-	function tween2location( obj, pos, rot, ms, easingPos, easingRot ) {
+	function tweenCamera( camera, indexFrame ) {
 
-		new TWEEN.Tween( obj.position )
-		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
-		.easing( easingPos )
-		.start();
-
-		new TWEEN.Tween( obj.rotation )
-		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
-		.easing( easingRot )
-		.onComplete( function() {
-
-		} )
-		.start();
-
-	}
-
-	function tweenCamera( camera, index ) {
-
-		var c = camera.userData.places[ index ];
+		var c = camera.userData.places[ indexFrame ];
 		var ms = 1000;
 		onComplete = function() {} ;
 
@@ -365,10 +447,7 @@ console.log( 'frame', indexFrame, indexItem );
 		.onComplete( onComplete )
 		.start();
 
-// playNote( 350 + 350 * Math.random(), context.currentTime, 0.1 );
-
 	}
-
 
 	function onWindowResize() {
 

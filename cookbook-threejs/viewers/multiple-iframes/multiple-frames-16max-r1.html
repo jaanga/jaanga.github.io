@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Multiple Frames R1</title>
+<title>Multiple Frames 16 Max R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -14,6 +14,7 @@
 
 <script>
 
+	var viewsMax = 16;
 
 	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
 	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
@@ -65,7 +66,7 @@
 
 	function createMultipleIframes() {
 
-		for ( var i = 0; i < 17; i++ ) {
+		for ( var i = 0; i < viewsMax; i++ ) {
 
 			createIframe();
 			var content = document.body.appendChild( document.createElement( 'div' ) );
@@ -79,7 +80,7 @@
 
 		di = document.body.appendChild( document.createElement( 'div' ) );
 //		ifr.id = 'ifr';
-		di.innerHTML = '<iframe id=ifr src=' + dwg + ' width=512 height=512 ><iframe>';
+		di.innerHTML = '<iframe id=ifr src=' + dwg + ' width=512 height=512 ></iframe>';
  
 	}
 

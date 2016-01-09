@@ -1,0 +1,206 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Multiple Frames R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+
+
+<script>
+
+	var iframes = [];
+	var renderers = [];
+	var renderersIndex = 0;
+	var renderersLimit = 3;
+	var iframesLimit = 32;
+
+	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
+	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+			h2 {}
+			#aa {text-decoration: none; }
+			#menu { }
+			.ifr { border: 1px solid red; width: 512px; height:512px; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a> 
+				<a id=aa href=http://jaanga.github.io/ >?</a>
+			</h2>
+			<div id=content ></div>
+			<div id=info ></div>
+
+		`;
+
+//			<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>
+//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+
+		createMultipleIframes();
+
+	}
+
+	function createIframe( i ) {
+
+		var iframe = {};
+		iframe.index = i;
+		iframe.text = `<div id=ifr${ i } class=ifr  ></div><br>`;
+
+		iframes.push( iframe );
+
+		return iframe;
+
+	}
+
+	function createMultipleIframes() {
+
+		for ( var i = 0; i < iframesLimit; i++ ) {
+
+			var iframe = createIframe( i );
+
+			content.innerHTML += 
+`
+
+${ iframe.text }
+
+<h2>header ${ i + 1 }</h2> ${ text }
+
+`;
+
+		}
+
+		for ( var i = 0; i < iframesLimit; i++ ) {
+
+			iframes[ i ].domElement = document.getElementById( 'ifr' + i );
+
+		}
+
+	}
+
+	function updateIframe( iframe ) {
+
+		var ifrs = document.getElementsByTagName( 'iframe' );
+
+		if ( ifrs.length > renderersLimit ) {
+			renderers.pop();
+console.log( 'ooooooooooooooops', ifrs );
+
+		}
+
+		if ( !renderers[ renderersIndex ] && renderers.length < renderersLimit ) {
+
+console.log( '', iframe );
+
+			var renderer = iframe;
+			renderers.push( renderer );
+			iframe.renderer = renderer;
+
+		}
+
+
+
+		renderersIndex = renderersIndex < renderersLimit ? renderersIndex : 0;
+		renderer = renderers[ renderersIndex++ ];
+
+		if ( renderer !== iframe.renderer ) { 
+
+console.log( 'hhh' );
+
+			renderer.domElement.innerHTML = '';
+			renderer.renderer = '';
+
+		}
+
+		iframe.renderer = renderer;
+
+		iframe.domElement.innerHTML = `<iframe src=${ dwg } class=ifr ></iframe><br>`;
+
+		return iframe;
+
+	}
+
+
+	function check() {
+
+		var count = 0;
+		for ( var i = 0; i < iframesLimit; i++ ) {
+			var ifr = iframes[ i ];
+			count++;
+			if ( ifr.domElement.innerHTML !== '' ) {
+console.log( 'got it', ifr );
+				var thing = 'not';
+				for ( var j = 0; j < renderers.length; j++ ) {
+console.log( 'got xxx', renderers[ j ].index, ifr.index );
+					if ( renderers[ j ].index === ifr.index ) {
+
+
+
+//				iframes[ i ].domElement.innerHTML = '';
+//				iframes[ i ].renderer = '';
+
+
+					}
+
+
+				}
+
+			}
+
+		}
+
+console.log( 'count', count );
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < iframes.length; i++ ) {
+
+			var iframe = iframes[ i ];
+
+			rect = iframe.domElement.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			if ( ! iframe.renderer ) { updateIframe( iframe, rect.width, rect.height ); }
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

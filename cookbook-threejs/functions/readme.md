@@ -75,7 +75,7 @@
 [Multiple Views R4]( ./views-multiple/multiple-scenes/multiple-views-r4.html )
 
 * Reuses 16 renderers to allow unlimited scenes in a single page
-	* 1024 views each with 256 Three.js meshes: no issues / every view at 60fps
+	* 512 views each with 256 Three.js meshes: no issues / every view at 60fps
 * Each view may have its own stats, zoom, pan and rotation maintained throughout the session
 * Avoids the complexity of viewports and scissoring for new programmers
 * Two demos
@@ -85,7 +85,24 @@
 
 ## Tweening
 
+[Tween.js Film Clips R2]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r2.html )
+
+* Tween position and rotation of multiple objects
+* 'Frame' data stored in the object
+* Multiple frame data points per object
+* Go to start, go to end, go to any frame
+* Generate multiple frame random location clip
+* Generate demo script
+* Every frame can have its own camera movement
+
+
 [Tween.js Film Clips R1]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r1.html )
+
+[Change Location]( ./tweening/change-location/change-location-r3.html )
+
+[Move into Position]( ./tweening/move-into-position/tweening-r2.html )
+
+[Tween.js Camera]( ./tweening/tweenjs-camera/tweenjs-camera-r1.html )
 
 
 ## Links of Interest

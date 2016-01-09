@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>Template Three.js Basic R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -22,7 +22,7 @@
 <script>
 
 	var indexFrame = 0;
-	var indexItem = 0;
+	var indexObjects = 0;
 
 	var easings;
 	var delta = 1;
@@ -88,13 +88,11 @@
 				oninput=tweenSelect(inpFrame.valueAsNumber); title="0 to 10: OK" > 
 				<output id=outFrame >value</output></p>
 
-			<p><button onclick=tweenIt(); >tween it</button></p>
 			<p><button onclick=initTweenClip(); >tween clip</button></p>
 
 			<div id=info ></div>
 
 		`;
-
 
 
 		stats = new Stats();
@@ -207,47 +205,45 @@
 
 	}
 
+	function creatClipRandom() {
 
-	function tweenIt() {
 
 
-		for ( var i = 0; i < objects.length; i++ ) {
+	}
 
-			var obj = objects[ i ];
+	function createClip() {
 
-			ePosType = easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-			eRotType = easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
+		object = objects[ 0 ];
 
-			ePos = TWEEN.Easing[ ePosType ];
-			eRot = TWEEN.Easing[ eRotType ];
-
-			tween2location( obj, v( delta * obj.position.x , obj.position.y, delta * -obj.position.z ), v( delta * pi05, delta * pi, 0), 2000, ePos.InOut, eRot.InOut );
-
-			delta *= -1;
-
-		}
-
-		info.innerHTML =
-`
-ePos ${ ePosType } <br>
-eRot ${ eRotType } <br>
-
-`;
+		object
 
 	}
 
 
-	function tweenSelect( index ) {
+	function tweenSelect( index, onComplete ) {
 
 		var index = index ? index : 0;
+		var onComplete = onComplete ? onComplete : function(){};
 
-		for ( var i = 0; i < objects.length; i++ ) {
+		for ( var j = 0; j < objects.length; j++ ) {
 
-			tween2location2( objects[ i ], index );
+			if ( objects[ j ].userData.places[ index ].fr === index ) {
+
+				tween2location( objects[ j ], index, onComplete );
+
+			} else {
+
+				indexObjects++;
+
+			}
 
 		}
 
-		tweenCamera( camera, index );
+		if ( camera.userData.places[ index ].fr === index ) {
+
+			tweenCamera( camera, index );
+
+		}
 
 		inpFrame.value = outFrame.value = index;
 
@@ -255,59 +251,40 @@ eRot ${ eRotType } <br>
 
 	function initTweenClip() {
 
-		tweenSelect( 0 );
-
 		indexFrame = 0;
-		indexItem = 0;
+		indexObjects = 0;
+
+		tweenSelect( 0 );
 
 		tweenClip();
 
 	}
 
-
-
 	function tweenClip() {
 
-		if ( indexItem >= objects.length ) {
+		if ( indexObjects >= objects.length ) {
 
-			indexItem = 0;
+			indexObjects = 0;
 			indexFrame++;
 
 		}
 
-		if ( indexFrame < frames && indexItem === 0 ) {
+		if ( indexFrame < frames && indexObjects === 0 ) {
 
-			for ( var j = 0; j < objects.length; j++ ) {
-
-				if ( objects[ j ].userData.places[ indexFrame ].fr === indexFrame ) {
-
-					tween2location2( objects[ j ], indexFrame, tweenClip );
-
-				} else {
-
-					indexItem++;
-
-				}
-
-				if ( camera.userData.places[ indexFrame ].fr === indexFrame ) {
-
-					tweenCamera( camera, indexFrame );
-
-				}
-
-			}
+			tweenSelect( indexFrame, tweenClip );
 
 		}
 
-console.log( 'frame', indexFrame, indexItem );
+//console.log( 'frame', indexFrame, indexObjects );
 
 	}
 
-	function tween2location2( obj, indexF, onComplete ) {
+	function tween2location( obj, indexFrame, onComplete ) {
 
 		var onComplete = onComplete ? onComplete : function(){};
 
-		var p = obj.userData.places[ indexF ];
+		var p = obj.userData.places[ indexFrame ];
+
 		new TWEEN.Tween( obj.position )
 		.to( {x: p.pX, y: p.pY, z: p.pZ }, p.ms )
 		.easing( TWEEN.Easing[ p.eP ].InOut )
@@ -318,7 +295,7 @@ console.log( 'frame', indexFrame, indexItem );
 		.easing( TWEEN.Easing[ p.eR ].InOut )
 		.onComplete( function() {
 
-			indexItem++;
+			indexObjects++;
 			onComplete();
 
 		} )
@@ -326,26 +303,9 @@ console.log( 'frame', indexFrame, indexItem );
 
 	}
 
-	function tween2location( obj, pos, rot, ms, easingPos, easingRot ) {
+	function tweenCamera( camera, indexFrame ) {
 
-		new TWEEN.Tween( obj.position )
-		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
-		.easing( easingPos )
-		.start();
-
-		new TWEEN.Tween( obj.rotation )
-		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
-		.easing( easingRot )
-		.onComplete( function() {
-
-		} )
-		.start();
-
-	}
-
-	function tweenCamera( camera, index ) {
-
-		var c = camera.userData.places[ index ];
+		var c = camera.userData.places[ indexFrame ];
 		var ms = 1000;
 		onComplete = function() {} ;
 

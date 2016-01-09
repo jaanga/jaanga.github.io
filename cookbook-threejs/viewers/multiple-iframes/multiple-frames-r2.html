@@ -1,0 +1,115 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Multiple Frames R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script>
+
+	var views = [];
+	var renderers = [];
+	var renderersLimit = 3;
+	var viewsLimit = 32;
+
+	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
+	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML = `
+
+			body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }
+			.divView { border: 1px solid red; width: 512px; height:512px; }
+			.ifr { border: 0px solid green; height: 100%; width: 100%; }
+			#aa {text-decoration: none; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = `
+
+			<h2>
+				<a href="" > ${ document.title }</a>
+				<a id=aa href=http://jaanga.github.io/ >?</a>
+			</h2>
+			<div id=content ></div>
+
+		`;
+
+		createMultipleViews();
+
+	}
+
+
+	function createMultipleViews() {
+
+		for ( var i = 0; i < viewsLimit; i++ ) {
+
+			content.innerHTML += `
+
+				<div id=ifr${ i } class=divView  ></div>
+				<h2>header ${ i + 1 }</h2> ${ text }
+
+			`;
+
+		}
+
+		views = document.getElementsByClassName( 'divView' );
+
+	}
+
+
+	function updateView( view ) {
+
+		var iframes = document.getElementsByTagName( 'iframe' );
+
+		if ( iframes.length > renderersLimit ) {
+
+			var frame = renderers.shift();
+			frame.innerHTML = '';
+
+		}
+
+		if ( view.innerHTML === '' ) {
+
+//console.log( 'id', view.id );
+
+			view.innerHTML = `<iframe src=${ dwg } class=ifr  ></iframe>`;
+
+			renderers.push( view );
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < views.length; i++ ) {
+
+			var view = views[ i ];
+
+			rect = view.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			updateView( view );
+
+		}
+
+	}
+
+</script>
+</body>
+</html>
