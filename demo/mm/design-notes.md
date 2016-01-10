@@ -45,3 +45,9 @@ So do it the human way.
 Is it better to have several 10 to 20 second clips than to have a single one minute clip?
 Perhaps getting you to push the buttons to continue make things feel mpre interactive...
 
+Every object records it possible locations ( position + rotation )
+Every clip decides which objects to use
+Every frame decides the tween time and which location and which easing to use for each object
+
+
+

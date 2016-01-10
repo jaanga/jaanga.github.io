@@ -21,9 +21,10 @@ _Follow Mr.doob: The aim of the project is to create a lightweight 3D library wi
 
 ##Overview
 
-Displays files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
+### [Three.js Examples Rover R2 - Full Screen - Dev]( ./threejs-examples-rover/dev/index.html )
 
-This is part of an attempt to build a simpler file viewer.
+
+### [Three.js Examples Viewer R4 - Full Screen - Dev]( ./threejs-examples-viewer/dev/index.html )
 
 <!--
 
@@ -53,6 +54,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
+Displays files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
+
+This is part of an attempt to build a simpler file viewer.
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
@@ -62,12 +66,22 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 
 ## Features
-<!--
+
+* Displays HTML and Markdown files
+* Menu and contents scroll independently
+* Menu element displays all Three.js example files organized by category
+	* Clicking a menu item scrolls into view the selected fil
+	* Menu item icons open file in new tab/window
+* Content element displays scrolling view of all the example files
+	* Bypasses browser limit of maximum sixteen open WebGL views
+	* Creates renderers when views are visible
+	* Discards renderers when view are not visible
+* View source button displays when HTML file is loaded 
 * Zoom, pan and rotate
-	* 1 finger / left button =  rotate
-	* 2 finger / wheel = zoom in and out
-	* 3 finger / right button = pan
--->
+	* 1 finger / left button >> rotate
+	* 2 finger / wheel >> zoom in and out
+	* 3 finger / right button >> pan
+
 
 ## Issues
 

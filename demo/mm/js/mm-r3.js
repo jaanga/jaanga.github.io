@@ -1,22 +1,28 @@
 ﻿
 //	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
+	var clip;
+	var indexFrame = 0;
+
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
 	var easings;
+	var duration = 500;
 
 //	function getEasings() {
 
+
 		easings = Object.keys( TWEEN.Easing );
+/*
+		for ( var easing in easings ) {
 
-//		for ( var easing in easings ) {
+			console.log( easings[ easing ] );
 
-//			console.log( easings[ easing ] );
+		}
 
-//		}
-
-//	}
+	}
+*/
 
 	var audioContext = new AudioContext();
 
@@ -43,7 +49,7 @@
 
 		if ( intersects.length > 0 ) {
 
-			movRotTween( intersects[ 0 ].object );
+			tween2location( intersects[ 0 ].object, intersects[ 0 ].object.userData.places[ 1 ] );
 
 			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
@@ -51,114 +57,18 @@
 
 	}
 
-	function returnAllToStartTween() {
-
-//		var obj, oud;
-
+	function tweenAllToLocation( index ) {
 
 		for ( var i in components ) {
-//		for ( var i = 0; i < components.length; i++ ) {
 
-			obj = components[ i ];
-			oud = obj.userData.places[ 0 ];
+			var obj = components[ i ];
+			var oud = obj.userData.places[ index ];
 
-// console.log( '', oud );
-
-//			if ( obj.position.distanceTo( v( oud.pX, oud.pY, oud.p3 ) ) !== 0 ) {
-
-				tween2location( obj, oud );
-
-//			}
+			tween2location( obj, oud );
 
 		}
 
-		tweenCamera( camera, 0 );
-
-/*
-		for ( i = 0; i < screws.length; i++ ) {
-
-			obj = screws[ i ];
-			ohp = obj.userData.holeParent;
-			oud = obj.userData.places;
-
-			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
-
-				obj.scale.set( 1, 1, 1 );
-				ohp.remove( obj );
-				scene.add( obj );
-				tween2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ] );
-
-			}
-
-		}
-
-		for ( i = 0; i < pegs.length; i++ ) {
-
-			obj = pegs[ i ];
-			ohp = obj.userData.holeParent;
-			oud = obj.userData.places;
-
-			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
-
-				obj.scale.set( 1, 1, 1 );
-				ohp.remove( obj );
-				scene.add( obj );
-				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
-
-			}
-
-
-		}
-*/
-
-		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
-
-	}
-
-	function assembleQuicklyTween() {
-
-		var obj, ohp, oud;
-
-		for ( var i = 0; i < components.length; i++ ) {
-
-			obj = components[ i ];
-			oud = obj.userData.places;
-
-			if ( obj.position.distanceTo( oud[ oud.length - 1 ][ 0 ] ) !== 0 ) {
-
-				send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000 );
-
-			}
-
-		}
-
-		for ( i = 0; i < screws.length; i++ ) {
-
-			obj = screws[ i ];
-			ohp = obj.userData.holeParent;
-
-			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
-
-				switchParent( screws, [ i ] );
-
-			}
-
-		}
-
-		for ( i = 0; i < pegs.length; i++ ) {
-
-			obj = pegs[ i ];
-			ohp = obj.userData.holeParent;
-
-			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
-
-				switchParent( pegs, [ i ] );
-
-			}
-
-		}
-
-		cameraTween( camera.userData.places[ 2 ][ 0 ], camera.userData.places[ 2 ][ 1 ], 1500 );
+		tweenCamera( camera, index );
 
 		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
@@ -166,49 +76,103 @@
 
 	function togglePositions() {
 
-
 		for ( var i = 0; i < components.length; i++ ) {
 
 			obj = components[ i ];
 
 			oud = obj.userData.places;
 
-console.log( 'togglePositions', oud) ;
+			if ( obj.position.distanceTo( v( oud[ 0 ].x, oud[ 0 ].y, oud[ 0 ].z ) ) < 50 ) {
 
-/*
-			if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) === 0 ) {
-
-				send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ] );
+				tween2location( obj, oud[ 1 ] );
 
 			} else {
 
-				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ],  );
+				tween2location( obj, oud[ 0 ] );
 
 			}
-*/
+
 		}
 
 		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 	}
 
-/*
-	function movRotTween( obj ) {
+	function togglePlayClip( theClip, checkbox ) {
 
-		oud = obj.userData.places;
+		clip = theClip;
 
-		if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) === 0 ) {
+		if ( checkbox.checked === false ) { return; }
 
-			send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000, dispatchScrewsPegs( obj ) );
+		if ( indexFrame === 0 ) {
+
+			tweenAllToLocation(0);
+
+			tweenFrame( indexFrame );
+
+		} else if ( indexFrame < clip.length ) {
+
+			tweenFrame( indexFrame );
+
+			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 		} else {
 
-			send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000, dispatchScrewsPegsHome( obj )  );
+			checkbox.checked = false;
+			indexFrame = 0;
+//			itemCount = 0;
+
+// Play a 'B' now --- Ta
+			playNote(493.883, audioContext.currentTime, 0.232 );
+
+// Play an 'E' just as the previous note finishes -- Da
+			playNote(659.255, audioContext.currentTime + 0.232, 0.464);
 
 		}
 
 	}
-*/
+
+	function tweenFrame( indexFrame ) {
+
+		frame = clip[ indexFrame ];
+
+console.log( '', frame, indexFrame );
+
+		for ( var i = 0; i < frame.length; i++ ) {
+
+
+			var item = frame[ i ];
+
+			obj = item[ 0 ];
+			var index = item[ 1 ];
+			var ms = item[ 2 ] ? item[ 2 ] : duration;
+
+
+			if ( obj.name === 'camera' ) {
+
+console.log( 'camera', obj );
+				tweenCamera( obj, index, tweenFrame, indexFrame );
+
+			} else if ( obj.name === 'pencilLine' ) {
+
+// console.log( 'pencil line', obj );
+//				drawPencilLine( oud[ index ][ 0 ], oud[ index + 1 ][ 0 ] );
+//				itemCount++;
+
+			} else {
+
+//console.log( '', obj.name );
+				oud = obj.userData.places[ index ];
+				oud.ms = ms;
+				tween2location( obj, oud, tweenFrame, indexFrame );
+
+			}
+
+		}
+
+		
+	}
+
 
 
 	function tween2location( obj, p, onComplete, index ) {
@@ -235,16 +199,12 @@ console.log( 'togglePositions', oud) ;
 		new TWEEN.Tween( obj.rotation )
 		.to( { x: p.rX, y: p.rY, z: p.rZ }, p.ms )
 		.easing( TWEEN.Easing[ p.eR ].InOut )
-		.onComplete( function() {
-
-			onComplete( ++index );
-
-		} )
+		.onComplete( function() { onComplete( ++index ); } )
 		.start();
 
 	}
 
-	function tweenCamera( camera, indexFrame ) {
+	function tweenCamera( camera, indexFrame, onComplete, index ) {
 
 		c = camera.userData.places[ indexFrame ];
 
@@ -255,7 +215,7 @@ console.log( 'togglePositions', oud) ;
 		c.tZ = c.tZ ? c.tZ : 0;
 
 		c.ms = c.ms ? c.ms : 1000;
-//		var onComplete = onComplete ? onComplete : function(){};
+		var onComplete = onComplete ? onComplete : function(){};
 
 		new TWEEN.Tween( camera.position )
 		.to( { x: c.cX, y: c.cY, z: c.cZ }, c.ms )
@@ -265,39 +225,11 @@ console.log( 'togglePositions', oud) ;
 		new TWEEN.Tween( controls.target )
 		.to( { x: c.tX, y: c.tY, z: c.tZ }, c.ms )
 		.easing( TWEEN.Easing[ c.eR ].InOut )
-//		.onComplete( onComplete )
+		.onComplete( function() { onComplete( ++index ); } )
 		.start();
 
 
 	}
-
-/*
-	function cameraTween( position, target, milleseconds, func ) {
-
-		var ms = milleseconds ? milleseconds : 1000;
-		onComplete = func ? func : function() {} ;
-
-		new TWEEN.Tween( camera.position )
-		.to( {
-			x: position.x,
-			y: position.y,
-			z: position.z}, ms )
-		.easing( TWEEN.Easing.Sinusoidal.InOut )
-		.start();
-
-		new TWEEN.Tween( controls.target ).to( {
-			x: target.x,
-			y: target.y,
-			z: target.z}, ms )
-		.easing( TWEEN.Easing.Sinusoidal.InOut )
-		.onComplete( onComplete )
-		.start();
-
-// playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
-
-	}
-*/
-
 
 	function playNote( frequency, startTime, duration) {
 
@@ -317,6 +249,8 @@ console.log( 'togglePositions', oud) ;
 
 	}
 
+
+
 /*
 // https://github.com/tweenjs/tween.js/
 // https://github.com/tweenjs/tween.js/blob/master/docs/user_guide.md
@@ -330,11 +264,6 @@ console.log( 'togglePositions', oud) ;
 	// var pi05 = 0.5 * pi;
 	// var pi_05 = -0.5 * pi;
 	// var pi2 = 2 * pi;
-
-
-
-
-
 
 
 	function dispatchScrewsPegs( obj ) {
@@ -482,9 +411,6 @@ console.log( '', obj.name );
 		}
 
 	}
-
-
-
 
 	function switchParent( type, arr ) {
 

@@ -243,7 +243,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 * Send link to customer upon purchase
 * Show items in the positions as they are in the box
 * Set up so works on phone very nicely
-* Add real colors
+* CCreate multiple rendering scenarios
+	* Add real colors
+	* Add toon shading
 * Add accessories, coordinated products and links to buy
 * Add typical things that go on bookcases
 * Add room and people and zombies

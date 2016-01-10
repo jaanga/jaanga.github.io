@@ -76,8 +76,8 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
 			</h2>
- 			<p><button onclick=tweenAllToLocation(0); >Return all to start</button>
-			<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>
+ 			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
+			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
 			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
 			<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Attach Wall Bracket</p>
 			<p><input type=checkbox id=chkPencilDraw onchange=togglePlayClip(pencilDrawClip,chkPencilDraw); > Draw Screw Position</p>
@@ -164,7 +164,6 @@
 
 		bracket115753 = drawBracket115753();
 //		bracket115753.userData.places.push( [ v( 20 + ran( 10 ), 10, -20 - ran( 20 ) ), v( -pi05, 0, ran( 3 ) ) ] );
-
 //		bracket115753.userData.places.push( [ v( origin.x, origin.y, origin.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 1
 //		bracket115753.userData.places.push( [ v( origin.x, origin.y, origin.z - 100 + 6.6 * radiusScrew ), v( 0, 0, 0 ) ] );  // 2
 
@@ -172,9 +171,8 @@
 
 //		bracket115753.userData.places.push( [ v( origin.x, origin.y, origin.z - 100 + 3.2 * radiusScrew ), v( 0, 0, 0 ) ] );  // 1
 
-		bracket115753.userData.places.push( { pX: 20 + ran( 10 ), pY: 10, pZ: -20 - ran( 20 ), rX: -pi05, rY: 0, rZ: ran( pi ) } );
-		bracket115753.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z - 100 + 3.2 * radiusScrew } );
-		bracket115753.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z - 100 + 6.6 * radiusScrew } );
+		bracket115753.userData.places.push( { pX: 20 + ran( 10 ), pY: 10, pZ: -20 - ran( 20 ), rX: -pi05, rY: 0, rZ: ran( pi ), ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
+
 
 		var placard = drawPlacard( '115753', 0.05, 120, -10, 20, 0 )
 		bracket115753.add( placard );
@@ -187,8 +185,8 @@
 //		part103693.userData.places.push( [ v( 20 + ran( 20 ), 0, 20 + ran( 30 ) ), v( -pi05, 0, ran( 3 ) ) ] );
 //		part103693.userData.places.push( [ v( origin.x - 20, origin.y - 9,  origin.z - 100 - 4 ), v( 0, 0, 0 ) ] );
 
-		part103693.userData.places.push( { pX: 20 + ran( 20 ), pY: 0, pZ: 20 + ran( 30 ), rX: -pi05, rY: 0, rZ: ran( pi ) } );
-		part103693.userData.places.push( { pX: origin.x - 20, pY: origin.y - 9, pZ: origin.z - 104 } );
+		part103693.userData.places.push( { pX: 20 + ran( 20 ), pY: 0, pZ: 20 + ran( 30 ), rX: -pi05, rY: 0, rZ: ran( pi ), ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
+
 
 		placard = drawPlacard( '103693', 0.05, 120, 0, 20, 0 )
 		part103693.add( placard );
@@ -206,9 +204,7 @@
 //			screw.userData.places.push( [ v( moveTo.x + 10, moveTo.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), moveTo.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 5 * pi ) ] ); // 1
 
 //			screw.userData.places.push( [ v( origin.x + 10, origin.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), origin.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 5 * pi ) ] ); // 1
-
-			screw.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0 } );
-			screw.userData.places.push( { pX: origin.x + 10, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
+			screw.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
 
 
 			placard = drawPlacard( '100372', 0.05, 120, 0, 20, 10 );
@@ -224,9 +220,7 @@
 //		screwWall.userData.places.push( [ v( - ran( 45 ), radiusScrew, -10 - ran( 30 ) ), v( - ran( 0.1 ), ran( 1.05 ) - 0.5, 0 ) ] );
 //		screwWall.userData.places.push( [ v( origin.x - 12.5, origin.y, origin.z - 95  ), v( 0, 0, 0 ) ] );  // 1
 //		screwWall.userData.places.push( [ v( origin.x - 12.5, origin.y, origin.z - 100  ), v( 0, 0, -5 * pi ) ] );  // 1
-
-		screwWall.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0 } );
-		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0 } );
+		screwWall.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
 
 
 		placard = drawPlacard( 'wall screw', 0.05, 120, 0, 20, 10 );
@@ -249,8 +243,7 @@
 //		pencil.userData.places.push( [ v( origin.x - 13, origin.y - 2, origin.z - 107  ), v( 0, 0, 0 ) ] ); // 6
 
 
-		pencil.userData.places.push( { pX: 20 + ran( -50 ), pY: pencil.userData.radius, pZ: 30 + ran( 20 ), rX: 0, rY: -pi05 + ran( 0.5 ) - 0.25, rZ: 0 } );
-		pencil.userData.places.push( { pX: origin.x - 15, pY: origin.y, pZ: origin.z - 50, rX: 0, rY: 0, rZ: 0 } );
+		pencil.userData.places.push( { pX: 20 + ran( -50 ), pY: pencil.userData.radius, pZ: 30 + ran( 20 ), rX: 0, rY: -pi05 + ran( 0.5 ) - 0.25, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
 
 
 		components.push( pencil );
@@ -259,7 +252,7 @@
 		screwdriver = drawScrewdriver();
 //		screwdriver.userData.places.push( [ v( 30 + ran( -25 ), screwdriver.userData.radiusHandle, ran( 30 ) ), v( 0, -pi05 + ran( 0.5 ) - 0.25, 0 ) ] );
 
-//		screwdriver.userData.places.push( [ v( origin.x - 20, origin.y, origin.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 1
+//		screwdriver.userData.places.push( [ v( origin.x - 20, origin.y  - 0.5 * heightBracket + 3 * radiusScrew, origin.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 1
 //		screwdriver.userData.places.push( [ v( origin.x - 5,  origin.y  - 0.5 * heightBracket + 3 * radiusScrew, origin.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 2
 
 //		screwdriver.userData.places.push( [ v( origin.x - 25, origin.y  + 0.5 * heightBracket - 3 * radiusScrew, origin.z - 100 + 5 * radiusScrew ), v( 0, -pi05, 0 ) ] ); // 3
@@ -273,8 +266,7 @@
 
 //		screwdriver.userData.places.push( [ v( 30 + ran( -25 ), screwdriver.userData.radiusHandle, ran( 30 ) ), v( 0, -pi05 + ran( 0.5 ) - 0.25, 0 ) ] );  // 7
 
-		screwdriver.userData.places.push( { pX: 30 + ran( -25 ), pY: screwdriver.userData.radiusHandle, pZ: ran( 30 ), rX: 0, rY: -pi05 + ran( 0.5 ) - 0.25, rZ: 0 } );
-		screwdriver.userData.places.push( { pX: origin.x - 20, pY: origin.y -0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: 30 + ran( -25 ), pY: screwdriver.userData.radiusHandle, pZ: ran( 30 ), rX: 0, rY: -pi05 + ran( 0.5 ) - 0.25, rZ: 0, ms: 3000, eP: 'Bounce', eR: 'Bounce' } );
 
 
 		components.push( screwdriver );
@@ -303,7 +295,7 @@
 
 		createClips();
 
-		tweenAllToLocation(0); // mm-r1.js
+		returnAllToStartTween(); // mm-r1.js
 
 	}
 
@@ -360,6 +352,8 @@
 		];
 
 	}
+
+
 
 	function onWindowResize() {
 

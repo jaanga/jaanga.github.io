@@ -2,7 +2,7 @@
 <html >
 <head>
 <meta charset=utf-8 >
-<title>Three.js Examples Rover R1</title>
+<title>Three.js Examples Rover R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -15,20 +15,18 @@
 	var renderersLimit = 3;
 	var viewsLimit = 32;
 
-
 	var topics;
 	var views;
 
 	var defaultFile = '../readme.md';
 
 	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
-	var url = 'https://api.github.com/repos/mrdoob/three.js/contents/examples/';
+	var urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples/';
+	var urlThreejs = 'http://mrdoob.github.io/three.js/examples/';
+
 	var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
-
-	var urlThreejs = 'http://mrdoob.github.io/three.js/examples/'
 // logo from view-source:http://mrdoob.github.io/three.js/docs/
-
 	var logo = [
 		'    __     __',
 		' __/ __\\  / __\\__   ____   _____   _____',
@@ -46,9 +44,9 @@
 		<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br> 
 		<a class=aa  href=""  ><pre style=font-size:6pt; >${ logo }</pre></a>
 		<h2>
-			<a class=aa href="" >Examples Rover R1</a>
+			<a class=aa href="" >Examples Rover R2</a>
 		</h2>
-		<p><a href=#readme.md >Read Me</a></p>
+		<p><a href=#${ defaultFile } >Read Me</a></p>
 		<div id=list ></div>
 `;
 
@@ -68,16 +66,16 @@
 
 			* { box-sizing: border-box; }
 			html { height: 100%; }
-			body { font: 12pt monospace; margin: 0; }
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+			body { font: 12pt monospace; margin: 0; overflow: hidden;}
+			button { background-color: #eee; border: 0px #eee solid; color: #888; cursor: pointer;  }
 			p { margin: 0 10px; text-indent: -10px; }
 			.aa { text-decoration: none; }
 			.divView { border: 0px solid red; width: 96%; height:512px; }
 			.ifr { border: 0px solid green; height: 100%; width: 100%; }
 
-			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 20px; padding: 10px; position: absolute; }
-			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; overflow: auto; padding: 0 20px; position: absolute; }
-			#content { border-width: 0px; height: 100%; left: 330px; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
+			#button{ background-color: silver; top: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
+			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; overflow: auto; padding: 0 0 0 10px; position: absolute; }
+			#content { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
 			#ifr { border-width: 0px; height: 96%; margin: 0; width: 96%; }
 `;
 
@@ -122,7 +120,9 @@
 
 		} else {
 
-			content.innerHTML = '<iframe src=' + urlThreejs + fileName + ' id=ifr ></iframe>';
+//			content.innerHTML = '<iframe src=' + urlThreejs + fileName + ' id=ifr ></iframe>';
+
+			scrollView( fileName );
 
 			button.style.display = '';
 
@@ -159,7 +159,7 @@
 		var topicOrder = ['webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
 
 		var xhr = new THREE.XHRLoader();
-		xhr.load( url, onLoad ) ;
+		xhr.load( urlAPI, onLoad ) ;
 
 		function onLoad( response ) {
 
@@ -198,17 +198,20 @@
 
 					var fileName = topic[ j ];
 					var id = fileName.replace( '.html', '')
-					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
+					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,'/ ' );
 
 					text += `
-						<p><a class=aa id=${ id } href=#${ fileName } > ${ title }</a>
-						<a class=aa href=${urlThreejs}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
+						<p>
+							<a class=aa id=mnu_${ fileName } href=#${ fileName } > ${ title }</a>
+							<a class=aa href=${urlThreejs}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
 						</p>\n
 					`;
 
 				}
 
 			}
+
+//						<a class=aa id=${ fileName } href=#${ fileName } > ${ title }</a>
 
 			menu.innerHTML += text;
 
@@ -226,7 +229,7 @@
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 
 					text += `
-						<div id=ifr-${ i }-${ j } class=divView  ></div>
+						<div id=${ id } class=divView  ></div>
 						<h3>${ title }</h3>
 
 					`;
@@ -239,7 +242,24 @@
 
 			views = document.getElementsByClassName( 'divView' );
 
+			scrollView();
+
+
+
 		}
+
+	}
+
+	function scrollView( fileName ) {
+//console.log( '', topicsNumber, topicNumber );
+
+
+		var topicsNumber = topicsNumber ? topicsNumber : 0; // Math.floor( Math.random() * topics.length );
+		var topic = topics[ topicsNumber ];
+		var topicNumber = topicNumber ? topicNumber : Math.floor( Math.random() * topic.length );
+
+		fileName = fileName ? fileName : topics[ 0 ][ topicNumber ]
+		views[ fileName.replace( '.html', '') ].scrollIntoView();
 
 	}
 
@@ -257,10 +277,8 @@
 		if ( view.innerHTML === '' ) {
 
 			var id = view.id;
-			var i = id.substr( 4, 1 );
-			var j = id.substr( 6 );
 
-			view.innerHTML = `<iframe src=${ urlThreejs + topics[ i ][ j ] } class=ifr  ></iframe>`;
+			view.innerHTML = `<iframe src=${ urlThreejs + view.id } class=ifr  ></iframe>`;
 
 			renderers.push( view );
 
