@@ -85,7 +85,7 @@
 
 			lines = response.split(/\r\n|\n/);
 
-			text = `<h2>${ files[ index ].name } </h2>`;
+			text = `<h2><a href=${ urlRaw + files[ index ].name }  >${ files[ index ].name }<a></h2>`;
 
 			for ( var i = 0; i < lines.length; i++ ) {
 
