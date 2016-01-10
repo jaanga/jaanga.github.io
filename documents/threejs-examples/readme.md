@@ -11,9 +11,9 @@ _Follow Mr.doob: The aim of the project is to create a lightweight 3D library wi
 <br>
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
-~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
 ~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 ~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
+~ [All of It]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-html-jaanga/viewer-html-jaanga-r1.html ) 
 
 ***
 
@@ -23,9 +23,12 @@ _Follow Mr.doob: The aim of the project is to create a lightweight 3D library wi
 
 ### [Three.js Examples Rover R2 - Full Screen - Dev]( ./threejs-examples-rover/dev/index.html )
 
+* Tries to break new ground with the user experience of viewing Three.js example files
+
 
 ### [Three.js Examples Viewer R4 - Full Screen - Dev]( ./threejs-examples-viewer/dev/index.html )
 
+* Tracks closely the features in [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
 <!--
 
 
@@ -67,6 +70,9 @@ This is part of an attempt to build a simpler file viewer.
 
 ## Features
 
+
+### Three.js Examples Rover
+
 * Displays HTML and Markdown files
 * Menu and contents scroll independently
 * Menu element displays all Three.js example files organized by category
@@ -81,6 +87,8 @@ This is part of an attempt to build a simpler file viewer.
 	* 1 finger / left button >> rotate
 	* 2 finger / wheel >> zoom in and out
 	* 3 finger / right button >> pan
+
+
 
 
 ## Issues
