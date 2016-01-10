@@ -74,15 +74,16 @@ This is part of an attempt to build a simpler file viewer.
 ### Three.js Examples Rover
 
 * Displays HTML and Markdown files
+	* Displays a randomly selected file on load
 * Menu and contents scroll independently
 * Menu element displays all Three.js example files organized by category
-	* Clicking a menu item scrolls into view the selected fil
-	* Menu item icons open file in new tab/window
+	* Clicking a menu item scrolls into view the selected file
+	* Menu items icons open file in new tab/window
 * Content element displays scrolling view of all the example files
 	* Bypasses browser limit of maximum sixteen open WebGL views
 	* Creates renderers when views are visible
 	* Discards renderers when view are not visible
-* View source button displays when HTML file is loaded 
+* View source button displays at top right when HTML file is loaded 
 * Zoom, pan and rotate
 	* 1 finger / left button >> rotate
 	* 2 finger / wheel >> zoom in and out
