@@ -14,6 +14,7 @@
 
 	var files;
 	var keys;
+	var index = 0;
 
 	var css, menu;
 
@@ -48,7 +49,7 @@
 
 	}
 
-	function requestFileNemes() {
+	function requestFileNames() {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
@@ -100,7 +101,7 @@
 
 			info.innerHTML += text;
 
-			if ( ++index < keys.length ) { requestFile2(); }
+			if ( ++index < keys.length ) { requestFiles(); }
 
 		}
 
