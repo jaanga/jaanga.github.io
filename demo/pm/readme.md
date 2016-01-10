@@ -9,7 +9,7 @@ PM Read Me
 
 _2016-01-09_
 
-[Get Sage Function Nemes]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r1.html )
+[Get Sage Function Names]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r1.html )
 
 * See <https://github.com/sagemath/sage/tree/master/src/sage/functions>
 * Gets data from master branch, but could get from develop branch
