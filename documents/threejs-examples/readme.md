@@ -35,7 +35,7 @@ _Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/ma
 ### Sample Web Page / Source Code
 
 <iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-examples/threejs-examples-viewer/threejs-examples-viewer-r5.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
+###### _Three.js Examples Viewer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-examples/threejs-examples-viewer/threejs-examples-viewer-r5.html )
 
 
 ## Concept
@@ -93,8 +93,6 @@ This is part of an attempt to build a simpler file viewer.
 	* 1 finger / left button >> rotate
 	* 2 finger / wheel >> zoom in and out
 	* 3 finger / right button >> pan
-
-
 
 
 ## Issues

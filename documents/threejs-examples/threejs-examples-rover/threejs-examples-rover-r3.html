@@ -70,13 +70,15 @@
 
 			.aa { text-decoration: none; }
 			.divView { border: 0px solid red; width: 100%; height:512px; }
-			.ifr { border: 0px solid green; height: 100%; width: 100%; }
+			.ifrView { border: 0px solid green; height: 100%; width: 100%; }
+			.md { margin: 20px; max-width: 1000px; overflow: auto; }
 
 			#button{ background-color: silver; top: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
-			#ifr { border-width: 0px; height: 96%; margin: 0; width: 100%; }
+//			#ifr { border-width: 0px; height: 96%; margin: 0; width: 100%; }
 			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 			#menu p { margin: 0 10px; text-indent: -10px; }
+
 `;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
@@ -101,8 +103,6 @@
 
 		requestThreejsFileNames();
 
-//		onHashChange();
-
 	}
 
 	function onHashChange() {
@@ -120,8 +120,6 @@
 
 		} else {
 
-//			content.innerHTML = '<iframe src=' + urlThreejs + fileName + ' id=ifr ></iframe>';
-
 			scrollView( fileName );
 
 			button.style.display = '';
@@ -135,7 +133,7 @@
 
 		function onLoad( text ) {
 
-			content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
+			content.innerHTML = '<div class=md >' + converter.makeHtml( text ) + '</div>';
 
 			button.style.display = 'none';
 
@@ -155,6 +153,7 @@
 		var raytracing = [];
 		var software = [];
 		var svg = [];
+
 		topics = [ webgl, webglAdvanced, vr, css3d, css3dStereo, misc, canvas, raytracing, software, svg ];
 		var topicOrder = ['webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
 
@@ -163,32 +162,28 @@
 
 		function onLoad( response ) {
 
-			lines = response.split(/\r\n|\n/);
+			var files = JSON.parse( response );
 
-// tt = eval( response );
+			var keys = Object.keys( files );
 
-			for ( var i = 0; i < lines.length; i++ ) {
+			for ( var key in keys ) {
 
-				line = lines[ i ];
+				var fileName = files[ key ].name;
 
-				if ( line.indexOf( '"name"' ) > -1 && line.indexOf( '.html' ) > -1 && line.indexOf( 'index.html' ) === -1 ) {
+				if ( fileName.substr( -5 ) !== '.html' || fileName === 'index.html') { continue; };
 
-					var fileName = line.substr( 13, line.length - 15 );
+				var topic = fileName.split( '_' ).shift();
+				var index = topicOrder.indexOf( topic );
 
-					var topic = fileName.split( '_' );
-					topic = topic.shift();
-					var index = topicOrder.indexOf( topic );
+				if ( fileName.indexOf( 'webgl_buffergeometry' ) > -1 || fileName.indexOf( 'webgl_custom' ) > -1 ) index = 1;
+				if ( fileName.indexOf( 'css3dstereo' ) > -1 ) index = 4;
 
-					if ( fileName.indexOf( 'webgl_buffergeometry' ) > -1 || fileName.indexOf( 'webgl_custom' ) > -1 ) index = 1;
-					if ( fileName.indexOf( 'css3dstereo' ) > -1 ) index = 4;
-
-					topics[ index ].push( fileName );
-
-				}
+				topics[ index ].push( fileName );
 
 			}
 
 			var text = '';
+
 			for ( i = 0; i < topics.length; i++ ) {
 
 				topic = topics[ i ];
@@ -201,7 +196,8 @@
 					var id = fileName.replace( '.html', '')
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,'/ ' );
 
-					text += `
+					text += 
+					`
 						<p>
 							<a class=aa id=mnu_${ fileName } href=#${ fileName } > ${ title }</a>
 							<a class=aa href=${urlThreejs}${ fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
@@ -212,24 +208,25 @@
 
 			}
 
-//						<a class=aa id=${ fileName } href=#${ fileName } > ${ title }</a>
-
 			menu.innerHTML += text;
 
 			text = '';
+
 			for ( i = 0; i < topics.length; i++ ) {
 
 				topic = topics[ i ];
 
 				text += `<h2>${ topicOrder[ i ] }</h2>`;
 
-				for ( var j = 0; j < topic.length; j++ ) {
+				for ( j = 0; j < topic.length; j++ ) {
 
 					var fileName = topic[ j ];
 					var id = fileName.replace( '.html', '')
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 
-					text += `
+					text += 
+					`
+
 						<div id=${ id } class=divView  ></div>
 						<h3>${ title }</h3>
 
@@ -245,20 +242,17 @@
 
 			scrollView();
 
-
-
 		}
 
 	}
 
 	function scrollView( fileName ) {
-//console.log( '', topicsNumber, topicNumber );
 
 		var topicsNumber = topicsNumber ? topicsNumber : 0; // Math.floor( Math.random() * topics.length );
 		var topic = topics[ topicsNumber ];
 		var topicNumber = topicNumber ? topicNumber : Math.floor( Math.random() * topic.length );
 
-		fileName = fileName ? fileName : topics[ 0 ][ topicNumber ]
+		var fileName = fileName ? fileName : topics[ 0 ][ topicNumber ]
 		views[ fileName.replace( '.html', '') ].scrollIntoView();
 
 	}
@@ -278,7 +272,7 @@
 
 			var id = view.id;
 
-			view.innerHTML = `<iframe src=${ urlThreejs + view.id } class=ifr  ></iframe>`;
+			view.innerHTML = `<iframe src=${ urlThreejs + view.id } class=ifrView  ></iframe>`;
 
 			renderers.push( view );
 
