@@ -140,7 +140,6 @@ console.log( '', frame, indexFrame );
 
 		for ( var i = 0; i < frame.length; i++ ) {
 
-
 			var item = frame[ i ];
 
 			obj = item[ 0 ];
@@ -151,6 +150,7 @@ console.log( '', frame, indexFrame );
 			if ( obj.name === 'camera' ) {
 
 console.log( 'camera', obj );
+
 				tweenCamera( obj, index, tweenFrame, indexFrame );
 
 			} else if ( obj.name === 'pencilLine' ) {
