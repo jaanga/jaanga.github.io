@@ -7,11 +7,23 @@ value='You are now in a GitHub web page view - Click this button to view this re
 PM Read Me
 ===
 
+_2016-01-10_
+
+[Get Sage Function Names R2]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r2.html )
+
+* Reads both 'master' and 'develop' branches and displays results from both side-by-side
+* links to both source files in theor respective branches
+* Adds output with the size in bytes of each file
+* Adds listing of all the def's in a file except for 'def __init__(self)'
+* Code clean-up
+	* uses JSON.parse instead of eval
+
 _2016-01-09_
 
-[Get Sage Function Names]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r1.html )
+[Get Sage Function Names R1]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r1.html )
 
 * See <https://github.com/sagemath/sage/tree/master/src/sage/functions>
+* Displays results with link to source file
 * Gets data from master branch, but could get from develop branch
 
 
