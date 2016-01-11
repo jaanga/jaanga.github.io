@@ -33,7 +33,7 @@
 		`
 
 			body { font: 12pt monospace; margin: 0; overflow: auto; }
-			h2, a { margin: 0; }
+			#menu h2, a { margin: 0; }
 			#aa { text-decoration: none; }
 			#menu { margin: 0 20px; position: absolute; }
 			#list1, #list2 { border: 1px black solid; display: inline-block; float: left; max-width: 40%; margin: 10px; padding: 20px;}
@@ -123,6 +123,9 @@
 				}
 
 			}
+
+			text += '<br><br>';
+
 			element.innerHTML += text;
 
 			if ( ++index < keys.length ) { 
