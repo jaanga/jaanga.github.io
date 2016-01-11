@@ -6,7 +6,7 @@ Three.js Examples Read Me
 ===
 
 
-_Follow Mr.doob: The aim of the project is to create a lightweight 3D library with a very low level of complexity — in other words, for dummies._
+_Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/master/README.md ): The aim of the project is to create a lightweight 3D library with a very low level of complexity — in other words, for dummies._
 
 <br>
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
@@ -21,24 +21,22 @@ _Follow Mr.doob: The aim of the project is to create a lightweight 3D library wi
 
 ##Overview
 
-### [Three.js Examples Rover R2 - Full Screen - Dev]( ./threejs-examples-rover/dev/index.html )
+### [Three.js Examples Rover - Full Screen - Dev]( http://jaanga.github.io/documents/threejs-examples/threejs-examples-rover/dev/index.html )
 
 * Tries to break new ground with the user experience of viewing Three.js example files
 
 
-### [Three.js Examples Viewer R4 - Full Screen - Dev]( ./threejs-examples-viewer/dev/index.html )
+### [Three.js Examples Viewer - Full Screen - Dev]( http://jaanga.github.io/documents/threejs-examples/threejs-examples-viewer/dev/index.html )
 
 * Tracks closely the features in [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
-<!--
+	* But does load a random example on load
 
-
-### [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 ### Sample Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html width=100% height=600px ></iframe>  
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-examples/threejs-examples-viewer/threejs-examples-viewer-r5.html width=100% height=600px ></iframe>  
 ###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
--->
+
 
 ## Concept
 
@@ -52,6 +50,13 @@ Each pattern describes a problem which occurs over and over again in our environ
 patterns are descriptions of common problems and proposal for the solutions that can be used repeatedly every time the problem is encountered and producing an different outcome.
 
 -->
+
+There are a number of with creating an easy to view catalog of animated 3D web pages.
+
+The usual fashion is to create 2D thumbnails of the 3D pages. Using 2D to represent 3D is an admission of some sort of failure.
+Using 2D to reprsent 3D begs the question: If 3D is so good, why don't you use 3D?
+
+
 
 
 ### Mission

@@ -14,6 +14,7 @@
 
 	var urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples/';
 	var urlThreejs = 'http://mrdoob.github.io/three.js/examples/';
+
 	var topics;
 
 // logo from view-source:http://mrdoob.github.io/three.js/docs/
@@ -33,9 +34,9 @@
 
 `
 		<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br>
-		<a class=aa  href=""  ><pre>${ logo }</pre></a>
+		<a class=aa href="" ><pre>${ logo }</pre></a>
 		<h2>
-			<a class=aa href="" >Examples Viewer R5</a>
+			<a class=aa href="" >${ document.title }</a>
 		</h2>
 		<p><a href=#${ defaultFile } >Read Me</a></p>
 
@@ -57,10 +58,12 @@
 			* { box-sizing: border-box; }
 			html { height: 100%; }
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 			p { margin: 0 10px; text-indent: -10px; }
 			pre { font-size: 6pt; }
 
 			.aa { text-decoration: none; }
+			.md { margin: 20px; max-width: 1000px; overflow: auto; }
 
 			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 20px; padding: 10px; position: absolute; }
 			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; padding: 0 0 0 20px; overflow: auto; position: absolute; }
@@ -120,7 +123,7 @@
 
 		function onLoad( text ) {
 
-			content.innerHTML = `<div style=max-width:800px; >${ converter.makeHtml( text ) }</div>`;
+			content.innerHTML = `<div class=md  >${ converter.makeHtml( text ) }</div>`;
 
 			button.style.display = `none`;
 
