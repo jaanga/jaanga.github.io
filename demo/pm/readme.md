@@ -16,7 +16,9 @@ _2016-01-10_
 * Adds output with the size in bytes of each file
 * Adds listing of all the def's in a file except for 'def __init__(self)'
 * Code clean-up
-	* uses JSON.parse instead of eval
+	* Uses JSON.parse instead of eval
+	* Display format improvements 
+	* Could be used to compare files from any two branches
 
 _2016-01-09_
 

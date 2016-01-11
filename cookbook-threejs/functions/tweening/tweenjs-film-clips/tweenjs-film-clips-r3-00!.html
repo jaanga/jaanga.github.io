@@ -21,10 +21,10 @@
 <script>
 
 	var easings;
-	var duration = 1500;
+	var duration = 500;
 
-	var indexFrame;
-	var indexObject;
+	var indexFrame = 0;
+	var indexObjects = 0;
 
 	var objectsCount = 8;
 	var framesDefault = 5;
@@ -87,15 +87,14 @@
 			<p><button onclick=tweenAllToLocation(); >return to start</button></p>
 			<p><button onclick=tweenAllToLocation(frames-1); >go to end</button></p>
 			<p>frame: <input type=range id=inpFrame max=${ frames - 1 } min=0 step=1 value=0 
-				oninput=tweenAllToLocation(inpFrame.valueAsNumber); > 
-				<output id=outFrame >0</output></p>
+				oninput=tweenAllToLocation(inpFrame.valueAsNumber); title="0 to 10: OK" > 
+				<output id=outFrame >value</output></p>
 
 			<p><button onclick=setRandomPlaces(); >set random places</button></p>
 			<p><button onclick=initTweenClipAllPlaces(); >tween clip all places</button></p>
 			<p><input type=checkbox id=chkClip1 onchange=togglePlayClip(playClip1,chkClip1); > tween clip 1</p>
 			<p><input type=checkbox id=chkClip2 onchange=togglePlayClip(playClip2,chkClip2); > tween clip 2</p>
 			<p><input type=checkbox id=chkClip3 onchange=togglePlayClip(playClip3,chkClip3); > tween clip 3</p>
-			<p><input type=checkbox id=chkClip4 onchange=togglePlayClip(playClip4,chkClip4); > tween clip 4</p>
 
 			<div id=info ></div>
 
@@ -169,13 +168,12 @@
 
 		}
 
-		setPlacesRandom();
-		setClipsDefined();
-		setClipsRandom();
+		setRandomPlaces();
+		createClipScript();
 
 	}
 
-	function setPlacesRandom() {
+	function setRandomPlaces() {
 
 		frames = framesDefault;
 
@@ -197,7 +195,7 @@
 					rX: Math.random() * pi,
 					rY: Math.random() * pi,
 					rZ: Math.random() * pi,
-//					ms: Math.random() * 3000,
+					ms: Math.random() * 3000,
 					eP: ePosType, 
 					eR: eRotType 
 				};
@@ -229,15 +227,14 @@
 	}
 
 
-	function setClipsDefined() {
+	function createClipScript() {
 
 		playClip1 = [
 
 			[ [ objects[ 0 ], 0 ], [ camera, 1 ]  ],
 			[ [ objects[ 0 ], 1 ], [ objects[ 3 ], 0 ], [ camera, 2 ] ],
 			[ [ objects[ 0 ], 2 ], [ camera, 3 ]  ],
-			[ [ objects[ 0 ], 3 ] ],
-			[ [ objects[ 0 ], 4 ], [ objects[ 2 ], 0 ] ]
+			[ [ objects[ 0 ], 3 ] ]
  
 		];
 
@@ -261,31 +258,42 @@
 
 	}
 
+/*
+	function tweenSelect( index, onComplete ) {
 
-	function setClipsRandom() {
+		var index = index ? index : 0;
+		var onComplete = onComplete ? onComplete : function(){};
 
-		playClip4 = [];
+		for ( var i = 0; i < objects.length; i++ ) {
 
-		for ( var i = 0; i < frames; i++ ) {
+			object = objects[ i ];
 
-			arr = [];
+			if ( object.userData.places.length && object.userData.places[ index ] && object.userData.places[ index ].fr === index ) {
 
-			for ( var j = 0; j < objects.length; j++ ) {
+console.log( 'tweenSelect', i, object.userData, index );
 
-				object = objects[ i ];
-				arr.push( [ object, i, 1500 ] );
+				tween2location( object, object.userData.places[ index ], onComplete, index );
+
+			} else {
+
+				indexObjects++;
 
 			}
 
-			arr.push( [ camera, i, 1500 ] );
+		}
 
-			playClip4.push( arr )
+		if ( camera.userData.places[ index ] && camera.userData.places[ index ].fr === index ) {
+
+//			tweenCamera( camera, index );
 
 		}
 
-console.log( 'clip', playClip4 );
+		inpFrame.value = outFrame.value = index;
 
 	}
+
+*/
+
 	function initTweenClipAllPlaces( indexFrame ) {
 
 		if ( indexFrame < frames && indexObjects === 0 ) {
@@ -311,11 +319,9 @@ console.log( 'clip', playClip4 );
 
 		}
 
-//console.log( 'tweenAllToLocation', index, camera.userData.places[ index ] );
+console.log( 'tweenAllToLocation', index, camera.userData.places[ index ] );
 
 		tweenCamera( camera, camera.userData.places[ index ] );
-
-		outFrame.value = index;
 
 	}
 
@@ -325,19 +331,19 @@ console.log( 'clip', playClip4 );
 		clip = theClip;
 		check = checkbox;
 
-		if ( !indexFrame || indexFrame === 0 ) {
+		if ( checkbox.checked === false ) { return; }
+
+		if ( indexFrame === 0 ) {
 
 			tweenAllToLocation(0);
 
-			tweenFrame();
+			tweenFrame( indexFrame );
 
 		} else if ( indexFrame < clip.length ) {
 
-			tweenFrame();
+			tweenFrame( indexFrame );
 
 		} else {
-
-console.log( 'should never get here...', indexFrame, indexObject );
 
 			checkbox.checked = false;
 			indexFrame = 0;
@@ -346,75 +352,48 @@ console.log( 'should never get here...', indexFrame, indexObject );
 
 	}
 
-	function tweenFrame( indexObject ) {
+// need to count objects...
+
+	function tweenFrame( indexFrame ) {
 
 		indexFrame = indexFrame ? indexFrame : 0;
-		indexObject = indexObject ? indexObject : 0;
 
-		if ( clip[ indexFrame ] && indexObject > clip[ indexFrame ].length ) {
+		if ( indexFrame >= clip.length ) { check.checked = false; return; }
 
-			indexObject = 0;
-			indexFrame++;
+		frame = clip[ indexFrame ];
 
-			outFrame.value = inpFrame.value = indexFrame;
+console.log( 'tweenFrame', indexFrame );
 
-			info.innerHTML = 'frame: ' + indexFrame + ' objects: ' + clip[ indexFrame ].length ;
+		for ( var i = 0; i < frame.length; i++ ) {
 
-		}
+			var item = frame[ i ];
 
-		if ( indexFrame >= clip.length) { 
+			obj = item[ 0 ];
+			var indexLocation = item[ 1 ];
+			var ms = item[ 2 ] ? item[ 2 ] : duration;
 
-//console.log( 'the end', indexFrame, indexObject );
+			if ( obj.name === 'camera' ) {
 
-			check.checked = false;
-			indexFrame = 0;
+console.log( 'camera', obj );
 
-			return; 
+				tweenCamera( obj, obj.userData.places[ indexLocation ], tweenFrame, indexFrame );
 
-		} 
+			} else if ( obj.name === 'pencilLine' ) {
 
-		if ( check.checked === false ) { return ; }
+// console.log( 'pencil line', obj );
 
-// console.log( 'tweenFrame', indexFrame, indexObject );
+//				drawPencilLine( oud[ indexLocation ][ 0 ], oud[ indexLocation + 1 ][ 0 ] );
+//				itemCount++;
 
-		if ( indexObject === 0 ) {
+			} else {
 
-			frame = clip[ indexFrame ];
+//console.log( ' else doit', obj.name );
 
-			for ( var i = 0; i < frame.length; i++ ) {
-
-				var item = frame[ i ];
-
-				obj = item[ 0 ];
-				var indexLocation = item[ 1 ];
-				obj.ms = item[ 2 ] ? item[ 2 ] : duration;
-				var oud = obj.userData.places[ indexLocation ];
-
-				if ( obj.name === 'camera' ) {
-
-//console.log( 'camera' );
-
-					tweenCamera( obj, oud, tweenFrame, indexObject );
-
-				} else if ( obj.name === 'pencilLine' ) {
-
-//console.log( 'pencil line');
-
-//					drawPencilLine( oud[ indexLocation ][ 0 ], oud[ indexLocation + 1 ][ 0 ] );
-
-				} else {
-
-//console.log( 'else doit' );
-
-					tween2location( obj, oud, tweenFrame, indexObject );
-
-				}
+				oud = obj.userData.places[ indexLocation ];
+				oud.ms = ms;
+				tween2location( obj, oud, tweenFrame, indexFrame );
 
 			}
-
-		} else {
-
-			tweenFrame( ++indexObject );
 
 		}
 
@@ -422,10 +401,9 @@ console.log( 'should never get here...', indexFrame, indexObject );
 
 	function tween2location( obj, p, onComplete, index ) {
 
-console.log( 'tween2location', p );
 		p.eP = p.eP ? p.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
 		p.eR = p.eR ? p.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		p.ms = p.ms ? p.ms : 5000;
+		p.ms = p.ms ? p.ms : 1000;
 
 		p.pX = p.pX ? p.pX : 0;
 		p.pY = p.pY ? p.pY : 0;
@@ -439,7 +417,7 @@ console.log( 'tween2location', p );
 		var onComplete = onComplete ? onComplete : function(){};
 
 		new TWEEN.Tween( obj.position )
-		.to( { x: p.pX, y: p.pY, z: p.pZ }, p.ms )
+		.to( {x: p.pX, y: p.pY, z: p.pZ }, p.ms )
 		.easing( TWEEN.Easing[ p.eP ].InOut )
 		.start();
 
@@ -453,6 +431,7 @@ console.log( 'tween2location', p );
 
 	function tweenCamera( camera, c, onComplete, index  ) {
 
+console.log( 'tc', c );
 		c.eP = c.eP ? c.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
 		c.eR = c.eR ? c.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
 		c.ms = c.ms ? c.ms : 1000;
@@ -464,6 +443,8 @@ console.log( 'tween2location', p );
 		c.tX = c.tX ? c.tX : 0;
 		c.tY = c.tY ? c.tY : 0;
 		c.tZ = c.tZ ? c.tZ : 0;
+
+
 
 		var index = index ? index : 0;
 		var onComplete = onComplete ? onComplete : function(){};
