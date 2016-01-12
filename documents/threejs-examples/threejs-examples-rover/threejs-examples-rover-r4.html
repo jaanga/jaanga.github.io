@@ -1,0 +1,343 @@
+﻿<!doctype html>
+<html >
+<head>
+<meta charset=utf-8 >
+<title>Examples Rover R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js ></script>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	var defaultFile = '../readme.md';
+
+	var urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+	var urlReleases = 'https://api.github.com/repos/mrdoob/three.js/tags?page=1&per_page=100';
+	var urlThreejs = 'http://mrdoob.github.io/three.js/examples/';
+	var urlThreejs = 'https://raw.githubusercontent.com/mrdoob/three.js/';
+	var views = [];
+	var renderers = [];
+
+	var renderersLimit = 3;
+	var viewsLimit = 32;
+
+	var topics;
+	var converter, content;
+	var previousFile = '';
+
+// logo from view-source:http://mrdoob.github.io/three.js/docs/
+	var logo = [
+		'    __     __',
+		' __/ __\\  / __\\__   ____   _____   _____',
+		'/ __/  /\\/ /  /___\\/ ____\\/ _____\\/ _____\\',
+		'\\/_   __/ /   _   / /  __/ / __  / / __  /_   __   _____',
+		'/ /  / / /  / /  / /  / / /  ___/ /  ___/\\ _\\/ __\\/ _____\\',
+		'\\/__/  \\/__/\\/__/\\/__/  \\/_____/\\/_____/\\/__/ /  / /  ___/',
+		'                                         / __/  /  \\__  \\',
+		'                                         \\/____/\\/_____/'
+	].join('\n');
+
+	var menuHeader =
+`
+
+		<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br> 
+		<a class=aa href="" ><pre>${ logo }</pre></a>
+		<h2>
+			<a class=aa href="" >${ document.title }</a>
+		</h2>
+		<p><a href=#${ defaultFile } >Read Me</a><br></p>
+		<br>
+		<p><select id=selTag onchange=requestThreejsFileNames(selTag.value); ></select></p>
+		<p id=menuItems ></p>
+
+`;
+
+	init();
+	animate();
+
+	function init() {
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+`
+
+			* { box-sizing: border-box; }
+			html { height: 100%; }
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden;}
+			button { background-color: #eee; border: 0px #eee solid; color: #888; cursor: pointer;  }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+			pre { font-size: 6pt; }
+
+			.aa { text-decoration: none; }
+			.divView { border: 0px solid red; width: 100%; height:512px; }
+			.ifrView { border: 0px solid green; height: 100%; width: 100%; }
+			.md { margin: 20px; max-width: 1000px; overflow: auto; }
+
+			#button{ background-color: silver; top: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
+			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
+//			#ifr { border-width: 0px; height: 96%; margin: 0; width: 100%; }
+			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; }
+			#menu p { margin: 0 10px; text-indent: -10px; }
+
+`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = menuHeader;
+
+		content = document.body.appendChild( document.createElement( 'div' ) );
+		content.id = 'content';
+
+		var button = document.body.appendChild( document.createElement( 'div' ) );
+		button.id = 'button';
+		button.textContent = 'View source';
+		button.style.display = 'none';
+		button.onclick = function() {
+
+			window.open( 'view-source:' + urlThreejs + selTag.value + '/examples/' + fileName );
+
+		}
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+		requestThreejsReleases();
+
+		requestThreejsFileNames();
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash.split( '#' );
+
+		fileName = hashes[ 1 ] ? hashes[ 1 ] : defaultFile;
+
+		document.title = fileName.split( '/' ).pop();
+
+		if ( fileName.substr( -3 ) === '.md' ) {
+
+			var xhr = new THREE.XHRLoader();
+			xhr.load( fileName, onLoad ) ;
+
+		} else {
+
+			scrollView( fileName );
+
+			button.style.display = '';
+
+			if ( previousFile.style ) { previousFile.style.color = ''; }
+			file = document.getElementById( fileName.replace( '.html', '') );
+			file.style.color = 'red';
+			previousFile = file;
+
+		}
+
+		function onLoad( text ) {
+
+			content.innerHTML = '<div class=md >' + converter.makeHtml( text ) + '</div>';
+
+			button.style.display = 'none';
+
+		}
+
+	}
+
+	function requestThreejsReleases() {
+
+		var xhr = new THREE.XHRLoader();
+		xhr.load( urlReleases, onLoad );
+
+		function onLoad( response) {
+
+			tags = JSON.parse( response );
+
+			var keys = Object.keys( tags );
+
+			for ( var key in keys ) {
+
+				selTag.appendChild( document.createElement( 'option' ) );
+				selTag.children[ key ].text = tags[ key ].name;
+			}
+
+
+		}
+
+	}
+
+	function requestThreejsFileNames( tag ) {
+
+		tag = tag ? tag : 'r73';
+		var webgl = [];
+		var webglAdvanced = [];
+		var vr = [];
+		var css3d = [];
+		var css3dStereo = [];
+		var misc = [];
+		var canvas = [];
+		var raytracing = [];
+		var software = [];
+		var svg = [];
+		var uncategorized = [];
+		topics = [ webgl, webglAdvanced, vr, css3d, css3dStereo, misc, canvas, raytracing, software, svg, uncategorized ];
+		var topicOrder = ['webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg', 'uncategorized' ];
+
+		var xhr = new THREE.XHRLoader();
+		xhr.load( urlAPI + '?ref=' + tag, onLoad ) ;
+
+		function onLoad( response ) {
+
+			files = JSON.parse( response );
+
+			var keys = Object.keys( files );
+
+			for ( var key in keys ) {
+
+				var fileName = files[ key ].name;
+
+				if ( fileName.substr( -5 ) !== '.html' || fileName === 'index.html') { continue; };
+
+				var topic = fileName.split( '_' ).shift();
+				var index = topicOrder.indexOf( topic );
+
+				if ( fileName.indexOf( 'webgl_buffergeometry' ) > -1 || fileName.indexOf( 'webgl_custom' ) > -1 ) index = 1;
+				if ( fileName.indexOf( 'css3dstereo' ) > -1 ) index = 4;
+
+				if ( topics[ index ] ) {
+					topics[ index ].push( fileName );
+
+				} else {
+
+					topics[ 10 ].push( fileName );
+
+				}
+			}
+
+			var text = 'files: ' + files.length;
+
+			for ( i = 0; i < topics.length; i++ ) {
+
+				topic = topics[ i ];
+
+				text += `<h2>${ topicOrder[ i ] }</h2>`;
+
+				for ( var j = 0; j < topic.length; j++ ) {
+
+					var fileName = topic[ j ];
+					var id = fileName.replace( '.html', '')
+					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,'/ ' );
+
+					text += 
+					`
+						<p>
+							<a class=aa id=mnu_${ fileName } href=#${ fileName } > ${ title }</a>
+							<a class=aa href=${urlThreejs + selTag.value + '/examples/' + fileName } ><img src=http://upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png ></a>
+						</p>\n
+					`;
+
+				}
+
+			}
+
+			menuItems.innerHTML = text;
+
+			text = '';
+
+			for ( i = 0; i < topics.length; i++ ) {
+
+				topic = topics[ i ];
+
+				text += `<h2>${ topicOrder[ i ] }</h2>`;
+
+				for ( j = 0; j < topic.length; j++ ) {
+
+					var fileName = topic[ j ];
+					var id = fileName.replace( '.html', '')
+					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
+
+					text += 
+					`
+
+						<div id=${ id } class=divView  ></div>
+						<h3>${ title }</h3>
+
+					`;
+
+				}
+
+			}
+
+			content.innerHTML = text;
+
+			views = document.getElementsByClassName( 'divView' );
+
+			scrollView();
+
+		}
+
+	}
+
+	function scrollView( fileName ) {
+
+		var topicsNumber = topicsNumber ? topicsNumber : 0; // Math.floor( Math.random() * topics.length );
+		var topic = topics[ topicsNumber ];
+		var topicNumber = topicNumber ? topicNumber : Math.floor( Math.random() * topic.length );
+
+		var fileName = fileName ? fileName : topics[ 0 ][ topicNumber ]
+		views[ fileName.replace( '.html', '') ].scrollIntoView();
+
+	}
+
+	function updateView( view ) {
+
+		var iframes = document.getElementsByTagName( 'iframe' );
+
+		if ( iframes.length > renderersLimit ) {
+
+			var frame = renderers.shift();
+			frame.innerHTML = '';
+
+		}
+
+		if ( view.innerHTML === '' ) {
+
+			var id = view.id;
+
+			view.innerHTML = `<iframe src=${ urlThreejs + selTag.value + '/examples/' + view.id + '.html' } class=ifrView  ></iframe>`;
+
+			renderers.push( view );
+
+		}
+
+	}
+
+	function onWindowResize() {
+
+		content.style.width = ( window.innerWidth - 330 ) + 'px';
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < views.length; i++ ) {
+
+			var view = views[ i ];
+
+			rect = view.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			updateView( view );
+
+		}
+
+	}
+</script>
+</body>
+</html>
