@@ -7,6 +7,24 @@ value='You are now in a GitHub web page view - Click this button to view this re
 PM Read Me
 ===
 
+_2016-01-11_
+
+[Get Sage Names R1]( http://jaanga.github.io/demo/pm/get-sage-names/get-sage-names-r1.html )
+
+* Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively throght the sub-folders
+* Displays the lefy of file names in left menu column
+* Opens and reads the contents of every file
+* Caries out a simple line-by line search on the contents
+* Records and lists the search results in the right-side contents pane
+	* the name of each file is listed 
+	* the name is also a link to the original file
+	* Search results are listed under
+
+### Issues
+	* Takes over five minutes to complete
+	* Needs save output to file button
+
+
 _2016-01-10_
 
 [Get Sage Function Names R2]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r2.html )

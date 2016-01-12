@@ -16,6 +16,7 @@
 
 	var files;
 	var keys;
+	var tree
 	var index = 0;
 
 	var css, menu;
@@ -45,7 +46,8 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/demo/pm/index.html >🛈</a>
 			</h2>
-			<p id=folderNames ></p>
+			<p><button onclick=requestFiles(); >Request Files</button> <span id=filesRead ></span> </p>
+			<p id=fileNames ></p>
 			<div id=info ></div>
 
 		`;
@@ -54,13 +56,11 @@
 		content.id = 'content';
 
 
-		requestFolderNames();
-
-//		requestFileNames();
+		requestFileNames();
 
 	}
 
-	function requestFolderNames() {
+	function requestFileNames() {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open( 'GET', folderNames, true );
@@ -88,7 +88,6 @@
 
 			info.innerHTML = text;
 
-			requestFiles();
 //console.log( 'tree', tree );
 
 		}
@@ -126,6 +125,8 @@
 			}
 
 			content.innerHTML += text;
+
+			filesRead.innerHTML = 'read: ' + ( 1 + index );
 
 			if ( ++index < keys.length ) { requestFiles(); }
 
