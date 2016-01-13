@@ -85,15 +85,22 @@
 
 ## Tweening
 
-[Tween.js Film Clips R2]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r2.html )
+### [Tween.js Film Clips R5]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r4.html )
 
 * Tween position and rotation of multiple objects
-* 'Frame' data stored in the object
+* 'Frame' data stored in each the object
 * Multiple frame data points per object
 * Go to start, go to end, go to any frame
 * Generate multiple frame random location clip
-* Generate demo script
-* Every frame can have its own camera movement
+* Generate demo script or 'clips'
+	* Every clip has multiple frames
+	* Every frame can have multiple items
+	* Every frame can have its own camera movement
+	* Every frame can be used to create a new line
+
+[Tween.js Film Clips R2]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r2.html )
+
+
 
 
 [Tween.js Film Clips R1]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r1.html )

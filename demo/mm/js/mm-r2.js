@@ -332,8 +332,6 @@ console.log( '', obj.name );
 
 		}
 
-
-
 		function itemDispatch() {
 
 			if ( checkbox.checked === true ) { 
