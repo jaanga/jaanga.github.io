@@ -7,7 +7,21 @@ value='You are now in a GitHub web page view - Click this button to view this re
 PM Read Me
 ===
 
-_2016-01-11_
+
+_2016-01-12_
+
+[Sage Snooper R1]( /jaanga.github.io/demo/pm/get-sage-names/sage-snooper-r1.html )
+
+* Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively throght the sub-folders
+* Displays the list of all folder and file names found in left menu column
+* Opens. reads and display the contents of currently selected file
+	* Reads fies from both master and develop branch
+* Displays files using textarea
+	* Preserves new line and spacing
+	* But not a terribly good solution. Should invoke Ace editor or equivalent
+
+
+2016-01-11_
 
 [Get Sage Names R1]( http://jaanga.github.io/demo/pm/get-sage-names/get-sage-names-r1.html )
 
