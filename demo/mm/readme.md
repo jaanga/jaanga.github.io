@@ -28,6 +28,19 @@ _This is all still a work-in-progress. In particular: sounds and textures need m
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
+_2016-01-14_
+
+[Kallax Wall Bracket Basic R11]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r11.html )
+
+mm-tween-r1.js
+
+* Plays clips with tweening
+
+mm-object-r1.js
+
+* Draws various parts and tools
+
+
 _2016-01-02 & 2016-01-01 & 2015-12-29_
 
 [Kallax Wall Bracket Basic R8]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r8.html )
@@ -43,7 +56,7 @@ _2016-01-02 & 2016-01-01 & 2015-12-29_
 
 Coming soon? 
 
-* Screwdriver and screw rotating into fnal position
+* Screwdriver and screw rotating into final position
 * Rounde-headed screw and flat blade screwdriver 
 
 _2015-12-24_

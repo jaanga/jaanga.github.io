@@ -49,5 +49,6 @@ Every object records it possible locations ( position + rotation )
 Every clip decides which objects to use
 Every frame decides the tween time and which location and which easing to use for each object
 
+Move the camera then move the object is better than the reverse
 
 
