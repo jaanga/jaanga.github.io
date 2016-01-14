@@ -1,16 +1,6 @@
-﻿//	var rows, columns;
-
-//	var components = [];
-//	var holes = [];
-	var screws = [];
+﻿
+//	var screws = [];
 	var pegs = [];
-
-	// var playList;
-	// var frameIndex = 0;
-	// var itemCount = 0;
-	// var duration = 500;
-
-//	var pencilDrawClip;
 
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
@@ -82,9 +72,6 @@
 		hole.name = 'screw location' + screws.length;
 		hole.userData.screw = mesh;
 
-		screws.push( mesh );
-//		kallax.add( mesh );
-
 		return mesh;
 
 	}
@@ -108,7 +95,6 @@
 		hole.userData.peg = mesh;
 
 		pegs.push( mesh );
-//		kallax.add( mesh );
 
 		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
@@ -161,7 +147,7 @@
 
 		mesh.userData.places = [];
 		mesh.name = 'bracket115753';
-		components.push( mesh );
+		objects.push( mesh );
 
 		var line = buildKallaxWallBracketSide1Lines();
 		line.position.set( - widthCorner - 0.5 * widthLeaf1, -0.5 * heightBracket, - 0.5 * widthLeaf2 - widthCorner + thickness + 0.01 );
@@ -385,7 +371,7 @@
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'part103693';
 		mesh.userData.places = [];
-		components.push( mesh );
+		objects.push( mesh );
 
 		return mesh;
 

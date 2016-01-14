@@ -1,32 +1,9 @@
-﻿<!doctype html>
-<html lang=en >
-<head>
-<meta charset=utf-8 >
-<title>Template Three.js Basic R4</title>
-<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-</head>
-<body>
-
-<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
-<!--
-
-<script src=http://rawgit.com/tweenjs/tween.js/master/src/Tween.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-
--->
-<script>
-
+﻿
 	var easings;
 	var duration = 500;
 
 	var indexFrame;
 	var indexObject;
-
-	var pencil = { name: 'pencil', userData: { places: [ { ms: 500 } ] } };
 
 	var clip
 	var check;
@@ -35,146 +12,19 @@
 	var framesDefault = 5;
 	var frames = framesDefault;
 
-	startTime = Date.now();
-
-	var geometries = [
-
-		new THREE.BoxGeometry( 10, 10, 10 ),
-		new THREE.CylinderGeometry( 5, 5, 1, 12 ),
-		new THREE.DodecahedronGeometry( 05 ),
-		new THREE.SphereGeometry( 5, 12, 8 ),
-		new THREE.TorusGeometry( 10, 5 ),
-
-	];
-
 	var objects = [];
 
-	var pi = Math.PI;
-	var pi05 = 0.5 * pi;
-	var pi_05 = -0.5 * pi;
-	var pi2 = 2 * pi;
+	var easings = Object.keys( TWEEN.Easing );
 
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	var startTime = Date.now();
 
-	var css, menu, stats, renderer, scene, camera, controls;
-	var geometry, material, mesh;
+//	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
-	init();
-	animate();
+	var raycaster = new THREE.Raycaster();
+	var mouse = new THREE.Vector2();
 
-	function init() {
+	var audioContext = new AudioContext();
 
-		css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
-		`
-
-			body { font: 12pt monospace; margin: 0; overflow: hidden; }
-			h2 { margin: 0 }
-			#aa {text-decoration: none; }
-			#menu { margin: 0 20px; height: 100%; max-width: 300px; overflow: auto; position: absolute; }
-
-			button { background-color: #eee; border: 2px #eee solid; color: #888; }
-
-			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
-			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
-			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
-
-		`;
-
-		menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
-		menu.innerHTML = 
-		`
-
-			<h2>
-				<a href="" > ${ document.title }</a> 
-				<a id=aa href=http://jaanga.github.io/ >🛈</a>
-			</h2>
-			<p><button onclick=tweenAllToLocation(); >return to start</button></p>
-			<p><button onclick=tweenAllToLocation(frames-1); >go to end</button></p>
-			<p>frame: <input type=range id=inpFrame max=${ frames - 1 } min=0 step=1 value=0 
-				oninput=tweenAllToLocation(inpFrame.valueAsNumber); > 
-				<output id=outFrame >0</output></p>
-
-			<p><button onclick=setClipsRandom(); >set random places</button></p>
-			<p><button onclick=initTweenClipAllPlaces(); >tween clip all places</button></p>
-			<p><input type=checkbox id=chkClip1 onchange=togglePlayClip(playClip1,chkClip1); > tween clip 1</p>
-			<p><input type=checkbox id=chkClip2 onchange=togglePlayClip(playClip2,chkClip2); > tween clip 2</p>
-			<p><input type=checkbox id=chkClip3 onchange=togglePlayClip(playClip3,chkClip3); > tween clip 3</p>
-			<p><input type=checkbox id=chkClip4 onchange=togglePlayClip(playClip4,chkClip4); > tween clip 4</p>
-
-			<div id=info ></div>
-
-		`;
-
-		stats = new Stats();
-		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
-		document.body.appendChild( stats.domElement );
-
-		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
-		renderer.setClearColor( 0xfafafa );
-		renderer.setPixelRatio( window.devicePixelRatio );
-		renderer.setSize( window.innerWidth, window.innerHeight );
-		document.body.appendChild( renderer.domElement );
-
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
-		camera.name = 'camera';
-
-		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
-		controls.dampingFactor = 0.25;
-		controls.enableDamping = true;
-		controls.update();
-
-		scene = new THREE.Scene();
-
-		window.addEventListener( 'resize', onWindowResize, false );
-
-// helpers
-		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
-		scene.add( gridHelper );
-
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
-
-// assets
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
-
-
-		geometry = new THREE.BoxGeometry( 10, 15, 10 );
-		material = new THREE.MeshNormalMaterial();
-		box = new THREE.Mesh( geometry, material );
-		box.position.set( -30, 10, 30 );
-		scene.add( box );
-
-		easings = Object.keys( TWEEN.Easing );
-
-//console.log( easings );
-
-		var material = new THREE.MeshNormalMaterial();
-
-		for ( var i = 0; i < objectsCount; i++ ) {
-
-			var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
-			mesh.name = 'obj ' + i;
-			scene.add( mesh );
-			objects.push( mesh );
-
-		}
-
-		setPlacesRandom();
-		setClipsDefined();
-		setClipsRandom();
-
-	}
 
 	function setPlacesRandom() {
 
@@ -286,6 +136,81 @@
 
 	}
 
+// audio
+
+	function playNote( frequency, startTime, duration) {
+
+		var osc1 = audioContext.createOscillator();
+		var volume = audioContext.createGain();
+
+		osc1.connect( volume );
+		osc1.type = 'triangle';
+		osc1.frequency.value = frequency + 1;
+
+		volume.connect( audioContext.destination );
+		volume.gain.linearRampToValueAtTime( 0, startTime + duration );
+		volume.gain.value = 0.01;
+
+		osc1.start( startTime );
+		osc1.stop( startTime + duration );
+
+	}
+
+
+// events
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		intersects = raycaster.intersectObjects( objects );
+
+		if ( intersects.length > 0 ) {
+
+			togglePlace( intersects[ 0 ].object )
+
+
+
+		}
+
+	}
+
+
+// tweens
+
+	function togglePlace( obj ) {
+
+		oud = obj.userData.places;
+
+		if ( obj.position.distanceTo( v( oud[ 0 ].pX, oud[ 0 ].pY, oud[ 0 ].pZ ) ) === 0 ) {
+
+			tween2location( obj, oud[ 1 ] );
+
+		} else {
+
+			tween2location( obj, oud[ 0 ]  );
+
+		}
+
+			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
+
+	}
+
 	function initTweenClipAllPlaces( indexFrame ) {
 
 		if ( indexFrame < frames && indexObjects === 0 ) {
@@ -300,7 +225,7 @@
 
 		var index = index ? index : 0;
 
-		info.innerHTML = 'frame:' + index + '<br>';
+		info.innerHTML = 'debug info<br>frame:' + index + '<br>';
 
 		for ( var i in objects ) {
 
@@ -315,11 +240,9 @@
 
 //console.log( 'tweenAllToLocation', index, camera.userData.places[ index ] );
 
-
-
 		tweenCamera( camera, camera.userData.places[ index ] );
 
-		outFrame.value = index;
+//		outFrame.value = index; // part of slider
 
 	}
 
@@ -337,8 +260,6 @@
 
 	function playClip() {
 
-//console.log( 'playClip', indexFrame );
-
 		if ( check.checked === true ) {
 
 			indexFrame = indexFrame ? indexFrame : 0;
@@ -350,20 +271,29 @@
 
 				tweenFrame();
 
+				info.innerHTML = 'title: ' + check.title + '<br>';
+
 			} else if ( indexFrame < clip.length ) {
 
 				tweenFrame();
 
 			} else {
 
-console.log( 'the end' );
-
+				info.innerHTML += 'the end - time:' + ( Date.now() - startTime );
 				check.checked = false;
 				indexFrame = 0;
+
+// Play a 'B' now --- Ta
+				playNote(493.883, audioContext.currentTime, 0.232 );
+
+// Play an 'E' just as the previous note finishes -- Da
+				playNote(659.255, audioContext.currentTime + 0.232, 0.464);
 
 			}
 
 		}
+
+
 
 	}
 
@@ -385,11 +315,11 @@ console.log( 'the end' );
 
 				tweenCamera( obj, oud, itemDispatch );
 
-			} else if ( obj.name === 'pencil' ) {
+			} else if ( obj.name === 'pencilLine' ) {
 
 //console.log( 'pencil line');
 
-				drawPencilLine( v( 0, 0, 0 ), v( 100, 100, 100 ), itemDispatch );
+				drawPencilLine( oud, obj.userData.places[ indexLocation + 1 ], itemDispatch );
 
 			} else {
 
@@ -421,7 +351,7 @@ console.log( 'the end' );
 			indexFrame++;
 
 			playClip(); 
-
+			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 		}
 
 	}
@@ -431,7 +361,7 @@ console.log( 'the end' );
 // console.log( 'ms', p.ms );
 		p.eP = p.eP ? p.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
 		p.eR = p.eR ? p.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		p.ms = p.ms ? p.ms : 5000;
+		p.ms = p.ms ? p.ms : duration;
 
 		p.pX = p.pX ? p.pX : 0;
 		p.pY = p.pY ? p.pY : 0;
@@ -466,7 +396,7 @@ console.log( 'the end' );
 
 		c.eP = c.eP ? c.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
 		c.eR = c.eR ? c.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		c.ms = c.ms ? c.ms : 5000;
+		c.ms = c.ms ? c.ms : duration;
 
 		c.cX = c.cX ? c.cX : 0;
 		c.cY = c.cY ? c.cY : 0;
@@ -505,6 +435,9 @@ console.log( 'the end' );
 		geometry.vertices.push( startPoint );
 		geometry.vertices.push( endPoint);
 
+		geometry.vertices.push( v( startPoint.pX, startPoint.pY, startPoint.pZ ) );
+		geometry.vertices.push( v( endPoint.pX, endPoint.pY, endPoint.pZ ) );
+
 		var material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
 		var line = new THREE.LineSegments( geometry, material  );
 
@@ -513,26 +446,3 @@ console.log( 'the end' );
 		onComplete();
 
 	}
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
-
-	}
-
-	function animate() {
-
-		requestAnimationFrame( animate );
-		controls.update();
-		stats.update();
-		TWEEN.update();
-		renderer.render( scene, camera );
-
-	}
-
-</script>
-</body>
-</html>
