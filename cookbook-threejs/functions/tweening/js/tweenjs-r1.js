@@ -14,23 +14,32 @@
 
 	var objects = [];
 
+	var pi = Math.PI;
+	var pi05 = 0.5 * pi;
+	var pi_05 = -0.5 * pi;
+	var pi2 = 2 * pi;
+
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
 	var easings = Object.keys( TWEEN.Easing );
 
 	var startTime = Date.now();
-
-//	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
 	var audioContext = new AudioContext();
 
+	var outFrame;
+
+// set up demos/tests
+
 
 	function setPlacesRandom() {
 
 		frames = framesDefault;
 
-		for ( var i = 0; i < objectsCount; i++ ) {
+		for ( var i = 0; i < objects.length; i++ ) {
 
 			object = objects[ i ];
 			object.userData.places = [];
@@ -182,9 +191,9 @@
 
 		if ( intersects.length > 0 ) {
 
+//			tween2location( intersects[ 0 ].object, intersects[ 0 ].object.userData.places[ 1 ] );
+
 			togglePlace( intersects[ 0 ].object )
-
-
 
 		}
 
@@ -192,6 +201,16 @@
 
 
 // tweens
+
+	function togglePlacesAll() {
+
+		for ( var i = 0; i < objects.length; i++ ) {
+
+			togglePlace( objects[ i ] ) 
+
+		}
+
+	}
 
 	function togglePlace( obj ) {
 
@@ -225,7 +244,7 @@
 
 		var index = index ? index : 0;
 
-		info.innerHTML = 'debug info<br>frame:' + index + '<br>';
+		info.innerHTML = 'frame:' + index + '<br>';
 
 		for ( var i in objects ) {
 
@@ -240,9 +259,9 @@
 
 //console.log( 'tweenAllToLocation', index, camera.userData.places[ index ] );
 
-		tweenCamera( camera, camera.userData.places[ index ] );
+		if ( camera.userData.places ) { tweenCamera( camera, camera.userData.places[ index ] ); }
 
-//		outFrame.value = index; // part of slider
+		if ( outFrame ) { outFrame.value = index; }
 
 	}
 
@@ -260,6 +279,8 @@
 
 	function playClip() {
 
+//console.log( 'playClip', indexFrame );
+
 		if ( check.checked === true ) {
 
 			indexFrame = indexFrame ? indexFrame : 0;
@@ -271,15 +292,14 @@
 
 				tweenFrame();
 
-				info.innerHTML = 'title: ' + check.title + '<br>';
-
 			} else if ( indexFrame < clip.length ) {
 
 				tweenFrame();
 
 			} else {
 
-				info.innerHTML += 'the end - time:' + ( Date.now() - startTime );
+console.log( 'the end' );
+
 				check.checked = false;
 				indexFrame = 0;
 
@@ -292,8 +312,6 @@
 			}
 
 		}
-
-
 
 	}
 
@@ -315,11 +333,11 @@
 
 				tweenCamera( obj, oud, itemDispatch );
 
-			} else if ( obj.name === 'pencilLine' ) {
+			} else if ( obj.name === 'pencil' ) {
 
 //console.log( 'pencil line');
 
-				drawPencilLine( oud, obj.userData.places[ indexLocation + 1 ], itemDispatch );
+				drawPencilLine( v( 0, 0, 0 ), v( 100, 100, 100 ), itemDispatch );
 
 			} else {
 
@@ -351,17 +369,18 @@
 			indexFrame++;
 
 			playClip(); 
-			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
+
 		}
 
 	}
+
 
 	function tween2location( obj, p, onComplete ) {
 
 // console.log( 'ms', p.ms );
 		p.eP = p.eP ? p.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
 		p.eR = p.eR ? p.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		p.ms = p.ms ? p.ms : duration;
+		ms = p.ms ? p.ms : duration;
 
 		p.pX = p.pX ? p.pX : 0;
 		p.pY = p.pY ? p.pY : 0;
@@ -374,7 +393,7 @@
 		var onComplete = onComplete ? onComplete : function(){};
 
 		new TWEEN.Tween( obj.position )
-		.to( { x: p.pX, y: p.pY, z: p.pZ }, p.ms )
+		.to( { x: p.pX, y: p.pY, z: p.pZ }, ms )
 		.easing( TWEEN.Easing[ p.eP ].InOut )
 		.onComplete( function() { 
 
@@ -386,7 +405,7 @@
 		.start();
 
 		new TWEEN.Tween( obj.rotation )
-		.to( { x: p.rX, y: p.rY, z: p.rZ }, p.ms )
+		.to( { x: p.rX, y: p.rY, z: p.rZ }, ms )
 		.easing( TWEEN.Easing[ p.eR ].InOut )
 		.start();
 
@@ -432,8 +451,8 @@
 
 		var geometry = new THREE.Geometry();
 
-		geometry.vertices.push( startPoint );
-		geometry.vertices.push( endPoint);
+//		geometry.vertices.push( startPoint );
+//		geometry.vertices.push( endPoint);
 
 		geometry.vertices.push( v( startPoint.pX, startPoint.pY, startPoint.pZ ) );
 		geometry.vertices.push( v( endPoint.pX, endPoint.pY, endPoint.pZ ) );
