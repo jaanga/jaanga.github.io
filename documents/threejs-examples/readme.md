@@ -54,7 +54,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 There are a number of with creating an easy to view catalog of animated 3D web pages.
 
 The usual fashion is to create 2D thumbnails of the 3D pages. Using 2D to represent 3D is an admission of some sort of failure.
-Using 2D to reprsent 3D begs the question: If 3D is so good, why don't you use 3D?
+Using 2D to represent 3D begs the question: If 3D is so good, why don't you use 3D?
 
 
 
