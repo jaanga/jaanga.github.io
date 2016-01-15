@@ -1,5 +1,5 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/documents/threejs-examples-viewer/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-examples-viewer/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+<span id=topp style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/documents/threejs-examples-viewer/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-examples-viewer/'; type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 
 Three.js Examples Read Me
@@ -69,6 +69,7 @@ This is part of an attempt to build a simpler file viewer.
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
+* To make the viewing of thousands of 3D things really easy peasy
 
 ## Things to Do / Road Map
 
@@ -78,17 +79,21 @@ This is part of an attempt to build a simpler file viewer.
 
 ### Three.js Examples Rover
 
-* Displays HTML and Markdown files
+* Displays HTML or Markdown files
 	* Displays a randomly selected file on load
-* Menu and contents scroll independently
+	* Uses GitHub API to read names of all Three.js Releases
+	* Dropdown list provides access to Three.js examples in all releases from R5 to the current 'dev' branch
+	* Upon selection of a release, menu reads fresh data from GitHub and displays all example files for that release
 * Menu element displays all Three.js example files organized by category
-	* Clicking a menu item scrolls into view the selected file
+	* Clicking a menu item scrolls into view the selected file in the Contents pane
 	* Menu items icons open file in new tab/window
 * Content element displays scrolling view of all the example files
 	* Bypasses browser limit of maximum sixteen open WebGL views
 	* Creates renderers when views are visible
 	* Discards renderers when view are not visible
-* View source button displays at top right when HTML file is loaded 
+	* View source button displays at top right when HTML file is loaded 
+* Menu and contents scroll independently
+* Three.js logo adapted from Three.js documentation source code
 * Zoom, pan and rotate
 	* 1 finger / left button >> rotate
 	* 2 finger / wheel >> zoom in and out
@@ -96,6 +101,11 @@ This is part of an attempt to build a simpler file viewer.
 
 
 ## Issues
+
+### Three.js Examples Rover
+
+* The further back you go the more there are issues
+* Many of the issues relate to CORS issues and are solvable
 
  
 ## Sources
@@ -106,6 +116,6 @@ This is part of an attempt to build a simpler file viewer.
 ***
 
 <center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+# <a href=javascript:topp.scrollIntoView(); style=text-decoration:none; > ❦ </a>
 </center>
 

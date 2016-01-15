@@ -1,0 +1,201 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API File Viewer R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+
+</head>
+<body>
+<script>
+
+	urlTags = 'https://api.github.com/repos/mrdoob/three.js/tags?page=1&per_page=100';
+
+	urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples?ref=';
+
+//	urlRaw = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/canvas_geometry_terrain.html';
+//	urlRaw = 'http://mrdoob.github.io/three.js/examples/';
+//	urlRaw = 'http://cdnjs.cloudflare.com/ajax/libs/three.js/r66/examples/';
+	urlRaw = 'https://rawgit.com/mrdoob/three.js/'
+
+	var css, menu;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: auto; }
+			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
+			h2, a { margin: 0; }
+			iframe { height:100%; width:100% }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			#aa { text-decoration: none; }
+			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
+			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<p>Release <select id=selTag onchange=requestFileNames(selTag.value); ></select></p>
+			<p id=fileCount ></p>
+			<div id=fileNames ></div>
+
+		`;
+
+		content = document.body.appendChild( document.createElement( 'iframe' ) );
+		content.id = 'content';
+
+		requestTags();
+
+		requestFileNames( 'r73' );
+
+	}
+
+	function requestTags() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlTags, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState != 4  ) { return; }
+
+			tags = JSON.parse( xhr.response );
+
+			var keys = Object.keys( tags );
+
+			selTag.appendChild( document.createElement( 'option' ) );
+			selTag.children[ 0 ].text = 'dev';
+			count = 1
+			for ( var key in keys ) {
+
+				selTag.appendChild( document.createElement( 'option' ) );
+				selTag.children[ count++ ].text = tags[ key ].name;
+
+			}
+
+			selTag.selectedIndex = 1;
+
+			if ( window.location.hash !== '' ) {
+
+				load(  window.location.hash.substring( 1 ) );
+
+			}
+
+		}
+
+	}
+
+	function requestFileNames( tag ) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlAPI + tag, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState != 4  ) { return; }
+
+			files = JSON.parse( xhr.response );
+			keys = Object.keys( files );
+			var txt = '';
+			var count = 0;
+			for ( var key in keys ) {
+
+				file = files[ key ].name;
+
+				if ( file.indexOf( '.html' ) !== -1 && file !== 'index.html' ) {
+
+					txt += `<div><a href=#${ file } onclick=load('${ file }')>${ file }<a></div>`
+					count++;
+
+				}
+
+			}
+
+			fileCount.innerHTML = count + ' files';
+			fileNames.innerHTML = txt;
+
+			if ( window.location.hash === '' ) {
+
+				load(  files[ Math.floor( Math.random() * count ) ].name );
+
+			}
+		}
+
+	}
+
+	function requestFile( url, fileName ) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', url + fileName, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState != 4  ) { return; }
+
+			source = xhr.response;
+
+			source = source.replace( /src=\"/gi, 'src=\"' + urlRaw + selTag.value + '/examples/' );
+			source = source.replace( /\'textures/gi, '\'' + urlRaw + selTag.value + '/examples/' + 'textures' );
+			source = source.replace( /\"textures/gi, '\"' + urlRaw + selTag.value + '/examples/' + 'textures' );
+			source = source.replace( /\'obj/gi, '\'' + urlRaw + selTag.value + '/examples/' + 'obj' );
+			source = source.replace( /\"obj/gi, '\"' + urlRaw + selTag.value + '/examples/' + 'obj' );
+			source = source.replace( /\'models/gi, '\'' + urlRaw + selTag.value + '/examples/' + 'models' );
+			source = source.replace( /\"models/gi, '\"' + urlRaw + selTag.value + '/examples/' + 'models' );
+
+// data comes in escaped...
+//			content.innerHTML = `<iframe id=ifr srcdoc=${ source } ></iframe>`;
+
+			content.srcdoc = source;
+
+		}
+
+	}
+
+	function load( fileName ) {
+
+		document.title = fileName;
+
+		if ( fileName.substr( -3 ) === '.md' ) {
+
+			var xhr = new THREE.XHRLoader();
+			xhr.load( fileName, onLoad ) ;
+
+		} else {
+
+			requestFile( urlRaw + selTag.value + '/examples/', fileName );
+
+		}
+
+		function onLoad( text ) {
+
+			content.innerHTML = `<div class=md >${ converter.makeHtml( text ) }</div>`;
+
+			button.style.display = `none`;
+
+		}
+
+	}
+
+</script>
+</body>
+</html>
