@@ -56,6 +56,10 @@ Interesting things you can do with Markdown.
 
 ___
 
+### Images
+
+![ text ]( http://lorempixel.com/image_output/800/600 =400x300 )
+
 ### Links
 
 https://github.com/showdownjs/showdown  

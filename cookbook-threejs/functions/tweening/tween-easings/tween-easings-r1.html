@@ -31,7 +31,7 @@
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			h2 { margin: 0 }
 			#aa {text-decoration: none; }
-			#menu { margin: 0 20px; position: absolute; }
+			#menu { background-color: #fff; margin: 0 20px; opacity: 0.85; padding: 5px; position: absolute; }
 
 			button, input[type=button] { background-color: #ddd; border: 2px solid #ddd; color: #888; }
 
@@ -50,8 +50,9 @@
 				<a href="" > ${ document.title }</a> 
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+			<div><small>click on a box to tween it</small></div>
 			<p><button onclick=togglePlacesAll(); >tween it</button></p>
-			<p>duration: <input type=range id=inpDuration max=10000 min=10 step=100 value=5000 oninput=out.value=inpDuration.value;updateBoxes(); title="10 to 10000: OK" > <output id=out >value</output></p>
+			<p>duration: <input type=range id=inpDuration max=10000 min=10 step=100 value=5000 oninput=out.value=inpDuration.value;updateBoxes(); title="10 to 10000: OK" > <output id=out >5000</output></p>
 
 
 			<div id=info ></div>
