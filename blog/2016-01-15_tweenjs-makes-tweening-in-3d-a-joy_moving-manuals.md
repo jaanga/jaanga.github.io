@@ -21,7 +21,7 @@ _graph of the various Tween.js easings_
 This morning we started to build a tweening 'gymneasium' to help compare and contrast the various easings.
 It's very R1 - because there are so many easy Tween.js options but it's a start and there will be more releases with more features.
 
-Update - 2016-01-16: R1.1 is up.
+Update - 2016-01-16: R1.1 is up. Adds camera tweening, placards to identify which easing a box is using and a general code cleanup.
 
 ### Links
 
