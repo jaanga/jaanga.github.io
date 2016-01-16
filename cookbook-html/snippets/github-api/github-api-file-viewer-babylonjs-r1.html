@@ -2,21 +2,31 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API File Viewer R2</title>
+<title>GitHub API File Viewer Babylon.js R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 
 </head>
 <body>
 <script>
 
-	urlTags = 'https://api.github.com/repos/mrdoob/three.js/tags?page=1&per_page=100';
 
-	urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples?ref=';
+	var tagDefault = 'v2.1';
+
+	var urlTags = 'https://api.github.com/repos/mrdoob/three.js/tags?page=1&per_page=100';
+	var urlTags = 'https://api.github.com/repos/xeolabs/scenejs/tags?page=1&per_page=100';
+	var urlTags = 'https://api.github.com/repos/BabylonJS/Samples/tags?page=1&per_page=100';
+
+	var urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples?ref=';
+	var urlAPI = 'https://api.github.com/repos/BabylonJS/Samples/contents/Demos';
 
 //	urlRaw = 'https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/canvas_geometry_terrain.html';
 //	urlRaw = 'http://mrdoob.github.io/three.js/examples/';
 //	urlRaw = 'http://cdnjs.cloudflare.com/ajax/libs/three.js/r66/examples/';
-	urlRaw = 'https://rawgit.com/mrdoob/three.js/'
+//	urlRaw = 'https://rawgit.com/mrdoob/three.js/'
+
+	var urlDefault = 'http://www.babylonjs.com/Demos/';
+	var urlRaw = 'https://rawgit.com/xeolabs/scenejs/';
+	var urlExamples = urlDefault;
 
 	var css, menu;
 
@@ -60,7 +70,7 @@
 
 		requestTags();
 
-		requestFileNames( 'r73' );
+		requestFileNames( tagDefault );
 
 	}
 
@@ -81,7 +91,8 @@
 
 			selTag.appendChild( document.createElement( 'option' ) );
 			selTag.children[ 0 ].text = 'dev';
-			count = 1
+			count = 1;
+
 			for ( var key in keys ) {
 
 				selTag.appendChild( document.createElement( 'option' ) );
@@ -104,7 +115,7 @@
 	function requestFileNames( tag ) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open( 'GET', urlAPI + tag, true );
+		xhr.open( 'GET', urlAPI, true );
 		xhr.onreadystatechange = callback;
 		xhr.send( null );
 
@@ -120,12 +131,12 @@
 
 				file = files[ key ].name;
 
-				if ( file.indexOf( '.html' ) !== -1 && file !== 'index.html' ) {
+//				if ( file.indexOf( '.html' ) !== -1 && file !== 'index.html' ) {
 
 					txt += `<div><a href=#${ file } onclick=load('${ file }')>${ file }<a></div>`
 					count++;
 
-				}
+//				}
 
 			}
 
@@ -134,9 +145,10 @@
 
 			if ( window.location.hash === '' ) {
 
-				load(  files[ Math.floor( Math.random() * count ) ].name );
+				load( files[ Math.floor( Math.random() * count ) ].name );
 
 			}
+
 		}
 
 	}
@@ -175,24 +187,9 @@
 
 		document.title = fileName;
 
-		if ( fileName.substr( -3 ) === '.md' ) {
+//		requestFile( urlRaw + selTag.value + '/examples/', fileName );
 
-			var xhr = new THREE.XHRLoader();
-			xhr.load( fileName, onLoad ) ;
-
-		} else {
-
-			requestFile( urlRaw + selTag.value + '/examples/', fileName );
-
-		}
-
-		function onLoad( text ) {
-
-			content.innerHTML = `<div class=md >${ converter.makeHtml( text ) }</div>`;
-
-			button.style.display = `none`;
-
-		}
+		content.src = urlExamples + fileName;
 
 	}
 
