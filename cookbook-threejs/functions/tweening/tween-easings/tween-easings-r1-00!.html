@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Tween Easings R1.1</title>
+<title>Tween Easings R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
@@ -52,12 +52,14 @@
 			</h2>
 			<div><small>click on a box to tween it</small></div>
 			<p><button onclick=togglePlacesAll(); >tween it</button></p>
-			<p>duration: <input type=range id=inpDuration max=10000 min=10 step=100 value=${ duration } oninput=out.value=inpDuration.value;updateBoxes(); title="10 to 10000: OK" > <output id=out >${ duration}</output></p>
+			<p>duration: <input type=range id=inpDuration max=10000 min=10 step=100 value=5000 oninput=out.value=inpDuration.value;updateBoxes(); title="10 to 10000: OK" > <output id=out >5000</output></p>
 
 
 			<div id=info ></div>
 
 		`;
+
+
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -99,11 +101,6 @@
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
-		geometry = new THREE.BoxGeometry( 10, 5, 10 * easings.length );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 59, 18, 0 );
-		scene.add( mesh );
 // assets
 
 		updateBoxes();
@@ -116,107 +113,29 @@
 		scene.remove( container );
 		container = new THREE.Object3D();
 
-		for ( var i = 0; i < easings.length; i++ ) {
+		for ( var i = 1; i < easings.length; i++ ) {
 
-			var geometry = new THREE.BoxGeometry( 8, 8, 8 );
-			var material = new THREE.MeshNormalMaterial();
-			var mesh = new THREE.Mesh( geometry, material );
+			geometry = new THREE.BoxGeometry( 8, 8, 8 );
+			material = new THREE.MeshNormalMaterial();
+			mesh = new THREE.Mesh( geometry, material );
+//			mesh.position.set( -30, 10, i * 10 - 50 );
 
-			var origin = v( -50, 20, -60 );
-			var moveTo = v( 50, 20, -50 );
+			origin = v( -50, 20, -55 );
+			moveTo = v( 50, 20, -50 );
 
 			mesh.userData.places = [];
-
-			var io = i === 0 ? 'None' : 'InOut'; 
-
 			mesh.userData.places.push( { pX: origin.x, pY: origin.y, pZ: i * 10 + origin.z, rX: 0, rY: 0, rZ: 0, 
-				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ].InOut, eR: TWEEN.Easing[ easings[ i ] ][ io ]} );
+				ms: inpDuration.valueAsNumber, eP: easings[ i ], eR: easings[ i ] } );
 			mesh.userData.places.push( { pX: moveTo.x, pY: moveTo.y, pZ: i * 10 + moveTo.z, rX: 0, rY: pi, rZ: 0, 
-				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ].InOut, eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
-
+				ms: inpDuration.valueAsNumber, eP: easings[ i ], eR: easings[ i ] } );
 			mesh.name = easings[ i ];
-
-			placard = drawPlacard( easings[ i ], 0.05, 120, 0, 10, 0 )
-			mesh.add( placard );
-
 			container.add( mesh );
 
 		}
-
 		scene.add( container );
 		objects = container.children;
 
 		tweenAllToLocation();
-
-	}
-
-
-	function drawPlacard( text, scale, color, x, y, z ) {
-
-		placard = new THREE.Object3D();
-
-		var texture = canvasMultilineText( text, { backgroundColor: color }  );
-		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
-		var sprite = new THREE.Sprite( spriteMaterial );
-		sprite.position.set( x, y, z ) ;
-		sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
-
-		var geometry = new THREE.Geometry();
-		geometry.vertices = [ v( x, 0, z ),  v( x, y, z ) ];
-		var material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
-		var line = new THREE.Line( geometry, material );
-
-		placard.add( sprite, line );
-
-		return placard;
-
-		function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
-
-		function canvasMultilineText( textArray, parameters ) {
-
-			var parameters = parameters || {} ;
-			var width = 0;
-			var canvas = document.createElement( 'canvas' );
-			var context = canvas.getContext( '2d' );
-
-			if ( typeof textArray === 'string' ) textArray = [ textArray ];
-
-			context.font = parameters.font ? parameters.font : '48px sans-serif';
-
-			for (var i = 0, len = textArray.length; i < len; i++) {
-
-				width = context.measureText( textArray[i] ).width > width ? context.measureText( textArray[i] ).width : width;
-
-			}
-
-			canvas.width = width + 20; // 480
-			canvas.height = textArray.length * 60;
-
-			var col = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
-
-			context.fillStyle = 'hsl( ' + col + ', 80%, 50% )' ;
-			context.fillRect( 0, 0, canvas.width, canvas.height);
-
-			context.lineWidth = 1 ;
-			context.strokeStyle = '#000';
-			context.strokeRect( 0, 0, canvas.width, canvas.height);
-
-			context.fillStyle = '#000' ;
-			context.font = parameters.font ? parameters.font : '48px sans-serif';
-
-			for (var i = 0, len = textArray.length; i < len; i++) {
-
-				context.fillText( textArray[i], 10, 48  + i * 60 );
-
-			}
-
-			var texture = new THREE.Texture( canvas );
-			texture.minFilter = texture.magFilter = THREE.NearestFilter;
-			texture.needsUpdate = true;
-
-			return texture;
-
-		}
 
 	}
 

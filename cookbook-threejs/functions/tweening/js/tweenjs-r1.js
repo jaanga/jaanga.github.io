@@ -191,8 +191,6 @@
 
 		if ( intersects.length > 0 ) {
 
-//			tween2location( intersects[ 0 ].object, intersects[ 0 ].object.userData.places[ 1 ] );
-
 			togglePlace( intersects[ 0 ].object )
 
 		}
@@ -246,14 +244,14 @@
 
 		info.innerHTML = 'frame:' + index + '<br>';
 
-		for ( var i in objects ) {
+		for ( var i = 0; i < objects.length; i++ ) {
 
 			var obj = objects[ i ];
 			var oud = obj.userData.places[ index ];
 
 			tween2location( obj, oud );
 
-			info.innerHTML += obj.name + ' time:' + oud.ms + '<br>';
+			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - time: ' + oud.ms + '<br>';
 
 		}
 
@@ -378,44 +376,38 @@ console.log( 'the end' );
 	function tween2location( obj, p, onComplete ) {
 
 // console.log( 'ms', p.ms );
-		p.eP = p.eP ? p.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		p.eR = p.eR ? p.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
+		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
+		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
 		ms = p.ms ? p.ms : duration;
 
-		p.pX = p.pX ? p.pX : 0;
-		p.pY = p.pY ? p.pY : 0;
-		p.pZ = p.pZ ? p.pZ : 0;
+		pX = p.pX ? p.pX : 0;
+		pY = p.pY ? p.pY : 0;
+		pZ = p.pZ ? p.pZ : 0;
 
-		p.rX = p.rX ? p.rX : 0;
-		p.rY = p.rY ? p.rY : 0;
-		p.rZ = p.rZ ? p.rZ : 0;
+		rX = p.rX ? p.rX : 0;
+		rY = p.rY ? p.rY : 0;
+		rZ = p.rZ ? p.rZ : 0;
 
 		var onComplete = onComplete ? onComplete : function(){};
 
 		new TWEEN.Tween( obj.position )
-		.to( { x: p.pX, y: p.pY, z: p.pZ }, ms )
-		.easing( TWEEN.Easing[ p.eP ].InOut )
-		.onComplete( function() { 
-
-// console.log( 'tween2location', p.ms, ( Date.now() - startTime ) );
-
-			onComplete();
-
-		} )
+		.to( { x: pX, y: pY, z: pZ }, ms )
+		.easing( eP )
 		.start();
 
 		new TWEEN.Tween( obj.rotation )
-		.to( { x: p.rX, y: p.rY, z: p.rZ }, ms )
-		.easing( TWEEN.Easing[ p.eR ].InOut )
+		.to( { x: rX, y: rY, z: rZ }, ms )
+		.easing( eR )
+		.onComplete( function() { onComplete(); } )
 		.start();
 
 	}
 
 	function tweenCamera( camera, c, onComplete ) {
 
-		c.eP = c.eP ? c.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		c.eR = c.eR ? c.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-		c.ms = c.ms ? c.ms : duration;
+		eP = c.eP ? c.eP : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
+		eR = c.eR ? c.eR : easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
+		ms = c.ms ? c.ms : duration;
 
 		c.cX = c.cX ? c.cX : 0;
 		c.cY = c.cY ? c.cY : 0;
@@ -442,26 +434,5 @@ console.log( 'the end' );
 		.easing( TWEEN.Easing[ c.eR ].InOut )
 		.onComplete( function() { onComplete(); } )
 		.start();
-
-	}
-
-	function drawPencilLine( startPoint, endPoint, func ) {
-
-		onComplete = func ? func : function() {} ;
-
-		var geometry = new THREE.Geometry();
-
-//		geometry.vertices.push( startPoint );
-//		geometry.vertices.push( endPoint);
-
-		geometry.vertices.push( v( startPoint.pX, startPoint.pY, startPoint.pZ ) );
-		geometry.vertices.push( v( endPoint.pX, endPoint.pY, endPoint.pZ ) );
-
-		var material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-		var line = new THREE.LineSegments( geometry, material  );
-
-		scene.add( line );
-
-		onComplete();
 
 	}

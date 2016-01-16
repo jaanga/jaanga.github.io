@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>Three.js Snippet Canvas Text v0.1.0</title>
+<title>Three.js Snippet Placards R1.1</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -11,7 +11,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script>
 
-
+	var boxes = [];
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
@@ -67,79 +67,103 @@
 		sprite = drawPlacard( 'Hello, world!', 0.1, 120, 0, 40, 0 )
 		scene.add( sprite );
 
-		sprite = drawPlacard( 'Hello, world! 2', 0.1, 120, 20, 40, 40 )
-		scene.add( sprite );
+
+		updateBoxes();
+
+	}
+
+	function updateBoxes() {
+
+		geometry = new THREE.BoxGeometry( 5, 5, 5 );
+		material = new THREE.MeshNormalMaterial();
+
+		for ( var i = 0; i < 50; i++ ) {
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( Math.random() * 100 - 50, Math.random() * 50 - 10, Math.random() * 100 - 50 );
+			mesh.rotation.set( Math.random() * 3, Math.random() * 3, Math.random() * 3 );
+
+			placard = drawPlacard( 'Box ' + i, 0.05, Math.floor( Math.random() * 255 ), 0, 10, 0 )
+			mesh.add( placard );
+
+			scene.add( mesh );
+			boxes.push( mesh );
+
+		}
 
 	}
 
 
-	function drawPlacard( text, scale, color, x, y, z) {
+// Copy 'drawPlacard' into your script
+
+	function drawPlacard( text, scale, color, x, y, z ) {
+
+// https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/functions/placards
 
 		placard = new THREE.Object3D();
 
-		texture = canvasMultilineText( text, { backgroundColor: color }  );
+		var texture = canvasMultilineText( text, { backgroundColor: color }  );
 		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
 		var sprite = new THREE.Sprite( spriteMaterial );
 		sprite.position.set( x, y, z ) ;
 		sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
-		placard.add( sprite );
 
 		var geometry = new THREE.Geometry();
 		geometry.vertices = [ v( x, 0, z ),  v( x, y, z ) ];
 		var material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
 		var line = new THREE.Line( geometry, material );
-		placard.add( line );
+
+		placard.add( sprite, line );
 
 		return placard;
 
-		function v( x, y, z){ return new THREE.Vector3( x, y, z ); }
+		function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
 
-	}
+		function canvasMultilineText( textArray, parameters ) {
 
+			var parameters = parameters || {} ;
+			var width = 0;
+			var canvas = document.createElement( 'canvas' );
+			var context = canvas.getContext( '2d' );
 
-	function canvasMultilineText( textArray, parameters ) {
+			if ( typeof textArray === 'string' ) textArray = [ textArray ];
 
-		var parameters = parameters || {} ;
-		var width = 0;
-		var canvas = document.createElement( 'canvas' );
-		var context = canvas.getContext( '2d' );
+			context.font = parameters.font ? parameters.font : '48px sans-serif';
 
-		if ( typeof textArray === 'string' ) textArray = [ textArray ];
+			for (var i = 0, len = textArray.length; i < len; i++) {
 
-		context.font = parameters.font ? parameters.font : '48px sans-serif';
+				width = context.measureText( textArray[i] ).width > width ? context.measureText( textArray[i] ).width : width;
 
-		for (var i = 0, len = textArray.length; i < len; i++) {
+			}
 
-			width = context.measureText( textArray[i] ).width > width ? context.measureText( textArray[i] ).width : width;
+			canvas.width = width + 20; // 480
+			canvas.height = textArray.length * 60;
+
+			var col = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
+
+			context.fillStyle = 'hsl( ' + col + ', 80%, 50% )' ;
+			context.fillRect( 0, 0, canvas.width, canvas.height);
+
+			context.lineWidth = 1 ;
+			context.strokeStyle = '#000';
+			context.strokeRect( 0, 0, canvas.width, canvas.height);
+
+			context.fillStyle = '#000' ;
+			context.font = parameters.font ? parameters.font : '48px sans-serif';
+
+			for (var i = 0, len = textArray.length; i < len; i++) {
+
+				context.fillText( textArray[i], 10, 48  + i * 60 );
+
+			}
+
+			var texture = new THREE.Texture( canvas );
+			texture.minFilter = texture.magFilter = THREE.NearestFilter;
+			texture.needsUpdate = true;
+
+			return texture;
 
 		}
-
-		canvas.width = width + 20; // 480
-		canvas.height = textArray.length * 60;
-
-		col = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
-
-		context.fillStyle = 'hsl( ' + col + ', 80%, 50% )' ;
-		context.fillRect( 0, 0, canvas.width, canvas.height);
-
-		context.lineWidth = 1 ;
-		context.strokeStyle = '#000';
-		context.strokeRect( 0, 0, canvas.width, canvas.height);
-
-		context.fillStyle = '#000' ;
-		context.font = parameters.font ? parameters.font : '48px sans-serif';
-
-		for (var i = 0, len = textArray.length; i < len; i++) {
-
-			context.fillText( textArray[i], 10, 48  + i * 60 );
-
-		}
-
-		var texture = new THREE.Texture( canvas );
-		texture.minFilter = texture.magFilter = THREE.NearestFilter;
-		texture.needsUpdate = true;
-
-		return texture;
 
 	}
 
@@ -155,6 +179,13 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < boxes.length; i++ ) {
+
+			boxes[ i ].rotation.x += -0.005;
+			boxes[ i ].rotation.y += -0.0025;
+
+		}
 		controls.update();
 		stats.update();
 		renderer.render( scene, camera );

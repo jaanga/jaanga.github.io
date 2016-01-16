@@ -82,6 +82,10 @@
 	* List view shows mixed text and views
 	* Gallery view shows views only
 
+## Placards
+
+[Placards R4]( ./placards/placards-r1.html )
+
 
 ## Tweening
 
