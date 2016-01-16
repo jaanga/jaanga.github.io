@@ -15,7 +15,7 @@
 <script src=../js/tweenjs-r1.js ></script>
 <script>
 // https://github.com/tweenjs/tween.js
-// http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tweenjs makes-tweening-in-3d-a-joy_moving-manuals.md
+// http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tweenjs-makes-tweening-in-3d-a-joy_moving-manuals.md
 
 	var container, objects;
 
@@ -34,11 +34,11 @@
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			h2 { margin: 0 }
 			#aa {text-decoration: none; }
-			#menu { background-color: #fff; margin: 0 20px; opacity: 0.85; padding: 5px; position: absolute; }
+			#menu { background-color: #fff; margin: 0 20px; max-width: 300px; opacity: 0.85; padding: 5px; position: absolute; }
 
 			button, input[type=button] { background-color: #ddd; border: 2px solid #ddd; color: #888; }
 
-			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 160px; }
 			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
 			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
 
@@ -53,9 +53,23 @@
 				<a href="" > ${ document.title }</a> 
 				<a id=aa href=http://jaanga.github.io/cookbook-threejs/functions/ >🛈</a>
 			</h2>
-			<div><small>click on a box to tween it</small></div>
-			<p><button onclick=togglePlacesAll(); >tween all</button></p>
-			<p>duration: <input type=range id=inpDuration max=10000 min=10 step=100 value=${ duration } oninput=out.value=inpDuration.value;updateBoxes(); title="10 to 10000: OK" > <output id=out >${ duration}</output></p>
+			<div>click on a box to tween it or:<br>
+				<button onclick=togglePlacesAll(); >tween all</button>
+			</p>
+			<p>tween camera:<br>
+				<button onclick=togglePlace(camera,0,1); >linear</button>
+				<button onclick=togglePlace(camera,2,3); >quadratic</button>
+				<button onclick=togglePlace(camera,4,5); >cubic</button>
+				<button onclick=togglePlace(camera,6,7); >quartic</button>
+				<button onclick=togglePlace(camera,8,9); >quintic</button>
+				<button onclick=togglePlace(camera,10,11); >Sinusoidal</button>
+				<button onclick=togglePlace(camera,12,13); >exponential</button>
+				<button onclick=togglePlace(camera,14,15); >circular</button>
+				<button onclick=togglePlace(camera,16,17); >elastic</button>
+				<button onclick=togglePlace(camera,18,19); >back</button>
+				<button onclick=togglePlace(camera,20,21); >bounce</button>
+			</p>
+			<p>duration:<input type=range id=inpDuration max=10000 min=10 step=100 value=${ duration } oninput=out.value=inpDuration.value;updateBoxes();updateCamera(); title="10 to 10000: OK" > <output id=out >${ duration}</output></p>
 
 
 			<div id=info ></div>
@@ -108,34 +122,37 @@
 		mesh.position.set( 59, 18, 0 );
 		scene.add( mesh );
 // assets
-
+		updateCamera();
 		updateBoxes();
 
-	}
 
+
+	}
 
 	function updateBoxes() {
 
 		scene.remove( container );
 		container = new THREE.Object3D();
 
+
+		var geometry = new THREE.BoxGeometry( 8, 8, 8 );
+		var material = new THREE.MeshNormalMaterial();
+
+		var origin = v( -50, 20, -60 );
+		var moveTo = v( 50, 20, -50 );
+
 		for ( var i = 0; i < easings.length; i++ ) {
 
-			var geometry = new THREE.BoxGeometry( 8, 8, 8 );
-			var material = new THREE.MeshNormalMaterial();
 			var mesh = new THREE.Mesh( geometry, material );
-
-			var origin = v( -50, 20, -60 );
-			var moveTo = v( 50, 20, -50 );
 
 			mesh.userData.places = [];
 
 			var io = i === 0 ? 'None' : 'InOut'; 
 
-			mesh.userData.places.push( { pX: origin.x, pY: origin.y, pZ: i * 10 + origin.z, rX: 0, rY: 0, rZ: 0, 
-				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ].InOut, eR: TWEEN.Easing[ easings[ i ] ][ io ]} );
-			mesh.userData.places.push( { pX: moveTo.x, pY: moveTo.y, pZ: i * 10 + moveTo.z, rX: 0, rY: pi, rZ: 0, 
-				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ].InOut, eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
+			mesh.userData.places.push( { tw: tween2location, pX: origin.x, pY: origin.y, pZ: i * 10 + origin.z, rX: 0, rY: 0, rZ: 0, 
+				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
+			mesh.userData.places.push( { tw: tween2location, pX: moveTo.x, pY: moveTo.y, pZ: i * 10 + moveTo.z, rX: 0, rY: pi, rZ: 0, 
+				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
 
 			mesh.name = easings[ i ];
 
@@ -153,6 +170,27 @@
 
 	}
 
+	function updateCamera() {
+
+console.log( 'updateCamera' );
+
+		camera.userData.places = [];
+
+		var origin = v( 100, 100, 100 );
+		var moveTo = v( -100, 100, 100 );
+
+		for ( var i = 0; i < easings.length; i++ ) {
+
+			var io = i === 0 ? 'None' : 'InOut'; 
+
+			camera.userData.places.push( { tw: tweenCamera, pX: origin.x, pY: origin.y, pZ: origin.z, tX: 0, tY: 0, tZ: 0, 
+				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ]} );
+			camera.userData.places.push( { tw: tweenCamera, pX: moveTo.x, pY: moveTo.y, pZ: moveTo.z, tX: 0, tY: 0, tZ: 0, 
+				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
+
+		}
+
+	}
 
 	function drawPlacard( text, scale, color, x, y, z ) {
 

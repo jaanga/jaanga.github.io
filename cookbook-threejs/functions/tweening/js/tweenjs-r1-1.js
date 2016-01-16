@@ -214,20 +214,17 @@
 
 
 
-	function togglePlace( obj, start, end ) {
-
-		start = start ? start : 0;
-		end = end ? end : 1;
+	function togglePlace( obj ) {
 
 		oud = obj.userData.places;
 
-		if ( obj.position.distanceTo( v( oud[ start ].pX, oud[ start ].pY, oud[ start ].pZ ) ) < 0.1 ) {
-//console.log( 'oud 1', oud[ 1 ] );
-			oud[ end ].tw( obj, oud[ end ] );
+		if ( obj.position.distanceTo( v( oud[ 0 ].pX, oud[ 0 ].pY, oud[ 0 ].pZ ) ) === 0 ) {
+
+			tween2location( obj, oud[ 1 ] );
 
 		} else {
-//console.log( 'oud 0', oud[ start ] );
-			oud[ start ].tw( obj, oud[ start ]  );
+
+			tween2location( obj, oud[ 0 ]  );
 
 		}
 
@@ -239,14 +236,14 @@
 
 		var index = index ? index : 0;
 
-		if( info ) { info.innerHTML = 'debug: frame:' + index + '<br>'; }
+		if( info ) { info.innerHTML = 'frame:' + index + '<br>'; }
 
 		for ( var i = 0; i < objects.length; i++ ) {
 
 			var obj = objects[ i ];
 			var oud = obj.userData.places[ index ];
 
-			oud.tw( obj, oud );
+			tween2location( obj, oud );
 
 			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - time: ' + oud.ms + '<br>';
 
@@ -406,30 +403,28 @@ console.log( 'the end' );
 
 	}
 
-	function tweenCamera( camera, p, onComplete ) {
+	function tweenCamera( camera, c, onComplete ) {
+console.log( 'c', c );
+		eP = c.eP ? c.eP : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
+		eR = c.eR ? c.eR : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
+		ms = c.ms ? c.ms : duration;
 
-//console.log( 'c', p );
+		cX = c.cX ? c.cX : 0;
+		cY = c.cY ? c.cY : 0;
+		cZ = c.cZ ? c.cZ : 0;
 
-		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
-		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
-		ms = p.ms ? p.ms : duration;
-
-		pX = p.pX ? p.pX : 0;
-		pY = p.pY ? p.pY : 0;
-		pZ = p.pZ ? p.pZ : 0;
-
-		tX = p.tX ? p.tX : 0;
-		tY = p.tY ? p.tY : 0;
-		tZ = p.tZ ? p.tZ : 0;
+		tX = c.tX ? c.tX : 0;
+		tY = c.tY ? c.tY : 0;
+		tZ = c.tZ ? c.tZ : 0;
 
 		var onComplete = onComplete ? onComplete : function(){};
 
 		new TWEEN.Tween( camera.position )
-		.to( { x: pX, y: pY, z: pZ}, ms )
+		.to( { x: cX, y: cY, z: cZ}, ms )
 		.easing( eP )
 		.start();
 
-		new TWEEN.Tween( controls.target ).to( { x: tX, y: tY, z: tZ}, ms )
+		new TWEEN.Tween( controls.target ).to( { x: tX, y: tY, z: tZ}, c.ms )
 		.easing( eR )
 		.onComplete( function() { onComplete(); } )
 		.start();
