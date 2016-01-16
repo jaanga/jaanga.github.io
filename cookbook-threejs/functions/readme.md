@@ -91,7 +91,7 @@
 
 ### [Tween.js Easings R1]( ./tweening/tweenjs-easings/tweenjs-easings-r1.html )
 
-*  See [Tween.js Turns Tweening and Animating in 3D into a Joy]( http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tween.js makes-tweening-in-3d-a-joy_moving-manuals.md )
+*  See [Tween.js Turns Tweening and Animating in 3D into a Joy]( http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tweenjs makes-tweening-in-3d-a-joy_moving-manuals.md )
 
 
 ### [Tween.js Film Clips R5]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r4.html )
