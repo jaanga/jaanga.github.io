@@ -73,35 +73,6 @@
 
 	}
 
-	function hashChange() {
-
-			content.innerHTML = header;
-			contents = [];
-
-		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
-
-			tags = location.hash.split( '#' ).slice( 2 );
-
-//console.log( 'tags', tags );
-
-			posts = [];
-
-			requestPostTitles( tags );
-
-		} else if ( location.hash !== '' ) {
-
-			requestPost( location.hash.substr( 1 ), 0, 1 );
-
-		} else {
-
-			tags = '';
-			posts = [];
-			requestPostTitles();
-
-		}
-
-	}
-
 </script>
 </body>
 </html>
