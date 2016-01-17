@@ -73,8 +73,8 @@
 
 		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
 
+			tags = location.hash.split( '#' ).slice( 2 );
 
-			tags = location.hash.split( '#' );
 			posts = [];
 
 			requestPostTitles( tags );

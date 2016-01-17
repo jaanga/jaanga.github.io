@@ -16,6 +16,11 @@
 			if ( xhr.readyState !== 4 ) { return; }
 
 			var response =  xhr.responseText;
+
+posts = JSON.parse( xhr.response );
+
+//console.log( 'posts', posts );
+
 			var lines = response.split(/\r\n|\n/);
 			var txt = '';
 
@@ -32,6 +37,7 @@
 						tag = items[ 2 ];
 
 						if ( tag ) {
+
 							itemTag = items[2].substr( 0, items[ 2 ].length - 5 );
 
 						} else {
@@ -59,8 +65,8 @@ console.log( 'oops here:', items );
 					} else {
 
 						posts.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
-						txt += fname + '<br>';
 
+						txt += fname + '<br>';
 
 					}
 
@@ -104,9 +110,7 @@ console.log( 'oops here:', items );
 
 			if ( items.length > 1 ) {
 
-//				txt = `<div><i>${ items[ 0 ] } - tags: ${ items[ 2 ].replace( '.md', '' ) } </i></div>`;
-
-				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( # "not working yet" )_\n`;
+				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( #tags#${ items[ 2 ].replace( '.md', '' ) } )_\n`;
 
 			} else {
 
