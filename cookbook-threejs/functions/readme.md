@@ -94,7 +94,7 @@
 *  See [Tween.js Turns Tweening and Animating in 3D into a Joy]( http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tweenjs-makes-tweening-in-3d-a-joy_moving-manuals.md )
 
 
-### [Tween.js Film Clips R5]( ./tweening/tweenjs-film-clips/tweenjs-film-clips-r4.html )
+### [Tween.js Film Clips R6]( http://jaanga.github.io/cookbook-threejs/functions/tweening/tweenjs-film-clips/tweenjs-film-clips-r6.html )
 
 * Tween position and rotation of multiple objects
 * 'Frame' data stored in each the object

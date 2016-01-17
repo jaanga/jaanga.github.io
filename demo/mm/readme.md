@@ -35,10 +35,9 @@ _2016-01-17_
 tweenjs-r1.js
 
 
-* Now with even better tweening. See
-
+* Now with even better tweening. See:
 	* [Tween.js Easings R1]( http://jaanga.github.io/cookbook-threejs/functions/tweening/tweenjs-easings/tweenjs-easings-r1.html )
-	* [
+	* [Tween.js Film Clip R6]( http://jaanga.github.io/cookbook-threejs/functions/tweening/tweenjs-film-clips/tweenjs-film-clips-r6.html )
 
 
 _2016-01-14_
