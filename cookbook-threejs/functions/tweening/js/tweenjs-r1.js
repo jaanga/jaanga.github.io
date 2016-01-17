@@ -191,7 +191,9 @@
 
 		if ( intersects.length > 0 ) {
 
-			togglePlace( intersects[ 0 ].object )
+			togglePlace( intersects[ 0 ].object );
+
+			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 		}
 
@@ -216,17 +218,17 @@
 
 	function togglePlace( obj, start, end ) {
 
-		start = start ? start : 0;
-		end = end ? end : 1;
+		var start = start ? start : 0;
+		var end = end ? end : 1;
 
 		oud = obj.userData.places;
 
 		if ( obj.position.distanceTo( v( oud[ start ].pX, oud[ start ].pY, oud[ start ].pZ ) ) < 0.1 ) {
-//console.log( 'oud 1', oud[ 1 ] );
+
 			oud[ end ].tw( obj, oud[ end ] );
 
 		} else {
-//console.log( 'oud 0', oud[ start ] );
+
 			oud[ start ].tw( obj, oud[ start ]  );
 
 		}
@@ -290,7 +292,7 @@
 
 			if ( indexFrame === 0 ) {
 
-				tweenAllToLocation(0);
+				tweenAllToLocation( 0 );
 
 				tweenFrame();
 
