@@ -129,7 +129,7 @@
 
 	function setClipsRandom() {
 
-		playClipRandom = [];
+		playClip4 = [];
 
 		for ( var i = 0; i < frames; i++ ) {
 
@@ -143,7 +143,7 @@
 
 			frame.push( [ camera, i ] );
 
-			playClipRandom.push( frame )
+			playClip4.push( frame )
 
 		}
 
@@ -251,19 +251,28 @@
 
 			var obj = objects[ i ];
 			var oud = obj.userData.places[ index ];
-			ms = oud.ms ? oud.ms : duration;
-			oud.tw = oud.tw ? oud.tw : tween2location;
+
 			oud.tw( obj, oud );
 
-			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-' + obj.geometry.type + ' ' + ms.toFixed() + 'ms<br>';
+			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - time: ' + oud.ms + '<br>';
 
 		}
 
-		if ( camera.userData.places.length > 0 ) { tweenCamera( camera, camera.userData.places[ index ] ); }
+//		if ( camera.userData.places.length > 0 ) { tweenCamera( camera, camera.userData.places[ 5 ] ); }
 
 		if ( outFrame ) { outFrame.value = index; }
 
 		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
+
+	}
+
+	function initTweenClipAllPlaces( indexFrame ) {
+
+		if ( indexFrame < frames && indexObjects === 0 ) {
+
+			tweenSelect( indexObjects, tweenClipRandom );
+
+		}
 
 	}
 
@@ -330,8 +339,25 @@ console.log( 'the end' );
 			var oud = obj.userData.places[ indexLocation ];
 			oud.ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexLocation ].ms;
 
-			oud.tw = oud.tw ? oud.tw : tween2location;
-			oud.tw( obj, oud, itemDispatch );
+//			if ( obj.name === 'camera' ) {
+
+//console.log( 'camera' );
+
+//				tweenCamera( obj, oud, itemDispatch );
+
+//			if ( obj.name === 'pencil' ) {
+
+//console.log( 'pencil line');
+
+//				drawPencilLine( v( 0, 0, 0 ), v( 100, 100, 100 ), itemDispatch );
+
+//			} else {
+
+//console.log( 'else doit', obj );
+
+				oud.tw( obj, oud, itemDispatch );
+
+//			}
 
 		}
 
@@ -339,13 +365,17 @@ console.log( 'the end' );
 
 	function itemDispatch() {
 
-		info.innerHTML += 'frame: ' + indexFrame + ' objects: ' + indexObject + ' ' + ( Date.now() - startTime ) + 'ms<br>';
+		info.innerHTML += 'frame: ' + indexFrame + ' objects: ' + indexObject + ' time: ' + ( Date.now() - startTime ) + '<br>';
 
 		if ( indexObject < clip[ indexFrame ].length - 1 ) {
+
+//console.log( 'iD go', indexObject );
 
 			indexObject++;
 
 		} else {
+
+//console.log( 'iD else ', indexObject, ( Date.now() - startTime ) );
 
 			indexObject = 0;
 			indexFrame++;

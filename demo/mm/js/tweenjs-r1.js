@@ -32,8 +32,8 @@
 
 	var outFrame;
 
-// set up demos/tests
 
+// set up demos/tests
 
 	function setPlacesRandom() {
 
@@ -46,11 +46,11 @@
 
 			for ( var j = 0; j < frames; j++ ) {
 
-				ePosType = easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
-				eRotType = easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ];
+				var index = Math.floor( Math.random() * ( easings.length - 1 ) ) 
+				var io = index === 0 ? 'None' : 'InOut'; 
 
 				var p = {
-					fr: j,
+					tw: tween2location,
 					pX: Math.random() * 100 - 50,
 					pY: Math.random() * 100 - 50,
 					pZ: Math.random() * 100 - 50,
@@ -58,8 +58,8 @@
 					rY: Math.random() * pi,
 					rZ: Math.random() * pi,
 					ms: Math.random() * 3000,
-					eP: ePosType,
-					eR: eRotType
+					eP: TWEEN.Easing[ easings[ index ] ][ io ],
+					eR: TWEEN.Easing[ easings[ index ] ][ io ]
 				};
 
 				object.userData.places.push( p );
@@ -72,16 +72,20 @@
 
 		for ( var i = 0; i < frames; i++ ) {
 
+			var index = Math.floor( Math.random() * ( easings.length - 1 ) ) 
+			var io = index === 0 ? 'None' : 'InOut'; 
+
 			p = {
-				cX: Math.random() * 100 + 50,
-				cY: Math.random() * 100 + 50,
-				cZ: Math.random() * 100 + 50,
+				tw: tweenCamera,
+				pX: Math.random() * 100 + 50,
+				pY: Math.random() * 100 + 50,
+				pZ: Math.random() * 100 + 50,
 				tX: Math.random() * 50,
 				tY: Math.random() * 50,
 				tZ: Math.random() * 50,
 				ms: Math.random() * 3000,
-				eP: easings[ 1 ],
-				eR: easings[ 1 ]
+				eP: TWEEN.Easing[ easings[ index ] ][ io ],
+				eR: TWEEN.Easing[ easings[ index ] ][ io ]
 
 			}
 
@@ -95,7 +99,7 @@
 
 		playClip1 = [
 
-			[ [ objects[ 0 ], 0 ], [ pencil, 0 ], [ camera, 1 ]  ],
+			[ [ objects[ 0 ], 1 ], [ camera, 0 ] ],
 			[ [ objects[ 0 ], 1 ], [ objects[ 3 ], 0 ], [ camera, 2 ] ],
 			[ [ objects[ 0 ], 2 ], [ camera, 3 ]  ],
 			[ [ objects[ 0 ], 3 ] ],
@@ -125,7 +129,7 @@
 
 	function setClipsRandom() {
 
-		playClip4 = [];
+		playClipRandom = [];
 
 		for ( var i = 0; i < frames; i++ ) {
 
@@ -139,7 +143,7 @@
 
 			frame.push( [ camera, i ] );
 
-			playClip4.push( frame )
+			playClipRandom.push( frame )
 
 		}
 
@@ -191,7 +195,9 @@
 
 		if ( intersects.length > 0 ) {
 
-			togglePlace( intersects[ 0 ].object )
+			togglePlace( intersects[ 0 ].object );
+
+			playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 		}
 
@@ -214,17 +220,20 @@
 
 
 
-	function togglePlace( obj ) {
+	function togglePlace( obj, start, end ) {
+
+		var start = start ? start : 0;
+		var end = end ? end : 1;
 
 		oud = obj.userData.places;
 
-		if ( obj.position.distanceTo( v( oud[ 0 ].pX, oud[ 0 ].pY, oud[ 0 ].pZ ) ) === 0 ) {
+		if ( obj.position.distanceTo( v( oud[ start ].pX, oud[ start ].pY, oud[ start ].pZ ) ) < 0.1 ) {
 
-			tween2location( obj, oud[ 1 ] );
+			oud[ end ].tw( obj, oud[ end ] );
 
 		} else {
 
-			tween2location( obj, oud[ 0 ]  );
+			oud[ start ].tw( obj, oud[ start ]  );
 
 		}
 
@@ -236,32 +245,25 @@
 
 		var index = index ? index : 0;
 
-		if( info ) { info.innerHTML = 'frame:' + index + '<br>'; }
+		if( info ) { info.innerHTML = 'debug: frame:' + index + '<br>'; }
 
 		for ( var i = 0; i < objects.length; i++ ) {
 
 			var obj = objects[ i ];
 			var oud = obj.userData.places[ index ];
+			ms = oud.ms ? oud.ms : duration;
+			oud.tw = oud.tw ? oud.tw : tween2location;
+			oud.tw( obj, oud );
 
-			tween2location( obj, oud );
-
-			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - time: ' + oud.ms + '<br>';
+			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-' + obj.geometry.type + ' ' + ms.toFixed() + 'ms<br>';
 
 		}
 
-//		if ( camera.userData.places.length > 0 ) { tweenCamera( camera, camera.userData.places[ 5 ] ); }
+		if ( camera.userData.places.length > 0 ) { tweenCamera( camera, camera.userData.places[ index ] ); }
 
 		if ( outFrame ) { outFrame.value = index; }
 
-	}
-
-	function initTweenClipAllPlaces( indexFrame ) {
-
-		if ( indexFrame < frames && indexObjects === 0 ) {
-
-			tweenSelect( indexObjects, tweenClipRandom );
-
-		}
+		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 	}
 
@@ -287,13 +289,15 @@
 
 			if ( indexFrame === 0 ) {
 
-				tweenAllToLocation(0);
+				tweenAllToLocation( 0 );
 
 				tweenFrame();
 
 			} else if ( indexFrame < clip.length ) {
 
 				tweenFrame();
+
+				playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 			} else {
 
@@ -326,25 +330,8 @@ console.log( 'the end' );
 			var oud = obj.userData.places[ indexLocation ];
 			oud.ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexLocation ].ms;
 
-			if ( obj.name === 'camera' ) {
-
-//console.log( 'camera' );
-
-				tweenCamera( obj, oud, itemDispatch );
-
-			} else if ( obj.name === 'pencil' ) {
-
-//console.log( 'pencil line');
-
-				drawPencilLine( v( 0, 0, 0 ), v( 100, 100, 100 ), itemDispatch );
-
-			} else {
-
-//console.log( 'else doit', obj );
-
-				tween2location( obj, oud, itemDispatch );
-
-			}
+			oud.tw = oud.tw ? oud.tw : tween2location;
+			oud.tw( obj, oud, itemDispatch );
 
 		}
 
@@ -352,17 +339,13 @@ console.log( 'the end' );
 
 	function itemDispatch() {
 
-		info.innerHTML += 'frame: ' + indexFrame + ' objects: ' + indexObject + ' time: ' + ( Date.now() - startTime ) + '<br>';
+		info.innerHTML += 'frame: ' + indexFrame + ' objects: ' + indexObject + ' ' + ( Date.now() - startTime ) + 'ms<br>';
 
 		if ( indexObject < clip[ indexFrame ].length - 1 ) {
-
-//console.log( 'iD go', indexObject );
 
 			indexObject++;
 
 		} else {
-
-//console.log( 'iD else ', indexObject, ( Date.now() - startTime ) );
 
 			indexObject = 0;
 			indexFrame++;
@@ -376,8 +359,8 @@ console.log( 'the end' );
 
 	function tween2location( obj, p, onComplete ) {
 
-		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
-		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
+		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 1 ] ].InOut;
+		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 1 ] ].InOut;
 		ms = p.ms ? p.ms : duration;
 
 		pX = p.pX ? p.pX : 0;
@@ -403,30 +386,50 @@ console.log( 'the end' );
 
 	}
 
-	function tweenCamera( camera, c, onComplete ) {
-console.log( 'c', c );
-		eP = c.eP ? c.eP : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
-		eR = c.eR ? c.eR : TWEEN.Easing[ easings[ 1 + Math.floor( Math.random() * ( easings.length - 1 ) ) ] ].InOut;
-		ms = c.ms ? c.ms : duration;
+	function tweenCamera( camera, p, onComplete ) {
 
-		cX = c.cX ? c.cX : 0;
-		cY = c.cY ? c.cY : 0;
-		cZ = c.cZ ? c.cZ : 0;
+		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 0 ] ].None;
+		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 0 ] ].None;
+		ms = p.ms ? p.ms : duration;
 
-		tX = c.tX ? c.tX : 0;
-		tY = c.tY ? c.tY : 0;
-		tZ = c.tZ ? c.tZ : 0;
+		pX = p.pX ? p.pX : 0;
+		pY = p.pY ? p.pY : 0;
+		pZ = p.pZ ? p.pZ : 0;
+
+		tX = p.tX ? p.tX : 0;
+		tY = p.tY ? p.tY : 0;
+		tZ = p.tZ ? p.tZ : 0;
 
 		var onComplete = onComplete ? onComplete : function(){};
 
 		new TWEEN.Tween( camera.position )
-		.to( { x: cX, y: cY, z: cZ}, ms )
+		.to( { x: pX, y: pY, z: pZ}, ms )
 		.easing( eP )
 		.start();
 
-		new TWEEN.Tween( controls.target ).to( { x: tX, y: tY, z: tZ}, c.ms )
+		new TWEEN.Tween( controls.target ).to( { x: tX, y: tY, z: tZ}, ms )
 		.easing( eR )
 		.onComplete( function() { onComplete(); } )
 		.start();
 
 	}
+
+
+	function drawPencilLine( obj, p, func ) {
+
+		onComplete = func ? func : function() {} ;
+
+		var geometry = new THREE.Geometry();
+
+		geometry.vertices.push( v( p.pX, p.pY, p.pZ ) );
+		geometry.vertices.push( v( p.rX, p.rY, p.rZ ) );
+
+		var material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+		var line = new THREE.LineSegments( geometry, material  );
+
+		scene.add( line );
+
+		onComplete();
+
+	}
+

@@ -2,8 +2,10 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Kallax Wall Bracket Basic R11</title>
+<title>Kallax Wall Bracket Basic R12</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='3D animation shows how to install a wall bracket for a book shelf' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM,Jaanga,Moving Manuals' >
 </head>
 <body>
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
@@ -105,7 +107,7 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
-// mm-tween-r1.js
+// tweenjs-r1.js
 		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
 
@@ -206,8 +208,11 @@
 
 		screwWall.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0 } );
 		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0 } );
-		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: -5 * pi} );
-		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 115, rX: 0, rY: 0, rZ: -10 * pi } );
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: -5 * pi } );
+
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: 0} );
+
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 115, rX: 0, rY: 0, rZ: -5 * pi } );
 
 		placard = drawPlacard( 'wall screw', 0.05, 120, 0, 20, 10 );
 		screwWall.add( placard );
@@ -235,6 +240,7 @@
 		screwdriver = drawScrewdriver();
 
 		screwdriver.userData.places.push( { pX: 30 + ran( -25 ), pY: screwdriver.userData.radiusHandle, pZ: ran( 30 ), rX: 0, rY: -pi05 + ran( 0.5 ) - 0.25, rZ: 0 } );
+
 		screwdriver.userData.places.push( { pX: origin.x - 25, pY: origin.y + 0.5 * heightBracket - 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
 		screwdriver.userData.places.push( { pX: origin.x - 10, pY: origin.y + 0.5 * heightBracket - 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
 		screwdriver.userData.places.push( { pX: origin.x - 0, pY: origin.y + 0.5 * heightBracket - 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
@@ -243,11 +249,21 @@
 		screwdriver.userData.places.push( { pX: origin.x - 10, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
 		screwdriver.userData.places.push( { pX: origin.x - 0, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 10 * pi, rY: -pi05, rZ: 0 } );
 
-		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 70, rX: 10 * pi, rY: 0, rZ: 0 } );
-		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 85, rX: 10 * pi, rY: 0, rZ: 0 } );
-		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 10 * pi, rY: 0, rZ: 0  } );
+		screwdriver.userData.places.push( { pX: origin.x - 0, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
 
-		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 10 * pi, rY: 0, rZ: -5 * pi  } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 70, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 85, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: -5 * pi  } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0  } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 80, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: -5 * pi  } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: 0  } );
+
+
 
 		objects.push( screwdriver );
 		scene.add( screwdriver );
@@ -255,9 +271,9 @@
 		camera.userData.places = [];
 		camera.name = 'camera';
 
-		camera.userData.places.push( { cX: -100, cY: 100, cZ: 100, tX: 0, tY: 0, tZ: 0 } );
-		camera.userData.places.push( { cX: 30, cY: 100, cZ: -50, tX: 80, tY: 16, tZ: -73 } );
-		camera.userData.places.push( { cX: 50, cY: 40, cZ: 20, tX: origin.x, tY: origin.y, tZ: origin.z - 100 } );
+		camera.userData.places.push( { tw: tweenCamera, pX: -100, pY: 100, pZ: 100, tX: 0, tY: 0, tZ: 0 } );
+		camera.userData.places.push( { tw: tweenCamera, pX: 30, pY: 100, pZ: -50, tX: 80, tY: 16, tZ: -73 } );
+		camera.userData.places.push( { tw: tweenCamera, pX: 50, pY: 40, pZ: 20, tX: origin.x, tY: origin.y, tZ: origin.z - 100 } );
 
 
 		pencilLine = {};
@@ -265,10 +281,8 @@
 		pencilLine.userData = {};
 		pencilLine.userData.places = [];
 
-		pencilLine.userData.places.push({ pX: origin.x - 16, pY: origin.y, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
-		pencilLine.userData.places.push({ pX: origin.x - 10, pY: origin.y, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
-		pencilLine.userData.places.push({ pX: origin.x - 13, pY: origin.y + 2, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
-		pencilLine.userData.places.push({ pX: origin.x - 13, pY: origin.y - 2, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
+		pencilLine.userData.places.push({ tw: drawPencilLine, pX: origin.x - 16, pY: origin.y, pZ: origin.z - 107, rX: origin.x - 10, rY: origin.y, rZ: origin.z - 107 } );
+		pencilLine.userData.places.push({ tw: drawPencilLine, pX: origin.x - 13, pY: origin.y + 2, pZ: origin.z - 107, rX: origin.x - 13, rY: origin.y - 2, rZ: origin.z - 107 } );
 
 		createClips();
 
@@ -293,8 +307,9 @@
 			[ [ screwdriver, 4, 2000 ] ],
 			[ [ screws[ 0 ], 1, 2000 ] ],
 			[ [ screwdriver, 5, 3000 ] ],
-			[ [ screws[ 0 ], 2, 8000 ], [ screwdriver, 6, 3000 ] ],
+			[ [ screws[ 0 ], 2, 5000 ], [ screwdriver, 6, 5000 ] ],
 			[ [ camera, 0, 2000 ] ],
+			[ [ screwdriver, 7, 0 ] ],
 			[ [ screwdriver, 0, 3000 ] ]
 
 		];
@@ -309,7 +324,7 @@
 			[ [ pencil, 4, 1000 ], [ pencilLine, 0, 500 ]  ],
 
 			[ [ pencil, 5, 2000 ] ],
-			[ [ pencil, 6, 1000 ], [ pencilLine, 2, 500 ] ],
+			[ [ pencil, 6, 1000 ], [ pencilLine, 1, 500 ] ],
 			[ [ camera, 0, 1000 ] ],
 			[ [ pencil, 0, 2000 ] ]
 
@@ -317,31 +332,29 @@
 
 		fixWallScrew = [
 
-			[ [ pencilLine, 0, 1000 ], [ pencilLine, 2, 1000 ], [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ],
+			[ [ pencilLine, 0, 1000 ], [ pencilLine, 1, 1000 ], [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ],
 			[ [ fixture, 1, 2000 ], [ bracket115753, 3, 2000 ], [ screws[ 0 ], 3, 2000 ], [ screws[ 1 ], 3, 2000 ] ],
 			[ [ screwWall, 1, 2000 ] ],
-			[ [ screwdriver, 7, 3000 ] ],
+			[ [ screwdriver, 8, 3000 ] ],
 			[ [ camera, 2, 1000 ] ],
-			[ [ screwdriver, 8, 2000 ] ],
-			[ [ screwdriver, 9, 5000 ], [ screwWall, 2, 5000 ] ],
-			[ [ screwdriver, 8, 2000 ] ],
-			[ [ camera, 0, 1000 ] ],
-			[ [ screwdriver, 0, 2000 ] ],
+			[ [ screwdriver, 9, 2000 ] ],
+			[ [ screwdriver, 10, 5000 ], [ screwWall, 2, 5000 ] ],
+			[ [ camera, 0, 1000 ], [ screwdriver, 11, 0 ] ],
+			[ [ screwdriver, 0, 3000 ] ],
 			[ [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ]
 
 		];
 
 		fixPart103693 = [
 
-			[ [ pencilLine, 0, 1000 ], [ pencilLine, 2, 1000 ], [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ],
-			[ [ screwWall, 2, 2000 ] ],
+			[ [ pencilLine, 0, 1000 ], [ pencilLine, 1, 1000 ], [ screwWall, 3, 2000 ], [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ],
 			[ [ part103693, 1, 2000 ] ],
 			[ [ camera, 2, 1000 ] ],
 			[ [ part103693, 2, 3000 ] ],
-			[ [ screwdriver, 8, 2000 ] ],
-			[ [ screwdriver, 9, 2000 ] ],
-			[ [ screwWall, 3, 2000 ], [ screwdriver, 10, 2000 ] ],
-			[ [ camera, 0, 1000 ] ],
+			[ [ screwdriver, 12, 2000 ] ],
+			[ [ screwdriver, 13, 2000 ] ],
+			[ [ screwWall, 4, 2000 ], [ screwdriver, 14, 2000 ] ],
+			[ [ camera, 0, 1000 ], [ screwdriver, 15, 0 ] ],
 			[ [ screwdriver, 0, 2000 ] ]
 
 		]
