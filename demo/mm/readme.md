@@ -28,6 +28,19 @@ _This is all still a work-in-progress. In particular: sounds and textures need m
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
+_2016-01-17_
+
+[Kallax Wall Bracket Basic R12]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r12.html )
+
+tweenjs-r1.js
+
+
+* Now with even better tweening. See
+
+	* [Tween.js Easings R1]( http://jaanga.github.io/cookbook-threejs/functions/tweening/tweenjs-easings/tweenjs-easings-r1.html )
+	* [
+
+
 _2016-01-14_
 
 [Kallax Wall Bracket Basic R11]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/kallax-wall-bracket-basic-r11.html )
