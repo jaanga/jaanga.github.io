@@ -2,7 +2,6 @@ The End of the Beginning?
 ===
 
 <iframe src=http://jaanga.github.io/outer-space/star-spotter/dev/index.html width=800 height=600 ><img src=star-spotter-screen-stars-1024x768.jpg width=800 height=600></iframe>
-
 <!--
 ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =640x480 )  
 -->
@@ -30,6 +29,6 @@ For example, have a look at the many ways the Moon Voyager Gamer code has been r
 Even with all this work, the bulk of te work is in the future. For the time being there is no math. 
 There are no orbits or trajectories bing calculated.
 And there is no indication as to the optics and sensors used to capture the data we have. But one day will recreate Galileo's telescope and look through it and see how he say the Moon and Mars.
-We will recreate the trajectories of the heavenly bpdies according to Kepler's rules and to all the subsequent enhancements.
+We will recreate the trajectories of the heavenly bodies according to Kepler's rules and to all the subsequent enhancements.
 
 Here is another quote: The best is yet to be.

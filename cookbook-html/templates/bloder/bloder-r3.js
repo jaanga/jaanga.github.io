@@ -110,7 +110,8 @@ console.log( 'oops here:', items );
 
 			if ( items.length > 1 ) {
 
-				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( #tags#${ items[ 2 ].replace( '.md', '' ) } )_ \n`;
+				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( #tags#${ items[ 2 ].replace( '.md', '' ) } )_ \n\n`;
+
 
 			} else {
 
@@ -120,9 +121,10 @@ console.log( 'oops here:', items );
 
 			titleLength = xhr.responseText.indexOf( '===' );
 
-			title = '[' + xhr.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )';
-
-			txt = converter.makeHtml( txt + title + xhr.responseText.substr( titleLength - 1 )  ) + '<hr>';
+			title = '###[' + xhr.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )\n';
+			tt = txt + title + xhr.responseText.substr( titleLength + 3 );
+console.log( 'tt', tt );
+			txt = converter.makeHtml( tt ) + '<hr>';
 
 			contents[ index ] = txt;
 
