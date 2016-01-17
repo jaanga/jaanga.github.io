@@ -17,11 +17,11 @@
 
 			var response =  xhr.responseText;
 
-posts = JSON.parse( xhr.response );
+// xhrposts = JSON.parse( xhr.response );
 
-//console.log( 'posts', posts );
+//console.log( 'xhrposts', xhrposts );
 
-			var lines = response.split(/\r\n|\n/);
+			lines = response.split(/\r\n|\n/);
 			var txt = '';
 
 			for ( var i = 0; i < lines.length; i++ ) {
