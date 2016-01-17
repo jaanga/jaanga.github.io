@@ -15,24 +15,19 @@
 
 			if ( xhr.readyState !== 4 ) { return; }
 
-			var response =  xhr.responseText;
+			xhrPosts = JSON.parse( xhr.response );
 
-// xhrposts = JSON.parse( xhr.response );
+			var keys = Object.keys( xhrPosts );
 
-//console.log( 'xhrposts', xhrposts );
+			for ( var i = 0; i < keys.length; i++ ) {
 
-			lines = response.split(/\r\n|\n/);
-			var txt = '';
+				fname = xhrPosts[ keys[ i ] ].name;
 
-			for ( var i = 0; i < lines.length; i++ ) {
-
-				if ( lines[ i ].indexOf( '"name": "201' ) > -1 ) {
-
-					line = lines[ i ];
-					items = line.substr( 13 ).split( '_' );
-					fname = line.substr( 13 ).replace( '",', '' );
+				if ( fname.substr( 0, 3 ) === '201' ) {
 
 					if ( tags !== undefined ) {
+
+						items = fname.split( '_' );
 
 						tag = items[ 2 ];
 
@@ -54,8 +49,6 @@ console.log( 'oops here:', items );
 							if ( itemTag === tags[ j ] ) {
 
 								posts.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
-								txt += fname + '<br>';
-
 							}
 
 						}
@@ -65,8 +58,6 @@ console.log( 'oops here:', items );
 					} else {
 
 						posts.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
-
-						txt += fname + '<br>';
 
 					}
 
@@ -85,8 +76,6 @@ console.log( 'oops here:', items );
 			postFinish = postFinish < posts.length ? postFinish : posts.length;
 
 			for ( var i = postsStart; i < postFinish; i++ ) {
-
-//console.log( posts[ i ].name, i, postsNumberToDisplay  );
 
 				requestPost ( posts[ i ].name, i, postFinish );
 
@@ -115,6 +104,8 @@ console.log( 'oops here:', items );
 
 			} else {
 
+// should never get here. could drop if?
+
 				txt = `<div><i>${ items[ 0 ] } </i></div>`;
 
 			}
@@ -122,25 +113,27 @@ console.log( 'oops here:', items );
 			titleLength = xhr.responseText.indexOf( '===' );
 
 			title = '# [' + xhr.responseText.substr( 0, titleLength - 1 ) + ' ]( #' + fileName + ' )\n';
-			tt = txt + title + xhr.responseText.substr( titleLength + 3 );
+			tt = txt + title + xhr.responseText.substr( titleLength + 3 ) + '<hr>'
 
 //console.log( 'tt', tt );
 
-			txt = converter.makeHtml( tt ) + '<hr>';
+			txt = converter.makeHtml( tt );
+
+// allow for async file arrival
 
 			contents[ index ] = txt;
 
 			if ( contents.length >= number ) {
 
-				postsText.innerHTML = '';
+				txt = '';
 
 				for ( var i = 0 ; i < number; i++ ) {
 
-					postsText.innerHTML += contents[ i ];
+					txt += contents[ i ];
 
 				}
 
-				postsText.innerHTML += footer
+				postsText.innerHTML = txt + footer;
 
 			}
 
