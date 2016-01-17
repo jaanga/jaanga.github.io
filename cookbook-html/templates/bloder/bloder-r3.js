@@ -121,7 +121,7 @@ console.log( 'oops here:', items );
 
 			titleLength = xhr.responseText.indexOf( '===' );
 
-			title = '###[' + xhr.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )\n';
+			title = '#[' + xhr.responseText.substr( 0, titleLength - 1 ) + ']( #' + fileName + ' )\n';
 			tt = txt + title + xhr.responseText.substr( titleLength + 3 );
 console.log( 'tt', tt );
 			txt = converter.makeHtml( tt ) + '<hr>';
