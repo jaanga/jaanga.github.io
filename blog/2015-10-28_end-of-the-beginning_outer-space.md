@@ -1,7 +1,11 @@
 The End of the Beginning?
 ===
 
+<iframe src=http://jaanga.github.io/outer-space/star-spotter/dev/index.html width=800 height=600 ><img src=star-spotter-screen-stars-1024x768.jpg width=800 height=600></iframe>
+
+<!--
 ![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =640x480 )  
+-->
 _Star Spotter Stars_
 
 One of our favorite quotes is: 'This is not the end, not even the beginning of the end, but it is, perhaps, the end of the beginning.' 
