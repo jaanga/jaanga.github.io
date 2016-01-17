@@ -110,7 +110,7 @@ console.log( 'oops here:', items );
 
 			if ( items.length > 1 ) {
 
-				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( #tags#${ items[ 2 ].replace( '.md', '' ) } )_\n`;
+				txt = `_${ items[ 0 ] } - tags: [${ items[ 2 ].replace( '.md', '' ) }]( #tags#${ items[ 2 ].replace( '.md', '' ) } )_ \n`;
 
 			} else {
 
