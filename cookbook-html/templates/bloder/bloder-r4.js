@@ -6,7 +6,7 @@
 
 	var converter = new showdown.Converter();
 
-	function hashChange() {
+	function onHashChange() {
 
 		content.innerHTML = header;
 		contents = [];
@@ -14,8 +14,6 @@
 		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
 
 			tags = location.hash.split( '#' ).slice( 2 );
-
-//console.log( 'tags', tags );
 
 			posts = [];
 			requestPostTitles( tags );
@@ -52,6 +50,7 @@
 
 				if ( fname.substr( 0, 3 ) === '201' ) {
 
+
 					if ( tags !== undefined ) {
 
 						items = fname.split( '_' );
@@ -60,7 +59,7 @@
 
 						if ( tag ) {
 
-							itemTag = items[2].substr( 0, items[ 2 ].length - 5 );
+							itemTag = items[2].substr( 0, items[ 2 ].length - 3 );
 
 						} else {
 
@@ -76,6 +75,7 @@ console.log( 'oops here:', items );
 							if ( itemTag === tags[ j ] ) {
 
 								posts.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
+
 							}
 
 						}
@@ -141,8 +141,6 @@ console.log( 'oops here:', items );
 
 			title = '# [' + xhr.responseText.substr( 0, titleLength - 1 ) + ' ]( #' + fileName + ' )\n';
 			tt = txt + title + xhr.responseText.substr( titleLength + 3 ) + '<hr>'
-
-//console.log( 'tt', tt );
 
 			txt = converter.makeHtml( tt );
 
