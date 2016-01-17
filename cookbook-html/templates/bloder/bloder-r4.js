@@ -1,10 +1,38 @@
-
+	var tags = '';
 	var posts = [];
 	var postsStart = 0;
 	var postsNumberToDisplay = 8;
 	var contents = [];
 
 	var converter = new showdown.Converter();
+
+	function hashChange() {
+
+			content.innerHTML = header;
+			contents = [];
+
+		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
+
+			tags = location.hash.split( '#' ).slice( 2 );
+
+//console.log( 'tags', tags );
+
+			posts = [];
+
+			requestPostTitles( tags );
+
+		} else if ( location.hash !== '' ) {
+
+			requestPost( location.hash.substr( 1 ), 0, 1 );
+
+		} else {
+
+			posts = [];
+			requestPostTitles();
+
+		}
+
+	}
 
 	function requestPostTitles( tags ) {
 
