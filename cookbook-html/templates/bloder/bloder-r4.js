@@ -8,8 +8,8 @@
 
 	function hashChange() {
 
-			content.innerHTML = header;
-			contents = [];
+		content.innerHTML = header;
+		contents = [];
 
 		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
 
@@ -18,7 +18,6 @@
 //console.log( 'tags', tags );
 
 			posts = [];
-
 			requestPostTitles( tags );
 
 		} else if ( location.hash !== '' ) {

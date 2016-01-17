@@ -7,11 +7,11 @@
 </head>
 <body>
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
-
-<script src=http://jaanga.github.io/cookbook-html/templates/bloder/bloder-r3.js ></script>
+<script src=http://jaanga.github.io/cookbook-html/templates/bloder/bloder-r4.js ></script>
 <script>
 
 	var apiUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/blog';
+
 //	var postsFolder = './blog/';
 	var postsFolder = 'http://jaanga.github.io/blog/';
 
@@ -64,33 +64,6 @@
 		window.addEventListener( 'hashchange', hashChange, false );
 
 		hashChange();
-
-	}
-
-	function hashChange() {
-
-			content.innerHTML = header;
-			contents = [];
-
-		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
-
-			tags = location.hash.split( '#' ).slice( 2 );
-
-			posts = [];
-
-			requestPostTitles( tags );
-
-		} else if ( location.hash !== '' ) {
-
-			requestPost( location.hash.substr( 1 ), 0, 1 );
-
-		} else {
-
-			tags = '';
-			posts = [];
-			requestPostTitles();
-
-		}
 
 	}
 
