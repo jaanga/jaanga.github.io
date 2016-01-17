@@ -10,6 +10,7 @@
 
 <script src=http://jaanga.github.io/cookbook-html/templates/bloder/bloder-r3.js ></script>
 <script>
+
 	var apiUrl = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/blog';
 	var postsFolder = 'http://jaanga.github.io/blog/';
 
@@ -69,10 +70,21 @@
 
 			content.innerHTML = header;
 			contents = [];
-		if ( location.hash !== '' ) {
+
+		if ( location.hash.substr( 0, 5 ) === '#tags' ) {
+
+
+			tags = location.hash.split( '#' );
+			posts = [];
+
+			requestPostTitles( tags );
+
+		} else if ( location.hash !== '' ) {
+
 			requestPost( location.hash.substr( 1 ), 0, 1 );
 
 		} else {
+
 			tags = '';
 			posts = [];
 			requestPostTitles();
