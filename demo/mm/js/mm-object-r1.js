@@ -42,11 +42,11 @@
 
 		if ( type === 'pegHole' ) {
 
-			obj.add( buildPeg( mesh ) );
+			obj.add( drawPeg( mesh ) );
 
 		} else if ( type === 'screwHole' ) {
 
-			obj.add( buildScrew( mesh ) );
+			obj.add( drawScrew( mesh ) );
 
 		}
 
@@ -699,5 +699,56 @@
 		texture.needsUpdate = true;
 
 		return texture;
+
+	}
+
+
+	function loadTexture() {
+
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+
+		loader.load(
+//			'http://mrdoob.github.io/three.js/examples/textures/water.jpg',
+			'../textures/birch-256x256.png',
+			function ( tex ) {
+
+				texture = tex;
+
+				updateMaterial( materialCaseColor );
+
+			}
+
+		);
+
+	}
+
+	function updateMaterial( color ) {
+
+		materialCaseColor = color;
+
+		kallax.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
+
+				t = texture.clone();
+				t.wrapS = t.wrapT = THREE.RepeatWrapping;
+				t.needsUpdate = true;
+
+				if ( child.name === 'shelf' || child.name === 'caseTop' || child.name === 'caseBottom' ) {
+
+					t.repeat.set( columns, 1 );
+
+				} else if ( child.name === 'caseLeft' || child.name === 'caseRight' ) {
+
+					t.repeat.set( rows, 1 );
+
+				}
+
+				child.material = new THREE.MeshBasicMaterial( { color: materialCaseColor, map: t, name: 'materialCase' } );
+
+			}
+
+		} );
 
 	}

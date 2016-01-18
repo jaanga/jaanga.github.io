@@ -43,6 +43,7 @@
 
 			object = objects[ i ];
 			object.userData.places = [];
+			object.userData.tween = tween2location;
 
 			for ( var j = 0; j < frames; j++ ) {
 
@@ -50,7 +51,7 @@
 				var io = index === 0 ? 'None' : 'InOut'; 
 
 				var p = {
-					tw: tween2location,
+
 					pX: Math.random() * 100 - 50,
 					pY: Math.random() * 100 - 50,
 					pZ: Math.random() * 100 - 50,
@@ -69,6 +70,11 @@
 		}
 
 		camera.userData.places = [];
+		camera.userData.tween = tweenCamera
+
+		var p = camera.position.clone(); 
+		var t = controls.target.clone();
+		camera.userData.places.push( { pX: p.x, pY: p.y, pZ: p.z, tX: t.x, tY: t.y, tZ: t.z } );
 
 		for ( var i = 0; i < frames; i++ ) {
 
@@ -76,7 +82,7 @@
 			var io = index === 0 ? 'None' : 'InOut'; 
 
 			p = {
-				tw: tweenCamera,
+
 				pX: Math.random() * 100 + 50,
 				pY: Math.random() * 100 + 50,
 				pZ: Math.random() * 100 + 50,
@@ -226,14 +232,15 @@
 		var end = end ? end : 1;
 
 		oud = obj.userData.places;
+		tween = obj.tween ? obj.tween : tween2location;
 
 		if ( obj.position.distanceTo( v( oud[ start ].pX, oud[ start ].pY, oud[ start ].pZ ) ) < 0.1 ) {
 
-			oud[ end ].tw( obj, oud[ end ] );
+			tween( obj, oud[ end ] );
 
 		} else {
 
-			oud[ start ].tw( obj, oud[ start ]  );
+			tween( obj, oud[ start ]  );
 
 		}
 
@@ -250,12 +257,13 @@
 		for ( var i = 0; i < objects.length; i++ ) {
 
 			var obj = objects[ i ];
+			if( !obj.userData.places[ index ] ) { continue; }
 			var oud = obj.userData.places[ index ];
 			ms = oud.ms ? oud.ms : duration;
-			oud.tw = oud.tw ? oud.tw : tween2location;
-			oud.tw( obj, oud );
+			tween = obj.userData.tween ? obj.userData.tween : tween2location;
+			tween( obj, oud );
 
-			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-' + obj.geometry.type + ' ' + ms.toFixed() + 'ms<br>';
+//			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-' + obj.geometry.type + ' ' + ms.toFixed() + 'ms<br>';
 
 		}
 
@@ -330,8 +338,9 @@ console.log( 'the end' );
 			var oud = obj.userData.places[ indexLocation ];
 			oud.ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexLocation ].ms;
 
-			oud.tw = oud.tw ? oud.tw : tween2location;
-			oud.tw( obj, oud, itemDispatch );
+			tween = obj.userData.tween ? obj.userData.tween : tween2location;
+console.log( '', obj.name, obj.tween );
+			tween( obj, oud, itemDispatch );
 
 		}
 
