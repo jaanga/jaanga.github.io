@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Tween.js Easings R1.2</title>
+<title>Tween.js Easings R1.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Compare and contrast the eleven types of Tween.js easings. Teen position and rotations of of single or all objects and camera. Adjustable duration.' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -12,7 +12,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
-<script src=../js/tweenjs-r2.js ></script>
+<script src=../js/tweenjs-r1.js ></script>
 <script>
 // https://github.com/tweenjs/tween.js
 // http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tweenjs-makes-tweening-in-3d-a-joy_moving-manuals.md
@@ -128,12 +128,15 @@
 		updateCamera();
 		updateBoxes();
 
+
+
 	}
 
 	function updateBoxes() {
 
 		scene.remove( container );
 		container = new THREE.Object3D();
+
 
 		var geometry = new THREE.BoxGeometry( 8, 8, 8 );
 		var material = new THREE.MeshNormalMaterial();
@@ -146,13 +149,12 @@
 			var mesh = new THREE.Mesh( geometry, material );
 
 			mesh.userData.places = [];
-			mesh.userData.tween = tween2location;
 
 			var io = i === 0 ? 'None' : 'InOut'; 
 
-			mesh.userData.places.push( { pX: origin.x, pY: origin.y, pZ: i * 10 + origin.z, rX: 0, rY: 0, rZ: 0, 
+			mesh.userData.places.push( { tw: tween2location, pX: origin.x, pY: origin.y, pZ: i * 10 + origin.z, rX: 0, rY: 0, rZ: 0, 
 				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
-			mesh.userData.places.push( { pX: moveTo.x, pY: moveTo.y, pZ: i * 10 + moveTo.z, rX: 0, rY: pi, rZ: 0, 
+			mesh.userData.places.push( { tw: tween2location, pX: moveTo.x, pY: moveTo.y, pZ: i * 10 + moveTo.z, rX: 0, rY: pi, rZ: 0, 
 				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
 
 			mesh.name = easings[ i ];
@@ -173,8 +175,9 @@
 
 	function updateCamera() {
 
+// console.log( 'updateCamera' );
+
 		camera.userData.places = [];
-		camera.userData.tween = tweenCamera;
 
 		var origin = v( 100, 100, 100 );
 		var moveTo = v( -100, 100, 100 );
@@ -183,9 +186,9 @@
 
 			var io = i === 0 ? 'None' : 'InOut'; 
 
-			camera.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z, tX: 0, tY: 0, tZ: 0, 
+			camera.userData.places.push( { tw: tweenCamera, pX: origin.x, pY: origin.y, pZ: origin.z, tX: 0, tY: 0, tZ: 0, 
 				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ]} );
-			camera.userData.places.push( { pX: moveTo.x, pY: moveTo.y, pZ: moveTo.z, tX: 0, tY: 0, tZ: 0, 
+			camera.userData.places.push( { tw: tweenCamera, pX: moveTo.x, pY: moveTo.y, pZ: moveTo.z, tX: 0, tY: 0, tZ: 0, 
 				ms: inpDuration.valueAsNumber, eP: TWEEN.Easing[ easings[ i ] ][ io ], eR: TWEEN.Easing[ easings[ i ] ][ io ] } );
 
 		}

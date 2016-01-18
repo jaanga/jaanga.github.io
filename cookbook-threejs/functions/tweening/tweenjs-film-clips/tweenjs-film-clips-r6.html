@@ -13,7 +13,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
-<script src=../js/tweenjs-r1.js ></script>
+<script src=../js/tweenjs-r2.js ></script>
 <!--
 <script src=http://rawgit.com/tweenjs/tween.js/master/src/Tween.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
@@ -32,7 +32,6 @@
 		new THREE.TorusGeometry( 10, 5 ),
 
 	];
-
 
 	var css, menu, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -71,7 +70,7 @@
 			<p><button onclick=tweenAllToLocation(); >return to start</button></p>
 			<p><button onclick=tweenAllToLocation(frames-1); >go to end</button></p>
 			<p>frame: <input type=range id=inpFrame max=${ frames - 1 } min=0 step=1 value=0 
-				oninput=tweenAllToLocation(inpFrame.valueAsNumber); > 
+				oninput=tweenAllToLocation(inpFrame.valueAsNumber,outFrame); > 
 				<output id=outFrame >0</output></p>
 
 			<p><button onclick=setClipsRandom(); >reset random places</button></p>
@@ -142,11 +141,13 @@
 
 		}
 
+// see tween-rX.js
+
 		setPlacesRandom();
 		setClipsDefined();
 		setClipsRandom();
 
-		tweenAllToLocation(0); // mm-r1.js
+		tweenAllToLocation(0); 
 
 	}
 
