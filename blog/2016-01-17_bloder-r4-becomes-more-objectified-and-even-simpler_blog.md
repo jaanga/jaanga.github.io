@@ -2,6 +2,7 @@ Bloder R4 Becomes More Objectified and Even Simpler Blog
 ===
 
 <iframe src=http://jaanga.github.io/request-jaanga-blog-posts.html width=800 height=600 ></iframe>
+_a Jaanga post inside a Jaanga post_
 
 A fun thing is to come back to some code you wrote a while ago, have a look at it - and see so many ways of making the code better, simpler and faster.
 The funny thing is that the last time you looked at the code you thought 'wow, this is nearly perfect.'
