@@ -269,20 +269,22 @@
 		scene.add( screwdriver );
 
 		camera.userData.places = [];
+		camera.userData.tween = tweenCamera;
 		camera.name = 'camera';
 
-		camera.userData.places.push( { tw: tweenCamera, pX: -100, pY: 100, pZ: 100, tX: 0, tY: 0, tZ: 0 } );
-		camera.userData.places.push( { tw: tweenCamera, pX: 30, pY: 100, pZ: -50, tX: 80, tY: 16, tZ: -73 } );
-		camera.userData.places.push( { tw: tweenCamera, pX: 50, pY: 40, pZ: 20, tX: origin.x, tY: origin.y, tZ: origin.z - 100 } );
+		camera.userData.places.push( { pX: -100, pY: 100, pZ: 100, tX: 0, tY: 0, tZ: 0 } );
+		camera.userData.places.push( { pX: 30, pY: 100, pZ: -50, tX: 80, tY: 16, tZ: -73 } );
+		camera.userData.places.push( { pX: 50, pY: 40, pZ: 20, tX: origin.x, tY: origin.y, tZ: origin.z - 100 } );
 
 
 		pencilLine = {};
 		pencilLine.name ='pencilLine';
 		pencilLine.userData = {};
 		pencilLine.userData.places = [];
+		pencilLine.userData.tween = drawPencilLine;
 
-		pencilLine.userData.places.push({ tw: drawPencilLine, pX: origin.x - 16, pY: origin.y, pZ: origin.z - 107, rX: origin.x - 10, rY: origin.y, rZ: origin.z - 107 } );
-		pencilLine.userData.places.push({ tw: drawPencilLine, pX: origin.x - 13, pY: origin.y + 2, pZ: origin.z - 107, rX: origin.x - 13, rY: origin.y - 2, rZ: origin.z - 107 } );
+		pencilLine.userData.places.push({ pX: origin.x - 16, pY: origin.y, pZ: origin.z - 107, rX: origin.x - 10, rY: origin.y, rZ: origin.z - 107 } );
+		pencilLine.userData.places.push({ pX: origin.x - 13, pY: origin.y + 2, pZ: origin.z - 107, rX: origin.x - 13, rY: origin.y - 2, rZ: origin.z - 107 } );
 
 		createClips();
 

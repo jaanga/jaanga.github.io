@@ -339,7 +339,7 @@ console.log( 'the end' );
 			oud.ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexLocation ].ms;
 
 			tween = obj.userData.tween ? obj.userData.tween : tween2location;
-console.log( '', obj.name, obj.tween );
+
 			tween( obj, oud, itemDispatch );
 
 		}
