@@ -52,7 +52,6 @@
 
 	var materialCase = new THREE.MeshNormalMaterial();
 	materialCase.name = 'materialCase';
-//	var materialCaseColor = 0x333333;
 	var materialCaseColor = 0xffffff;
 
 	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
@@ -119,13 +118,13 @@
 
 		`;
 
-// 0xf8dfa1
-
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
 		document.body.appendChild( stats.domElement );
 
-		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true}  );
+		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
@@ -165,7 +164,10 @@
 		height = rows * widthUnit + 2 * thicknessCase  + ( columns - 1 ) * thicknessShelf;
 		height05 = 0.5 * height;
 
-//		dispatchScrewsPegs2Parent( kallax );
+//		addObjectsToParent( screws, scene );
+//		addObjectsToParent( pegs, scene );
+
+tweenAllToLocation()
 
 		scene.remove( kallax, edges, helpers );
 

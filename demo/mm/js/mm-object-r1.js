@@ -42,11 +42,13 @@
 
 		if ( type === 'pegHole' ) {
 
-			obj.add( drawPeg( mesh ) );
+//			obj.add( drawPeg( mesh ) );
+			drawPeg( mesh );
 
 		} else if ( type === 'screwHole' ) {
 
-			obj.add( drawScrew( mesh ) );
+//			obj.add( drawScrew( mesh ) );
+			drawScrew( mesh );
 
 		}
 
@@ -61,16 +63,21 @@
 		var offsetZ =  width05 + 10;
 		var a = ran( pi2 ); 
 		var r = ran( 10 );
-		var mud = mesh.userData;
 
-		mud.places = [];
-		mud.places.push( [ v( offsetX + r * cos( a ), ran( 5 ), offsetZ + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
-		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		mesh.userData.places = [];
+//		mud.places.push( [ v( , ,  ), v( 0, ,  ) ] );
+//		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+
+		mesh.userData.places.push( { pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05 } );
+		mesh.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
 
 		mesh.name = 'screw';
-		mud.holeParent = hole;
+		mesh.userData.holeParent = hole;
 		hole.name = 'screw location' + screws.length;
 		hole.userData.screw = mesh;
+
+		screws.push( mesh );
+		scene.add( mesh );
 
 		return mesh;
 
@@ -85,16 +92,21 @@
 		var r = ran( 25 );
 		var mud = mesh.userData;
 
-		mud.places = [];
-		mud.places.push( [ v( offsetX + r * cos( a ), ran( 5 ), offsetZ + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
-		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		mesh.userData.places = [];
+//		mud.places.push( [ v( , ,  ), v( 0, , ) ] );
+//		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+
+		mesh.userData.places.push( { pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
 
 		mesh.name = 'peg';
-		mud.holeParent = hole;
+		mesh.userData.holeParent = hole;
+
 		hole.name = 'peg location' + pegs.length;
 		hole.userData.peg = mesh;
 
 		pegs.push( mesh );
+		scene.add( mesh );
 
 		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );

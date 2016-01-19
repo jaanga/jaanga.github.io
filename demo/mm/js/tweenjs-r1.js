@@ -237,15 +237,16 @@
 		if ( obj.position.distanceTo( v( oud[ start ].pX, oud[ start ].pY, oud[ start ].pZ ) ) < 0.1 ) {
 
 			tween( obj, oud[ end ] );
+			dispatchScrewsPegsToHole( obj );
 
 		} else {
 
 			tween( obj, oud[ start ]  );
+			dispatchScrewsPegsToScene( obj )
 
 		}
 
 	}
-
 
 
 	function tweenAllToLocation( index ) {
@@ -253,6 +254,19 @@
 		var index = index ? index : 0;
 
 		if( info ) { info.innerHTML = 'debug: frame:' + index + '<br>'; }
+
+		tweenObjectsToLocation( objects, index );
+
+		if ( camera.userData.places && camera.userData.places.length > 0 ) { tweenCamera( camera, camera.userData.places[ index ] ); }
+
+		if ( outFrame ) { outFrame.value = index; }
+
+		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
+
+	}
+
+
+	function tweenObjectsToLocation( objects, index ) {
 
 		for ( var i = 0; i < objects.length; i++ ) {
 
@@ -263,15 +277,19 @@
 			tween = obj.userData.tween ? obj.userData.tween : tween2location;
 			tween( obj, oud );
 
-//			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-' + obj.geometry.type + ' ' + ms.toFixed() + 'ms<br>';
+			if ( index === 0 ) {
+
+				dispatchScrewsPegsToScene( obj );
+
+			} else {
+
+				dispatchScrewsPegsToHole( obj )
+
+			}
+
+			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-'  + ' ' + ms.toFixed() + 'ms<br>';
 
 		}
-
-		if ( camera.userData.places.length > 0 ) { tweenCamera( camera, camera.userData.places[ index ] ); }
-
-		if ( outFrame ) { outFrame.value = index; }
-
-		playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 	}
 
@@ -442,3 +460,54 @@ console.log( 'the end' );
 
 	}
 
+//
+
+	function dispatchScrewsPegsToHole( object ) {
+
+		object.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 9 ) === 'screw loc') {
+
+				obj = child.userData.screw
+				child.add( obj );
+				obj.position.set( 0, 0, 0 );
+				obj.rotation.set( pi05, 0, 0 );
+				obj.scale.set( 3, 3, 3 );
+
+			} else if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+				obj = child.userData.peg
+				child.add( obj );
+				obj.position.set( 0, 0, 0 );
+				obj.rotation.set( pi05, 0, 0 );
+				obj.scale.set( 3, 3, 3 );
+
+			}
+
+		} );
+
+	}
+
+	function dispatchScrewsPegsToScene( object ) {
+
+		object.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 9 ) === 'screw loc') {
+
+				obj = child.userData['screw'];
+				scene.add( obj );
+				tween( obj, obj.userData.places[ 0 ]  );
+				obj.scale.set( 1, 1, 1 );
+
+			} else if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+				obj = child.userData['peg'];
+				scene.add( obj );
+				tween( obj, obj.userData.places[ 0 ]  );
+				obj.scale.set( 1, 1, 1 );
+
+			}
+
+		} );
+
+	}

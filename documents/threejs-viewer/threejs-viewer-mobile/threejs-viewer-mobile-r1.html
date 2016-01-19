@@ -34,11 +34,19 @@
 
 			#button{ background-color: silver; top: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
-			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
+			#menu { background-color: #ccc; color: #888; font-size: 11pt;  height: ${ window.innerHeight }px; left: -320px; max-width: 300px; overflow: auto; 
+				padding: 0 0 0 20px; position: absolute; top: -50px;}
 
 		`;
+		content = document.body.appendChild( document.createElement( 'iframe' ) );
+		content.id = 'content';
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.style.cssText = 'color: #ccc; font-size: 24pt; left: 320px; position: absolute; top: 50px; transition: left 1s; z-index: 100; ';
+		hamburger.innerHTML = '<span id=bars onclick=hamburger.style.left=hamburger.style.left==="0px"?"320px":0; >&#9776;</span>';
+
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
 		`
@@ -52,8 +60,7 @@
 
 		`;
 
-		content = document.body.appendChild( document.createElement( 'iframe' ) );
-		content.id = 'content';
+
 
 		button = document.body.appendChild( document.createElement( 'div' ) );
 		button.id = 'button';
