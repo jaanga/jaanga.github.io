@@ -224,8 +224,6 @@
 
 	}
 
-
-
 	function togglePlace( obj, start, end ) {
 
 		var start = start ? start : 0;
@@ -247,7 +245,6 @@
 		}
 
 	}
-
 
 	function tweenAllToLocation( index ) {
 
@@ -272,6 +269,7 @@
 
 			var obj = objects[ i ];
 			if( !obj.userData.places[ index ] ) { continue; }
+
 			var oud = obj.userData.places[ index ];
 			ms = oud.ms ? oud.ms : duration;
 			tween = obj.userData.tween ? obj.userData.tween : tween2location;

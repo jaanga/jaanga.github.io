@@ -1,5 +1,5 @@
 ﻿
-//	var screws = [];
+	var screws = [];
 	var pegs = [];
 
 	var pi = Math.PI;
@@ -355,13 +355,14 @@
 
 		shape.absarc( startX + radius1, startY + rectHeight - 1 * radius1, radius3, 0, pi );
 		shape.absarc( startX + radius1, startY + 1 * radius1, radius3, pi, pi2 );
-		geo2 = shape.extrude( { amount: thickness, bevelEnabled: false } )
+
+		var geo2 = shape.extrude( { amount: thickness, bevelEnabled: false } );
 		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, thickness ) );
 		geometry.merge( geo2 );
 
-		geo2 = geo2.clone();
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( rectWidth - 2 * radius1, 0, 0 ) );
-		geometry.merge( geo2 );
+		var geo3 = shape.extrude( { amount: thickness, bevelEnabled: false } );
+		geo3.applyMatrix( new THREE.Matrix4().makeTranslation( rectWidth - 2 * radius1, 0, thickness ) );
+		geometry.merge( geo3 );
 
 // curved ends
 		shape = new THREE.Shape();
@@ -369,20 +370,24 @@
 		shape.moveTo( startX, 0 );
 		shape.absarc( startX + 2 * thickness, 0, 2, 1.25 * pi, pi );
 
-		geo2 = shape.extrude( { amount: rectWidth, bevelEnabled: false } );
-		geo2.applyMatrix( new THREE.Matrix4().makeRotationY( pi05) );
-		geometry.merge( geo2 );
+		var geo4 = shape.extrude( { amount: rectWidth, bevelEnabled: false } );
+		geo4.applyMatrix( new THREE.Matrix4().makeRotationY( pi05) );
+		geometry.merge( geo4 );
 
-		geo2 = geo2.clone();
-		geo2.applyMatrix( new THREE.Matrix4().makeRotationZ( pi ) );
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( rectWidth, rectHeight, 0 ) );
+		var geo5 = shape.extrude( { amount: rectWidth, bevelEnabled: false } );
+		geo5.applyMatrix( new THREE.Matrix4().makeRotationZ( pi) );
+		geo5.applyMatrix( new THREE.Matrix4().makeRotationY( -pi05 ) );
+		geo5.applyMatrix( new THREE.Matrix4().makeTranslation( rectWidth, rectHeight, 0 ) );
 
-		geometry.merge( geo2 );
+		geometry.merge( geo5 );
 		geometry.mergeVertices ();
 
-		mesh = new THREE.Mesh( geometry, material );
+
+		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'part103693';
 		mesh.userData.places = [];
+
+
 		objects.push( mesh );
 
 		return mesh;
@@ -398,8 +403,8 @@
 		var pitch = 2;
 		var segments = 12;
 
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
-		points = [
+		var material = new THREE.MeshNormalMaterial( { side: 2 } );
+		var points = [
 
 // head
 //			v( 5, 0, height05 + 2) ,
@@ -425,7 +430,7 @@
 		geo2 = drawSpiralAlongZ( radiusScrew05, radiusScrew05 + 1, segments, height / pitch, pitch );
 		geometry.merge( geo2 );
 
-		mesh = new THREE.Mesh( geometry, material );
+		var mesh = new THREE.Mesh( geometry, material );
 
 		mesh.name = 'screw100372';
 		mesh.userData.places = [];
@@ -553,7 +558,7 @@
 		shape.holes.push( holePath );
 
 		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
-		mesh = new THREE.Mesh( geometry, material );
+		var mesh = new THREE.Mesh( geometry, material );
 
 		mesh.name = 'fixture';
 		mesh.userData.places = [];
@@ -590,7 +595,7 @@
 		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
 		geometry.merge( geo2 );
 
-		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
+		var material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'screwdriver';
 		mesh.userData.places = [];

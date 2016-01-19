@@ -8,10 +8,10 @@
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM,Jaanga,Moving Manuals' >
 </head>
 <body>
-<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/tween.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/libs/tween.min.js ></script>
 <script src=../js/mm-object-r1.js ></script>
 <script src=../js/tweenjs-r1.js ></script>
 <script>
@@ -183,6 +183,7 @@
 		placard = drawPlacard( '103693', 0.05, 120, 0, 20, 0 )
 		part103693.add( placard );
 
+		objects.push( part103693 );
 		bracketAssembly.add( part103693 );
 
 		for ( var i = 0; i < 2; i++ ) {
@@ -217,12 +218,12 @@
 		placard = drawPlacard( 'wall screw', 0.05, 120, 0, 20, 10 );
 		screwWall.add( placard );
 		bracketAssembly.add( screwWall );
-
-
-		scene.add( bracketAssembly );
 		objects.push( screwWall );
 
+		scene.add( bracketAssembly );
+
 		drawHelpers( 50 );  
+
 
 		pencil = drawPencil();
 
@@ -267,6 +268,7 @@
 
 		objects.push( screwdriver );
 		scene.add( screwdriver );
+
 
 		camera.userData.places = [];
 		camera.userData.tween = tweenCamera;
