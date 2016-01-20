@@ -27,9 +27,9 @@
 			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
 			h2, a { margin: 0; }
 			iframe { height:100%; width:100% }
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
 			.aa { text-decoration: none; }
+
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
 			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 
@@ -41,8 +41,8 @@
 		`
 
 			<h2>
-				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+				<a class=aa href="" > ${ document.title }</a> 
+				<a class=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<p id=fileCount ></p>
 			<div id=fileNames ></div>
@@ -50,14 +50,11 @@
 		`;
 
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
-
-// xx = content.contentWindow.appendChild( document.createElement( 'div' ) );
 		content.id = 'content';
 
 		requestFileNames();
 
 	}
-
 
 	function requestFileNames() {
 
@@ -72,17 +69,17 @@
 
 			var files = JSON.parse( xhr.response );
 			var keys = Object.keys( files );
+			var categories = [];
 			var txt = '';
 			var count = 0;
-			var categories = [];
 
 			for ( var key in keys ) {
 
-				file = files[ key ].name;
+				var file = files[ key ].name;
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
-				title = file.slice( 0, -5 ).split( '_' );
+				var title = file.slice( 0, -5 ).split( '_' );
 
 				category = title.shift();
 
@@ -95,7 +92,7 @@
 
 				title = title.join().replace( /,/gi, ' ' );
 
-				txt += `<div><a class=aa href=#${ file } onclick=load('${ file }')>${ title }<a></div>`;
+				txt += `<div><a class=aa href=#${ file } onclick=load('${ file }') >${ title }<a></div>`;
 				count++;
 
 			}
@@ -103,15 +100,9 @@
 			fileCount.innerHTML = count + ' files';
 			fileNames.innerHTML = txt;
 
-			if ( window.location.hash === '' ) {
+			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * count ) ].name;
 
-				load( files[ Math.floor( Math.random() * count ) ].name );
-
-			} else {
-
-				load( window.location.hash.substr( 1 ) );
-
-			}
+			load( fileName );
 
 		}
 

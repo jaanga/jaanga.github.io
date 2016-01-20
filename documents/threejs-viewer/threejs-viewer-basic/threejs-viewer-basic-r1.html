@@ -14,7 +14,6 @@
 	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
 
 	var css, menu, content;
-	var fileName, selected = '', button;
 
 	init();
 
@@ -28,11 +27,9 @@
 			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
 			h2, a { margin: 0; }
 			iframe { height:100%; width:100% }
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 
 			.aa { text-decoration: none; }
 
-			#button{ background-color: silver; top: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
 			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 
@@ -44,8 +41,8 @@
 		`
 
 			<h2>
-				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+				<a class=aa href="" >${ document.title }</a> 
+				<a class=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<p id=fileCount ></p>
 			<div id=fileNames ></div>
@@ -55,16 +52,9 @@
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
 		content.id = 'content';
 
-		button = document.body.appendChild( document.createElement( 'div' ) );
-		button.id = 'button';
-		button.textContent = 'View source';
-		button.style.display = 'none';
-		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); };
-
 		requestFileNames();
 
 	}
-
 
 	function requestFileNames() {
 
@@ -75,24 +65,23 @@
 
 		function callback() {
 
-			if ( xhr.readyState != 4  ) { return; }
+			if ( xhr.readyState !== 4  ) { return; }
 
 			var files = JSON.parse( xhr.response );
-
-//			files.reverse();
-
+			var keys = Object.keys( files );
+			var categories = [];
 			var txt = '';
 			var count = 0;
-			var categories = [];
 
-			for ( var i = 0; i < files.length; i++ ) {
+			for ( var key in keys ) {
 
-				file = files[ i ].name;
+				var file = files[ key ].name;
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
 				var title = file.slice( 0, -5 ).split( '_' );
-				var category = title.shift();
+
+				category = title.shift();
 
 				if ( categories.indexOf( category ) === -1 ) {
 
@@ -103,7 +92,7 @@
 
 				title = title.join().replace( /,/gi, ' ' );
 
-				txt += `<div><a class=aa id=${ file.replace( '.html', `` ) } href=#${ file } onclick=load('${ file }')>${ title }<a></div>`;
+				txt += `<div><a class=aa href=#${ file } onclick=load('${ file }') >${ title }<a></div>`;
 				count++;
 
 			}
@@ -111,18 +100,9 @@
 			fileCount.innerHTML = count + ' files';
 			fileNames.innerHTML = txt;
 
-			if ( window.location.hash === '' ) {
+			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * count ) ].name;
 
-				fileName = files[ Math.floor( Math.random() * count ) ].name;
-				load( fileName );
-
-			} else {
-
-				fileName = files[ Math.floor( Math.random() * count ) ].name;
-
-				load( fileName );
-
-			}
+			load( fileName );
 
 		}
 
@@ -133,14 +113,6 @@
 		document.title = fileName + ' - Jaanga Scene.js Viewer';
 
 		content.src = urlExamples + fileName;
-
-		button.style.display = ``;
-
-		if ( selected.style ) { selected.style.color = ``; }
-
-		var file = document.getElementById( fileName.replace( '.html', `` ) );
-		file.style.color = `red`;
-		selected = file;
 
 	}
 
