@@ -28,9 +28,16 @@ _This is all still a work-in-progress. In particular: sounds and textures need m
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
+_2016-01-21_
+
+* More updates
+* Looking very much like the scripts are technically complete
+* The ongoing work will relate more to cinematography, rendering and parts creation
+
+ 
 _2016-01-19_
 
-### [Kallax NxN Basic R4 - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r4.html.html )
+[Kallax NxN Basic R4 - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r4.html.html )
 
 * Update with all new tweening looking good - just the play by play to finish up
 * But an oops on the Wall bracket needs to be fixed
