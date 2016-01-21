@@ -153,7 +153,10 @@
 		origin = v( 80, 20, 30 );
 		moveTo = v( 120, 20, 80 );
 
-// all drawX... in // mm-r1.js
+
+// all drawX... in // mm-objects-r1.js
+
+		drawHelpers( 50 );  
  
 		fixture = drawFixture();
 		fixture.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z, rX: 0, rY: pi05, rZ: 0 } );
@@ -172,6 +175,8 @@
 		var placard = drawPlacard( '115753', 0.05, 120, -10, 20, 0 )
 		bracket115753.add( placard );
 
+		objects.push( bracket115753 );
+
 		bracketAssembly.add( bracket115753 );
 
 		part103693 = drawPart103693();
@@ -183,6 +188,7 @@
 		placard = drawPlacard( '103693', 0.05, 120, 0, 20, 0 )
 		part103693.add( placard );
 
+		objects.push( part103693 );
 		bracketAssembly.add( part103693 );
 
 		for ( var i = 0; i < 2; i++ ) {
@@ -222,7 +228,7 @@
 		scene.add( bracketAssembly );
 		objects.push( screwWall );
 
-		drawHelpers( 50 );  
+
 
 		pencil = drawPencil();
 

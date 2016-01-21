@@ -296,22 +296,6 @@
 
 	}
 
-	function goToFrame( index ) {
-
-		index = index ? index : 2;
-
-		startTime = Date.now();
-
-		clip = playList;
-		check = chkPlay;
-
-		indexFrame = index;
-
-		tweenFrame();
-
-	}
-
-
 	function playClip() {
 
 //console.log( 'playClip', indexFrame );
@@ -363,13 +347,12 @@ console.log( 'the end' );
 			var indexPlace = item[ 1 ];
 			var oud = obj.userData.places[ indexPlace ];
 			oud.ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexPlace ].ms;
-			indexHardware = item[ 3 ] > -1 ? item[ 3 ] : indexPlace; 
 
 			tween = obj.userData.tween ? obj.userData.tween : tweenToPlace;
 
 			tween( obj, oud, itemDispatch );
 
-			if ( holes ) { dispatchScrewsPegsToParent( obj, indexHardware ); }
+			if ( holes ) { dispatchScrewsPegsToParent( obj, indexPlace ); }
 
 		}
 
@@ -380,6 +363,7 @@ console.log( 'the end' );
 		info.innerHTML += 'frame: ' + indexFrame + ' objects: ' + indexObject + ' ' + ( Date.now() - startTime ) + 'ms<br>';
 
 		if ( indexObject < clip[ indexFrame ].length - 1 ) {
+
 
 			indexObject++;
 
@@ -452,7 +436,6 @@ console.log( 'the end' );
 
 	}
 
-// specials
 
 	function drawPencilLine( obj, p, func ) {
 
@@ -472,6 +455,60 @@ console.log( 'the end' );
 
 	}
 
+//
+/*
+	function dispatchScrewsPegsToHole( object ) {
+
+		object.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 9 ) === 'screw loc') {
+
+				obj = child.userData.screw
+				child.add( obj );
+				obj.position.set( 0, 0, 0 );
+				obj.rotation.set( pi05, 0, 0 );
+				obj.scale.set( 3, 3, 3 );
+
+			} else if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+				obj = child.userData.peg;
+				child.add( obj );
+				obj.position.set( 0, 0, 0 );
+				obj.rotation.set( pi05, 0, 0 );
+				obj.scale.set( 3, 3, 3 );
+
+			}
+
+		} );
+
+	}
+
+	function dispatchScrewsPegsToScene( object ) {
+
+		object.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 9 ) === 'screw loc') {
+
+				obj = child.userData.screw;
+				scene.add( obj );
+				tween( obj, obj.userData.places[ 0 ]  );
+				obj.scale.set( 1, 1, 1 );
+
+			} else if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+				obj = child.userData.peg;
+				scene.add( obj );
+				tween( obj, obj.userData.places[ 0 ]  );
+				obj.scale.set( 1, 1, 1 );
+
+			}
+
+		} );
+
+	}
+
+*/
+
 	function dispatchScrewsPegsToParent( object, indexPlace ) {
 
 		object.traverse( function ( child ) {
@@ -479,22 +516,18 @@ console.log( 'the end' );
 			if ( child.name.substr( 0, 9 ) === 'screw loc') {
 
 				obj = child.userData.screw;
-				p = obj.userData.places[ indexPlace ];
-
-				if ( !p ) { return; }
-
-				obj.scale.set( p.scale, p.scale, p.scale );
-				p.parent.add( obj );
-				tween( obj, p  );
-
+				obj.userData.places[ indexPlace ].parent.add( obj );
+				tween( obj, obj.userData.places[ indexPlace ]  );
+				s =  obj.userData.places[ indexPlace ].scale;
+				obj.scale.set( s, s, s );
 
 			} else if ( child.name.substr( 0, 7 ) === 'peg loc') {
 
 				obj = child.userData.peg;
-				p = obj.userData.places[ indexPlace ];
-				obj.scale.set( p.scale, p.scale, p.scale );
-				p.parent.add( obj );
-				tween( obj, p  );
+				obj.userData.places[indexPlace ].parent.add( obj );
+				tween( obj, obj.userData.places[ indexPlace ] );
+				s =  obj.userData.places[ indexPlace ].scale;
+				obj.scale.set( s, s, s );
 
 			}
 

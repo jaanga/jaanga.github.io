@@ -1,6 +1,7 @@
 ﻿
 	var screws = [];
 	var pegs = [];
+	var hardware;
 
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
@@ -15,6 +16,22 @@
 
 	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var texture;
+
+	var materialCase = new THREE.MeshNormalMaterial();
+	materialCase.name = 'materialCase';
+	var materialCaseColor = 0xffffff;
+
+	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
+	var materialHole = new THREE.MeshBasicMaterial( { color: 0x000000, side: 2 } );
+
+	var geometryScrew = new THREE.CylinderGeometry( 1, 0.3, 10 );
+	var materialScrew = new THREE.MeshNormalMaterial();
+
+	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
+
 
 	function drawHelpers( length ) {
 
@@ -42,12 +59,10 @@
 
 		if ( type === 'pegHole' ) {
 
-//			obj.add( drawPeg( mesh ) );
 			drawPeg( mesh );
 
 		} else if ( type === 'screwHole' ) {
 
-//			obj.add( drawScrew( mesh ) );
 			drawScrew( mesh );
 
 		}
@@ -61,15 +76,15 @@
 		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
 		var offsetX = - height05 - 10;
 		var offsetZ =  width05 + 10;
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 10 );
 
 		mesh.userData.places = [];
-//		mud.places.push( [ v( , ,  ), v( 0, ,  ) ] );
-//		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
-
-		mesh.userData.places.push( { pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05 } );
-		mesh.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05 } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: -5, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05 } );
+		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 20, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
 
 		mesh.name = 'screw';
 		mesh.userData.holeParent = hole;
@@ -77,7 +92,6 @@
 		hole.userData.screw = mesh;
 
 		screws.push( mesh );
-		scene.add( mesh );
 
 		return mesh;
 
@@ -88,16 +102,18 @@
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
 		var offsetX = height05 + 20;
 		var offsetZ =  - width05 - 20;
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 25 );
 		var mud = mesh.userData;
 
 		mesh.userData.places = [];
-//		mud.places.push( [ v( , ,  ), v( 0, , ) ] );
-//		mud.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
 
-		mesh.userData.places.push( { pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 20, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+
 
 		mesh.name = 'peg';
 		mesh.userData.holeParent = hole;
@@ -106,7 +122,6 @@
 		hole.userData.peg = mesh;
 
 		pegs.push( mesh );
-		scene.add( mesh );
 
 		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
@@ -159,7 +174,8 @@
 
 		mesh.userData.places = [];
 		mesh.name = 'bracket115753';
-		objects.push( mesh );
+
+//		objects.push( mesh );
 
 		var line = buildKallaxWallBracketSide1Lines();
 		line.position.set( - widthCorner - 0.5 * widthLeaf1, -0.5 * heightBracket, - 0.5 * widthLeaf2 - widthCorner + thickness + 0.01 );
@@ -178,7 +194,7 @@
 				v2( width05, height05 ),
 				v2( width05, -height05 ),
 				v2( -width05, -height05 ),
-				v2( -width05, height05 ),
+				v2( -width05, height05 )
 
 			];
 
@@ -214,7 +230,7 @@
 				v2( width05 - thickness, width ),
 				v2( width05 - thickness, thickness + thickness / segments),
 				v2( width05 - thickness - thickness / segments, thickness),
-				v2( -width05, thickness),
+				v2( -width05, thickness)
 			] );
 
 			var shape = new THREE.Shape();
@@ -238,7 +254,7 @@
 				v2( width05, height05 ),
 				v2( width05, -height05 ),
 				v2( -width05, -height05 ),
-				v2( -width05, height05 ),
+				v2( -width05, height05 )
 
 			];
 
@@ -320,7 +336,7 @@
 
 		material = new THREE.MeshNormalMaterial();
 
-		startX = 0
+		startX = 0;
 		startY = 0;
 		rectWidth = 15;
 		rectWidth05 = 0.5 * rectWidth;
@@ -387,8 +403,7 @@
 		mesh.name = 'part103693';
 		mesh.userData.places = [];
 
-
-		objects.push( mesh );
+//		objects.push( mesh );
 
 		return mesh;
 
@@ -423,7 +438,7 @@
 
 		var geo2 = drawPhillipsHead( radiusScrew + 1.25, radiusScrew + 1.25 ); // createPhillipsHead( radius, height, rows );
 		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( -pi05 ) );
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, height05 + delta ) ); 
+		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, height05 + delta ) );
 
 		geometry.merge( geo2 );
 
@@ -441,10 +456,10 @@
 
 		function drawPhillipsHead( radius, height, rows ) {
 
-			var radius = radius ? radius : 20;
-			var height = height ? height : -20;
+			radius = radius ? radius : 20;
+			height = height ? height : -20;
 			var columns = 12;
-			var rows = rows ? rows : 2;
+			rows = rows ? rows : 2;
 
 			var geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
 			var vertices = geometry.vertices;
@@ -540,14 +555,14 @@
 			v2( width, height ),
 			v2( width, -height ),
 			v2( -width, -height ),
-			v2( -width, height ),
+			v2( -width, height )
 
 		];
 
 		var shape = new THREE.Shape();
 		shape.fromPoints( pts );
 
-		var holeTop = v( + width - 5 * radiusScrew, 0, 0 )
+		var holeTop = v( + width - 5 * radiusScrew, 0, 0 );
 
 		var holePath = new THREE.Path();
 		holePath.absarc( holeTop.x, holeTop.y + 0.5 * heightBracket - 3 * radiusScrew, radiusScrew, 0, Math.PI * 2, true );
@@ -589,7 +604,7 @@
 		var tipLength = 8;
 		var points = [ v( 1, 0, 0 ), v( 1, 0, 50 ), v( radiusHandle, 0, 50 ), v( radiusHandle, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radiusHandle, 0, 55), v( radiusHandle, 0, 80 ), v( 0, 0, 81 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
-		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, tipLength ) ); 
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, tipLength ) );
 
 		var geo2 = drawPhillipsTip( radiusShaft, tipLength );
 		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
@@ -605,10 +620,10 @@
 
 		function drawPhillipsTip( radiusShaft, tipLength, rows ) {
 
-			var radiusShaft = radiusShaft ? radiusShaft : 1;
-			var tipLength = tipLength ? tipLength : 5;
+			radiusShaft = radiusShaft ? radiusShaft : 1;
+			tipLength = tipLength ? tipLength : 5;
 			var columns = 12;
-			var rows = rows ? rows : 3;
+			rows = rows ? rows : 3;
 
 			var geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
 			var vertices = geometry.vertices;
@@ -633,7 +648,7 @@
 
 					var vt = vertices[ count++ ];
 					vt.x = r * cos( theta * j );
-					vt.y = lengths[ i ] * tipLength
+					vt.y = lengths[ i ] * tipLength;
 					vt.z = r * sin( theta * j );
 
 				}
@@ -668,14 +683,12 @@
 
 		return placard;
 
-		function v( x, y, z){ return new THREE.Vector3( x, y, z ); }
-
 	}
 
 
 	function canvasMultilineText( textArray, parameters ) {
 
-		var parameters = parameters || {} ;
+		parameters = parameters || {} ;
 		var width = 0;
 		var canvas = document.createElement( 'canvas' );
 		var context = canvas.getContext( '2d' );
@@ -684,7 +697,7 @@
 
 		context.font = parameters.font ? parameters.font : '48px sans-serif';
 
-		for (var i = 0, len = textArray.length; i < len; i++) {
+		for ( var i = 0; i < textArray.length; i++) {
 
 			width = context.measureText( textArray[i] ).width > width ? context.measureText( textArray[i] ).width : width;
 
@@ -705,7 +718,7 @@
 		context.fillStyle = '#000' ;
 		context.font = parameters.font ? parameters.font : '48px sans-serif';
 
-		for (var i = 0, len = textArray.length; i < len; i++) {
+		for ( i = 0; i < textArray.length; i++) {
 
 			context.fillText( textArray[i], 10, 48  + i * 60 );
 

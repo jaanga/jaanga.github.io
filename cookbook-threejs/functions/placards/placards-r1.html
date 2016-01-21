@@ -126,7 +126,7 @@
 
 		function canvasMultilineText( textArray, parameters ) {
 
-			var parameters = parameters || {} ;
+			parameters = parameters || {} ;
 			var width = 0;
 			var canvas = document.createElement( 'canvas' );
 			var context = canvas.getContext( '2d' );
@@ -135,13 +135,13 @@
 
 			context.font = parameters.font ? parameters.font : '48px sans-serif';
 
-			for (var i = 0, len = textArray.length; i < len; i++) {
+			for ( var i = 0; i < textArray.length; i++) {
 
-				width = context.measureText( textArray[i] ).width > width ? context.measureText( textArray[i] ).width : width;
+				width = context.measureText( textArray[ i ] ).width > width ? context.measureText( textArray[ i ] ).width : width;
 
 			}
 
-			canvas.width = width + 20; // 480
+			canvas.width = width + 20;
 			canvas.height = textArray.length * 60;
 
 			var col = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
@@ -151,14 +151,14 @@
 
 			context.lineWidth = 1 ;
 			context.strokeStyle = '#000';
-			context.strokeRect( 0, 0, canvas.width, canvas.height);
+			context.strokeRect( 0, 0, canvas.width, canvas.height );
 
 			context.fillStyle = '#000' ;
 			context.font = parameters.font ? parameters.font : '48px sans-serif';
 
-			for (var i = 0, len = textArray.length; i < len; i++) {
+			for ( i = 0; i < textArray.length; i++) {
 
-				context.fillText( textArray[i], 10, 48  + i * 60 );
+				context.fillText( textArray[ i ], 10, 48  + i * 60 );
 
 			}
 

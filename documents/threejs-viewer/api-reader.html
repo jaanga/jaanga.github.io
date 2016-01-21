@@ -1,0 +1,137 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Basic HTML Template</title>
+<!--
+<meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
+-->
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<script>
+
+	var urlContents= 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/5bc5abeabb0706b67596c8663894729bb255759d?recursive=1';
+
+	var css, menu;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: auto; }
+			h2, a { margin: 0; }
+			#aa { text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }
+			input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/ > 🛈 &#x24D8;</a>
+			</h2>
+			<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+			<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>
+			<p>Overlay: <select id=selList title="Select the 2D overlay" >select option<select></p>
+			<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>
+			<p>
+				<input type=radio name=field id=but1 />button 1
+				<input type=radio name=field id=but2 checked />button 2
+				<input type=radio name=field id=but3 />button 3
+			</p>
+			<div id=info ></div>
+
+		`;
+
+		requestFileNames();
+
+	}
+
+
+	function requestFileNames() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlContents, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState !== 4  ) { return; }
+
+			files = JSON.parse( xhr.response );
+			var keys = Object.keys( files.tree );
+
+			var categories = [];
+			var txt = '';
+			var count = 0;
+
+			for ( var key in keys ) {
+
+				var file = files.tree[ key ];
+
+console.log( '', file.path );
+
+/*
+				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
+
+				var title = file.slice( 0, -5 ).split( '_' );
+
+				category = title.shift();
+
+				if ( categories.indexOf( category ) === -1 ) {
+
+					categories.push( category );
+					txt += `<h2> ${ category } </h2>`;
+
+				}
+
+				title = title.join().replace( /,/gi, ' ' );
+
+				txt += `<div><a class=aa href=#${ file } onclick=load('${ file }') >${ title }<a></div>`;
+				count++;
+*/
+
+			}
+
+//			fileCount.innerHTML = count + ' files';
+//			fileNames.innerHTML = txt;
+
+//			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * count ) ].name;
+
+//			load( fileName );
+
+		}
+
+	}
+
+	function load( fileName ) {
+
+		document.title = fileName + ' - Jaanga Scene.js Viewer';
+
+		content.src = urlExamples + fileName;
+
+	}
+</script>
+</body>
+</html>
