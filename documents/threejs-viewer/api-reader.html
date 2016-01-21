@@ -49,6 +49,7 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/ > 🛈 &#x24D8;</a>
 			</h2>
+<!--
 			<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
 			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
 			<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>
@@ -59,9 +60,13 @@
 				<input type=radio name=field id=but2 checked />button 2
 				<input type=radio name=field id=but3 />button 3
 			</p>
+-->
 			<div id=info ></div>
 
 		`;
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
 
 		requestFileNames();
 
@@ -79,8 +84,8 @@
 
 			if ( xhr.readyState !== 4  ) { return; }
 
-			files = JSON.parse( xhr.response );
-			var keys = Object.keys( files.tree );
+			response = JSON.parse( xhr.response );
+			var keys = Object.keys( response.tree );
 
 			var categories = [];
 			var txt = '';
@@ -88,13 +93,15 @@
 
 			for ( var key in keys ) {
 
-				var file = files.tree[ key ];
+				var file = response.tree[ key ].path;
 
-console.log( '', file.path );
 
+
+
+				if ( file.indexOf( '@' ) === -1 || file === 'index.html' ) { continue; }
+
+console.log( '', file );
 /*
-				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
-
 				var title = file.slice( 0, -5 ).split( '_' );
 
 				category = title.shift();

@@ -237,12 +237,12 @@
 		if ( obj.position.distanceTo( v( oud[ start ].pX, oud[ start ].pY, oud[ start ].pZ ) ) < 0.1 ) {
 
 			tween( obj, oud[ end ] );
-			dispatchScrewsPegsToParent( obj, end );
+			if ( holes.length ) { dispatchScrewsPegsToParent( obj, end ); }
 
 		} else {
 
 			tween( obj, oud[ start ]  );
-			dispatchScrewsPegsToParent( obj, start );
+			if ( holes.length ) { dispatchScrewsPegsToParent( obj, start ); }
 
 		}
 
@@ -277,7 +277,7 @@
 			tween = obj.userData.tween ? obj.userData.tween : tweenToPlace;
 			tween( obj, oud );
 
-			if ( holes ) { dispatchScrewsPegsToParent( obj, index ); }
+			if ( holes.length ) { dispatchScrewsPegsToParent( obj, index ); }
 
 			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-'  + ' ' + ms.toFixed() + 'ms<br>';
 
@@ -369,7 +369,7 @@ console.log( 'the end' );
 
 			tween( obj, oud, itemDispatch );
 
-			if ( holes ) { dispatchScrewsPegsToParent( obj, indexHardware ); }
+			if ( holes.length ) { dispatchScrewsPegsToParent( obj, indexHardware ); }
 
 		}
 
