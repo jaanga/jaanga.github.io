@@ -4,7 +4,7 @@
 <meta charset=utf-8 >
 <title>Three.js Viewer Basic R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='View Three.js examples files' >
+<meta name=description content='View Three.js example files - a simple, minimal selector and viewer for viewing large numbers of files one at a time.' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
@@ -24,7 +24,6 @@
 		`
 
 			body { font: 12pt monospace; margin: 0; overflow: auto; }
-			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
 			h2, a { margin: 0; }
 			iframe { height:100%; width:100% }
 
@@ -67,15 +66,15 @@
 
 			if ( xhr.readyState !== 4  ) { return; }
 
-			var files = JSON.parse( xhr.response );
-			var keys = Object.keys( files );
+			var response = JSON.parse( xhr.response );
+			var keys = Object.keys( response );
 			var categories = [];
+			var files = [];
 			var txt = '';
-			var count = 0;
 
-			for ( var key in keys ) {
+			for ( var key in response ) {
 
-				var file = files[ key ].name;
+				var file = response[ key ].name;
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
@@ -93,14 +92,15 @@
 				title = title.join().replace( /,/gi, ' ' );
 
 				txt += `<div><a class=aa href=#${ file } onclick=load('${ file }') >${ title }<a></div>`;
-				count++;
+
+				files.push( file )
 
 			}
 
-			fileCount.innerHTML = count + ' files';
+			fileCount.innerHTML = files.length + ' files';
 			fileNames.innerHTML = txt;
 
-			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * count ) ].name;
+			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
 
 			load( fileName );
 
@@ -110,7 +110,7 @@
 
 	function load( fileName ) {
 
-		document.title = fileName + ' - Jaanga Scene.js Viewer';
+		document.title = fileName + ' - Scene.js Viewer';
 
 		content.src = urlExamples + fileName;
 

@@ -27,21 +27,8 @@
 		'                                         \\/____/\\/_____/'
 	].join('\n');
 
-	var menuHeader =
-
-`
-		<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br>
-		<a class=aa href="" ><pre>${ logo }</pre></a>
-		<h2>
-			<a class=aa href="" >Viewer Three.js R1</a>
-		</h2>
-
-`;
-
-	var topics;
-	var converter, content;
-	var fileName, selected = '';
-		var count = 0;
+	
+	var fileName, selected;
 
 	init();
 
@@ -49,30 +36,29 @@
 
 		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
-`
-
-			* { box-sizing: border-box; }
-			html { height: 100%; }
+		`
 
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
-			button { background-color: #eee; border: 0px #eee solid; color: #888; cursor: pointer;  }
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
 			pre { font-size: 6pt; }
 
 			.aa { text-decoration: none; }
-			.md { margin: 20px; max-width: 1000px; overflow: auto; }
 
 			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: hidden; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
-			#ifr { border-width: 0px; height: 100%; margin: 0; width: 100%; }
 			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; }
-			#menu p { margin: 0 10px; text-indent: -10px; }
 
-`;
+		`;
 
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = menuHeader;
+		menu.innerHTML =
+		`
+
+			<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br>
+			<a class=aa href="" ><pre>${ logo }</pre></a>
+			<h2><a class=aa href="" >Viewer Three.js R1</a></h2>
+
+		`;
 
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
 		content.id = 'content';
@@ -80,7 +66,6 @@
 		var button = document.body.appendChild( document.createElement( 'div' ) );
 		button.id = 'button';
 		button.textContent = 'View source';
-		button.style.display = 'none';
 		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); }
 
 		requestThreejsFileNames();
@@ -100,10 +85,7 @@
 		var software = [];
 		var svg = [];
 
-//		var files;
-
-
-		topics = [ webgl, webglAdvanced, vr, css3d, css3dstereo, misc, canvas, raytracing, software, svg ];
+		var topics = [ webgl, webglAdvanced, vr, css3d, css3dstereo, misc, canvas, raytracing, software, svg ];
 		var topicOrder = [ 'webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
 
 		var xhr = new THREE.XHRLoader();
@@ -111,28 +93,27 @@
 
 		function onLoad( response ) {
 
-			files = JSON.parse( response );
-
+			var files = JSON.parse( response );
 			var keys = Object.keys( files );
 			var categories = [];
 			var txt = '';
-
+			var count = 0;
 
 			for ( var key in keys ) {
 
-				fileName = files[ key ].name;
+				var file = files[ key ].name;
 
-				if ( fileName.substr( -5 ) !== '.html' || fileName === 'index.html') { continue; };
+				if ( file.substr( -5 ) !== '.html' || file === 'index.html') { continue; };
 
-				var topic = fileName.split( '_' ).shift();
-				fileName = fileName.replace( '.html', '')
+				var topic = file.split( '_' ).shift();
+				file = file.replace( '.html', '')
 
 				var index = topicOrder.indexOf( topic );
 
-				if ( fileName.indexOf( 'webgl_buffergeometry' ) > -1 || fileName.indexOf( 'webgl_custom' ) > -1 ) index = 1;
-				if ( fileName.indexOf( 'css3dstereo' ) > -1 ) index = 4;
+				if ( file.indexOf( 'webgl_buffergeometry' ) > -1 || file.indexOf( 'webgl_custom' ) > -1 ) { index = 1; }
+				if ( file.indexOf( 'css3dstereo' ) > -1 ) { index = 4; }
 
-				topics[ index ].push( fileName );
+				topics[ index ].push( file );
 
 				count++;
 
@@ -148,15 +129,15 @@
 
 				for ( var j = 0; j < topic.length; j++ ) {
 
-					var fileName = topic[ j ];
-					var id = fileName.replace( '.html', '')
+					var file = topic[ j ];
+					var id = file.replace( '.html', '')
 					var title = id.substr( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 					text +=
 					`
-						<p>
-							<a class=aa id=${ id } href=#${ fileName } onclick=load('${ fileName }'); > ${ title }</a>
-							<a class=aa href=${urlExamples}${ fileName } ><img src=../Icon_External_Link.png ></a>
-						</p>
+						<div>
+							<a class=aa id=${ id } href=#${ file } onclick=load('${ file }'); >${ title }</a>
+							<a class=aa href=${ urlExamples }${ file } ><img src=../Icon_External_Link.png ></a>
+						</div>
 					`;
 
 				}
@@ -165,30 +146,26 @@
 
 			menu.innerHTML += text;
 
+			selected = button;
+
 			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * count ) ].name;
 
 			load( fileName );
 
 		}
 
-
-
 	}
 
-	function load( fileName ) {
+	function load( file ) {
 
-		document.title = fileName;
-		content.src = urlExamples + fileName;
+		document.title = file;
+		content.src = urlExamples + file;
 
-		button.style.display = ``;
-
-		if ( selected.style ) { selected.style.color = ``; }
-		file = document.getElementById( fileName.replace( '.html', `` ) );
-		file.style.color = `red`;
-		selected = file;
+		selected.style.color = ``;
+		selected = document.getElementById( file.replace( '.html', `` ) );
+		selected.style.color = `red`;
 
 	}
-
 
 </script>
 </body>
