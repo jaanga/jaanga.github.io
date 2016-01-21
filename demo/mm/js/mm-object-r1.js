@@ -29,7 +29,7 @@
 	var geometryScrew = new THREE.CylinderGeometry( 1, 0.3, 10 );
 	var materialScrew = new THREE.MeshNormalMaterial();
 
-	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 5 );
 	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
 
 
@@ -81,14 +81,14 @@
 
 		mesh.userData.places = [];
 		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05 } );
-		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: -5, rX: pi05, rY: 0, rZ: 0 } );
-		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05 } );
-		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 20, rX: pi05, rY: 0, rZ: 0 } );
-		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 1.5 - thicknessCase, rX: pi05, rY: 0, rZ: 0 } ); // assembled
 
-		mesh.name = 'screw';
+		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 20, rX: pi05, rY: 0, rZ: 0 } );
+
+		mesh.name = 'screw ' + screws.length;
 		mesh.userData.holeParent = hole;
-		hole.name = 'screw location' + screws.length;
+
+		hole.name = 'screw location ' + screws.length;
 		hole.userData.screw = mesh;
 
 		screws.push( mesh );
@@ -108,17 +108,14 @@
 
 		mesh.userData.places = [];
 		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
 
-		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
 		mesh.userData.places.push( { parent: hole, scale: 3, pX: 0, pY: 0, pZ: 20, rX: pi05, rY: 0, rZ: 0 } );
-		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
 
-
-		mesh.name = 'peg';
+		mesh.name = 'peg ' + pegs.length;
 		mesh.userData.holeParent = hole;
 
-		hole.name = 'peg location' + pegs.length;
+		hole.name = 'peg location ' + pegs.length;
 		hole.userData.peg = mesh;
 
 		pegs.push( mesh );

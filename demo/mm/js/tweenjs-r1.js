@@ -1,6 +1,6 @@
 ﻿
-	var easings;
-	var duration = 500;
+
+	var objects = [];
 
 	var indexFrame;
 	var indexObject;
@@ -12,18 +12,8 @@
 	var framesDefault = 5;
 	var frames = framesDefault;
 
-	var objects = [];
-
-	var pi = Math.PI;
-	var pi05 = 0.5 * pi;
-	var pi_05 = -0.5 * pi;
-	var pi2 = 2 * pi;
-
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-
 	var easings = Object.keys( TWEEN.Easing );
-
-	var startTime = Date.now();
+	var duration = 500;
 
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
@@ -73,7 +63,7 @@
 		camera.userData.tween = tweenCamera;
 
 		p = camera.position.clone();
-		t = controls.target.clone();
+		var t = controls.target.clone();
 		camera.userData.places.push( { pX: p.x, pY: p.y, pZ: p.z, tX: t.x, tY: t.y, tZ: t.z } );
 
 		for ( var i = 0; i < frames; i++ ) {
@@ -175,7 +165,6 @@
 		osc1.stop( startTime + duration );
 
 	}
-
 
 
 // events
@@ -310,7 +299,6 @@
 		tweenFrame();
 
 	}
-
 
 	function playClip() {
 
