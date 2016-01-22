@@ -13,13 +13,13 @@
 	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
 	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
 
-	var css, menu, content;
+	var selected, fileName, content;
 
 	init();
 
 	function init() {
 
-		css = document.body.appendChild( document.createElement( 'style' ) );
+		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 		`
 
@@ -29,12 +29,13 @@
 
 			.aa { text-decoration: none; }
 
+			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
 			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 
 		`;
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
 		`
@@ -50,6 +51,13 @@
 
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
 		content.id = 'content';
+
+		var button = document.body.appendChild( document.createElement( 'div' ) );
+		button.id = 'button';
+		button.textContent = 'View source';
+		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); }
+
+		selected = button;
 
 		requestFileNames();
 
@@ -70,7 +78,7 @@
 			var keys = Object.keys( response );
 			var categories = [];
 			var files = [];
-			var txt = '';
+			var text = '';
 
 			for ( var key in response ) {
 
@@ -79,26 +87,25 @@
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
 				var title = file.slice( 0, -5 ).split( '_' );
-
-				category = title.shift();
+				var category = title.shift();
 
 				if ( categories.indexOf( category ) === -1 ) {
 
 					categories.push( category );
-					txt += `<h2> ${ category } </h2>`;
+					text += `<h2> ${ category } </h2>`;
 
 				}
 
 				title = title.join().replace( /,/gi, ' ' );
 
-				txt += `<div><a class=aa href=#${ file } onclick=load('${ file }') >${ title }<a></div>`;
+				text += `<div><a class=aa id=${ file.slice( 0, -5 ) } href=#${ file } onclick=load('${ file }') >${ title }<a></div>`;
 
 				files.push( file )
 
 			}
 
 			fileCount.innerHTML = files.length + ' files';
-			fileNames.innerHTML = txt;
+			fileNames.innerHTML = text;
 
 			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
 
@@ -110,9 +117,13 @@
 
 	function load( fileName ) {
 
-		document.title = fileName + ' - Scene.js Viewer';
+		document.title = fileName + ' - Three.js Viewer Basic';
 
 		content.src = urlExamples + fileName;
+
+		selected.style.color = ``;
+		selected = document.getElementById( fileName.replace( '.html', `` ) );
+		selected.style.color = `red`;
 
 	}
 
