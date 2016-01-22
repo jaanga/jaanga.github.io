@@ -28,7 +28,7 @@
 	].join('\n');
 
 	
-	var fileName, selected;
+	var fileName, selected, content;
 
 	init();
 
@@ -45,16 +45,16 @@
 
 			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
 			#content { border-width: 0px; height: 100%; left: 320px; overflow: hidden; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
-			#menu { background-color: #ccc; height: 100%; max-width: 320px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; }
+			#menu { background-color: #ccc; height: 100%; max-width: 300px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 
 		`;
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
 		`
 
-			<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br>
+			<a class=aa href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br>
 			<a class=aa href="" ><pre>${ logo }</pre></a>
 			<h2><a class=aa href="" >Viewer Three.js R1</a></h2>
 
@@ -67,6 +67,8 @@
 		button.id = 'button';
 		button.textContent = 'View source';
 		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); }
+
+		selected = button;
 
 		requestThreejsFileNames();
 
