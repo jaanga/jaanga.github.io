@@ -712,7 +712,7 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( -bend, length + shaft, 0 ) );
 
 		var mesh = new THREE.Mesh( geometry, material );
-		mesh.name = 'allenWrench_100092';
+		mesh.name = 'hexKey_100092';
 		mesh.userData.places = [];
 
 		placard = build_placard( '100092', 0.05, 120, 0, 20, 0 )
@@ -921,6 +921,8 @@
 					t.repeat.set( rows, 1 );
 
 				}
+
+				if ( color === 15658734 ) { t = ''; }
 
 				child.material = new THREE.MeshBasicMaterial( { color: materialCaseColor, map: t, name: 'materialCase' } );
 

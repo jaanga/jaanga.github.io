@@ -241,7 +241,7 @@
 
 		index = index ? index : 0;
 
-		if( info ) { info.innerHTML = 'debug: frame:' + index + '<br>'; }
+		if( info ) { info.innerHTML = 'debug:<br>frame:' + index + '<br>'; }
 
 		tweenObjectsToLocation( objects, index );
 
@@ -268,7 +268,9 @@
 
 			if ( holes.length ) { dispatchScrewsPegsToParent( obj, index, ms ); }
 
-			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-'  + ' ' + ms.toFixed() + 'ms<br>';
+			if ( oud.autoRotate !== undefined ) { controls.autoRotate = chkRotate.checked = oud.autoRotate; }
+
+//			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - ' ' + ms.toFixed() + 'ms<br>';
 
 		}
 
@@ -358,14 +360,16 @@ console.log( 'the end' );
 			tween( obj, oud, ms, itemDispatch );
 
 			if ( holes.length ) { dispatchScrewsPegsToParent( obj, indexHardware, ms ); }
-
+			if ( oud.autoRotate !== undefined ) { console.log( '', oud ); controls.autoRotate = chkRotate.checked = oud.autoRotate; }
 		}
+
+		info.innerHTML += 'frame: ' + indexFrame + ' items: ' + frame.length + ' ' + ( Date.now() - startTime ) + 'ms<br>';
 
 	}
 
 	function itemDispatch() {
 
-		info.innerHTML += 'frame: ' + indexFrame + ' objects: ' + indexObject + ' ' + ( Date.now() - startTime ) + 'ms<br>';
+
 
 		if ( indexObject < clip[ indexFrame ].length - 1 ) {
 

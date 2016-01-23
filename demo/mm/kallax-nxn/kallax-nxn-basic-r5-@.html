@@ -99,10 +99,11 @@
 			<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>
 			<p><button onclick=togglePlacesAll(); >Toggle Places</button></p>
 			<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Play Step-by-Step Assembly</p>
+			<p><input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate; > Auto-Rotate</p>
 			<p>
 				<input type=radio name=field id=birch onchange=updateMaterial(0xffffff); checked />birch
 				<input type=radio name=field id=black onchange=updateMaterial(0x333333); />black
-				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); />white
+				<input type=radio name=field id=white onchange=updateMaterial(0xeeeeee); />white
 			</p>
 			<p><a href="http://jaanga.github.io/demo/mm/kallax-wall-bracket/" >notKallax Wall Bracket</a></p>
 			<div id=info style=font-size:9pt; ></div>
@@ -221,8 +222,8 @@
 		}
 
 		kallax.userData.places = [];
-		kallax.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-		kallax.userData.places.push( { pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: 0, rZ: -pi05 } );
+		kallax.userData.places.push( { autoRotate: false, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		kallax.userData.places.push( { autoRotate: true, pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: 0, rZ: -pi05 } );
 //		kallax.userData.places.push( { pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: 0, rZ: pi05 } );
 
 		objects.push( kallax );
@@ -252,7 +253,7 @@
 		camera.userData.places.push( { pX: p2, pY: p2, pZ: p2, tX: 0, tY: height05Case, tZ: 0 } ); // assembled
 
 		camera.userData.places.push( { pX: 130, pY: 400, pZ: 30, tX: 2, tY: 12, tZ: -11 } ); // zoom out / high up
-		camera.userData.places.push( { pX: -200, pY: 35, pZ: 75, tX: -5, tY: 40, tZ: -80 } ); // close in / far corner / outside
+		camera.userData.places.push( { pX: -230, pY: 60, pZ: -180, tX: -10, tY: 10, tZ: -30 } ); // close in / far corner / outside
 		camera.userData.places.push( { pX: 95, pY: 154, pZ: 84, tX: 3, tY: 3, tZ: 0 } ); // close in / middle
 
 		camera.userData.places.push( { pX: 80, pY: 140, pZ: 140, tX: 2, tY: 12, tZ: -11 } ); // close in far right - inside
@@ -480,11 +481,15 @@
 
 	function createClips() {
 
+		speed05 = 500;
+
 		speed1 = 1000;
 
 		speed2 = 2000;
 
-		speed3 = 5000;
+		speed3 = 3000;
+
+		speed5 = 5000;
 
 		playList = [
 
@@ -512,18 +517,18 @@
 
 		for ( i = 0; i < columns - 1; i++ ) {
 
-			items.push( [ dividers[ i ], 2, speed2, 0 ] );
+			items.push( [ dividers[ i ], 2, speed2, 2 ] );
 
 		}
 
-
 		if ( items.length ) { playList.push( items ); }
+
 
 		items = [];
 
 		for ( i = 0; i < columns - 1; i++ ) {
 
-			items.push( [ dividers[ i ], 2, speed2, 2 ] );
+			items.push( [ dividers[ i ], 2, speed2, 1 ] );
 
 		}
 
@@ -551,7 +556,7 @@
 
 			if ( i < shelves.length ) {
 
-				items.push( [ shelves[ i ], 3, speed1, 0 ] );
+				items.push( [ shelves[ i ], 3, speed2, 0 ] );
 
 			}
 
@@ -566,7 +571,7 @@
 
 			if ( i < shelves.length ) {
 
-				items.push( [ shelves[ i ], 3, speed1, 2 ] );
+				items.push( [ shelves[ i ], 3, speed2, 2 ] );
 
 			}
 
@@ -580,7 +585,7 @@
 
 			if ( i < shelves.length ) {
 
-				items.push( [ shelves[ i ], 3, speed1, 1 ] );
+				items.push( [ shelves[ i ], 3, speed2, 1 ] );
 
 			}
 
@@ -603,7 +608,7 @@
 
 			for ( var j = i * d ; j < i * d + d; j++ ) {
 
-				items.push( [ dividers[ j ], 2, speed1, 2 ] );
+				items.push( [ dividers[ j ], 2, speed05, 2 ] );
 
 			}
 
@@ -613,7 +618,7 @@
 
 			for ( j = i * d ; j < i * d + d; j++ ) {
 
-				items.push( [ dividers[ j ], 2, speed1, 1 ] );
+				items.push( [ dividers[ j ], 2, speed05, 1 ] );
 
 			}
 
@@ -623,7 +628,7 @@
 
 			for ( j = i * d ; j < i * d + d; j++ ) {
 
-				items.push( [ dividers[ j ], 1, speed1, 1 ] );
+				items.push( [ dividers[ j ], 1, speed05, 1 ] );
 
 			}
 
@@ -631,13 +636,13 @@
 
 			if ( i < rows - 1 ) {
 
-				playList.push ( [ [ shelves[ i ], 2, speed1, 1 ] ] );
-				playList.push ( [ [ shelves[ i ], 1, speed1 ] ] );
+				playList.push ( [ [ shelves[ i ], 2, speed05, 1 ] ] );
+				playList.push ( [ [ shelves[ i ], 1, speed05 ] ] );
 
 			}
 		}
 
-		playList.push( [ [ caseLeft, 1, speed1, 0 ], [ camera, 6, speed2 ]  ]);
+		playList.push( [ [ caseLeft, 1, speed2, 0 ], [ camera, 6, speed2 ]  ]);
 		playList.push( [ [ caseLeft, 1, speed1, 2 ] ]);
 		playList.push( [ [ caseLeft, 1, speed3, 1 ] ]);
 
@@ -645,8 +650,7 @@
 		playList.push( [ [ caseBottom, 1, speed1, 2 ] ] );
 		playList.push( [ [ caseBottom, 1, speed3, 1 ] ] );
 
-		playList.push( [ [ kallax, 1, speed2 ] ]);
-
+		playList.push( [ [ kallax, 1, speed3 ], [ hexKey, 0, speed3 ] ] );
 
 	}
 
