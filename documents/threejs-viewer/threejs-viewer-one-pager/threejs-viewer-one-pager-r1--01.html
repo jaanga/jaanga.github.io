@@ -14,28 +14,42 @@
 	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
 	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
 
-	var iframeContainers = [];
-	var iframesActive = [];
-	var iframesActiveLimit = 3;
+	var views = []; // start with something
+	var renderers = [];
 
+	var renderersLimit = 3;
+	var viewsLimit = 32;
+
+	var menu, content;
+	var topics;
 	var content;
-	var selected;
-	var fileName;
-
+	var fileName, selected;
+	var files;
 
 // logo from view-source:http://mrdoob.github.io/three.js/docs/
+	var logo = [
 
-	var logo =
-`
-    __     __
- __/ __\\  / __\\__   ____   _____   _____
-/ __/  /\\/ /  /___\\/ ____\\/ _____\\/ _____\\
-\\/_   __/ /   _   / /  __/ / __  / / __  /_   __   _____
-/ /  / / /  / /  / /  / / /  ___/ /  ___/\\ _\\/ __\\/ _____\\
-\\/__/  \\/__/\\/__/\\/__/  \\/_____/\\/_____/\\/__/ /  / /  ___/
-                                         / __/  /  \\__ \\
-                                         \\/____/\\/_____/
-`;
+		'    __     __',
+		' __/ __\\  / __\\__   ____   _____   _____',
+		'/ __/  /\\/ /  /___\\/ ____\\/ _____\\/ _____\\',
+		'\\/_   __/ /   _   / /  __/ / __  / / __  /_   __   _____',
+		'/ /  / / /  / /  / /  / / /  ___/ /  ___/\\ _\\/ __\\/ _____\\',
+		'\\/__/  \\/__/\\/__/\\/__/  \\/_____/\\/_____/\\/__/ /  / /  ___/',
+		'                                         / __/  /  \\__ \\',
+		'                                         \\/____/\\/_____/'
+
+	].join('\n');
+
+	var menuHeader =
+	`
+
+		<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a><br> 
+		<a class=aa href="" title='click here to reload' ><pre>${ logo }</pre></a>
+		<h2><a class=aa href="" >Viewer One Pager R1</a></h2>
+		<p id=menuCount ></p>
+		<div id=menuNames ></div>
+
+	`;
 
 	init();
 	animate();
@@ -47,17 +61,18 @@
 		`
 
 			* { box-sizing: border-box; }
-			body { font: 12pt monospace; margin: 0;}
+			html { height: 100%; }
 
-			a { text-decoration: none; }
+			body { font: 12pt monospace; margin: 0;}
 			h2 { margin: 0; }
-			iframe { border: 1px solid green; height: 100%; width: 100%; }
 			pre { font-size: 6pt; }
 
-			.divIframe { border: 0px solid red; width: 100%; height:512px; }
+			.aa { text-decoration: none; }
+			.divView { border: 0px solid red; width: 100%; height:512px; }
+			.ifr { border: 1px solid green; height: 100%; width: 100%; }
 
-			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
-			#content { height: 100%; left: 320px; margin: auto; overflow: auto; padding: 10%; 
+			#button{ background-color: silver; top: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
+			#content { border-width: 0px; height: 100%; left: 320px; margin: auto;  overflow: auto; padding: 100px; 
 				position: absolute; right: 0; width: ${ window.innerWidth - 320 }px; }
 			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 
@@ -65,16 +80,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML =
-		`
-
-			<div<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a></div> 
-			<pre><a href="" title='click here to reload' >${ logo }</a></pre>
-			<h2><a href="" >Viewer One Pager R1</a></h2>
-			<p id=menuCount ></p>
-			<div id=menuNames ></div>
-
-		`;
+		menu.innerHTML = menuHeader;
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
 		content.id = 'content';
@@ -114,9 +120,8 @@
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
-
+				files.push( file );
 				var id = file.slice( 0, -5 );
-				files.push( id );
 				var title = id.split( '_' );
 				var category = title.shift();
 				title = title.join().replace( /,/gi, ' ' );
@@ -129,12 +134,12 @@
 
 				}
 
-				menuText += `<div><a id=mnu_${ id } href=#${ id } onclick=scrollIframe('${ id }') >${ title }<a></div>`;
+				menuText += `<div><a class=aa id=mnu_${ id } class=aa href=#${ file } onclick=scrollView('${ file }') >${ title }<a></div>`;
 
 				contentText += 
 				`
 
-					<div class=divIframe id=${ id } ></div>
+					<div class=divView id=${ id } ></div>
 					<h3>${ title }</h3>
 
 				`;
@@ -145,42 +150,42 @@
 			menuNames.innerHTML = menuText;
 			content.innerHTML = contentText;
 
-			iframeContainers = document.getElementsByClassName( 'divIframe' );
+			views = document.getElementsByClassName( 'divView' );
 
 			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
-			scrollIframe( fileName );
+			scrollView( fileName );
 
 		}
 
 	}
 
-	function scrollIframe( file ) {
+	function scrollView( fileName ) {
 
-		iframeContainers[ file ].scrollIntoView();
+		views[ fileName.slice( 0, -5 ) ].scrollIntoView();
+
+		document.title = fileName + ' Three.js Viewer One-Pager';
+
+		selected.style.color = ``;
+		selected = document.getElementById( 'mnu_' + fileName.slice( 0, -5 ) );
+		selected.style.color = `red`;
 
 	}
 
-	function updateIframe( activeContainer ) {
+	function updateView( view ) {
 
 		var iframes = document.getElementsByTagName( 'iframe' );
 
-		if ( iframes.length > iframesActiveLimit ) {
+		if ( iframes.length > renderersLimit ) {
 
-			var frameTooMany = iframesActive.shift();
-			frameTooMany.innerHTML = '';
+			var frame = renderers.shift();
+			frame.innerHTML = '';
 
 		}
 
-		if ( activeContainer.innerHTML === '' ) {
+		if ( view.innerHTML === '' ) {
 
-			activeContainer.innerHTML = `<iframe src=${ urlExamples + activeContainer.id + '.html' } ></iframe>`;
-			iframesActive.push( activeContainer );
-
-			selected.style.color = ``;
-			selected = document.getElementById( 'mnu_' + fileName );
-			selected.style.color = `red`;
-
-			fileName = activeContainer.id;
+			view.innerHTML = `<iframe class=ifr src=${ urlExamples + view.id + '.html' } ></iframe>`;
+			renderers.push( view );
 
 		}
 
@@ -190,15 +195,15 @@
 
 		requestAnimationFrame( animate );
 
-		for ( var i = 0; i < iframeContainers.length; i++ ) {
+		for ( var i = 0; i < views.length; i++ ) {
 
-			var iframeContainer = iframeContainers[ i ];
+			var view = views[ i ];
 
-			rect = iframeContainer.getBoundingClientRect();
+			rect = view.getBoundingClientRect();
 
 			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
 
-			updateIframe( iframeContainer );
+			updateView( view );
 
 		}
 

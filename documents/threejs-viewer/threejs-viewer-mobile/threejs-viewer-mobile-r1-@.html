@@ -13,9 +13,10 @@
 	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
 	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
 
-	var content, hamburger;
+	var hamburger, content;
 	var fileName, selected;
-	var files, count = 0; fileIndex = 0;
+	var files = [];
+	var fileIndex = 0;
 
 	init();
 
@@ -26,15 +27,16 @@
 		`
 
 			body { font: 12pt monospace; margin: 0; overflow: auto; }
+			a { text-decoration: none; }
 			button { border: 0px silver; background-color: silver; height: 20px; }
 			h2 { margin: 0; }
 			iframe { height:100%; width:100% }
 
-			.aa { text-decoration: none; }
+
 
 			#content { border-width: 0px; height: 100%; left: 0; overflow: hidden; position: absolute; top: 0; width: 100%; }
 			#hamburger { color: #fcc; cursor: pointer; font-size: 24pt; left: 320px; position: absolute; top: 50px; transition: left 1s; z-index: 100; }
-			#menu { background-color: #ccc; color: #888; font-size: 11pt;  height: ${ window.innerHeight }px; left: -320px; max-width: 300px; 
+			#menu { background-color: #ccc; color: #888; font-size: 11pt;  height: ${ window.innerHeight }px; left: -320px; max-width: 300px;
 				opacity: 0.95; overflow: auto; padding: 0 0 0 20px; position: absolute; top: -50px;}
 
 		`;
@@ -49,8 +51,8 @@
 		`
 
 			<h2>
-				<a class=aa href="" > ${ document.title }</a>
-				<a class=aa href=http://jaanga.github.io/ >🛈</a>
+				<a href="" > ${ document.title }</a>
+				<a href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<p><button onclick=slideshow(); >slideshow</button></p>
 			<p id=fileCount ></p>
@@ -61,22 +63,21 @@
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
 		content.id = 'content';
 
-		selected = content
+		selected = content;  // saves an 'if' later on
 
 		requestFileNames();
 
 	}
 
-
 	function slideshow() {
 
-		fileIndex = fileIndex < count ? fileIndex : 0;
+		fileIndex = fileIndex < files.length ? fileIndex : Math.floor( Math.randon() * files.length );
 
-		load( files[ fileIndex++ ].name );
+		load( files[ fileIndex++ ] );
 
 		hamburger.style.left = '0px';
 
-		setTimeout( slideshow, 10000 );
+		setInterval( slideshow, 10000 );
 
 	}
 
@@ -91,39 +92,40 @@
 
 			if ( xhr.readyState != 4  ) { return; }
 
-			files = JSON.parse( xhr.response );
-
-			var txt = '';
+			var response = JSON.parse( xhr.response );
+			var keys = Object.keys( response );
 			var categories = [];
+			var text = '';
 
-			for ( var i = 0; i < files.length; i++ ) {
+			for ( var key in response ) {
 
-				file = files[ i ].name;
+				file = response[ key ].name;
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
-				var title = file.slice( 0, -5 ).split( '_' );
+
+				var id = file.slice( 0, -5 );
+				files.push( id );
+				var title = id.split( '_' );
 				var category = title.shift();
+				title = title.join().replace( /,/gi, ' ' );
 
 				if ( categories.indexOf( category ) === -1 ) {
 
 					categories.push( category );
-					txt += `<h2> ${ category } </h2>`;
+
+					text += `<h2> ${ category } </h2>`;
 
 				}
 
-				title = title.join().replace( /,/gi, ' ' );
-
-				txt += `<div><a class=aa id=${ file.replace( '.html', `` ) } href=#${ file } onclick=load('${ file }')>${ title }<a></div>`;
-				count++;
+				text += `<div><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></div>`;
 
 			}
 
-			fileCount.innerHTML = count + ' files';
-			fileNames.innerHTML = txt;
+			fileCount.innerHTML = files.length + ' files';
+			fileNames.innerHTML = text;
 
-			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ].name;
-
+			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
 			load( fileName );
 
 		}
@@ -134,10 +136,10 @@
 
 		document.title = fileName + ' - Three.js Viewer Mobile';
 
-		content.src = urlExamples + fileName;
+		content.src = urlExamples + fileName + '.html';
 
 		selected.style.color = ``;
-		selected = document.getElementById( fileName.replace( '.html', `` ) );
+		selected = document.getElementById( 'mnu_' + fileName );
 		selected.style.color = `red`;
 
 	}

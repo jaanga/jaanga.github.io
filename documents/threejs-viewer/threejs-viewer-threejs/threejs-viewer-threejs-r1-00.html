@@ -75,7 +75,18 @@
 
 	function requestThreejsFileNames() {
 
-		topics = [ [], [], [], [], [], [], [], [], [], [], [] ];
+		var webgl = [];
+		var webglAdvanced = [];
+		var vr = [];
+		var css3d = [];
+		var css3dstereo = [];
+		var misc = [];
+		var canvas = [];
+		var raytracing = [];
+		var software = [];
+		var svg = [];
+
+		topics = [ [], [], [], [], [], [], [], [], [], [], [] ]; // [ webgl, webglAdvanced, vr, css3d, css3dstereo, misc, canvas, raytracing, software, svg ];
 		var topicOrder = [ 'webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
 
 		var xhr = new THREE.XHRLoader();
@@ -93,7 +104,7 @@
 
 				var file = response[ key ].name;
 
-				if ( file.slice( -5 ) !== '.html' || file === 'index.html') { continue; };
+				if ( file.substr( -5 ) !== '.html' || file === 'index.html') { continue; };
 
 				var topic = file.split( '_' ).shift();
 				id = file.slice( 0, -5);
@@ -122,12 +133,10 @@
 					var title = id.slice( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 					text +=
 					`
-
 						<div>
 							<a id=mnu_${ id } href=#${ id } onclick=load('${ id }'); >${ title }</a>
 							<a href=${ urlExamples }${ id + '.html' } ><img src=../files/Icon_External_Link.png ></a>
 						</div>
-
 					`;
 
 				}
