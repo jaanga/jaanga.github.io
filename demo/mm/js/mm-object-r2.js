@@ -1,6 +1,4 @@
 ﻿
-
-
 	var edges;
 	var helpers;
 
@@ -42,7 +40,7 @@
 	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
 
 
-	function drawHelpers( length ) {
+	function draw_helpers( length ) {
 
 		helpers = new THREE.Object3D();
 
@@ -57,7 +55,7 @@
 
 	}
 
-	function drawHole( obj, x, y, z, aX, aY, aZ, type ) {
+	function build_hole( obj, x, y, z, aX, aY, aZ, type ) {
 
 		var mesh = new THREE.Mesh( geometryHole, materialHole );
 		mesh.name = 'hole';
@@ -68,11 +66,11 @@
 
 		if ( type === 'pegHole' ) {
 
-			drawPeg_101339( mesh );
+			draw_peg_101339( mesh );
 
 		} else if ( type === 'screwHole' ) {
 
-			drawScrew_1004321_104322( mesh );
+			draw_screw_1004321_104322( mesh );
 
 		}
 
@@ -80,7 +78,7 @@
 
 	}
 
-	function drawPeg_101339 ( hole ) {
+	function draw_peg_101339 ( hole ) {
 
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
 		var offsetX = height05Case + 20;
@@ -101,7 +99,7 @@
 		hole.name = 'peg location ' + pegs.length;
 		hole.userData.peg = mesh;
 
-		placard = drawPlacard( '101339', 0.05, 120, 0, 20, 0 )
+		placard = build_placard( '101339', 0.05, 120, 0, 20, 0 )
 		mesh.add( placard );
 
 		pegs.push( mesh );
@@ -430,7 +428,7 @@
 
 // drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
-		geo2 = drawSpiralAlongZ( radiusScrew05, radiusScrew, segments, length05 / pitch, pitch );
+		geo2 = build_spiralAlongZ( radiusScrew05, radiusScrew, segments, length05 / pitch, pitch );
 		geometry.merge( geo2 );
 
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( pi_05 ) );
@@ -717,7 +715,7 @@
 		mesh.name = 'allenWrench_100092';
 		mesh.userData.places = [];
 
-		placard = drawPlacard( '100092', 0.05, 120, 0, 20, 0 )
+		placard = build_placard( '100092', 0.05, 120, 0, 20, 0 )
 		mesh.add( placard );
 
 		mesh.userData.radius = radius;

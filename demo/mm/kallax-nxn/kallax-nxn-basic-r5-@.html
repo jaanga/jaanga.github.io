@@ -104,7 +104,8 @@
 				<input type=radio name=field id=black onchange=updateMaterial(0x333333); />black
 				<input type=radio name=field id=white onchange=updateMaterial(0xffffff); />white
 			</p>
-			<div id=info ></div>
+			<p><a href="http://jaanga.github.io/demo/mm/kallax-wall-bracket/" >notKallax Wall Bracket</a></p>
+			<div id=info style=font-size:9pt; ></div>
 
 		`;
 
@@ -230,7 +231,7 @@
 
 		scene.add( kallax, edges, hardware, helpers );
 
-		hexKey = drawHexKey_100092();
+		hexKey = draw_hexKey_100092();
 		hexKey.userData.places.push( { pX: - width05Case - 20, pY: 0, pZ: -height05Case - 20, rX: pi05, rY: 0, rZ: 0 } );
 		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
 		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
@@ -283,37 +284,37 @@
 
 		if ( name === 'caseBottom' ) {
 
-			drawHole( mesh, -width05Case + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi05, 0, 0, 'screwHole' );
-			drawHole( mesh, -width05Case + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0, 'screwHole' );
-			drawHole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi05, 0, 0, 'screwHole'  );
-			drawHole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0, 'screwHole'  );
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi05, 0, 0, 'screwHole' );
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0, 'screwHole' );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi05, 0, 0, 'screwHole'  );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0, 'screwHole'  );
 
 		} else {
 
-			drawHole( mesh, -width05Case + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, -width05Case + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
 
 		}
 
-		drawHole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
-		drawHole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
 
 // four corners bottom
-		drawHole( mesh, -width05Case + thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
-		drawHole( mesh, -width05Case + thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
-		drawHole( mesh, width05Case - thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
-		drawHole( mesh, width05Case - thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, -width05Case + thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, -width05Case + thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
 
 		for ( var i = 0; i < columns - 1; i++ ) {
 
 //			var w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
 			var w = i * ( widthUnit + 0.75 * thicknessCase ) - ( columns05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
-			drawHole( mesh, w, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, w, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, w, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, w, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
 
 		}
 
@@ -339,34 +340,34 @@
 
 		if ( name === 'caseRight' ) {
 
-			drawHole( mesh, 0.5 * heightCase - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0 );
-			drawHole( mesh, 0.5 * heightCase - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0);
-			drawHole( mesh, -0.5 * heightCase + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0, 'screwHole' );
-			drawHole( mesh, -0.5 * heightCase + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0, 'screwHole' );
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0 );
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0);
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0, 'screwHole' );
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0, 'screwHole' );
 
 		} else {
 
-			drawHole( mesh, 0.5 * heightCase - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0, 'screwHole' );
-			drawHole( mesh, 0.5 * heightCase - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0, 'screwHole' );
-			drawHole( mesh, -0.5 * heightCase + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0);
-			drawHole( mesh, -0.5 * heightCase + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0 );
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0, 'screwHole' );
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0, 'screwHole' );
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0);
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0 );
 
 		}
 
 // wall brackets
-		drawHole( mesh, 0.5 * heightCase - 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
-		drawHole( mesh, 0.5 * heightCase - 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
-		drawHole( mesh, -0.5 * heightCase + 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
-		drawHole( mesh, -0.5 * heightCase + 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, 0.5 * heightCase - 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, 0.5 * heightCase - 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, -0.5 * heightCase + 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, -0.5 * heightCase + 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
 
 		for ( var i = 0; i < rows - 1; i++ ) {
 
 //			var w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
 			var h = i * ( widthUnit + 0.75 * thicknessCase ) - ( rows05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
-			drawHole( mesh, h, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, h, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, h, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, h, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
 
 		}
 
@@ -398,15 +399,15 @@
 		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
 
-		drawHole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
-		drawHole( mesh, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
-		drawHole( mesh, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
-		drawHole( mesh, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
 
-		drawHole( mesh, widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi05, 0 );
-		drawHole( mesh, widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0 );
-		drawHole( mesh, -widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0 );
-		drawHole( mesh, -widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0 );
+		build_hole( mesh, widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, -widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0 );
+		build_hole( mesh, -widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0 );
 
 		return mesh;
 
@@ -437,25 +438,25 @@
 		edges.add( edge );
 
 // four corners plus
-		drawHole( mesh, width05Case - thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
-		drawHole( mesh, width05Case - thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
-		drawHole( mesh, width05Case - thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
-		drawHole( mesh, width05Case - thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
 
 // four corners minus
-		drawHole( mesh, -width05Case + thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
-		drawHole( mesh, -width05Case + thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
-		drawHole( mesh, -width05Case + thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
-		drawHole( mesh, -width05Case + thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
 
 		for ( var i = 0; i < columns - 1; i++ ) {
 
 //			w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
 			var w = i * ( widthUnit + 0.75 * thicknessCase ) - ( columns05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
-			drawHole( mesh, w, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, w, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, w, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
-			drawHole( mesh, w, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
 		}
 
 		return mesh;

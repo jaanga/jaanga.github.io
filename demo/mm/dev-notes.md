@@ -14,6 +14,12 @@ draw_ = part
 build_ = component of a part
 
 
+Need to work on 
+
+* placard width and placement and when to show
+* mobilization
+
+
 2016-01-21
 
 Most technical aspects seem to be undercontrol
