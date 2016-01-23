@@ -21,6 +21,11 @@ Need to work on
 * step-by step for under 2x2
 * dividers stack improperly
 * hexKey twirls too much
+* Add plastic cover to wall bracket
+* Round headed wall screw
+* flat head screw driver
+* handle for hex key
+
 
 
 2016-01-21

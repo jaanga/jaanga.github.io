@@ -16,10 +16,17 @@
 
 	var urlContents= 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 
-	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
-	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+//	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
+//	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
-	var footer = '';
+	var footer =
+	`
+
+		<center title="dingbat" >
+		<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a></h1>
+		</center>
+
+	`;
 
 	var views = [];
 	var renderers = [];
@@ -62,7 +69,7 @@
 
 			<h1>
 				<a href="" > ${ document.title }</a>
-				<a class=aa href=http://jaanga.github.io/ >🛈</a>
+				<a class=aa href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
 			</h1>
 			<p id=introduction >
 				<p><i>Exploring new ways of viewing large numbers of 3D files.</i><hr></p>
@@ -101,7 +108,7 @@
 
 				var file = response.tree[ key ].path;
 
-				if ( file.indexOf( '.html' ) === -1 || file.indexOf( '@' ) === -1 )  { continue; }
+				if ( file.indexOf( 'threejs-viewer/' ) === - 1 || file.indexOf( '.html' ) === -1 || file.indexOf( '@' ) === -1 )  { continue; }
 
 				files.push( file );
 
@@ -109,7 +116,7 @@
 
 			}
 
-createMultipleViews()
+			createMultipleViews()
 
 		}
 
@@ -124,10 +131,13 @@ createMultipleViews()
 
 				<div class=divView id=ifr${ i }  ></div>
 				<div class=divText >header ${ i + 1 }</div>
+				<hr>
 
 			`;
 
 		}
+
+		container.innerHTML += footer;
 
 		views = document.getElementsByClassName( 'divView' );
 		texts = document.getElementsByClassName( 'divText' );
