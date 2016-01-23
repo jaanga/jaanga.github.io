@@ -2,6 +2,18 @@ dev notes read me
 ===
 
 
+2016-01-23
+
+Ground plane should become shelf that moves with fixture - along with parts not being used
+
+Renaming with underscores - so part numbers become more visible
+
+part number - with case is embedded in function name.
+
+draw_ = part
+build_ = component of a part
+
+
 2016-01-21
 
 Most technical aspects seem to be undercontrol

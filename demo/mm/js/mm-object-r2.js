@@ -1,7 +1,16 @@
 ﻿
+
+
+	var edges;
+	var helpers;
+
 	var screws = [];
 	var pegs = [];
+
+	var holes;
 	var hardware;
+
+	var thickness = 1;
 
 	var pi = Math.PI;
 	var pi05 = 0.5 * pi;
@@ -104,7 +113,7 @@
 
 	}
 
-	function drawBracket115753() {
+	function draw_bracket115753() {
 
 		var widthLeaf1 = 18;
 		var widthLeaf2 = 12;
@@ -296,7 +305,7 @@
 
 	}
 
-	function drawPart103693() {
+	function draw_part103693() {
 
 		var startX;
 		var startY;
@@ -381,7 +390,7 @@
 
 	}
 
-	function drawScrew_1004321_104322( hole ) {
+	function draw_screw_1004321_104322( hole ) {
 
 		var material = new THREE.MeshNormalMaterial( { side: 2 } );
 
@@ -439,7 +448,7 @@
 		mesh.name = 'screw ' + screws.length;
 		mesh.userData.holeParent = hole;
 
-		placard = drawPlacard( [ '1004321', '104322' ], 0.05, 120, 0, 20, 0 )
+		placard = build_placard( [ '1004321', '104322' ], 0.05, 120, 0, 20, 0 )
 		mesh.add( placard );
 
 		hole.name = 'screw location ' + screws.length;
@@ -451,7 +460,7 @@
 
 	}
 
-	function drawScrew100372() {
+	function draw_screw100372() {
 
 		var radiusScrew05 = 0.5 * radiusScrew;
 		var delta = 2;
@@ -476,13 +485,13 @@
 
 		var geometry = new THREE.LatheGeometry( points, segments );
 
-		var geo2 = drawPhillipsHead( radiusScrew + 1.25, radiusScrew + 1.25 ); // createPhillipsHead( radius, height, rows );
+		var geo2 = build_phillipsHead( radiusScrew + 1.25, radiusScrew + 1.25 ); // createPhillipsHead( radius, height, rows );
 		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( -pi05 ) );
 		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, height05 + delta ) );
 
 		geometry.merge( geo2 );
 
-		geo2 = drawSpiralAlongZ( radiusScrew05, radiusScrew05 + 1, segments, height / pitch, pitch );
+		geo2 = build_spiralAlongZ( radiusScrew05, radiusScrew05 + 1, segments, height / pitch, pitch );
 		geometry.merge( geo2 );
 
 		var mesh = new THREE.Mesh( geometry, material );
@@ -493,7 +502,7 @@
 
 		return mesh;
 
-		function drawPhillipsHead( radius, height, rows ) {
+		function build_phillipsHead( radius, height, rows ) {
 
 			radius = radius ? radius : 20;
 			height = height ? height : -20;
@@ -538,7 +547,7 @@
 
 		}
 
-		function drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+		function xxxdrawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
 			var radiusInside = rIn ? rIn : 10;
 			var radiusOutside = rOut ? rOut : 15;
@@ -583,7 +592,7 @@
 
 	}
 
-	function drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
 		var radiusInside = rIn ? rIn : 10;
 		var radiusOutside = rOut ? rOut : 15;
@@ -626,7 +635,7 @@
 
 	}
 
-	function drawFixture() {
+	function draw_fixture() {
 
 		var width = 100;
 		var height = 300;
@@ -655,6 +664,9 @@
 		shape.holes.push( holePath );
 
 		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
+
+		material = new THREE.MeshNormalMaterial( { side: 2 });
+
 		var mesh = new THREE.Mesh( geometry, material );
 
 		mesh.name = 'fixture';
@@ -667,7 +679,7 @@
 // tools
 
 
-	function drawHexKey_100092() {
+	function draw_hexKey_100092() {
 
 		var radius = 0.5;
 		var bend = 2;
@@ -715,7 +727,7 @@
 
 	}
 
-	function drawScrewdriver() {
+	function draw_screwdriver() {
 
 		var radiusHandle = 5;
 		var radiusShaft = 1;
@@ -782,7 +794,7 @@
 
 	}
 
-	function drawPencil() {
+	function draw_pencil() {
 
 		var radius = 2;
 		var points = [ v( 0, 0, 0 ) , v( radius, 0, 10 ), v( radius, 0, 70 ), v( 0, 0, 70 ) ];
@@ -799,7 +811,7 @@
 
 // utilities
 
-	function drawPlacard( text, scale, color, x, y, z ) {
+	function build_placard( text, scale, color, x, y, z ) {
 
 		placard = new THREE.Object3D();
 
@@ -819,7 +831,6 @@
 		return placard;
 
 	}
-
 
 	function canvasMultilineText( textArray, parameters ) {
 
