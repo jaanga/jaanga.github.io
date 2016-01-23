@@ -13,7 +13,7 @@
 	var frames = framesDefault;
 
 	var easings = Object.keys( TWEEN.Easing );
-	var duration = 500;
+	var duration = 1000;
 
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
@@ -264,9 +264,9 @@
 			var oud = obj.userData.places[ index ];
 			ms = oud.ms ? oud.ms : duration;
 			tween = obj.userData.tween ? obj.userData.tween : tweenToPlace;
-			tween( obj, oud );
+			tween( obj, oud, ms );
 
-			if ( holes.length ) { dispatchScrewsPegsToParent( obj, index ); }
+			if ( holes.length ) { dispatchScrewsPegsToParent( obj, index, ms ); }
 
 			info.innerHTML += ( 1 + i ) + ' ' + obj.name + '-'  + ' ' + ms.toFixed() + 'ms<br>';
 
@@ -350,14 +350,14 @@ console.log( 'the end' );
 			var obj = item[ 0 ];
 			var indexPlace = item[ 1 ];
 			var oud = obj.userData.places[ indexPlace ];
-			oud.ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexPlace ].ms;
+			ms = item[ 2 ] ? item[ 2 ] : obj.userData.places[ indexPlace ].ms;
 			indexHardware = item[ 3 ] > -1 ? item[ 3 ] : indexPlace; 
 
 			tween = obj.userData.tween ? obj.userData.tween : tweenToPlace;
 
-			tween( obj, oud, itemDispatch );
+			tween( obj, oud, ms, itemDispatch );
 
-			if ( holes.length ) { dispatchScrewsPegsToParent( obj, indexHardware ); }
+			if ( holes.length ) { dispatchScrewsPegsToParent( obj, indexHardware, ms ); }
 
 		}
 
@@ -383,11 +383,11 @@ console.log( 'the end' );
 	}
 
 
-	function tweenToPlace( obj, p, onComplete ) {
+	function tweenToPlace( obj, p, ms, onComplete ) {
 
-		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 1 ] ].InOut;
-		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 1 ] ].InOut;
-		ms = p.ms ? p.ms : duration;
+		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 8 ] ].InOut;
+		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 8 ] ].InOut;
+		ms = ms ? ms : duration;
 
 		pX = p.pX ? p.pX : 0;
 		pY = p.pY ? p.pY : 0;
@@ -402,21 +402,23 @@ console.log( 'the end' );
 		new TWEEN.Tween( obj.position )
 		.to( { x: pX, y: pY, z: pZ }, ms )
 		.easing( eP )
+
 		.start();
 
 		new TWEEN.Tween( obj.rotation )
 		.to( { x: rX, y: rY, z: rZ }, ms )
+
 		.easing( eR )
 		.onComplete( function() { onComplete(); } )
 		.start();
 
 	}
 
-	function tweenCamera( camera, p, onComplete ) {
+	function tweenCamera( camera, p, ms, onComplete ) {
 
 		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 0 ] ].None;
 		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 0 ] ].None;
-		ms = p.ms ? p.ms : duration;
+		ms = ms ? ms : duration;
 
 		pX = p.pX ? p.pX : 0;
 		pY = p.pY ? p.pY : 0;
@@ -460,7 +462,7 @@ console.log( 'the end' );
 
 	}
 
-	function dispatchScrewsPegsToParent( object, indexPlace ) {
+	function dispatchScrewsPegsToParent( object, indexPlace, ms ) {
 
 		object.traverse( function ( child ) {
 
@@ -473,16 +475,23 @@ console.log( 'the end' );
 
 				obj.scale.set( p.scale, p.scale, p.scale );
 				p.parent.add( obj );
-				tween( obj, p  );
+				tween( obj, p, ms );
+
+				p.parent.add( hexKey );
+				hexKey.scale.set( p.scale, p.scale, p.scale );
+				tween( hexKey, p, ms );
 
 
 			} else if ( child.name.substr( 0, 7 ) === 'peg loc') {
 
 				obj = child.userData.peg;
 				p = obj.userData.places[ indexPlace ];
+
+				if ( !p ) { return; }
+
 				obj.scale.set( p.scale, p.scale, p.scale );
 				p.parent.add( obj );
-				tween( obj, p  );
+				tween( obj, p, ms  );
 
 			}
 
