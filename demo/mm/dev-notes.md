@@ -18,6 +18,8 @@ Need to work on
 
 * placard width and placement and when to show
 * mobilization
+* step-by step for under 2x2
+
 
 
 2016-01-21

@@ -360,7 +360,7 @@ console.log( 'the end' );
 			tween( obj, oud, ms, itemDispatch );
 
 			if ( holes.length ) { dispatchScrewsPegsToParent( obj, indexHardware, ms ); }
-			if ( oud.autoRotate !== undefined ) { console.log( '', oud ); controls.autoRotate = chkRotate.checked = oud.autoRotate; }
+			if ( oud.autoRotate !== undefined ) { controls.autoRotate = chkRotate.checked = oud.autoRotate; }
 		}
 
 		info.innerHTML += 'frame: ' + indexFrame + ' items: ' + frame.length + ' ' + ( Date.now() - startTime ) + 'ms<br>';

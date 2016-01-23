@@ -27,8 +27,26 @@ _The product assembly manuals of the future - now_
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
-_2016-01-22_
 
+_2016-01-23_
+
+NxN
+
+* General clean-up, re-structing varoable names to be easier to read
+* Add autoRotate
+* Re-structure the per frame data display
+* Update camera positions and frame times
+* Fix issue with displaying white texture
+* Add link to Wall Bracket
+
+Wall Bracket
+
+* Add link to NxN
+* Code clean-up
+* Re-structure variable names
+
+ 
+_2016-01-22_
 
 [Kallax NxN Basic R5 - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r5.html.html )
 
