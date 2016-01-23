@@ -385,8 +385,8 @@ console.log( 'the end' );
 
 	function tweenToPlace( obj, p, ms, onComplete ) {
 
-		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 8 ] ].InOut;
-		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 8 ] ].InOut;
+		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 5 ] ].InOut;
+		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 5 ] ].InOut;
 		ms = ms ? ms : duration;
 
 		pX = p.pX ? p.pX : 0;
@@ -444,7 +444,7 @@ console.log( 'the end' );
 
 // specials
 
-	function drawPencilLine( obj, p, func ) {
+	function drawPencilLine( obj, p, ms, func ) {
 
 		onComplete = func ? func : function() {} ;
 

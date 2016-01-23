@@ -71,7 +71,6 @@
 
 	}
 
-
 	function drawPeg_101339 ( hole ) {
 
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
@@ -149,8 +148,6 @@
 
 		mesh.userData.places = [];
 		mesh.name = 'bracket115753';
-
-//		objects.push( mesh );
 
 		var line = buildKallaxWallBracketSide1Lines();
 		line.position.set( - widthCorner - 0.5 * widthLeaf1, -0.5 * heightBracket, - 0.5 * widthLeaf2 - widthCorner + thickness + 0.01 );

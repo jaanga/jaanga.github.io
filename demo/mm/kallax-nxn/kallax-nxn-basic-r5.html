@@ -479,9 +479,9 @@
 
 	function createClips() {
 
-		speed1 = 500;
+		speed1 = 1000;
 
-		speed2 = 1000;
+		speed2 = 2000;
 
 		speed3 = 5000;
 
@@ -522,7 +522,7 @@
 
 		for ( i = 0; i < columns - 1; i++ ) {
 
-			items.push( [ dividers[ i ], 2, speed1, 2 ] );
+			items.push( [ dividers[ i ], 2, speed2, 2 ] );
 
 		}
 
@@ -534,7 +534,7 @@
 
 		for ( i = 0; i < columns - 1; i++ ) {
 
-			items.push( [ dividers[ i ], 1, speed1, 1 ] );
+			items.push( [ dividers[ i ], 1, speed2, 1 ] );
 
 		}
 
@@ -636,11 +636,11 @@
 			}
 		}
 
-		playList.push( [ [ caseLeft, 1, speed1, 0 ], [ camera, 6, speed1 ]  ]);
+		playList.push( [ [ caseLeft, 1, speed1, 0 ], [ camera, 6, speed2 ]  ]);
 		playList.push( [ [ caseLeft, 1, speed1, 2 ] ]);
 		playList.push( [ [ caseLeft, 1, speed3, 1 ] ]);
 
-		playList.push( [ [ caseBottom, 1, speed1, 0 ], [ camera, 7, speed1 ] ] );
+		playList.push( [ [ caseBottom, 1, speed2, 0 ], [ camera, 7, speed2 ] ] );
 		playList.push( [ [ caseBottom, 1, speed1, 2 ] ] );
 		playList.push( [ [ caseBottom, 1, speed3, 1 ] ] );
 
