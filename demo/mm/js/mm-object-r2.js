@@ -17,7 +17,7 @@
 	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
-	var texture;
+	var textureCase;
 
 	var materialCase = new THREE.MeshNormalMaterial();
 	materialCase.name = 'materialCase';
@@ -803,7 +803,7 @@
 
 		placard = new THREE.Object3D();
 
-		texture = canvasMultilineText( text, { backgroundColor: color }  );
+		var texture = canvasMultilineText( text, { backgroundColor: color }  );
 		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
 		var sprite = new THREE.Sprite( spriteMaterial );
 		sprite.position.set( x, y, z ) ;
@@ -881,7 +881,7 @@
 
 			function ( tex ) {
 
-				texture = tex;
+				textureCase = tex;
 
 				updateMaterial( materialCaseColor );
 
@@ -899,7 +899,7 @@
 
 			if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
 
-				t = texture.clone();
+				t = textureCase.clone();
 				t.wrapS = t.wrapT = THREE.RepeatWrapping;
 				t.needsUpdate = true;
 
