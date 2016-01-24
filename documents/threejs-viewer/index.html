@@ -8,16 +8,13 @@
 <meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
 -->
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='' >
+<meta name=description content='Gallery of a variety of scripts that enable you to view the Three.js exsmple files in new ways.' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
 <script>
 
 	var urlContents= 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
-
-//	var dwg = 'http://jaanga.github.io/cookbook-threejs/templates/draw-things/template-threejs-draw-things-r1.html';
-//	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 	var footer =
 	`
@@ -28,43 +25,29 @@
 
 	`;
 
-	var views = [];
-	var renderers = [];
-	var renderersLimit = 3;
-	var viewsLimit = 32;
-
-	var files = [];
-	var css, menu;
+	var iframeContainers = [];
+	var iframesActive = [];
+	var iframesActiveLimit = 3;
 
 	init();
 	animate();
 
 	function init() {
 
-		css = document.body.appendChild( document.createElement( 'style' ) );
+		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 		`
 
-			body { font: 12pt monospace; left: 0; right: 0; margin: auto; max-width: 800px; }
-			h2 { }
-			.aa { text-decoration: none; }
+			body { font: 12pt monospace; left: 0; right: 0; margin: auto; position: absolute; max-width: 800px; }
+			a, a:visited { color: crimson; text-decoration: none; }
+			iframe { border: 0px solid green; height: 100%; width: 100%; }
 
-
-			button{ -webkit-appearance: none; -moz-appearance: none; border: 0px silver; background-color: silver; height: 20px; }
-			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
-
-			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }
-			input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
-			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
-
-			.divView { border: 1px solid red; margin-top: 80px;width: 100%; height:512px; }
-			.ifr { border: 0px solid green; height: 100%;   width: 100%; }
+			.divIframe { border: 1px solid crimson; height:512px; margin: 80px 0 0 ${ -0.5 * ( window.innerWidth - 1000 ) }px; width: ${ window.innerWidth - 200 }px; }
 
 		`;
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
-		menu.innerHTML =
+		var contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.innerHTML =
 		`
 
 			<h1>
@@ -129,7 +112,7 @@
 
 			container.innerHTML += `
 
-				<div class=divView id=ifr${ i }  ></div>
+				<div class=divIframe id=${ i }  ></div>
 				<div class=divText >header ${ i + 1 }</div>
 				<hr>
 
@@ -139,30 +122,30 @@
 
 		container.innerHTML += footer;
 
-		views = document.getElementsByClassName( 'divView' );
+		iframeContainers = document.getElementsByClassName( 'divIframe' );
 		texts = document.getElementsByClassName( 'divText' );
 
 	}
 
-	function updateView( view ) {
+	function updateIframe( activeContainer ) {
 
 		var iframes = document.getElementsByTagName( 'iframe' );
 
-		if ( iframes.length > renderersLimit ) {
+		if ( iframes.length > iframesActiveLimit ) {
 
-			var frame = renderers.shift();
-			frame.innerHTML = '';
+			var frameTooMany = iframesActive.shift();
+			frameTooMany.innerHTML = '';
+
 
 		}
 
-		if ( view.innerHTML === '' ) {
+		if ( activeContainer.innerHTML === '' ) {
 
-			id = view.id.substr(3);
+			id = activeContainer.id;
 
-//			view.innerHTML = `<iframe src=${ 'http://jaanga.github.io/' + files[ id ] } onload=loadIt(this); class=ifr  ></iframe>`;
-			view.innerHTML = `<iframe class=ifr src=${ '../../' + files[ id ] } onload=loadIt(this,${ id }); ></iframe>`;
+			activeContainer.innerHTML = `<iframe src=${ '../../' + files[ id ] } onload=loadIt(this,${ id }); ></iframe>`;
 
-			renderers.push( view );
+			iframesActive.push( activeContainer );
 
 		}
 
@@ -196,15 +179,15 @@
 
 		requestAnimationFrame( animate );
 
-		for ( var i = 0; i < views.length; i++ ) {
+		for ( var i = 0; i < iframeContainers.length; i++ ) {
 
-			var view = views[ i ];
+			var iframeContainer = iframeContainers[ i ];
 
-			rect = view.getBoundingClientRect();
+			var rect = iframeContainer.getBoundingClientRect();
 
 			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
 
-			updateView( view );
+			updateIframe( iframeContainer );
 
 		}
 

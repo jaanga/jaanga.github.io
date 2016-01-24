@@ -41,29 +41,29 @@
 			a { text-decoration: none; }
 			pre { font-size: 6pt; }
 
-			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
-			#content { border-width: 0px; height: 100%; left: 320px; overflow: hidden; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
-			#menu { background-color: #ccc; height: 100%; max-width: 300px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; }
-
 		`;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
+		menu.style.cssText = `background-color: #ccc; height: 100%; max-width: 300px; opacity: 0.85; overflow: auto; padding: 0 0 0 20px; position: absolute; `;
 		menu.innerHTML =
 		`
 
 			<div<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a></div> 
 			<pre><a href="" title='click here to reload' >${ logo }</a></pre>
-			<h2><a href="" >Viewer Three.js R1</a></h2>
-			<p id=menuCount ></p>
-			<div id=menuNames ></div>
+			<h2><a href="" >Viewer Three.js R1</a>
+				 <a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
+			</h2>
+			<p>View files in the same categories and order as on Threejs.org. </p>
+			<p id=fileCount ></p>
+			<div id=fileNames ></div>
+
 		`;
 
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
-		content.id = 'content';
+		content.style.cssText = `border-width: 0px; height: 100%; left: 320px; overflow: hidden; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; `;
 
 		var button = document.body.appendChild( document.createElement( 'div' ) );
-		button.id = 'button';
+		button.style.cssText = `background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; `;
 		button.textContent = 'View source';
 		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); }
 
@@ -84,19 +84,18 @@
 		function onLoad( response ) {
 
 			var response = JSON.parse( response );
-			var keys = Object.keys( response );
 			var categories = [];
 			files = [];
 			var text = '';
 
-			for ( var key in keys ) {
+			for ( var key in response ) {
 
 				var file = response[ key ].name;
 
 				if ( file.slice( -5 ) !== '.html' || file === 'index.html') { continue; };
 
 				var topic = file.split( '_' ).shift();
-				id = file.slice( 0, -5);
+				var id = file.slice( 0, -5);
 
 				var index = topicOrder.indexOf( topic );
 
@@ -117,7 +116,7 @@
 
 				for ( var j = 0; j < topic.length; j++ ) {
 
-					var id = topic[ j ];
+					id = topic[ j ];
 					files.push( id );
 					var title = id.slice( id.indexOf( '_' ) + 1 ).replace( /_/g,' / ' );
 					text +=
@@ -134,25 +133,25 @@
 
 			}
 
-			menuCount.innerHTML = files.length + ' files';
-			menuNames.innerHTML = text;
+			fileCount.innerHTML = files.length + ' files';
+			fileNames.innerHTML = text;
 
-			selected = button;
-
-			fileName = location.hash ? location.hash.slice( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
-			load( fileName );
+			var fName = location.hash ? location.hash.slice( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
+			load( fName );
 
 		}
 
 	}
 
-	function load( file ) {
+	function load( fName ) {
 
-		document.title = file + '- Three.js Viewer';
-		content.src = urlExamples + file + '.html';
+		document.title = fName + '- Three.js Viewer';
+		content.src = urlExamples + fName + '.html';
+
+		fileName = fName;
 
 		selected.style.color = ``;
-		selected = document.getElementById( 'mnu_' + file );
+		selected = document.getElementById( 'mnu_' + fName );
 		selected.style.color = `red`;
 
 	}

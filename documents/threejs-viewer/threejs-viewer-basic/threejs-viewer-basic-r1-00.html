@@ -26,27 +26,31 @@
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			a { text-decoration: none; }
 			h2 { margin: 0; }
-			iframe { height:100%; width:100%; }
+			iframe { height:100%; width:100% }
+
+			#vvbutton{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
+			#bbbcontent { border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; }
+			#vvvmenu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
 
 		`;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
+//		menu.id = 'menu'; // needed for FF
 		menu.style.cssText = 'background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; '; 
 		menu.innerHTML =
 		`
 
 			<h2>
-				<a id=topp href="" >${ document.title }</a>
+				<a href="" >${ document.title }</a>
 				<a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
 			</h2>
-			<p>Basic temmplate that can be used to view large numbers of fileshosted on GitHub.</p>
 			<p id=fileCount ></p>
 			<div id=fileNames ></div>
 
 		`;
 
 		content = document.body.appendChild( document.createElement( 'iframe' ) );
-		content.style.cssText = 'border-width: 0px; height: 100%; left: 320px; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; ';
+		content.style = ' cssTextborder-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; ';
 
 		var button = document.body.appendChild( document.createElement( 'div' ) );
 		button.style.cssText = 'background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; ';
@@ -71,6 +75,7 @@
 			if ( xhr.readyState !== 4  ) { return; }
 
 			var response = JSON.parse( xhr.response );
+//			var keys = Object.keys( response );
 			var categories = [];
 			var files = [];
 			var text = '';
@@ -102,24 +107,22 @@
 			fileCount.innerHTML = files.length + ' files';
 			fileNames.innerHTML = text;
 
-			var fName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
-			load( fName );
+			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
+			load( fileName );
 
 		}
 
 	}
 
-	function load( fName ) {
+	function load( fileName ) {
 
-		document.title = fName + ' - Three.js Viewer Basic';
+		document.title = fileName + ' - Three.js Viewer Basic';
 
-		content.src = urlExamples + fName + '.html';
+		content.src = urlExamples + fileName + '.html';
 
 		selected.style.color = ``;
-		selected = document.getElementById( 'mnu_' + fName );
+		selected = document.getElementById( 'mnu_' + fileName );
 		selected.style.color = `red`;
-
-		fileName = fName;
 
 	}
 

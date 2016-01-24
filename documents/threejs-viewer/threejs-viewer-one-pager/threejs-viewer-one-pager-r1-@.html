@@ -37,6 +37,15 @@
                                          \\/____/\\/_____/
 `;
 
+	var footer =
+	`
+
+		<center title="dingbat" >
+		<h1><a href=javascript:topp.scrollIntoView(); > ❦ </a></h1>
+		</center>
+
+	`;
+
 	init();
 	animate();
 
@@ -56,31 +65,31 @@
 
 			.divIframe { border: 0px solid red; width: 100%; height:512px; }
 
-			#button{ background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; }
-			#content { height: 100%; left: 320px; margin: auto; overflow: auto; padding: 10%; 
-				position: absolute; right: 0; width: ${ window.innerWidth - 320 }px; }
-			#menu { background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; }
-
 		`;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
+		menu.style.cssText = `background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; `;
 		menu.innerHTML =
 		`
 
-			<div<a id=top href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a></div> 
+			<div><a id=topp href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a></div> 
 			<pre><a href="" title='click here to reload' >${ logo }</a></pre>
-			<h2><a href="" >Viewer One Pager R1</a></h2>
+			<h2>
+				<a href="" >Viewer One Pager R1</a>
+				 <a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
+			</h2>
+			<p>Scroll through hundreds of WebGL files on a single webpage.</p>
 			<p id=menuCount ></p>
 			<div id=menuNames ></div>
 
 		`;
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
-		content.id = 'content';
+		content.style.cssText = `height: 100%; left: 320px; margin: auto; overflow: auto; padding: 10%; 
+				position: absolute; right: 0; width: ${ window.innerWidth - 320 }px; `;
 
 		var button = document.body.appendChild( document.createElement( 'div' ) );
-		button.id = 'button';
+		button.style.cssText = `background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; `;
 		button.textContent = 'View source';
 		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); };
 
@@ -102,18 +111,16 @@
 			if ( xhr.readyState !== 4  ) { return; }
 
 			var response = JSON.parse( xhr.response );
-			var keys = Object.keys( response );
 			var categories = [];
 			var files = [];
 			var menuText = ''
 			var contentText = '';
 
-			for ( var key in keys ) {
+			for ( var key in response ) {
 
 				var file = response[ key ].name;
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
-
 
 				var id = file.slice( 0, -5 );
 				files.push( id );
@@ -142,21 +149,27 @@
 			}
 
 			menuCount.innerHTML = files.length + ' files';
-			menuNames.innerHTML = menuText;
+			menuNames.innerHTML = menuText + footer;
 			content.innerHTML = contentText;
 
 			iframeContainers = document.getElementsByClassName( 'divIframe' );
 
-			fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
-			scrollIframe( fileName );
+			var fName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
+			scrollIframe( fName );
 
 		}
 
 	}
 
-	function scrollIframe( file ) {
+	function scrollIframe( fName ) {
 
-		iframeContainers[ file ].scrollIntoView();
+		fileName = fName
+
+		iframeContainers[ fName ].scrollIntoView();
+
+		selected.style.color = ``;
+		selected = document.getElementById( 'mnu_' + fileName );
+		selected.style.color = `red`;
 
 	}
 
