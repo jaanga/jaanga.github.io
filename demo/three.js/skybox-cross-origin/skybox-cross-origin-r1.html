@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Skyboxes R1</title>
+<title>Skybox Cross Origin R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='Skybox,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -67,7 +67,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -79,7 +79,10 @@
 			<p><button onclick=addSkyBoxes_1_2(urlList[7][1]) >Skybox 1 then 2</button></p>
 			<p><button onclick=addSkyBoxes_2_1(urlList[7][1]) >Skybox 2 then 1</button></p>
 
-			<div id=info >Press top button, note that both boxes load skyboxes. Reload page. Pressbottom button, note thatboth skyboxes are black</div>
+			<div id=info >Press top button, note that both boxes load skyboxes.<br>
+				Reload page.<br>
+				Press bottom button, note that both skyboxes are black.
+			</div>
 
 		`;
 
@@ -87,7 +90,7 @@
 		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
 		document.body.appendChild( stats.domElement );
 
-		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
@@ -106,9 +109,6 @@
 		axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
-// assets
-
-
 	}
 
 	function addSkyBoxes_1_2( urls ) {
@@ -119,7 +119,7 @@
 
 		addSkyBox2( urls );
 
-}
+	}
 
 
 	function addSkyBoxes_2_1( urls ) {
@@ -130,36 +130,37 @@
 
 		addSkyBox1( urls );
 
-}
+	}
 
 
 // Skybox1
 
 	function addSkyBox1( urls ) {
 
+		THREE.CubeTextureLoader.crossOrigin = 'anonymous';
 
+		var textureCube1 = new THREE.CubeTextureLoader();
+		textureCube1.load( urls );
 
-			THREE.CubeTextureLoader.crossOrigin = 'anonymous';
+		var shader1 = THREE.ShaderLib[ "cube" ];
+		shader1.uniforms[ "tCube" ].value = textureCube1;
 
-			var textureCube1 = new THREE.CubeTextureLoader();
-			textureCube1.load( urls );
+		var material1 = new THREE.ShaderMaterial( {
 
-			var shader1 = THREE.ShaderLib[ "cube" ];
-			shader1.uniforms[ "tCube" ].value = textureCube1;
+			fragmentShader: shader1.fragmentShader,
+			vertexShader: shader1.vertexShader,
+			uniforms: shader1.uniforms,
+			depthWrite: false,
+			side: THREE.BackSide
 
-			var material1 = new THREE.ShaderMaterial( {
+		} ),
 
-				fragmentShader: shader1.fragmentShader,
-				vertexShader: shader1.vertexShader,
-				uniforms: shader1.uniforms,
-				depthWrite: false,
-				side: THREE.BackSide
+		var geometry1 = new THREE.BoxGeometry( 50, 50, 50 );
 
-			} ),
+		skybox1 = new THREE.Mesh( geometry1, material1 );
+		skybox1.position.x = -30;
 
-			skybox1 = new THREE.Mesh( new THREE.BoxGeometry( 50, 50, 50 ), material1 );
-			skybox1.position.x = -30;  
-			scene.add( skybox1 );
+		scene.add( skybox1 );
 
 	}
 
@@ -167,31 +168,29 @@
 
 	function addSkyBox2( urls ) {
 
+		THREE.ImageUtils.crossOrigin = 'anonymous';
 
-			THREE.ImageUtils.crossOrigin = 'anonymous';
+		var textureCube2 = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
+		textureCube2.format = THREE.RGBFormat;
 
-			var textureCube2 = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
-			textureCube2.format = THREE.RGBFormat;
+		var shader2 = THREE.ShaderLib[ "cube" ];
+		shader2.uniforms[ "tCube" ].value = textureCube2;
 
-			var shader2 = THREE.ShaderLib[ "cube" ];
-			shader2.uniforms[ "tCube" ].value = textureCube2;
+		var material2 = new THREE.ShaderMaterial( {
 
-			var material2 = new THREE.ShaderMaterial( {
+			fragmentShader: shader2.fragmentShader,
+			vertexShader: shader2.vertexShader,
+			uniforms: shader2.uniforms,
+			side: THREE.BackSide
 
-				fragmentShader: shader2.fragmentShader,
-				vertexShader: shader2.vertexShader,
-				uniforms: shader2.uniforms,
-				side: THREE.BackSide
+		} );
 
-			} );
+		var geometry2 = new THREE.BoxGeometry( 50, 50, 50 );
 
-			var geometry2 = new THREE.BoxGeometry( 50, 50, 50 );
+		skybox2 = new THREE.Mesh( geometry2, material2 );
+		skybox2.position.x = 30;
 
-			skybox2 = new THREE.Mesh( geometry2, material2 );
-			skybox2.position.x = 30;
-
-			scene.add( skybox2 );
-
+		scene.add( skybox2 );
 
 	}
 
