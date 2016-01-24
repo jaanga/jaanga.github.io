@@ -132,9 +132,6 @@
 
 	}
 
-
-// Skybox1
-
 	function addSkyBox1( urls ) {
 
 		THREE.CubeTextureLoader.crossOrigin = 'anonymous';
@@ -153,7 +150,7 @@
 			depthWrite: false,
 			side: THREE.BackSide
 
-		} ),
+		} );
 
 		var geometry1 = new THREE.BoxGeometry( 50, 50, 50 );
 
@@ -163,8 +160,6 @@
 		scene.add( skybox1 );
 
 	}
-
-// Skybox 2
 
 	function addSkyBox2( urls ) {
 
