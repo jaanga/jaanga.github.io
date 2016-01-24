@@ -2,119 +2,33 @@
 
 
 	var axisHelper;
+	var backgroundGradient;
 	var groundBoxLights;
 	var trylonPerisphere;
-	var backgroundGradient;
 
-	function toggleAxis( length ) {
 
-		if ( axisHelper === undefined ) {
+	function addWindowResize() {
 
-			length = length ? length : 50;
-
-			axisHelper = new THREE.AxisHelper( length );
-			scene.add( axisHelper );
-
-		} else {
-
-			scene.remove( axisHelper );
-
-		}
+		window.addEventListener( 'resize', onWindowResize, false );
 
 	}
 
-	function toggleGroundBoxLights( size ) {
+	function onWindowResize() {
 
-		if ( groundBoxLights === undefined ) {
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
 
-			size = size ? size : 100;
-
-			groundBoxLights = new THREE.Object3D();
-
-			var geometry = new THREE.BoxGeometry( size, size, size );
-
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff * Math.random(),
-				specular: 0xffffff * Math.random(),
-				shininess: 5
-			} );
-
-//			var material = new THREE.MeshNormalMaterial();
-
-			groundBox = new THREE.Mesh( geometry, material );
-			groundBox.position.set( 0, -0.5 * size, 0 );
-			groundBox.castShadow = true;
-			groundBox.receiveShadow = true;
-			groundBoxLights.add( groundBox );
-
-			groundBoxHelper = new THREE.BoxHelper( groundBox );
-			groundBoxHelper.material.color.setRGB( 1, 0, 1 );
-			groundBoxLights.add( groundBoxHelper );
-
-			gridHelper = new THREE.GridHelper( 0.5 * size, 10 );
-			groundBoxLights.add( gridHelper );
-
-			scene.add( groundBoxLights );
-
-			return groundBoxLights;
-
-		} else {
-
-			scene.remove( groundBoxLights );
-
-		}
+		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 
 
-	function toggleTrylonPerisphere() {
 
-		if ( trylonPerisphere === undefined ) {
 
-			trylonPerisphere = new THREE.Object3D();
+	function addLights( siz ) {
 
-// Perisphere
-			geometry = new THREE.SphereGeometry( 25, 50, 50 );
-			material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff * Math.random(),
-				specular: 0xffffff * Math.random(),
-				shininess: 10
-			} );
-			mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( -100, 20, 0 );
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
-			trylonPerisphere.add( mesh );
-
-// Trylon
-			geometry = new THREE.CylinderGeometry( 0, 8, 100, 3 );
-			material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff * Math.random(),
-				specular: 0xffffff * Math.random(),
-				shininess: 1
-			} );
-			mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( -115, 50, -30 );
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
-			trylonPerisphere.add( mesh );
-
-			scene.add( trylonPerisphere );
-
-			return trylonPerisphere;
-
-		} else {
-
-			scene.remove( trylonPerisphere );
-
-		}
-
-	}
-
-	function addLights( size ) {
-
-		var size = size ? size : 100;
-		renderer.shadowMap.enabled = true;
+		var size = siz ? siz : 100;
+//		renderer.shadowMap.enabled = true;
 
 		var lightAmbient, lightDirectional, lightPoint;
 
@@ -150,6 +64,25 @@
 		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
 		scene.add( camera );
 
+/*
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = child.receiveShadow = true;
+//				child.material = material;
+
+			}
+
+		} );
+*/
+
+	}
+
+	function addShadows() {
+
+		renderer.shadowMap.enabled = true;
+
 		scene.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
@@ -163,17 +96,78 @@
 
 	}
 
-	function toggleGradient () {
+
+	function addMaterialTextureSkybox() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshBasicMaterial();
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
+
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		material.envMap = textureCube;
+		material.reflectivity = 0.85;
+
+		return material;
+
+	}
+
+
+	function addMaterialTextureSwedishRoyalCastle() {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		material = new THREE.MeshBasicMaterial();
+		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
+		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
+
+		textureCube = THREE.ImageUtils.loadTextureCube( urls );
+		material.envMap = textureCube;
+		material.reflectivity = 0.85;
+
+		return material;
+
+	}
+
+
+	function toggleAutoRotate() {
+
+		controls.autoRotate = controls.autoRotate === true ? false : true ;
+
+	}
+
+
+	function toggleAxis( length ) {
+
+		if ( axisHelper === undefined ) {
+
+			length = length ? length : 50;
+
+			axisHelper = new THREE.AxisHelper( length );
+
+		} 
+
+		if ( scene.getObjectById( axisHelper.id )  ) {
+
+			scene.remove( axisHelper );
+
+		} else {
+
+			scene.add( axisHelper );
+
+		}
+
+	}
+
+	function toggleBackgroundGradient () {
+
+			function col() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); }
+			function pt() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
 
 		if ( backgroundGradient === undefined ) {
 
-				var col1 = Math.random().toString( 16 ).slice( 2, 8 );
-				var col2 = Math.random().toString( 16 ).slice( 2, 8 );
-				var col3 = Math.random().toString( 16 ).slice( 2, 8 );
-				var x = ( Math.random() * window.innerWidth ).toFixed(0);
-				var y = ( Math.random() * window.innerHeight ).toFixed(0);
 
-				backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
+
+			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
 
 		} else {
 
@@ -183,8 +177,99 @@
 
 	}
 
-	function toggleAutoRotate() {
+	toggleGradient = toggleBackgroundGradient;
 
-		controls.autoRotate = controls.autoRotate === true ? false : true ;
+	function toggleGroundBoxLights( size ) {
+
+		if ( groundBoxLights === undefined ) {
+
+			size = size ? size : 100;
+
+			groundBoxLights = new THREE.Object3D();
+
+			var geometry = new THREE.BoxGeometry( size, size, size );
+
+			var material = new THREE.MeshPhongMaterial( {
+				color: 0xffffff * Math.random(),
+				specular: 0xffffff * Math.random(),
+				shininess: 5
+			} );
+
+//			var material = new THREE.MeshNormalMaterial();
+
+			groundBox = new THREE.Mesh( geometry, material );
+			groundBox.position.set( 0, -0.5 * size, 0 );
+			groundBox.castShadow = true;
+			groundBox.receiveShadow = true;
+			groundBoxLights.add( groundBox );
+
+			groundBoxHelper = new THREE.BoxHelper( groundBox );
+			groundBoxHelper.material.color.setRGB( 1, 0, 1 );
+			groundBoxLights.add( groundBoxHelper );
+
+			gridHelper = new THREE.GridHelper( 0.5 * size, 10 );
+			groundBoxLights.add( gridHelper );
+
+			scene.add( groundBoxLights );
+
+		} else {
+
+			scene.remove( groundBoxLights );
+
+		}
+
+		return groundBoxLights;
+
+	}
+
+
+	function toggleTrylonPerisphere() {
+
+// https://en.wikipedia.org/wiki/Trylon_and_Perisphere
+
+		if ( trylonPerisphere === undefined ) {
+
+			trylonPerisphere = new THREE.Object3D();
+
+			trylonPerisphere.name = 'trylonPerisphere';
+
+// Perisphere
+			geometry = new THREE.SphereGeometry( 25, 50, 50 );
+			material = new THREE.MeshPhongMaterial( {
+				color: 0xffffff * Math.random(),
+				specular: 0xffffff * Math.random(),
+				shininess: 10
+			} );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( -100, 20, 0 );
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+			trylonPerisphere.add( mesh );
+
+// Trylon
+			geometry = new THREE.CylinderGeometry( 0, 8, 100, 3 );
+			material = new THREE.MeshPhongMaterial( {
+				color: 0xffffff * Math.random(),
+				specular: 0xffffff * Math.random(),
+				shininess: 1
+			} );
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( -115, 50, -30 );
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+			trylonPerisphere.add( mesh );
+
+		}
+
+		if ( scene.getObjectByName( 'trylonPerisphere' ) !== undefined ) {
+
+			scene.remove( trylonPerisphere );
+
+		} else {
+
+			scene.add( trylonPerisphere );
+
+		}
 
 	}

@@ -64,6 +64,47 @@ Using 2D to represent 3D begs the question: If 3D is so good, why don't you use 
 
 Displays files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
 
+* Show animated real-time 3D in animated real-time 3D
+	* Using 2D thumbnails for galleries to select 3D web page is old school
+	* Using stills to show something that moves is not a way to go. won't get you anywhere. Stills are the the way to stop
+	* Using things that don't interact to represent things that do interact is a bad act
+
+* Why make two things - the file and the icon or representation - when one will do?
+
+
+
+* Separate code and content 
+* Very simple JavaScript
+* View hundreds of files in a singe page
+	* Recycle iframes as needed
+
+* Highlight currently selected file
+* Provide link to view source code
+* Open file in new tab
+* Support permalinks
+* Categorize and prettify file names
+	Display categories with header tags
+* Loads fast
+	* Or displays stuff soon
+	* Adds detail as time goes on
+* Passes through all interaction
+* Designed to be view in multiple sizes
+	* Works on Mobile
+	* works on the wall
+* You don't go to it. It comes to you.
+
+
+* Use GitHub API to read names of files in folders, recursively in required
+* Use GitHub API tags to source revisions tags and their contents
+
+* Use iframe srcdoc feature to display files where data has been mangled
+* Report data such as number of files found
+
+* Scroll menu and contents separately if needed
+* Always show something
+	* Open with a randomly selected file
+
+
 This is part of an attempt to build a simpler file viewer.
 
 ### Vision

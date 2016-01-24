@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>Jaanga Assets for Three.js R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -17,9 +17,14 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
+<!--
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
+-->
+<script src=jaanga-assets-for-threejs-r3.js ></script>
+
 <script>
 
-	varstats, renderer, scene, camera, controls;
+	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
 	init();
@@ -33,40 +38,33 @@
 
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			a {text-decoration: none; }
-			h2 { margin: 0 }
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+			h2 { margin: 0; }
 
-/*			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
-
-			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
-			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
-			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
-*/
 		`;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.style.cssText = `margin: 0 30px; position: absolute; `;
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" >${ document.title }</a>
-				 <a href=http://jaanga.github.io/ >🛈</a>
+				<a href="" > ${ document.title } </a>
+				<a href=http://jaanga.github.io/ > &#x24D8; </a>
 			</h2>
 			<div id=info ></div>
+			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; > Axis</p>
+			<p><input type=checkbox onchange=controls.autoRotate=controls.autoRotate===true?false:true; > Rotation</p>
+			<p><button onclick=toggleTrylonPerisphere(); >toggleTrylonPerisphere</button></p>
+			<p><button onclick=toggleStonehenge(); >toggleStonehenge</button></p>
 
 		`;
 
-//			<p><button onclick=doIt(); >do it</button></p>
-//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
-
-
 		stats = new Stats();
-		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
 		document.body.appendChild( stats.domElement );
 
-		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
-//		renderer.setClearColor( 0xf0f0f0 );
-		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
@@ -78,35 +76,22 @@
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
-
-// helpers
-
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
-
-		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
-		scene.add( gridHelper );
+// see http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js
 
 		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
 
-// assets
+		addLights( 200 );
+		addShadows();
+		addWindowResize();
 
+//		toggleAxis();
+//		toggleAutoRotate();
+		toggleBackgroundGradient();
+		toggleGroundBoxLights();
 
-	}
+//		toggleTrylonPerisphere();
+//		trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );
 
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 

@@ -13,7 +13,7 @@
 <script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
 <script>
 
-	var css, info, stats, renderer, scene, camera, controls;
+	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
 	init();
@@ -21,12 +21,12 @@
 
 	function init() {
 
-		css = document.head.appendChild( document.createElement('style') );
+		var css = document.head.appendChild( document.createElement('style') );
 		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
 			'#i {text-decoration: none; }' +
 		'';
 
-		info = document.body.appendChild( document.createElement( 'div' ) );
+		var info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'margin: 0 20px; position: absolute; ';
 		info.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
 			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +

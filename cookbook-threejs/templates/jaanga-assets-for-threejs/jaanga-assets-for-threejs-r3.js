@@ -136,25 +136,11 @@
 	}
 
 
-	function toggleAxis( length ) {
-
-		if ( axisHelper === undefined ) {
+	function drawAxis( length ) {
 
 			length = length ? length : 50;
 
-			axisHelper = new THREE.AxisHelper( length );
-
-		} 
-
-		if ( scene.getObjectById( axisHelper.id )  ) {
-
-			scene.remove( axisHelper );
-
-		} else {
-
-			scene.add( axisHelper );
-
-		}
+			
 
 	}
 
@@ -227,6 +213,8 @@
 
 // https://en.wikipedia.org/wiki/Trylon_and_Perisphere
 
+		var trylonPerisphere = scene.getObjectByName( 'trylonPerisphere' );
+
 		if ( trylonPerisphere === undefined ) {
 
 			trylonPerisphere = new THREE.Object3D();
@@ -234,16 +222,17 @@
 			trylonPerisphere.name = 'trylonPerisphere';
 
 // Perisphere
-			geometry = new THREE.SphereGeometry( 25, 50, 50 );
-			material = new THREE.MeshPhongMaterial( {
+			var geometry = new THREE.SphereGeometry( 25, 50, 50 );
+			var material = new THREE.MeshPhongMaterial( {
 				color: 0xffffff * Math.random(),
 				specular: 0xffffff * Math.random(),
 				shininess: 10
 			} );
-			mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( -100, 20, 0 );
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
+
 			trylonPerisphere.add( mesh );
 
 // Trylon
@@ -258,18 +247,86 @@
 			mesh.position.set( -115, 50, -30 );
 			mesh.castShadow = true;
 			mesh.receiveShadow = true;
+
 			trylonPerisphere.add( mesh );
 
-		}
-
-		if ( scene.getObjectByName( 'trylonPerisphere' ) !== undefined ) {
-
-			scene.remove( trylonPerisphere );
-
-		} else {
+			trylonPerisphere.scale.set( 0.4, 0.4, 0.4 );
 
 			scene.add( trylonPerisphere );
 
+		} else {
+
+			scene.remove( trylonPerisphere );
+
 		}
+
+	}
+
+	function toggleStonehenge() {
+
+
+		var stonehenge = scene.getObjectByName( 'stonehenge' );
+
+		if ( stonehenge === undefined ) {
+
+			stonehenge = new THREE.Object3D();
+
+			stonehenge.name = 'stonehenge';
+
+			number = 20;
+			angle = 6.283 / number;
+			radius = 200;
+			for ( var i = 0; i < number; i++ ) {
+					var geometry = new THREE.BoxGeometry( 15, 100, 30 );
+	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
+	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
+					var color = 0xffffff * Math.random();
+					var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
+					var mesh = new THREE.Mesh( geometry, material );
+					mesh.castShadow = true;
+					mesh.receiveShadow = true;
+					mesh.rotation.y = - angle * i;
+					mesh.position.set( radius * Math.cos( angle * i ) , 50, radius * Math.sin( angle * i )  );
+
+					stonehenge.add( mesh );
+
+					helper = new THREE.EdgesHelper( mesh );
+					scene.add( helper );
+
+			}
+
+			number = 9;
+			angle = 6.283 / number;
+			radius = 200;
+
+			for ( var i = 0; i < number; i++ ) {
+					var geometry = new THREE.BoxGeometry( 15, 20, 100 );
+	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
+	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
+					var color = 0xffffff * Math.random();
+					var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
+					var mesh = new THREE.Mesh( geometry, material );
+					mesh.castShadow = true;
+					mesh.receiveShadow = true;
+					mesh.rotation.y = - angle * i;
+					mesh.position.set( radius * Math.cos( angle * i ) , 110, radius * Math.sin( angle * i )  );
+
+					stonehenge.add( mesh );
+
+					helper = new THREE.EdgesHelper( mesh );
+					scene.add( helper );
+
+			}
+
+			stonehenge.scale.set( 0.2, 0.2, 0.2 );
+
+			scene.add( stonehenge );
+
+		} else {
+
+			scene.remove( stonehenge );
+
+		}
+
 
 	}
