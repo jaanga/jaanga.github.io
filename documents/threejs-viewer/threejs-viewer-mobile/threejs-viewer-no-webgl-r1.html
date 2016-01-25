@@ -10,6 +10,8 @@
 <body>
 <script>
 
+	var duration = 10000;
+
 	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
 	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
 
@@ -67,13 +69,15 @@
 
 	function slideshow() {
 
+		duration = location.hash ? location.hash.substr( 1 ) : duration;
+
 		fileIndex = fileIndex < files.length ? fileIndex : Math.floor( Math.randon() * files.length );
 
 		load( files[ fileIndex++ ] );
 
 		hamburger.style.left = '0px';
 
-		setInterval( slideshow, 10000 );
+		setInterval( slideshow, duration );
 
 	}
 
