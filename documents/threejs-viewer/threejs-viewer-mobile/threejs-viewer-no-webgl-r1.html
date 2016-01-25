@@ -69,9 +69,9 @@
 
 	function slideshow() {
 
-		duration = location.hash ? location.hash.substr( 1 ) : duration;
+//		duration = location.hash ? location.hash.substr( 1 ) : duration;
 
-		fileIndex = fileIndex < files.length ? fileIndex : Math.floor( Math.randon() * files.length );
+		fileIndex = fileIndex < files.length ? fileIndex : Math.floor( Math.random() * files.length );
 
 		load( files[ fileIndex++ ] );
 
