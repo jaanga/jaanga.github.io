@@ -86,6 +86,7 @@
 				Reload page.<br>
 				Press bottom button, note that both skyboxes are black.
 			</div>
+			<p id=msg1 ></p>
 
 		`;
 
@@ -153,7 +154,21 @@
 			depthWrite: false,
 			side: THREE.BackSide
 
-		} );
+		},
+
+// Function called when download progresses
+			function ( xhr ) {
+
+				msg1.innerHTML = ( xhr.loaded / xhr.total * 100 ) + '% loaded';
+
+			},
+
+// Function called when download errors
+			function ( xhr ) {
+
+				msg1.innerHTML = 'An error happened';
+
+			} );
 
 		var geometry1 = new THREE.BoxGeometry( 50, 50, 50 );
 

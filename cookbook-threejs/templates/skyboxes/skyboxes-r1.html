@@ -75,11 +75,19 @@
 				 <a href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 
+			<p><button onclick=addSkyBox(urlList[0][1]); >Bridge2</button></p>
+			<p><button onclick=addSkyBox(urlList[1][1]); >Escher</button></p>
+			<p><button onclick=addSkyBox(urlList[2][1]); >Milk Way</button></p>
+			<p><button onclick=addSkyBox(urlList[3][1]); >Park2</button></p>
+			<p><button onclick=addSkyBox(urlList[4][1]); >Park3Med</button></p>
+			<p><button onclick=addSkyBox(urlList[5][1]); >Pisa</button></p>
+			<p><button onclick=addSkyBox(urlList[6][1]); >skybox</button></p>
+			<p><button onclick=addSkyBox(urlList[7][1]); >Swedish Royal Castle</button></p>
 
-			<p><button onclick=addSkyBoxes_1_2(urlList[7][1]) >Skybox 1 then 2</button></p>
-			<p><button onclick=addSkyBoxes_2_1(urlList[7][1]) >Skybox 2 then 1</button></p>
+			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; > Axis</p>
+			<p><input type=checkbox onchange=controls.autoRotate=controls.autoRotate===true?false:true; checked > Rotation</p>
 
-			<div id=info >Press top button, note that both boxes load skyboxes. Reload page. Pressbottom button, note thatboth skyboxes are black</div>
+			<div id=info ></div>
 
 		`;
 
@@ -108,90 +116,64 @@
 
 // assets
 
+		addSkyBox( urlList[ 7 ][ 1 ] );
 
 	}
 
-	function addSkyBoxes_1_2( urls ) {
+	function addSkyBox( urls ) {
 
-		scene.remove( skybox1, skybox2 );
+		scene.remove( skybox1, skybox2 )
 
-		addSkyBox1( urls );
+		// Skybox1
 
-		addSkyBox2( urls );
+		THREE.CubeTextureLoader.crossOrigin = 'anonymous';
 
-}
+		var textureCube1 = new THREE.CubeTextureLoader();
+		textureCube1.load( urls );
 
+		var shader1 = THREE.ShaderLib[ "cube" ];
+		shader1.uniforms[ "tCube" ].value = textureCube1;
 
-	function addSkyBoxes_2_1( urls ) {
+		var material1 = new THREE.ShaderMaterial( {
 
-		scene.remove( skybox1, skybox2 );
+			fragmentShader: shader1.fragmentShader,
+			vertexShader: shader1.vertexShader,
+			uniforms: shader1.uniforms,
+			depthWrite: false,
+			side: THREE.BackSide
 
-		addSkyBox2( urls );
+		} ),
 
-		addSkyBox1( urls );
+		skybox1 = new THREE.Mesh( new THREE.BoxGeometry( 50, 50, 50 ), material1 );
+		skybox1.position.x = -30;  
+		scene.add( skybox1 );
 
-}
-
-
-// Skybox1
-
-	function addSkyBox1( urls ) {
-
-
-
-			THREE.CubeTextureLoader.crossOrigin = 'anonymous';
-
-			var textureCube1 = new THREE.CubeTextureLoader();
-			textureCube1.load( urls );
-
-			var shader1 = THREE.ShaderLib[ "cube" ];
-			shader1.uniforms[ "tCube" ].value = textureCube1;
-
-			var material1 = new THREE.ShaderMaterial( {
-
-				fragmentShader: shader1.fragmentShader,
-				vertexShader: shader1.vertexShader,
-				uniforms: shader1.uniforms,
-				depthWrite: false,
-				side: THREE.BackSide
-
-			} ),
-
-			skybox1 = new THREE.Mesh( new THREE.BoxGeometry( 50, 50, 50 ), material1 );
-			skybox1.position.x = -30;  
-			scene.add( skybox1 );
-
-	}
 
 // Skybox 2
 
-	function addSkyBox2( urls ) {
+		THREE.ImageUtils.crossOrigin = 'anonymous';
 
+		var textureCube2 = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
+		textureCube2.format = THREE.RGBFormat;
 
-			THREE.ImageUtils.crossOrigin = 'anonymous';
+		var shader2 = THREE.ShaderLib[ "cube" ];
+		shader2.uniforms[ "tCube" ].value = textureCube2;
 
-			var textureCube2 = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
-			textureCube2.format = THREE.RGBFormat;
+		var material2 = new THREE.ShaderMaterial( {
 
-			var shader2 = THREE.ShaderLib[ "cube" ];
-			shader2.uniforms[ "tCube" ].value = textureCube2;
+			fragmentShader: shader2.fragmentShader,
+			vertexShader: shader2.vertexShader,
+			uniforms: shader2.uniforms,
+			side: THREE.BackSide
 
-			var material2 = new THREE.ShaderMaterial( {
+		} );
 
-				fragmentShader: shader2.fragmentShader,
-				vertexShader: shader2.vertexShader,
-				uniforms: shader2.uniforms,
-				side: THREE.BackSide
+		var geometry2 = new THREE.BoxGeometry( 50, 50, 50 );
 
-			} );
+		skybox2 = new THREE.Mesh( geometry2, material2 );
+		skybox2.position.x = 30;
 
-			var geometry2 = new THREE.BoxGeometry( 50, 50, 50 );
-
-			skybox2 = new THREE.Mesh( geometry2, material2 );
-			skybox2.position.x = 30;
-
-			scene.add( skybox2 );
-
+		scene.add( skybox2 );
 
 	}
 

@@ -264,14 +264,16 @@
 
 	function toggleStonehenge() {
 
-
 		var stonehenge = scene.getObjectByName( 'stonehenge' );
+		var stonehengeHelpers = scene.getObjectByName( 'stonehengeHelpers' );
 
 		if ( stonehenge === undefined ) {
 
 			stonehenge = new THREE.Object3D();
+			stonehengeHelpers = new THREE.Object3D();
 
 			stonehenge.name = 'stonehenge';
+			stonehengeHelpers.name = 'stonehengeHelpers';
 
 			number = 20;
 			angle = 6.283 / number;
@@ -291,7 +293,7 @@
 					stonehenge.add( mesh );
 
 					helper = new THREE.EdgesHelper( mesh );
-					scene.add( helper );
+					stonehengeHelpers.add( helper );
 
 			}
 
@@ -308,25 +310,77 @@
 					var mesh = new THREE.Mesh( geometry, material );
 					mesh.castShadow = true;
 					mesh.receiveShadow = true;
+
 					mesh.rotation.y = - angle * i;
 					mesh.position.set( radius * Math.cos( angle * i ) , 110, radius * Math.sin( angle * i )  );
 
 					stonehenge.add( mesh );
 
 					helper = new THREE.EdgesHelper( mesh );
-					scene.add( helper );
+					stonehengeHelpers.add( helper );
 
 			}
 
 			stonehenge.scale.set( 0.2, 0.2, 0.2 );
-
-			scene.add( stonehenge );
+			scene.add( stonehenge, stonehengeHelpers );
 
 		} else {
 
-			scene.remove( stonehenge );
+			scene.remove( stonehenge, stonehengeHelpers );
 
 		}
 
+	}
+
+	function toggleRandomGeometry( objectsCount ) {
+
+			objectsCount = objectsCount ? objectsCount : 10;
+
+		var randomGeometry = scene.getObjectByName( 'randomGeometry' );
+		var randomGeometryHelpers = scene.getObjectByName( 'randomGeometryHelpers' );
+
+		if ( randomGeometry === undefined ) {
+
+			randomGeometry = new THREE.Object3D();
+			randomGeometryHelpers = new THREE.Object3D();
+
+			randomGeometry.name = 'randomGeometry';
+			randomGeometryHelpers.name = 'randomGeometryHelpers';
+
+			var geometries = [
+
+				new THREE.BoxGeometry( 10, 10, 10 ),
+				new THREE.CylinderGeometry( 5, 5, 1, 12 ),
+				new THREE.DodecahedronGeometry( 05 ),
+				new THREE.SphereGeometry( 5, 12, 8 ),
+				new THREE.TorusGeometry( 10, 5 ),
+
+			];
+
+			var material = new THREE.MeshNormalMaterial();
+			var radius = 50, angle = 2 * Math.PI / objectsCount;
+
+			for ( var i = 0; i < objectsCount; i++ ) {
+
+				var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
+				mesh.position.set( radius * Math.cos( angle * i ) , 30, radius * Math.sin( angle * i )  );
+				mesh.name = 'obj ' + i;
+
+				randomGeometry.add( mesh );
+
+				helper = new THREE.EdgesHelper( mesh );
+				randomGeometryHelpers.add( helper );
+
+			}
+
+			scene.add( randomGeometry, randomGeometryHelpers );
+
+		} else {
+
+			scene.remove( randomGeometry, randomGeometryHelpers );
+
+		}
 
 	}
