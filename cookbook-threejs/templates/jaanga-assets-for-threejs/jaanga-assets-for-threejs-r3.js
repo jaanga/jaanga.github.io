@@ -129,41 +129,58 @@
 	}
 
 
+	function toggleAxis( length ) {
+
+		if ( axisHelper === undefined ) {
+
+			length = length ? length : 50;
+
+			axisHelper = new THREE.AxisHelper( length );
+
+		} 
+
+		if ( scene.getObjectById( axisHelper.id )  ) {
+
+			scene.remove( axisHelper );
+
+		} else {
+
+			scene.add( axisHelper );
+
+		}
+
+	}
+
 	function toggleAutoRotate() {
 
 		controls.autoRotate = controls.autoRotate === true ? false : true ;
 
 	}
 
+	function toggleBackgroundGradient() {
 
-	function drawAxis( length ) {
+		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+		var backgroundGradient = document.body.style.backgroundImage;
 
-			length = length ? length : 50;
-
-			
-
-	}
-
-	function toggleBackgroundGradient () {
-
-			function col() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); }
-			function pt() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
-
-		if ( backgroundGradient === undefined ) {
-
-
+console.log( '',backgroundGradient);
+		if ( backgroundGradient === '' ) {
 
 			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
 
 		} else {
 
-			backgroundGradient = document.body.style.backgroundImage = '';
+			document.body.style.backgroundImage = '';
 
 		}
+
+
 
 	}
 
 	toggleGradient = toggleBackgroundGradient;
+
+
 
 	function toggleGroundBoxLights( size ) {
 
@@ -334,7 +351,7 @@
 
 	function toggleRandomGeometry( objectsCount ) {
 
-			objectsCount = objectsCount ? objectsCount : 10;
+		objectsCount = objectsCount ? objectsCount : 10;
 
 		var randomGeometry = scene.getObjectByName( 'randomGeometry' );
 		var randomGeometryHelpers = scene.getObjectByName( 'randomGeometryHelpers' );

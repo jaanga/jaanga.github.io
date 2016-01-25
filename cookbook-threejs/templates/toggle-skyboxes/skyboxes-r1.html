@@ -61,6 +61,7 @@
 
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			a {text-decoration: none; }
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
 			h2 { margin: 0 }
 
 		`;
@@ -84,7 +85,7 @@
 			<p><button onclick=addSkyBox(urlList[6][1]); >skybox</button></p>
 			<p><button onclick=addSkyBox(urlList[7][1]); >Swedish Royal Castle</button></p>
 
-			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; > Axis</p>
+			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; checked > Axis</p>
 			<p><input type=checkbox onchange=controls.autoRotate=controls.autoRotate===true?false:true; checked > Rotation</p>
 
 			<div id=info ></div>
@@ -124,56 +125,67 @@
 
 		scene.remove( skybox1, skybox2 )
 
-		// Skybox1
+		s1 = addSkyBox1( urls );
+		s1.position.x = -30;
+  
+		s2 = addSkyBox2( urls );
+		s2.position.x = 30;
+
+		scene.add( s1, s2 );
+	}
+
+	function addSkyBox1( urls ) {
 
 		THREE.CubeTextureLoader.crossOrigin = 'anonymous';
 
-		var textureCube1 = new THREE.CubeTextureLoader();
-		textureCube1.load( urls );
+		var textureCube = new THREE.CubeTextureLoader();
+		textureCube.load( urls );
 
-		var shader1 = THREE.ShaderLib[ "cube" ];
-		shader1.uniforms[ "tCube" ].value = textureCube1;
+		var shader = THREE.ShaderLib[ "cube" ];
+		shader.uniforms[ "tCube" ].value = textureCube;
 
-		var material1 = new THREE.ShaderMaterial( {
+		var material = new THREE.ShaderMaterial( {
 
-			fragmentShader: shader1.fragmentShader,
-			vertexShader: shader1.vertexShader,
-			uniforms: shader1.uniforms,
+			fragmentShader: shader.fragmentShader,
+			vertexShader: shader.vertexShader,
+			uniforms: shader.uniforms,
 			depthWrite: false,
-			side: THREE.BackSide
-
-		} ),
-
-		skybox1 = new THREE.Mesh( new THREE.BoxGeometry( 50, 50, 50 ), material1 );
-		skybox1.position.x = -30;  
-		scene.add( skybox1 );
-
-
-// Skybox 2
-
-		THREE.ImageUtils.crossOrigin = 'anonymous';
-
-		var textureCube2 = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
-		textureCube2.format = THREE.RGBFormat;
-
-		var shader2 = THREE.ShaderLib[ "cube" ];
-		shader2.uniforms[ "tCube" ].value = textureCube2;
-
-		var material2 = new THREE.ShaderMaterial( {
-
-			fragmentShader: shader2.fragmentShader,
-			vertexShader: shader2.vertexShader,
-			uniforms: shader2.uniforms,
 			side: THREE.BackSide
 
 		} );
 
-		var geometry2 = new THREE.BoxGeometry( 50, 50, 50 );
+		var geometry = new THREE.BoxGeometry( 50, 50, 50 );
 
-		skybox2 = new THREE.Mesh( geometry2, material2 );
-		skybox2.position.x = 30;
+		skybox = new THREE.Mesh( geometry, material );
 
-		scene.add( skybox2 );
+		return skybox;
+	}
+
+
+	function addSkyBox2( urls ) {
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+
+		var textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
+		textureCube.format = THREE.RGBFormat;
+
+		var shader = THREE.ShaderLib[ "cube" ];
+		shader.uniforms[ "tCube" ].value = textureCube;
+
+		var material = new THREE.ShaderMaterial( {
+
+			fragmentShader: shader.fragmentShader,
+			vertexShader: shader.vertexShader,
+			uniforms: shader.uniforms,
+			side: THREE.BackSide
+
+		} );
+
+		var geometry = new THREE.BoxGeometry( 50, 50, 50 );
+
+		skybox = new THREE.Mesh( geometry, material );
+
+		return skybox;
 
 	}
 

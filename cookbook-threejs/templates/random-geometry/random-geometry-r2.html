@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Random Geometry R1</title>
+<title>Random Geometry R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='500 random geometries progressing in spherical directions. Nice displays of gimbal lock syndrome.' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -19,7 +19,8 @@
 
 <script>
 
-	objects = [];
+	var backgroundGradient;
+	var objects = [];
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -54,6 +55,10 @@
 				<a href="" >${ document.title }</a>
 				 <a href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+
+			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; checked > Axis </p>
+			<p><input type=checkbox onchange=controls.autoRotate=controls.autoRotate===true?false:true; checked > Rotation</p>
+
 			<div id=info ></div>
 
 		`;
@@ -66,6 +71,8 @@
 		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
 		document.body.appendChild( stats.domElement );
 
+		window.addEventListener( 'resize', onWindowResize, false );
+
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
 		renderer.setPixelRatio( window.devicePixelRatio );
@@ -77,10 +84,16 @@
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
+		controls.autoRotate===true;
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
+		light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
+//		light = new THREE.HemisphereLight( 0xffaaaa, 0x008800 );
+
+//		light.position.set( - 0.5, 0.8, 1 );
+		light.position.set( 1, 1, 1 );
+		scene.add( light );
 
 // helpers
 /*
@@ -95,12 +108,32 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 */
-		var axisHelper = new THREE.AxisHelper( 80 );
+
+		axisHelper = new THREE.AxisHelper( 80 );
 		scene.add( axisHelper );
 
 // assets
 
-		toggleRandomGeometry( 500);
+		toggleBackgroundGradient();
+
+		toggleRandomGeometry( 500 );
+
+	}
+
+	function toggleBackgroundGradient () {
+
+			function col() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); }
+			function pt() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+
+		if ( backgroundGradient === undefined ) {
+
+			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
+
+		} else {
+
+			backgroundGradient = document.body.style.backgroundImage = '';
+
+		}
 
 	}
 
@@ -130,13 +163,15 @@
 
 			];
 
-			var material = new THREE.MeshNormalMaterial();
 
 			var radius = 50, angle = 2 * Math.PI / objectsCount;
 
 			for ( var i = 0; i < objectsCount; i++ ) {
 
 				var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
+
+				var material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+
 				var mesh = new THREE.Mesh( geometry, material );
 				mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
 				mesh.phi = phi = Math.random() * 6;
