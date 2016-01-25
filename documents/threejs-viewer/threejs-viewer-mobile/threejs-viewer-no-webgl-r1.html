@@ -101,7 +101,7 @@
 				file = response[ key ].name;
 
 				if ( ( file.indexOf( 'css3d_' ) === -1 && file.indexOf( 'canvas_' ) === -1 ) || file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
-
+				if ( file.indexOf( 'video' ) > -1 || file.indexOf( 'youtube' ) > -1 || file.indexOf( 'deviceorientation' ) > -1  )  { continue; }
 
 				var id = file.slice( 0, -5 );
 				files.push( id );
