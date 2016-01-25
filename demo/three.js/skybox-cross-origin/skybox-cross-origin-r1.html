@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Skybox Cross Origin R1</title>
+<title>Skybox Cross Origin Issues R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='Skybox,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -76,10 +76,13 @@
 			</h2>
 
 
-			<p><button onclick=addSkyBoxes_1_2(urlList[7][1]) >Skybox 1 then 2</button></p>
-			<p><button onclick=addSkyBoxes_2_1(urlList[7][1]) >Skybox 2 then 1</button></p>
+			<p><button onclick=addSkyBoxes_1_2(urlList[7][1]) >Skybox #1 then #2</button></p>
+			<p><button onclick=addSkyBoxes_2_1(urlList[7][1]) >Skybox #2 then #1</button></p>
 
-			<div id=info >Press top button, note that both boxes load skyboxes.<br>
+			<div id=info >Loads textures two ways:<br>
+				#1. Using THREE.CubeTextureLoader<br>
+				#2. Using THREE.ImageUtils<br>
+				Press top button, note that both boxes load skyboxes.<br>
 				Reload page.<br>
 				Press bottom button, note that both skyboxes are black.
 			</div>
