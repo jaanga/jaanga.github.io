@@ -1,0 +1,254 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Materials Lightmap R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { background:#fff; font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<div id=info ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+				// LIGHTS
+/*
+				var light = new THREE.DirectionalLight( 0xaabbff, 0.3 );
+				light.position.x = 300;
+				light.position.y = 250;
+				light.position.z = -500;
+
+*/
+				var light = new THREE.DirectionalLight( 0xaabbff, 0.3 );
+				light.position.x = 100;
+				light.position.y = 100;
+				light.position.z = -100;
+
+				scene.add( light );
+
+
+addLights();
+
+
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshPhongMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -21, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -20, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+
+		var textureLoader = new THREE.TextureLoader();
+
+// load a resource
+
+		var mapHeight = textureLoader.load( "stone.jpg" );
+
+		mapHeight.anisotropy = 4;
+		mapHeight.repeat.set( 0.998, 0.998 );
+		mapHeight.offset.set( 0.001, 0.001 );
+		mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
+		mapHeight.format = THREE.RGBFormat;
+
+
+		var material = new THREE.MeshPhongMaterial( {
+			
+//			shininess: 2,
+
+		} );
+
+
+		material.blending = "NormalBlending",
+
+		material.color.setRGB( 0.64, 0.13957696, 0.078344 );
+
+		material.bumpMap = mapHeight;
+		material.bumpMap.anisotropy = 4;
+		material.bumpMap.repeat.set( 2, 2 );
+		material.bumpMap.wrapS = THREE.RepeatWrapping;
+		material.bumpMap.wrapT = THREE.RepeatWrapping;
+
+		material.bumpScale = 2;
+
+		material.specularMap = mapHeight;
+		material.specular.setRGB( 0.067, 0.067, 0.067 );
+		material.specularMap.repeat.set( 2, 2 );
+//		material.specular.specularCoef = 100;
+
+		material.lightMap = textureLoader.load( "lightmap-ao-shadow.png" );
+		material.lightMap.wrapS = THREE.RepeatWrapping;
+		material.lightMap.wrapT = THREE.RepeatWrapping;
+		material.lightMap.anisotropy = 4;
+
+		material.lightMapIntensity = 0.75;
+
+		geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.scale.multiplyScalar( 300 );
+		mesh.position.set( 0, 30, 0 );
+		scene.add( mesh );
+
+console.log( '', material );
+
+	}
+
+/*
+
+	"blending" : "NormalBlending",
+	"colorDiffuse" : [0.64, 0.13957696, 0.078344],
+	"colorSpecular" : [0.067, 0.067, 0.067],
+	"depthTest" : true,
+	"depthWrite" : true,
+	"mapLight" : "lightmap-ao-shadow.png",
+	"mapBump" : "stone.jpg",
+	"mapSpecular" : "stone.jpg",
+	"mapBumpRepeat" : [2, 2],
+	"mapSpecularRepeat" : [2, 2],
+	"mapBumpWrap" : ["repeat", "repeat"],
+	"mapSpecularWrap" : ["repeat", "repeat"],
+	"mapBumpScale" : 2,
+	"mapBumpAnisotropy": 4,
+	"mapSpecularAnisotropy": 4,
+	"mapLightAnisotropy": 4,
+	"shading" : "Phong",
+	"specularCoef" : 100,
+*/
+
+
+	function addLights( siz ) {
+
+		var size = siz ? siz : 100;
+//		renderer.shadowMap.enabled = true;
+
+		var lightAmbient, lightDirectional, lightPoint;
+
+		lightAmbient = new THREE.AmbientLight( 0x888888 );
+		scene.add( lightAmbient );
+
+		lightDirectional = new THREE.DirectionalLight( 0xaabbff, 5 );
+		lightDirectional.position.set( -200, 200, 200 );
+
+		var d = size;
+		lightDirectional.shadowCameraLeft = -d;
+		lightDirectional.shadowCameraRight = d;
+		lightDirectional.shadowCameraTop = d;
+		lightDirectional.shadowCameraBottom = -d;
+
+		lightDirectional.shadowCameraNear = 20;
+		lightDirectional.shadowCameraFar = 2 * size;
+
+// can help stop appearance of gridlines in objects with opacity < 1
+		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
+		lightDirectional.shadowDarkness = 0.3; // default 0.5
+		lightDirectional.shadowMapWidth = 2048;  // default 512
+		lightDirectional.shadowMapHeight = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		lightHelper = new THREE.DirectionalLightHelper( lightDirectional, size )
+//		scene.add( lightHelper )
+
+		lightPoint = new THREE.PointLight( 0xffffff, 1 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

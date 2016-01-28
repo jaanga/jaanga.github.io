@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Canvas Texture Noise R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+// http://www.lab4games.net/zz85/blog/2014/11/08/exploring-simple-noise-and-clouds-with-three-js/
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+/*			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+*/
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<div id=info ></div>
+
+		`;
+
+//			<p><button onclick=doIt(); >do it</button></p>
+//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		addLights();
+
+		texture = buildTexture();
+
+		geometry = new THREE.PlaneBufferGeometry( 20, 20 );
+//		material = new THREE.MeshBasicMaterial( {color: 0xff0000 , side: 2 } );
+		material = new THREE.MeshPhongMaterial( { map: buildTexture(), side: 2, transparent: false } );
+
+		material.color.setRGB( 0.64, 0.13957696, 0.078344 );
+
+		material.bumpMap = texture;
+		material.bumpScale = 1;
+
+		material.specularMap = texture;
+		material.specular.setRGB( 0.067, 0.067, 0.067 );
+
+		material.lightMap = texture;
+		material.lightMapIntensity = 0.75;
+
+		for (var i = 0; i < 50; i++) {
+
+			material.color.setHex( 0xffffff * Math.random() );
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() , 100 * Math.random() - 50);
+			mesh.rotation.set( 3 * Math.random(), 3 * Math.random(), 0 );
+			scene.add( mesh );
+
+		}
+
+	}
+
+	function buildTexture() {
+
+		var noiseSize = 256;
+		var size = noiseSize * noiseSize;
+		var data = new Uint8Array( 4 * size );
+
+		for ( var i = 0; i < size * 4; ) {
+
+			n = 200 + Math.random() * 10 | 0;
+			data[ i ++ ] = n;
+			data[ i ++ ] = n;
+			data[ i ++ ] = n;
+			data[ i ++ ] = 255;
+		}
+
+		var dt = new THREE.DataTexture( data, noiseSize, noiseSize, THREE.RGBAFormat );
+		dt.anisotropy = 4;
+//		dt.bumpMap.repeat.set( 16, 16 );
+		dt.wrapS = THREE.RepeatWrapping;
+		dt.wrapT = THREE.RepeatWrapping;
+		dt.needsUpdate = true;
+
+		return dt;
+
+	}
+
+	function addLights( siz ) {
+
+		var size = siz ? siz : 100;
+//		renderer.shadowMap.enabled = true;
+
+		var lightAmbient, lightDirectional, lightPoint;
+
+		lightAmbient = new THREE.AmbientLight( 0x888888 );
+		scene.add( lightAmbient );
+
+		lightDirectional = new THREE.DirectionalLight( 0xaabbff, 5 );
+		lightDirectional.position.set( -200, 200, 200 );
+
+		var d = size;
+		lightDirectional.shadowCameraLeft = -d;
+		lightDirectional.shadowCameraRight = d;
+		lightDirectional.shadowCameraTop = d;
+		lightDirectional.shadowCameraBottom = -d;
+
+		lightDirectional.shadowCameraNear = 20;
+		lightDirectional.shadowCameraFar = 2 * size;
+
+// can help stop appearance of gridlines in objects with opacity < 1
+		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
+		lightDirectional.shadowDarkness = 0.3; // default 0.5
+		lightDirectional.shadowMapWidth = 2048;  // default 512
+		lightDirectional.shadowMapHeight = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		lightHelper = new THREE.DirectionalLightHelper( lightDirectional, size )
+//		scene.add( lightHelper )
+
+		lightPoint = new THREE.PointLight( 0xffffff, 1 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
+

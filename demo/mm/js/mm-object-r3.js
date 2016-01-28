@@ -29,7 +29,8 @@
 
 	var materialCase = new THREE.MeshNormalMaterial();
 	materialCase.name = 'materialCase';
-	var materialCaseColor = 0xffffff;
+
+	var materialCaseColor = 0xf8f8f8;
 
 	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
 	var materialHole = new THREE.MeshBasicMaterial( { color: 0x000000, side: 2 } );
@@ -919,16 +920,21 @@
 
 	function loadTexture2( file ) {
 
-		loader = new THREE.TextureLoader();
-		loader.crossOrigin = 'anonymous';
+		THREE.TextureLoader.crossOrigin = 'anonymous';
 
-		textureCase = loader.load(
+		loader = new THREE.TextureLoader();
+
+		loader.load(
 
 			file,
 
-			function () {
+			function ( tex ) {
 
-				updateMaterial( materialCaseColor );
+				textureCase = tex;
+				textureCase.wrapS = textureCase.wrapT = THREE.RepeatWrapping;
+				textureCase.needsUpdate = true;
+
+				updateMaterial();
 
 			}
 
@@ -936,32 +942,68 @@
 
 	}
 
+	function buildTextureNoise() {
+
+		var noiseSize = 256;
+		var size = noiseSize * noiseSize;
+		var data = new Uint8Array( 4 * size );
+
+		for ( var i = 0; i < size * 4; ) {
+
+			n = 200 + Math.random() * 10 | 0;
+			data[ i ++ ] = n;
+			data[ i ++ ] = n;
+			data[ i ++ ] = n;
+			data[ i ++ ] = 255;
+		}
+
+		var dt = new THREE.DataTexture( data, noiseSize, noiseSize, THREE.RGBAFormat );
+		dt.anisotropy = 4;
+//		dt.repeat.set( 16, 16 );
+		dt.wrapS = THREE.RepeatWrapping;
+		dt.wrapT = THREE.RepeatWrapping;
+		dt.needsUpdate = true;
+
+		return dt;
+
+	}
 
 	function updateMaterial( color ) {
 
-		materialCaseColor = color;
+		materialCaseColor = color ? color : 0xfdccaa;
 
 		kallax.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh && child.material.name === 'materialCase' ) {
 
-				t = textureCase.clone();
-				t.wrapS = t.wrapT = THREE.RepeatWrapping;
-				t.needsUpdate = true;
-
 				if ( child.name === 'shelf' || child.name === 'caseTop' || child.name === 'caseBottom' ) {
 
-					t.repeat.set( columns, 1 );
+					textureCase.repeat.set( columns, 1 );
 
 				} else if ( child.name === 'caseLeft' || child.name === 'caseRight' ) {
 
-					t.repeat.set( rows, 1 );
+					textureCase.repeat.set( rows, 1 );
 
 				}
 
-				if ( color === 15658734 ) { t = ''; }
+				if ( materialCaseColor === 0xf8f8f8 ) { 
 
-				child.material = new THREE.MeshPhongMaterial( { color: materialCaseColor, map: t, name: 'materialCase' } );
+					var t = buildTextureNoise();
+
+				} else {
+
+					t = textureCase;
+
+				}
+
+				child.material = new THREE.MeshPhongMaterial( { 
+					color: materialCaseColor, 
+					bumpMap: t,
+					bumpScale:1,
+					name: 'materialCase' 
+				} );
+
+				child.material.needsUpdate = true;
 
 			}
 

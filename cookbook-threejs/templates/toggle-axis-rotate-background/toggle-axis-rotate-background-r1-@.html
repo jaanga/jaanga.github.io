@@ -117,14 +117,17 @@
 
 	}
 
+
 	function toggleBackgroundGradient() {
+
+// 2016-01-28
 
 		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
 		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
 
 		if ( document.body.style.backgroundImage === '' ) {
 
-			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
+			document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
 
 		} else {
 
@@ -132,9 +135,8 @@
 
 		}
 
-
-
 	}
+
 
 	function animate() {
 

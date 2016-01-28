@@ -1,9 +1,11 @@
-<!doctype html>
-<html>
+﻿<!doctype html>
+<html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Light R1</title>
-<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
+<title>Template Three.js Light R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
@@ -11,26 +13,30 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script>
 
-	var css, menu, stats, renderer, scene, camera, controls;
-	var lightAmbient, lightDirectional, lightPoint;
-	var geometry, material, mesh, helper;
+	var stats, renderer, scene, camera, controls;
 
-	var cubes = [];
 
 	init();
 	animate();
 
 	function init() {
 
-		css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
-			'#i {text-decoration: none; }' +
-		'';
+//		var geometry, material, mesh, helper;
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
-		menu.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
-			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = '<h2 ><a href="" >' + document.title + '</a> ' +
+			'<a id=i href=http://jaanga.github.io/ >🛈</a></h2>' +
 			'<div id=info ></div>' +
 		'';
 
@@ -38,11 +44,14 @@
 		stats.domElement.style.cssText = 'position: absolute; right: 0; bottom: 0; z-index: 100; ';
 		document.body.appendChild( stats.domElement );
 
-		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 		renderer.setClearColor( 0xf0f0f0 );
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+
 		document.body.appendChild( renderer.domElement );
 
 		scene = new THREE.Scene();
@@ -51,47 +60,93 @@
 		camera.position.set( 100, 100, 100 );
 		scene.add( camera ); // for light to follow
 
-// controls
 		controls = new THREE.OrbitControls( camera );
 		controls.minDistance = 10;
 		controls.maxDistance = 1000;
 
-// lights
+		addLights( 70 );
+
+		drawHelpers();
+
+		drawCubes();
+
+		addShadows();
+
+	}
+
+
+	function addLights( size ) {
+
+// 2016-01-27
+
+		var size = size ? size : 100;
+//		var lightAmbient, lightDirectional, lightPoint;
+
+
 		lightAmbient = new THREE.AmbientLight( 0x444444 );
 		scene.add( lightAmbient );
 
-		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.25 );
-		lightDirectional.position.set( -200, 200, 200 );
 
-		var d = 100;
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -50, 150, 50 );
+
+		var d = size;
 		lightDirectional.shadowCameraLeft = -d;
 		lightDirectional.shadowCameraRight = d;
 		lightDirectional.shadowCameraTop = d;
 		lightDirectional.shadowCameraBottom = -d;
 
-		lightDirectional.shadowCameraNear = 200;
-		lightDirectional.shadowCameraFar = 500;
+		lightDirectional.shadowCameraNear = 20;
+		lightDirectional.shadowCameraFar = 5 * size;
 
-// can help stop appearance of gridlines in objects with opacity < 1
+// helps stop appearance of grid lines in objects
 		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
 		lightDirectional.shadowDarkness = 0.3; // default 0.5
+
 		lightDirectional.shadowMapWidth = 2048;  // default 512
 		lightDirectional.shadowMapHeight = 2048;
 
 		lightDirectional.castShadow = true;
-		lightDirectional.shadowCameraVisible = true;
 		scene.add( lightDirectional );
 
-//		lightPoint = new THREE.PointLight( 0xffffff, 0.25 );
-//		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
-//		camera.add( lightPoint );
+		lightHelper = new THREE.DirectionalLightHelper( lightDirectional, size )
+		scene.add( lightHelper )
 
-		lightPoint = new THREE.PointLight( 0xff0000, 0.5 );
-		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
 		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
 
-// Ground Plane
+	}
+
+	function addShadows() {
+
+// 2016-01-27
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+
+			}
+
+		} );
+
+	}
+
+
+	function drawHelpers() {
+
+// 2016-01-27
+
 		geometry = new THREE.BoxGeometry( 100, 5, 100 );
+
 		var material = new THREE.MeshPhongMaterial( {
 			color: 0xffffff * Math.random(),
 			emissive: 0xffffff * Math.random(),
@@ -102,8 +157,6 @@
 
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -10, 0 );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
 		scene.add( mesh );
 
 		helper = new THREE.EdgesHelper( mesh );
@@ -117,32 +170,42 @@
 		helper.position.set( 0, -7.5, 0 );
 		scene.add( helper );
 
-		window.addEventListener( 'resize', onWindowResize, false );
 
 // Sphere
 		geometry = new THREE.SphereGeometry( 25, 50, 50 );
 
 //		material = new THREE.MeshNormalMaterial();
 		material = new THREE.MeshPhongMaterial( {
+
 //			color: 0xffffff * Math.random(),
 //			emissive: 0xffffff * Math.random(),
 //			specular: 0xffffff * Math.random(),
 
-			color: 0xaaaaaa,
+//			color: 0xaaaaaa,
 //			emissive: 0xffffff * Math.random(),
-			specular: 0xffffff
+//			specular: 0xffffff
 //			shininess: 0.1
+
 		} );
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -100, 10, 0 );
+		mesh.position.set( -50, 10, 0 );
 		mesh.castShadow = true;
 		mesh.receiveShadow = true;
 		scene.add( mesh );
 
-// Cubes
+	}
+
+
+	function drawCubes() {
+
+// 2016-01-27
+
 		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+
 		for (var i = 0; i < 50; i++) {
+
 			material = new THREE.MeshPhongMaterial( {
+
 				color: 0xffffff * Math.random(),
 				emissive: 0xffffff * Math.random(),
 				opacity: Math.random(),
@@ -155,16 +218,18 @@
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
 			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
-			mesh.castShadow = true;
-			mesh.receiveShadow = true;
+//			mesh.castShadow = true;
+//			mesh.receiveShadow = true;
+			mesh.name = 'cube';
 			scene.add( mesh );
-			cubes.push( mesh );
 
 			helper = new THREE.EdgesHelper( mesh );
 			helper.material.color.setRGB( 1, 0, 0 );
 			scene.add( helper );
 
 		}
+
+		addShadows();
 
 	}
 
@@ -180,7 +245,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-		controls.update();
+//		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 

@@ -268,7 +268,12 @@
 
 			if ( holes.length ) { dispatchScrewsPegsToParent( obj, index, ms ); }
 
-			if ( oud.autoRotate !== undefined ) { controls.autoRotate = chkRotate.checked = oud.autoRotate; }
+			if ( oud.autoRotate !== undefined ) {
+ 
+				controls.autoRotate = chkRotate.checked = oud.autoRotate; 
+				togglePlacardVisible();
+
+			}
 
 //			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - ' ' + ms.toFixed() + 'ms<br>';
 
@@ -360,7 +365,12 @@ console.log( 'the end' );
 			tween( obj, oud, ms, itemDispatch );
 
 			if ( holes.length ) { dispatchScrewsPegsToParent( obj, indexHardware, ms ); }
-			if ( oud.autoRotate !== undefined ) { controls.autoRotate = chkRotate.checked = oud.autoRotate; }
+			if ( oud.autoRotate !== undefined ) { 
+
+				controls.autoRotate = chkRotate.checked = oud.autoRotate;
+				togglePlacardVisible();
+
+			}
 
 		}
 
@@ -369,8 +379,6 @@ console.log( 'the end' );
 	}
 
 	function itemDispatch() {
-
-
 
 		if ( indexObject < clip[ indexFrame ].length - 1 ) {
 
