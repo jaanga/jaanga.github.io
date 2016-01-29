@@ -2,7 +2,7 @@
 <html >
 <head>
 <meta charset=utf-8 >
-<title>Three.js Viewer One-Pager R1</title>
+<title>Three.js Viewer Gallery R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='View every Three.js example on a single scrolling page. Manages the number of renderers being used.' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM,viewer,examples,single page' >
@@ -27,19 +27,20 @@
 
 	function init() {
 
+// https://medium.com/@jamesfuthey/simulating-the-creation-of-website-thumbnail-screenshots-using-iframes-7145269891db#.z2eh0zxh6
+
 		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 		`
 
-/*			* { box-sizing: border-box; } */
 			body { font: 12pt monospace; margin: 0; }
 
 			a { text-decoration: none; }
-			h2 { margin: 0; }
 			iframe { border: 1px solid green; height: 100%; width: 100%; }
 
-			.container { border: 1px solid red; display: inline-block; margin: 20px; position: relative;  height: 300px; width: 300px; }
-			.divIframe { border: 1px solid red; height: 900px; width: 900px; position: relative; transform: scale( 0.25 ); transform-origin: 0 0; }
+			.example { border: 0px solid red; display: inline-block; height: 300px; margin: 0 20px 20px 0; position: relative; overflow: hidden; width: 240px; }
+			.container { border: 0px solid red; height: 240px; width: 240px; overflow: hidden; }
+			.divIframe { border: 0px solid red; height: 960px; width: 960px; transform: scale( 0.25 ); transform-origin: 0 0; }
 
 		`;
 
@@ -53,7 +54,7 @@
 				<a href="" >Viewer One Pager R1</a>
 				 <a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
 			</h2>
-			<p>Scroll through hundreds of WebGL files on a single webpage.</p>
+			<p>Scroll through a gallery of hundreds of WebGL files on a single web page.</p>
 			<p id=menuCount ></p>
 			<div id=menuNames ></div>
 		`;
@@ -85,6 +86,7 @@
 
 				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 
+				if ( file.indexOf( 'software' ) > -1 || file === 'misc_sound.html' ) { continue; }
 				var id = file.slice( 0, -5 );
 				files.push( id );
 				var title = id.split( '_' );
@@ -95,17 +97,18 @@
 
 					categories.push( category );
 
-					menuText += `<h2> ${ category } </h2>`;
+					contentText += `<h2> ${ category } </h2>`;
 
 				}
 
-				menuText += `<div><a id=mnu_${ id } href=#${ id } onclick=scrollIframe('${ id }') >${ title }<a></div>`;
-
 				contentText += 
 				`
-
-					<div class=container ><div class=divIframe id=${ id } ></div><h3>${ title }</h3></div>
-					
+					<div class=example >
+						<div class=container >
+							<div class=divIframe id=${ id } ></div>
+						</div>
+						<h3><a href=${ urlExamples}${ file } >${ title }</a></h3>
+					</div>
 
 				`;
 
@@ -115,21 +118,7 @@
 
 			iframeContainers = document.getElementsByClassName( 'divIframe' );
 
-			scrollIframe( files[ 0 ] );
-
 		}
-
-	}
-
-	function scrollIframe( fName ) {
-
-		fileName = fName
-
-//		iframeContainers[ fName ].scrollIntoView();
-
-//		selected.style.color = ``;
-//		selected = document.getElementById( 'mnu_' + fileName );
-//		selected.style.color = `red`;
 
 	}
 
@@ -148,10 +137,6 @@
 
 			activeContainer.innerHTML = `<iframe src=${ urlExamples + activeContainer.id + '.html' } ></iframe>`;
 			iframesActive.push( activeContainer );
-
-//			selected.style.color = ``;
-//			selected = document.getElementById( 'mnu_' + fileName );
-//			selected.style.color = `red`;
 
 			fileName = activeContainer.id;
 
