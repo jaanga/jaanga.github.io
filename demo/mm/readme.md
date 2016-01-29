@@ -28,11 +28,29 @@ _This is all still a work-in-progress. In particular: sounds and textures need m
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
+_2016-01-29_
+
+[Kallax NxN Basic R7 - Demo - Full Screen ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r7.html.html )
+
+Note: touching items to toggle position on a tablet or phone is currently not working the way it should be. 
+Clicking with mouse is OK.
+Clicking menu items is OK.
+Will fix in next release.
+
+* Add shade and shadows
+* Add noise texture creation 
+* Add renderer modifiers
+* Add background and more ground
+* Add toggle placard visibility
+* Add toggle rotate
+
+
+
 _2016-01-23_
 
 NxN
 
-* General clean-up, re-structing varoable names to be easier to read
+* General clean-up, re-structuring variable names to be easier to read
 * Add autoRotate
 * Re-structure the per frame data display
 * Update camera positions and frame times
@@ -48,7 +66,7 @@ Wall Bracket
  
 _2016-01-22_
 
-[Kallax NxN Basic R5 - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r5.html.html )
+[Kallax NxN Basic R5 - Demo - Full Screen ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r5.html.html )
 
 * Add hexKey
 * Add Screw 1004321 104322
@@ -64,7 +82,7 @@ _2016-01-21_
  
 _2016-01-19_
 
-[Kallax NxN Basic R4 - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r4.html.html )
+[Kallax NxN Basic R4 - Demo - Full Screen ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r4.html.html )
 
 * Update with all new tweening looking good - just the play by play to finish up
 * But an oops on the Wall bracket needs to be fixed
