@@ -77,10 +77,10 @@
 
 	function addLights( size ) {
 
-// 2016-01-27
+// 2016-01-29
 
 		var size = size ? size : 100;
-//		var lightAmbient, lightDirectional, lightPoint;
+		var lightAmbient, lightDirectional, lightPoint;
 
 
 		lightAmbient = new THREE.AmbientLight( 0x444444 );
@@ -88,7 +88,7 @@
 
 
 		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		lightDirectional.position.set( -50, 150, 50 );
+		lightDirectional.position.set( -size, size, size );
 
 		var d = size;
 		lightDirectional.shadowCameraLeft = -d;
@@ -96,8 +96,8 @@
 		lightDirectional.shadowCameraTop = d;
 		lightDirectional.shadowCameraBottom = -d;
 
-		lightDirectional.shadowCameraNear = 20;
-		lightDirectional.shadowCameraFar = 5 * size;
+		lightDirectional.shadowCameraNear = 0;
+		lightDirectional.shadowCameraFar = 4 * size;
 
 // helps stop appearance of grid lines in objects
 		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
@@ -109,9 +109,7 @@
 		lightDirectional.castShadow = true;
 		scene.add( lightDirectional );
 
-		lightHelper = new THREE.DirectionalLightHelper( lightDirectional, size )
-		scene.add( lightHelper )
-
+		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
 
 		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
 		camera.add( lightPoint );
@@ -122,10 +120,13 @@
 
 	function addShadows() {
 
-// 2016-01-27
+// 2016-01-29
 
 		renderer.shadowMap.enabled = true;
 		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 		scene.traverse( function ( child ) {
 

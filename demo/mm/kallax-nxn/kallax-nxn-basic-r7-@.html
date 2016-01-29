@@ -2,23 +2,32 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>notKallax NxN R5</title>
+<title>notKallax NxN R7</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='3D animation that shows you how to assemble a book shelf with 1 to 6 rows and 1 to 7 columns of cubby holes.' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM,Jaanga,Moving Manuals' >
 </head>
 <body>
-<script src=http://rawgit.com/mrdoob/three.js/r73/build/three.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/controls/OrbitControls.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/libs/stats.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/libs/tween.min.js ></script>
-<script src=../js/mm-object-r2.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/tween.min.js ></script>
+-->
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
+
+<script src=../js/mm-object-r3.js ></script>
 <script src=../js/tweenjs-r1.js ></script>
 
 <script>
 
 	var rows = 4;
 	var columns = 4;
+
+	var edgesColor = 0x884444;
 
 	var kallax, edges, hardware, helpers;
 
@@ -100,12 +109,17 @@
 			<p><button onclick=tweenAllToLocation(); >Return all to start</button>
 			<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>
 			<p><button onclick=togglePlacesAll(); >Toggle Places</button></p>
+
 			<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Play Step-by-Step Assembly</p>
+
 			<p><input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate; > Auto-Rotate</p>
+			<p><input type=checkbox id=chkPlacards onchange=togglePlacardVisible(); checked > Placards Visible</p>
+			<p><input type=checkbox onchange=toggleBackgroundGradient(); checked > Background</p>
+
 			<p>
-				<input type=radio name=field id=birch onchange=updateMaterial(0xffffff); checked />birch
+				<input type=radio name=field id=birch onchange=updateMaterial(0xfdccaa); checked />birch
 				<input type=radio name=field id=black onchange=updateMaterial(0x333333); />black
-				<input type=radio name=field id=white onchange=updateMaterial(0xeeeeee); />white
+				<input type=radio name=field id=white onchange=updateMaterial(0xf8f8f8); />white
 			</p>
 			<p><a href="http://jaanga.github.io/demo/mm/kallax-wall-bracket/" >notKallax Wall Bracket</a></p>
 			<div id=info style=font-size:9pt; ></div>
@@ -116,11 +130,15 @@
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
 		document.body.appendChild( stats.domElement );
 
-		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true}  );
-		renderer.setClearColor( 0xf0f0f0 );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff}  );
+//		renderer.setClearColor( 0xffffff );
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
+
+//		renderer.gammaInput = true;
+//		renderer.gammaOutput = true;
+//		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -140,7 +158,12 @@
 // assets
 
 		drawKallax();
-		loadTexture( '../textures/birch-256x256.png' );
+
+		loadTexture2( '../textures/birch-256x256.png' ); // mm-object-rx.js
+
+		addLights( 200 );
+
+		toggleBackgroundGradient();
 
 	}
 
@@ -225,7 +248,7 @@
 
 		kallax.userData.places = [];
 		kallax.userData.places.push( { autoRotate: false, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-		kallax.userData.places.push( { autoRotate: true, pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: 0, rZ: -pi05 } );
+		kallax.userData.places.push( { autoRotate: true, pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: ran( 2 ) - 1 , rZ: -pi05 } );
 //		kallax.userData.places.push( { pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: 0, rZ: pi05 } );
 
 		objects.push( kallax );
@@ -267,6 +290,8 @@
 
 		tweenAllToLocation();
 
+addShadows();
+
 	}
 
 	function buildCaseHorizontal ( name ) {
@@ -280,7 +305,7 @@
 		objects.push( mesh );
 		kallax.add( mesh );
 
-		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
 		edges.add( edge );
 
 // four corners top
@@ -336,7 +361,7 @@
 		objects.push( mesh );
 		kallax.add( mesh );
 
-		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
 		edges.add( edge );
 
 // four corners
@@ -399,7 +424,7 @@
 		dividers.push( mesh );
 		kallax.add( mesh );
 
-		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
 		edges.add( edge );
 
 		build_hole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
@@ -437,7 +462,7 @@
 		shelves.push( mesh );
 		kallax.add( mesh );
 
-		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
 		edges.add( edge );
 
 // four corners plus
@@ -473,25 +498,32 @@
 		var axisHelper = new THREE.AxisHelper( w + 75 );
 		helpers.add( axisHelper );
 
-		geometry = new THREE.BoxGeometry( heightCase + 150, 2, widthCase + 150 );
-		material = new THREE.MeshNormalMaterial();
+		geometry = new THREE.BoxGeometry( 2 * heightCase, 2, 2.75 * widthCase );
+		material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, bumpMap: buildTextureNoise(), bumpScale: 6, specularMap: buildTextureNoise(),  } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -1, 0 );
+		helpers.add( mesh );
+
+
+		geometry = new THREE.PlaneBufferGeometry( 2000, 2000 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, bumpMap: buildTextureNoise(), bumpScale: 6, specularMap: buildTextureNoise(),  } );
+
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -2, 0 );
+
 		helpers.add( mesh );
 
 	}
 
 	function createClips() {
 
-		speed05 = 500;
-
-		speed1 = 1000;
-
-		speed2 = 2000;
-
-		speed3 = 3000;
-
-		speed5 = 5000;
+		var speed05 = 500;
+		var speed1 = 1000;
+		var speed2 = 2000;
+		var speed3 = 3000;
+		var speed5 = 5000;
 
 		playList = [
 
@@ -653,6 +685,92 @@
 		playList.push( [ [ caseBottom, 1, speed3, 1 ] ] );
 
 		playList.push( [ [ kallax, 1, speed3 ], [ hexKey, 0, speed3 ] ] );
+
+	}
+
+
+	function addLights( size ) {
+
+// 2016-01-29 ~ template-threejs-lights-r2.html
+
+		var size = size ? size : 100;
+		var lightAmbient, lightDirectional, lightPoint;
+
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -size, size, size );
+
+		var d = size;
+		lightDirectional.shadowCameraLeft = -d;
+		lightDirectional.shadowCameraRight = d;
+		lightDirectional.shadowCameraTop = d;
+		lightDirectional.shadowCameraBottom = -d;
+
+		lightDirectional.shadowCameraNear = 0;
+		lightDirectional.shadowCameraFar = 4 * size;
+
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
+		lightDirectional.shadowDarkness = 0.3; // default 0.5
+
+		lightDirectional.shadowMapWidth = 2048;  // default 512
+		lightDirectional.shadowMapHeight = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+	function addShadows() {
+
+// 2016-01-29 ~ template-threejs-lights-r2.html
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+
+			}
+
+		} );
+
+	}
+
+	function toggleBackgroundGradient() {
+
+// 2016-01-28
+
+		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+
+		if ( document.body.style.backgroundImage === '' ) {
+
+			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
 
 	}
 
