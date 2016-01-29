@@ -30,7 +30,7 @@ _If you would like to see a 'prettified' version in the near future, please let 
 
 _2016-01-29_
 
-[Kallax NxN Basic R7 - Demo - Full Screen ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r7.html.html )
+[Kallax NxN Basic R7 - Demo - Full Screen ]( http://jaanga.github.io/demo/mm/kallax-nxn/kallax-nxn-basic-r7-@.html.html )
 
 Note: touching items to toggle position on a tablet or phone is currently not working the way it should be. 
 Clicking with mouse is OK.
