@@ -46,6 +46,10 @@
 
 [Drag and Drop]( ./drag-and-drop/index.html )
 
+## Event Handling
+
+[MouseOver]( ./event-handling/mouseover/threejs-mouseover-r2.html )
+
 ## Enable Rotate Camera After Delay
 
 [enable-rotate-camera-after-delay-r1]( enable-rotate-camera-after-delay/enable-rotate-camera-after-delay-r1.html )
