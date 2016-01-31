@@ -19,14 +19,19 @@
 ## The Scripts
 
 
+### Column Verona
 * [column-verona-r1.html]( http://jaanga.github.io/cookbook-threejs/objects/column-verona/column-verona-r1.html )
+
+
+### Qline
+
+* [Qline]( http://jaanga.github.io/cookbook-threejs/objects/qline/ )
+
+
+### Slotted Sphere
+
 * [slotted-sphere-sections]( http://jaanga.github.io/cookbook-threejs/objects/slotted-sphere-sections/slotted-sphere-sections-r1.html )
 
-materials-sandbox-generate-textures-r1-00.html
-
-materials-sandbox-r1-00.html
-
-materials-sandbox-r1.html
 
 
 ## Concept

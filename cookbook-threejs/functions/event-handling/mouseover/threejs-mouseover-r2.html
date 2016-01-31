@@ -33,7 +33,7 @@
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-			'<div id=msg>Move the cursor to ID the cubes...</div>' +
+			'<div id=msg >Move the cursor to ID the cubes...</div>' +
 		'';
 
 		stats = new Stats();
@@ -106,6 +106,13 @@
 		if ( intersects.length > 0 ) {
 
 			intersects[ 0 ].object.rotation.y +=0.1;
+
+			msg.innerHTML = 'Selected cube ID: ' + intersects[ 0 ].object.id ;
+
+
+		} else {
+
+			msg.innerHTML = 'No cube selected';
 
 		}
 

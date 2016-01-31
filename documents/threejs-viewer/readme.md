@@ -6,7 +6,7 @@ Three.js Examples Read Me
 ===
 
 
-_Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/master/README.md ): The aim of the project is to create a lightweight 3D library with a very low level of complexity — in other words, for dummies._
+_Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/master/README.md ): "The aim of the project is to create a lightweight 3D library with a very low level of complexity — in other words, for dummies."_
 
 <br>
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
@@ -21,6 +21,10 @@ _Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/ma
 
 ##Overview
 
+There are currently six variations of viewers in this folder. See the [home page]( http://jaanga.github.io/documents/threejs-examples/ ) 
+for details and links to each.
+
+<!--
 ### [Three.js Examples Rover - Full Screen - Dev]( http://jaanga.github.io/documents/threejs-examples/threejs-examples-rover/dev/index.html )
 
 * Tries to break new ground with the user experience of viewing Three.js example files
@@ -30,11 +34,12 @@ _Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/ma
 
 * Tracks closely the features in [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
 	* But does load a random example on load
+-->
 
 
 ### Sample Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-basic/threejs-viewer-basic-r1-@.html width=100% height=600px ></iframe>  
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-basic/threejs-viewer-basic-r1-@.html width=90% height=600px ></iframe>  
 ###### _Three.js Examples Viewer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-basic/threejs-viewer-basic-r1-@.html )
 
 
@@ -51,61 +56,80 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-There are a number of with creating an easy to view catalog of animated 3D web pages.
+There are a number of ways of creating an easy to view catalog of animated 3D web pages.
 
-The usual fashion is to create 2D thumbnails of the 3D pages. Using 2D to represent 3D is an admission of some sort of failure.
+The usual fashion is to create 2D thumbnail images of the 3D pages. Using 2D to represent 3D is an admission of some sort of failure.
 Using 2D to represent 3D begs the question: If 3D is so good, why don't you use 3D?
 
-
-
+* Using 2D thumbnails for galleries to select 3D web page is old school
+* Using stills to show something that moves is not the way to go. Stills won't get you anywhere. Stills are the way to stop.
+* Using things that don't interact to represent things that do interact is a bad act
+* Why make two things - the file and the icon or representation - when one should do?
 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-Displays files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ )
+Using the files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ) we want to do the following
 
-* Show animated real-time 3D in animated real-time 3D
-	* Using 2D thumbnails for galleries to select 3D web page is old school
-	* Using stills to show something that moves is not a way to go. won't get you anywhere. Stills are the the way to stop
-	* Using things that don't interact to represent things that do interact is a bad act
-
-* Why make two things - the file and the icon or representation - when one will do?
-
-
-
-* Separate code and content 
-* Very simple JavaScript
-* View hundreds of files in a singe page
+* Show that you can display animated real-time 3D in animated real-time 3D
+* Build demos with very simple JavaScript
+* Menu element displays all Three.js example files organized by category
+	* Clicking a menu item scrolls into view the selected file in the Contents pane
+	* Menu items icons open file in new tab/window
+	* Highlight currently selected file
+* Content element displays scrolling view of all the example files
+	* Bypasses browser limit of maximum sixteen open WebGL views
+	* Creates renderers when views are visible
+	* Discards renderers when view are not visible
+	* View hundreds of files in a singe page
 	* Recycle iframes as needed
-
-* Highlight currently selected file
 * Provide link to view source code
-* Open file in new tab
+* Open selected files in new tab
+* Display a randomly selected file on load
 * Support permalinks
 * Categorize and prettify file names
-	Display categories with header tags
+	* Display categories with header tags
 * Loads fast
 	* Or displays stuff soon
-	* Adds detail as time goes on
-* Passes through all interaction
+	* Adds more detail as time goes on
+* Passes through all the individual interaction of each 3D file
+* Separates code and content
+* Menu and contents scroll independently
 * Designed to be view in multiple sizes
-	* Works on Mobile
-	* works on the wall
+	* Works on mobile
+	* Works projected on the wall
 * You don't go to it. It comes to you.
 
+### GitHub API
 
-* Use GitHub API to read names of files in folders, recursively in required
-* Use GitHub API tags to source revisions tags and their contents
+* Use GutHUB API to
+	* Obtain the latest, most up to date list of files at run-time
+	* Read names of files in folders, recursively in required
+	* Use GitHub API tags to source revisions tags and their contents
+
+
+### Use of Iframe
 
 * Use iframe srcdoc feature to display files where data has been mangled
 * Report data such as number of files found
+
+### User Interface
 
 * Scroll menu and contents separately if needed
 * Always show something
 	* Open with a randomly selected file
 
-
 This is part of an attempt to build a simpler file viewer.
+
+
+<!--
+The second message is a bit more complicated. 
+
+Don't go there and come back, go there and come back. Make the 'there' come to you.
+
+The first statement refers to a list of hyperlinks whee in order to see of the referenced pages you must click the link. go to that page, 
+then click on the return button, do back to the original page and then click on the next hyperlink
+-->
 
 ### Vision
 <!--  a descriptive picture of a desired future state -->
@@ -117,24 +141,6 @@ This is part of an attempt to build a simpler file viewer.
 
 ## Features
 
-
-### Three.js Examples Rover
-
-* Displays HTML or Markdown files
-	* Displays a randomly selected file on load
-	* Uses GitHub API to read names of all Three.js Releases
-	* Dropdown list provides access to Three.js examples in all releases from R5 to the current 'dev' branch
-	* Upon selection of a release, menu reads fresh data from GitHub and displays all example files for that release
-* Menu element displays all Three.js example files organized by category
-	* Clicking a menu item scrolls into view the selected file in the Contents pane
-	* Menu items icons open file in new tab/window
-* Content element displays scrolling view of all the example files
-	* Bypasses browser limit of maximum sixteen open WebGL views
-	* Creates renderers when views are visible
-	* Discards renderers when view are not visible
-	* View source button displays at top right when HTML file is loaded 
-* Menu and contents scroll independently
-* Three.js logo adapted from Three.js documentation source code
 * Zoom, pan and rotate
 	* 1 finger / left button >> rotate
 	* 2 finger / wheel >> zoom in and out
@@ -143,14 +149,15 @@ This is part of an attempt to build a simpler file viewer.
 
 ## Issues
 
-### Three.js Examples Rover
+### Three.js Examples Timeline
 
 * The further back you go the more there are issues
-* Many of the issues relate to CORS issues and are solvable
+	* Many of the issues relate to CORS issues and are solvable
+	* Early example files were in separate folders
 
- 
 ## Sources
 
+* Three.js logo adapted from Three.js documentation source code
 
 <br>
 

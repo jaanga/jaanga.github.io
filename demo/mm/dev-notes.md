@@ -2,6 +2,16 @@ dev notes read me
 ===
 
 
+2016-01-30
+
+* Add all the colors
+* Hammer
+* Tidy Kallax NxN geometry
+* Control tweening so objects do not pass through others
+* Put objects in shelves at end of film clips
+* Add moving point lights at end of clips
+* Add architectural elements
+
 2016-01-23
 
 Ground plane should become shelf that moves with fixture - along with parts not being used
