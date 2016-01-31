@@ -19,11 +19,7 @@
 
 <script>
 
-	var width = 5;
-	var constructionLines = [];
-
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+	width = 5;
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -55,7 +51,6 @@
 			</h2>
 			<p><button onclick=pointsRandomQline(); >Random Points Qline</button></p>
 			<p><button onclick=pointsSquareQline(); >Square Points Qline</button></p>
-			<p><button onclick=pointsPathQline(); >Path Points Qline</button></p>
 			<div id=info ></div>
 
 		`;
@@ -80,9 +75,6 @@
 
 		scene = new THREE.Scene();
 
-		light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
-		scene.add( light );
-
 		window.addEventListener( 'resize', onWindowResize, false );
 
 
@@ -101,31 +93,22 @@
 		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
-//		pointsSquareQline();
-		pointsRandomQline();
-
-generatePath();
+		pointsSquareQline();
 
 	}
+
 
 	function pointsSquareQline() {
 
 		var qline = scene.getObjectByName( 'qline' );
 
-		scene.remove( qline );
-
-		for ( var i = 0; i < constructionLines.length; i++ ) {
-
-			scene.remove( constructionLines[ i ] );
-
-		}
-
-		constructionLines = [];
+		if ( qline !== undefined ) { scene.remove( qline ); }
 
 		points = [ v( 50, 0, 50 ), v( 50, 0, -50 ), v( -50, 0, -50 ), v( -50, 0, 50 ), v( 50, 0, 50 ) ];
 
 		qline = drawQline( points, width);
 		qline.name = 'qline';
+		qline.scale.set( -1, -1, -1 );
 
 		scene.add( qline );
 
@@ -135,46 +118,15 @@ generatePath();
 
 		var qline = scene.getObjectByName( 'qline' );
 
-		scene.remove( qline );
-
-		for ( var i = 0; i < constructionLines.length; i++ ) {
-
-			scene.remove( constructionLines[ i ] );
-
-		}
-
-		constructionLines = [];
+		if ( qline !== undefined ) { scene.remove( qline ); }
 
 		var points = generateRandomPoints( 20, 100 );
 
-		qline = drawQline( points, width );
+		qline = drawQline( points, width);
 		qline.name = 'qline';
+		qline.scale.set( -1, -1, -1 );
 
 		scene.add( qline );
-
-	}
-
-	function pointsPathQline() {
-
-		var qline = scene.getObjectByName( 'qline' );
-
-		scene.remove( qline );
-
-		for ( var i = 0; i < constructionLines.length; i++ ) {
-
-			scene.remove( constructionLines[ i ] );
-
-		}
-
-		constructionLines = [];
-
-		var points = generatePath();
-
-		qline = drawQline( points, width );
-		qline.name = 'qline';
-
-		scene.add( qline );
-
 
 	}
 
@@ -192,44 +144,14 @@ generatePath();
 
 	}
 
-	function generatePath() {
-
-		var pi = Math.PI;
-		var pi2 = 2 * pi;
-
-//		var path;
-		path = new THREE.Path();
-
-//		path.fromPoints( [ v2( 10, -10 ), v2( 10, -30 ), v2( 20, -30 ), v2( 20, -10 ) ] );
-
-		path.absarc( 0, 30, 10, 0, pi );
-		path.absarc( 10, -20, 20, pi, pi2 );
-		path.moveTo( 10, -20 );
-		path.moveTo( -10, 30 );
-
-console.log( 'path', path );
-
-		pts = path.getPoints();
-
-		points = [];
-
-		for ( var i = 0; i < pts.length; i++ ) {
-
-			points.push( v( pts[ i ].x, 0, pts[ i ].y ) );
-
-		}
-
-		return points;
-
-	}
-
 	function drawQline( points, width ) {
 
 		var points1 = offset( points, 0.5 * width );
+
 		var points2 = offset( points, -0.5 * width );
-		var geometry = new THREE.PlaneGeometry( 10, 10, 1, points.length - 1 );
-//		var material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
-		var material = new THREE.MeshPhongMaterial( { color: 0xffff00, side: 2, wireframe: false } );
+
+		var geometry = new THREE.PlaneGeometry( 10, 10, 1, points.length );
+		var material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
 		var mesh = new THREE.Mesh( geometry, material );
 
 		for ( var i = 0, j = 0; i < points1.length; i++ ) {
@@ -250,54 +172,81 @@ console.log( 'path', path );
 	}
 
 
-	function offset( points, offset ) {
-
-//		var pt1, pt2, offsetPt1, offsetPt2, vector, angle, length;
-//		var line, lines, vertices;
-		var pi05 = 0.5 * Math.PI;
+	function offset( pointsArray, offset ) {
+pa = pointsArray;
 
 		lines = [];
 		vertices = [];
 
-		for ( var i = 0; i < points.length - 1; i++ ) {
+//		var pt1, pt2, pt3;
 
-			pt1 = points[ i ];
-			pt2 = points[ i + 1 ];
+		for ( var i = 0; i < pointsArray.length - 1; i++ ) {
 
-			vector = pt2.clone().sub( pt1 );
-			angle = Math.atan2( vector.z, vector.x );
+			var pt1 = pointsArray[ i ];
 
-			offsetPt1 = v( pt1.x + offset * Math.cos( angle - pi05 ), 0, pt1.z - offset * Math.sin( angle + pi05 ) );
-			offsetPt2 = v( pt2.x + offset * Math.cos( angle - pi05 ), 0, pt2.z - offset * Math.sin( angle + pi05 ) );
+			var vectorDelta = pointsArray[ i + 1 ].clone().sub( pt1 );
+			var angle = Math.atan2( vectorDelta.z, vectorDelta.x );
 
-			line = new THREE.Line3( offsetPt1, offsetPt2 );
+			var pt2 = v( pt1.x + offset * Math.cos( angle - Math.PI / 2 ), 0, pt1.z - offset * Math.sin( angle + Math.PI / 2 ) );
+			var length = pt1.distanceTo( pointsArray[ i + 1 ] );
+
+			var pt3 = v( pt2.x + length * Math.cos( angle ), 0, pt2.z + length * Math.sin( angle ) );
+
+/*
+			if ( i === 1000 ) {
+
+				pt1 = pointsArray[  pointsArray.length - 1 ];
+
+				vectorDelta = pointsArray[ 0 ].clone().sub( pt1 );
+				angle = Math.atan2( vectorDelta.z, vectorDelta.x );
+
+				pt2 = v( pt1.x + offset * Math.cos( angle - Math.PI / 2 ), 0, pt1.z - offset * Math.sin( angle + Math.PI / 2 ) );
+				length = pt1.distanceTo( pointsArray[ pointsArray.length - 1  ] );
+
+
+				line = new THREE.Line3( pt1, pt2 );
+				lines.push( line );
+
+			}
+
+*/
+
+			line = new THREE.Line3( pt2, pt3 );
 			lines.push( line );
 
-// debug
 			geometry = new THREE.Geometry();
-			geometry.vertices = [ offsetPt1, offsetPt2 ];
+			geometry.vertices = [ pt2, pt3 ];
+
 			material = new THREE.LineBasicMaterial( { color: 'red' } );
+
 			line = new THREE.Line( geometry, material );
-			constructionLines.push( line );
+
 			scene.add( line );
-//
 
 		}
 
 
-		if ( points[ 0 ].distanceTo( points[ points.length - 1 ] ) < 0.01 ) {
 
-			pt1 = intersectionTwoLines2( lines[ 0 ], lines [ lines.length - 1 ] );
-			pt2 = pt1;
 
-		} else {
+/*
+		len = pointsArray.length - 1;
+		pt1 = pointsArray[ len ];
 
-			pt1 = lines[ 0 ].start;
-			pt2 = lines[ lines.length - 1 ].end;
+		vectorDelta = pt1.clone().sub( pointsArray[ len - 2 ] );
+		angle2 = Math.atan2( vectorDelta.z, vectorDelta.x );
 
-		}
+		pt2 = v( pt1.x + offset * Math.cos( angle - Math.PI / 2 ), 0, pt1.z - offset * Math.sin( angle + Math.PI / 2 ) );
+		length = pt1.distanceTo( pointsArray[ len - 2 ] );
 
-		vertices = [ pt1 ];
+		pt3 = v( pt2.x + length * Math.cos( angle2 ), 0, pt2.z + length * Math.sin( angle2 ) );
+
+//		var line = new THREE.Line3( pt2, pt3 );
+//		lines.push( line );
+*/
+
+// add: if ( pa[ 0 ].distanceTo( pa[ pa.length - 1 ] < 0.001 ) {}
+
+		vertices = [ lines[ 0 ].start ]
 
 		for ( var i = 0; i < lines.length; i++ ) {
 
@@ -307,7 +256,9 @@ console.log( 'path', path );
 
 			} else {
 
-				pt = pt2;
+//				pt = intersectionTwoLines2( lines[ i ], lines [ i - 1 ] );
+//				pt = intersectionTwoLines2( lines[ 0 ], lines [ 1 ] );
+
 
 			}
 
@@ -315,15 +266,17 @@ console.log( 'path', path );
 
 		}
 
-//
-		geometry = new THREE.Geometry();
-		geometry.vertices = vertices;
-		material = new THREE.LineBasicMaterial( { color: 'green' } );
-		line = new THREE.Line( geometry, material );
-		line.position.y = 10;
-		constructionLines.push( line );
-		scene.add( line );
-//
+			vertices.push( lines[ lines.length - 1 ].end );
+
+			geometry = new THREE.Geometry();
+			geometry.vertices = vertices;
+
+			material = new THREE.LineBasicMaterial( { color: 'green' } );
+
+			line = new THREE.Line( geometry, material );
+			line.position.y = 10;
+
+			scene.add( line );
 
 		return vertices;
 
@@ -333,20 +286,41 @@ console.log( 'path', path );
 
 // http://jsfiddle.net/justin_c_rounds/Gd2S2/
 
-		var ptA = line1.start;
-		var ptB = line1.end;
-		var ptC = line2.start;
-		var ptD = line2.end;
+			line1Start = line1.start;
+			line1End = line1.end;
 
-		var denominator = ( ptD.z - ptC.z ) * ( ptB.x - ptA.x ) - ( ptD.x - ptC.x ) * ( ptB.z - ptA.z );
+			line2Start = line2.start;
+			line2End = line2.end;
 
-		if ( denominator == 0 ) { return; }
+			denominator = ( (line2End.z - line2Start.z ) * ( line1End.x - line1Start.x ) )
+				- ( ( line2End.x - line2Start.x ) * ( line1End.z - line1Start.z ) );
 
-		var a = ( ( ptD.x - ptC.x ) * ( ptA.z - ptC.z ) - ( ptD.z - ptC.z ) * ( ptA.x - ptC.x ) ) / denominator;
-		var x = ptA.x + ( a * ( ptB.x - ptA.x ) );
-		var z = ptA.z + ( a * ( ptB.z - ptA.z ) );
+			if ( denominator == 0 ) { return; }
 
-		return v( x, 0, z );
+			a = line1Start.z - line2Start.z;
+			b = line1Start.x - line2Start.x;
+
+			numerator1 = ( (line2End.x - line2Start.x ) * a ) - ( (line2End.z - line2Start.z ) * b );
+			numerator2 = ( (line1End.x - line1Start.x ) * a ) - ( (line1End.z - line1Start.z ) * b );
+
+			a = numerator1 / denominator;
+//			b = numerator2 / denominator;
+
+			x = line1Start.x + ( a * (line1End.x - line1Start.x ));
+			z = line1Start.z + ( a * (line1End.z - line1Start.z ));
+
+			return v( x, 0, z );
+
+	}
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
 
 	}
 
