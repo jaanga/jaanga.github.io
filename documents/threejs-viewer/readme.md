@@ -21,7 +21,7 @@ _Follow Mr.doob's [Three.js mission]( https://github.com/mrdoob/three.js/blob/ma
 
 ##Overview
 
-There are currently six variations of viewers in this folder. See the [home page]( http://jaanga.github.io/documents/threejs-examples/ ) 
+There are currently six variations of new types of viewers of the [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ) in this folder. See the [home page]( http://jaanga.github.io/documents/threejs-examples/ ) 
 for details and links to each.
 
 <!--
@@ -56,12 +56,14 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 -->
 
-There are a number of ways of creating an easy to view catalog of animated 3D web pages.
+There are a number of ways of creating an easy-to-view catalog of animated 3D web pages.
 
-The usual fashion is to create 2D thumbnail images of the 3D pages. Using 2D to represent 3D is an admission of some sort of failure.
+The usual manner is to create 2D thumbnail images of the 3D pages. 
+But using 2D to represent 3D is an admission of some sort of failure.
 Using 2D to represent 3D begs the question: If 3D is so good, why don't you use 3D?
 
-* Using 2D thumbnails for galleries to select 3D web page is old school
+Generally:
+* Using a 2D thumbnail in a gallery to link to a 3D web page is old school
 * Using stills to show something that moves is not the way to go. Stills won't get you anywhere. Stills are the way to stop.
 * Using things that don't interact to represent things that do interact is a bad act
 * Why make two things - the file and the icon or representation - when one should do?
@@ -69,7 +71,7 @@ Using 2D to represent 3D begs the question: If 3D is so good, why don't you use 
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
-Using the files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ) we want to do the following
+Using the files from [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ) we want to do the following:
 
 * Show that you can display animated real-time 3D in animated real-time 3D
 * Build demos with very simple JavaScript
