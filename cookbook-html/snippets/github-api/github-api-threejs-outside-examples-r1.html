@@ -79,11 +79,17 @@
 
 		if ( xhr.readyState != 4  ) { return; }
 		text = xhr.responseText;
-		var lines = text.split(/\r\n|\n/);
 
-		text = text.replace( /\<!DOC[\s\S]*projects\">/im, '' );
+
+		text = text.replace( /\<!DOC[\s\S]*projects\">[\s\S][\s\S]/im, '' );
 		text = text.replace( /\<\/div>[\s\S]*html>/im, '' );
-		info.innerText = text ;
+		text = text.replace( /<a(.*?)="/gi, '' );
+		text = text.replace( /" tar(.*?)a>/gi, '' );
+		text = text.replace( /\<!--(.*?)-->[\s\S]/gi, '' );
+		text = text.replace( /\s/gi, '' );
+
+		lines = text.split(/\r\n|\n/);
+		info.innerText = text;
 
 	}
 

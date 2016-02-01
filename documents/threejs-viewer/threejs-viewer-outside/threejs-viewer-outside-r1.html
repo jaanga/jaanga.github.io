@@ -1,0 +1,196 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Three.js Viewer Basic R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content=
+'View all the Three.js example files - a simple, minimal selector and viewer to viewing large numbers of files one at a time. 
+Obtains latest file list using GitHub API.
+View source code. 
+Current filename is highlighted.
+Support permalinks.
+' >
+<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<script>
+
+	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+
+	var urlContents = 'http://threejs.org';
+
+	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
+
+	var content, selected, fileName;
+
+	init();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a { text-decoration: none; }
+			h2 { margin: 0; }
+			iframe { height:100%; width:100%; }
+
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = 'background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; '; 
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a id=topp href="" >${ document.title }</a>
+				<a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
+			</h2>
+			<p>Basic template that can be used to view large numbers of files hosted on GitHub.</p>
+			<p id=fileCount ></p>
+			<div id=fileNames ></div>
+
+		`;
+
+		content = document.body.appendChild( document.createElement( 'iframe' ) );
+		content.style.cssText = 'border-width: 0px; height: 100%; left: 320px; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; ';
+
+		var button = document.body.appendChild( document.createElement( 'div' ) );
+		button.style.cssText = 'background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; ';
+		button.textContent = 'View source';
+		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); }
+
+		selected = button; // saves an 'if' later on
+
+		requestFileNames();
+
+	}
+
+
+	function requestFile() {
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', 'http://threejs.org', true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+	}
+
+	function callback() {
+
+		if ( xhr.readyState != 4  ) { return; }
+		text = xhr.responseText;
+
+
+		text = text.replace( /\<!DOC[\s\S]*projects\">[\s\S][\s\S]/im, '' );
+		text = text.replace( /\<\/div>[\s\S]*html>/im, '' );
+		text = text.replace( /<a(.*?)="/gi, '' );
+		text = text.replace( /" tar(.*?)a>/gi, '' );
+		text = text.replace( /\<!--(.*?)-->[\s\S]/gi, '' );
+//		text = text.replace( /\s/gi, '' );
+
+		lines = text.split(/http/);
+		info.innerText = text;
+
+	}
+
+
+	function requestFileNames() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlContents, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		menuText = '';
+		function callback() {
+
+			if ( xhr.readyState !== 4  ) { return; }
+
+			text = xhr.responseText;
+
+
+			text = text.replace( /\<!DOC[\s\S]*projects\">[\s\S][\s\S]/im, '' );
+			text = text.replace( /\<\/div>[\s\S]*html>/im, '' );
+			text = text.replace( /<a(.*?)="/gi, '' );
+			text = text.replace( /" tar(.*?)a>/gi, '' );
+			text = text.replace( /\<!--(.*?)-->[\s\S]/gi, '' );
+	//		text = text.replace( /\s/gi, '' );
+
+			files = text.split(/\r\n|\n/);
+//			info.innerText = text;
+
+
+			for ( var i = 0; i < files.length; i++ ) {
+
+				file = files[ i ].trim();
+
+				var id = file.slice( 0, -5 );
+
+				menuText += `<div><a href=#${ file } onclick=load('${ file }') >${ file }</a></div>`;
+
+			}
+
+/*
+			var response = JSON.parse( xhr.response );
+			var categories = [];
+			var files = [];
+			var text = '';
+
+			for ( var key in response ) {
+
+				var file = response[ key ].name;
+
+				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
+
+				var id = file.slice( 0, -5 );
+				files.push( id );
+				var title = id.split( '_' );
+				var category = title.shift();
+				title = title.join().replace( /,/gi, ' ' );
+
+				if ( categories.indexOf( category ) === -1 ) {
+
+					categories.push( category );
+
+					text += `<h2> ${ category } </h2>`;
+
+				}
+
+				text += `<div><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></div>`;
+
+			}
+*/
+
+			fileCount.innerHTML = files.length + ' files';
+			fileNames.innerHTML = menuText;
+
+			var fName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
+//			load( fName );
+
+		}
+
+	}
+
+
+
+
+	function load( fName ) {
+
+		document.title = fName + ' - Three.js Viewer Basic';
+
+		content.src = fName;
+
+//		selected.style.color = ``;
+//		selected = document.getElementById( 'mnu_' + fName );
+//		selected.style.color = `red`;
+
+		fileName = fName;
+
+	}
+
+</script>
+</body>
+</html>

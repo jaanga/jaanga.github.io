@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html >
+<head>
+<meta charset=utf-8 >
+<title>Three.js Viewer Gallery R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content=
+'View every Three.js example files as a scrolling gallery on a single continuous page. 
+The UI for each example is accessible.
+Views are scaled down to 25% of original size.
+Limits the number of renderers being used to 15.
+' >
+<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM,viewer,examples,single page' >
+</head>
+<body>
+<body>
+<script>
+
+	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+
+	var urlContents = 'http://threejs.org';
+
+	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
+
+	var iframeContainers = [];
+	var iframesActive = [];
+	var iframesActiveLimit = 15;
+
+	var content;
+	var selected;
+	var fileName;
+
+	init();
+	animate();
+
+	function init() {
+
+// https://medium.com/@jamesfuthey/simulating-the-creation-of-website-thumbnail-screenshots-using-iframes-7145269891db#.z2eh0zxh6
+
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; }
+
+			a { text-decoration: none; }
+			iframe { border: 1px solid green; height: 100%; width: 100%; }
+
+			.example { border: 0px solid red; display: inline-block; height: 300px; margin: 0 20px 20px 0; position: relative; overflow: hidden; width: 240px; }
+			.container { border: 0px solid red; height: 240px; width: 240px; overflow: hidden; }
+			.divIframe { border: 0px solid red; height: 960px; width: 960px; transform: scale( 0.25 ); transform-origin: 0 0; }
+
+		`;
+
+		content = document.body.appendChild( document.createElement( 'div' ) );
+		content.style.cssText = `height: 100%; left: 0; margin: auto; 
+				position: absolute; right: 0; max-width: 900px; `;
+		content.innerHTML = 
+		`
+			<div><a id=topp href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a></div> 
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
+			</h2>
+			<p>Scroll through a gallery of hundreds of WebGL files on a single web page.</p>
+			<p id=menuCount ></p>
+			<div id=menuNames ></div>
+		`;
+
+		requestFileNames();
+
+	}
+
+	function requestFileNames() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlContents, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState !== 4  ) { return; }
+
+			text = xhr.responseText;
+
+
+			text = text.replace( /\<!DOC[\s\S]*projects\">[\s\S][\s\S]/im, '' );
+			text = text.replace( /\<\/div>[\s\S]*html>[\s\S]/im, '' );
+			text = text.replace( /<a(.*?)="/gi, '' );
+			text = text.replace( /" tar(.*?)a>/gi, '' );
+			text = text.replace( /\<!--(.*?)-->[\s\S]/gi, '' );
+	//		text = text.replace( /\s/gi, '' );
+
+			files = text.split(/\r\n|\n/);
+
+			var contentText = '';
+
+			for ( var i = 0; i < files.length; i++ ) {
+
+				file = files[ i ].trim();
+
+				contentText += 
+				`
+					<div class=example >
+						<div class=container >
+							<div class=divIframe id=${ i } ></div>
+						</div>
+						<h3><a href=${ file } >${ file.substr( 7 ) }</a></h3>
+					</div>
+
+				`;
+
+			}
+
+			content.innerHTML += contentText;
+
+			iframeContainers = document.getElementsByClassName( 'divIframe' );
+
+		}
+
+	}
+
+	function updateIframe( activeContainer ) {
+
+		var iframes = document.getElementsByTagName( 'iframe' );
+
+		if ( iframes.length > iframesActiveLimit ) {
+
+			var frameTooMany = iframesActive.shift();
+			frameTooMany.innerHTML = '';
+
+		}
+
+		if ( activeContainer.innerHTML === '' ) {
+
+			activeContainer.innerHTML = `<iframe src=${ files[ activeContainer.id ] } ></iframe>`;
+			iframesActive.push( activeContainer );
+
+			fileName = activeContainer.id;
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < iframeContainers.length; i++ ) {
+
+			var iframeContainer = iframeContainers[ i ];
+
+			rect = iframeContainer.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			updateIframe( iframeContainer );
+
+		}
+
+	}
+
+</script>
+</body>
+</html>
