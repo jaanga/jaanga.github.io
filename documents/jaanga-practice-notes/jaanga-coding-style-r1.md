@@ -1,6 +1,8 @@
 Jaanga Style Guide
 ===
 
+_update 2016-02-01_
+
 ## Coding Style Guidelines
 
 The code should be as close as possible to readable English. 
@@ -12,6 +14,11 @@ Absolute URLs are recommended for items that would otherwise have issues with lo
 Everything in Jaanga is written in client-side JavaScript.
 
 In the instance of a [Three.js]( http://threejs.org ) script, the style generally follows [Mr.doob Coding Style]( https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2 ).
+
+_What the following needs, more than anything, is links to sources that justify the following statement.
+This documents should not be the ideas popping out of an individuals head, but the result of a number of long term investigations.
+In other words, this document is not anecdotal but based on clinical studies. 
+The following should a demonstration based on the [scientific method]( https://en.wikipedia.org/wiki/Scientific_method )._
 
 * Code generally follows the [Three.js examples]( http://mrdoob.github.io/three.js/examples/ ) coding style more than the source code style
 	* Descriptive, informative variable names
@@ -28,6 +35,10 @@ In the instance of a [Three.js]( http://threejs.org ) script, the style generall
 * Minimum notation or use of symbols
 	* Good: y = Math.floor( x );
 	* Not so good: y = ~~x;
+	* We do use semi-colons - it's like the period at the end of a sentence
+		* But otherwise minimize the use of punctuation because punctuation tends to slow down the reading speed
+* All lower case
+	* Even !DOCTYPE
 * Everything in one file
 	* No need to have multiple files open 
 	* No need to keep looking all over the place 
@@ -92,10 +103,26 @@ In the instance of a [Three.js]( http://threejs.org ) script, the style generall
 	* And do feel free to build a jQuery version...
 * Content, appearance and behavior that are related are kept together
 	* Every HTML file contains all its associated CSS, HTML data - as well as the JavaScript
+		* The use of external JavaScript files other than major libraries such as Three.js or Showdown is kept to a minimum
 	* No need to keep three files open. It's all in one file just in front of you
 	* This is part of techniques that help you become more accustomed to the DOM
-
-
+	* You should be able to download the single file and it runs
+		* Links to essential libraries are absolute URLs
+* Functions are still declared in old school manner
+	* We use: function name(){}
+	* We use rarely: var name = function(){}
+	* This is because most people still seem to be learning JavaScript this way
+	* When we find a good reason to switch, then we will switch
+	* Example: if the Three.js examples switch over, then we switch over
+* Functions contain most everything they need to run
+	* You should be able to copy a function to another script and it should work
+	* All little things such as var pi = Math.PI can be at the top of the function
+	* We like: var thing; thing = []; because this allows the var statement to be commented out so it becomes a global and easier to debug
+	* We like: var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+		* Yes, this is an instance of a function being declared as a variable
+		* As a variable declaration it can be placed at the top of a function add thus advertises its usage later on
+			* It's like the [gun on the mantle piece in a play]( https://en.wikipedia.org/wiki/Chekhov%27s_gun )
+		* This makes sense for one-liners only
 
 ***
 

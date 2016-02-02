@@ -19,13 +19,14 @@
 ## The Scripts
 
 
-### Column Verona
-* [column-verona-r1.html]( http://jaanga.github.io/cookbook-threejs/objects/column-verona/column-verona-r1.html )
+### [Column Verona]( http://jaanga.github.io/cookbook-threejs/objects/column-verona/column-verona-r1.html )
+
+* A modern classic column
+
+### [Qline]( http://jaanga.github.io/cookbook-threejs/objects/qline/ )
 
 
-### Qline
-
-* [Qline]( http://jaanga.github.io/cookbook-threejs/objects/qline/ )
+* What comes after the Pline (Polyline)?
 
 
 ### Slotted Sphere
