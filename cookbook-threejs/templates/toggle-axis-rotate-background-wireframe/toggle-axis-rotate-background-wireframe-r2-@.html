@@ -2,9 +2,9 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Toggle Axis Rotate Background R1</title>
+<title>Toggle Axis Rotate Background Wireframe R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='' >
+<meta name=description content='toggle display of axis, camera control auto-rotation, color gradient background and wireframe material' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
@@ -44,12 +44,13 @@
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a href=http://jaanga.github.io/ > &#x24D8; </a>
+				<a href=http://jaanga.github.io/cookbook-threejs/templates/ > &#x24D8; </a>
 			</h2>
 			<div id=info ></div>
 			<p><input type=checkbox onchange=toggleAxis(); checked > Axis</p>
-			<p><input type=checkbox onchange=toggleAutoRotate(); checked > Rotate</p>
-			<p><input type=checkbox onchange=toggleBackgroundGradient(); checked > Background</p>
+			<p><input type=checkbox onchange=toggleAutoRotate(this.checked); checked > Rotate</p>
+			<p><input type=checkbox onchange=toggleBackgroundGradient(this.checked); checked > Background</p>
+			<p><input type=checkbox onchange=toggleWireframe(mesh,this.checked); > Wireframe</p>
 
 		`;
 
@@ -80,8 +81,8 @@
 		scene.add( gridHelper );
 
 		toggleAxis();
-		toggleAutoRotate();
-		toggleBackgroundGradient();
+		toggleAutoRotate( true );
+		toggleBackgroundGradient( true );
 
 	}
 
@@ -111,21 +112,21 @@
 
 	}
 
-	function toggleAutoRotate() {
+	function toggleAutoRotate( checked ) {
 
-		controls.autoRotate = controls.autoRotate === true ? false : true ;
+		controls.autoRotate = checked ;
 
 	}
 
 
-	function toggleBackgroundGradient() {
+	function toggleBackgroundGradient( checked ) {
 
-// 2016-01-28
+// 2016-02-02
 
 		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
 		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
 
-		if ( document.body.style.backgroundImage === '' ) {
+		if ( checked ) {
 
 			document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
 
@@ -137,6 +138,11 @@
 
 	}
 
+	function toggleWireframe( obj, boole ) {
+
+		obj.material.wireframe = boole;
+
+	}
 
 	function animate() {
 
