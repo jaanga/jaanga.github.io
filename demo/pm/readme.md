@@ -11,6 +11,11 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Sage Docs Browser R1]( http://jaanga.github.io/demo/pm/sage-docs-browser/sage-docs-browser-r1.html )
 
+* Uses GitHub API to read names of all files in https://api.github.com/repositories/49542267/contents/functions and recursively through the sub-folders
+* Displays the list of all folder and file names found in left menu column
+	* Currently selected file is highlighted
+* Opens, reads and displays the contents of currently selected file
+	* View source buttons links to the source code of the current page 
 
 ## _2016-01-12_
 
