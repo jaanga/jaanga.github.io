@@ -68,6 +68,7 @@
 
 		drawHelpers();
 
+		drawSphere();
 		drawCubes();
 
 		addShadows();
@@ -134,6 +135,7 @@
 
 				child.castShadow = true
 				child.receiveShadow = true;
+//				child.material.needsUpdate = true;
 
 			}
 
@@ -149,11 +151,11 @@
 		geometry = new THREE.BoxGeometry( 100, 5, 100 );
 
 		var material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(),
-			emissive: 0xffffff * Math.random(),
-			specular: 0xffffff * Math.random(),
-			shininess: 30,
-			side: THREE.DoubleSide
+//			color: 0xffffff * Math.random(),
+//			emissive: 0xffffff * Math.random(),
+//			specular: 0xffffff * Math.random(),
+//			shininess: 30,
+//			side: THREE.DoubleSide
 		} );
 
 		mesh = new THREE.Mesh( geometry, material );
@@ -171,13 +173,17 @@
 		helper.position.set( 0, -7.5, 0 );
 		scene.add( helper );
 
+	}
 
-// Sphere
-		geometry = new THREE.SphereGeometry( 25, 50, 50 );
+
+	function drawSphere() {
+
+		var geometry = new THREE.SphereGeometry( 25, 50, 50 );
 
 //		material = new THREE.MeshNormalMaterial();
-		material = new THREE.MeshPhongMaterial( {
+		var material = new THREE.MeshPhongMaterial( {
 
+			color: 0xff0000
 //			color: 0xffffff * Math.random(),
 //			emissive: 0xffffff * Math.random(),
 //			specular: 0xffffff * Math.random(),
@@ -188,10 +194,10 @@
 //			shininess: 0.1
 
 		} );
-		mesh = new THREE.Mesh( geometry, material );
+		var mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( -50, 10, 0 );
-		mesh.castShadow = true;
-		mesh.receiveShadow = true;
+//		mesh.castShadow = true;
+//		mesh.receiveShadow = true;
 		scene.add( mesh );
 
 	}
@@ -201,22 +207,24 @@
 
 // 2016-01-27
 
-		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		var geometry = new THREE.BoxGeometry( 10, 10, 10 );
 
 		for (var i = 0; i < 50; i++) {
 
-			material = new THREE.MeshPhongMaterial( {
+			var material = new THREE.MeshPhongMaterial( {
 
+//				color: 0xff0000
 				color: 0xffffff * Math.random(),
-				emissive: 0xffffff * Math.random(),
-				opacity: Math.random(),
-				specular: 0xffffff * Math.random(),
-				shading: THREE.FlatShading,
-				shininess: 10,
-				transparent: true
+//				emissive: 0xffffff * Math.random(),
+//				opacity: Math.random(),
+//				specular: 0xffffff * Math.random(),
+//				shading: THREE.FlatShading,
+//				shininess: 10,
+//				transparent: true
+
 			} );
 
-			mesh = new THREE.Mesh( geometry, material );
+			var mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
 			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
 //			mesh.castShadow = true;
@@ -229,8 +237,6 @@
 			scene.add( helper );
 
 		}
-
-		addShadows();
 
 	}
 
