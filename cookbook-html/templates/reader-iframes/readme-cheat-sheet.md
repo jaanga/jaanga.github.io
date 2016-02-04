@@ -160,4 +160,6 @@ text text text
 # <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
 </center>
 
-
+<center title="dingbat" >
+## <a href=javascript:content.scrollTop=0; >❦</a>
+</center>

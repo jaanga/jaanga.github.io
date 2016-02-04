@@ -23,34 +23,50 @@
 
 ## Documents
 
-[Fourmilab]( #https://www.fourmilab.ch/yoursky/ )  
-[Google]( #http://google.com )  
+[Fourmilab]( #https://www.fourmilab.ch/yoursky/ ) - iframe   
+[Space Place]( #http://spaceplace.wisc.edu/ ) -iframe 
 
-[Medium]( #https://medium.com/@G___A/70-tools-no-remote-employee-should-do-without-84e42d4b6e06 )
+[Google]( ##http://google.com ) - no load   
+[Medium]( ##https://medium.com/@G___A/70-tools-no-remote-employee-should-do-without-84e42d4b6e06 )
 
-['Mr.doob\'s Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2)  
+[![]( ./Icon_External_Link.png ) Mr.doob\'s Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2)  
+
 [Does MrDoob Approve?]( #https://raw.githubusercontent.com/zz85/mrdoobapproves/gh-pages/README.md )  
+
 [Showdown Coding Style](#https://raw.githubusercontent.com/showdownjs/code-style/master/README.md)  
-[Showdown Coding Style](#../github-markdown-reader-showdown-coding-style.html)  
+
+<!-- [Showdown Coding Style](#../github-markdown-reader-showdown-coding-style.html)  -->
+
 [Google HTML/CSS Style Guide](#https://google.github.io/styleguide/htmlcssguide.xml)  
+
 [Google JavaScript Style Guide](#https://google.github.io/styleguide/javascriptguide.xml)  
-[GitHub Styleguide](https://github.com/styleguide/javascript )  
+
+[![]( ./Icon_External_Link.png ) GitHub Styleguide](https://github.com/styleguide/javascript )  
+
 [Principles of Writing Consistent, Idiomatic JavaScript](#https://raw.githubusercontent.com/rwaldron/idiomatic.js/master/readme.md)  
-[Principles of Writing Consistent, Idiomatic JavaScript](#../github-markdown-reader-rwaldron-coding-style.html)  
+
+<!--[Principles of Writing Consistent, Idiomatic JavaScript](#../github-markdown-reader-rwaldron-coding-style.html)  -->
+
 [Airbnb JavaScript Style Guide](#https://raw.githubusercontent.com/airbnb/javascript/master/README.md)  
-[Airbnb JavaScript Style Guide 2](#../github-markdown-reader-airbnb-coding-style.html)  
+
+<!-- [Airbnb JavaScript Style Guide 2](#../github-markdown-reader-airbnb-coding-style.html) --> 
+
 [Node.js Style Guide](#https://raw.githubusercontent.com/felixge/node-style-guide/master/Readme.md)  
+
 [Pragmatic Standards: JavaScript Coding Standards and Best Practices](#https://raw.githubusercontent.com/stevekwan/best-practices/master/javascript/best-practices.md)  
 
-[W3schools Style Guide](http://www.w3schools.com/js/js_conventions.asp)  
-[jQuery JavaScript Style Guide](https://contribute.jquery.org/style-guide/js/)  
-[10 Best JavaScript Style Guides Including Airbnb and Idiomatic](http://noeticforce.com/best-javascript-style-guide-for-maintainable-code )
+[![]( ./Icon_External_Link.png ) W3schools Style Guide](http://www.w3schools.com/js/js_conventions.asp)  
+[![]( ./Icon_External_Link.png ) jQuery JavaScript Style Guide](https://contribute.jquery.org/style-guide/js/)  
+[![]( ./Icon_External_Link.png ) 10 Best JavaScript Style Guides Including Airbnb and Idiomatic](http://noeticforce.com/best-javascript-style-guide-for-maintainable-code )
 
 
 Can we do this?
 
 lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
 
+<center title="dingbat" >
+## <a href=javascript:content.scrollTop=0; >❦</a>
+</center>
 `;
 
 	var converter;
@@ -78,7 +94,7 @@ lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non num
 		menu.innerHTML = converter.makeHtml( menuMarkdown );
 
 		content = document.body.appendChild( document.createElement( 'div' ) );
-		content.style.cssText = `border-width: 0px; height: 100%; left: 320px; padding: 0 5%; overflow: auto; position: absolute; top: 0; max-width: ${ window.innerWidth - 350 }px; `;
+		content.style.cssText = `border-width: 0px; height: 100%; left: 320px; margin: 0 auto; position: absolute; right: 0; top: 0; max-width: ${ window.innerWidth - 350 }px; `;
 
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'hashchange', onHashChange, false );
@@ -99,26 +115,39 @@ lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non num
 			xmlHttp.open( 'get', url, true );
 			xmlHttp.onreadystatechange = function() {
 
+				content.style.maxWidth = '800px';
+				content.style.overflow = 'auto';
 				content.innerHTML = xmlHttp.readyState === 4 ? converter.makeHtml( xmlHttp.responseText ) : '';
 
 			};
 
 			xmlHttp.send( null );
 
+		} else if ( url.substr( 0, 1 ) === '#' ) {
+
+			xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( 'get', url.substr( 1 ), true );
+			xmlHttp.onreadystatechange = function() {
+
+				content.style.maxWidth = '1100px';
+				content.style.overflow = 'hidden';
+				content.innerHTML = xmlHttp.readyState === 4 ? xmlHttp.responseText : '';
+
+			};
+
+			xmlHttp.send( null );
 
 		} else {
 
-
-			content.innerHTML = '<iframe src=' + url + ' style=width:1000px ></iframe>';
+			content.style.maxWidth = '1100px';
+			content.style.overflow = 'hidden';
+			content.innerHTML = '<iframe src=' + url + ' ></iframe>';
 
 		}
 
 		content.scrollTop = 0;
 
-
 	}
-
-
 
 	function onWindowResize() {
 
