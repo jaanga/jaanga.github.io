@@ -45,7 +45,7 @@ Support permalinks.
 				<a href="" >${ document.title }</a>
 				<a href=https://github.com/paulmasson/sagemath-docs >🛈</a>
 			</h2>
-			<p>Basic template that can be used to view large numbers of files hosted on GitHub.</p>
+			<p>Browse Sage Docs functions via an alphabetized list.</p>
 			<p id=fileCount ></p>
 			<div id=fileNames ></div>
 
@@ -90,18 +90,15 @@ Support permalinks.
 				var id = file.slice( 0, -5 );
 				files.push( id );
 				var title = id.split( '_' );
-				var category = title.shift();
+
+//				var category = title.shift();
 				title = title.join().replace( /,/gi, ' ' );
+//				if ( categories.indexOf( category ) === -1 ) {
+//					categories.push( category );
+//					text += `<h3> ${ category } </h3>`;
+//				}
 
-				if ( categories.indexOf( category ) === -1 ) {
-
-					categories.push( category );
-
-					text += `<h3> ${ category } </h3>`;
-
-				}
-
-				text += `<div><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></div>`;
+				text += `<h3><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></h3>`;
 
 			}
 
