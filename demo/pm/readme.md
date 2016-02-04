@@ -4,29 +4,33 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/pm/  ) »
 
-PM Read Me
+[PM Read Me]( ./index.html )
 ===
 
+## _2016-02-03_
 
-_2016-01-12_
+[Sage Docs Browser R1]( http://jaanga.github.io/demo/pm/sage-docs-browser/sage-docs-browser-r1.html )
+
+
+## _2016-01-12_
 
 [Sage Snooper R1]( http://jaanga.github.io/demo/pm/get-sage-names/sage-snooper-r1.html )
 
-* Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively throght the sub-folders
+* Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively through the sub-folders
 * Displays the list of all folder and file names found in left menu column
 * Opens. reads and display the contents of currently selected file
 	* Reads fies from both master and develop branch
 * Displays files using textarea
 	* Preserves new line and spacing
 	* But not a terribly good solution. Should invoke Ace editor or equivalent
-	* Would benefit from similatenous scroll
+	* Would benefit from simultaneous scroll
 
 
-2016-01-11_
+## _2016-01-11_
 
 [Get Sage Names R1]( http://jaanga.github.io/demo/pm/get-sage-names/get-sage-names-r1.html )
 
-* Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively throght the sub-folders
+* Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively through the sub-folders
 * Displays the list of all folder and file names found in left menu column
 * Opens and reads the contents of every file
 * Carries out a simple line-by line search on the contents
@@ -40,12 +44,12 @@ _2016-01-12_
 	* Needs save output to file button
 	* Tries to read folders, opens empty files, etc, etc
 
-_2016-01-10_
+## _2016-01-10_
 
 [Get Sage Function Names R2]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r2.html )
 
 * Reads both 'master' and 'develop' branches and displays results from both side-by-side
-* links to both source files in theor respective branches
+* links to both source files in there respective branches
 * Adds output with the size in bytes of each file
 * Adds listing of all the def's in a file except for 'def __init__(self)'
 * Code clean-up
@@ -53,7 +57,7 @@ _2016-01-10_
 	* Display format improvements 
 	* Could be used to compare files from any two branches
 
-_2016-01-09_
+## _2016-01-09_
 
 [Get Sage Function Names R1]( http://jaanga.github.io/demo/pm/get-sage-function-names/get-sage-function-names-r1.html )
 
@@ -62,17 +66,17 @@ _2016-01-09_
 * Gets data from master branch, but could get from develop branch
 
 
-_2015-12-30_
+## _2015-12-30_
 
 [Multiple Views R1]( http://jaanga.github.io/demo/pm/multiple-views/multiple-views-r1.html )
 
-_2015-12-13_
+## _2015-12-13_
 
 [Vista Lights URL Hash Reader R2]( http://jaanga.github.io/demo/pm/url-hash-reader-r2.html )
 
 [Vista Lights Random Image Resize R2]( http://jaanga.github.io/demo/pm/vista-lights-random-image-resize-r2.html )
 
-_2015-12-12_
+## _2015-12-12_
 
 [Vista Lights Receiver R1]( http://jaanga.github.io/demo/pm/vista-lights-receiver-r1.html )
 
