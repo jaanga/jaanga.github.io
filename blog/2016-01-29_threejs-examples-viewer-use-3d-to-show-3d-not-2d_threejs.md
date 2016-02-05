@@ -2,8 +2,8 @@
 ===
 
 
-<div style="height: 750px; transform: scale( 0.90); transform-origin: 0 0;"><iframe src=http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-gallery/threejs-viewer-gallery-r1-@.html width=900 height=800 style="border: 1px green solid; "" ></iframe></div>
-_[Three.js Examples Viewer Gallery R1]( http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-gallery/threejs-viewer-gallery-r1-@.html )_
+<div style="height: 750px; transform: scale( 0.90); transform-origin: 0 0;"><iframe src=http://jaanga.github.io/documents/threejs-viewers/threejs-viewer-gallery/ width=900 height=800 style="border: 1px green solid; "" ></iframe></div>
+_[Three.js Examples Viewer Gallery R1]( http://jaanga.github.io/documents/threejs-viewers/threejs-viewer-gallery/ )_
 
 
 Many of of you are working really hard to bring a 3D experience into the web as an everyday happening. 
@@ -68,7 +68,9 @@ _From [Three.js]( http://threejs.org/ )_
 
 ## Links
 
-[Three.js Viewers]( http://jaanga.github.io/documents/threejs-viewer/index.html )
+[Three.js Viewers]( http://jaanga.github.io/documents/threejs-viewers/index.html )
+
+[Three.js Viewers]( http://jaanga.github.io/documents/threejs-viewers-featured/index.html )
 
 [Three.js Viewers Read Me]( http://jaanga.github.io/documents/threejs-viewer/readme-reader.html )
 
