@@ -19,6 +19,9 @@ _The product assembly manuals of the future - now_
 
 ##Overview
 
+
+### [Poang Rocking Chair - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/poang-rocking/index.html )
+
 ### [Kallax Wall Bracket Basic - Demo - Full Screen - Latest]( http://jaanga.github.io/demo/mm/kallax-wall-bracket/index.html )
 
 ### [Kallax NxN Basic - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/kallax-nxn/index.html )
@@ -26,6 +29,16 @@ _The product assembly manuals of the future - now_
 ### 
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
+
+
+_2016-02-04_
+
+### [Poang Rocking Chair - Demo - Full Screen - R2 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r2.html )
+
+* Basic Geometry is OK
+* Needs better colors and textures
+* Geometry needs loosening up/randomizing
+
 
 
 _2016-01-29_
