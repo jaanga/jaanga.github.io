@@ -70,7 +70,7 @@ _From [Three.js]( http://threejs.org/ )_
 
 [Three.js Viewers]( http://jaanga.github.io/documents/threejs-viewers/index.html )
 
-[Three.js Viewers]( http://jaanga.github.io/documents/threejs-viewers-featured/index.html )
+[Three.js Viewers Featured]( http://jaanga.github.io/documents/threejs-viewers-featured/index.html )
 
 [Three.js Viewers Read Me]( http://jaanga.github.io/documents/threejs-viewer/readme-reader.html )
 
