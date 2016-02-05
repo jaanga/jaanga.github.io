@@ -39,8 +39,8 @@ for details and links to each.
 
 ### Sample Web Page / Source Code
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-basic/threejs-viewer-basic-r1-@.html width=90% height=600px ></iframe>  
-###### _Three.js Examples Viewer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewer/threejs-viewer-basic/threejs-viewer-basic-r1-@.html )
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewers/threejs-viewer-basic/threejs-viewer-basic-r1-@.html width=90% height=600px ></iframe>  
+###### _Three.js Examples Viewer - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/documents/threejs-viewers/threejs-viewer-basic/threejs-viewer-basic-r1-@.html )
 
 
 ## Concept
