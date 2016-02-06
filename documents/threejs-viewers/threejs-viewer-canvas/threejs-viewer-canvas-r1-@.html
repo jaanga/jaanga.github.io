@@ -1,148 +1,157 @@
 ﻿<!doctype html>
 <html lang=en >
-<head>
-<meta charset=utf-8 >L
-<title>Three.js Viewer Canvas R1</title>
-<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='View Three.js examples files on your elderly computer. No WebGL needed.' >
-<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM,viewer,examples,mobile' >
-</head>
-<body>
-<script>
+	<head>
+		<meta charset=utf-8 >L
+		<title>Three.js Viewer Canvas R1</title>
+		<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+		<meta name=description content=
+`
+View Three.js examples files on your elderly computer.
+No WebGL needed. Uses canvas renderer only
+Runs a slide show of all available files.
+Click 'hamburger' to hide menu.
+Run art shows on your old spare computers.
 
-	var duration = 20000;
+' >
+		<meta name=keywords content='Three.js,JavaScript,canvas,GitHub,API,FOSS,3D,STEM,viewer,examples,mobile' >
+	</head>
 
-	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
-	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
+	<body>
+		<script>
 
-	var hamburger, content, selected;
-	var files = [];
-	var fileIndex = 0;
+			var duration = 20000;
 
-	init();
+			var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+			var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
 
-	function init() {
+			var hamburger, content, selected;
+			var files = [];
+			var fileIndex = 0;
 
-		var css = document.body.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
-		`
+			init();
 
-			body { font: 12pt monospace; margin: 0; overflow: hidden; }
-			button{ border: 0px silver; background-color: silver; height: 20px; }
-			a { text-decoration: none; }
-			h2 { margin: 0; }
-			iframe { height:100%; width:100%; }
+			function init() {
 
-		`;
+				var css = document.body.appendChild( document.createElement( 'style' ) );
+				css.innerHTML =
+				`
 
-		content = document.body.appendChild( document.createElement( 'iframe' ) );
-		content.style.cssText = 'border-width: 0px; height: 100%; left: 0; overflow: hidden; position: absolute; top: 0; width: 100%; ';
+					body { font: 12pt monospace; margin: 0; overflow: hidden; }
+					button{ border: 0px silver; background-color: silver; height: 20px; }
+					a { text-decoration: none; }
+					h2 { margin: 0; }
+					iframe { height:100%; width:100%; }
 
-		hamburger = document.body.appendChild( document.createElement( 'div' ) );
-		hamburger.style.cssText = 'color: #fcc; cursor: pointer; left: 320px; position: absolute; top: 50px; transition: left 1s; ';
-		hamburger.innerHTML = `<div onclick=hamburger.style.left=hamburger.style.left==="0px"?"320px":0; >
-			<span style=font-size:24pt; >&#9776;</span></div>`;
+				`;
 
-		menu = hamburger.appendChild( document.createElement( 'div' ) );
-		menu.style.cssText = `background-color: #ccc; color: #888; height: ${ window.innerHeight }px; left: -320px; max-width: 300px; 
-				opacity: 0.95; overflow: auto; padding: 0 0 20px 20px; position: absolute; top: -50px; `;
+				content = document.body.appendChild( document.createElement( 'iframe' ) );
+				content.style.cssText = 'border-width: 0px; height: 100%; left: 0; overflow: hidden; position: absolute; top: 0; width: 100%; ';
 
-		menu.innerHTML =
-		`
+				hamburger = document.body.appendChild( document.createElement( 'div' ) );
+				hamburger.style.cssText = 'color: #fcc; cursor: pointer; left: 320px; position: absolute; top: 50px; transition: left 1s; ';
+				hamburger.innerHTML = `<div onclick=hamburger.style.left=hamburger.style.left==="0px"?"320px":0; >
+					<span style=font-size:24pt; >&#9776;</span></div>`;
 
-			<h2>
-				<a href="" > ${ document.title }</a>
-				<a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
-			</h2>
-			<p>Click 'hamburger' to go fullscreen.</p>
-			<p><button onclick=slideshow(); >slideshow</button></p>
-			<p id=fileCount ></p>
-			<div id=fileNames ></div>
+				menu = hamburger.appendChild( document.createElement( 'div' ) );
+				menu.style.cssText = `background-color: #ccc; color: #888; height: ${ window.innerHeight }px; left: -320px; max-width: 300px;
+						opacity: 0.95; overflow: auto; padding: 0 0 20px 20px; position: absolute; top: -50px; `;
 
-		`;
+				menu.innerHTML =
+				`
 
-		selected = content;  // saves an 'if' later on
+					<h2>
+						<a href="" >${ document.title }</a>
+						<a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
+					</h2>
+					<p>Run Three.js examples on very old computers. Run slide shows. Click 'hamburger' to go full screen.</p>
+					<p><button onclick=slideshow(); >Slide Show</button></p>
+					<p id=fileCount ></p>
+					<div id=fileNames ></div>
 
-		requestFileNames();
+				`;
 
-	}
+				selected = content;  // saves an 'if' later on
 
-	function slideshow() {
-
-//		duration = location.hash ? location.hash.substr( 1 ) : duration;
-
-		fileIndex = fileIndex < files.length ? fileIndex : Math.floor( Math.random() * files.length );
-
-		load( files[ fileIndex++ ] );
-
-		hamburger.style.left = '0px';
-
-		setTimeout( slideshow, duration );
-
-	}
-
-	function requestFileNames() {
-
-		var xhr = new XMLHttpRequest();
-		xhr.open( 'GET', urlContents, true );
-		xhr.onreadystatechange = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			if ( xhr.readyState !== 4  ) { return; }
-
-			var response = JSON.parse( xhr.response );
-			var categories = [];
-			var text = '';
-
-			for ( var key in response ) {
-
-				file = response[ key ].name;
-
-				if ( ( file.indexOf( 'css3d_' ) === -1 && file.indexOf( 'canvas_' ) === -1 ) || file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
-				if ( file.indexOf( 'video' ) > -1 || file.indexOf( 'youtube' ) > -1 || file.indexOf( 'deviceorientation' ) > -1  )  { continue; }
-
-				var id = file.slice( 0, -5 );
-				files.push( id );
-				var title = id.split( '_' );
-				var category = title.shift();
-				title = title.join().replace( /,/gi, ' ' );
-
-				if ( categories.indexOf( category ) === -1 ) {
-
-					categories.push( category );
-
-					text += `<h2> ${ category } </h2>`;
-
-				}
-
-				text += `<div><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></div>`;
+				requestFileNames();
 
 			}
 
-			fileCount.innerHTML = files.length + ' files';
-			fileNames.innerHTML = text;
+			function slideshow() {
 
-			var fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
-			load( fileName );
+//				duration = location.hash ? location.hash.substr( 1 ) : duration;
 
-		}
+				fileIndex = fileIndex < files.length ? fileIndex : Math.floor( Math.random() * files.length );
 
-	}
+				load( files[ fileIndex++ ] );
 
-	function load( fileName ) {
+				hamburger.style.left = '0px';
 
-		document.title = fileName + ' - Three.js Viewer Mobile';
+				setTimeout( slideshow, duration );
 
-		content.src = urlExamples + fileName + '.html';
+			}
 
-		selected.style.color = ``;
-		selected = document.getElementById( 'mnu_' + fileName );
-		selected.style.color = `red`;
+			function requestFileNames() {
 
-	}
+				var xhr = new XMLHttpRequest();
+				xhr.open( 'GET', urlContents, true );
+				xhr.onreadystatechange = callback;
+				xhr.send( null );
 
-</script>
-</body>
+				function callback() {
+
+					if ( xhr.readyState !== 4  ) { return; }
+
+					var response = JSON.parse( xhr.response );
+					var categories = [];
+					var text = '';
+
+					for ( var key in response ) {
+
+						file file = response[ key ].name;
+
+						if ( ( file.indexOf( 'css3d_' ) === -1 && file.indexOf( 'canvas_' ) === -1 ) || file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
+						if ( file.indexOf( 'video' ) > -1 || file.indexOf( 'youtube' ) > -1 || file.indexOf( 'deviceorientation' ) > -1  )  { continue; }
+
+						var id = file.slice( 0, -5 );
+						files.push( id );
+						var title = id.split( '_' );
+						var category = title.shift();
+						title = title.join().replace( /,/gi, ' ' );
+
+						if ( categories.indexOf( category ) === -1 ) {
+
+							categories.push( category );
+
+							text += `<h2> ${ category } </h2>`;
+
+						}
+
+						text += `<div><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></div>`;
+
+					}
+
+					fileCount.innerHTML = files.length + ' files';
+					fileNames.innerHTML = text;
+
+					var fileName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
+					load( fileName );
+
+				}
+
+			}
+
+			function load( fileName ) {
+
+				document.title = fileName + ' - Three.js Viewer Canvas';
+
+				content.src = urlExamples + fileName + '.html';
+
+				selected.style.color = ``;
+				selected = document.getElementById( 'mnu_' + fileName );
+				selected.style.color = `red`;
+
+			}
+
+		</script>
+	</body>
 </html>
