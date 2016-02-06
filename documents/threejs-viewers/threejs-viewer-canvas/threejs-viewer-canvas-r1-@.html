@@ -61,7 +61,7 @@ Run art shows on your old spare computers.
 
 					<h2>
 						<a href="" >${ document.title }</a>
-						<a href=http://jaanga.github.io/documents/threejs-viewer/ >🛈</a>
+						<a href=http://jaanga.github.io/documents/threejs-viewers/ >🛈</a>
 					</h2>
 					<p>Run Three.js examples on very old computers. Run slide shows. Click 'hamburger' to go full screen.</p>
 					<p><button onclick=slideshow(); >Slide Show</button></p>
@@ -107,7 +107,7 @@ Run art shows on your old spare computers.
 
 					for ( var key in response ) {
 
-						file file = response[ key ].name;
+						var file = response[ key ].name;
 
 						if ( ( file.indexOf( 'css3d_' ) === -1 && file.indexOf( 'canvas_' ) === -1 ) || file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
 						if ( file.indexOf( 'video' ) > -1 || file.indexOf( 'youtube' ) > -1 || file.indexOf( 'deviceorientation' ) > -1  )  { continue; }
