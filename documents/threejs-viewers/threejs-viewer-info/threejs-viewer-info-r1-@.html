@@ -1,0 +1,187 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Three.js Viewer info R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content=
+'View all the Three.js example files. 
+Obtains latest file list using GitHub API.
+View source code. 
+Current filename is highlighted.
+Support permalinks.
+' >
+<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<script>
+
+	var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+	var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
+	var urlCommits = 'https://api.github.com/repos/mrdoob/three.js/commits?path=examples/'
+
+	var selected, fileName;
+
+	init();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a { text-decoration: none; }
+			h2 { margin: 0; }
+			iframe { height: 600px; width:100%; }
+
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = 'background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; '; 
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a id=topp href="" >${ document.title }</a>
+				<a href=http://jaanga.github.io/documents/threejs-viewers/ >🛈</a>
+			</h2>
+			<p>Basic template that can be used to view large numbers of files hosted on GitHub.</p>
+			<p id=fileCount ></p>
+			<div id=fileNames ></div>
+
+		`;
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+
+
+//		content.style.cssText = 'border-width: 0px; height: 100%; left: 320px; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; ';
+
+		container.style.cssText = 'border-width: 0px; height: 100%; left: 0; margin: 0 auto; max-width: 800px; overflow: auto; position: absolute; right: 0; top: 0; ';
+		container.innerHTML = 
+		`
+
+			<iframe id=content ></iframe>
+			<div id=title ></div>
+			<div id=commits ></div>
+
+`;
+
+
+		var button = document.body.appendChild( document.createElement( 'div' ) );
+		button.style.cssText = 'background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; ';
+		button.textContent = 'View source';
+		button.onclick = function() { window.open( 'view-source:' + urlExamples + fileName ); }
+
+		selected = button; // saves an 'if' later on
+
+		requestFileNames();
+
+	}
+
+	function requestFileNames() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlContents, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState !== 4  ) { return; }
+
+			var response = JSON.parse( xhr.response );
+			var categories = [];
+			var files = [];
+			var text = '';
+
+			for ( var key in response ) {
+
+				var file = response[ key ].name;
+
+				if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
+
+				var id = file.slice( 0, -5 );
+				files.push( id );
+				var title = id.split( '_' );
+				var category = title.shift();
+				title = title.join().replace( /,/gi, ' ' );
+
+				if ( categories.indexOf( category ) === -1 ) {
+
+					categories.push( category );
+
+					text += `<h2> ${ category } </h2>`;
+
+				}
+
+				text += `<div><a id=mnu_${ id } href=#${ id } onclick=load('${ id }') >${ title }<a></div>`;
+
+			}
+
+			fileCount.innerHTML = files.length + ' files';
+			fileNames.innerHTML = text;
+
+			var fName = location.hash ? location.hash.substr( 1 ) : files[ Math.floor( Math.random() * files.length ) ];
+
+			load( fName );
+
+		}
+
+	}
+
+	function requestCommits( fName ) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlCommits + fName + '.html', true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState !== 4  ) { return; }
+
+			text = '<p>Commits</p>';
+			var response = JSON.parse( xhr.response );
+
+			for ( var i = 0; i < response.length; i++ ) {
+
+				commit = response[ i ];
+				text += '<p>date: ' + commit.commit.committer.date + ' author: ' + commit.commit.author.name + ' message: ' + commit.commit.message + '<p>';
+
+			}
+console.log( '', response );
+
+			commits.innerHTML = text;
+
+		}
+
+
+
+
+	}
+
+
+	function load( fName ) {
+
+		document.title = fName + ' - Three.js Viewer Basic';
+
+		content.src = urlExamples + fName + '.html';
+
+		var t = fName.split( '_' );
+		t = t.join().replace( /,/gi, ' ' );
+		title.innerHTML = '<h2>' + t + '</h2>';
+
+		selected.style.color = ``;
+		selected = document.getElementById( 'mnu_' + fName );
+		selected.style.color = `red`;
+
+		requestCommits( fName );
+
+		fileName = fName;
+
+	}
+
+</script>
+</body>
+</html>

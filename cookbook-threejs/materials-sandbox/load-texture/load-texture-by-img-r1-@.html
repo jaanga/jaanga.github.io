@@ -116,13 +116,20 @@
 		);
 
 		geometry = new THREE.SphereGeometry( 50, 50, 25 );
-		material = new THREE.MeshBasicMaterial();
+		material = new THREE.MeshNormalMaterial();
 		sphere1 = new THREE.Mesh( geometry, material );
 		sphere1.position.set( -50, 30, 0 );
 		scene.add( sphere1 );
 
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( 'http://i.imgur.com/RPv6ofy.jpg', this.callback );
+		loader.callback = function( texture ){ 
 
+			sphere1.material = new THREE.MeshBasicMaterial( { map: texture } );
 
+		}
+/*
 		image = document.createElement( 'img' );
 		image.crossOrigin = 'anonymous';
 		image.onload = function() { 
@@ -140,8 +147,9 @@
 
 //		image.src = 'http://mrdoob.github.io/three.js/examples/textures/land_ocean_ice_cloud_2048.jpg';
 		image.src = 'http://i.imgur.com/RPv6ofy.jpg';
-
+*/
 	}
+
 
 	function onWindowResize() {
 
