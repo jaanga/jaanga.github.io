@@ -58,12 +58,11 @@ Support permalinks.
 				container.innerHTML = 
 				`
 
-					<iframe id=content ></iframe>
+					<iframe id=contents ></iframe>
 					<div id=title ></div>
 					<div id=commits ></div>
 
 				`;
-
 
 				var button = document.body.appendChild( document.createElement( 'div' ) );
 				button.style.cssText = 'background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; ';
@@ -159,7 +158,7 @@ Support permalinks.
 
 				document.title = fName + ' - Three.js Viewer Basic';
 
-				content.src = urlExamples + fName + '.html';
+				contents.src = urlExamples + fName + '.html';
 
 				var t = fName.split( '_' );
 				t = t.join().replace( /,/gi, ' ' );
