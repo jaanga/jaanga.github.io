@@ -1,4 +1,7 @@
 ﻿
+	var holes = [];
+	var screws;
+	var pegs;
 
 	var objects = [];
 
@@ -428,7 +431,7 @@ console.log( 'the end' );
 	}
 
 	function tweenCamera( camera, p, ms, onComplete ) {
-
+console.log( 'cam tween', p );
 		eP = p.eP ? p.eP : TWEEN.Easing[ easings[ 0 ] ].None;
 		eR = p.eR ? p.eR : TWEEN.Easing[ easings[ 0 ] ].None;
 		ms = ms ? ms : duration;

@@ -8,15 +8,19 @@
 <meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
-
+<!--
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-<!--
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
+-->
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
--->
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/tween.min.js ></script>
+
+<script src=../js/mm-object-r3.js ></script>
+<script src=../js/tweenjs-r1.js ></script>
 <script>
 
 	chairWidth = 68;
@@ -458,20 +462,19 @@
 		lightDirectional.position.set( -size, size, size );
 
 		var d = size;
-		lightDirectional.shadowCameraLeft = -d;
-		lightDirectional.shadowCameraRight = d;
-		lightDirectional.shadowCameraTop = d;
-		lightDirectional.shadowCameraBottom = -d;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
 
-		lightDirectional.shadowCameraNear = 0;
-		lightDirectional.shadowCameraFar = 4 * size;
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 4 * size;
 
 // helps stop appearance of grid lines in objects
-		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
-		lightDirectional.shadowDarkness = 0.3; // default 0.5
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
 
-		lightDirectional.shadowMapWidth = 2048;  // default 512
-		lightDirectional.shadowMapHeight = 2048;
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
 
 		lightDirectional.castShadow = true;
 		scene.add( lightDirectional );
