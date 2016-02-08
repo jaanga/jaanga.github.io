@@ -30,10 +30,17 @@ _The product assembly manuals of the future - now_
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
+_2016-02-08_
+
+### [Poang Rocking Chair - Demo - Full Screen - R3 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r3.html )
+
+* Adds first pass at assembly tweening
+* Code clean-up
+* Three.js r75 fixes
 
 _2016-02-04_
 
-### [Poang Rocking Chair - Demo - Full Screen - R2 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r2.html )
+[Poang Rocking Chair - Demo - Full Screen - R2 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r2.html )
 
 * Basic Geometry is OK
 * Needs better colors and textures
