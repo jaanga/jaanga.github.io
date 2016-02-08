@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Light R2</title>
+<title>rStats Basic R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -11,15 +11,25 @@
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://spite.github.io/rstats/rStats.js ></script>
+<script src=http://spite.github.io/rstats/rStats.extras.js ></script>
 <script>
+// https://github.com/spite/rstats/
 
-	var stats, renderer, scene, camera, controls;
+	var renderer, scene, camera, controls;
 
+	var rS; // = new rStats();
+	var glS = new glStats(); // init at any point
+	var tS; // init after WebGLRenderer is created
+
+	var cubes = [];
 
 	init();
 	animate();
 
 	function init() {
+
+
 
 //		var geometry, material, mesh, helper;
 
@@ -40,10 +50,6 @@
 			'<div id=info ></div>' +
 		'';
 
-		stats = new Stats();
-		stats.domElement.style.cssText = 'position: absolute; right: 0; bottom: 0; z-index: 100; ';
-		document.body.appendChild( stats.domElement );
-
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
@@ -51,6 +57,29 @@
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+
+		tS = new threeStats( renderer ); // init after WebGLRenderer is created
+
+		rS = new rStats( {
+			values: {
+				frame: { caption: 'Total frame time (ms)', over: 16 },
+				fps: { caption: 'Framerate (FPS)', below: 30 },
+				calls: { caption: 'Calls (three.js)', over: 3000 },
+				raf: { caption: 'Time since last rAF (ms)' },
+				rstats: { caption: 'rStats update (ms)' }
+			},
+			groups: [
+				{ caption: 'Framerate', values: [ 'fps', 'raf' ] },
+				{ caption: 'Frame Budget', values: [ 'frame', 'texture', 'setup', 'render' ] }
+			],
+			fractions: [
+				{ base: 'frame', steps: [ 'action1', 'render' ] }
+			],
+			plugins: [
+				tS,
+				glS
+			]
+		} );
 
 		document.body.appendChild( renderer.domElement );
 
@@ -229,6 +258,7 @@
 //			mesh.castShadow = true;
 //			mesh.receiveShadow = true;
 			mesh.name = 'cube';
+			cubes.push( mesh );
 			scene.add( mesh );
 
 			helper = new THREE.EdgesHelper( mesh );
@@ -252,8 +282,32 @@
 
 		requestAnimationFrame( animate );
 //		controls.update();
-		stats.update();
+
+		for ( var i = 0; i < cubes.length; i++ ) {
+
+			cubes[ i ].rotation.z += 0.1;
+
+		}
+
 		renderer.render( scene, camera );
+
+		rS( 'frame' ).start();
+		glS.start();
+
+		rS( 'frame' ).start();
+		rS( 'rAF' ).tick();
+		rS( 'FPS' ).frame();
+		
+		rS( 'action1' ).start();
+		/* Perform action #1 */
+		rS( 'action1' ).end();
+		
+		rS( 'render' ).start();
+		/* Perform render */
+		rS( 'render' ).end();
+		
+		rS( 'frame' ).end();
+		rS().update();
 
 	}
 

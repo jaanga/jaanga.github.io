@@ -13,9 +13,9 @@
 
 	var urlTags = 'https://api.github.com/repos/mrdoob/three.js/tags?page=1&per_page=100';
 	var urlAPI = 'https://api.github.com/repos/mrdoob/three.js/contents/examples?ref=';
-	var urlRaw = 'https://rawgit.com/mrdoob/three.js/'
+	var urlRaw = 'https://rawgit.com/mrdoob/three.js/';
 
-	var content, selected, fileName;
+	var contents, selected, fileName;
 
 	init();
 
@@ -49,9 +49,9 @@
 
 		`;
 
-		content = document.body.appendChild( document.createElement( 'iframe' ) );
-		content.onload = function() { content.contentWindow.THREE.ImageUtils.crossOrigin = 'anonymous'; };
-		content.style.cssText = `border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; `;
+		contents = document.body.appendChild( document.createElement( 'iframe' ) );
+		contents.onload = function() { contents.contentWindow.THREE.ImageUtils.crossOrigin = 'anonymous'; };
+		contents.style.cssText = `border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; `;
 
 		var button = document.body.appendChild( document.createElement( 'div' ) );
 		button.style.cssText = `background-color: silver; bottom: 30px; cursor: pointer; right: 50px; padding: 10px; position: absolute; `;
@@ -169,11 +169,10 @@
 			source = source.replace( /\.\/models/gi, '' + urlRaw + selTag.value + '/examples/' + 'models' );
 
 // data comes in escaped...
-//			content.innerHTML = `<iframe id=ifr srcdoc=${ source } ></iframe>`;
+//			contents.innerHTML = `<iframe id=ifr srcdoc=${ source } ></iframe>`;
 
-			content.srcdoc = source;
+			contents.srcdoc = source;
 
-			
 		}
 
 	}

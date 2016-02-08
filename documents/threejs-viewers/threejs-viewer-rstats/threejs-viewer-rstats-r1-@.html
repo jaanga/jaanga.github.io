@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html lang=en >
+	<head>
+		<meta charset=utf-8 >
+		<title>Three.js Viewer rStats R1</title>
+		<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+		<meta name=description content=
+'View spite\'s rStats output for many Three.js example files. Very work-in-progress. Many fails.
+Obtains latest file list and number of files using GitHub API.
+Support permalinks.
+' >
+		<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,API,Git,FOSS,3D' >
+		<meta name=links content='https://github.com/spite/rstats' >
+	</head>
+	<body>
+		<script>
+
+			var urlContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+			var urlExamples = 'http://mrdoob.github.io/three.js/examples/';
+//			var urlRaw = 'http://mrdoob.github.io/three.js/examples/';
+			var urlRaw = 'https://rawgit.com/mrdoob/three.js/';
+
+			var textRstats;
+
+			var container, selected, fileName;
+
+			init();
+
+			function init() {
+
+				var css = document.head.appendChild( document.createElement( 'style' ) );
+				css.innerHTML =
+				`
+
+					body { font: 12pt monospace; margin: 0; overflow: hidden; }
+					a { text-decoration: none; }
+					h2 { margin: 0; }
+					iframe { height: 600px; width:100%; }
+
+				`;
+
+				var menu = document.body.appendChild( document.createElement( 'div' ) );
+				menu.style.cssText = 'background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 0 0 20px; position: absolute; '; 
+				menu.innerHTML =
+				`
+
+					<h2>
+						<a id=topp href="" >${ document.title }</a>
+						<a href=http://jaanga.github.io/documents/threejs-viewers/ >🛈</a>
+					</h2>
+					<p>View the date, author and message of every commit to the Three.js example files.</p>
+					<p id=fileCount ></p>
+					<div id=fileNames ></div>
+
+				`;
+
+			contents = document.body.appendChild( document.createElement( 'iframe' ) );
+			contents.onload = function() { contents.contentWindow.THREE.ImageUtils.crossOrigin = 'anonymous'; };
+			contents.style.cssText = `border-width: 0px; height: 100%; left: 320px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 320 }px; `;
+
+			textRstats = 
+			`
+
+				<script src=http:\/\/spite.github.io\/rstats\/rStats.js ><\/script>
+				<script src=http:\/\/spite.github.io\/rstats\/rStats.extras.js ><\/script>
+
+			`;
+
+			textRstats2 = 
+
+			`
+				<script>
+
+					THREE.ImageUtils.crossOrigin = 'anonymous';
+
+					THREE.TextureLoader.crossOrigin = 'anonymous';
+
+					var glS = new glStats();
+					var tS = new threeStats( renderer ); // init after WebGLRenderer is created
+
+					var rS = new rStats( {
+						values: {
+							frame: { caption: 'Total frame time (ms)', over: 16 },
+							fps: { caption: 'Framerate (FPS)', below: 30 },
+							calls: { caption: 'Calls (three.js)', over: 3000 },
+							raf: { caption: 'Time since last rAF (ms)' },
+							rstats: { caption: 'rStats update (ms)' }
+						},
+						groups: [
+							{ caption: 'Framerate', values: [ 'fps', 'raf' ] },
+							{ caption: 'Frame Budget', values: [ 'frame', 'texture', 'setup', 'render' ] }
+						],
+						fractions: [
+							{ base: 'frame', steps: [ 'action1', 'render' ] }
+						],
+						plugins: [
+							tS,
+							glS
+						]
+					} );
+
+				function renderRstats() { 
+
+					rS( 'frame' ).start();
+					rS( 'rAF' ).tick();
+					rS( 'FPS' ).frame();
+					
+					rS( 'action1' ).start();
+					/* Perform action #1 */
+					rS( 'action1' ).end();
+					
+					rS( 'render' ).start();
+					/* Perform render */
+					rS( 'render' ).end();
+					
+					rS( 'frame' ).end();
+					rS().update();
+
+
+
+					requestAnimationFrame( renderRstats ); 
+
+				}
+
+				renderRstats(); 
+
+				<\/script>
+
+			`;
+
+				requestFileNames();
+
+			}
+
+			function requestFileNames() {
+
+				var xhr = new XMLHttpRequest();
+				xhr.open( 'GET', urlContents, true );
+				xhr.onreadystatechange = callback;
+				xhr.send( null );
+
+				function callback() {
+
+					if ( xhr.readyState !== 4  ) { return; }
+
+					var response = JSON.parse( xhr.response );
+					var categories = [];
+					var files = [];
+					var text = '';
+
+					for ( var key in response ) {
+
+						var file = response[ key ].name;
+
+						if ( file.indexOf( '.html' ) === -1 || file === 'index.html' ) { continue; }
+
+						var id = file.slice( 0, -5 );
+						files.push( id );
+						var title = id.split( '_' );
+						var category = title.shift();
+						title = title.join().replace( /,/gi, ' ' );
+
+						if ( categories.indexOf( category ) === -1 ) {
+
+							categories.push( category );
+
+							text += `<h2> ${ category } </h2>`;
+
+						}
+
+						text += `<div><a id=mnu_${ id } href=#${ id } onclick=requestFile('${ id }') >${ title }<a></div>`;
+
+					}
+
+					fileCount.innerHTML = files.length + ' files';
+					fileNames.innerHTML = text;
+
+					var fName = location.hash ? location.hash.substr( 1 ) : 'webgl_loader_sea3d';
+
+					requestFile( fName );
+
+				}
+
+			}
+
+			function requestFile( fName ) {
+
+				var xhr = new XMLHttpRequest();
+				xhr.open( 'GET', urlExamples + fName + '.html', true );
+				xhr.onreadystatechange = callback;
+				xhr.send( null );
+
+				function callback() {
+
+					if ( xhr.readyState !== 4  ) { return; }
+
+					source = xhr.response;
+
+					source = source.replace( /src=\"/gi, 'src=\"' + urlRaw + 'dev' + '/examples/' );
+					source = source.replace( /src=\'/gi, 'src=\'' + urlRaw + 'dev' + '/examples/' );
+					source = source.replace( /\'textures/gi, '\'' + urlRaw + 'dev' + '/examples/' + 'textures' );
+					source = source.replace( /\"textures/gi, '\"' + urlRaw + 'dev' + '/examples/' + 'textures' );
+					source = source.replace( /\'obj/gi, '\'' + urlRaw + 'dev' + '/examples/' + 'obj' );
+					source = source.replace( /\"obj/gi, '\"' + urlRaw + 'dev' + '/examples/' + 'obj' );
+					source = source.replace( /\'models/gi, '\'' + urlRaw + 'dev' + '/examples/' + 'models' );
+					source = source.replace( /\"models/gi, '\"' + urlRaw + 'dev' + '/examples/' + 'models' );
+					source = source.replace( /\.\/models/gi, '' + urlRaw + 'dev' + '/examples/' + 'models' );
+
+					source = source.replace( /<body>/gi, '<body>' + textRstats );
+
+					source = source.replace( /<\/body>/gi, textRstats2 + '<\/body>' );
+
+					contents.srcdoc = source;
+
+				}
+
+			}
+
+		</script>
+	</body>
+</html>

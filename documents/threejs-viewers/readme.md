@@ -1,5 +1,5 @@
 <span id=topp style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/documents/threejs-examples-viewer/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-examples-viewer/'; type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-viewers/'; type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 
 Three.js Examples Read Me
@@ -55,6 +55,18 @@ Each pattern describes a problem which occurs over and over again in our environ
 patterns are descriptions of common problems and proposal for the solutions that can be used repeatedly every time the problem is encountered and producing an different outcome.
 
 -->
+
+There are a good number of proprietary and complex 3D files viewers, including
+
+* Aurodesk A360
+* Clara.io
+* GitHub STL viewer
+* 3D Warehouse
+* Verold
+* http://www.viewstl.com/
+
+There are not many example of simple open source file viewers
+
 
 There are a number of ways of creating an easy-to-view catalog of animated 3D web pages.
 
