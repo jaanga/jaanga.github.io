@@ -76,7 +76,7 @@
 	function requestThreejsFileNames() {
 
 		topics = [ [], [], [], [], [], [], [], [], [], [], [] ];
-		var topicOrder = [ 'webgl', 'webgl / advanced', 'vr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
+		var topicOrder = [ 'webgl', 'webgl / advanced', 'webvr', 'css3d', 'css3d stereo', 'misc', 'canvas', 'raytracing', 'software', 'svg' ];
 
 		var xhr = new THREE.XHRLoader();
 		xhr.load( urlContents, onLoad ) ;
@@ -102,9 +102,17 @@
 				if ( file.indexOf( 'webgl_buffergeometry' ) > -1 || file.indexOf( 'webgl_custom' ) > -1 ) { index = 1; }
 				if ( file.indexOf( 'css3dstereo' ) > -1 ) { index = 4; }
 
-				topics[ index ].push( id );
+				if ( topics[ index ] ) {
 
+					topics[ index ].push( id );
+
+				} else {
+
+					console.log ( 'error topcs', index );
+
+				}
 			}
+
 
 			var text = '';
 
