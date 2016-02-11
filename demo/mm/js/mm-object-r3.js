@@ -596,6 +596,8 @@
 
 	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
+// 2016-02-11
+
 		var radiusInside = rIn ? rIn : 10;
 		var radiusOutside = rOut ? rOut : 15;
 
@@ -606,7 +608,7 @@
 		var pitch = pit ? pit : 15;
 		var pitchDelta = 0.5 * pitch / segments;
 
-		var angleDelta = pi / segments;
+		var angleDelta = Math.PI / segments;
 
 		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
 		vertices = geometry.vertices;
@@ -617,14 +619,14 @@
 
 			if ( v.x < 0 ) {
 
-				v.x = radiusInside * cos( angleDelta * i );
-				v.y = radiusInside * sin( angleDelta * i );
+				v.x = radiusInside * Math.cos( angleDelta * i );
+				v.y = radiusInside * Math.sin( angleDelta * i );
 				v.z = pitchDelta * i;
 
 			} else {
 
-				v.x = radiusOutside * cos( angleDelta * i );
-				v.y = radiusOutside * sin( angleDelta * i );
+				v.x = radiusOutside * Math.cos( angleDelta * i );
+				v.y = radiusOutside * Math.sin( angleDelta * i );
 				v.z = pitchDelta * i;
 
 			}
