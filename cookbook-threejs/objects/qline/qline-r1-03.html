@@ -296,11 +296,7 @@ console.log( '', path );
 
 		var points1 = offset( points, 0.5 * width );
 		var points2 = offset( points, -0.5 * width );
-		var points3 = offset( points, -0.5 * width, 10 );
-		var points4 = offset( points, 0.5 * width, 10 );
-		var points5 = offset( points, 0.5 * width );
-
-		geometry = new THREE.PlaneGeometry( 10, 10, 4, points.length - 1 );
+		geometry = new THREE.PlaneGeometry( 10, 10, 1, points.length - 1 );
 //		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
 		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material );
@@ -308,11 +304,8 @@ console.log( '', path );
 
 		for ( var i = 0, j = 0; i < points.length; i++ ) {
 
-			mesh.geometry.vertices[ j++ ] = points1[ i ];
 			mesh.geometry.vertices[ j++ ] = points2[ i ];
-			mesh.geometry.vertices[ j++ ] = points3[ i ];
-			mesh.geometry.vertices[ j++ ] = points4[ i ];
-			mesh.geometry.vertices[ j++ ] = points5[ i ];
+			mesh.geometry.vertices[ j++ ] = points1[ i ];
 
 		}
 
@@ -327,9 +320,7 @@ console.log( '', path );
 	}
 
 
-	function offset( points, offsetX, offsetY ) {
-
-		var offsetY = offsetY ? offsetY : 0;
+	function offset( points, offset ) {
 
 		var geometry, material, mesh;
 		var pt1, pt2, offsetPt1, offsetPt2, vector, angle;
@@ -348,8 +339,8 @@ console.log( '', path );
 			vector = pt2.clone().sub( pt1 );
 			angle = Math.atan2( vector.z, vector.x );
 
-			offsetPt1 = v( pt1.x + offsetX * Math.cos( angle - pi05 ), 0, pt1.z - offsetX * Math.sin( angle + pi05 ) );
-			offsetPt2 = v( pt2.x + offsetX * Math.cos( angle - pi05 ), 0, pt2.z - offsetX * Math.sin( angle + pi05 ) );
+			offsetPt1 = v( pt1.x + offset * Math.cos( angle - pi05 ), 0, pt1.z - offset * Math.sin( angle + pi05 ) );
+			offsetPt2 = v( pt2.x + offset * Math.cos( angle - pi05 ), 0, pt2.z - offset * Math.sin( angle + pi05 ) );
 
 			line = new THREE.Line3( offsetPt1, offsetPt2 );
 			lines.push( line );
@@ -380,7 +371,7 @@ console.log( '', path );
 
 		}
 
-		vertices = [ v( pt1.x, offsetY, pt1.z ) ];
+		vertices = [ pt1 ];
 
 		for ( var i = 0; i < lines.length; i++ ) {
 
@@ -394,7 +385,7 @@ console.log( '', path );
 
 			}
 
-			vertices.push( v( pt.x, offsetY, pt.z ) );
+			vertices.push( pt );
 
 		}
 

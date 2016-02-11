@@ -7,7 +7,7 @@
 </head>
 <body>
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script>
 	var info, stats, renderer, scene, camera, controls;
@@ -23,7 +23,7 @@
 		info = document.body.appendChild( document.createElement( 'div' ) );
 
 		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
-		info.innerHTML = '<h1>' + document.title + '</h1>' +
+		info.innerHTML = '<h1><a href="" >' + document.title + '</a></h1>' +
 			'<div id=msg></div>';
 
 		stats = new Stats();
@@ -37,7 +37,7 @@
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
 		camera.position.set( 100, 100, 100 );
-		controls = new THREE.TrackballControls( camera, renderer.domElement );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 // axes
 		scene.add( new THREE.ArrowHelper( v(1, 0, 0), v(0, 0, 0), 30, 0xcc0000) );
@@ -65,6 +65,8 @@
 		scene.add( mesh );
 
 //
+
+var radius = 50;
 		geometry = new THREE.SphereGeometry( 50, 30, 20 );
 
 		geometry.computeBoundingBox();
@@ -75,6 +77,8 @@
 		// faces are indexed using characters
 //console.log( yRange );
 
+
+/*
 		for ( var i = 0; i < geometry.vertices.length; i++ ) {
 			point = geometry.vertices[ i ];
 			color = new THREE.Color( 0x0000ff );
@@ -83,6 +87,9 @@
 		}
 
 		var faceIndices = [ 'a', 'b', 'c' ];
+
+
+
 		for ( var i = 0; i < geometry.faces.length; i++ ) {
 			face = geometry.faces[ i ];
 			//numberOfSides = ( face instanceof THREE.Face3 ) ? 3 : 4;
@@ -91,11 +98,45 @@
 				face.vertexColors[ j ] = geometry.colors[ vertexIndex ];
 			}
 		}
+*/
+		var faceIndices = [ 'a', 'b', 'c' ];
 
-		var wireTexture = new THREE.ImageUtils.loadTexture( '../../textures/square.png' );
+				for ( var i = 0; i < geometry.faces.length; i ++ ) {
+
+					f  = geometry.faces[ i ];
+
+					for( var j = 0; j < 3; j++ ) {
+
+						vertexIndex = f[ faceIndices[ j ] ];
+
+						p = geometry.vertices[ vertexIndex ];
+
+						color = new THREE.Color( 0xffffff );
+						color.setHSL( ( p.y / radius + 1 ) / 2, 1.0, 0.5 );
+
+						f.vertexColors[ j ] = color;
+
+						color = new THREE.Color( 0xffffff );
+						color.setHSL( 0.0, ( p.y / radius + 1 ) / 2, 0.5 );
+
+//						f.vertexColors[ j ] = color;
+
+						color = new THREE.Color( 0xffffff );
+						color.setHSL( 0.125 * vertexIndex/geometry.vertices.length, 1.0, 0.5 );
+
+//						f.vertexColors[ j ] = color;
+
+
+					}
+
+				}
+
+//THREE.ImageUtils.crossOrigin = 'anonymous';
+
+		var wireTexture = new THREE.ImageUtils.loadTexture( 'square-outline.png' );
 		wireTexture.wrapS = wireTexture.wrapT = THREE.RepeatWrapping; 
 		wireTexture.repeat.set( 60, 40 );
-		material = new THREE.MeshBasicMaterial( { ambient: 0xff0000, map: wireTexture, vertexColors: THREE.VertexColors } );
+		material = new THREE.MeshBasicMaterial( { map: wireTexture, vertexColors: THREE.VertexColors } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );

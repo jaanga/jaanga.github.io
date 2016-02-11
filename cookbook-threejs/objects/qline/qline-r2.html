@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html lang=en >
 <head>
-<title>Qline R1.html</title>
+<title>Qline R2 </title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
@@ -18,9 +18,25 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
+// see all mm/js/qline
 
 	var pointCount = 5;
 	var width = 5;
+	var height = 8;
+
+	var pi = Math.PI;
+	var pi05 = 0.5 * pi;
+	var pi2 = 2 * pi;
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y , z ); };
+	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+	var sections = [
+
+		[ v2( width, height ), v2( width, -height ), v2( -width, -height ), v2( -width, height ), v2( width, height ) ]
+
+	];
+
+	var section = sections[ 0 ];
 
 	var stats, renderer, scene, camera, controls;
 
@@ -51,12 +67,17 @@
 				 <a href=http://jaanga.github.io/cookbook-threejs/objects/ >🛈</a>
 			</h2>
 
+			<p><input type=radio onchange=section=sections[0]; name="radSections" id=radBox  checked >Box</p>
+			<p><input type=radio onchange=section=sections[1]; name="radSections" id=radStar >Star</p>
+			<p><input type=radio onchange=section=sections[2]; name="radSections" id=radCircle >Circle</p>
 			<p><button onclick=updateQline2Square(); >Square Points Qline</button></p>
 			<p><button onclick=updateQline2Path(); >Path Points Qline</button></p>
 			<p><button onclick=updateQline2PathSpline(inpPoints.valueAsNumber); >Path Points Spline Qline</button></p>
 			<p><button onclick=updateQline2Random(inpPoints.valueAsNumber); >Random Points Qline</button></p>
 			<p><button onclick=updateQline2RegularPolygon(inpPoints.valueAsNumber,35); >Regular Polygon Qline</button></p>
 			<p><button onclick=updateQline2IrregularPolygon(inpPoints.valueAsNumber,35); >Irregular Polygon Qline</button></p>
+
+			<p><button onclick=updateQline2HexKey(); >Hex Key</button></</p>
 			<p>Points: <input type=range id=inpPoints max=50 min=3 step=1 value=5 oninput=out.value=inpPoints.value; title="3 to 100: OK" > <output id=out >${ pointCount}</output></p>
 			<p><input type=checkbox id=inpWire onchange=toggleWireframe(scene.getObjectByName('qmesh'),this.checked); > wireframe</p>
 			<div id=info ></div>
@@ -104,46 +125,56 @@
 		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
+
+		var pts = [], numPts = 8;
+
+		for ( var i = 0; i < numPts * 2 + 1; i ++ ) {
+
+			var l = i % 2 == 1 ? 10 : 20;
+
+			var a = i / numPts * Math.PI;
+
+			pts.push( new THREE.Vector2 ( Math.cos( a ) * l, Math.sin( a ) * l ) );
+
+		}
+
+		sections.push( pts );
+
+		var pts = [], numPts = 12;
+
+		for ( var i = 0; i <= numPts; i ++ ) {
+
+			var a = i / numPts * 2 * Math.PI;
+
+			pts.push( new THREE.Vector2 ( Math.cos( a ) * 5, Math.sin( a ) * 5) );
+
+		}
+
+		sections.push( pts );
+
 //		updateQline2Square();
 //		updateQline2Path();
 //		updateQline2Random();
-		updateQline2RegularPolygon();
+//		updateQline2RegularPolygon();
+		updateQline2HexKey();
 
 	}
 
-	function drawQlineFromPoints( points ) {
 
-		var qline, mesh;
-
-		qline = scene.getObjectByName( 'qline' );
-
-		scene.remove( qline );
-
-		qline = new THREE.Object3D();
-		qline.name = 'qline';
-
-		scene.add( qline );
-
-		mesh = createQlineMesh( points, width);
-
-		qline.add( mesh );
-
-		inpWire.checked = false;
-
-	}
 
 	function updateQline2Square() {
 
 		var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 		var points;
 
-		points = [ v( 30, 0, 30 ), v( 30, 0, -30 ), v( -30, 0, -30 ), v( -30, 0, 30 ), v( 30, 0, 30 ) ];
+		points = [ v( 30, 0, 30 ), v( 30, 0, -30 ), v( -30, 20, -30 ), v( -30, 0, 30 ), v( 30, 0, 30 ) ];
 
-		drawQlineFromPoints( points );
+		drawQlineFromPoints( section, points );
 
 	}
 
 	function updateQline2Path() {
+
 
 		var path;
 		var pts2D, points;
@@ -172,7 +203,7 @@
 
 		}
 
-		drawQlineFromPoints( points );
+		drawQlineFromPoints( section, points );
 
 	}
 
@@ -180,6 +211,7 @@
 
 		count = count ? count : 5;
 		spread = spread ? spread : 100;
+
 
 //		var path;
 //		var pts2D, points;
@@ -213,7 +245,7 @@ console.log( '', path );
 
 		}
 
-		drawQlineFromPoints( points );
+		drawQlineFromPoints( section, points );
 
 	}
 
@@ -233,7 +265,7 @@ console.log( '', path );
 
 		}
 
-		drawQlineFromPoints( points );
+		drawQlineFromPoints( section, points );
 
 	}
 
@@ -256,7 +288,7 @@ console.log( '', path );
 
 		}
 
-		drawQlineFromPoints( points );
+		drawQlineFromPoints( section, points );
 
 	}
 
@@ -267,10 +299,6 @@ console.log( '', path );
 		count = count ? count : 5 ;
 
 		var points;
-
-		var pi = Math.PI;
-		var pi2 = 2 * pi;
-		var v = function( x, y, z ){ return new THREE.Vector3( x, y , z ); };
 
 		points = [];
 
@@ -285,56 +313,132 @@ console.log( '', path );
 
 		points.push( v( radius * Math.cos( 0 ), 0,  radius * Math.sin( 0 ) ) );
 
-		drawQlineFromPoints( points );
+		drawQlineFromPoints( section, points );
 
 	}
 
+	function updateQline2HexKey( ) {
 
-	function createQlineMesh( points, width ) {
+		section = sections[ 2 ];
+		var segments = 6
+		var points = [ v( 0, 0, 0 ) ];
+		var angle = pi05 / segments;
 
-		var geometry, material, mesh;
+		for ( var i = 0; i <= 6; i++ ) {
 
-		var points1 = offset( points, 0.5 * width );
-		var points2 = offset( points, -0.5 * width );
-		var points3 = offset( points, -0.5 * width, 10 );
-		var points4 = offset( points, 0.5 * width, 10 );
-		var points5 = offset( points, 0.5 * width );
+			points.push( v( -5 * Math.cos( i * angle ) + 5, 0, 25 + 5 * Math.sin( i * angle ) ) );
 
-		geometry = new THREE.PlaneGeometry( 10, 10, 4, points.length - 1 );
+		}
+
+		for ( var i = 0; i <= 6; i++ ) {
+
+			points.push( v( 5 * Math.cos( i * angle - 1.57 ) + 55, 0, 35 + 5 * Math.sin( i * angle - 1.57 ) ) );
+
+		}
+
+		points.push( v( 60, 0, 70 ) );
+
+		drawQlineFromPoints( section, points );
+
+
+		qmesh = scene.getObjectByName( 'qmesh' );
+
+// CylinderGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded )
+
+		geometry = new THREE.CylinderGeometry( width, width, 10, 6, 1 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), shading: 1, side: 2, wireframe: false } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = -5;
+		qmesh.add( mesh );
+
+		geometry = new THREE.CylinderGeometry( width, width, 10, 6, 1 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), shading: 1, side: 2, wireframe: false } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 60, 0, 75 );
+		qmesh.add( mesh );
+
+
+	}
+
+/////////////////
+
+	function drawQlineFromPoints( section, path ) {
+
+// 2016-02-10
+
+		var qline, mesh;
+
+		qline = scene.getObjectByName( 'qline' );
+
+		scene.remove( qline );
+
+		qline = new THREE.Object3D();
+
+		mesh = createQlineMesh( qline, section, path );
+		qline.name = 'qline';
+		qline.add( mesh );
+
+//		edge = new THREE.EdgesHelper( mesh );
+//		scene.add( edge );
+
+		scene.add( qline );
+
+		inpWire.checked = false;
+
+	}
+
+	function createQlineMesh( obj, section, path ) {
+
+// 2016-02-10
+
+		var vertices, geometry, material, mesh;
+
+		vertices = [];
+		geometry = new THREE.PlaneGeometry( 10, 10, section.length - 1, path.length - 1 );
 //		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
 		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'qmesh';
 
-		for ( var i = 0, j = 0; i < points.length; i++ ) {
+		for ( var i = 0; i < section.length; i++ ) {
 
-			mesh.geometry.vertices[ j++ ] = points1[ i ];
-			mesh.geometry.vertices[ j++ ] = points2[ i ];
-			mesh.geometry.vertices[ j++ ] = points3[ i ];
-			mesh.geometry.vertices[ j++ ] = points4[ i ];
-			mesh.geometry.vertices[ j++ ] = points5[ i ];
+			vertices.push( offset ( obj, path, section[ i ].x, section[ i ].y ) );
+
+		};
+
+		for ( var i = 0, j = 0; i < path.length; i++ ) {
+
+			for ( var k = 0; k < section.length; k++ ) {
+
+				mesh.geometry.vertices[ j++ ] = vertices[ k ][ i ];
+
+			}
 
 		}
 
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 
-		mesh.geometry.verticesNeedUpdate = true;
-		mesh.geometry.normalsNeedUpdate = true;
+//		mesh.geometry.verticesNeedUpdate = true;
+//		mesh.geometry.normalsNeedUpdate = true;
 
 		return mesh;
 
 	}
 
 
-	function offset( points, offsetX, offsetY ) {
+	function offset( obj, points, offsetX, offsetY ) {
+
+// 2016-02-10
 
 		var offsetY = offsetY ? offsetY : 0;
-
 		var geometry, material, mesh;
 		var pt1, pt2, offsetPt1, offsetPt2, vector, angle;
 		var line, lines, vertices;
-
 		var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 		var pi05 = 0.5 * Math.PI;
 
@@ -354,16 +458,14 @@ console.log( '', path );
 			line = new THREE.Line3( offsetPt1, offsetPt2 );
 			lines.push( line );
 
-// debug
-			var qline;
+/* debug
 			geometry = new THREE.Geometry();
 			geometry.vertices = [ offsetPt1, offsetPt2 ];
 			material = new THREE.LineBasicMaterial( { color: 'magenta' } );
-			line = new THREE.Line( geometry, material );
+			var line = new THREE.Line( geometry, material );
 			line.position.y = -5;
-			qline = scene.getObjectByName( 'qline' );
-			qline.add( line );
-//
+			obj.add( line );
+*/
 
 		}
 
@@ -398,13 +500,12 @@ console.log( '', path );
 
 		}
 
-//
+// debug
 		geometry = new THREE.Geometry();
 		geometry.vertices = vertices;
 		material = new THREE.LineBasicMaterial( { color: 'yellow' } );
 		line = new THREE.Line( geometry, material );
-		qline = scene.getObjectByName( 'qline' );
-		qline.add( line );
+		obj.add( line );
 //
 
 		return vertices;
@@ -413,6 +514,7 @@ console.log( '', path );
 
 	function intersectionTwoLines2( line1, line2 ) {
 
+// 2016-02-10
 // Thanks to http://jsfiddle.net/justin_c_rounds/Gd2S2/ && http://jsfiddle.net/user/justin_c_rounds/fiddles/
 
 		var ptA = line1.start;
@@ -432,6 +534,8 @@ console.log( '', path );
 		return v( x, 0, z );
 
 	}
+
+
 
 	function toggleWireframe( obj, boole ) {
 

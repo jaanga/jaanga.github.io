@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Poang Rocker R3.2</title>
+<title>Poang Rocker R3.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Not the Poang Rocking chair - but looks like it' >
 <meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -21,7 +21,6 @@
 
 <script src=../js/mm-object-r3.js ></script>
 <script src=../js/tweenjs-r1.js ></script>
-<script src =../js/qline-r1.js ></script>
 <script>
 
 	var chairWidth = 68;
@@ -103,22 +102,12 @@
 
 		scene = new THREE.Scene();
 
-		drawHelpers();  // mm-object-rX.js
+		drawHelpers();
 
 		drawPoangRocker();
-
 		addLights( 200 );
 
 		addShadows();
-
-		hexKey = draw_hexKey_100001();
-
-		hexKey.userData.places.push( { pX: 0, pY: 30, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-
-		objects.push( hexKey );
-		scene.add( hexKey );
 
 	}
 

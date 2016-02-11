@@ -732,6 +732,70 @@
 
 	}
 
+
+	function draw_hexKey_100001() {
+
+console.log( 'hk' );
+
+		var section = QL.sectionCircle( 2 );
+
+		var radiusSection = 2;
+		var radiusPath = 5;
+		var lengthHex = 6;
+		var lengthShort = 15;
+		var lengthLong = 60;
+		var segments = 6;
+
+		var points = [ v( 0, 0, 10 ) ];
+
+		var angle = pi05 / segments;
+
+		for ( var i = 0; i <= 6; i++ ) {
+
+			points.push( v( -radiusPath * Math.cos( i * angle ) + radiusPath, 0, lengthHex + lengthShort + radiusPath * Math.sin( i * angle ) ) );
+
+		}
+
+		for ( var i = 0; i <= 6; i++ ) {
+
+			points.push( v( radiusPath * Math.cos( i * angle - 1.57 ) + lengthLong + radiusPath, 0, lengthHex + lengthShort + 2 * radiusPath + radiusPath * Math.sin( i * angle - 1.57 ) ) );
+
+		}
+
+		points.push( v( lengthLong + 2 * radiusPath, 0, lengthHex + 2 * lengthShort + 2 * radiusPath ) );
+
+
+		material = new THREE.MeshStandardMaterial( { color: 0xaaaaaa, emissive: 0x000000, side: 2, wireframe: false } );
+
+		qmesh = QL.drawQlineFromPoints( section, points );
+		qmesh.material = material;
+
+
+		geometry = new THREE.CylinderGeometry( radiusSection, radiusSection, 10, 6, 1 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		material = material.clone();
+		material.shading = 1
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = 5;
+		qmesh.add( mesh );
+
+		geometry = new THREE.CylinderGeometry( radiusSection, radiusSection, lengthHex, 6, 1 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( lengthLong + 2 * radiusPath, 0, 1.5 * lengthHex + 2 * lengthShort + 2 * radiusPath );
+		qmesh.add( mesh );
+
+		qmesh.name = 'hexKey100001';
+		qmesh.userData.places = [];
+
+
+		return qmesh;
+
+	}
+
 	function draw_screwdriver() {
 
 		var radiusHandle = 5;

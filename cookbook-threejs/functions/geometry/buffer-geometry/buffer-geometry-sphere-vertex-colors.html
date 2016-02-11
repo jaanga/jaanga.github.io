@@ -84,7 +84,26 @@
 
 // assets
 		geometry = new THREE.SphereBufferGeometry( 50, 50, 25 );
-		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshBasicMaterial( { color: 0xcccccc, vertexColors: THREE.VertexColors } );
+
+		var colors = [];
+		var color = new THREE.Color();
+		var arr = geometry.attributes.position.array;
+
+		for ( var i = 0; i < arr.length; i += 3 ) {
+
+			var ht = arr[ 1 + i ];
+
+			color.setHSL( ( ht / 50 + 1 ) / 2, 1.0, 0.5 );
+
+			colors[ i ] = color.r;
+			colors[ i + 1 ] = color.g;
+			colors[ i + 2 ] = color.b;
+
+		}
+
+		geometry.addAttribute( 'color', new THREE.BufferAttribute( new Float32Array( colors ), 3 ) );
+
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
