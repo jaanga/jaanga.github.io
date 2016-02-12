@@ -403,7 +403,7 @@
 		var length = 10;
 		var length05 = 0.5 * length;
 		var lengthShaft = 0.3 * length;
-
+		
 		var pitch = radiusScrew;
 		var segments = 12;
 
@@ -414,16 +414,16 @@
 
 // head
 
-			v2( radiusScrew, length05 ),
-			v2( radiusScrew + delta, length05 ),
-			v2( radiusScrew, length05 - delta ),
+			v( radiusScrew, 0, length05 ),
+			v( radiusScrew + delta, 0, length05 ),
+			v( radiusScrew, 0, length05 - delta),
 
 // body and tip
-			v2( radiusScrew, lengthShaft ),
-			v2( radiusScrew05, lengthShaft ),
+			v( radiusScrew, 0, lengthShaft ),
+			v( radiusScrew05, 0, lengthShaft ),
 
-			v2( radiusScrew05, -lengthShaft ),
-			v2( 0, -lengthShaft - delta )
+			v( radiusScrew05, 0, -lengthShaft ),
+			v( 0, 0, -lengthShaft - delta )
 
 		];
 
@@ -432,10 +432,9 @@
 // drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
 		var geo2 = build_spiralAlongZ( radiusScrew05, radiusScrew, segments, length05 / pitch, pitch );
-		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
-		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 2.5, 0 ) );
-
 		geometry.merge( geo2 );
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( pi_05 ) );
 
 		var mesh = new THREE.Mesh( geometry, material );
 
@@ -476,12 +475,12 @@
 		var points = [
 
 // head
-			v2( radiusScrew05 + delta, height05 + delta ),
-			v2( radiusScrew05, height05 ),
+			v( radiusScrew05 + delta, 0, height05 + delta ),
+			v( radiusScrew05, 0, height05 ),
 
 // body and tip
-			v2( radiusScrew05, -height05 ),
-			v2( 0, -height05 - delta )
+			v( radiusScrew05, 0, -height05 ),
+			v( 0, 0, -height05 - delta )
 
 		];
 
@@ -549,6 +548,49 @@
 
 		}
 
+		function xxxdrawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+			var radiusInside = rIn ? rIn : 10;
+			var radiusOutside = rOut ? rOut : 15;
+
+			var segments = seg ? seg : 36;
+			var turns = tur ? tur : 7;
+			var segementsTotal = turns * segments;
+
+			var pitch = pit ? pit : 15;
+			var pitchDelta = 0.5 * pitch / segments;
+
+			var angleDelta = pi / segments;
+
+			var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
+			vertices = geometry.vertices;
+
+			for ( var i = 0; i < vertices.length; i++ ) {
+
+				var v = vertices[ i ];
+
+				if ( v.x < 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * i );
+					v.y = radiusInside * sin( angleDelta * i );
+					v.z = pitchDelta * i;
+
+				} else {
+
+					v.x = radiusOutside * cos( angleDelta * i );
+					v.y = radiusOutside * sin( angleDelta * i );
+					v.z = pitchDelta * i;
+
+				}
+
+			}
+
+			geometry.center();
+
+			return geometry;
+
+		}
+
 	}
 
 	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
@@ -590,7 +632,7 @@
 
 		}
 
-//		geometry.center();
+		geometry.center();
 
 		return geometry;
 
@@ -865,7 +907,7 @@ console.log( 'hk' );
 		for ( var i = 0; i < placards.length; i++ ) {
 
 			placards[ i ].visible = !placards[ i ].visible;
-
+ 
 		}
 
 	}
@@ -1009,7 +1051,7 @@ console.log( 'hk' );
 
 				}
 
-				if ( materialCaseColor === 0xf8f8f8 ) {
+				if ( materialCaseColor === 0xf8f8f8 ) { 
 
 					var t = buildTextureNoise();
 
@@ -1019,11 +1061,11 @@ console.log( 'hk' );
 
 				}
 
-				child.material = new THREE.MeshPhongMaterial( {
-					color: materialCaseColor,
+				child.material = new THREE.MeshPhongMaterial( { 
+					color: materialCaseColor, 
 					bumpMap: t,
 					bumpScale:1,
-					name: 'materialCase'
+					name: 'materialCase' 
 				} );
 
 				child.material.needsUpdate = true;
