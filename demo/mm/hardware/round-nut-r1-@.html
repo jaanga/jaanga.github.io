@@ -1,0 +1,243 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Template Three.js Basic R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Similar to part 100514' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+// http://www.ikea.com/us/en/assembly_instructions/poang-rocking-chair-frame__AA-370711-7_pub.pdf
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/demo/mm/ >❦</a>
+			</h2>
+			<div id=info ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, 100, -100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -51, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -50, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		createRoundNut();
+
+	}
+
+	function createRoundNut() {
+		var shape;
+		var geometry, material, mesh;
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		radius = 10;
+		radiusHole = 5;
+		depthSlot = 5;
+		depthBody = 10;
+
+		var y = 2;
+
+		sine = y / radius;
+		angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
+
+		shape = new THREE.Shape();
+
+		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
+		shape.lineTo( -x, y );
+
+// choose one
+		geometry = shape.extrude( { amount: depthSlot, bevelEnabled: false, curveSegments: 10 } );
+
+		geometry2 = geometry.clone();
+		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry2 );
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
+
+		geometry3 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
+		geometry.merge( geometry3 );
+
+		y = radiusHole;
+		sine = y / radius;
+		angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
+		shape.lineTo( -x, y );
+
+		geometry4 = shape.extrude( { amount: 2 * radiusHole, bevelEnabled: false, curveSegments: 5 } );
+		geometry4.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody ) );
+		geometry.merge( geometry4 );
+
+		geometry5 = geometry4.clone();
+		geometry5.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry5 );
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
+
+		geometry6 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry6.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + 2 * radiusHole ) );
+		geometry.merge( geometry6 );
+
+		geometry7 = build_spiralAlongZ( 2.5, radiusHole, 12, 5, 3 );
+		geometry7.applyMatrix( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
+		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius, 0, depthSlot + depthBody + radiusHole ) );
+		geometry7.computeFaceNormals();
+		geometry7.computeVertexNormals();
+
+		geometry.merge( geometry7 );
+
+		geometry8 = new THREE.CylinderGeometry( radiusHole, radiusHole, 2 * radius, 12, 1, true );
+		geometry8.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 * Math.PI ) );
+		geometry8.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + radiusHole ) );
+		geometry.merge( geometry8 );
+
+
+		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
+		var mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+
+	}
+
+
+	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+// 2016-02-11
+
+		var radiusInside = rIn ? rIn : 10;
+		var radiusOutside = rOut ? rOut : 15;
+
+		var segments = seg ? seg : 36;
+		var turns = tur ? tur : 7;
+		var segementsTotal = turns * segments;
+
+		var pitch = pit ? pit : 15;
+		var pitchDelta = 0.5 * pitch / segments;
+
+		var angleDelta = Math.PI / segments;
+
+		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
+		vertices = geometry.vertices;
+
+		for ( var i = 0; i < vertices.length; i++ ) {
+
+			var v = vertices[ i ];
+
+			if ( v.x < 0 ) {
+
+				v.x = radiusInside * Math.cos( angleDelta * i );
+				v.y = radiusInside * Math.sin( angleDelta * i );
+				v.z = pitchDelta * i;
+
+			} else {
+
+				v.x = radiusOutside * Math.cos( angleDelta * i );
+				v.y = radiusOutside * Math.sin( angleDelta * i );
+				v.z = pitchDelta * i;
+
+			}
+
+		}
+
+//		geometry.center();
+
+		return geometry;
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
