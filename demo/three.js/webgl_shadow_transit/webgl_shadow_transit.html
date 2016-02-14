@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>WebGL Shadows</title>
+<title>WebGL Shadow Transit</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='500 random geometries progressing in spherical directions. Nice displays of gimbal lock syndrome.' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -34,6 +34,7 @@
 
 	function init() {
 
+// DOM
 		var css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 		`
@@ -42,12 +43,10 @@
 			a {text-decoration: none; }
 			h2 { margin: 0 }
 
-/*			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
-
 			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
 			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
 			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
-*/
+
 		`;
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
@@ -62,7 +61,7 @@
 
 			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; checked > Axis </p>
 			<p><input type=checkbox onchange=controls.autoRotate=controls.autoRotate===true?false:true; checked > Rotation</p>
-			<p>Number of objects: <input type=range id=inp max=1000 min=50 step=50 value=500 oninput=out.value=inp.value;toggleRandomGeometry(inp.valueAsNumber); title="50 to 1000: OK" > <output id=out >value</output></p>
+			<p>Number of objects:<br><input type=range id=inp max=1000 min=0 step=50 value=500 oninput=out.value=inp.value;toggleRandomGeometry(inp.valueAsNumber); title="50 to 1000: OK" > <output id=out >500</output></p>
 
 			<div id=info ></div>
 
@@ -73,6 +72,7 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
+// Three.js
 		renderer = new THREE.WebGLRenderer( { antialias: true }  );
 		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.shadowMap.enabled = true;
@@ -162,6 +162,8 @@
 		randomGeometry.name = 'randomGeometry';
 		randomGeometryHelpers.name = 'randomGeometryHelpers';
 
+// thanks to @greggman for the idea of random geometries
+
 		var geometries = [
 
 			new THREE.BoxGeometry( 10, 10, 10 ),
@@ -185,12 +187,7 @@
 			mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
 			mesh.phi = phi = Math.random() * 6;
 			mesh.theta = theta = Math.random() * 6;
-
-//				mesh.position.set( radius * Math.sin( theta ) * Math.cos( phi ), radius * Math.sin( theta ) * Math.sin( phi ), radius * Math.cos( theta ) );
-//				mesh.lookAt( new THREE.Vector3( 0, 0, 0 ) );
-			mesh.castShadow = true
-			mesh.receiveShadow = true;
-//				mesh.name = 'obj ' + i;
+			mesh.castShadow = mesh.receiveShadow = true;
 
 			randomGeometry.add( mesh );
 
@@ -217,7 +214,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-		controls.update();
+//		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 
