@@ -1,0 +1,418 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Box to Cylinder R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+/*			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+*/
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/ >❦</a>
+			</h2>
+			<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>
+			<div id=info ></div>
+
+		`;
+
+//			<p><button onclick=doIt(); >do it</button></p>
+//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		geometry = createCylinder();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.x = -50;
+		scene.add( mesh );
+
+		geometry = createBox();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = -50;
+		scene.add( mesh );
+
+		geometry = createCylinderOverBox();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 50, 0, -50 );
+		scene.add( mesh );
+
+		geometry = createBoxedCylinder();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.x = 0;
+		scene.add( mesh );
+
+	}
+
+	function createCylinder( radius, height, columns, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 50;
+		var columns = columns ? columns : 120;
+		var rows = rows ? rows : 1;
+		var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns, rows );
+
+		vertices = geometry.attributes.position.array;
+
+		var count = 0;
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = 2 * Math.PI / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				vertices[ count++ ] = radius * Math.cos( theta * j );
+				vertices[ count++ ] = i * height / rows;
+				vertices[ count++ ] = radius * Math.sin( theta * j );
+
+//console.log( '', count);
+
+			}
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+	function createBox( points, height, rows ) {
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		points = points ? points : [ v2( 10, 23 ), v2( -10, 10 ), v2( -10, -10 ) , v2( 10, -10 ), v2( 10, 10 ) ];
+
+		var height = height ? height : 50;
+		var rows = rows ? rows : 6;
+		var segments = 3;
+
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows );
+
+		vertices = geometry.attributes.position.array;
+
+		var count = 0;
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			for ( var j = 0; j < points.length; j++ ) {
+
+				for ( var k = 0; k < segments; k++ ) {
+
+					delta = k / segments;
+
+					if ( j < points.length - 1 ) { 
+
+						vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+						vertices[ count++ ] = i * height / rows;
+						vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+					} else {
+
+						vertices[ count++ ] = points[ j ].x;
+						vertices[ count++ ] = i * height / rows;
+						vertices[ count++ ] = points[ j ].y;
+
+					}
+
+//console.log( 'p', i, j, k, points[ j ], vertices[ count - 3], vertices[ count - 2], vertices[ count - 1] );
+//console.log( 'd', delta);
+
+				}
+
+			}
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+	function createCylinderOverBox( points, height, rows ) {
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		var radius = radius ? radius : 20;
+		points = points ? points : [ v2( 10, 10 ), v2( -10, 10 ), v2( -10, -10 ) , v2( 10, -10 ), v2( 10, 10 ) ];
+
+		var height = height ? height : 25;
+		var rows = rows ? rows : 3;
+		var segments = 3;
+
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows);
+
+		vertices = geometry.attributes.position.array;
+
+		var count = 0;
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			for ( var j = 0; j < points.length; j++ ) {
+
+				for ( var k = 0; k < segments; k++ ) {
+
+					delta = k / segments;
+
+					if ( j < points.length - 1 ) { 
+
+						vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+						vertices[ count++ ] = i * height;
+						vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+					} else {
+
+						vertices[ count++ ] = points[ j ].x;
+						vertices[ count++ ] = i * height;
+						vertices[ count++ ] = points[ j ].y;
+
+					}
+
+//console.log( 'p', i, j, k, points[ j ], vertices[ count - 3], vertices[ count - 2], vertices[ count - 1] );
+//console.log( 'd', delta);
+
+				}
+
+			}
+
+		}
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			var theta = 2 * Math.PI / ( columns - 1 );
+
+			for ( var j = 0; j < columns; j++ ) {
+
+				vertices[ count++ ] = radius * Math.cos( 0.5 * Math.PI + theta * j );
+				vertices[ count++ ] =  i * height + height;
+				vertices[ count++ ] = radius * Math.sin( 0.5 * Math.PI + theta * j );
+
+			}
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+
+	function createBoxedCylinder( points, height, rows ) {
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		var radius = radius ? radius : 20;
+		points = points ? points : [ v2( 20, 20 ), v2( -20, 20 ), v2( -20, -20 ) , v2( 20, -20 ), v2( 20, 20 ) ];
+
+		var height = height ? height : 25;
+		var rows = rows ? rows : 5;
+		var segments = 3;
+
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows);
+
+		vertices = geometry.attributes.position.array;
+
+		var count = 0;
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			for ( var j = 0; j < points.length; j++ ) {
+
+				for ( var k = 0; k < segments; k++ ) {
+
+					delta = k / segments;
+
+					if ( j < points.length - 1 ) { 
+
+						vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+						vertices[ count++ ] = i * height;
+						vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+					} else {
+
+						vertices[ count++ ] = points[ j ].x;
+						vertices[ count++ ] = i * height;
+						vertices[ count++ ] = points[ j ].y;
+
+					}
+
+//console.log( 'p', i, j, k, points[ j ], vertices[ count - 3], vertices[ count - 2], vertices[ count - 1] );
+//console.log( 'd', delta);
+
+				}
+
+			}
+
+		}
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			var theta = 2 * Math.PI / ( columns - 1 );
+
+			for ( var j = 0; j < columns; j++ ) {
+
+				vertices[ count++ ] = radius * Math.cos( 0.5 * Math.PI + theta * j );
+				vertices[ count++ ] =  i * height + height;
+				vertices[ count++ ] = radius * Math.sin( 0.5 * Math.PI + theta * j );
+
+			}
+
+		}
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			for ( var j = 0; j < points.length; j++ ) {
+
+				for ( var k = 0; k < segments; k++ ) {
+
+					delta = k / segments;
+
+					if ( j < points.length - 1 ) { 
+
+						vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+						vertices[ count++ ] = i * height + 2 * height;
+						vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+					} else {
+
+						vertices[ count++ ] = points[ j ].x;
+						vertices[ count++ ] = i * height + 2 * height;
+						vertices[ count++ ] = points[ j ].y;
+
+					}
+
+//console.log( 'p', i, j, k, points[ j ], vertices[ count - 3], vertices[ count - 2], vertices[ count - 1] );
+//console.log( 'd', delta);
+
+				}
+
+			}
+
+		}
+
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

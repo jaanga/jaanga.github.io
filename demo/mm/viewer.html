@@ -2,7 +2,7 @@
 <html lang=en >
 	<head>
 		<meta charset=utf-8 >
-		<title>Three.js Viewers </title>
+		<title>Moving Manuals Files Viewer</title>
 		<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 		<meta name=description content='Gallery of a variety of scripts that enable you to view the Three.js exsmple files in new ways.' >
 		<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -10,13 +10,15 @@
 	<body>
 		<script>
 
-			var urlContents= 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+			var urlRepo = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+
+			var urlFolder = 'demo/mm/';
 
 			var footer =
 			`
 
 				<center title="dingbat" >
-				<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a></h1>
+				<h1><a href=javascript:window.scrollTop=0; style=text-decoration:none; > ❦ </a></h1>
 				</center>
 
 			`;
@@ -50,13 +52,12 @@
 
 					<h1>
 						<a href="" > ${ document.title }</a>
-						<a href=https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-viewers/ >🛈</a>
+						<a href=http://jaanga.github.io/demo/mm/ >🛈</a>
 					</h1>
 
-					<p><i>Exploring new ways of viewing large numbers of 3D files.</i><hr></p>
-					<p>A collection of scripts where each script has a different feature set.
-						All the scripts here link to the files on GitHub at <a href=http://mrdoob.github.io/three.js/examples/>Three.js Examples</a>.
-						See also the <a href=readme-reader.html >Read Me </a>file for further details.
+					<p><i>Moving Manuals kit of parts.</i><hr></p>
+					<p>A collection of scripts where each script creates a different part.
+						See also the <a href=index.html >Read Me </a>file for further details.
 					</p>
 					<p>Click any file title to open the file full screen.</p>
 
@@ -71,7 +72,7 @@
 			function requestFileNames() {
 
 				var xhr = new XMLHttpRequest();
-				xhr.open( 'GET', urlContents, true );
+				xhr.open( 'GET', urlRepo, true );
 				xhr.onreadystatechange = callback;
 				xhr.send( null );
 
@@ -89,7 +90,7 @@
 
 						var file = response.tree[ key ].path;
 
-						if ( file.indexOf( 'demo/mm/' ) === - 1 || file.indexOf( '.html' ) === -1 || file.indexOf( '@' ) === -1 )  { continue; }
+						if ( file.indexOf( urlFolder ) === - 1 || file.indexOf( '.html' ) === -1 || file.indexOf( '@' ) === -1 )  { continue; }
 
 						files.push( file );
 
