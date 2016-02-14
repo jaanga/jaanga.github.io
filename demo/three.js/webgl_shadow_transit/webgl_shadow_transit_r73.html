@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>WebGL Shadow Transit</title>
+<title>WebGL Shadow Transit R73</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='500 random geometries progressing in spherical directions. Nice displays of gimbal lock syndrome.' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -13,9 +13,9 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/r73/examples/js/libs/stats.min.js ></script>
 
 <script>
 
@@ -25,6 +25,20 @@
 	var radius = 50;
 	var phi = 0.1, theta = 0.1;
 	var lightPoint, lightDirectional;
+
+// thanks to @greggman for the idea of random geometries
+
+	var geometries = [
+
+		new THREE.BoxGeometry( 10, 10, 10 ),
+		new THREE.CylinderGeometry( 5, 5, 5, 12 ),
+		new THREE.CylinderGeometry( 5, 0, 5, 4 ),
+		new THREE.DodecahedronGeometry( 05 ),
+		new THREE.SphereGeometry( 5, 12, 8 ),
+		new THREE.TorusGeometry( 5, 2 ),
+
+	];
+
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -61,7 +75,7 @@
 
 			<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; checked > Axis </p>
 			<p><input type=checkbox onchange=controls.autoRotate=controls.autoRotate===true?false:true; checked > Rotation</p>
-			<p>Number of objects:<br><input type=range id=inp max=1000 min=0 step=50 value=500 oninput=out.value=inp.value;toggleRandomGeometry(inp.valueAsNumber); title="50 to 1000: OK" > <output id=out >500</output></p>
+			<p>Number of objects:<br><input type=range id=inpCount max=200 min=0 step=1 value=100 oninput=out.value=inpCount.value;toggleRandomGeometry(inpCount.valueAsNumber); title="50 to 1000: OK" > 6 x <output id=out >100</output></p>
 
 			<div id=info ></div>
 
@@ -91,8 +105,6 @@
 		controls.autoRotate = true;
 
 		scene = new THREE.Scene();
-
-		controls.autoRotate === true;
 
 		var size = 100;
 		var lightAmbient;
@@ -143,13 +155,13 @@
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );
 
-		toggleRandomGeometry( 500 );
+		toggleRandomGeometry();
 
 	}
 
 	function toggleRandomGeometry( objectsCount ) {
 
-		objectsCount = objectsCount ? objectsCount : 10;
+		objectsCount = objectsCount ? objectsCount : 100;
 
 		var randomGeometry = scene.getObjectByName( 'randomGeometry' );
 		var randomGeometryHelpers = scene.getObjectByName( 'randomGeometryHelpers' );
@@ -162,26 +174,24 @@
 		randomGeometry.name = 'randomGeometry';
 		randomGeometryHelpers.name = 'randomGeometryHelpers';
 
-// thanks to @greggman for the idea of random geometries
+		for ( var i = 0; i < geometries.length; i++ ) {
 
-		var geometries = [
+			drawObjects( randomGeometry, randomGeometryHelpers, i, objectsCount );
 
-			new THREE.BoxGeometry( 10, 10, 10 ),
-			new THREE.CylinderGeometry( 5, 5, 5, 12 ),
-			new THREE.CylinderGeometry( 5, 0, 5, 4 ),
-			new THREE.DodecahedronGeometry( 05 ),
-			new THREE.SphereGeometry( 5, 12, 8 ),
-			new THREE.TorusGeometry( 5, 2 ),
+		}
 
-		];
+		scene.add( randomGeometry, randomGeometryHelpers );
 
-		var angle = 2 * Math.PI / objectsCount;
+	}
 
-		for ( var i = 0; i < objectsCount; i++ ) {
 
-			var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
+	function drawObjects( obj, helpers, index, count ) {
 
-			var material = new THREE.MeshStandardMaterial( { color: 0xffffff * Math.random() } );
+		for ( var i = 0; i < count; i++ ) {
+
+			var geometry = geometries[ index ];
+
+			var material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
 
 			var mesh = new THREE.Mesh( geometry, material );
 			mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
@@ -189,16 +199,13 @@
 			mesh.theta = theta = Math.random() * 6;
 			mesh.castShadow = mesh.receiveShadow = true;
 
-			randomGeometry.add( mesh );
+			obj.add( mesh );
+			objects.push( mesh );
 
 			helper = new THREE.EdgesHelper( mesh );
-			randomGeometryHelpers.add( helper );
-
-			objects.push( mesh )
+			helpers.add( helper );
 
 		}
-
-		scene.add( randomGeometry, randomGeometryHelpers );
 
 	}
 
@@ -214,7 +221,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 
