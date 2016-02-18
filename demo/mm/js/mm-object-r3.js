@@ -80,6 +80,32 @@
 
 	}
 
+	function build_hole2( obj, x, y, z, aX, aY, aZ, drawType ) {
+
+		var mesh = new THREE.Mesh( geometryHole, materialHole );
+		mesh.name = 'hole';
+		mesh.position.set( x + sign( x ) * 0.1 , y + sign( y ) * 0.1, z  + sign( z ) * 0.1); // to stop shimmering
+		mesh.rotation.set( aX, aY, aZ );
+
+		holes.push( mesh );
+/*
+		if ( type === 'pegHole' ) {
+
+			draw_peg_101339( mesh );
+
+		} else if ( type === 'screwHole' ) {
+
+			draw_screw_1004321_104322( mesh );
+
+		}
+*/
+
+		if ( drawType ) { drawType( mesh ); }
+
+		obj.add( mesh );
+
+	}
+
 	function draw_peg_101339 ( hole ) {
 
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
@@ -87,7 +113,6 @@
 		var offsetZ =  - width05Case - 20;
 		var a = ran( pi2 );
 		var r = ran( 25 );
-		var mud = mesh.userData;
 
 		mesh.userData.places = [];
 		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
@@ -693,8 +718,6 @@
 
 
 	function draw_hexKey_100001() {
-
-console.log( 'hk' );
 
 		var section = QL.sectionCircle( 2 );
 

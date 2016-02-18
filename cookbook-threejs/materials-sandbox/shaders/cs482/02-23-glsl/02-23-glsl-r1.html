@@ -1,0 +1,242 @@
+﻿<html><head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>PixAnvil Graphics Demo</title>
+  
+  <script src="https://www.cs.uaf.edu/2015/spring/cs482/demo/pixanvil_2015_01/three.js"></script>
+  <script src="https://www.cs.uaf.edu/2015/spring/cs482/demo/pixanvil_2015_01/pixanvil.js"></script>
+  <script src="https://www.cs.uaf.edu/2015/spring/cs482/demo/pixanvil_2015_01/gpu1D.js"></script>
+  <script src="https://www.cs.uaf.edu/2015/spring/cs482/demo/pixanvil_2015_01/gpu2D.js"></script>
+  <link rel="stylesheet" href="https://www.cs.uaf.edu/2015/spring/cs482/demo/pixanvil_2015_01/pixanvil.css">
+</head>
+<body onload="PixAnvil.create(['Setup','Loop','Frag','UI',])">
+<H1>PixAnvil/Three.js demo</H1>
+<table class="pixanvil" id="draggable_outer">
+<tr>
+	<td id="draggable_left" style="width:40%">
+<p id="#errors" style="color:red;">Er, JavaScript or <a href="http://get.webgl.org/">WebGL</a> doesn't seem to be running, so basically all you're going to see is the bare code...</p>
+
+<table class="tabbed" style="width:100%;height:100%">
+<tr><td>
+	<p id="tabHeaders">
+</td></tr>
+<tr><td height="99%">
+<textarea class="tabBox" id="tab_Setup" rows="25" cols="30">
+
+// Setup to render into an offscreen buffer
+// (See mrdoob.github.com/three.js/examples/webgl_rtt.html)
+
+var w=512, h=512; // size of offscreen tex (pixels)
+
+sim.texRTT = new THREE.WebGLRenderTarget( w,h, { minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter, 
+format:THREE.RGBAFormat,type:THREE.FloatType } );
+
+// The offscreen buffer has its own camera and scene
+sim.cameraRTT = new THREE.OrthographicCamera( 0,1, 1,0, -100, 100 );
+sim.sceneRTT = new THREE.Scene();
+
+sim.sphereRTT = new THREE.Mesh( 
+   new THREE.SphereGeometry(0.2,10,10), 
+   new THREE.MeshBasicMaterial( { color: 0x5500cc} ) 
+);
+sim.sceneRTT.add( sim.sphereRTT );
+
+// Here's how to run a shader into the offscreen buffer
+var plane=new THREE.Mesh(
+   new THREE.PlaneBufferGeometry(1,1),
+   sim.frag=new THREE.ShaderMaterial( {
+     uniforms: { 
+        lib_time: { type: "f", value: 0.0 } 
+     },
+     vertexShader: lib.simpleVertexShader,
+     fragmentShader: PixAnvil.loadTab("Frag")
+
+} )
+);
+plane.position.set(0.5,0.5,0.0); // center it
+sim.sceneRTT.add(plane);
+
+
+// Here's the easy way to draw texRTT onscreen:
+var cubeShow = new THREE.BoxGeometry( 10,1,10 );
+var easyShow = new THREE.Mesh( cubeShow, 
+  new THREE.MeshBasicMaterial( { color: 0xf0f0f0, map: sim.texRTT } ) 
+);
+easyShow.position.set(0,20,5);
+scene.add( easyShow );
+
+
+// Here's the hard way, with a shader.
+var matShow = new THREE.ShaderMaterial( {
+  uniforms: { 
+        readRTT: { type: "t", value: sim.texRTT } 
+  },
+  vertexShader: lib.simpleVertexShader,
+  fragmentShader: 
+"varying vec2 texcoords;\n"+
+"uniform sampler2D readRTT;\n"+
+"void main() { \n"+
+"  vec4 c=texture2D(readRTT,texcoords);\n"+
+"  gl_FragColor=vec4(vec3(c),1); \n"+
+"}\n"
+} );
+var a = new THREE.Mesh( cubeShow, matShow);
+quadShow.position.set(0,10,5);
+scene.add( quadShow );
+
+// Add a brown TV frame (so you can see background)
+var frame = new THREE.Mesh( cubeShow, new THREE.MeshBasicMaterial( { color: 0x884422 } ) );
+frame.position.set(0,10.1,5);
+frame.scale.set(1.1,1,1.1);
+scene.add( frame );
+
+// Ground
+// var groundTex=THREE.ImageUtils.loadTexture( "textures/checkerboard_noisy.jpg" );
+//groundTex.wrapS=groundTex.wrapT=THREE.RepeatWrapping;
+//groundTex.repeat=new vec2(25.0,25.0);
+
+sim.ground = new THREE.Mesh(
+  new THREE.BoxGeometry(50,50,0.0001),
+  new THREE.MeshLambertMaterial(
+    {color: 0xffccaa, opacity: 1}) // , map:groundTex})
+);
+sim.ground.position.z=-1;  /* hack for radius 1 */
+sim.ground.receiveShadow=true;
+scene.add(sim.ground);
+
+// Sun-like spotlight
+var l=new THREE.SpotLight();
+sim.light = l;
+l.position.set( -50, -100, 100 );
+l.castShadow=true;
+l.shadowCameraNear = 50; 
+l.shadowCameraFar = 500; 
+l.shadowCameraFov = 10; // degrees field of view
+scene.add(l);
+
+
+</textarea>
+
+
+<textarea class="tabBox" id="tab_Loop" rows="25" cols="30">
+// Change offscreen scene--move the sphere
+sim.sphereRTT.position.x=0.5+0.5*Math.cos(lib.time);
+sim.sphereRTT.position.y=0.5+0.5*Math.sin(lib.time);
+
+// Update uniform variables
+sim.frag.uniforms.lib_time.value=lib.time;
+
+// Render offscreen scene into texRTT
+PixAnvil.renderer.render( sim.sceneRTT, sim.cameraRTT, sim.texRTT, true );
+
+// The newly rendered texRTT will be seen on the cubes
+
+
+</textarea>
+
+
+<textarea class="tabBox" id="tab_Frag" rows="25" cols="30">
+varying vec2 texcoords;
+uniform float lib_time;
+
+void main() { 
+  float cut=fract(0.2*lib_time);
+  if (texcoords.x<cut) 
+  {
+    gl_FragColor=vec4(1,0,0,0);
+  }
+  else 
+  {
+    gl_FragColor=vec4(texcoords,fract(lib_time),1); 
+  }
+}
+
+
+
+</textarea>
+
+
+<textarea class="tabBox" id="tab_UI" rows="25" cols="30">
+// Camera control:
+
+// Update camera coordinate system
+var s=camera;
+if (!s.X) { // startup: create initial coordinates
+    s.X=new vec3(1,0,0);
+    s.Y=new vec3(0,0,1);
+    s.Z=new vec3(0,-1,-0.2); // camera Z is world Y
+    s.P=new vec3(0,-5,1.3); // initial location
+}
+
+// Move camera via keyboard
+var move=new vec3(0,0,0); // sums current frame motion
+
+// X control via A and D
+if (lib.key['a']) move.pe(new vec3(-1,0,0));
+if (lib.key['d']) move.pe(new vec3(+1,0,0));
+// Y control via W and S
+if (lib.key['w']) move.pe(new vec3(0,0,-1));
+if (lib.key['s']) move.pe(new vec3(0,0,+1));
+// Z control via Q and Z
+if (lib.key['q']) move.pe(new vec3(0,+1,0));
+if (lib.key['z']) move.pe(new vec3(0,-1,0));
+
+move.te(5.0*lib.dt); // meters/second motion rate
+s.P.pe(s.X.t(move.x).p(s.Y.t(move.y)).p(s.Z.t(move.z)));
+
+// Rotate camera via mouse
+var speed=0.01; // radians per mouse pixel
+if (lib.mouseleft) { // move Z with mouse
+    s.Z.pe(s.X.t(-lib.mousedx*speed).p(
+           s.Y.t( lib.mousedy*speed)));
+}
+
+// Keep level: make sure X is horizontal.
+s.X.z=0.0;
+s.Y.crossVectors(s.Z,s.X.normalize());
+
+// Orthonormalize
+s.X.crossVectors(s.Y,s.Z).normalize();
+s.Y.crossVectors(s.Z,s.X).normalize();
+s.Z.normalize();
+
+  
+// Write coordinate system into matrix
+s.matrixAutoUpdate=false; // don't trash
+s.matrixWorldNeedsUpdate=true; // show
+  
+var m=s.matrix; // the camera's matrix
+
+// Utility function: set a matrix column
+function setCol(m,col,vec) {
+  m.elements[4*col+0]=vec.x;
+  m.elements[4*col+1]=vec.y;
+  m.elements[4*col+2]=vec.z;
+}
+
+  setCol(m,0,s.X);
+  setCol(m,1,s.Y);
+  setCol(m,2,s.Z);
+  setCol(m,3,s.P); // position from sim
+
+
+
+</textarea>
+
+
+<div class="tabDiv" id="tab_Save" ></div>
+<div class="tabDiv" id="tab_Stats" > </div>
+
+</td></tr>
+<tr><td>
+<p id="timeControl">
+</td></tr>
+</table>
+
+	</td>
+	<td id="draggable_thumb"> </td>
+	<td id="draggable_right">  <div id="renderer" style="width:99%;" /> </td>
+</tr>
+</table>
+
+</body>
+</html>

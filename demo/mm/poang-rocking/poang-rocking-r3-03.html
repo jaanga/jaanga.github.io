@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Poang Rocker R3.3</title>
+<title>Poang Rocker R3.2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Not the Poang Rocking chair - but looks like it' >
 <meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -33,17 +33,13 @@
 
 	var edgesColor = 0x884444;
 
-	var edges;
-	var helpers;
-
-	var screws119046 = [];
-	var placards = [];
-
 	var poang, edges, hardware, helpers;
 
 // assets
 
-	var verticesSection =  [ v2( 0, 0 ), v2( 0, -frameThickness ), v2( - frameWidth, -frameThickness ), v2( - frameWidth, 0 ) ];
+	 var verticesSection =  [ v2( 0, 0 ), v2( 0, -frameThickness ), v2( - frameWidth, -frameThickness ), v2( - frameWidth, 0 ) ];
+
+
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -116,7 +112,6 @@
 		addShadows();
 
 		hexKey = draw_hexKey_100001();
-		hexKey.scale.set( 0.1, 0.1, 0.1 );
 
 		hexKey.userData.places.push( { pX: 0, pY: 30, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
 		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
@@ -148,35 +143,34 @@
 
 		rockerRight = drawRocker( 'rockerRight' );
 
-		rockerRight.userData.places.push( { pX: -50, pY: 0, pZ: -60, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		rockerRight.userData.places.push( { pX: -50, pY: 0, pZ: -50, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		rockerRight.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
 
 		rockerLeft = drawRocker( 'rockerRight' );
 
-		rockerLeft.userData.places.push( { pX: -50, pY: frameWidth, pZ: -60, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		rockerLeft.userData.places.push( { pX: -50, pY: frameWidth, pZ: -50, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		rockerLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - frameWidth, rX: 0, rY: 0, rZ: 0 } );
 
 
 		armRight = drawArm( 'armRight' );
 
-		armRight.userData.places.push( { pX: -30, pY: 0, pZ: -130, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		armRight.userData.places.push( { pX: 0, pY: 0, pZ: -120, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		armRight.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
 
 		armLeft = drawArm( 'armLeft' );
 
-		armLeft.userData.places.push( { pX: -30, pY: frameWidth, pZ: -130, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		armLeft.userData.places.push( { pX: 0, pY: frameWidth, pZ: -120, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		armLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - frameWidth, rX: 0, rY: 0, rZ: 0 } );
 
 
 		backRight = drawBack( 'backRight' );
 
-		backRight.userData.places.push( { pX: 0, pY: 0, pZ: -180, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		backRight.userData.places.push( { pX: 0, pY: 0, pZ: -80, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		backRight.userData.places.push( { pX: 0, pY: 0, pZ: frameWidth, rX: 0, rY: 0, rZ: 0 } );
-
 
 		backLeft = drawBack( 'backLeft' );
 
-		backLeft.userData.places.push( { pX: 10, pY: 0, pZ: -180, rX: pi05, rY: 0, rZ: ran( 0.4 ) - 0.2 } );
+		backLeft.userData.places.push( { pX: 10, pY: 0, pZ: -80, rX: pi05, rY: 0, rZ: ran( 0.4 ) - 0.2 } );
 		backLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - 2 * frameWidth, rX: 0, rY: 0, rZ: 0 } );
 
 
@@ -189,7 +183,6 @@
 
 		seatLeft.userData.places.push( { pX: 100, pY: 0, pZ: -70, rX: pi05, rY: 0, rZ: ran( 0.4 ) - 0.2 } );
 		seatLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - 2 * frameWidth, rX: 0, rY: 0, rZ: 0 } );
-
 
 		armBar = drawArmBar( 'armBar' );
 
@@ -232,7 +225,7 @@
 		cushionTop.userData.places.push( { pX: 80, pY: 90, pZ: frameWidth + bevelThickness, rX: 0, rY: 0, rZ: 1.3 } );
 
 		cushionMiddle = drawCushionMiddle( 'cushionMiddle' );
-		cushionMiddle.userData.places.push( { pX: 69, pY: 0, pZ: 120, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		cushionMiddle.userData.places.push( { pX: 95, pY: 0, pZ: 120, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		cushionMiddle.userData.places.push( { pX: 52, pY: 34, pZ: frameWidth + bevelThickness, rX: 0, rY: 0, rZ: 1.2 } );
 
 		cushionBottom = drawCushionBottom( 'cushionBottom' );
@@ -426,7 +419,6 @@
 	function drawSeatBar( name ) {
 
 		var barSection =  [ v2( 0, 0 ), v2( 0, frameThickness - 1 ), v2( frameWidth - 2, frameThickness - 1 ), v2( frameWidth - 2, 0 ) ];
-		var offset = -0.5 * ( frameWidth - 2 );
 
 		var vertices = [
 
@@ -438,14 +430,11 @@
 
 		];
 
-		var mesh = drawExtrusion( vertices, barSection, 10 );
+		mesh = drawExtrusion( vertices, barSection, 10 );
 		mesh.name = ( name );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
-
-		build_hole2( mesh, offset, 0.1, 1.5 * frameWidth + 2, pi05, 0, 0, draw_screw_119046 );
-		build_hole2( mesh, offset, 0.11, chairWidth - 1.5 * frameWidth - 2, pi05, 0, 0, draw_screw_119046  );
 
 		objects.push( mesh );
 		poang.add( mesh );
@@ -460,7 +449,6 @@
 	function drawArmBar( name ) {
 
 		var barSection =  [ v2( 0, 0 ), v2( 0, frameThickness - 0.75 ), v2( - frameWidth + 1, frameThickness - 0.75 ), v2( - frameWidth + 1, 0 ) ];
-		var offset = 0.5 * ( frameWidth );
 
 		var vertices = [
 
@@ -471,9 +459,6 @@
 
 		var mesh = drawExtrusion( vertices, barSection, 3 );
 		mesh.name = ( name );
-
-		build_hole( mesh, -0.1, offset, frameWidth + 2, 0, pi05, 0 );
-		build_hole( mesh, -0.1, offset, chairWidth - frameWidth - 2, 0, pi05, 0 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -502,11 +487,6 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
 
-		build_hole( mesh, 7, 35.1 + frameThickness, 0.5 * frameWidth, pi05, 0, 0 );
-		build_hole( mesh, 35, 34.1, 0.5 * frameWidth, pi05, 0, 0 );
-		build_hole( mesh, 10, 35.1, -0.1, 0, 0, 0 );
-		build_hole( mesh, 57, 42, 0.5 * frameWidth, 0, pi05, 0 );
-
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
 
@@ -522,8 +502,6 @@
 
 	function drawBack( name ) {
 
-		var offset = 0.5 * frameWidth;
-
 		var vertices = [
 
 			v( 85, 95, 0 ),
@@ -535,12 +513,6 @@
 
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
-
-		build_hole( mesh, 85 - frameThickness - 2, 92, offset, 0, pi05, 0 );
-		build_hole( mesh, 80 - frameThickness - 2, 75, offset, 0, pi05, 0 );
-		build_hole( mesh, 70 - frameThickness - 1, 60, offset, 0, pi05, 0 );
-		build_hole( mesh, 60 - frameThickness - 0, 43, offset, 0, pi05, 0 );
-		build_hole( mesh, 63 - frameThickness - 0, 48, offset, 0, pi05, 0 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -557,7 +529,6 @@
 
 	function drawArm ( name ) {
 
-		var offset = 0.5 * frameWidth;
 		var vertices = [
 
 			v( 74, 65, 0 ),
@@ -574,11 +545,6 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
 
-		build_hole( mesh, 15, 3, offset, pi05, 0, 0 );
-		build_hole( mesh, 35, 54, offset, pi05, 0, 0 );
-		build_hole( mesh, 12, 35, -0.1, 0, 0, 0 );
-		build_hole( mesh, 71, 64, -0.1, 0, 0, 0);
-
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
 
@@ -593,8 +559,6 @@
 	}
 
 	function drawRocker( name ) {
-
-		var offset = 0.5 * ( frameWidth );
 
 		var vertices = [
 
@@ -612,10 +576,6 @@
 
 		var mesh = drawExtrusion( vertices, verticesSection, 80 );
 		mesh.name = ( name );
-
-		build_hole( mesh, 2, 4, offset, pi05, 0, 0 );
-		build_hole( mesh, 32, 52, offset, pi05, 0, 0 );
-		build_hole( mesh, 55, 50, -0.1, 0, 0, 0 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -707,187 +667,6 @@
 		return mesh;
 
 	}
-
-	function build_hole2( obj, x, y, z, aX, aY, aZ, drawType ) {
-
-		var mesh = new THREE.Mesh( geometryHole, materialHole );
-		mesh.name = 'hole';
-		mesh.position.set( x + sign( x ) * 0.1 , y + sign( y ) * 0.1, z  + sign( z ) * 0.1); // to stop shimmering
-		mesh.rotation.set( aX, aY, aZ );
-
-		holes.push( mesh );
-/*
-		if ( type === 'pegHole' ) {
-
-			draw_peg_101339( mesh );
-
-		} else if ( type === 'screwHole' ) {
-
-			draw_screw_1004321_104322( mesh );
-
-		}
-*/
-
-		if ( drawType ) { drawType( mesh ); }
-
-		obj.add( mesh );
-
-	}
-
-	function draw_screw_119046( hole ) {
-
-		var material = new THREE.MeshNormalMaterial( { side: 2 });
-		var geometry = createFlatHeadHexScrew( 0, 15, 1, 0, 3.5, 2.5 );
-
-		var offsetX = 20;
-		var offsetZ =  20;
-		var a = ran( pi2 );
-		var r = ran( 25 );
-
-		var mesh = new THREE.Mesh( geometry, material );
-//		mesh.position.x = 30;
-		scene.add( mesh );
-
-		mesh.userData.places = [];
-		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
-
-		mesh.name = 'screw119046 ' + pegs.length;
-		mesh.userData.holeParent = hole;
-/*
-		hole.name = 'screw location ' + screws119046.length;
-		hole.userData.screws119046 = mesh;
-
-		var placard = build_placard( '119046', 0.05, 120, 0, 20, 0 );
-		placards.push( placard );
-		mesh.add( placard );
-
-		screws119046.push( mesh );
-
-		edge = new THREE.EdgesHelper( mesh, edgesColor );
-		edges.add( edge );
-
-		return mesh;
-*/
-
-	}
-
-	function createFlatHeadHexScrew( lengthBody, lengthThread, lengthTip, chamfer, radiusBody, radiusThread ) {
-
-		var lengthBody = lengthBody !== undefined ? lengthBody : 50;
-		var lengthThread = lengthThread ? lengthThread : 20;
-		var lengthTip = lengthTip ? lengthTip : 3;
-		var chamfer = chamfer !== undefined ? chamfer : 0;
-		var radiusBody = radiusBody ? radiusBody : 4;
-		var radiusThread = radiusThread ? radiusThread : 3;
-
-		var radiusHead = 8;
-		var radiusHex = 2;
-		var stepHead = 2;
-
-		var depthHex = 1.9 * stepHead;
-
-// hex dims
-		var segments = 6;
-		points = [];
-		angle = 2 * Math.PI / segments;
-
-		var shape, hole;
-		var geometry, material, mesh;
-		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
-
-		shape = new THREE.Shape();
-		shape.absarc( 0, 0, radiusHead, 0, 2 * Math.PI );
-
-//head & hex
-		hole = new THREE.Path();
-
-		for ( var i = 0; i < segments; i++ ) {
-
-			points.push( v2( radiusHex * Math.cos( i * angle ), radiusHex * Math.sin( i * angle ) ) );
-
-		}
-
-		hole.fromPoints( points );
-		shape.holes.push( hole );
-
-		geometry = shape.extrude( { amount: depthHex, bevelEnabled: false, curveSegments: 30, steps: 3 } );
-
-// body, thread & tip
-
-		points = [
-
-			v2( radiusHead, 0 ) , v2( radiusHead + stepHead, 0 ), v2( radiusHead + stepHead, stepHead ),
-
-			v2 ( radiusBody, stepHead + chamfer ), v2( radiusBody, stepHead + chamfer + lengthBody ),
-
-			v2( radiusThread, stepHead + chamfer + lengthBody ), v2( radiusThread, stepHead + chamfer + lengthBody + lengthThread ),
-
-			v2( 0, stepHead + chamfer + lengthBody + lengthThread + lengthTip )
-
-		];
-
-		var geometry2 = new THREE.LatheGeometry( points, 24, 0, 1.75 * Math.PI );
-
-		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
-		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead ) );
-
-		geometry.merge( geometry2 );
-
-		var geometry3 = build_spiralAlongZ( radiusThread, radiusBody, 12, lengthThread, 1 )
-		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead + stepHead + chamfer + lengthBody ) );
-
-		geometry.merge( geometry3 );
-
-		return geometry;
-
-	}
-
-
-	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
-
-// 2016-02-11
-
-		var radiusInside = rIn ? rIn : 10;
-		var radiusOutside = rOut ? rOut : 15;
-
-		var segments = seg ? seg : 36;
-		var turns = tur ? tur : 7;
-		var segementsTotal = turns * segments;
-
-		var pitch = pit ? pit : 15;
-		var pitchDelta = 0.5 * pitch / segments;
-
-		var angleDelta = Math.PI / segments;
-
-		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
-		vertices = geometry.vertices;
-
-		for ( var i = 0; i < vertices.length; i++ ) {
-
-			var v = vertices[ i ];
-
-			if ( v.x < 0 ) {
-
-				v.x = radiusInside * Math.cos( angleDelta * i );
-				v.y = radiusInside * Math.sin( angleDelta * i );
-				v.z = pitchDelta * i;
-
-			} else {
-
-				v.x = radiusOutside * Math.cos( angleDelta * i );
-				v.y = radiusOutside * Math.sin( angleDelta * i );
-				v.z = pitchDelta * i;
-
-			}
-
-		}
-//		geometry.center();
-
-		return geometry;
-
-	}
-
 
 	function addLights( size ) {
 
