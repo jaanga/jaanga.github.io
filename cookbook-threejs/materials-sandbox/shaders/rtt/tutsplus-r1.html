@@ -2,10 +2,10 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Axle R1</title>
+<title>TutsPlus RTT R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='Similar to part 123786' >
-<meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
 <!--
@@ -17,11 +17,31 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
+<script id="myVertexShader" type="x-shader/x-vertex">
+	varying vec2 vUv;
+	void main() {
+		gl_Position = projectionMatrix* modelViewMatrix * vec4( position, 1.0);
+		vUv = uv;
+	}
+</script>
+<script id="myFragmentShader" type="x-shader/x-fragment">
+	uniform sampler2D texture;
+	varying vec2 vUv;
+
+	void main() {
+		gl_FragColor = vec4 ( 0.2, 0.2, 0.2, 0) + texture2D ( texture, vUv) ;
+	}
+</script>
 <script>
-// http://www.ikea.com/us/en/assembly_instructions/poang-rocking-chair-frame__AA-370711-7_pub.pdf
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
+
+	var angle = 0;
+
+	var pointLight;
+	var sceneRTT, rtTexture, teapot;
+	var rttmaterial, quad;
 
 	init();
 	animate();
@@ -46,13 +66,14 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
 				<a href="" >${ document.title }</a>
 				 <a href=http://jaanga.github.io/ >❦</a>
 			</h2>
+			<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>
 			<div id=info ></div>
 
 		`;
@@ -74,7 +95,7 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+		camera.position.set( 300, 300, 300 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
@@ -98,40 +119,56 @@
 
 // assets
 
-		geometry = createAxle();
+		rtTexture = new THREE.WebGLRenderTarget(
 
-		var material = new THREE.MeshNormalMaterial( { side: 2 } );
-		var mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+			window.innerWidth, window.innerHeight,
+			{ minFilter: THREE.LinearFilter, magFilter: THREE.NearestFilter, format: THREE.RGBFormat }
+
+		);
+
+		sceneRTT = new THREE.Scene();
+
+		pointLight = new THREE.PointLight (0xffffff);
+		pointLight.position.set (0,300,200);
+		sceneRTT.add (pointLight);
+
+//rtTexture.setClearColor (0x333300);  wont work
+
+		var jsonLoader = new THREE.JSONLoader();
+
+		jsonLoader.load ("teapot.json", function (geometry) {
+
+			teapot = new THREE.Mesh (geometry, new THREE.MeshLambertMaterial({color:0xff1234}));
+			teapot.scale.set (32,32,32);
+			sceneRTT.add (teapot);
+
+		});
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		sceneRTT.add( mesh );
+
+		rttmaterial = new THREE.ShaderMaterial( {
+
+			uniforms: {texture: {type: "t", value: rtTexture}},
+			vertexShader: document.getElementById( 'myVertexShader' ).textContent,
+			fragmentShader: document.getElementById( 'myFragmentShader' ).textContent}
+
+		);
+		rttmaterial.side = THREE.DoubleSide;
+
+		geometry = new THREE.PlaneBufferGeometry( 300,300 );
+
+		mesh = new THREE.Mesh ( geometry, rttmaterial);
+		mesh.position.set( 0, 0, -90 )
+
+		scene.add ( mesh );
 
 	}
 
-
-	function createAxle( radius, radiusSpacer, fillet ) {
-
-		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
-
-		radius = radius ? radius : 3;
-		radiusSpacer = radiusSpacer ? radiusSpacer : 5;
-		fillet = fillet ? fillet : 1;
-
-		depthShaft1 = 15;
-		depthSpacer = 16;
-		depthShaft2 = 31;
-
-		var points = [];
-
-		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ), 
-			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),  
-			v2( radius, depthShaft2 - fillet), v2( radius - fillet, depthShaft2 ), v2( 0, depthShaft2 ),
-
-		];
-
-		var geometry = new THREE.LatheGeometry( points, 24, Math.PI, 1.5 * Math.PI );
-
-		return geometry;
-
-	}
 
 	function onWindowResize() {
 
@@ -148,6 +185,15 @@
 		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
+
+		if (teapot !== undefined) {
+
+			teapot.rotation.y += 0.005;
+
+		}
+
+// render teapot to texture
+		renderer.render( sceneRTT, camera, rtTexture, true );
 
 	}
 

@@ -30,13 +30,23 @@
 	var frameThickness = 2.5;
 	var bevelThickness = 2;
 	var bevelSize = 2;
+	var hexKey;
 
 	var edgesColor = 0x884444;
 
 	var edges;
 	var helpers;
+	var tools;
 
 	var screws119046 = [];
+	var screws112522 = [];
+	var screws112091 = [];
+	var screws122606 = [];
+	var screws122607 = [];
+	var spindles123786 = [];
+	var roundNuts100514 = [];
+
+
 	var placards = [];
 
 	var poang, edges, hardware, helpers;
@@ -115,16 +125,6 @@
 
 		addShadows();
 
-		hexKey = draw_hexKey_100001();
-		hexKey.scale.set( 0.1, 0.1, 0.1 );
-
-		hexKey.userData.places.push( { pX: 0, pY: 30, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
-
-		objects.push( hexKey );
-		scene.add( hexKey );
-
 	}
 
 
@@ -132,19 +132,22 @@
 
 		tweenAllToLocation();
 
-		scene.remove( poang, edges, hardware, helpers );
-
-		helpers = new THREE.Object3D();
-		drawHelpers();
+		scene.remove( poang, edges, hardware, helpers, tools );
 
 		poang = new THREE.Object3D();
 		poang.name = 'poang';
+
+		helpers = new THREE.Object3D();
+		drawHelpers();
 
 		edges = new THREE.Object3D();
 		edges.name = 'edges';
 
 		hardware = new THREE.Object3D();
 		hardware.name = 'hardware';
+
+		tools = new THREE.Object3D();
+		tools.name = 'tools';
 
 		rockerRight = drawRocker( 'rockerRight' );
 
@@ -239,7 +242,17 @@
 		cushionBottom.userData.places.push( { pX: 25, pY: 0, pZ: 120, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		cushionBottom.userData.places.push( { pX: 7, pY: 38, pZ: frameWidth + bevelThickness, rX: 0, rY: 0, rZ: -0.125 } );
 
-		scene.add( poang, edges, hardware, helpers );
+		hexKey = draw_hexKey_100001();
+		hexKey.scale.set( 0.1, 0.1, 0.1 );
+
+		hexKey.userData.places.push( { pX: 0, pY: 30, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+
+		objects.push( hexKey );
+		tools.add( hexKey );
+
+		scene.add( poang, edges, hardware, helpers, tools );
 
 		camera.userData.places = [];
 		camera.userData.tween = tweenCamera;
@@ -444,9 +457,17 @@
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
 
-		build_hole2( mesh, offset, 0.1, 1.5 * frameWidth + 2, pi05, 0, 0, draw_screw_119046 );
-		build_hole2( mesh, offset, 0.11, chairWidth - 1.5 * frameWidth - 2, pi05, 0, 0, draw_screw_119046  );
+		if ( name !== 'seatBar1' && name !== 'seatBar2' ) {
 
+			build_hole2( mesh, offset, 0.1, 1.5 * frameWidth + 2, pi05, 0, 0, draw_screw_119046 );
+			build_hole2( mesh, offset, 0.11, chairWidth - 1.5 * frameWidth - 2, pi05, 0, 0, draw_screw_119046  );
+
+		} else {
+
+			build_hole2( mesh, offset, 0.1, 1.5 * frameWidth + 2, pi05, 0, 0, draw_screw_112522 );
+			build_hole2( mesh, offset, 0.11, chairWidth - 1.5 * frameWidth - 2, pi05, 0, 0, draw_screw_112522  );
+
+		}
 		objects.push( mesh );
 		poang.add( mesh );
 
@@ -472,8 +493,9 @@
 		var mesh = drawExtrusion( vertices, barSection, 3 );
 		mesh.name = ( name );
 
-		build_hole( mesh, -0.1, offset, frameWidth + 2, 0, pi05, 0 );
-		build_hole( mesh, -0.1, offset, chairWidth - frameWidth - 2, 0, pi05, 0 );
+		build_hole2( mesh, -0.1, offset, frameWidth + 2, 0, pi05, 0, draw_round_nut_100514 );
+		build_hole2( mesh, -0.1, offset, chairWidth - frameWidth - 2, 0, pi05, 0, draw_round_nut_100514 );
+
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -502,10 +524,10 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
 
-		build_hole( mesh, 7, 35.1 + frameThickness, 0.5 * frameWidth, pi05, 0, 0 );
-		build_hole( mesh, 35, 34.1, 0.5 * frameWidth, pi05, 0, 0 );
-		build_hole( mesh, 10, 35.1, -0.1, 0, 0, 0 );
-		build_hole( mesh, 57, 42, 0.5 * frameWidth, 0, pi05, 0 );
+		build_hole2( mesh, 7, 35.1 + frameThickness, 0.5 * frameWidth, pi05, 0, 0  );
+		build_hole2( mesh, 35, 34.1, 0.5 * frameWidth, pi05, 0, 0 );
+		build_hole2( mesh, 10, 35.1, -0.1, 0, 0, 0 );
+		build_hole2( mesh, 57, 42, 0.5 * frameWidth, 0, pi05, 0,draw_screw_112522 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -536,11 +558,11 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
 
-		build_hole( mesh, 85 - frameThickness - 2, 92, offset, 0, pi05, 0 );
-		build_hole( mesh, 80 - frameThickness - 2, 75, offset, 0, pi05, 0 );
-		build_hole( mesh, 70 - frameThickness - 1, 60, offset, 0, pi05, 0 );
-		build_hole( mesh, 60 - frameThickness - 0, 43, offset, 0, pi05, 0 );
-		build_hole( mesh, 63 - frameThickness - 0, 48, offset, 0, pi05, 0 );
+		build_hole2( mesh, 85 - frameThickness - 2, 92, offset, 0, pi05, 0 );
+		build_hole2( mesh, 80 - frameThickness - 2, 75, offset, 0, pi05, 0 );
+		build_hole2( mesh, 70 - frameThickness - 1, 60, offset, 0, pi05, 0 );
+		build_hole2( mesh, 60 - frameThickness - 0, 43, offset, 0, pi05, 0 );
+		build_hole2( mesh, 63 - frameThickness - 0, 48, offset, 0, pi05, 0 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -574,10 +596,12 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
 
-		build_hole( mesh, 15, 3, offset, pi05, 0, 0 );
-		build_hole( mesh, 35, 54, offset, pi05, 0, 0 );
-		build_hole( mesh, 12, 35, -0.1, 0, 0, 0 );
-		build_hole( mesh, 71, 64, -0.1, 0, 0, 0);
+		build_hole2( mesh, 15, 3, offset, pi05, 0, 0 );
+		build_hole2( mesh, 35, 54, offset, pi05, 0, 0 );
+		build_hole2( mesh, 12, 35, -0.1, 0, 0, 0, draw_spindle_123786 );
+		build_hole2( mesh, 71, 64, -0.1, 0, 0, 0, draw_screw_122607 );
+
+		build_hole2( mesh, 10, 26, frameWidth + 0.1, 0, 0, 0, draw_screw_122606 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -613,9 +637,9 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 80 );
 		mesh.name = ( name );
 
-		build_hole( mesh, 2, 4, offset, pi05, 0, 0 );
-		build_hole( mesh, 32, 52, offset, pi05, 0, 0 );
-		build_hole( mesh, 55, 50, -0.1, 0, 0, 0 );
+		build_hole2( mesh, 2, 4, offset, pi05, 0, 0, draw_screw_112091 );
+		build_hole2( mesh, 32, 52, offset, pi05, 0, 0, draw_screw_112091 );
+		build_hole2( mesh, 55, 50, -0.1, 0, 0, 0 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -716,17 +740,6 @@
 		mesh.rotation.set( aX, aY, aZ );
 
 		holes.push( mesh );
-/*
-		if ( type === 'pegHole' ) {
-
-			draw_peg_101339( mesh );
-
-		} else if ( type === 'screwHole' ) {
-
-			draw_screw_1004321_104322( mesh );
-
-		}
-*/
 
 		if ( drawType ) { drawType( mesh ); }
 
@@ -750,13 +763,13 @@
 
 		mesh.userData.places = [];
 		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
 
 		mesh.name = 'screw119046 ' + pegs.length;
 		mesh.userData.holeParent = hole;
-/*
+
 		hole.name = 'screw location ' + screws119046.length;
-		hole.userData.screws119046 = mesh;
+		hole.userData.screw = mesh;
 
 		var placard = build_placard( '119046', 0.05, 120, 0, 20, 0 );
 		placards.push( placard );
@@ -768,7 +781,225 @@
 		edges.add( edge );
 
 		return mesh;
-*/
+
+
+	}
+
+	function draw_screw_112522( hole ) {
+
+		var material = new THREE.MeshNormalMaterial( { side: 2 });
+		var geometry = createFlatHeadHexScrew( 0, 10, 1, 5 );
+
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+//		mesh.position.x = 30;
+		scene.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw112522 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '112522', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		screws112522.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function draw_screw_112091( hole ) {
+
+		var material = new THREE.MeshNormalMaterial( { side: 2 });
+		var geometry = createFlatHeadHexScrew( 0, 20, 1 );
+
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+//		mesh.position.x = 30;
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw112091 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '112091', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		screws112091.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function draw_screw_122607( hole ) {
+
+		var material = new THREE.MeshNormalMaterial( { side: 2 });
+		var geometry = createFlatHeadHexScrew( 30 );
+
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw122607 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( ['122607', '122603'], 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		screws122607.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function draw_screw_122606( hole ) {
+
+		var material = new THREE.MeshNormalMaterial( { side: 2 });
+		var geometry = createFlatHeadHexScrew();
+
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw122606 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( ['122606', '122604'], 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		screws122606.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function draw_spindle_123786( hole ) {
+
+		var geometry = createSpindle();
+		var material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'spindle123786 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '123786', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		spindles123786.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function draw_round_nut_100514( hole ) {
+
+		var geometry = createRoundNut();
+		var material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'roundNut100514 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + roundNuts100514.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '100514', 0.05, 120, 50, 50, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		roundNuts100514.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
 
 	}
 
@@ -843,6 +1074,87 @@
 
 	}
 
+	function createRoundNut() {
+		var shape;
+		var geometry, material, mesh;
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		radius = 10;
+		radiusHole = 5;
+		depthSlot = 5;
+		depthBody = 10;
+
+		var y = 2;
+
+		sine = y / radius;
+		angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+//console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
+
+		shape = new THREE.Shape();
+
+		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
+		shape.lineTo( -x, y );
+
+// choose one
+		geometry = shape.extrude( { amount: depthSlot, bevelEnabled: false, curveSegments: 10 } );
+
+		geometry2 = geometry.clone();
+		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry2 );
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
+
+		geometry3 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
+		geometry.merge( geometry3 );
+
+		y = radiusHole;
+		sine = y / radius;
+		angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
+		shape.lineTo( -x, y );
+
+		geometry4 = shape.extrude( { amount: 2 * radiusHole, bevelEnabled: false, curveSegments: 5 } );
+		geometry4.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody ) );
+		geometry.merge( geometry4 );
+
+		geometry5 = geometry4.clone();
+		geometry5.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry5 );
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
+
+		geometry6 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry6.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + 2 * radiusHole ) );
+		geometry.merge( geometry6 );
+
+		geometry7 = build_spiralAlongZ( 2.5, radiusHole, 12, 5, 3 );
+		geometry7.applyMatrix( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
+		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius, 0, depthSlot + depthBody + radiusHole ) );
+		geometry7.computeFaceNormals();
+		geometry7.computeVertexNormals();
+
+		geometry.merge( geometry7 );
+
+		geometry8 = new THREE.CylinderGeometry( radiusHole, radiusHole, 2 * radius, 12, 1, true );
+		geometry8.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 * Math.PI ) );
+		geometry8.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + radiusHole ) );
+		geometry.merge( geometry8 );
+
+		return geometry;
+
+//		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
+//		var mesh = new THREE.Mesh( geometry, material );
+//		scene.add( mesh );
+
+	}
 
 	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
@@ -883,6 +1195,33 @@
 
 		}
 //		geometry.center();
+
+		return geometry;
+
+	}
+
+	function createSpindle( radius, radiusSpacer, fillet ) {
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		radius = radius ? radius : 3;
+		radiusSpacer = radiusSpacer ? radiusSpacer : 5;
+		fillet = fillet ? fillet : 1;
+
+		depthShaft1 = 15;
+		depthSpacer = 16;
+		depthShaft2 = 31;
+
+		var points = [];
+
+		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ), 
+			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),  
+			v2( radius, depthShaft2 - fillet), v2( radius - fillet, depthShaft2 ), v2( 0, depthShaft2 ),
+
+		];
+
+		var geometry = new THREE.LatheGeometry( points, 24, Math.PI, 1.5 * Math.PI );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -depthShaft1, 0 ) );
 
 		return geometry;
 
