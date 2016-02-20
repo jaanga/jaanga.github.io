@@ -2,6 +2,22 @@ dev notes read me
 ===
 
 
+2016-02-20 ~ 
+
+Terminology
+
+buildXXX = create geometry
+
+drawXXX = create mesh and add to scene
+
+Name space
+
+OB-objects-r1.js
+UT-utilities-r1.js
+TW-tween-r1.js
+TO-tools-r1.js
+HW-hardware-r1.js
+
 2016-01-30
 
 * Add all the colors

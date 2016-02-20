@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Poang Rocker R3.4</title>
+<title>Poang Rocker R3.3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Not the Poang Rocking chair - but looks like it' >
 <meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -85,7 +85,7 @@
 
 			'<p><button onclick=tweenAllToLocation(); >Return all to start</button>' +
 			'<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>' +
-			'<p><input type=checkbox onchange=toggleHW(); >Toggle Hardware</p>' +
+
 			'<div id=info ></div>' +
 
 		'';
@@ -125,37 +125,6 @@
 
 	}
 
-	function toggleHW() {
-
-		if ( hardware.children.length > 0 ) {
-
-			children = hardware.children
-			var sHW = children[0].scale.x === 0.1 ? 0.5 : 0.1;
-
-			for ( var i = 0; i < children.length; i++ ) {
-
-				children[ i ].scale.set( sHW, sHW, sHW );
-
-			}
-
-		}
-
-		if ( holes.length > 0 ) {
-
-			for ( var i = 0; i < holes.length; i++ ) {
-
-				if ( holes[i].children.length > 0 ) { 
-
-					var sHW = holes[i].children[0].scale.x === 0.1 ? 0.5 : 0.1;
-					holes[i].children[ 0 ].scale.set( sHW, sHW, sHW );
-
-				}
-
-			}
-
-		}
-
-	}
 
 	function drawPoangRocker() {
 
@@ -255,7 +224,7 @@
 
 
 		seatCloth = drawSeatCloth( 'seatCloth' );
-		seatCloth.userData.places.push( { pX: 95, pY: 0, pZ: -30, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatCloth.userData.places.push( { pX: 95, pY: 0, pZ: -10, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
 		seatCloth.userData.places.push( { pX: 10, pY: 36, pZ: 0, rX: 0, rY: 0, rZ: -0.125 } );
 
 
@@ -779,24 +748,69 @@
 	function draw_screw_119046( hole ) {
 
 		var geometry = createFlatHeadHexScrew( 0, 15, 1, 0, 3.5, 2.5 );
-		var X = 90, Z =  60, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '119046', 0.05, 120, 0, 20, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: 0, pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+		var offsetX = 20;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		scene.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw119046 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '119046', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+//		screws119046.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
 
 		return mesh;
+
 
 	}
 
 	function draw_screw_112522( hole ) {
 
 		var geometry = createFlatHeadHexScrew( 0, 10, 1, 5 );
-		var X = 100, Z =  50, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '112522', 0.05, 120, 0, 20, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: 0, pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		scene.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw112522 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '112522', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+//		screws112522.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
 
 		return mesh;
 
@@ -805,11 +819,31 @@
 	function draw_screw_112091( hole ) {
 
 		var geometry = createFlatHeadHexScrew( 0, 20, 1 );
-		var X = 110, Z =  80, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '112091', 0.05, 120, 0, 20, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: 0, pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw112091 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '112091', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
 
 		return mesh;
 
@@ -818,11 +852,31 @@
 	function draw_screw_122607( hole ) {
 
 		var geometry = createFlatHeadHexScrew( 30 );
-		var X = 95, Z =  60, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '122604', 0.05, 120, 0, 20, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw122607 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( ['122607', '122603'], 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
 
 		return mesh;
 
@@ -831,11 +885,31 @@
 	function draw_screw_122606( hole ) {
 
 		var geometry = createFlatHeadHexScrew();
-		var X = 100, Z =  70, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '122604', 0.05, 120, 0, 20, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'screw122606 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( ['122606', '122604'], 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
 
 		return mesh;
 
@@ -844,11 +918,31 @@
 	function draw_spindle_123786( hole ) {
 
 		var geometry = createSpindle();
-		var X = 100, Z =  90, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '123786', 0.05, 120, 0, 20, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		hardware.add( mesh );
+
+		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
+
+		mesh.name = 'spindle123786 ' + pegs.length;
+		mesh.userData.holeParent = hole;
+
+		hole.name = 'screw location ' + screws119046.length;
+		hole.userData.screw = mesh;
+
+		var placard = build_placard( '123786', 0.05, 120, 0, 20, 0 );
+		placards.push( placard );
+		mesh.add( placard );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
 
 		return mesh;
 
@@ -857,26 +951,36 @@
 	function draw_round_nut_100514( hole ) {
 
 		var geometry = createRoundNut();
-		var X = 90, Z = 80, a = ran( pi2 ), r = ran( 10 );
 
-		var mesh = tweakHW( geometry, hole, build_placard( '100514', 0.05, 120, 50, 50, 0 ) );
-		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
-		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
-
-		return mesh;
-
-	}
-
-	function tweakHW( geometry, hole, placard ) {
+		var offsetX = 50;
+		var offsetZ =  20;
+		var a = ran( pi2 );
+		var r = ran( 25 );
 
 		var mesh = new THREE.Mesh( geometry, materialScrew );
-		mesh.userData.holeParent = hole;
+		mesh.name = 'roundNut100514';
+
 		mesh.userData.places = [];
+		mesh.userData.places.push( { parent: hardware, scale: 1, pX: offsetX + r * cos( a ), pY: ran( 5 ), pZ: offsetZ + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+
+//		hole.name = 'screw location ' + roundNuts100514.length;
+
+		var placard = build_placard( '100514', 0.05, 120, 50, 50, 0 );
+
+		tweakHW( mesh, hole, placard );
+
+		return mesh;
+	}
+
+	function tweakHW( mesh, hole, placard ) {
 
 		hardware.add( mesh );
 
+		mesh.userData.holeParent = hole;
+
 		hole.userData.screw = mesh;
-		hole.name = 'screw location';
 
 		placards.push( placard );
 		mesh.add( placard );
@@ -965,15 +1069,15 @@
 		var geometry, material, mesh;
 		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 
-		var radius = 10;
-		var radiusHole = 5;
-		var depthSlot = 5;
-		var depthBody = 10;
+		radius = 10;
+		radiusHole = 5;
+		depthSlot = 5;
+		depthBody = 10;
 
 		var y = 2;
 
-		var sine = y / radius;
-		var  angle = Math.asin( sine );
+		sine = y / radius;
+		angle = Math.asin( sine );
 		var x = Math.cos( angle ) * radius;
 
 //console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
@@ -1036,6 +1140,10 @@
 
 		return geometry;
 
+//		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
+//		var mesh = new THREE.Mesh( geometry, material );
+//		scene.add( mesh );
+
 	}
 
 	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
@@ -1055,7 +1163,7 @@
 		var angleDelta = Math.PI / segments;
 
 		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
-		var vertices = geometry.vertices;
+		vertices = geometry.vertices;
 
 		for ( var i = 0; i < vertices.length; i++ ) {
 
@@ -1076,6 +1184,7 @@
 			}
 
 		}
+//		geometry.center();
 
 		return geometry;
 
