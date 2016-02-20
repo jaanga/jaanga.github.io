@@ -21,7 +21,7 @@
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
-	var audioContext = new AudioContext();
+	if ( AudioContext !== undefined ) { var audioContext = new AudioContext(); }
 
 	var outFrame;
 
