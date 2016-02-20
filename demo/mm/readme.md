@@ -30,9 +30,18 @@ _The product assembly manuals of the future - now_
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
+_2016-02-20_
+
+[Poang Rocking Chair - Demo - Full Screen - R3.4 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r3-@.html )
+
+* Add toggle hardware scale
+* Works on Safari & iOS
+* Code clean-up
+* Full assembly-disassembly tweening
+
 _2016-02-08_
 
-### [Poang Rocking Chair - Demo - Full Screen - R3 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r3.html )
+[Poang Rocking Chair - Demo - Full Screen - R3 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r3-00.html )
 
 * Adds first pass at assembly tweening
 * Code clean-up
