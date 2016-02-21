@@ -54,12 +54,12 @@
 			</h2>
 			<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>
 			<div id=info ></div>
+			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
 
 		`;
 
 //			<p><button onclick=doIt(); >do it</button></p>
-//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
-
 
 		stats = new Stats();
 		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
