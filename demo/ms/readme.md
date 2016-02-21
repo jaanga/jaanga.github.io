@@ -4,6 +4,6 @@
 MS Read Me
 ===
 
-[Sun Lat Lon]( ./sun-lat-lon/index.html )
+[Sun Lat Lon]( http://jaanga.github.io/demo/ms/sun-lat-lon/sun-lat-lon-r1.html )
 
 * Use the sliders to change the latitude and longitude of the sun
