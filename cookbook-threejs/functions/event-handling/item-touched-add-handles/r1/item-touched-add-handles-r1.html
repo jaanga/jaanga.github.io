@@ -124,6 +124,13 @@
 
 		}
 
+		geometry = new THREE.SphereGeometry( 10, 10, 10 );
+//		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 50, 0 );
+		scene.add( mesh );
+		objects.push( mesh );
+
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xf0f0f0 } );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		renderer.shadowMap.enabled = true;

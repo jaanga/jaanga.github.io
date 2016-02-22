@@ -2,25 +2,31 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Light R2</title>
+<title>Add Object Position Align R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
-<!--
+
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
--->
+<!--
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-
+-->
 <script>
 
-	var stats, renderer, scene, camera, controls;
+	var objects = [];
+	var headsUp;
+	var raycaster;
+	var mouse;
+	var particle, particleMaterial;
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
+	var stats, renderer, scene, camera, controls;
 
 	init();
 	animate();
@@ -52,6 +58,11 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
+// Heads Up
+		headsUp = document.body.appendChild( document.createElement( 'div' ) );
+		headsUp.style.cssText = 'background-color: #ddd; border-radius: 8px; padding: 0 5px 10px 5px; opacity: 0.85; ' +
+			'position: absolute; left: 50px; text-align: left; z-index: 10;';
+
 // three.js
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 		renderer.setClearColor( 0xf0f0f0 );
@@ -69,6 +80,19 @@
 		controls.minDistance = 10;
 		controls.maxDistance = 1000;
 
+// interaction
+		particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
+		particle = new THREE.Sprite( particleMaterial );
+//			particle.position.copy( pt );
+		particle.scale.x = particle.scale.y = 1;
+		scene.add( particle );
+
+		raycaster = new THREE.Raycaster();
+		mouse = new THREE.Vector2();
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // for mobile
+
 //assets
 		drawHelpers();
 
@@ -78,12 +102,184 @@
 		addLights( 70 );
 		addShadows();
 
+		addObject();
+
+		obj = scene.children[ 6 ];
+		v = obj.geometry.vertices;
+		addObject2( obj, v[ 0 ], v[ 1 ], v[ 5 ] );
+	}
+
+	function addObject2( obj, pt1, pt2, pt3 ) {
+
+		var axis = new THREE.Vector3( 0, 1, 0 );
+		var line = new THREE.Line3( pt1, pt2 );
+		var geometry = new THREE.Geometry();
+		geometry.vertices.push( pt1, pt2, pt3 );
+		geometry.faces.push( new THREE.Face3( 0, 1, 2 ) );
+		geometry.computeVertexNormals ();
+		var vector = geometry.faces[ 0 ].vertexNormals[ 0 ];
+
+		geometry = new THREE.BoxGeometry( 1, 3, 1 );
+
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( line.center() );
+		mesh.quaternion.setFromUnitVectors( axis, vector );
+		obj.add( mesh );
+
+	}
+
+
+	function addObject() {
+
+		obj = scene.children[ 5 ]
+		pt1 = obj.geometry.vertices[ 23 ];
+
+		geometry = new THREE.BoxGeometry( 1, 1, 1 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( pt1 );
+		obj.add( mesh );
+
+
+		pt2 = obj.geometry.vertices[ 25 ];
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( pt2 );
+		obj.add( mesh );
+
+console.log( '', pt1 );
+
+		pt2 = obj.geometry.vertices[ 25 ];
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( pt2 );
+		obj.add( mesh );
+
+console.log( '', pt2 );
+
+		pt3 = obj.geometry.vertices[ 40 ];
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( pt3 );
+		obj.add( mesh );
+
+console.log( '', pt3 );
+
+		var geometry = new THREE.Geometry();
+
+		geometry.vertices.push( pt1, pt2, pt3 );
+		geometry.faces.push( new THREE.Face3( 0, 1, 2 ) );
+
+		geometry.computeBoundingSphere();
+//		geometry.computeFaceNormals ();
+		geometry.computeVertexNormals ()
+		vector = geometry.faces[ 0 ].vertexNormals[ 0 ];
+var axis = new THREE.Vector3(0, 1, 0);
+console.log( 'geo', geometry, axis );
+
+		geometry = new THREE.BoxGeometry( 1, 3, 1 );
+
+//		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 ) );
+//geometry.verticesNeedUpdate = true;  
+//geometry.normalsNeedUpdate = true;
+
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		line = new THREE.Line3( pt1, pt2 );
+		mesh.position.copy( line.center() );
+		mesh.quaternion.setFromUnitVectors(axis, vector);
+		obj.add( mesh );
+
+console.log( '', line.center() );
+
+
+	}
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		var intersects = raycaster.intersectObjects( objects );
+
+		if ( intersects.length > 0 ) {
+
+			intersected = intersects[ 0 ].object;
+//			intersected.material.color.setHex( Math.random() * 0xffffff );
+
+			var vertices = intersected.geometry.vertices;
+			var dis = 1000000000;
+			var ip = intersects[ 0 ].point;
+			var pt, index;
+
+			for ( var i = 0; i < vertices.length; i++ ) {
+
+				var vertex = vertices[ i ].clone();
+				vertex.applyMatrix4( intersected.matrixWorld );
+				var d = vertex.distanceTo( ip );
+
+				if ( d < dis ) {
+
+					dis = d;
+					pt = vertex;
+					index = i
+
+				}
+
+			}
+
+//			particle = new THREE.Sprite( particleMaterial );
+			particle.position.copy( pt );
+//			particle.scale.x = particle.scale.y = 1;
+//			scene.add( particle );
+
+			headsUp.style.left = 50 + 0.5 * window.innerWidth + mouse.x * 0.5 * window.innerWidth + 'px';
+			headsUp.style.top = -10 + 0.5 * window.innerHeight - mouse.y * 0.5 * window.innerHeight + 'px';
+			headsUp.style.display = '';
+
+			headsUp.innerHTML  = '<h3 style="margin:0;" >Data Viewer</h3>' +
+
+				'Name: ' + intersected.name + '<br>' +
+				'type: ' + intersected.geometry.type + '<br>' +
+				'Three.js id:' + intersected.id + '<br>' +
+				'UUID:' + intersected.uuid + '<br>' +
+				'Layer: ' + intersected.layer + '<br>' +
+				'Point x: ' + intersects[ 0 ].point.x.toFixed(2) + ' y:' + intersects[ 0 ].point.y.toFixed(2) + ' z:' + intersects[ 0 ].point.z.toFixed(2) + '<br>' +
+				'index: ' + index + '<br>' +
+				'vertex x:' + pt.x.toFixed(2) + ' y:' + pt.y.toFixed(2) + ' z:' + pt.z.toFixed(2) + '<br>' +
+
+			'';
+
+console.log( 'interested', pt, intersects[0] );
+
+		} else {
+
+			intersected = null;
+
+			headsUp.style.display = 'none';
+
+			document.body.style.cursor = 'auto';
+
+		}
+
 	}
 
 
 	function addLights( size ) {
 
-// 2016-02-21 ~ template-threejs-lights-r2.html
+// 2016-02-07 ~ template-threejs-lights-r2.html
 
 		var size = size ? size : 100;
 		var lightAmbient, lightDirectional, lightPoint;
@@ -125,7 +321,7 @@
 
 	function addShadows() {
 
-// 2016-02-21 ~ add-lights/template-threejs-lights-r2.html
+// 2016-01-29 ~ add-lights/template-threejs-lights-r2.html
 
 		renderer.shadowMap.enabled = true;
 		renderer.shadowMap.cullFace = THREE.CullFaceBack;
@@ -150,7 +346,7 @@
 
 	function drawHelpers() {
 
-// 2016-02-21
+// 2016-01-27
 
 		geometry = new THREE.BoxGeometry( 100, 5, 100 );
 
@@ -182,13 +378,13 @@
 
 	function drawSphere() {
 
-		var geometry = new THREE.SphereGeometry( 25, 50, 25 );
+		var geometry = new THREE.SphereGeometry( 25, 16, 8 );
 
 //		material = new THREE.MeshNormalMaterial();
 		var material = new THREE.MeshPhongMaterial( {
 
-			color: 0xff0000
-//			color: 0xffffff * Math.random(),
+//			color: 0xff0000
+			color: 0xffffff * Math.random(),
 //			emissive: 0xffffff * Math.random(),
 //			specular: 0xffffff * Math.random(),
 
@@ -199,7 +395,9 @@
 
 		} );
 		var mesh = new THREE.Mesh( geometry, material );
+		mesh.name = 'sphere'
 		mesh.position.set( -50, 10, 0 );
+		objects.push( mesh );
 		scene.add( mesh );
 
 	}
@@ -207,11 +405,11 @@
 
 	function drawCubes() {
 
-// 2016-02-21
+// 2016-01-27
 
 		var geometry = new THREE.BoxGeometry( 10, 10, 10 );
 
-		for (var i = 0; i < 50; i++) {
+		for (var i = 0; i < 5; i++) {
 
 			var material = new THREE.MeshPhongMaterial( {
 
@@ -227,9 +425,10 @@
 			} );
 
 			var mesh = new THREE.Mesh( geometry, material );
+			mesh.name = 'cube ' + i;
 			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
 			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
-			mesh.name = 'cube';
+			objects.push( mesh );
 			scene.add( mesh );
 
 			helper = new THREE.EdgesHelper( mesh );

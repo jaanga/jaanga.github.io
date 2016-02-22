@@ -27,8 +27,8 @@
 
 	}
 
-  </script>
-  
+</script>
+
 <script id=fragmentShader type=x-shader/x-fragment >
 
 	uniform vec3 color1;
@@ -124,7 +124,7 @@
 		scene.add( axisHelper );
 
 // assets
-		geometry = new THREE.PlaneBufferGeometry( 100, 100, 200, 200 );
+		geometry = new THREE.PlaneBufferGeometry( 500, 500, 1024, 512 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - 0.5 * Math.PI ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 0 ) );
 //		material = new THREE.MeshNormalMaterial();

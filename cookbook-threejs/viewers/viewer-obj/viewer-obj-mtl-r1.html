@@ -16,13 +16,13 @@
 -->
 <script src="http://mrdoob.github.io/three.js/examples/js/loaders/DDSLoader.js"></script>
 <script src="http://mrdoob.github.io/three.js/examples/js/loaders/MTLLoader.js"></script>
-<script src="http://mrdoob.github.io/three.js/examples/js/loaders/OBJMTLLoader.js"></script>
+<script src="http://mrdoob.github.io/three.js/examples/js/loaders/OBJLoader.js"></script>
 <script>
 
 //	var fileName = '../models/tree';
 //	var fileName = '../models/female02';
 	var fileName = '../models/HumanHeart';
-	var fileName = '../models/HumanHeart';
+	var fileName = '../models/HumanHeart.obj';
 
 	var css, info, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -111,8 +111,8 @@
 	function loadFileOBJByURL( fileName ) {
 
 // http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/#http://va3c.github.io/viewer/samples/NPP_16.stl
-
-		var loader = new THREE.OBJMTLLoader();
+/*
+		var loader = new THREE.MTLLoader();
 		loader.crossOrigin = 'anonymous';
 		loader.load( fileName + '.obj', fileName + '.mtl', function ( object ) {
 
@@ -122,7 +122,39 @@
 			'';
 
 		} );
+*/
 
+// model
+
+				var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+					}
+				};
+
+				var onError = function ( xhr ) { };
+
+				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setBaseUrl( '../models/' );
+//				mtlLoader.setPath( '../models/' );
+				mtlLoader.load( '../models/HumanHeart.mtl', function( materials ) {
+
+					materials.preload();
+
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+//					objLoader.setPath( '../models/' );
+					objLoader.load( fileName, function ( object ) {
+
+//						object.position.y = - 95;
+						scene.add( object );
+
+					}, onProgress, onError );
+
+				});
 	}
 
 	function loadFileOBJByContent( fileObject ) {
