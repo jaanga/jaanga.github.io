@@ -152,10 +152,6 @@
 
 				f = hand.fingers[ j ];
 
-				k = knuckles[ count++ ];
-				k.position.fromArray( f.carpPosition );
-				k.visible = true;
-
 				p = phalanges[ count ];
 				p.position.fromArray( f.distal.center() );
 				p.scale.y = f.distal.length;
@@ -164,7 +160,7 @@
 				p.visible = true;
 
 				k = knuckles[ count++ ];
-				k.position.fromArray( f.dipPosition );
+				k.position.fromArray( f.carpPosition );
 				k.visible = true;
 
 				p = phalanges[ count ];
@@ -175,7 +171,7 @@
 				p.visible = true;
 
 				k = knuckles[ count++ ];
-				k.position.fromArray( f.pipPosition );
+				k.position.fromArray( f.dipPosition );
 				k.visible = true;
 
 				p = phalanges[ count ];
@@ -185,19 +181,24 @@
 				p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
 				p.visible = true;
 
-
 				k = knuckles[ count++ ];
-				k.position.fromArray( f.mcpPosition );
+				k.position.fromArray( f.pipPosition );
 				k.visible = true;
 
-				if ( j !== 0 ) {
+				if ( f.metacarpal.length > 0 ) {
+
 					p = phalanges[ count ];
 					p.position.fromArray( f.metacarpal.center() );
 					p.scale.y = f.metacarpal.length;
 					d = f.metacarpal.direction();
 					p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
 					p.visible = true;
+
 				}
+
+				k = knuckles[ count++ ];
+				k.position.fromArray( f.mcpPosition );
+				k.visible = true;
 
 				text += f.carpPosition + ' - ' + f.dipPosition + '<br>';
 
