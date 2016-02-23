@@ -30,9 +30,30 @@ _The product assembly manuals of the future - now_
 _This is all still a work-in-progress. In particular: sounds and textures need much effort._
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
+
+_2016-02-23_
+
+[Poang Rocking Chair - Demo - Full Screen - R4 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r4-@.html )
+
+* Adds object snap capability while editing/creating
+	* No more placing hardware by many trial end error attempts
+	* Select three points on existing geometry is now sufficient
+	* Utility allows points to be highlighted and by a simple clock on the screen
+* Add createClip and step-by-step assembly animation
+	* First pass
+	* Components move to final assembly positions
+	* No intermediate positions showing actual assembly process yet
+* All significant requirements met
+	* Still a number of minor errors
+		* Hardware pointing in wrong direction or misplaced
+		* Hardware details need finalizing
+	* Still number of details to be added
+		* Rails tongues and slots
+		* Arm and back lap joint 
+
 _2016-02-20_
 
-[Poang Rocking Chair - Demo - Full Screen - R3.4 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r3-@.html )
+[Poang Rocking Chair - Demo - Full Screen - R3.4 ]( http://jaanga.github.io/demo/mm/poang-rocking/poang-rocking-r3.html )
 
 * Add toggle hardware scale
 * Works on Safari & iOS
