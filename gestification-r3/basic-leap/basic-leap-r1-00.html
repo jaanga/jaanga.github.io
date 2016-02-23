@@ -1,0 +1,242 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Basic Leap R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+
+<script src=http://js.leapmotion.com/leap-0.6.4.js ></script>
+
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+	var loop = {};
+	var phalanges = [], knuckles = [];
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+/*			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+*/
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/ >❦</a>
+			</h2>
+<!--			<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>
+			<p><button onclick=doIt(); >do it</button></p>
+			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+-->			<div id=info ></div>
+			<div id=fingerData ></div>
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( -500, 500, 500 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 600, 2, 300 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 150, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 150 );
+		scene.add( axisHelper );
+
+// assets
+
+		geometry = new THREE.SphereGeometry( 5, 5, 5 );
+		material = new THREE.MeshNormalMaterial();
+
+		for ( var i = 0; i < 40; i++ ) {
+
+			geometry = new THREE.SphereGeometry( 7, 5, 5 );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.visible = false;
+			knuckles.push ( mesh );
+			scene.add( mesh );
+
+			geometry = new THREE.CylinderGeometry( 5, 5, 1 );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.visible = false;
+			phalanges.push ( mesh );
+			scene.add( mesh );
+
+		}
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+
+	loop.animate = function( frame ) {
+
+//		info.innerHTML = frame.dump();
+		info.innerHTML = frame.toString();
+
+		text = '';
+		count = 0;
+		var axis = new THREE.Vector3( 0, 1, 0 );
+		var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+		for ( var i = 0; i < frame.hands.length; i++ ) {
+
+			hand = frame.hands[ i ];
+
+			for ( var j = 0; j < hand.fingers.length; j++ ) {
+
+				f = hand.fingers[ j ];
+
+				p = phalanges[ count ];
+				p.position.fromArray( f.distal.center() );
+				p.scale.y = f.distal.length;
+				d = f.distal.direction();
+				p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
+				p.visible = true;
+
+				k = knuckles[ count++ ];
+				k.position.fromArray( f.carpPosition );
+				k.visible = true;
+
+				p = phalanges[ count ];
+				p.position.fromArray( f.medial.center() );
+				p.scale.y = f.medial.length;
+				d = f.medial.direction();
+				p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
+				p.visible = true;
+
+				k = knuckles[ count++ ];
+				k.position.fromArray( f.dipPosition );
+				k.visible = true;
+
+				p = phalanges[ count ];
+				p.position.fromArray( f.proximal.center() );
+				p.scale.y = f.proximal.length;
+				d = f.proximal.direction();
+				p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
+				p.visible = true;
+
+				k = knuckles[ count++ ];
+				k.position.fromArray( f.pipPosition );
+				k.visible = true;
+
+				if ( f.metacarpal.length > 0 ) {
+
+					p = phalanges[ count ];
+					p.position.fromArray( f.metacarpal.center() );
+					p.scale.y = f.metacarpal.length;
+					d = f.metacarpal.direction();
+					p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
+					p.visible = true;
+
+				}
+
+				k = knuckles[ count++ ];
+				k.position.fromArray( f.mcpPosition );
+				k.visible = true;
+
+				text += f.carpPosition + ' - ' + f.dipPosition + '<br>';
+
+			}
+
+		}
+
+/*
+		for ( var i = 0; i < frame.pointables.length; i++ ) {
+
+				k = knuckles[ count++ ];
+				k.position.fromArray( frame.pointables[ i ].tipPosition );
+				k.visible = true;
+
+		}
+*/
+
+		for ( var i = count; i < 40; i++ ) {
+
+			phalanges[i].visible = false;
+			knuckles[i].visible = false;
+
+		}
+
+		fingerData.innerHTML = text;
+
+//		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+	loop = Leap.loop( loop.animate );
+
+// This allows us to move even while in an iFrame.
+	Leap.loopController.setBackground( true );
+
+
+</script>
+</body>
+</html>
