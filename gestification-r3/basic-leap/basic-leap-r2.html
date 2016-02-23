@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Basic Leap R1</title>
+<title>Basic Leap R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -22,7 +22,8 @@
 <script>
 
 	var loop = {};
-	var phalanges = [], knuckles = [];
+	var phalanges;
+	var knuckles;
 
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	var axis = v( 0, 1, 0 );
@@ -88,30 +89,35 @@
 
 // assets
 
-		drawHands();
+		updateHands();
 
 	}
 
-	function drawHands() {
+	function updateHands() {
 
-		var geometry = new THREE.SphereGeometry( 5, 5, 5 );
-		var material = new THREE.MeshNormalMaterial();
+		scene.remove( phalanges, knuckles );
+
+		sizeKnuck = 1;
+		sizePhal = 1;
+
+		phalanges = new THREE.Object3D();
+		knuckles = new THREE.Object3D();
 
 		for ( var i = 0; i < 38; i++ ) {
 
-			geometry = new THREE.SphereGeometry( 7, 5, 5 );
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.visible = false;
-			knuckles.push ( mesh );
-			scene.add( mesh );
-
-			geometry = new THREE.CylinderGeometry( 5, 5, 1 );
+			geometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.visible = false;
-			phalanges.push ( mesh );
-			scene.add( mesh );
+			phalanges.add( mesh );
+
+			var geometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.visible = false;
+			knuckles.add( mesh );
 
 		}
+
+		scene.add( phalanges, knuckles );
 
 	}
 
@@ -140,12 +146,12 @@
 
 				f = hand.fingers[ j ];
 
-				updateFinger( count++, f.distal,  f.carpPosition );
-				updateFinger( count++, f.medial, f.dipPosition );
-				updateFinger( count++, f.proximal, f.pipPosition );
-				updateFinger( count++, f.metacarpal, f.mcpPosition );
+				updateFinger( count++, f.distal,  f.carpPosition, 0.3 );
+				updateFinger( count++, f.medial, f.dipPosition, 0.325 );
+				updateFinger( count++, f.proximal, f.pipPosition, 0.35 );
+				updateFinger( count++, f.metacarpal, f.mcpPosition, 0.375 );
 
-				text += f.carpPosition + ' - ' + f.dipPosition + '<br>';
+				text += f.distal.width + ' - ' + f.proximal.width + '<br>';
 
 			}
 
@@ -154,7 +160,7 @@
 /*
 		for ( var i = 0; i < frame.pointables.length; i++ ) {
 
-				k = knuckles[ count++ ];
+				k = knuckles.children[ count++ ];
 				k.position.fromArray( frame.pointables[ i ].tipPosition );
 				k.visible = true;
 
@@ -163,8 +169,8 @@
 
 		for ( var i = count; i < 38; i++ ) {
 
-			phalanges[i].visible = false;
-			knuckles[i].visible = false;
+			phalanges.children[ i ].visible = false;
+			knuckles.children[ i ].visible = false;
 
 		}
 
@@ -176,21 +182,25 @@
 
 	}
 
-	function updateFinger( count, bone, position ) {
+	function updateFinger( count, bone, position, scale ) {
 
 		if ( count !== 3 && count !== 23 ) { // thumbs have no metacarpals
 
-			var p = phalanges[ count ];
+			var p = phalanges.children[ count ];
 			p.position.fromArray( bone.center() );
 			p.scale.y = bone.length;
+			p.scale.set( scale * bone.width, bone.length, scale * bone.width );
+
 			var d = bone.direction();
 			p.quaternion.setFromUnitVectors( axis, v( d[ 0 ], d[ 1 ], d[ 2 ] ) );
 			p.visible = true;
 
 		}
 
-		var k = knuckles[ count ];
+		var k = knuckles.children[ count ];
+		var s = 1.15 * scale * bone.width;
 		k.position.fromArray( position );
+		k.scale.set( s, s, s );
 		k.visible = true;
 
 	}
