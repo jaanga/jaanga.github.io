@@ -10,7 +10,6 @@
 
 		'Normal Side 2': { 'material': new THREE.MeshNormalMaterial( { side: 2  } ) },
 		'Normal Side 2 Opacity 0.7' : { 'material' : new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true   } ), },
-		'Normal Flat': { 'material': new THREE.MeshNormalMaterial( { side: 2 } )  },
 		'Normal Wireframe': { 'material': new THREE.MeshNormalMaterial( { wireframe: true } ) },
 
 
@@ -560,54 +559,72 @@
 	}
 
 
-	function addLights() {
+	function addLights( size ) {
 
-		renderer.shadowMap.enabled = true;
+// 2016-02-21 ~ template-threejs-lights-r2.html
 
+		var size = size ? size : 100;
 		var lightAmbient, lightDirectional, lightPoint;
+
 
 		lightAmbient = new THREE.AmbientLight( 0x444444 );
 		scene.add( lightAmbient );
 
+
 		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		lightDirectional.position.set( -200, 200, 200 );
+		lightDirectional.position.set( -size, size, size );
 
-		var d = 100;
-		lightDirectional.shadowCameraLeft = -d;
-		lightDirectional.shadowCameraRight = d;
-		lightDirectional.shadowCameraTop = d;
-		lightDirectional.shadowCameraBottom = -d;
+		var d = size;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
 
-		lightDirectional.shadowCameraNear = 200;
-		lightDirectional.shadowCameraFar = 500;
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 3 * size;
 
-// can help stop appearance of gridlines in objects with opacity < 1
-		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
-		lightDirectional.shadowDarkness = 0.3; // default 0.5
-		lightDirectional.shadowMapWidth = 2048;  // default 512
-		lightDirectional.shadowMapHeight = 2048;
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
 
 		lightDirectional.castShadow = true;
-//		lightDirectional.shadowCameraVisible = true;
 		scene.add( lightDirectional );
+
+//		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
 
 		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
 		camera.add( lightPoint );
 		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
 		scene.add( camera );
 
+	}
+
+	function addShadows() {
+
+// 2016-02-21 ~ add-lights/template-threejs-lights-r2.html
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 		scene.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
 
-				child.castShadow = child.receiveShadow = true;
-				child.material = material;
+				child.castShadow = true
+				child.receiveShadow = true;
+//				child.material.needsUpdate = true;
 
 			}
 
 		} );
 
 	}
+
 
 	cubes = [ 'Bridge2', 'Escher', 'MilkyWay', 'Park2', 'Park3Med', 'pisa', 'skybox', 'SwedishRoyalCastle' ];
 
@@ -658,6 +675,7 @@
 				material.envMap = textureCube;
 //				material.refractionRatio = 0.85;
 				material.reflectivity = 0.85;
+
 			}
 
 		} else {
@@ -695,6 +713,8 @@ console.log( 'no index' );
 
 			if ( child instanceof THREE.Mesh ) {
 
+				child.castShadow = true
+				child.receiveShadow = true;
 				child.material = material;
 
 			}

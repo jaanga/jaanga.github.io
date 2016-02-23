@@ -2,7 +2,13 @@ dev notes read me
 ===
 
 
-2016-02-20 ~ 
+## 2016-02-22
+
+* Add build_hole3. working a treat. very fast and easy to places. code very simple too. Object snap in JavaScript. Yay
+* Add slow assembly. working a treat. movies by algorithm. lots of potential here
+
+
+## 2016-02-20 ~ 
 
 Terminology
 

@@ -20,11 +20,13 @@
 <script>
 
 	var objects = [];
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+
 	var headsUp;
 	var raycaster;
 	var mouse;
 	var particle, particleMaterial;
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
 	var stats, renderer, scene, camera, controls;
 
@@ -107,6 +109,7 @@
 		obj = scene.children[ 6 ];
 		v = obj.geometry.vertices;
 		addObject2( obj, v[ 0 ], v[ 1 ], v[ 5 ] );
+
 	}
 
 	function addObject2( obj, pt1, pt2, pt3 ) {
