@@ -46,6 +46,10 @@
 	var helpers;
 	var tools;
 
+	var rockerRight, rockerLeft, armRight, armLeft, backRight, backLeft, seatRight, seatleft, armBar, 
+		seatBar1, seatBar2, seatBar3, seatBar4, seatBar5, seatBar6, seatCloth, cushionBottom, cushionMiddle, cushionTop;
+
+
 	var screws119046 = [];
 	var screws112522 = [];
 	var screws112091 = [];
@@ -96,7 +100,8 @@
 
 			'<p><button onclick=tweenAllToLocation(); >Return all to start</button>' +
 			'<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>' +
-			'<p><button onclick=assembleSlowlyTween(tweenCount); >Assemble slowly</button></p>' +
+//			'<p><button onclick=assembleSlowlyTween(tweenCount); >Assemble slowly</button></p>' +
+			'<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Play Step-by-Step Assembly</p>' +
 			'<p><input type=checkbox onchange=toggleHW(); >Toggle Hardware</p>' +
 			'<div id=info ></div>' +
 
@@ -154,7 +159,44 @@
 
 		addShadows();
 
+
+
 	}
+
+	function createClips() {
+
+		var speed05 = 500;
+		var speed1 = 1000;
+		var speed2 = 2000;
+		var speed3 = 3000;
+		var speed5 = 5000;
+
+		playList = [
+
+			[ [ backLeft, 1, speed2 ] ],
+			[ [ seatBar3, 1, speed2 ] ],
+			[ [ seatBar4, 1, speed2 ] ],
+			[ [ seatBar5, 1, speed2 ] ],
+			[ [ seatBar6, 1, speed2 ] ],
+			[ [ backRight, 1, speed2 ] ],
+			[ [ seatLeft, 1, speed2 ] ],
+			[ [ seatBar1, 1, speed2 ] ],
+			[ [ seatBar2, 1, speed2 ] ],
+			[ [ seatCloth, 1, speed2 ] ],
+			[ [ seatRight, 1, speed2 ] ],
+			[ [ rockerLeft, 1, speed2 ] ],
+			[ [ armLeft, 1, speed2 ] ],
+			[ [ armBar, 1, speed2 ] ],
+			[ [ rockerRight, 1, speed2 ] ],
+			[ [ armRight, 1, speed2 ] ],
+			[ [ cushionMiddle, 1, speed2 ] ],
+			[ [ cushionBottom, 1, speed2 ] ],
+			[ [ cushionTop, 1, speed2 ] ],
+
+		];
+
+	}
+
 
 	function toggleHW() {
 
@@ -336,6 +378,8 @@
 		camera.userData.places.push( { pX: 1.5 * p2, pY: 50, pZ: -0.25 * p2, tX: -40, tY: 50, tZ: 30 } ); //  the end
 
 		tweenAllToLocation();
+
+		createClips();
 
 	}
 
@@ -557,16 +601,16 @@
 
 		];
 
-		var mesh = drawExtrusion( vertices, barSection, 5 );
+		var mesh = drawExtrusion( vertices, barSection, 20 );
 		mesh.name = ( name );
 
-		build_hole2( mesh, -0.1, offset, frameWidth + 2, 0, pi05, 0, draw_round_nut_100514 );
-		build_hole2( mesh, -0.1, offset, chairWidth - frameWidth - 2, 0, pi05, 0, draw_round_nut_100514 );
+//		build_hole2( mesh, -0.1, offset, frameWidth + 2, 0, pi05, 0, draw_round_nut_100514 );
+//		build_hole2( mesh, -0.1, offset, chairWidth - frameWidth - 2, 0, pi05, 0, draw_round_nut_100514 );
 
 		vs = mesh.geometry.vertices;
 
-//		build_hole3( mesh, vs[  ], vs[ 14 ], vs[ 17 ] );
-//		build_hole3( mesh, vs[  ], vs[ 74 ], vs[ 77 ] );
+		build_hole3( mesh, vs[ 4 ], vs[ 7 ], vs[ 0 ] );
+		build_hole3( mesh, vs[ 76 ], vs[ 75 ], vs[ 72 ] );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -595,10 +639,19 @@
 		var mesh = drawExtrusion( vertices, verticesSection, 50 );
 		mesh.name = ( name );
 
-		build_hole2( mesh, 7, 35.1 + frameThickness, 0.5 * frameWidth, pi05, 0, 0  );
-		build_hole2( mesh, 35, 34.1, 0.5 * frameWidth, pi05, 0, 0 );
-		build_hole2( mesh, 10, 35.1, -0.1, 0, 0, 0 );
-		build_hole2( mesh, 57, 42, 0.5 * frameWidth, 0, pi05, 0,draw_screw_112522 );
+//		build_hole2( mesh, 7, 35.1 + frameThickness, 0.5 * frameWidth, pi05, 0, 0  );
+//		build_hole2( mesh, 35, 34.1, 0.5 * frameWidth, pi05, 0, 0 );
+//		build_hole2( mesh, 10, 35.1, -0.1, 0, 0, 0 );
+//		build_hole2( mesh, 57, 42, 0.5 * frameWidth, 0, pi05, 0,draw_screw_112522 );
+
+		vs = mesh.geometry.vertices;
+
+		build_hole3( mesh, vs[ 185 ], vs[ 184  ], vs[ 181 ] );
+
+		build_hole3( mesh, vs[ 193 ], vs[ 194 ], vs[ 197 ] );
+		build_hole3( mesh, vs[ 109 ], vs[ 110 ], vs[ 113 ] );
+		build_hole3( mesh, vs[ 17 ], vs[ 18 ], vs[ 21 ], draw_screw_112522 );
+
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -687,7 +740,7 @@
 		build_hole3( mesh, vs[ 72 ], vs[ 75 ], vs[ 68 ] );
 		build_hole3( mesh, vs[ 4 ], vs[ 5 ], vs[ 9 ], draw_screw_122607 );
 
-		build_hole2( mesh, 10, 26, frameWidth + 0.1, 0, 0, 0, draw_screw_122606 );
+//		build_hole2( mesh, 10, 26, frameWidth + 0.1, 0, 0, 0, draw_screw_122606 );
 
 		mesh.castShadow = mesh.receiveShadow = true;
 		mesh.userData.places = [];
@@ -1390,6 +1443,7 @@ console.log( '', line.center() );
 
 	}
 
+
 	function onDocumentTouchStart( event ) {
 
 		event.preventDefault();
@@ -1473,6 +1527,8 @@ console.log( 'interested', pt, intersects[0] );
 
 	}
 
+
+/*
 	function assembleSlowlyTween( index ) {
 
 				var obj = objects[ index ]; 
@@ -1499,7 +1555,7 @@ console.log( 'interested', pt, intersects[0] );
 				.easing( TWEEN.Easing.Elastic.Out).start();
 
 	}
-
+*/
 </script>
 </body>
 </html>
