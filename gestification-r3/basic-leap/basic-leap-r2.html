@@ -5,7 +5,8 @@
 <title>Basic Leap R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices' >
-<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-02-23' >
 </head>
 <body>
 
@@ -32,6 +33,7 @@
 	var geometry, material, mesh;
 
 	init();
+	animate();
 
 	function init() {
 
@@ -176,10 +178,6 @@
 
 		fingerData.innerHTML = text;
 
-//		controls.update();
-		stats.update();
-		renderer.render( scene, camera );
-
 	}
 
 	function updateFinger( count, bone, position, scale ) {
@@ -211,6 +209,14 @@
 
 	Leap.loopController.setBackground( true );
 
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
 
 </script>
 </body>

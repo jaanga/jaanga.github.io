@@ -161,11 +161,13 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 				var metas = that.contentWindow.document.getElementsByTagName('meta'); ;
 				var description = 'none';
 				var keywords = 'none';
+				var date = 'none';
 
 				for ( var i = 0; i < metas.length; i++ ) {
 
 					if ( metas[ i ].name === 'description' ) { description = metas[ i ].content; }
 					if ( metas[ i ].name === 'keywords' ) { keywords = metas[ i ].content; }
+					if ( metas[ i ].name === 'date' ) { date = metas[ i ].content; }
 
 				}
 
@@ -174,6 +176,7 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 					'<h2><a href=${ that.src } >' + that.contentWindow.document.title + '</a></h2>' +
 					'<p>' + description + '</p>' +
 					'<p>keywords: ' + keywords + '</p>' +
+					'<p>date: ' + date + '</p>' +
 
 				'';
 

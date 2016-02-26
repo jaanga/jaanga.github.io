@@ -4,8 +4,9 @@
 <meta charset=utf-8 >
 <title>Basic Leap Hand Editor R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='Three.js template for Leap Motion devices' >
-<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=description content='Three.js hand editor template for Leap Motion devices. Update sizes, material, texture, environment map. Includes scenic enhancements and simple touch detection.' >
+<meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-02-25' >
 </head>
 <body>
 
@@ -38,6 +39,7 @@
 	var lightAmbient, lightDirectional, lightPoint;
 
 	init();
+	animate();
 
 	function init() {
 
@@ -402,10 +404,6 @@
 
 //		fingerData.innerHTML = text;
 
-		controls.update();
-		stats.update();
-		renderer.render( scene, camera );
-
 		checkForIntersect( phalanges.children[ 4 ], stonehenge.children )
 
 	}
@@ -470,6 +468,14 @@
 
 	Leap.loopController.setBackground( true );
 
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
 
 </script>
 </body>
