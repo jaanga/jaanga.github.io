@@ -44,9 +44,11 @@
 			'<p><select id=selMaterial></select></p>' +
 		'';
 
-		for (var i = 0; i < skyboxURLs.length; i++) {
-				selSkybox.appendChild( document.createElement( 'option' ) );
-				selSkybox.children[ i ].text = skyboxURLs[i][0];
+		for ( var i = 0; i < skyboxURLs.length; i++ ) {
+
+			selSkybox.appendChild( document.createElement( 'option' ) );
+			selSkybox.children[ i ].text = skyboxURLs[ i ][ 0 ];
+
 		}
 
 		selSkybox.selectedIndex = 6;

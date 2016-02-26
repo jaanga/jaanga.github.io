@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Basic Leap Hand Editor R3</title>
+<title>Basic Leap Hand Editor R2.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -99,7 +99,6 @@
 		camera.position.set( -500, 500, 500 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.target.y = 150;
 		controls.maxDistance = 2000;
 
 		scene = new THREE.Scene();
@@ -138,7 +137,6 @@
 		toggleAutoRotate( true );
 		toggleBackgroundGradient( true );
 		toggleGroundBoxLights( 500 );
-		toggleStonehenge( 5 );
 
 		addLights( 500 );
 		addShadows();
@@ -181,72 +179,6 @@
 
 	}
 
-	function toggleStonehenge( scale ) {
-
-		stonehenge = scene.getObjectByName( 'stonehenge' );
-		var stonehengeHelpers = scene.getObjectByName( 'stonehengeHelpers' );
-
-		if ( stonehenge === undefined ) {
-
-			stonehenge = new THREE.Object3D();
-			stonehengeHelpers = new THREE.Object3D();
-
-			stonehenge.name = 'stonehenge';
-			stonehengeHelpers.name = 'stonehengeHelpers';
-
-			var number = 20;
-			var angle = 6.283 / number;
-			var radius = scale * 200;
-
-			for ( var i = 0; i < number; i++ ) {
-				var geometry = new THREE.BoxGeometry( 15, 100, 30 );
-				var color = 0xffffff * Math.random();
-				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
-				var mesh = new THREE.Mesh( geometry, material );
-				mesh.rotation.y = - angle * i;
-				mesh.position.set( radius * Math.cos( angle * i ) , 1 * scale * 50, radius * Math.sin( angle * i )  );
-				mesh.scale.set( scale, 2 * scale, scale );
-				stonehenge.add( mesh );
-
-				helper = new THREE.EdgesHelper( mesh );
-				stonehengeHelpers.add( helper );
-
-			}
-
-			number = 9;
-			angle = 6.283 / number;
-			radius = scale * 200;
-
-			for ( var i = 0; i < number; i++ ) {
-				var geometry = new THREE.BoxGeometry( 15, 20, 100 );
-
-				var color = 0xffffff * Math.random();
-				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
-				var mesh = new THREE.Mesh( geometry, material );
-
-				mesh.rotation.y = -angle * i;
-				delta = 0.01 *  Math.random();
-				mesh.scale.set( scale, 2 * scale, scale );
-				mesh.position.set( radius * Math.cos( ( delta + angle ) * i ) , 1 * scale * 170, radius * Math.sin( ( delta + angle ) * i )  );
-
-				stonehenge.add( mesh );
-
-				helper = new THREE.EdgesHelper( mesh );
-				stonehengeHelpers.add( helper );
-
-			}
-
-			stonehenge.scale.set( 0.2, 0.2, 0.2 );
-
-			scene.add( stonehenge, stonehengeHelpers );
-
-		} else {
-
-			scene.remove( stonehenge, stonehengeHelpers );
-
-		}
-
-	}
 
 	function toggleGroundBoxLights( size ) {
 
@@ -322,6 +254,7 @@
 
 	}
 
+
 	function toggleBackgroundGradient( checked ) {
 
 // 2016-02-02
@@ -378,11 +311,12 @@
 				updateFinger( count++, f.proximal, f.pipPosition, 0.35 );
 				updateFinger( count++, f.metacarpal, f.mcpPosition, 0.375 );
 
-				text += f.tipPosition + '<br>';
+				text += f.distal.width + ' - ' + f.proximal.width + '<br>';
 
 			}
 
 		}
+
 
 		for ( var i = 0; i < frame.pointables.length; i++ ) {
 
@@ -405,38 +339,6 @@
 		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
-
-		checkForIntersect( phalanges.children[ 4 ], stonehenge.children )
-
-	}
-
-	function checkForIntersect( obj1, objects ) {
-
-		var bbox1 = new THREE.Box3();
-		bbox1.setFromObject( obj1 );
-
-		var count = 0;
-		var bbox2 = new THREE.Box3();
-
-		for ( var i = 0; i < objects.length; i++ ) {
-
-			obj = objects[ i ];
-			bbox2.setFromObject( obj );
-
-			if ( bbox1.intersectsBox( bbox2 ) ) { 
-
-					obj.material.emissive.setHex( 0xff00ff );
-					count++;
-
-			} else {
-
-				obj.material.emissive.setHex( 0x000000 );
-
-			}
-
-		}
-
-		info.innerHTML = 'intersects: ' + count;
 
 	}
 
