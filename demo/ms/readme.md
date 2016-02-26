@@ -4,6 +4,17 @@
 MS Read Me
 ===
 
+## 2016-02-26
+
+[Analemma R1]( http://jaanga.github.io/demo/ms/analemma/annalemma-r1.html )
+
+[Sun Lat Lon R2]( http://jaanga.github.io/demo/ms/sun-lat-lon/sun-lat-lon-r2.html )
+
+* Add permalinks ( using hash.location )
+* Camera etc: to be added
+
+## 2016-02-25
+
 [Sun Lat Lon]( http://jaanga.github.io/demo/ms/sun-lat-lon/sun-lat-lon-r1.html )
 
 * Use the sliders to change the latitude and longitude of the sun
