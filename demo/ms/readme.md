@@ -6,9 +6,11 @@ MS Read Me
 
 ## 2016-02-26
 
-[Analemma R1]( http://jaanga.github.io/demo/ms/analemma/annalemma-r1.html )
+[Analemma R1]( http://jaanga.github.io/demo/ms/analemma/analemma-r1.html )
 
-[Sun Lat Lon R2]( http://jaanga.github.io/demo/ms/sun-lat-lon/sun-lat-lon-r2.html )
+* First pass at drawing lines as circumference curves
+
+[Sun Lat Lon Hash R1]( http://jaanga.github.io/demo/ms/sun-lat-lon/sun-lat-lon-hash-r1.html )
 
 * Add permalinks ( using hash.location )
 * Camera etc: to be added
