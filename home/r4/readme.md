@@ -85,10 +85,10 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 </div>
 
 <div class=figure >
-<a href=http://jaanga.github.io/gestification-r2/ >
+<a href=http://jaanga.github.io/gestification-r3/ >
 <img src=http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png >
-<h2>Gestification R2</h2></a>
-<li><a href=http://jaanga.github.io/gestification/>Gestification]</a>2013
+<h2>Gestification R3</h2></a>
+<li><a href="http://jaanga.github.io/gestification-r2/" >Gestification R2</a> 2015 / <a href=http://jaanga.github.io/gestification/>Gestification</a> 2013
 <li>Work that involves Three.js and the <a href=http://leapmotion.com >Leap Motion</a> device.
 </div>
 

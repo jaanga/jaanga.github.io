@@ -3,8 +3,11 @@
 
 [Jaanga]( http://jaanga.github.io ) »
 
-Gestification R3 Read Me
+[Gestification R3 Read Me]( index.html )
 ===
+
+
+_[Gestification Blog]( request-gestification-blog-posts.html ) [Read Me]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r3/ )_
 
 
 ## 2016-02-25
