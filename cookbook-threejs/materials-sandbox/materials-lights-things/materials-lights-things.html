@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>materials-lights-things</title>
+<title>Materials Lights Things r2</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -10,12 +10,15 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=https://cdn.rawgit.com/mrdoob/texgen.js/master/build/texgen.min.js ></script>
-<script src=materials-lights.js ></script>
+
 <!--
 <script src=draw-things.js ></script>
 -->
 <script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
+
+<script src=materials-lights-r2.js ></script>
 <script>
+
 	var defaultMaterial = 36;
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -37,8 +40,16 @@
 			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
 			'<div id=info ></div>' +
 			'<p><input type=checkbox id=chkEnvMap checked /> envMap</p>' +
+			'<p><select id=selSkybox onchange=updateMaterial(selMaterial.value); ></select></p>' +
 			'<p><select id=selMaterial></select></p>' +
 		'';
+
+		for (var i = 0; i < skyboxURLs.length; i++) {
+				selSkybox.appendChild( document.createElement( 'option' ) );
+				selSkybox.children[ i ].text = skyboxURLs[i][0];
+		}
+
+		selSkybox.selectedIndex = 6;
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -58,7 +69,6 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
-		addLights();
 
 		material = getMaterial();
 
@@ -79,11 +89,15 @@
 			}
 
 		}
-		selMaterial.selectedIndex = defaultMaterial; //materialsKeys.indexOf( materialsKeys[ defaultMaterial ] );
+
+		selMaterial.selectedIndex = defaultMaterial; // materialsKeys.indexOf( materialsKeys[ defaultMaterial ] );
 
 		selMaterial.onchange = function() { updateMaterial( selMaterial.value ); }
 
 		drawThings();
+
+		addLights();
+		addShadows();
 
 	}
 

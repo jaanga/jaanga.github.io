@@ -1,7 +1,15 @@
 ﻿	var QL = QL || {};
 
-	var width= 5;
+	var width = 5;
 	var height = 5;
+
+	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var pi = Math.PI;
+	var pi05 = 0.5 * pi;
+	var pi_05 = -0.5 * pi;
+	var pi2 = 2 * pi;
 
 	QL.sections = [
 
@@ -28,7 +36,6 @@
 		QL.sections.push( pts );
 
 		return pts;
-
 
 	}
 
@@ -78,6 +85,7 @@
 
 		}
 
+		geometry.mergeVertices();
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 
@@ -86,20 +94,48 @@
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'qmesh';
 
-
-// better to return geometry?
-
 		return mesh;
 
 	}
 
+	QL.drawQlineFromPointsGeo = function ( section, path ) {
+
+// 2016-02-24
+
+		var vertices, geometry, material, mesh;
+
+		vertices = [];
+		geometry = new THREE.PlaneGeometry( 10, 10, section.length - 1, path.length - 1 );
+
+		for ( var i = 0; i < section.length; i++ ) {
+
+			vertices.push( QL.offset ( mesh, path, section[ i ].x, section[ i ].y ) );
+
+		};
+
+		for ( var i = 0, j = 0; i < path.length; i++ ) {
+
+			for ( var k = 0; k < section.length; k++ ) {
+
+				geometry.vertices[ j++ ] = vertices[ k ][ i ];
+
+			}
+
+		}
+
+		geometry.mergeVertices();
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
 
 	QL.offset = function( obj, points, offsetX, offsetY ) {
 
 // 2016-02-10
 
 		var offsetY = offsetY ? offsetY : 0;
-		var geometry, material, mesh;
 		var pt1, pt2, offsetPt1, offsetPt2, vector, angle;
 		var line, lines, vertices;
 
@@ -123,16 +159,16 @@
 			lines.push( line );
 
 /* debug
+			var geometry, material;
 			geometry = new THREE.Geometry();
 			geometry.vertices = [ offsetPt1, offsetPt2 ];
 			material = new THREE.LineBasicMaterial( { color: 'magenta' } );
-			var line = new THREE.Line( geometry, material );
+			line = new THREE.Line( geometry, material );
 			line.position.y = -5;
 			obj.add( line );
 */
 
 		}
-
 
 		if ( points[ 0 ].distanceTo( points[ points.length - 1 ] ) < 0.01 ) {
 

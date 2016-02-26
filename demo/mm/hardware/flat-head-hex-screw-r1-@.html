@@ -134,6 +134,8 @@
 
 	function createFlatHeadHexScrew( lengthBody, lengthThread, lengthTip, chamfer, radiusBody, radiusThread ) {
 
+// 2016-02-2 ~ http://jaanga.github.io/demo/mm/hardware/flat-head-hex-screw-r1-@.html
+
 		var lengthBody = lengthBody !== undefined ? lengthBody : 50;
 		var lengthThread = lengthThread ? lengthThread : 20;
 		var lengthTip = lengthTip ? lengthTip : 3;
@@ -153,7 +155,7 @@
 		angle = 2 * Math.PI / segments;
 
 		var shape, hole;
-		var geometry, material, mesh;
+		var geometry, geometry2;
 		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 
 		shape = new THREE.Shape();
@@ -187,17 +189,19 @@
 
 		];
 
-		var geometry2 = new THREE.LatheGeometry( points, 24, 0, 1.75 * Math.PI );
+		geometry2 = new THREE.LatheGeometry( points, 24, 0, 1.75 * Math.PI );
 
 		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
 		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead ) );
-
 		geometry.merge( geometry2 );
 
-		var geometry3 = build_spiralAlongZ( radiusThread, radiusBody, 12, lengthThread, 1 )
-		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead + stepHead + chamfer + lengthBody ) );
+		geometry2 = build_spiralAlongZ( radiusThread, radiusBody, 12, lengthThread, 1 )
+		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead + stepHead + chamfer + lengthBody ) );
+		geometry.merge( geometry2 );
 
-		geometry.merge( geometry3 );
+		geometry.mergeVertices();
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
 
 		return geometry;
 
@@ -221,7 +225,7 @@
 		var angleDelta = Math.PI / segments;
 
 		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
-		vertices = geometry.vertices;
+		var vertices = geometry.vertices;
 
 		for ( var i = 0; i < vertices.length; i++ ) {
 

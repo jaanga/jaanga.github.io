@@ -32,7 +32,7 @@
 
 		};
 
-		reader.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js';
+		reader.src = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.o/showdown.min.js';
 
 		window.addEventListener( 'hashchange', hashChange, false );
 

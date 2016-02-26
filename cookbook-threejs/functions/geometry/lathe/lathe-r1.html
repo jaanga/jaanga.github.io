@@ -95,8 +95,35 @@
 // assets
 
 
+		drawLatheObject();
+
+
 	}
 
+// ### GEOMETRY / Lathe
+// http://mrdoob.github.io/three.js/docs/#Reference/Extras.Geometries/LatheGeometry
+// Class for generating meshes with axial symmetry. Possible uses include donuts, pipes, vases etc. The lathe rotate around the Y axis.
+// LatheGeometry(points, segments, phiStart, phiLength) - does not close automatically
+
+
+	function drawLatheObject() {
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		var points = [];
+
+//		for ( var i = 0; i < 10; i ++ ) { points.push( new THREE.Vector2( Math.sin( i * 0.2 ) * 15 + 50, ( i - 5 ) * 2 ) ); }
+
+//		points = [ v2( 20, 0 ) , v2( 30, 0 ), v2( 30, 10 ), v2( 20, 10 ), v2( 20, 0 ) ];
+		points = [ v2( 30, 10 ) , v2( 10, 30 ) ];
+//		points = [ v2( 0, 0 ) , v2( 0, 0 ), v2( 0, 0 ), v2( 0, 0 ), v2( 0, 0 ) ];
+
+		geometry = new THREE.LatheGeometry( points, 24, 0.2, 1.0 * Math.PI - 0.4 );
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
 
 	function onWindowResize() {
 

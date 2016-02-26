@@ -2,23 +2,31 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>Round Nut R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Similar to part 100514' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
-<!--
+
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
--->
+<!--
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-
+-->
 <script>
 // http://www.ikea.com/us/en/assembly_instructions/poang-rocking-chair-frame__AA-370711-7_pub.pdf
+
+
+	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+	var radius = 10;
+	var radiusHole = 5;
+	var depthSlot = 5;
+	var depthBody = 10;
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -30,26 +38,27 @@
 
 		var css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
-		`
 
-			body { font: 12pt monospace; margin: 0; overflow: hidden; }
-			a {text-decoration: none; }
-			h2 { margin: 0 }
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
 
-		`;
+		'';
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
 		menu.innerHTML = 
-		`
 
-			<h2>
-				<a href="" >${ document.title }</a>
-				 <a href=http://jaanga.github.io/demo/mm/ >❦</a>
-			</h2>
-			<div id=info ></div>
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/ >❦</a>' +
+			'</h2>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+/*			'<p><button onclick=doIt(); >do it</button></p>' +
+			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
+*/			'<div id=info ></div>' +
 
-		`;
+		'';
 
 		stats = new Stats();
 		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
@@ -88,13 +97,39 @@
 
 // assets
 
-		createRoundNut();
+		var light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
+		light.position.set( -1, 1, 1 );
+		scene.add( light );
+
+		geometry = createRoundNut();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		material = new THREE.MeshPhongMaterial( { side: 2, wireframe: false } );
+//		material = new THREE.MeshStandardMaterial( { color: 0xaaaaaa, side: 2, wireframe: false } );
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+// height, radius 
+
+		y = radiusHole;
+		sine = y / radius;
+		angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+		geometry = createSquaredCylinder( 2 * x, radiusHole );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.rotation.z = 0.5 * Math.PI
+		mesh.position.set( x, 0, depthSlot + depthBody + radiusHole );
+		scene.add( mesh );
 
 	}
 
 	function createRoundNut() {
+
 		var shape;
-		var geometry, material, mesh;
+		var geometry;
+
 		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 
 		radius = 10;
@@ -115,12 +150,12 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
 		shape.lineTo( -x, y );
 
-// choose one
 		geometry = shape.extrude( { amount: depthSlot, bevelEnabled: false, curveSegments: 10 } );
 
 		geometry2 = geometry.clone();
 		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
 		geometry.merge( geometry2 );
+
 
 		shape = new THREE.Shape();
 		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
@@ -128,6 +163,7 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 		geometry3 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
 		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
 		geometry.merge( geometry3 );
+
 
 		y = radiusHole;
 		sine = y / radius;
@@ -155,21 +191,23 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 
 		geometry7 = build_spiralAlongZ( 2.5, radiusHole, 12, 5, 3 );
 		geometry7.applyMatrix( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
-		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius, 0, depthSlot + depthBody + radiusHole ) );
+		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius + 2, 0, depthSlot + depthBody + radiusHole ) );
 		geometry7.computeFaceNormals();
 		geometry7.computeVertexNormals();
 
 		geometry.merge( geometry7 );
-
+/*
 		geometry8 = new THREE.CylinderGeometry( radiusHole, radiusHole, 2 * radius, 12, 1, true );
 		geometry8.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 * Math.PI ) );
 		geometry8.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + radiusHole ) );
 		geometry.merge( geometry8 );
+*/
 
+		geometry.mergeVertices();
+		geometry.computeFaceNormals();
+//		geometry.computeVertexNormals();
 
-		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
-		var mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+		return geometry
 
 	}
 
@@ -214,6 +252,97 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 		}
 
 //		geometry.center();
+
+		return geometry;
+
+	}
+
+	function createSquaredCylinder( height, radius ) {
+
+// 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/buffer-geometry/box-to-cylinder-r1.html
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+		var columns, geometry, vertices, count, theta, delta;
+
+		var radius = radius ? radius : 20;
+		points = [ v2( radius, radius ), v2( -radius, radius ), v2( -radius, -radius ) , v2( radius, -radius ), v2( radius, radius ) ];
+
+		var height = height ? height : 25;
+		var rows = 3;
+		var segments = 6;
+
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows);
+
+		vertices = geometry.attributes.position.array;
+
+		count = 0;
+
+		for ( var j = 0; j < points.length; j++ ) {
+
+			for ( var k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					vertices[ count++ ] = 0;
+					vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					vertices[ count++ ] = points[ j ].x;
+					vertices[ count++ ] = 0;
+					vertices[ count++ ] = points[ j ].y;
+
+				}
+
+			}
+
+		}
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			theta = 2 * Math.PI / ( columns - 1 );
+
+			for ( var j = 0; j < columns; j++ ) {
+
+				vertices[ count++ ] = radius * Math.cos( 0.5 * Math.PI + theta * j );
+				vertices[ count++ ] =  i * height;
+				vertices[ count++ ] = radius * Math.sin( 0.5 * Math.PI + theta * j );
+
+			}
+
+		}
+
+		for ( j = 0; j < points.length; j++ ) {
+
+			for ( k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					vertices[ count++ ] = height;
+					vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					vertices[ count++ ] = points[ j ].x;
+					vertices[ count++ ] = height;
+					vertices[ count++ ] = points[ j ].y;
+
+				}
+
+			}
+
+		}
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
 
 		return geometry;
 

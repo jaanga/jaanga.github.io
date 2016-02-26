@@ -22,73 +22,65 @@
 
 	}
 
+	function addLights( size ) {
 
+// 2016-02-21 ~ template-threejs-lights-r2.html
 
-
-	function addLights( siz ) {
-
-		var size = siz ? siz : 100;
-//		renderer.shadowMap.enabled = true;
-
+		var size = size ? size : 100;
 		var lightAmbient, lightDirectional, lightPoint;
+
 
 		lightAmbient = new THREE.AmbientLight( 0x444444 );
 		scene.add( lightAmbient );
 
+
 		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		lightDirectional.position.set( -200, 200, 200 );
+		lightDirectional.position.set( -size, size, size );
 
 		var d = size;
-		lightDirectional.shadowCameraLeft = -d;
-		lightDirectional.shadowCameraRight = d;
-		lightDirectional.shadowCameraTop = d;
-		lightDirectional.shadowCameraBottom = -d;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
 
-		lightDirectional.shadowCameraNear = 20;
-		lightDirectional.shadowCameraFar = 2 * size;
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 3 * size;
 
-// can help stop appearance of gridlines in objects with opacity < 1
-		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
-		lightDirectional.shadowDarkness = 0.3; // default 0.5
-		lightDirectional.shadowMapWidth = 2048;  // default 512
-		lightDirectional.shadowMapHeight = 2048;
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
 
 		lightDirectional.castShadow = true;
 		scene.add( lightDirectional );
 
-//		lightHelper = new THREE.DirectionalLightHelper( lightDirectional, size )
-//		scene.add( lightHelper )
+		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
 
 		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
 		camera.add( lightPoint );
 		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
 		scene.add( camera );
 
-/*
-		scene.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh ) {
-
-				child.castShadow = child.receiveShadow = true;
-//				child.material = material;
-
-			}
-
-		} );
-*/
-
 	}
 
 	function addShadows() {
 
+// 2016-02-21 ~ add-lights/template-threejs-lights-r2.html
+
 		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 		scene.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
 
-				child.castShadow = child.receiveShadow = true;
-//				child.material = material;
+				child.castShadow = true
+				child.receiveShadow = true;
+//				child.material.needsUpdate = true;
 
 			}
 
@@ -297,8 +289,6 @@ console.log( '',backgroundGradient);
 			radius = 200;
 			for ( var i = 0; i < number; i++ ) {
 					var geometry = new THREE.BoxGeometry( 15, 100, 30 );
-	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
-	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
 					var color = 0xffffff * Math.random();
 					var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
 					var mesh = new THREE.Mesh( geometry, material );
@@ -319,22 +309,21 @@ console.log( '',backgroundGradient);
 			radius = 200;
 
 			for ( var i = 0; i < number; i++ ) {
-					var geometry = new THREE.BoxGeometry( 15, 20, 100 );
-	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.3 * Math.random() - 0.15 ) );
-	//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.2 * Math.random() - 0.1 ) );
-					var color = 0xffffff * Math.random();
-					var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
-					var mesh = new THREE.Mesh( geometry, material );
-					mesh.castShadow = true;
-					mesh.receiveShadow = true;
+				var geometry = new THREE.BoxGeometry( 15, 20, 100 );
+				var color = 0xffffff * Math.random();
+				var material = new THREE.MeshPhongMaterial( { color: color, side: 2 });
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.castShadow = true;
+				mesh.receiveShadow = true;
 
-					mesh.rotation.y = - angle * i;
-					mesh.position.set( radius * Math.cos( angle * i ) , 110, radius * Math.sin( angle * i )  );
+				mesh.rotation.y = -angle * i;
+				delta = 0.01 *  Math.random();
+				mesh.position.set( radius * Math.cos( ( delta + angle ) * i ) , 110, radius * Math.sin( ( delta + angle ) * i )  );
 
-					stonehenge.add( mesh );
+				stonehenge.add( mesh );
 
-					helper = new THREE.EdgesHelper( mesh );
-					stonehengeHelpers.add( helper );
+				helper = new THREE.EdgesHelper( mesh );
+				stonehengeHelpers.add( helper );
 
 			}
 

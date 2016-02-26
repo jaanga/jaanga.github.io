@@ -1,0 +1,342 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Sweep R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+	var slot = 10;
+
+	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+	var cos = function ( a ){ return Math.cos( a ); }
+	var sin = function ( a ){ return Math.sin( a ); }
+	var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	var d2r = pi / 180, r2d = 180 / pi;  // degrees / radians
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
+*/
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/ >❦</a>' +
+			'</h2>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+/*			'<p><button onclick=doIt(); >do it</button></p>' +
+			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
+*/			'<div id=info ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		geometry = new THREE.PlaneGeometry( 50, 50 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 0, 10 );
+		scene.add( mesh );
+
+		geometry = sweepCylinder( 20, 5 );
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -10, 0 );
+		scene.add( mesh );
+
+		geometry = sweepSegment();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 0, 0 );
+		scene.add( mesh );
+
+
+
+	}
+
+	function sweepCylinder( radius, height, columns, rows ) {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 50;
+		var columns = columns ? columns : 12;
+		var rows = rows ? rows : 5;
+
+
+
+		geometry = new THREE.PlaneGeometry( 10, 10, columns, rows );
+		vertices = geometry.vertices;
+		count = 0;
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			var theta = pi / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				x = radius * cos( theta * j );
+				y = i * height / rows;
+				z = radius * sin( theta * j );
+
+				vertices[ count++ ] = v( x, y, z );
+
+			}
+
+		}
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+	}
+
+
+	function sweepSegment() {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 20;
+		var columns = columns ? columns : 12;
+		var rows = rows ? rows : 5;
+
+		slot = 10;
+
+		angleStart = Math.atan2( slot, radius ); 
+		angleEnd = pi - angleStart; // Math.atan2( slot, radius ); 
+
+		geometry = new THREE.PlaneGeometry( 2 * radius, 50 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.rotation.set( 0, angleStart, 0 );
+		mesh.position.set( 0, 0, 0 );
+		scene.add( mesh );
+
+console.log( 'angleStart', angleStart * r2d );
+
+		geometry = new THREE.PlaneGeometry( 10, 10, columns, rows );
+		vertices = geometry.vertices;
+		count = 0;
+
+/*
+		rad = radius * cos( angleStart );
+		delta = 2 * rad / ( columns );
+
+		for ( var i = 0; i <= columns + 1; i++ ) {
+
+				x = rad - i * delta;
+				y = 0;
+				z = slot;
+				vertex = v( x, y, z );
+
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+*/
+
+		for ( i = 0; i <= rows; i++ ) {
+
+			rad2 = radius - i * 1;
+
+			angleStart = Math.atan2( slot, rad2 ); 
+
+			delta = ( angleEnd - angleStart ) / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				x = rad2 * cos( angleStart + delta * j );
+				y = i * height / rows;
+				z = rad2 * sin( angleStart + delta * j );
+				vertex = v( x, y, z );
+
+				vertices[ count++ ] = v( x, y, z );
+
+			}
+
+		}
+
+/*
+		rad = ( radius - rows )* cos( angleStart );
+		delta = 2 * rad / ( columns );
+		for ( i = 0; i <= columns + 1; i++ ) {
+
+				x = rad - i * delta;
+				y = height;
+				z = slot;
+				vertex = v( x, y, z );
+
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		rad = radius * cos( angleStart );
+		delta = 2 * rad / ( columns + 1 );
+		for ( i = 0; i <= columns; i++ ) {
+
+				x = rad - i * delta;
+				y = 0;
+				z = slot;
+				vertex = v( x, y, z );
+
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+*/
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+	function sweepBoxes() {
+
+		var radius = radius ? radius : 20;
+		var height = height ? height : 20;
+		var columns = columns ? columns : 12;
+		var rows = rows ? rows : 5;
+
+		slot = 10;
+
+		angleStart = Math.atan2( slot, radius ); 
+		angleEnd = pi - angleStart; // Math.atan2( slot, radius ); 
+
+console.log( 'ang', angleStart * r2d );
+
+
+		geometry = new THREE.BoxGeometry( 2, 5, 2 );
+
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+
+		x = radius * cos( angleStart * j );
+		y = i * height / rows;
+		z = radius * sin( angleStart * j );
+
+		vertex = v( x, y, z );
+
+		mesh.position.copy( vertex );
+		scene.add( mesh );
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		x = radius * cos( angleEnd * j );
+		y = i * height / rows;
+		z = radius * sin( angleEnd * j );
+
+		vertex = v( x, y, z );
+
+		mesh.position.copy( vertex );
+		scene.add( mesh );
+
+		for ( var i = 0; i <= rows; i++ ) {
+
+			delta = ( angleEnd - angleStart ) / columns;
+
+			for ( var j = 0; j <= columns; j++ ) {
+
+				x = radius * cos( angleStart + delta * j );
+				y = i * height / rows;
+				z = radius * sin( angleStart + delta * j );
+				vertex = v( x, y, z );
+
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.copy( vertex );
+				scene.add( mesh );
+
+			}
+
+		}
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+//		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

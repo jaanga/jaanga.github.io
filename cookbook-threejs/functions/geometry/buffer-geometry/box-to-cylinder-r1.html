@@ -126,6 +126,14 @@
 		mesh.position.x = 0;
 		scene.add( mesh );
 
+
+
+		geometry = createSquaredCylinder();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = 50;
+		scene.add( mesh );
 	}
 
 	function createCylinder( radius, height, columns, rows ) {
@@ -386,7 +394,6 @@
 
 		}
 
-
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 
@@ -394,6 +401,96 @@
 
 	}
 
+	function createSquaredCylinder( points, height, rows ) {
+
+// 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/buffer-geometry/box-to-cylinder-r1.html
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+		var columns, geometry, vertices, count, theta, delta;
+
+		var radius = radius ? radius : 20;
+		points = points ? points : [ v2( 20, 20 ), v2( -20, 20 ), v2( -20, -20 ) , v2( 20, -20 ), v2( 20, 20 ) ];
+
+		var height = height ? height : 25;
+		var rows = rows ? rows : 3;
+		var segments = 3;
+
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows);
+
+		vertices = geometry.attributes.position.array;
+
+		count = 0;
+
+		for ( var j = 0; j < points.length; j++ ) {
+
+			for ( var k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					vertices[ count++ ] = 0;
+					vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					vertices[ count++ ] = points[ j ].x;
+					vertices[ count++ ] = 0;
+					vertices[ count++ ] = points[ j ].y;
+
+				}
+
+			}
+
+		}
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			theta = 2 * Math.PI / ( columns - 1 );
+
+			for ( var j = 0; j < columns; j++ ) {
+
+				vertices[ count++ ] = radius * Math.cos( 0.5 * Math.PI + theta * j );
+				vertices[ count++ ] =  i * height;
+				vertices[ count++ ] = radius * Math.sin( 0.5 * Math.PI + theta * j );
+
+			}
+
+		}
+
+		for ( j = 0; j < points.length; j++ ) {
+
+			for ( k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					vertices[ count++ ] = height;
+					vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					vertices[ count++ ] = points[ j ].x;
+					vertices[ count++ ] = height;
+					vertices[ count++ ] = points[ j ].y;
+
+				}
+
+			}
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
 
 	function onWindowResize() {
 
