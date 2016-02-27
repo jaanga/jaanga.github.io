@@ -883,6 +883,27 @@
 
 	}
 
+	function build_placard2( text, scale, color, x, y, z ) {
+
+		var placard = new THREE.Object3D();
+
+		var texture = canvasMultilineText( text, { backgroundColor: color }  );
+		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
+		var sprite = new THREE.Sprite( spriteMaterial );
+		sprite.position.set( x, y, z ) ;
+		sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
+		placard.add( sprite );
+
+		var geometry = new THREE.Geometry();
+		geometry.vertices = [ v( 0, 0, 0 ),  v( x, y, z ) ];
+		var material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
+		var line = new THREE.Line( geometry, material );
+		placard.add( line );
+
+		return placard;
+
+	}
+
 	function togglePlacardVisible() {
 
 		for ( var i = 0; i < placards.length; i++ ) {

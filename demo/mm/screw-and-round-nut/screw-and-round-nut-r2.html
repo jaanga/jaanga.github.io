@@ -2,25 +2,29 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Screw and Round Nut R1</title>
+<title>Screw and Round Nut R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='' >
-<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=description content='Detail view of assembling chair parts with ling screw and round nut. Similar to Poang chair' >
+<meta name=keywords content='Moving ManualsWebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-02-27' >
 </head>
 <body>
 
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
+<script src=../js/qline-r1.js ></script>
+<script src=../js/tweenjs-r1.js ></script>
+<script src=../js/mm-object-r3.js ></script>
 <!--
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
--->
-<!--
 <script src=http://jaanga.github.io/demo/mm/js/qline-r1.js ></script>
+<script src=http://jaanga.github.io/demo/mm/js/tweenjs-r1.js ></script>
 -->
-<script src =../js/qline-r1.js ></script>
+
 <script>
 
 	var width = 5;
@@ -34,6 +38,8 @@
 	var width05 = 0.5 * width;
 	var height05 = 0.5 * height;
 	var length05 = 0.5 * length;
+
+	var indexAssembly = 0;
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -66,18 +72,21 @@
 			'	<a href="" >' + document.title + '</a>' +
 			'	 <a href=http://jaanga.github.io/ >❦</a>' +
 			'</h2>' +
+ 			'<p><button onclick=toggleAssembly(); >Toggle Assembly</button>' +
+			'<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Play Step-by-Step Assembly</p>' +
+			'<p><input type=checkbox onchange=toggleWireframe(); >Toggle Wireframe</p>' +
+
 /*--		'	<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
 			'<p><button onclick=doIt(); >do it</button></p>' +
 			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
-*/			'<div id=info ></div>' +
+*/
+			'<div id=info ></div>' +
 
 		'';
 
 		stats = new Stats();
 		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
 		document.body.appendChild( stats.domElement );
-
-		window.addEventListener( 'resize', onWindowResize, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
@@ -86,13 +95,20 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 30, 60, 30 );
+		camera.position.set( -30, 60, 30 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.target.set( 0, 49, 0 )
 		controls.maxDistance = 800;
 
 		scene = new THREE.Scene();
+
+// listeners
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
 
 // helpers
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
@@ -111,15 +127,74 @@
 
 // assets
 
-		drawArm();
-		drawArmBar();
+		draw_ScrewAndRoundNut_Assembly();
+
+	}
+
+	function toggleWireframe() {
+
+		for ( var i = 0; i < objects.length; i++ ) {
+
+			objects[ i ].material.wireframe = !objects[ i ].material.wireframe 
+
+		}
+
+	}
+
+
+	function toggleAssembly() {
+
+		indexAssembly = indexAssembly === 0 ? 1 : 0;
+
+		tweenAllToLocation( indexAssembly );
+
+	}
+
+	function draw_ScrewAndRoundNut_Assembly() {
+
+//		var geomtry, material, mesh;
+		material = new THREE.MeshNormalMaterial();
+
+//		scene.remove( objects );
+
+		origin = v( 10, 20, 10 );
+		moveTo = v( 0, 0, 0 );
+
+		geometry = drawArm();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.name = 'arm';
+		mesh.userData.places = [];
+		mesh.userData.places.push( { pX: -length05, pY: length + 5, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { pX: -length05, pY: length + 0.5 * width, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		arm = mesh;
+		objects.push( mesh );
+		scene.add( mesh );
+
+		geometry = drawArmBar();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.name = 'armBar';
+		mesh.userData.places = [];
+		mesh.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		armBar = mesh;
+		objects.push( mesh );
+		scene.add( mesh );
 
 // 122606
 		geometry = createFlatHeadHexScrew();
 		geometry.scale( 0.1, 0.1, 0.1 );
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.rotation.set( pi05, 0, 0 );
-		mesh.position.set( 0, length + 17, 0 );
+		mesh.name = 'screw_122606';
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.userData.places = [];
+		mesh.userData.places.push( { pX: 0, pY: length + 17, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { pX: 0, pY: length + width, pZ: 0, rX: pi05, rY: 0, rZ: pi } );
+		mesh.userData.places.push( { pX: 0, pY: length + width + 3, pZ: 0, rX: pi05, rY: 0, rZ: 0 } );
+
+		placard = build_placard( '122606', 0.03, 120, 0, -20, 2 );
+		mesh.add( placard );
+
+		flatHeadHexScrew_122606 = mesh;
+		objects.push( mesh );
 		scene.add( mesh );
 
 // 100514
@@ -128,17 +203,80 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( Math.PI ) );
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
-//		mesh.rotation.set( -pi05, 0, -0.4 );
-		mesh.position.set( 0, length - 1.5 * height, 7 );
+		mesh.name = 'nut_100514';
+		mesh.userData.places = [];
+		mesh.userData.places.push( { pX: 0, pY: length - 1.5 * height, pZ: 7, rX: 0, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { pX: 0, pY: length - 1.5 * height, pZ: height05, rX: 0, rY: 0, rZ: 0.5 * pi } );
+		mesh.userData.places.push( { pX: 0, pY: length - 1.5 * height, pZ: 7, rX: 0, rY: 0, rZ: - pi } );
+		mesh.userData.places.push( { pX: 0, pY: length - 1.5 * height, pZ: 7, rX: 0, rY: 0, rZ: pi } );
+		mesh.userData.places.push( { pX: 0, pY: length - 1.5 * height, pZ: 7, rX: 0, rY: 0, rZ: 0.5 * pi } );
+
+		roundNut_100514 = mesh;
+
+		placard = build_placard2( '100514', 0.03, 120, -20, 0, 1 );
+		mesh.add( placard );
+
+		objects.push( mesh );
 		scene.add( mesh );
 
 // 100001
 		geometry = draw_hexKey_100001();
 		geometry.scale( 0.1, 0.1, 0.1 );
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.rotation.set( -pi05, 0, -0.4 );
-		mesh.position.set( 0, length + 18, 0 );
+		mesh.name = 'hexKey_100001';
+		mesh.userData.places = [];
+		mesh.userData.places.push( { pX: 0, pY: length + 18, pZ: 0, rX: pi_05, rY: 0, rZ: 0 } );
+		mesh.userData.places.push( { pX: 0, pY: length + width - 0.5 , pZ: 0, rX: pi_05, rY: 0, rZ: -2 * pi } );
+		mesh.userData.places.push( { pX: 0, pY: length + 7.25, pZ: 0, rX: pi_05, rY: 0, rZ: 0 } );
+		hexKey_100001 = mesh;
+
+		placard = build_placard( '100001', 0.03, 120, 0, 20, 2 );
+		mesh.add( placard );
+
+		objects.push( mesh );
 		scene.add( mesh );
+
+		camera.userData.places = [];
+		camera.userData.tween = tweenCamera;
+
+		var p = camera.position.clone();
+		var t = controls.target.clone();
+		var p2 = 100;
+
+// 		camera.userData.places.push( { pX: 0, pY: 0, pZ: 0, tX: 0, tY: 0, tZ: 0 } );
+		camera.userData.places.push( { pX: 30, pY: 60, pZ: 30, tX: 0, tY: 49, tZ: 0 } ); // start
+		camera.userData.places.push( { pX: -2, pY: 50, pZ: 20, tX: 1, tY: 42, tZ: 2 } ); // assembly
+		camera.userData.places.push( { pX: 11, pY: 40, pZ: 16, tX: 1, tY: 37, tZ: 3 } ); // zoom
+
+		createClips();
+
+		tweenAllToLocation(); // mm-tween-r1.js
+
+	}
+
+	function createClips() {
+
+		var speed05 = 500;
+		var speed1 = 1000;
+		var speed2 = 2000;
+		var speed3 = 3000;
+		var speed5 = 5000;
+
+		playList = [
+
+			[ [ camera, 2, speed1 ] ],
+			[ [ roundNut_100514, 2, speed2 ] ],
+			[ [ roundNut_100514, 3, speed2 ] ],
+			[ [ roundNut_100514, 4, speed2 ] ],
+			[ [ roundNut_100514, 1, speed2 ] ],
+			[ [ camera, 0, speed1 ] ],
+			[ [ arm, 1, speed2 ] ],
+			[ [ flatHeadHexScrew_122606, 2, speed2 ] ],
+			[ [ hexKey_100001, 2, speed2 ] ],
+			[ [ flatHeadHexScrew_122606, 1, speed2 ], [ hexKey_100001, 1, speed2 ] ],
+			[ [ hexKey_100001, 0, 0 ] ],
+			[ [ camera, 1, speed1 ] ]
+		];
 
 	}
 
@@ -156,17 +294,15 @@
 		hole.absarc( 0, length05, radiusHole, 0, -2 * Math.PI );
 		shape.holes.push( hole );
 
-		geometry = shape.extrude( { amount: width, bevelEnabled: false, curveSegments: 8, steps: 3 } );
+		geometry = shape.extrude( { amount: width, bevelEnabled: false, curveSegments: 8, steps: 1 } );
 
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -width05, 0 ) );
 
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -length05, length + 5, 0 );
+		return geometry;
 
-		scene.add( mesh );
+
 
 	}
 
@@ -193,7 +329,7 @@
 		hole.absarc( 0, length - 1.5 * height, radiusHole, 0, -2 * Math.PI );
 		shape.holes.push( hole );
 
-		geometry = shape.extrude( { amount: height, bevelEnabled: false, curveSegments: 8, steps: 3 } );
+		geometry = shape.extrude( { amount: height, bevelEnabled: false, curveSegments: 8, steps: 1 } );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -height05 ) );
 
 		shape = new THREE.Shape();
@@ -203,7 +339,7 @@
 		hole.absarc( 0, 0, radiusHole, 0, -2 * Math.PI );
 		shape.holes.push( hole );
 
-		geo = shape.extrude( { amount: height, bevelEnabled: false, curveSegments: 8, steps: 3 } );
+		geo = shape.extrude( { amount: height, bevelEnabled: false, curveSegments: 8, steps: 1 } );
 		geo.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 		geometry.merge( geo );
 
@@ -229,9 +365,11 @@
 
 		geometry.mergeVertices();
 
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+		return geometry;
+
+//		material = new THREE.MeshNormalMaterial();
+//		mesh = new THREE.Mesh( geometry, material );
+//		scene.add( mesh );
 
 	}
 
@@ -245,6 +383,7 @@
 		var chamfer = chamfer !== undefined ? chamfer : 0;
 		var radiusBody = radiusBody ? radiusBody : 4;
 		var radiusThread = radiusThread ? radiusThread : 3;
+		var curveSegments = 20;
 
 		var radiusHead = 8;
 		var radiusHex = 2;
@@ -276,7 +415,7 @@
 		hole.fromPoints( points );
 		shape.holes.push( hole );
 
-		geometry = shape.extrude( { amount: depthHex, bevelEnabled: false, curveSegments: 30, steps: 3 } );
+		geometry = shape.extrude( { amount: depthHex, bevelEnabled: false, curveSegments: curveSegments, steps: 1 } );
 
 // body, thread & tip
 
@@ -292,13 +431,13 @@
 
 		];
 
-		geometry2 = new THREE.LatheGeometry( points, 24, 0, 1.75 * Math.PI );
+		geometry2 = new THREE.LatheGeometry( points, curveSegments, 0, 2 * Math.PI );
 
 		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
 		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead ) );
 		geometry.merge( geometry2 );
 
-		geometry2 = build_spiralAlongZ( radiusThread, radiusBody, 12, lengthThread, 1 )
+		geometry2 = build_spiralAlongZ( radiusThread, radiusBody, 0.5 * curveSegments, lengthThread, 1 )
 		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead + stepHead + chamfer + lengthBody ) );
 		geometry.merge( geometry2 );
 
@@ -726,6 +865,7 @@
 		requestAnimationFrame( animate );
 		controls.update();
 		stats.update();
+		TWEEN.update();
 		renderer.render( scene, camera );
 
 	}

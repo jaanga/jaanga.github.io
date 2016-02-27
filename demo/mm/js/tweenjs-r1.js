@@ -1,9 +1,20 @@
 ﻿
+/*
+2016-02-27 ~ Copyright Jaanga authors ~ MIT License
+
+Reminders
+
+* Add listeners
+* Add TWEEN.update(); to animation
+* Add toggle assembly items to menu
+
+*/
+
+	var objects = [];
+
 	var holes = [];
 	var screws;
 	var pegs;
-
-	var objects = [];
 
 	var indexFrame;
 	var indexObject;
@@ -278,7 +289,7 @@
 
 			}
 
-//			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - ' ' + ms.toFixed() + 'ms<br>';
+//			info.innerHTML += ( 1 + i ) + ' ' + obj.name + ' - ' + ms.toFixed() + 'ms<br>';
 
 		}
 
