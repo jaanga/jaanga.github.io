@@ -2,9 +2,9 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Screw and Round Nut R1</title>
+<title>Round Nut R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='' >
+<meta name=description content='Similar to part 100514' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
@@ -17,23 +17,8 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 -->
-<!--
-<script src=http://jaanga.github.io/demo/mm/js/qline-r1.js ></script>
--->
-<script src =../js/qline-r1.js ></script>
 <script>
-
-	var width = 5;
-	var height = 2;
-	var length = 40;
-	var radiusHole = 0.5;
-
-	var pegLength = 2;
-	var pegRadius = 0.5; 
-
-	var width05 = 0.5 * width;
-	var height05 = 0.5 * height;
-	var length05 = 0.5 * length;
+// http://www.ikea.com/us/en/assembly_instructions/poang-rocking-chair-frame__AA-370711-7_pub.pdf
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -50,12 +35,6 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
-
-/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
-			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
-			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
-*/
 		'';
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
@@ -66,8 +45,8 @@
 			'	<a href="" >' + document.title + '</a>' +
 			'	 <a href=http://jaanga.github.io/ >❦</a>' +
 			'</h2>' +
-/*--		'	<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
-			'<p><button onclick=doIt(); >do it</button></p>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+/*			'<p><button onclick=doIt(); >do it</button></p>' +
 			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
 */			'<div id=info ></div>' +
 
@@ -86,24 +65,23 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 30, 60, 30 );
+		camera.position.set( -100, 100, -100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.target.set( 0, 49, 0 )
 		controls.maxDistance = 800;
 
 		scene = new THREE.Scene();
 
 // helpers
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
 
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
+		mesh.position.set( 0, -51, 0 );
 		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
+		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
 
 		var axisHelper = new THREE.AxisHelper( 50 );
@@ -111,202 +89,17 @@
 
 // assets
 
-		drawArm();
-		drawArmBar();
+		var light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
+		light.position.set( -1, 1, 1 );
+		scene.add( light );
 
-// 122606
-		geometry = createFlatHeadHexScrew();
-		geometry.scale( 0.1, 0.1, 0.1 );
-		var mesh = new THREE.Mesh( geometry, material );
-		mesh.rotation.set( pi05, 0, 0 );
-		mesh.position.set( 0, length + 17, 0 );
-		scene.add( mesh );
-
-// 100514
 		geometry = createRoundNut_100514();
-		geometry.scale( 0.05, 0.05, 0.05 );
-		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( Math.PI ) );
+
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
-		mesh = new THREE.Mesh( geometry, material );
-//		mesh.rotation.set( -pi05, 0, -0.4 );
-		mesh.position.set( 0, length - 1.5 * height, 7 );
-		scene.add( mesh );
-
-
-		geometry = draw_hexKey_100001();
-		geometry.scale( 0.1, 0.1, 0.1 );
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.rotation.set( -pi05, 0, -0.4 );
-		mesh.position.set( 0, length + 18, 0 );
-		scene.add( mesh );
-
-	}
-
-	function drawArm() {
-
-		var shape, hole;
-		var geometry, material, mesh;
-
-		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
-
-		shape = new THREE.Shape();
-		shape.fromPoints( [ v2( -height05, 0 ), v2( height05, 0 ), v2( height05, length ), v2( -height05, length ) ] );
-
-		hole = new THREE.Path();
-		hole.absarc( 0, length05, radiusHole, 0, -2 * Math.PI );
-		shape.holes.push( hole );
-
-		geometry = shape.extrude( { amount: width, bevelEnabled: false, curveSegments: 8, steps: 3 } );
-
-		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
-		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
-		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -width05, 0 ) );
-
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( -length05, length + 5, 0 );
-
-		scene.add( mesh );
-
-	}
-
-	function drawArmBar() {
-
-		var width05 = 0.5 * width;
-		var height05 = 0.5 * height;
-		var length05 = 0.5 * length;
-
-		var shape, hole;
-		var geometry, material, mesh;
-		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
-
-		shape = new THREE.Shape();
-		shape.fromPoints( [ v2( -width05, 0.95 * height ), v2( width05, 0.95 * height ), v2( width05, length - 0.95 * height ), v2( -width05, length - 0.95 * height ) ] );
-
-
-		var hole = new THREE.Path();
-		hole.absarc( 0, width05, radiusHole, 0, -2 * Math.PI );
-		shape.holes.push( hole );
-
-
-		hole = new THREE.Path();
-		hole.absarc( 0, length - 1.5 * height, radiusHole, 0, -2 * Math.PI );
-		shape.holes.push( hole );
-
-		geometry = shape.extrude( { amount: height, bevelEnabled: false, curveSegments: 8, steps: 3 } );
-		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -height05 ) );
-
-		shape = new THREE.Shape();
-		shape.fromPoints( [ v2( -width05, -height05 ), v2( width05, -height05 ), v2( width05, height05 ), v2( -width05, height05 ) ] );
-
-		var hole = new THREE.Path();
-		hole.absarc( 0, 0, radiusHole, 0, -2 * Math.PI );
-		shape.holes.push( hole );
-
-		geo = shape.extrude( { amount: height, bevelEnabled: false, curveSegments: 8, steps: 3 } );
-		geo.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
-		geometry.merge( geo );
-
-		geo = geo.clone();
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( 0, length - height, 0 ) );
-		geometry.merge( geo );
-
-		geo = new THREE.CylinderGeometry( pegRadius, pegRadius, pegLength );
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( - width05 + height05, 0, 0 ) );
-		geometry.merge( geo );
-
-		geo = new THREE.CylinderGeometry( pegRadius, pegRadius, pegLength );
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( width05 - height05, 0, 0 ) );
-		geometry.merge( geo );
-
-		geo = new THREE.CylinderGeometry( pegRadius, pegRadius, pegLength );
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( -width05 + height05, length, 0 ) );
-		geometry.merge( geo );
-
-		geo = new THREE.CylinderGeometry( pegRadius, pegRadius, pegLength );
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( width05 - height05, length, 0 ) );
-		geometry.merge( geo );
-
-		geometry.mergeVertices();
-
-		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshPhongMaterial( { side: 2, wireframe: false } );
+//		material = new THREE.MeshStandardMaterial( { color: 0xaaaaaa, side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
-
-	}
-
-	function createFlatHeadHexScrew( lengthBody, lengthThread, lengthTip, chamfer, radiusBody, radiusThread ) {
-
-// 2016-02-2 ~ http://jaanga.github.io/demo/mm/hardware/flat-head-hex-screw-r1-@.html
-
-		var lengthBody = lengthBody !== undefined ? lengthBody : 50;
-		var lengthThread = lengthThread ? lengthThread : 20;
-		var lengthTip = lengthTip ? lengthTip : 3;
-		var chamfer = chamfer !== undefined ? chamfer : 0;
-		var radiusBody = radiusBody ? radiusBody : 4;
-		var radiusThread = radiusThread ? radiusThread : 3;
-
-		var radiusHead = 8;
-		var radiusHex = 2;
-		var stepHead = 2;
-
-		var depthHex = 1.9 * stepHead;
-
-// hex dims
-		var segments = 6;
-		points = [];
-		angle = 2 * Math.PI / segments;
-
-		var shape, hole;
-		var geometry, geometry2;
-		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
-
-		shape = new THREE.Shape();
-		shape.absarc( 0, 0, radiusHead, 0, 2 * Math.PI );
-
-//head & hex
-		hole = new THREE.Path();
-
-		for ( var i = 0; i < segments; i++ ) {
-
-			points.push( v2( radiusHex * Math.cos( i * angle ), radiusHex * Math.sin( i * angle ) ) );
-
-		}
-
-		hole.fromPoints( points );
-		shape.holes.push( hole );
-
-		geometry = shape.extrude( { amount: depthHex, bevelEnabled: false, curveSegments: 30, steps: 3 } );
-
-// body, thread & tip
-
-		points = [
-
-			v2( radiusHead, 0 ) , v2( radiusHead + stepHead, 0 ), v2( radiusHead + stepHead, stepHead ),
-
-			v2 ( radiusBody, stepHead + chamfer ), v2( radiusBody, stepHead + chamfer + lengthBody ),
-
-			v2( radiusThread, stepHead + chamfer + lengthBody ), v2( radiusThread, stepHead + chamfer + lengthBody + lengthThread ),
-
-			v2( 0, stepHead + chamfer + lengthBody + lengthThread + lengthTip )
-
-		];
-
-		geometry2 = new THREE.LatheGeometry( points, 24, 0, 1.75 * Math.PI );
-
-		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
-		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead ) );
-		geometry.merge( geometry2 );
-
-		geometry2 = build_spiralAlongZ( radiusThread, radiusBody, 12, lengthThread, 1 )
-		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead + stepHead + chamfer + lengthBody ) );
-		geometry.merge( geometry2 );
-
-		geometry.mergeVertices();
-		geometry.computeFaceNormals();
-		geometry.computeVertexNormals();
-
-		return geometry;
 
 	}
 
@@ -316,13 +109,13 @@
 
 // 2016-02-26 ~ http://jaanga.github.io/demo/mm/hardware/round-nut-100514-r1-@.html
 
-		var radius, radiusHole, depthSlot, depthBodyTopdepthBodyBottom;
+		var radius, radiusHole, depthSlot, depthBodyTop, depthBodyBottom;
 
-		radius = 10;
-		radiusHole = 5;
-		depthSlot = 3;
-		depthBodyTop = 15;
-		depthBodyBottom = 10;
+		radius = 5;
+		radiusHole = 2.5;
+		depthSlot = 1.5;
+		depthBodyTop = 10;
+		depthBodyBottom = 5;
 
 		var shape;
 		var geometry;
@@ -331,7 +124,7 @@
 
 //sweepConeSegment( radiusBase, radiusTop, height, chordRadius, columns )
 
-		geometry = sweepConeSegment( radius, radius - depthSlot, depthSlot, 2, 24 );
+		geometry = sweepConeSegment( radius, radius - depthSlot, depthSlot, 1, 24 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
 
@@ -343,7 +136,7 @@
 		shape = new THREE.Shape();
 		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
 
-		geometry2 = shape.extrude( { amount: depthBodyTop, bevelEnabled: false, curveSegments: 30 } );
+		geometry2 = shape.extrude( { amount: depthBodyTop, bevelEnabled: false, curveSegments: 10 } );
 		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
 		geometry.merge( geometry2 );
 
@@ -375,7 +168,7 @@
 		shape = new THREE.Shape();
 		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
 
-		geometry6 = shape.extrude( { amount: depthBodyBottom, bevelEnabled: false, curveSegments: 30 } );
+		geometry6 = shape.extrude( { amount: depthBodyBottom, bevelEnabled: false, curveSegments: 10 } );
 		geometry6.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBodyTop + 2 * radiusHole ) );
 		geometry.merge( geometry6 );
 
@@ -383,7 +176,7 @@
 
 		geometry7 = build_spiralAlongZ( 0.75 * radiusHole, radiusHole, 12, 4, 2 );
 		geometry7.applyMatrix( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
-		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius + 2, 0, depthSlot + depthBodyTop + radiusHole ) );
+		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius, 0, depthSlot + depthBodyTop + radiusHole ) );
 		geometry7.computeFaceNormals();
 		geometry7.computeVertexNormals();
 
@@ -508,6 +301,52 @@
 
 
 
+			function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+// 2016-02-11
+
+				var radiusInside = rIn ? rIn : 10;
+				var radiusOutside = rOut ? rOut : 15;
+
+				var segments = seg ? seg : 36;
+				var turns = tur ? tur : 7;
+				var segementsTotal = turns * segments;
+
+				var pitch = pit ? pit : 15;
+				var pitchDelta = 0.5 * pitch / segments;
+
+				var angleDelta = Math.PI / segments;
+
+				var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
+				var vertices = geometry.vertices;
+
+				for ( var i = 0; i < vertices.length; i++ ) {
+
+					var v = vertices[ i ];
+
+					if ( v.x < 0 ) {
+
+						v.x = radiusInside * Math.cos( angleDelta * i );
+						v.y = radiusInside * Math.sin( angleDelta * i );
+						v.z = pitchDelta * i;
+
+
+					} else {
+
+						v.x = radiusOutside * Math.cos( angleDelta * i );
+						v.y = radiusOutside * Math.sin( angleDelta * i );
+						v.z = pitchDelta * i;
+
+					}
+
+				}
+
+				return geometry;
+
+			}
+
+
+
 			function createSquaredCylinder( height, radius ) {
 
 // 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/buffer-geometry/box-to-cylinder-r1.html
@@ -612,105 +451,97 @@
 	}
 
 
-	function draw_hexKey_100001() {
 
-// 2016-02-24 ~ http://jaanga.github.io/demo/mm/tools/hex-key-100001.html
+	function createSquaredCylinderBuffer( height, radius ) {
 
-		var section = QL.sectionCircle( 2 );
+// 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/buffer-geometry/box-to-cylinder-r1.html
 
-		var radiusSection = 2;
-		var radiusPath = 5;
-		var lengthHex = 6;
-		var lengthShort = 15;
-		var lengthLong = 60;
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+		var columns, geometry, vertices, count, theta, delta;
+
+		var radius = radius ? radius : 20;
+		points = [ v2( radius, radius ), v2( -radius, radius ), v2( -radius, -radius ) , v2( radius, -radius ), v2( radius, radius ) ];
+
+		var height = height ? height : 25;
+		var rows = 3;
 		var segments = 6;
-		var angle = pi05 / segments;
 
-		var geometry, geo;
-		var points = [ v( 0, 0, lengthHex ) ];
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows);
 
-		for ( var i = 0; i <= segments; i++ ) {
+		vertices = geometry.attributes.position.array;
 
-			points.push( v( -radiusPath * Math.cos( i * angle ) + radiusPath, 0, 
-				lengthHex + lengthShort + radiusPath * Math.sin( i * angle ) ) );
+		count = 0;
 
-		}
+		for ( var j = 0; j < points.length; j++ ) {
 
-		for ( var i = 0; i <= segments; i++ ) {
+			for ( var k = 0; k < segments; k++ ) {
 
-			points.push( v( radiusPath * Math.cos( i * angle - 0.5 * Math.PI ) + lengthLong + radiusPath, 0,
-				lengthHex + lengthShort + 2 * radiusPath + radiusPath * Math.sin( i * angle - 0.5 * Math.PI  ) ) );
+				delta = k / segments;
 
-		}
+				if ( j < points.length - 1 ) { 
 
-		points.push( v( lengthLong + 2 * radiusPath, 0, lengthHex + 2 * lengthShort + 2 * radiusPath ) );
+					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					vertices[ count++ ] = 0;
+					vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
 
-		geometry = QL.drawQlineFromPointsGeo( section, points );
+				} else {
 
-		geo = new THREE.CylinderGeometry( radiusSection, radiusSection, lengthHex, 6, 1 );
-		geo.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 0.5 * lengthHex ) );
-		geometry.merge( geo );
+					vertices[ count++ ] = points[ j ].x;
+					vertices[ count++ ] = 0;
+					vertices[ count++ ] = points[ j ].y;
 
-		geo = new THREE.CylinderGeometry( radiusSection, radiusSection, lengthHex, 6, 1 );
-		geo.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
-		geo.applyMatrix( new THREE.Matrix4().makeTranslation( lengthLong + 2 * radiusPath, 0, 1.5 * lengthHex + 2 * lengthShort + 2 * radiusPath ) );
-		geometry.merge( geo );
-
-		geometry.mergeVertices();
-
-		return geometry;
-
-	}
-
-
-	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
-
-// 2016-02-11
-
-		var radiusInside = rIn ? rIn : 10;
-		var radiusOutside = rOut ? rOut : 15;
-
-		var segments = seg ? seg : 36;
-		var turns = tur ? tur : 7;
-		var segementsTotal = turns * segments;
-
-		var pitch = pit ? pit : 15;
-		var pitchDelta = 0.5 * pitch / segments;
-
-		var angleDelta = Math.PI / segments;
-
-		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
-		var vertices = geometry.vertices;
-
-		for ( var i = 0; i < vertices.length; i++ ) {
-
-			var v = vertices[ i ];
-
-			if ( v.x < 0 ) {
-
-				v.x = radiusInside * Math.cos( angleDelta * i );
-				v.y = radiusInside * Math.sin( angleDelta * i );
-				v.z = pitchDelta * i;
-
-			} else {
-
-				v.x = radiusOutside * Math.cos( angleDelta * i );
-				v.y = radiusOutside * Math.sin( angleDelta * i );
-				v.z = pitchDelta * i;
+				}
 
 			}
 
 		}
 
-//		geometry.center();
+		for ( var i = 0; i < 2; i++ ) {
+
+			theta = 2 * Math.PI / ( columns - 1 );
+
+			for ( var j = 0; j < columns; j++ ) {
+
+				vertices[ count++ ] = radius * Math.cos( 0.5 * Math.PI + theta * j );
+				vertices[ count++ ] =  i * height;
+				vertices[ count++ ] = radius * Math.sin( 0.5 * Math.PI + theta * j );
+
+			}
+
+		}
+
+		for ( j = 0; j < points.length; j++ ) {
+
+			for ( k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					vertices[ count++ ] = height;
+					vertices[ count++ ] = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					vertices[ count++ ] = points[ j ].x;
+					vertices[ count++ ] = height;
+					vertices[ count++ ] = points[ j ].y;
+
+				}
+
+			}
+
+		}
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
 
 		return geometry;
 
 	}
-
-
-
 
 	function onWindowResize() {
 

@@ -109,20 +109,6 @@
 		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
-// height, radius 
-
-		y = radiusHole;
-		sine = y / radius;
-		angle = Math.asin( sine );
-		var x = Math.cos( angle ) * radius;
-
-		geometry = createSquaredCylinder( 2 * x, radiusHole );
-
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.rotation.z = 0.5 * Math.PI
-		mesh.position.set( x, 0, depthSlot + depthBody + radiusHole );
-		scene.add( mesh );
-
 	}
 
 	function createRoundNut() {
@@ -134,11 +120,13 @@
 
 		radius = 10;
 		radiusHole = 5;
-		depthSlot = 5;
-		depthBody = 10;
+		depthSlot = 3;
+		depthBodyTop = 15;
+		depthBodyBottom = 10;
 
 		var y = 2;
 
+/*
 		sine = y / radius;
 		angle = Math.asin( sine );
 		var x = Math.cos( angle ) * radius;
@@ -155,27 +143,44 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 		geometry2 = geometry.clone();
 		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
 		geometry.merge( geometry2 );
+*/
 
+//sweepConeSegment( radiusBase, radiusTop, height, chordRadius, columns )
 
+		geometry = sweepConeSegment( radius, radius - depthSlot, depthSlot, 2, 24 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
+
+		geometry2 = geometry.clone();
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry2 );
+
+// cylinder
 		shape = new THREE.Shape();
 		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
 
-		geometry3 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry3 = shape.extrude( { amount: depthBodyTop, bevelEnabled: false, curveSegments: 10 } );
 		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
 		geometry.merge( geometry3 );
-
 
 		y = radiusHole;
 		sine = y / radius;
 		angle = Math.asin( sine );
 		var x = Math.cos( angle ) * radius;
 
+// hole
+		geometryX = createSquaredCylinder( 2 * x, radiusHole );
+		geometryX.applyMatrix( new THREE.Matrix4().makeRotationZ( -0.5 * Math.PI ) );
+		geometryX.applyMatrix( new THREE.Matrix4().makeTranslation( -x, 0, depthSlot + depthBodyTop + radiusHole) );
+//		mesh.position.set( x, 0, depthSlot + depthBodyTop + radiusHole );
+		geometry.merge( geometryX );
+
 		shape = new THREE.Shape();
 		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
 		shape.lineTo( -x, y );
 
 		geometry4 = shape.extrude( { amount: 2 * radiusHole, bevelEnabled: false, curveSegments: 5 } );
-		geometry4.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody ) );
+		geometry4.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBodyTop ) );
 		geometry.merge( geometry4 );
 
 		geometry5 = geometry4.clone();
@@ -185,13 +190,14 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 		shape = new THREE.Shape();
 		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
 
-		geometry6 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
-		geometry6.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + 2 * radiusHole ) );
+// bottom cylinder
+		geometry6 = shape.extrude( { amount: depthBodyBottom, bevelEnabled: false, curveSegments: 10 } );
+		geometry6.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBodyTop + 2 * radiusHole ) );
 		geometry.merge( geometry6 );
 
 		geometry7 = build_spiralAlongZ( 2.5, radiusHole, 12, 5, 3 );
 		geometry7.applyMatrix( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
-		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius + 2, 0, depthSlot + depthBody + radiusHole ) );
+		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius + 2, 0, depthSlot + depthBodyTop + radiusHole ) );
 		geometry7.computeFaceNormals();
 		geometry7.computeVertexNormals();
 
@@ -199,7 +205,7 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 /*
 		geometry8 = new THREE.CylinderGeometry( radiusHole, radiusHole, 2 * radius, 12, 1, true );
 		geometry8.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 * Math.PI ) );
-		geometry8.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + radiusHole ) );
+		geometry8.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBodyTop + radiusHole ) );
 		geometry.merge( geometry8 );
 */
 
@@ -211,6 +217,114 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 
 	}
 
+	function sweepConeSegment( radiusBase, radiusTop, height, chordRadius, columns ) {
+
+		var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+		var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+
+		var radiusBase = radiusBase ? radiusBase : 20;
+		var radiusTop = radiusTop ? radiusTop : 15;
+		var chordRadius = chordRadius ? chordRadius : 10;
+		var height = height ? height : 10;
+		var columns = columns ? columns : 12;
+
+		geometry = new THREE.PlaneGeometry( 10, 10, columns, 4 );
+		vertices = geometry.vertices;
+		count = 0;
+
+		angleStart = Math.atan2( chordRadius, radiusBase ); 
+		chordLength = radiusBase * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		startX = radiusBase * Math.cos( chordAngle );
+		delta = 2 * startX / columns;
+
+		for ( var i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = 0;
+				z = chordRadius;
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		angleStart = Math.atan2( chordRadius, radiusBase ); 
+		chordLength = radiusBase * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		delta = ( pi - 2 * chordAngle ) / columns;
+
+		for ( i = 0; i <= columns; i++ ) {
+
+			x = radiusBase * Math.cos( chordAngle + i * delta );
+			y = 0;
+			z = radiusBase * Math.sin( chordAngle + i * delta );
+
+// why is this necessary!?!
+
+				if ( z < chordRadius ) {
+
+					z = chordRadius;
+
+				}
+
+			vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		angleStart = Math.atan2( chordRadius, radiusTop ); 
+		chordLength = radiusTop * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		delta = ( pi - 2 * chordAngle ) / columns;
+
+		for ( i = 0; i <= columns; i++ ) {
+
+			x = radiusTop * Math.cos( chordAngle + i * delta );
+			y = height;
+			z = radiusTop * Math.sin( chordAngle + i * delta );
+
+				if ( z < chordRadius ) {
+
+					z = chordRadius;
+
+				}
+
+			vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		chordLength = radiusTop * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		startX = radiusTop * Math.cos( chordAngle );
+		delta = 2 * startX / columns;
+
+		for ( i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = height;
+				z = chordRadius;
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		chordLength = radiusBase * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		startX = radiusBase * Math.cos( chordAngle );
+		delta = 2 * startX / columns;
+
+		for ( var i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = 0;
+				z = chordRadius;
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
 
 	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
@@ -241,6 +355,7 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 				v.y = radiusInside * Math.sin( angleDelta * i );
 				v.z = pitchDelta * i;
 
+
 			} else {
 
 				v.x = radiusOutside * Math.cos( angleDelta * i );
@@ -258,6 +373,104 @@ console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
 	}
 
 	function createSquaredCylinder( height, radius ) {
+
+// 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/buffer-geometry/box-to-cylinder-r1.html
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+		var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+		var columns, geometry, vertices, count, theta, delta;
+
+		var radius = radius ? radius : 20;
+		points = [ v2( radius, radius ), v2( -radius, radius ), v2( -radius, -radius ) , v2( radius, -radius ), v2( radius, radius ) ];
+
+		var height = height ? height : 25;
+		var rows = 3;
+		var segments = 6;
+
+		columns = segments * ( points.length );
+ 
+		geometry = new THREE.PlaneGeometry(  1, 1, columns - 1, rows);
+
+		vertices = geometry.vertices;
+
+		count = 0;
+
+		for ( var j = 0; j < points.length; j++ ) {
+
+			for ( var k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					x = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					y = 0;
+					z = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					x = points[ j ].x;
+					y = 0;
+					z = points[ j ].y;
+
+				}
+				vertices[ count++ ] = v( x, y, z );
+
+			}
+
+		}
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			theta = 2 * Math.PI / ( columns - 1 );
+
+			for ( var j = 0; j < columns; j++ ) {
+
+				x = radius * Math.cos( 0.5 * Math.PI + theta * j );
+				y =  i * height;
+				z = radius * Math.sin( 0.5 * Math.PI + theta * j );
+
+				vertices[ count++ ] = v( x, y, z );
+
+			}
+
+		}
+
+		for ( j = 0; j < points.length; j++ ) {
+
+			for ( k = 0; k < segments; k++ ) {
+
+				delta = k / segments;
+
+				if ( j < points.length - 1 ) { 
+
+					x = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
+					y = height;
+					z = points[ j ].y + delta * ( points[ j + 1 ].y - points[ j ].y );
+
+				} else {
+
+					x = points[ j ].x;
+					y = height;
+					z = points[ j ].y;
+
+				}
+
+				vertices[ count++ ] = v( x, y, z );
+
+			}
+
+		}
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+	function createSquaredCylinderBuffer( height, radius ) {
 
 // 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/buffer-geometry/box-to-cylinder-r1.html
 

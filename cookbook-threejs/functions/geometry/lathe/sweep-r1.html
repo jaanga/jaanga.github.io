@@ -8,15 +8,15 @@
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
-<!--
+
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
--->
+<!--
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-
+-->
 <script>
 
 	var slot = 10;
@@ -101,38 +101,36 @@
 		scene.add( axisHelper );
 
 // assets
-
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		geometry = new THREE.PlaneGeometry( 50, 50 );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 10 );
-		scene.add( mesh );
+//		scene.add( mesh );
 
 		geometry = sweepCylinder( 20, 5 );
-
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -10, 0 );
 		scene.add( mesh );
 
-		geometry = sweepSegment();
+		geometry = sweepConeSegment();
+
+//sweepConeSegment( radiusBase, radiusTop, height, chordRadius, columns )
+
+		geometry = sweepConeSegment( 50, 40, 5, 20, 24 );
 
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );
 
-
-
 	}
 
 	function sweepCylinder( radius, height, columns, rows ) {
 
 		var radius = radius ? radius : 20;
-		var height = height ? height : 50;
-		var columns = columns ? columns : 12;
+		var height = height ? height : 30;
+		var columns = columns ? columns : 36;
 		var rows = rows ? rows : 5;
-
-
 
 		geometry = new THREE.PlaneGeometry( 10, 10, columns, rows );
 		vertices = geometry.vertices;
@@ -161,37 +159,161 @@
 	}
 
 
-	function sweepSegment() {
+
+
+	function sweepConeSegment( radiusBase, radiusTop, height, chordRadius, columns ) {
+
+// 2016-02-26 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry/lathe/sweep-r1.html
+
+		var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+		var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+
+		var radiusBase = radiusBase ? radiusBase : 20;
+		var radiusTop = radiusTop ? radiusTop : 15;
+		var chordRadius = chordRadius ? chordRadius : 10;
+		var height = height ? height : 10;
+		var columns = columns ? columns : 12;
+
+		geometry = new THREE.PlaneGeometry( 10, 10, columns, 4 );
+		vertices = geometry.vertices;
+		count = 0;
+
+		angleStart = Math.atan2( chordRadius, radiusBase ); 
+		chordLength = radiusBase * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		startX = radiusBase * Math.cos( chordAngle );
+		delta = 2 * startX / columns;
+
+		for ( var i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = 0;
+				z = chordRadius;
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		angleStart = Math.atan2( chordRadius, radiusBase ); 
+		chordLength = radiusBase * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		delta = ( pi - 2 * chordAngle ) / columns;
+
+		for ( i = 0; i <= columns; i++ ) {
+
+			x = radiusBase * Math.cos( chordAngle + i * delta );
+			y = 0;
+			z = radiusBase * Math.sin( chordAngle + i * delta );
+
+// why is this necessary!?!
+
+				if ( z < chordRadius ) {
+
+					z = chordRadius;
+
+				}
+
+			vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		angleStart = Math.atan2( chordRadius, radiusTop ); 
+		chordLength = radiusTop * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		delta = ( pi - 2 * chordAngle ) / columns;
+
+		for ( i = 0; i <= columns; i++ ) {
+
+			x = radiusTop * Math.cos( chordAngle + i * delta );
+			y = height;
+			z = radiusTop * Math.sin( chordAngle + i * delta );
+
+				if ( z < chordRadius ) {
+
+					z = chordRadius;
+
+				}
+
+			vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		chordLength = radiusTop * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		startX = radiusTop * Math.cos( chordAngle );
+		delta = 2 * startX / columns;
+
+		for ( i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = height;
+				z = chordRadius;
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+		chordLength = radiusBase * Math.cos( angleStart );
+		chordAngle = Math.atan2( chordRadius, chordLength );
+		startX = radiusBase * Math.cos( chordAngle );
+		delta = 2 * startX / columns;
+
+		for ( var i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = 0;
+				z = chordRadius;
+				vertices[ count++ ] = v( x, y, z );
+
+		}
+
+//		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		return geometry;
+
+	}
+
+
+
+
+
+	function sweepSegmentDebug( radius, height, columns, rows ) {
 
 		var radius = radius ? radius : 20;
 		var height = height ? height : 20;
 		var columns = columns ? columns : 12;
-		var rows = rows ? rows : 5;
-
+		var rows = rows ? rows : 1;
+		deltaRow = 5;
 		slot = 10;
 
 		angleStart = Math.atan2( slot, radius ); 
 		angleEnd = pi - angleStart; // Math.atan2( slot, radius ); 
 
-		geometry = new THREE.PlaneGeometry( 2 * radius, 50 );
+		geometry = new THREE.PlaneGeometry( 2 * radius + 5, 50 );
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.rotation.set( 0, angleStart, 0 );
+		mesh.rotation.set( 0, -angleStart, 0 );
 		mesh.position.set( 0, 0, 0 );
+//		scene.add( mesh );
+
+		slotLength = radius * cos( angleStart );
+		slotAngle = Math.atan2( slot, slotLength );
+
+		startX = radius * Math.cos( slotAngle );
+
+info.innerHTML = 'angleStart ' + angleStart * r2d + '<br>slotLength ' + slotLength;
+
+		geometry = new THREE.BoxGeometry( 0.5 , 80, 0.5 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( startX, -10, slot );
 		scene.add( mesh );
 
-console.log( 'angleStart', angleStart * r2d );
-
-		geometry = new THREE.PlaneGeometry( 10, 10, columns, rows );
+		geometry = new THREE.PlaneGeometry( 10, 10, columns, rows + 3 );
 		vertices = geometry.vertices;
 		count = 0;
 
-/*
-		rad = radius * cos( angleStart );
-		delta = 2 * rad / ( columns );
+		delta = 2 * startX / columns;
+		for ( var i = 0; i <= columns; i++ ) {
 
-		for ( var i = 0; i <= columns + 1; i++ ) {
-
-				x = rad - i * delta;
+				x = startX - i * delta;
 				y = 0;
 				z = slot;
 				vertex = v( x, y, z );
@@ -199,21 +321,27 @@ console.log( 'angleStart', angleStart * r2d );
 				vertices[ count++ ] = v( x, y, z );
 
 		}
-*/
 
 		for ( i = 0; i <= rows; i++ ) {
 
-			rad2 = radius - i * 1;
-
+			rad2 = radius - i * deltaRow;
 			angleStart = Math.atan2( slot, rad2 ); 
-
-			delta = ( angleEnd - angleStart ) / columns;
+			slotLength = rad2 * cos( angleStart );
+			slotAngle = Math.atan2( slot, slotLength );
+			delta = ( pi - 2 * slotAngle ) / columns;
 
 			for ( var j = 0; j <= columns; j++ ) {
 
-				x = rad2 * cos( angleStart + delta * j );
-				y = i * height / rows;
-				z = rad2 * sin( angleStart + delta * j );
+				x = rad2 * Math.cos( slotAngle + j * delta );
+				y = i * height / ( rows * deltaRow );
+				z = rad2 * Math.sin( slotAngle + j * delta );
+
+				if ( z < slot ) {
+
+					z = slot;
+
+				}
+
 				vertex = v( x, y, z );
 
 				vertices[ count++ ] = v( x, y, z );
@@ -222,13 +350,22 @@ console.log( 'angleStart', angleStart * r2d );
 
 		}
 
-/*
-		rad = ( radius - rows )* cos( angleStart );
-		delta = 2 * rad / ( columns );
-		for ( i = 0; i <= columns + 1; i++ ) {
 
-				x = rad - i * delta;
-				y = height;
+		slotLength = ( radius - rows * deltaRow ) * cos( angleStart );
+		slotAngle = Math.atan2( slot, slotLength );
+		slotRadius = ( radius - rows * deltaRow ) * Math.cos( slotAngle );
+		startX = ( radius - rows * deltaRow ) * Math.cos( slotAngle );
+
+		geo = new THREE.BoxGeometry( 0.5 , 80, 0.5 );
+		mesh = new THREE.Mesh( geo, material );
+		mesh.position.set( startX, 0, slot );
+		scene.add( mesh );
+
+		delta = 2 * startX / columns;
+		for ( i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
+				y = rows * height / ( rows * deltaRow );
 				z = slot;
 				vertex = v( x, y, z );
 
@@ -236,11 +373,15 @@ console.log( 'angleStart', angleStart * r2d );
 
 		}
 
-		rad = radius * cos( angleStart );
-		delta = 2 * rad / ( columns + 1 );
-		for ( i = 0; i <= columns; i++ ) {
+		slotLength = radius * cos( angleStart );
+		slotAngle = Math.atan2( slot, slotLength );
 
-				x = rad - i * delta;
+		startX = radius * Math.cos( slotAngle );
+
+		delta = 2 * startX / columns;
+		for ( var i = 0; i <= columns; i++ ) {
+
+				x = startX - i * delta;
 				y = 0;
 				z = slot;
 				vertex = v( x, y, z );
@@ -248,7 +389,7 @@ console.log( 'angleStart', angleStart * r2d );
 				vertices[ count++ ] = v( x, y, z );
 
 		}
-*/
+
 
 //		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
@@ -256,6 +397,7 @@ console.log( 'angleStart', angleStart * r2d );
 		return geometry;
 
 	}
+
 
 	function sweepBoxes() {
 
@@ -270,7 +412,6 @@ console.log( 'angleStart', angleStart * r2d );
 		angleEnd = pi - angleStart; // Math.atan2( slot, radius ); 
 
 console.log( 'ang', angleStart * r2d );
-
 
 		geometry = new THREE.BoxGeometry( 2, 5, 2 );
 
