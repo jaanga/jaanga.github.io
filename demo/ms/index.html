@@ -10,15 +10,15 @@
 	<body>
 <textarea id=ta style=display:none; >
 
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/demo/ms/ "View file as a web page." ) </span>
-<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/ms/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view the home page]( http://jaanga.github.io/demo/ms/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/ms/'; type=button  value='You are now in a GitHub web page view - Click this button to view the read me file and view the source code' />
 
-[Jaanga]( http://jaanga.github.io ) »
+[Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/ )
  
 [MS Read Me]( index.html )
 ===
 
-[Read Me]( https://github.com/jaanga/jaanga.github.io/tree/master/demo/ms/ )_
+_Adding some sunshine to things_
 
 
 </textarea>
@@ -93,7 +93,7 @@
 
 						var file = response.tree[ key ].path;
 
-						if ( file.indexOf( urlSource ) === - 1 || file.indexOf( '.html' ) === -1 || file.indexOf( 'index' ) === -1 ) { continue; }
+						if ( file.indexOf( urlSource ) === - 1 || file.indexOf( '.html' ) === -1 ) { continue; }
 						if ( file.indexOf( '-@' ) === -1 ) { continue; }
 
 						files.push( file );
@@ -145,7 +145,7 @@
 
 					id = activeContainer.id;
 
-					activeContainer.innerHTML = '<iframe src="./' + files[ id ] + '" onload=loadIt(this,' + id + '); ></iframe>';
+					activeContainer.innerHTML = '<iframe src="../../' + files[ id ] + '" onload=loadIt(this,' + id + '); ></iframe>';
 
 					iframesActive.push( activeContainer );
 
