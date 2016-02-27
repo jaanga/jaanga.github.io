@@ -1,0 +1,334 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Sun Lat Lon Hash R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Place the sun at any latitude or longitude. Adjust the view. Permalink created on the fly' >
+<meta name=keywords content='solar analysis,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-02-26' >
+
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+	var lightAmbient, lightDirectional, lightPoint;
+
+	var lat = 32.63;
+	var lon = 51.65;
+	var size = 10;
+
+	init();
+	animate();
+
+
+	function init() {
+
+//DOM
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h2, a { margin: 0; }' +
+			'a { text-decoration: none; }' +
+			'#menu { margin: 0 20px; position: absolute; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+		'';
+
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	<a href=http://jaanga.github.io/demo/ms >❦</a>' +
+			'</h2>' +
+			'<p>Lat: <input type=range id=inpLat max=90 min=0 step=1 value=' + lat + ' oninput=lat=inpLat.valueAsNumber;updateHash(); title="0 to 90: OK" > <output id=outLat >value</output></p>' +
+			'<p>Lon: <input type=range id=inpLon max=180 min=0 step=1 value=' + lon + ' oninput=lon=inpLon.valueAsNumber;updateHash(); title="0 to 180: OK" > <output id=outLon >value</output></p>' +
+
+			'<div id=info ></div>' +
+
+		'';
+
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; bottom: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// three.js
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+
+		document.body.appendChild( renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 200 );
+		camera.position.set( 10, 10, 10 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.minDistance = 5;
+		controls.maxDistance = 50;
+
+		window.addEventListener ( 'hashchange', parseHash, false );
+
+// assets
+
+
+		drawHelpers();
+
+		drawSphere();
+		drawCubes();
+
+		addLights( size );
+		addShadows();
+
+		parseHash();
+
+	}
+
+	function updateHash() { 
+
+		location.hash = 
+
+			'lat=' + lat +
+			'#lon=' + lon +
+
+			'#cpx=' + camera.position.x.toFixed(1) +
+			'#cpy=' + camera.position.y.toFixed(1) +
+			'#cpz=' + camera.position.z.toFixed(1) +
+
+			'#ctx=' + controls.target.x.toFixed(1) +
+			'#cty=' + controls.target.y.toFixed(1) +
+			'#ctz=' + controls.target.z.toFixed(1) +
+ 
+		''; 
+
+		outLat.value = lat;
+		outLon.value = lon;
+
+	}
+
+	function parseHash() {
+
+		if ( location.hash ) {
+
+			hashes = location.hash.split( '#' );
+
+			for ( var i = 0; i < hashes.length; i++ ) {
+
+				hash = hashes[ i ];
+
+				parameter = hash.slice( 0, 3 );
+				value = parseFloat( hash.slice( 4 ) );
+
+				if ( parameter === 'lat' ) { lat = value;
+
+					} else if ( parameter === 'lon' ) { lon = value;
+
+					} else if ( parameter === 'cpx' ) { camera.position.x = value;
+					} else if ( parameter === 'cpy' ) { camera.position.y = value;
+					} else if ( parameter === 'cpz' ) { camera.position.z = value;
+
+					} else if ( parameter === 'ctx' ) { controls.target.x = value;
+					} else if ( parameter === 'cty' ) { controls.target.y = value;
+					} else if ( parameter === 'ctz' ) { controls.target.z = value;
+
+				}
+
+			}
+
+			inpLat.value = lat;
+			inpLon.value = lon;
+
+		} else {
+
+			lat = inpLat.valueAsNumber
+			lon = inpLon.valueAsNumber;
+
+			updateHash();
+
+		}
+
+		outLat.value = lat;
+		outLon.value = lon;
+
+		updatePosition( lat, lon )
+
+	}
+
+	function updatePosition( lat, lon ) {
+
+		var radius = size;
+		var d2r =  Math.PI / 180;
+		var rc = radius * Math.cos( inpLat.valueAsNumber * d2r );
+
+		lightDirectional.position.set( rc * Math.cos( lon * d2r ), radius * Math.sin( lat * d2r ), rc * Math.sin( lon * d2r ) );
+
+	}
+
+
+	function drawHelpers() {
+
+		geometry = new THREE.BoxGeometry( 10, 0.5, 10 );
+
+		var material = new THREE.MeshPhongMaterial();
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -0.25, 0 );
+		scene.add( mesh );
+
+		helper = new THREE.EdgesHelper( mesh );
+		helper.material.color.setRGB( 1, 0, 1 );
+		scene.add( helper );
+
+		var axisHelper = new THREE.AxisHelper( 5 );
+		scene.add( axisHelper );
+
+		var helper = new THREE.GridHelper( 5, 1 );
+		helper.position.set( 0, 0, 0 );
+		scene.add( helper );
+
+	}
+
+
+	function drawSphere() {
+
+		var geometry = new THREE.SphereGeometry( 2.5, 50, 50 );
+
+//		material = new THREE.MeshNormalMaterial();
+		var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -5, 1, 0 );
+		scene.add( mesh );
+
+	}
+
+
+	function drawCubes() {
+
+		var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+
+		for ( var i = 0; i < 50; i++ ) {
+
+			var material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() } );
+
+			var mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 10 * Math.random() - 5, 10 * Math.random(), 10 * Math.random() - 5 );
+			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+			scene.add( mesh );
+
+			var helper = new THREE.EdgesHelper( mesh );
+			helper.material.color.setRGB( 1, 0, 0 );
+			scene.add( helper );
+
+		}
+
+	}
+
+
+	function addLights( size ) {
+
+		size = size ? size : 10;
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -size, size, size );
+
+		var d = size;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
+
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 2 * size;
+
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+// attach to camera
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+
+	function addShadows() {
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+
+			}
+
+		} );
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+		updateHash();
+	}
+
+</script>
+</body>
+</html>
