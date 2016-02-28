@@ -4,9 +4,9 @@
 <meta charset=utf-8 >
 <title>Basic Leap Hand Editor Inworld R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='Three.js hand editor template for Leap Motion devices. Update sizes, material, texture, environment map. Includes scenic enhancements and simple touch detection.' >
+<meta name=description content='Three.js hand editor template for Leap Motion devices. Update sizes and colors of your hands by rolling and pitching your hand.' >
 <meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-02-25' >
+<meta name=date content='2016-02-27' >
 </head>
 <body>
 
@@ -18,9 +18,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-<script src=../../../cookbook-threejs/materials-sandbox/materials-lights-things/materials-lights.js ></script>
 -->
-<script src=http://jaanga.github.io/cookbook-threejs/materials-sandbox/materials-lights-things/materials-lights-r2.js ></script>
 <script>
 
 	var loop = {};
@@ -36,7 +34,6 @@
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
-	var lightAmbient, lightDirectional, lightPoint;
 
 	init();
 	animate();
