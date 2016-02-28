@@ -32,6 +32,13 @@ _This is all still a work-in-progress. In particular: sounds and textures need m
 _If you would like to see a 'prettified' version in the near future, please let us know._
 
 
+_2016-02-28_
+
+
+* All four looked at, edited and verified to be FF and Edge compatible
+
+
+
 _2016-02-27_
 
 [Screw and Round Nut - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/screw-and-round-nut/screw-and-round-nut-r2-@.html )
