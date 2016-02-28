@@ -29,7 +29,7 @@ _Adding some sunshine to things_
 	var urlSource = 'http://jaanga.github.io/demo/ms/';
 	var urlSource = '../../../../';
 
-	var urlContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 
 	var footer =
 
@@ -78,7 +78,7 @@ _Adding some sunshine to things_
 	function requestFileNames() {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open( 'GET', urlContents, true );
+		xhr.open( 'GET', urlAPIContents, true );
 		xhr.onreadystatechange = callback;
 		xhr.send( null );
 

@@ -10,7 +10,7 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script src=http://js.leapmotion.com/leap-0.6.4.js ></script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
 	var baseBoneRotation = ( new THREE.Quaternion ).setFromEuler( new THREE.Euler( 0, 0, Math.PI / 2 ) );
@@ -103,6 +103,7 @@
 		addShadows();
 
 		toggleTrylonPerisphere();
+		var trylonPerisphere = scene.getObjectByName( 'trylonPerisphere' );
 		trylonPerisphere.scale.set( 2, 2, 2 );
 
 	}
@@ -242,8 +243,8 @@
 
 						secondBB = new THREE.Sphere().set( vector, 20 );
 
-//ghosts[ but ].position.copy( secondBB.center );
-//scene.add( ghosts[ but ] )
+// ghosts[ but ].position.copy( secondBB.center );
+// scene.add( ghosts[ but ] )
 // info.innerText = `1: ${ firstBB.center.toArray() } \n 2: ${secondBB.center.toArray() }`;
 
 						if ( secondBB.intersectsSphere( firstBB ) === true ) {

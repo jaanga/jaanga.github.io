@@ -1,4 +1,5 @@
-## 2016-02-27 ~  Update
+2016-02-27 ~  Update
+===
 
 Lots of good work on the project that is still in quiet mode.
 
