@@ -35,7 +35,7 @@ _If you would like to see a 'prettified' version in the near future, please let 
 _2016-02-28_
 
 
-* All four looked at, edited and verified to be FF and Edge compatible
+* All four demos checked, edited and verified to be FF and Edge compatible
 
 
 
