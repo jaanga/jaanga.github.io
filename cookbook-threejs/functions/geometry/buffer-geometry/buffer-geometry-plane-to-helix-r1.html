@@ -105,9 +105,14 @@
 		drawSpiralAlongZ();
 
 	}
-
+// needs PlaneGeometry version. See mm-object-r3...
 
 	function drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+// 2016-02-28 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry\buffer-geometry/buffer-geometry-plane-to-helix-r1.html
+
+		var radiusOutside, radiusInside, segments, segmentsTotal, turns, pitch, pitchDelta, delta, angleDelta;
+		var geometry, vertices;
 
 		radiusInside = rIn ? rIn : 10;
 		radiusOutside = rOut ? rOut : 15;
@@ -123,20 +128,20 @@
 
 		geometry = new THREE.PlaneBufferGeometry( 1, 1, 1, segementsTotal );
 
-		arr = geometry.attributes.position.array;
+		vertices = geometry.attributes.position.array;
 
-		for ( var i = 0; i < arr.length; ) {
+		for ( var i = 0; i < vertices.length; ) {
 
-			if ( arr[ i ] < 0 ) {
+			if ( vertices[ i ] < 0 ) {
 
 				delta = i / 6;
-				arr[ i++ ] = radiusInside * cos( angleDelta * delta );
-				arr[ i++ ] = radiusInside * sin( angleDelta * delta );
-				arr[ i++ ] = pitchDelta * delta;
+				vertices[ i++ ] = radiusInside * cos( angleDelta * delta );
+				vertices[ i++ ] = radiusInside * sin( angleDelta * delta );
+				vertices[ i++ ] = pitchDelta * delta;
 
-				arr[ i++ ] = radiusOutside * cos( angleDelta * delta );
-				arr[ i++ ] = radiusOutside * sin( angleDelta * delta );
-				arr[ i++ ] = pitchDelta * delta;
+				vertices[ i++ ] = radiusOutside * cos( angleDelta * delta );
+				vertices[ i++ ] = radiusOutside * sin( angleDelta * delta );
+				vertices[ i++ ] = pitchDelta * delta;
 
 			}
 

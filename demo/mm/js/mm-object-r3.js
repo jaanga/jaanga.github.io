@@ -501,12 +501,12 @@
 		var points = [
 
 // head
-			v2( radiusScrew05 + delta, height05 + delta ),
-			v2( radiusScrew05, height05 ),
+			v( radiusScrew05 + delta, 0, height05 + delta ),
+			v( radiusScrew05, 0, height05 ),
 
 // body and tip
-			v2( radiusScrew05, -height05 ),
-			v2( 0, -height05 - delta )
+			v( radiusScrew05, 0, -height05 ),
+			v( 0, 0, -height05 - delta )
 
 		];
 
@@ -519,6 +519,7 @@
 		geometry.merge( geo2 );
 
 		geo2 = build_spiralAlongZ( radiusScrew05, radiusScrew05 + 1, segments, height / pitch, pitch );
+		geo2.center();
 		geometry.merge( geo2 );
 
 		var mesh = new THREE.Mesh( geometry, material );
@@ -540,6 +541,7 @@
 			var vertices = geometry.vertices;
 			var count = 0;
 			var raddii = [ 1, 0.75, 0.25 ];
+			var r, offset;
 
 			for ( var i = 0; i <= rows; i++ ) {
 
@@ -556,6 +558,7 @@
 
 						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
 						offset = - height / rows;
+
 					}
 
 					vt = vertices[ count++ ];
@@ -578,7 +581,7 @@
 
 	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
-// 2016-02-11
+// 2016-02-28
 
 		var radiusInside = rIn ? rIn : 10;
 		var radiusOutside = rOut ? rOut : 15;
@@ -593,7 +596,7 @@
 		var angleDelta = Math.PI / segments;
 
 		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
-		vertices = geometry.vertices;
+		var vertices = geometry.vertices;
 
 		for ( var i = 0; i < vertices.length; i++ ) {
 

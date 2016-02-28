@@ -426,8 +426,9 @@ patterns are descriptions of common problems and proposal for the solutions that
 <br>
 
 ## Notes
+Trademarks property of their respective owners. 
 
-Apart from sharing a deep delight with putting things together, Jaanga is not in anyway associated with the Ikea.
+Apart from sharing a deep delight with putting things together, Jaanga is not in anyway associated with any specific furniture vendor.
 
 
 ***
