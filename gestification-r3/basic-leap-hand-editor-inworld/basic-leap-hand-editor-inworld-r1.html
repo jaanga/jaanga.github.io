@@ -20,7 +20,6 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script src=../../../cookbook-threejs/materials-sandbox/materials-lights-things/materials-lights.js ></script>
 -->
-<script src=https://cdn.rawgit.com/mrdoob/texgen.js/master/build/texgen.min.js ></script>
 <script src=http://jaanga.github.io/cookbook-threejs/materials-sandbox/materials-lights-things/materials-lights-r2.js ></script>
 <script>
 
@@ -28,8 +27,9 @@
 	var phalanges;
 	var knuckles;
 
-	var defaultMaterial = 36;
-	var groundBoxLights;
+	var sizePhal = 1.3;
+	var sizeKnuck = 1.3;
+	var handMaterial;
 
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	var axis = v( 0, 1, 0 );
@@ -50,40 +50,16 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
-			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
-			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
-
 		'';
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; max-width: 300px; position: absolute';
 		menu.innerHTML = '<h2 ><a href="" >' + document.title + '</a> ' +
-			'<a href=http://jaanga.github.io/gestification-r3/basic-leap-hand-editor/basic-leap-hand-editor-r1.html >❦</a></h2>' +
-			'<p>Phalanges: <input type=range id=inpPhal max=3 min=0.1 step=0.1 value=1.3 oninput=updateHands(); title="0 to 20: OK" > <output id=outPhal >value</output></p>' +
-			'<p>Knuckles: <input type=range id=inpKnuck max=3 min=0.1 step=0.1 value=1.3 oninput=updateHands(); title="0 to 20: OK" > <output id=outKnuck >value</output></p>' +
-			'<p>Scale X: <input type=range id=inpScaleX max=3 min=0.5 step=0.1 value=1.5 oninput=updateHands(); title="0 to 4: OK" > <output id=outScaleX >value</output></p>' +
-			'<p>Scale Y: <input type=range id=inpScaleY max=3 min=0.5 step=0.1 value=1.5 oninput=updateHands(); title="0 to 4: OK" > <output id=outScaleY >value</output></p>' +
-			'<p>Scale Z: <input type=range id=inpScaleZ max=3 min=0.5 step=0.1 value=1.5 oninput=updateHands(); title="0 to 4: OK" > <output id=outScaleZ >value</output></p>' +
-
-			'<p><input type=checkbox id=chkEnvMap checked /> envMap</p>' +
-			'<p><select id=selSkybox onchange=updateMaterial(selMaterial.value); ></select></p>' +
-			'<p><select id=selMaterial></select></p>' +
-			'<div><input type=checkbox onchange=toggleAxis(599); checked > Axis</div>' +
-			'<div><input type=checkbox onchange=toggleAutoRotate(this.checked); checked > Rotate</div>' +
-			'<div><input type=checkbox onchange=toggleBackgroundGradient(this.checked); checked > Background</div>' +
+			'<a href=http://jaanga.github.io/gestification-r3/ >❦</a></h2>' +
 			'<div id=info ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
 
-		for ( var i = 0; i < skyboxURLs.length; i++ ) {
-
-			selSkybox.appendChild( document.createElement( 'option' ) );
-			selSkybox.children[ i ].text = skyboxURLs[ i ][ 0 ];
-
-		}
-
-		selSkybox.selectedIndex = 6;
 
 		stats = new Stats();
 		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
@@ -106,51 +82,48 @@
 
 		scene = new THREE.Scene();
 
-		material = getMaterial();
+// helpers
 
-		for ( var i = 0; i < materialsKeys.length ; i++ ) {
+		geometry = new THREE.BoxGeometry( 300, 2, 300 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
 
-			if ( materialsKeys[ i ].substr( 0, 1 ) === '#' ) {
+		var gridHelper = new THREE.GridHelper( 150, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
 
-				node = document.createElement( 'optgroup' );
-				selMaterial.appendChild( node );
-				node.label = materialsKeys[ i ].substr( 1 );
+		var axisHelper = new THREE.AxisHelper( 150 );
+		scene.add( axisHelper );
 
-			} else {
-
-				node = document.createElement( 'option' );
-				selMaterial.appendChild( node );
-				node.text = materialsKeys[ i ];
-				if ( materialsKeys[ defaultMaterial ] === materialsKeys[ i ] ) { selMaterial.selectedIndex = i; }
-			}
-
-		}
-		selMaterial.selectedIndex = defaultMaterial; //materialsKeys.indexOf( materialsKeys[ defaultMaterial ] );
-
-		selMaterial.onchange = function() { updateMaterial( selMaterial.value ); }
+		var light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
+		light.position.set( -1, 1, 1 );
+		scene.add( light );
 
 // assets
 
-		geometry = new THREE.PlaneBufferGeometry( 500, 2000 );
+		geometry = new THREE.PlaneBufferGeometry( 500, 200, 5, 20 );
 
-		material = new THREE.MeshNormalMaterial( { side: 2, opacity: 0.35, transparent: true } );
+		material = new THREE.MeshBasicMaterial( { color:0xff0000, side: 2, opacity: 0.35, transparent: true } );
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.x = - 200;
+		mesh.position.x = - 100;
 		mesh.rotation.y = 0.5 * Math.PI;
 		scene.add( mesh );
 
+		var placard = drawPlacard( [ 'Come over here','to change', 'your size'], 0.5, Math.floor( Math.random() * 255 ), -500, 200, 50 )
+		scene.add( placard );
+
+		material = new THREE.MeshBasicMaterial( { color:0x00ff00, side: 2, opacity: 0.35, transparent: true } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = 0;
+		scene.add( mesh );
+
+		placard = drawPlacard( [ 'Come over here','to change', 'your color'], 0.5, Math.floor( Math.random() * 255 ), 0, 200, -500 )
+		scene.add( placard );
+
+
 		updateHands();
-//		updateMaterial( defaultMaterial );
-
-
-		toggleAxis( 500 );
-		toggleAutoRotate( false );
-		toggleBackgroundGradient( true );
-		toggleGroundBoxLights( 500 );
-//		toggleStonehenge( 5 );
-
-		addLights( 500 );
-		addShadows();
 
 	}
 
@@ -158,29 +131,20 @@
 
 		scene.remove( phalanges, knuckles );
 
-		outKnuck.value = sizeKnuck = inpKnuck.valueAsNumber;
-		outPhal.value = sizePhal = inpPhal.valueAsNumber;
-
 		phalanges = new THREE.Object3D();
 		knuckles = new THREE.Object3D();
 
-		outScaleX.value = phalanges.scale.x = knuckles.scale.x = inpScaleX.valueAsNumber;
-		outScaleY.value = phalanges.scale.y = knuckles.scale.y = inpScaleY.valueAsNumber;
-		outScaleZ.value = phalanges.scale.z = knuckles.scale.z = inpScaleZ.valueAsNumber;
+		handMaterial = new THREE.MeshPhongMaterial();
 
 		for ( var i = 0; i < 38; i++ ) {
 
 			geometry = new THREE.CylinderGeometry( sizePhal, sizePhal, 1 );
-			mesh = new THREE.Mesh( geometry, material );
-			mesh.castShadow = true
-			mesh.receiveShadow = true;
+			mesh = new THREE.Mesh( geometry, handMaterial );
 			mesh.visible = false;
 			phalanges.add( mesh );
 
 			var geometry = new THREE.SphereGeometry( sizeKnuck, 20, 10 );
-			var mesh = new THREE.Mesh( geometry, material );
-			mesh.castShadow = true
-			mesh.receiveShadow = true;
+			var mesh = new THREE.Mesh( geometry, handMaterial );
 			mesh.visible = false;
 			knuckles.add( mesh );
 
@@ -190,102 +154,63 @@
 
 	}
 
-	function toggleGroundBoxLights( size ) {
+	function drawPlacard( text, scale, color, x, y, z ) {
 
-		if ( groundBoxLights === undefined ) {
+// 2016-02-27 ~ https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/functions/placards
 
-			size = size ? size : 100;
+		var texture = canvasMultilineText( text, { backgroundColor: color }   );
+		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
+		var sprite = new THREE.Sprite( spriteMaterial );
+		sprite.position.set( x, y, z ) ;
+		sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
 
-			groundBoxLights = new THREE.Object3D();
+		return sprite;
 
-			var geometry = new THREE.BoxGeometry( size, size, size );
+		function canvasMultilineText( textArray, parameters ) {
 
-			var material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff * Math.random(),
-				specular: 0xffffff * Math.random(),
-				shininess: 5
-			} );
+			parameters = parameters || {} ;
+			var width = parameters.width ? parameters.width : 0;
+			var canvas = document.createElement( 'canvas' );
+			var context = canvas.getContext( '2d' );
+			var font = parameters.font ? parameters.font : '48px monospace';
+			var color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
 
-//			var material = new THREE.MeshNormalMaterial();
+			if ( typeof textArray === 'string' ) textArray = [ textArray ];
 
-			groundBox = new THREE.Mesh( geometry, material );
-			groundBox.position.set( 0, -0.5 * size, 0 );
-			groundBox.castShadow = true;
-			groundBox.receiveShadow = true;
-			groundBoxLights.add( groundBox );
+			context.font = font;
 
-			groundBoxHelper = new THREE.BoxHelper( groundBox );
-			groundBoxHelper.material.color.setRGB( 1, 0, 1 );
-			groundBoxLights.add( groundBoxHelper );
+			for ( var i = 0; i < textArray.length; i++) {
 
-			gridHelper = new THREE.GridHelper( 0.5 * size, 10 );
-			groundBoxLights.add( gridHelper );
+				width = context.measureText( textArray[ i ] ).width > width ? context.measureText( textArray[ i ] ).width : width;
 
-			scene.add( groundBoxLights );
+			}
 
-		} else {
+			canvas.width = width + 20;
+			canvas.height =  parameters.height ? parameters.height : textArray.length * 60;
 
-			scene.remove( groundBoxLights );
+			context.fillStyle = 'hsl( ' + color + ', 80%, 50% )' ;
+			context.fillRect( 0, 0, canvas.width, canvas.height);
 
-		}
+			context.lineWidth = 1 ;
+			context.strokeStyle = '#000';
+			context.strokeRect( 0, 0, canvas.width, canvas.height );
 
-		return groundBoxLights;
+			context.fillStyle = '#000' ;
+			context.font = font;
 
-	}
+			for ( i = 0; i < textArray.length; i++) {
 
-	function toggleAxis( length ) {
+				context.fillText( textArray[ i ], 10, 48  + i * 60 );
 
-		var axisHelper = scene.getObjectByName( 'axisHelper' );
+			}
 
-		if ( axisHelper === undefined ) {
+			var texture = new THREE.Texture( canvas );
+			texture.minFilter = texture.magFilter = THREE.NearestFilter;
+			texture.needsUpdate = true;
 
-			length = length ? length : 50;
-
-			axisHelper = new THREE.AxisHelper( length );
-			axisHelper.name = 'axisHelper';
-
-		}
-
-		if ( scene.getObjectById( axisHelper.id )  ) {
-
-			scene.remove( axisHelper );
-
-		} else {
-
-			scene.add( axisHelper );
+			return texture;
 
 		}
-
-	}
-
-	function toggleAutoRotate( checked ) {
-
-		controls.autoRotate = checked ;
-
-	}
-
-	function toggleBackgroundGradient( checked ) {
-
-// 2016-02-02
-
-		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
-		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
-
-		if ( checked ) {
-
-			document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
-
-		} else {
-
-			document.body.style.backgroundImage = '';
-
-		}
-
-	}
-
-	function toggleWireframe( obj, boole ) {
-
-		obj.material.wireframe = boole;
 
 	}
 
@@ -304,7 +229,6 @@
 //		info.innerHTML = frame.dump();
 		info.innerHTML = frame.toString();
 
-		text = '';
 		count = 0;
 
 		for ( var i = 0; i < frame.hands.length; i++ ) {
@@ -313,13 +237,14 @@
 
 			if ( hand.palmPosition[ 0 ] < -100 ) {
 
-fingerData.innerHTML = hand.palmPosition
+				sizePhal = 5 * Math.abs( hand.roll() );
+				sizeKnuck = 5 * Math.abs( hand.pitch() );
 
-// outScaleX.value = phalanges.scale.x = knuckles.scale.x = inpScaleX.valueAsNumber = 5 * hand.roll();
-//		outPhal.value = sizePhal = 
+			}
 
-				inpPhal.valueAsNumber = 5 * Math.abs( hand.roll() );
-				inpKnuck.valueAsNumber = 5 * Math.abs( hand.pitch() );
+			if ( hand.palmPosition[ 2 ] < 0 ) {
+
+				handMaterial.color.setHSL( Math.PI / Math.abs( hand.roll() ), Math.PI / Math.abs( hand.pitch() ), 0.5 );
 
 			}
 
@@ -331,8 +256,6 @@ fingerData.innerHTML = hand.palmPosition
 				updateFinger( count++, f.medial, f.dipPosition, 0.325 );
 				updateFinger( count++, f.proximal, f.pipPosition, 0.35 );
 				updateFinger( count++, f.metacarpal, f.mcpPosition, 0.375 );
-
-				text += f.tipPosition + '<br>';
 
 			}
 
@@ -346,46 +269,12 @@ fingerData.innerHTML = hand.palmPosition
 
 		}
 
-
 		for ( var i = count; i < 38; i++ ) {
 
 			phalanges.children[ i ].visible = false;
 			knuckles.children[ i ].visible = false;
 
 		}
-
-
-//		checkForIntersect( phalanges.children[ 4 ], stonehenge.children )
-
-	}
-
-	function checkForIntersect( obj1, objects ) {
-
-		var bbox1 = new THREE.Box3();
-		bbox1.setFromObject( obj1 );
-
-		var count = 0;
-		var bbox2 = new THREE.Box3();
-
-		for ( var i = 0; i < objects.length; i++ ) {
-
-			obj = objects[ i ];
-			bbox2.setFromObject( obj );
-
-			if ( bbox1.intersectsBox( bbox2 ) ) { 
-
-					obj.material.emissive.setHex( 0xff00ff );
-					count++;
-
-			} else {
-
-				obj.material.emissive.setHex( 0x000000 );
-
-			}
-
-		}
-
-		info.innerHTML = 'intersects: ' + count;
 
 	}
 
@@ -396,7 +285,7 @@ fingerData.innerHTML = hand.palmPosition
 			var p = phalanges.children[ count ];
 			p.position.fromArray( bone.center() );
 			p.scale.y = bone.length;
-			s = inpPhal.valueAsNumber;
+			s = sizePhal;
 			p.scale.set( s * scale * bone.width, bone.length, s * scale * bone.width );
 
 			var d = bone.direction();
@@ -406,7 +295,7 @@ fingerData.innerHTML = hand.palmPosition
 		}
 
 		var k = knuckles.children[ count ];
-		var s = 1.15 * inpKnuck.valueAsNumber * scale * bone.width;
+		var s = 1.15 * sizeKnuck * scale * bone.width;
 		k.position.fromArray( position );
 		k.scale.set( s, s, s );
 		k.visible = true;
@@ -441,7 +330,6 @@ fingerData.innerHTML = hand.palmPosition
 // This allows us to move even while in an iFrame
 
 	Leap.loopController.setBackground( true );
-
 
 
 	function animate() {

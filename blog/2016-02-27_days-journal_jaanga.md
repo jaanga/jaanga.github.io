@@ -18,5 +18,9 @@ Many more features to be added in the future
 
 ( Text Geometry R1]( http://jaanga.github.io/cookbook-threejs/functions/text-geometry/text-geometry-r1.html )
 
-* New Three.js cookbood script 
+* New Three.js cookbook script 
 
+[Placards R1 ]( http://jaanga.github.io/cookbook-threejs/functions/placards/placards-r1.html )
+
+* Code clean-up
+* Add more parameters
