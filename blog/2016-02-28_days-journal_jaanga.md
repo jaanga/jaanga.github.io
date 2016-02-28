@@ -11,4 +11,8 @@ Basic HTML Template]( http://jaanga.github.io/cookbook-html/templates/basic-html
 * Revert back to old time strings
 * Other minor tweaks
 
-[Hamburger Child Menu R4] ( 
+[Hamburger Child Menu R4] ( http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r2.html )
+
+* Big update
+* Follows on from Three.js Viewer Mobile
+* Code clean-up and streamline
