@@ -15,13 +15,11 @@
 <body>
 <script>
 
-	var css, menu;
-
 	init();
 
 	function init() {
 
-		css = document.body.appendChild( document.createElement( 'style' ) );
+		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
 			'body { font: 12pt monospace; margin: 0; }' +
@@ -38,7 +36,7 @@
 
 		'';
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
 
