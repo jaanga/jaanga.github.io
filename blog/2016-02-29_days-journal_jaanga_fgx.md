@@ -7,4 +7,4 @@
 * From Three.js docs
 
 
-[OBJ Load Scale and Center]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-obj/load-and-combine/load-scale-and-center-r1.html )
+[OBJ Load Scale and Center]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-obj/load-scale-and-center/load-scale-and-center-r1.html )
