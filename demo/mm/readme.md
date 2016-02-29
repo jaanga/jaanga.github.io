@@ -37,6 +37,10 @@ _2016-02-28_
 
 * All four demos checked, edited and verified to be FF and Edge compatible
 
+[Moving Manuals home page]( http://jaanga.github.io/demo/mm/index.html
+
+* Initial mock-up
+
 
 
 _2016-02-27_

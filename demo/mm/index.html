@@ -54,7 +54,7 @@
 				for ( var i = 0; i < iframes.length; i++ ) {
 
 					ifrm = iframes[ i ];
-					ifrm.style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
+					ifrm.style.margin = '100px 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
 					ifrm.style.width = ( window.innerWidth - 25 ) + 'px';
 					ifrm.style.height = '500px';
 					ifrm.onload = function() { this.contentWindow.controls.enableZoom = false; };

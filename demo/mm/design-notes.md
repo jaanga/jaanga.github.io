@@ -5,15 +5,13 @@ Design Notes
 
 Manuals should be understandable by people who cannot read and write.
 
-Everything and anything in a paper manual must be included in the digital manual.
+Everything and anything in the paper manual must be included in the digital manual.
 
 All parts that have ID numbers shall their ID numbers displayed wherever they are shown
 
-Text warnings are displaye first
+Text warnings are displayed first. Visual advice comes next
 
-Visual advice comes next
-
-Parts list and counts
+Parts are listed and numbered
 
 Assembly instructions
 

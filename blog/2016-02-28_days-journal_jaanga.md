@@ -8,7 +8,7 @@ Quiet Project
 * Add single toggle assembly button to all menus
 * Now all menus have same look and feel
 * Fix Three.js compatibility issue on bracket demo
-
+* The project has a home page mock-up
 
 Basic HTML Template]( http://jaanga.github.io/cookbook-html/templates/basic-html\basic-html.html )
 

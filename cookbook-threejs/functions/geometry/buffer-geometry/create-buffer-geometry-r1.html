@@ -2,40 +2,23 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>OBJ Load and Combine R1</title>
+<title>Create Buffer Geometry R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 <meta name=date content='' >
 </head>
 <body>
-
+<!--
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/loaders/OBJLoader.js ></script>
-<!--
+-->
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
--->
+
 <script>
-
-	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj';
-	var fileName2 = '../../models/Saab-37_Viggen/Saab-37_Viggen.obj';
-	var fileName3 = '../../models/HumanHeart.obj';
-	var fileName4 = '../../models/tree.obj';
-//	var fileName = '';
-	var fileName5 = 'C:/temp/aircraft-and-models/3divxfwhvmv4-Tu-160_Blackjack/Tu-160 Blackjack/blackjack.obj';
-	var fileName6 = 'C:/temp/aircraft-and-models/Airbus 330/Airbus 330/A-330.obj';
-	var fileName7 = 'C:/temp/aircraft-and-models/Factory Complex/Factory.obj';
-
-	var fileName8 = 'C:/temp/aircraft-and-models/Nefertiti.obj/Nefertiti.obj';
-	var fileName9 = 'C:/temp/aircraft-and-models/Sidney_opera/SYDNEY.obj';
-	var fileName10 = '';
-
-	var object;
-	var geometryObj;
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -68,18 +51,9 @@
 			'	<a href="" >' + document.title + '</a>' +
 			'	 <a href=http://jaanga.github.io/ >❦</a>' +
 			'</h2>' +
-			'<p><input type=checkbox onchange=object.material.wireframe=!object.material.wireframe; > Wireframe</p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName1); >female / remote</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName2); >viggen</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName3); >heart</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName4); >tree</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName5); >blackjack</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName6); >A-330</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName7); >factory</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName8); >Nefertiti</button></p>' +
-			'<p><button onclick=loadOBJFileByURL(fileName9); >Sydney</button></p>' +
-//			'<p><button onclick=loadOBJFileByURL(fileName10); >factory</button></p>' +
-/*			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+/*			'<p><button onclick=doIt(); >do it</button></p>' +
+			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
 */			'<div id=info ></div>' +
 
 		'';
@@ -121,74 +95,45 @@
 
 // assets
 
-		loadOBJFileByURL( fileName1 );
+		geometry = new THREE.BufferGeometry();
 
-	}
+// create a simple square shape. We duplicate the top left and bottom right 
+// vertices because each vertex needs to appear once per triangle.
 
+		var vertexPositions = [ 
 
-	function loadOBJFileByURL( fileName ) {
+			[-10.0, -10.0, 10.0], 
+			[ 10.0, -10.0, 10.0], 
+			[ 10.0, 10.0, 10.0], 
+			[ 10.0, 10.0, 10.0], 
+			[-10.0, 10.0, 10.0], 
+			[-10.0, -10.0, 10.0] 
 
-		scene.remove( object );
-
-		var loader = new THREE.OBJLoader();
-		loader.crossOrigin = 'anonymous';
-		loader.load( fileName, function ( obj ) {
-
-			object = obj;
-
-			addObject( object );
-
-			info.innerHTML = 'name: ' + fileName + '<br>' +
-			'';
-
-// console.log( 'object', object );
-
-		} );
-
-	}
-
-	function addObject( object ) {
-
-//		var bbox;
+		];
  
-		bbox = new THREE.Box3();
+		var vertices = new Float32Array( vertexPositions.length * 3 ); 
 
+// three components per vertex
+// components of the position vector for each vertex are stored
+// contiguously in the buffer. 
 
-		object.traverse( function ( child ) {
+		for ( var i = 0; i < vertexPositions.length; i++ ) { 
 
-			if ( child instanceof THREE.Mesh ) {
+			vertices[ i * 3 + 0 ] = vertexPositions[ i ][ 0 ]; 
+			vertices[ i * 3 + 1 ] = vertexPositions[ i ][ 1 ]; 
+			vertices[ i * 3 + 2 ] = vertexPositions[ i ][ 2 ]; 
 
-//				child.castShadow = true
-//				child.receiveShadow = true;
-				child.material = new THREE.MeshNormalMaterial();
+		} 
 
-				if ( child.geometry.attributes.position.array.length > 0 ) {
+// itemSize = 3 because there are 3 values (components) per vertex 
+		geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 
-					child.geometry.computeBoundingBox();
-					bbox.union( child.geometry.boundingBox );
-
-//console.log( '', child.geometry.boundingBox );
-
-
-				}
-
-			}
-
-		} );
-
-
-		delta = bbox.max.sub( bbox.min );
-		radius = bbox.getBoundingSphere().radius;
-		s = 100 / radius;
-		os = object.scale; 
-		os.set( s * os.x, s * os.y, s * os.z ); 
-//		object.position.set( 0, -0.5 * s * delta.y, 0 );
-
-console.log( '', radius );
-
-		scene.add( object );
+		material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } ); 
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
 
 	}
+
 
 	function onWindowResize() {
 
