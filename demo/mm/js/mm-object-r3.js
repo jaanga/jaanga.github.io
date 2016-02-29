@@ -282,9 +282,11 @@
 					holePath.absarc( x, y, radiusScrew + thickness, 0, Math.PI * 2, true );
 					shape.holes.push( holePath );
 
-					pts = [ v( radiusScrew + thickness, 0, thickness ) , v( radiusScrew, 0, thickness ), v( radiusScrew + thickness, 0, 0 ) ];
+					pts = [ v2( radiusScrew + thickness, thickness ) , v2( radiusScrew, thickness ), v2( radiusScrew + thickness, 0 ) ];
 
 					geo2 = new THREE.LatheGeometry( pts, 4 * segments );
+					geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
+
 					geo2.applyMatrix( new THREE.Matrix4().makeTranslation( x, y, 0  ) );
 
 					geometry.merge( geo2 );
@@ -501,19 +503,20 @@
 		var points = [
 
 // head
-			v( radiusScrew05 + delta, 0, height05 + delta ),
-			v( radiusScrew05, 0, height05 ),
+			v2( radiusScrew05 + delta, height05 + delta ),
+			v2( radiusScrew05, height05 ),
 
 // body and tip
-			v( radiusScrew05, 0, -height05 ),
-			v( 0, 0, -height05 - delta )
+			v2( radiusScrew05, -height05 ),
+			v2( 0, -height05 - delta )
 
 		];
 
 		var geometry = new THREE.LatheGeometry( points, segments );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
 
 		var geo2 = build_phillipsHead( radiusScrew + 1.25, radiusScrew + 1.25 ); // createPhillipsHead( radius, height, rows );
-		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( -pi05 ) );
+		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi_05 ) );
 		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, height05 + delta ) );
 
 		geometry.merge( geo2 );
@@ -786,8 +789,10 @@
 		var radiusHandle = 5;
 		var radiusShaft = 1;
 		var tipLength = 8;
-		var points = [ v( 1, 0, 0 ), v( 1, 0, 50 ), v( radiusHandle, 0, 50 ), v( radiusHandle, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radiusHandle, 0, 55), v( radiusHandle, 0, 80 ), v( 0, 0, 81 ) ];
+		var points = [ v2( 1, 0 ), v2( 1, 50 ), v2( radiusHandle, 50 ), v2( radiusHandle, 52), v2( 4, 52), v2( 4, 55 ), v2( radiusHandle, 55), 
+			v2( radiusHandle, 80 ), v2( 0, 81 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, tipLength ) );
 
 		var geo2 = drawPhillipsTip( radiusShaft, tipLength );
@@ -851,8 +856,9 @@
 	function draw_pencil() {
 
 		var radius = 2;
-		var points = [ v( 0, 0, 0 ) , v( radius, 0, 10 ), v( radius, 0, 70 ), v( 0, 0, 70 ) ];
+		var points = [ v2( 0, 0 ) , v2( radius, 10 ), v2( radius, 70 ), v2( 0, 70 ) ];
 		var geometry = new THREE.LatheGeometry( points, 8 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
 
 		var mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'pencil';
