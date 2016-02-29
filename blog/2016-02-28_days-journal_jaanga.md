@@ -6,6 +6,8 @@ Quiet Project
 * The four main demos edited and verified to run on Chrome, FF and Edge
 * Update main demos to hamburger menu
 * Add single toggle assembly button to all menus
+* Now all menus have same look and feel
+* Fix Three.js compatibility issue on bracket demo
 
 
 Basic HTML Template]( http://jaanga.github.io/cookbook-html/templates/basic-html\basic-html.html )

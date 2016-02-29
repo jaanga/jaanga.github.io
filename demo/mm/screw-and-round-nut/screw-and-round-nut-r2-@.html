@@ -5,8 +5,8 @@
 <title>Screw and Round Nut R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Detail view of assembling chair parts with ling screw and round nut. Similar to Poang chair' >
-<meta name=keywords content='Moving ManualsWebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-02-27' >
+<meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-02-28' >
 </head>
 <body>
 
@@ -33,7 +33,7 @@
 	var radiusHole = 0.5;
 
 	var pegLength = 2;
-	var pegRadius = 0.5; 
+	var pegRadius = 0.5;
 
 	var width05 = 0.5 * width;
 	var height05 = 0.5 * height;
@@ -61,7 +61,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 */
 
 		var css = document.body.appendChild( document.createElement('style') );
@@ -160,7 +160,7 @@
 
 		for ( var i = 0; i < objects.length; i++ ) {
 
-			objects[ i ].material.wireframe = !objects[ i ].material.wireframe 
+			objects[ i ].material.wireframe = !objects[ i ].material.wireframe
 
 		}
 
@@ -568,7 +568,7 @@
 				var vertices = geometry.vertices;
 				var count = 0;
 
-				var angleStart = Math.atan2( chordRadius, radiusBase ); 
+				var angleStart = Math.atan2( chordRadius, radiusBase );
 				var chordLength = radiusBase * Math.cos( angleStart );
 				var chordAngle = Math.atan2( chordRadius, chordLength );
 				var startX = radiusBase * Math.cos( chordAngle );
@@ -583,7 +583,7 @@
 
 				}
 
-				angleStart = Math.atan2( chordRadius, radiusBase ); 
+				angleStart = Math.atan2( chordRadius, radiusBase );
 				chordLength = radiusBase * Math.cos( angleStart );
 				chordAngle = Math.atan2( chordRadius, chordLength );
 				delta = ( pi - 2 * chordAngle ) / columns;
@@ -606,7 +606,7 @@
 
 				}
 
-				angleStart = Math.atan2( chordRadius, radiusTop ); 
+				angleStart = Math.atan2( chordRadius, radiusTop );
 				chordLength = radiusTop * Math.cos( angleStart );
 				chordAngle = Math.atan2( chordRadius, chordLength );
 				delta = ( pi - 2 * chordAngle ) / columns;
@@ -682,7 +682,7 @@
 				var segments = 6;
 
 				columns = segments * ( points.length );
-		 
+
 				geometry = new THREE.PlaneGeometry(  1, 1, columns - 1, rows);
 
 				vertices = geometry.vertices;
@@ -695,7 +695,7 @@
 
 						delta = k / segments;
 
-						if ( j < points.length - 1 ) { 
+						if ( j < points.length - 1 ) {
 
 							x = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
 							y = 0;
@@ -737,7 +737,7 @@
 
 						delta = k / segments;
 
-						if ( j < points.length - 1 ) { 
+						if ( j < points.length - 1 ) {
 
 							x = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
 							y = height;
@@ -787,7 +787,7 @@
 
 		for ( var i = 0; i <= segments; i++ ) {
 
-			points.push( v( -radiusPath * Math.cos( i * angle ) + radiusPath, 0, 
+			points.push( v( -radiusPath * Math.cos( i * angle ) + radiusPath, 0,
 				lengthHex + lengthShort + radiusPath * Math.sin( i * angle ) ) );
 
 		}
