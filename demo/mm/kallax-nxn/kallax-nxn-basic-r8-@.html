@@ -73,32 +73,9 @@
 	animate();
 
 	function init() {
-/*
-		var css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
-
-			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
-			'h2 { margin: 0 }' +
-			'h2 a {text-decoration: none; }' +
-			'#menu { background-color: #eee; height: 100%; margin: 0 20px; max-width: 250px; opacity: 0.85; overflow: auto; padding: 0 8px; position: absolute; }' +
-			'select { z-index: 20; }' +
-
-			'button { background-color: #ddd; border: 2px #eee solid; color: #888; }' +
-			'input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
-
-			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
-			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
-			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
-
-		'';
-
-		menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
-		menu.innerHTML =
-*/
 
 		var css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = 
+		css.innerHTML =
 
 			'body { font: 12pt monospace; margin: 0; }' +
 			'h2 { margin: 0; }' +
@@ -124,7 +101,8 @@
 
 		var menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
+
 			'<h2>' +
 			'	<a href="" >' + document.title + '</a> ' +
 			'	<a href=http://jaanga.github.io/demo/mm/ >❦</a>' +
@@ -136,9 +114,6 @@
 			'</p>' +
 
  			'<p><button onclick=toggleAssembly(); >Toggle Assembly</button>' +
-//			'<p><button onclick=tweenAllToLocation(); >Return all to start</button>' +
-//			'<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>' +
-//			'<p><button onclick=togglePlacesAll(); >Toggle Places</button></p>' +
 
 			'<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Play Step-by-Step Assembly</p>' +
 
@@ -153,9 +128,6 @@
 			'	<input type=checkbox id=chkPlacards onchange=togglePlacardVisible(); checked > Placards Visible<br>' +
 			'	<input type=checkbox onchange=toggleBackgroundGradient(); checked > Background' +
 			'</p>' +
-
-
-
 
 			'<p><a href="http://jaanga.github.io/demo/mm/kallax-wall-bracket/" >notKallax Wall Bracket</a></p>' +
 //			'<p><a href="http://www.ikea.com/us/en/assembly_instructions/kallax-shelving-unit__AA-1009445-8_pub.pdf" >Assembly Manual</a></p>' +

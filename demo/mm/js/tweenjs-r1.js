@@ -1,6 +1,6 @@
 ﻿
 /*
-2016-02-27 ~ Copyright Jaanga authors ~ MIT License
+2016-02-28 ~ Copyright Jaanga authors ~ MIT License
 
 Reminders
 
@@ -216,6 +216,14 @@ Reminders
 
 
 // tweens
+
+	function toggleAssembly() {
+
+		indexAssembly = indexAssembly === 0 ? 1 : 0;
+
+		tweenAllToLocation( indexAssembly );
+
+	}
 
 	function togglePlacesAll() {
 
