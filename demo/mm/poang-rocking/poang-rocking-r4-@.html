@@ -70,9 +70,7 @@
 
 	var poang, edges, hardware, helpers;
 
-// assets
-
-	var verticesSection =  [ v2( 0, 0 ), v2( 0, -frameThickness ), v2( - frameWidth, -frameThickness ), v2( - frameWidth, 0 ) ];
+	var verticesSection = [ v2( 0, 0 ), v2( 0, -frameThickness ), v2( - frameWidth, -frameThickness ), v2( - frameWidth, 0 ) ];
 
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
@@ -81,25 +79,11 @@
 	animate();
 
 	function init() {
-/*
-		var css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
-
-			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
-			'a {text-decoration: none; }' +
-			'button { background-color: silver; border: 2px silver solid; color: #888; }' +
-			'h2 { margin: 0 }' +
-		'';
-
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
-		menu.innerHTML =
-*/
 
 		var css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML =
 
-			'body { font: 12pt monospace; margin: 0; }' +
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
 			'h2 { margin: 0; }' +
 			'a { text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #888; }' +
