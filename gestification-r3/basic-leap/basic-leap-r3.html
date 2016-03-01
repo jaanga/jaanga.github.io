@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Basic Leap R2</title>
+<title>Basic Leap R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices' >
 <meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-02-23' >
+<meta name=date content='2016-02-29' >
 </head>
 <body>
 
@@ -24,6 +24,7 @@
 
 	var loop = {};
 
+	var hands, hand;
 	var phalanges;
 	var knuckles;
 
@@ -143,7 +144,8 @@
 
 		for ( var i = 0; i < frame.hands.length; i++ ) {
 
-			hand = frame.hands[ i ];
+			hands = frame.hands;
+			hand = hands[ i ];
 
 			for ( var j = 0; j < hand.fingers.length; j++ ) {
 
