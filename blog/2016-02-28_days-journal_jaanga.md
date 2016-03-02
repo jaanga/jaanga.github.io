@@ -10,13 +10,13 @@ Quiet Project
 * Fix Three.js compatibility issue on bracket demo
 * The project has a home page mock-up
 
-Basic HTML Template]( http://jaanga.github.io/cookbook-html/templates/basic-html\basic-html.html )
+[Basic HTML Template]( http://jaanga.github.io/cookbook-html/templates/basic-html\basic-html.html )
 
 * Updated yet again
 * Revert back to old time strings
 * Other minor tweaks
 
-[Hamburger Child Menu R4] ( http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r2.html )
+[Hamburger Child Menu R4]( http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r2.html )
 
 * Big update
 * Follows on from Three.js Viewer Mobile
