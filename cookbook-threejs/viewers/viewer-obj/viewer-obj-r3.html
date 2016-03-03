@@ -64,7 +64,7 @@
 			'	<a href=http://jaanga.github.io/ >❦</a>' +
 			'</h2>' +
 			'<p>Drag and drop files over this menu or <input type=file onchange=loadFileOBJByContent(this); /><p>' +
-			'<p>Scale: <input id=inpScale value=1.0 ></p>' +
+			'<p>Scale: <input id=inpScale value=0.3 ></p>' +
 			'<p>' +
 				'Rotation:<br>' +
 				'x: <input id=inpRotX value=0 > y: <input id=inpRotY value=0 > z: <input id=inpRotZ value=0 >' +
@@ -132,7 +132,7 @@
 		var blob = new Blob( [ JSON.stringify( object.toJSON() ) ] );
 		var a = document.body.appendChild( document.createElement( 'a' ) );
 		a.href = window.URL.createObjectURL( blob );
-		a.download = 'scene.json';
+		a.download =  fileName.split('/').pop().replace( /\.obj|\.OBJ/, '.json' );
 		a.click();
 		delete a;
 
@@ -174,7 +174,7 @@
 			'';
 			info.innerHTML = '<h3>File name: ' + fileName.split('/').pop() + '</h3>';
 
-console.log( 'object', object );
+//console.log( 'object', object );
 
 		} );
 
@@ -193,7 +193,7 @@ console.log( 'object', object );
 			loader.crossOrigin = 'anonymous';
 			object = loader.parse( reader.result );
 
-console.log( object  );
+//console.log( object  );
 
 			addObject( object );
 
@@ -222,8 +222,6 @@ console.log( object  );
 
 	function addObject( object ) {
 
-
-
 		object.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
@@ -249,8 +247,12 @@ console.log( object  );
 		pZ = parseFloat( inpPosZ.value );
 		object.position.set( pX, pY, pZ );
 
+object.updateMatrixWorld()
+
 		scene.add( object );
 
+
+console.log( '', object.children[ 1 ].geometry.attributes.position );
 	}
 
 	function checkClearScreen() {
