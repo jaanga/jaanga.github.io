@@ -9,15 +9,23 @@ value='You are now in the home page view - Click this button to view the read me
 
 _The product assembly manuals of the future - now_
 
+/*
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
 ~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 ~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
+*/
+
+[Further Considerations]( http://jaanga.github.io/demo/mm/readme-reader.html#further-considerations.md )
+~ [Design Notes]( http://jaanga.github.io/demo/mm/readme-reader.html#design-notes.md ) 
+~ [Dev Notes]( http://jaanga.github.io/demo/mm/readme-reader.html#dev-notes.md ) 
 
 ***
 
 
 ##Overview
+
+### [Moving Manuals home page]( http://jaanga.github.io/demo/mm/index.html )
 
 ### [Screw and Round Nut - Demo - Full Screen - Latest ]( http://jaanga.github.io/demo/mm/screw-and-round-nut/index.html )
 
@@ -37,7 +45,7 @@ _2016-02-28_
 
 * All four demos checked, edited and verified to be FF and Edge compatible
 
-[Moving Manuals home page]( http://jaanga.github.io/demo/mm/index.html
+[Moving Manuals home page]( http://jaanga.github.io/demo/mm/index.html )
 
 * Initial mock-up
 

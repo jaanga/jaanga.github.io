@@ -20,6 +20,6 @@
 
 Saves to JSON - but only with un-updated parameters. Will have to figure out some scene traverse scenario.
 
-[Viewer JSON R1]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-json/viewer-json-r1.html 
+[Viewer JSON R1]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-json/viewer-json-r1.html )
 
 * First pass - copied from vA3C
