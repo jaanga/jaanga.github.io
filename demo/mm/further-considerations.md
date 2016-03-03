@@ -1,5 +1,10 @@
+
+[Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »  [Demo]( http://jaanga.github.io/demo/mm  ) »
+
 Further Considerations
 ===
+
+_Notes relating to the MM home page mock-up - generated as a result of feedback from my family_
 
 
 ## Colors 1

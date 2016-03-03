@@ -1,4 +1,6 @@
-dev notes read me
+[Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »  [Demo]( http://jaanga.github.io/demo/mm  ) »
+
+dev notes
 ===
 
 
