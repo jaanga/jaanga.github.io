@@ -1,4 +1,4 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view the home page]( http://jaanga.github.io/demo/mm/index.html "View file as a web page." ) </span>
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view the home page]( http://jaanga.github.io/demo/mm/index.html "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/mm/'; 
 value='You are now in the home page view - Click this button to view the read me file and the source code' >
 
