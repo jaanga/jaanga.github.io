@@ -6,3 +6,25 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [GN Read Me]( ./index.html )
 ===
+
+
+### [Ricoh Theta Sandbox]( jaanga.github.io/demo/gn/ricoh-theta-sandbox/index.html )
+
+Images from the Ricoh Theta work very well as the texturs in [sky spheres]( https://en.wikipedia.org/wiki/Skybox_(video_games) )
+
+Supports the following:
+
+* Rotate = one finger / left mouse
+* Zoom = two fingers / scroll wheel
+* Pan = three fingers / right mouse
+* Rotation = press spacebar
+* Previous / Next image = left / right cursor keys
+
+### Road Map
+* Video capability
+* Slideshow capability
+* Blend in 3D bbjects
+
+
+_Images creits to be addded_
+
