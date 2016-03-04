@@ -8,9 +8,9 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ===
 
 
-### [Ricoh Theta Sandbox]( jaanga.github.io/demo/gn/ricoh-theta-sandbox/index.html )
+### [Ricoh Theta Sandbox]( http://jaanga.github.io/demo/gn/ricoh-theta-sandbox/index.html )
 
-Images from the Ricoh Theta work very well as the texturs in [sky spheres]( https://en.wikipedia.org/wiki/Skybox_(video_games) )
+Images from the Ricoh Theta work very well as the textures that can be used to create [sky spheres]( https://en.wikipedia.org/wiki/Skybox_(video_games) )
 
 Supports the following:
 
@@ -20,7 +20,11 @@ Supports the following:
 * Rotation = press spacebar
 * Previous / Next image = left / right cursor keys
 
-### Road Map
+### Things to Do / Road Map
+
+* Add your own images
+* Upload images to Imgur and then call them from the app
+* Changw the speed of the rotation
 * Video capability
 * Slideshow capability
 * Blend in 3D bbjects
