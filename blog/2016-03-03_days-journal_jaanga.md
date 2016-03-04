@@ -3,8 +3,9 @@
 
 [OBJ Viewer Basic]( http://jaanga.github.io/3d-models/viewers/obj-viewer-basic/ )
 
-* now has index file pointing to latest release
+* Now has index file pointing to latest release
 * R2 is a code clean-up, streamlining, documenting effort
+* Also update read me file.
 
 
 [Femur Heart UCSF]( http://theo-armour.github.io/ucsf/ )
@@ -14,3 +15,5 @@
 Looks like Unicode characters working again in all versions of the home browser
 
 Can go back to using &#x24D8;
+
+
