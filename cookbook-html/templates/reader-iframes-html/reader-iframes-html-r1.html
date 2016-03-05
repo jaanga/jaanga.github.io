@@ -29,6 +29,7 @@
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML =
+
 			'<div id=contents ></div>' +
 
 		'';
@@ -37,15 +38,15 @@
 
 		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
 
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'get', fileName, true );
-		xmlHttp.onreadystatechange = function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onreadystatechange = function() {
 
-			if ( xmlHttp.readyState !== 4 ) { return; }
+			if ( xhr.readyState !== 4 ) { return; }
 
-			contents.innerHTML = converter.makeHtml( xmlHttp.responseText );
+			contents.innerHTML = converter.makeHtml( xhr.responseText );
 
-			iframes = document.getElementsByClassName( 'ifr' );
+//			iframes = document.getElementsByClassName( 'ifr' );
 			iframes = document.getElementsByTagName( 'iframe' );
 
 			if ( iframes !== undefined ) {
@@ -55,7 +56,7 @@
 					ifr = iframes[ i ];
 					ifr.style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
 					ifr.style.width = ( window.innerWidth - 25 ) + 'px';
-					ifr.style.height = '300px';
+					ifr.style.height = '500px';
 					ifr.onload = function() { ifr.contentWindow.controls.enableZoom = false; };
 
 				}
@@ -64,7 +65,7 @@
 
 		};
 
-		xmlHttp.send( null );
+		xhr.send( null );
 
 	}
 

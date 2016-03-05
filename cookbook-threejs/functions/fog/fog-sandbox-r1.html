@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R1</title>
+<title>Fog Sandbox R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-03-04' >
 </head>
 <body>
 <!--
@@ -68,6 +68,9 @@
 //		renderer.setClearColor( 0xf0f0f0 );
 //		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
+
+// not necessary for fog
+//       renderer.shadowMapEnabled = true;
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
@@ -78,10 +81,29 @@
 
 		scene = new THREE.Scene();
 
+
+// FogExp2( hex, density)
+//		scene.fog = new THREE.FogExp2( 0xffffff, 0.0015 );
+
+// Fog( hex, near, far )
+		scene.fog = new THREE.Fog( 0xaaaa00, 0.015, 200 );
+
+
+		// add subtle ambient lighting
+		var ambientLight = new THREE.AmbientLight(0x0c0c0c);
+		scene.add(ambientLight);
+
+// add spotlight for the shadows
+// not necessary for fog
+		var spotLight = new THREE.SpotLight(0xffffff);
+		spotLight.position.set(-40, 60, -10);
+		spotLight.castShadow = true;
+		scene.add(spotLight);
+
 // helpers
 
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshPhongMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
@@ -95,6 +117,62 @@
 
 // assets
 
+		toggleRandomGeometry( 50 );
+
+
+	}
+
+
+	function toggleRandomGeometry( objectsCount ) {
+
+		objectsCount = objectsCount ? objectsCount : 10;
+
+		var randomGeometry = scene.getObjectByName( 'randomGeometry' );
+		var randomGeometryHelpers = scene.getObjectByName( 'randomGeometryHelpers' );
+
+		if ( randomGeometry === undefined ) {
+
+			randomGeometry = new THREE.Object3D();
+			randomGeometryHelpers = new THREE.Object3D();
+
+			randomGeometry.name = 'randomGeometry';
+			randomGeometryHelpers.name = 'randomGeometryHelpers';
+
+			var geometries = [
+
+				new THREE.BoxGeometry( 10, 10, 10 ),
+				new THREE.CylinderGeometry( 5, 5, 1, 12 ),
+				new THREE.DodecahedronGeometry( 05 ),
+				new THREE.SphereGeometry( 5, 12, 8 ),
+				new THREE.TorusGeometry( 10, 5 ),
+
+			];
+
+			var material = new THREE.MeshPhongMaterial( { color: 0xff00ff } );
+			var radius = 50, angle = 2 * Math.PI / objectsCount;
+
+			for ( var i = 0; i < objectsCount; i++ ) {
+
+				var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
+				var mesh = new THREE.Mesh( geometry, material );
+				mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
+				mesh.position.set( radius * Math.cos( angle * i ) , 30, radius * Math.sin( angle * i )  );
+				mesh.name = 'obj ' + i;
+
+				randomGeometry.add( mesh );
+
+				helper = new THREE.EdgesHelper( mesh );
+				randomGeometryHelpers.add( helper );
+
+			}
+
+			scene.add( randomGeometry, randomGeometryHelpers );
+
+		} else {
+
+			scene.remove( randomGeometry, randomGeometryHelpers );
+
+		}
 
 	}
 
@@ -111,7 +189,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 
