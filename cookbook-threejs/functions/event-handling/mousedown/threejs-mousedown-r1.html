@@ -169,117 +169,118 @@
 
 		raycaster = new THREE.Raycaster();
 
-				renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
-				renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
-				renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
 
 	}
 
-			function onDocumentMouseMove( event ) {
+	function onDocumentMouseMove( event ) {
 
-				event.preventDefault();
+		event.preventDefault();
 
-				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
-				//
+		//
 
-				raycaster.setFromCamera( mouse, camera );
+		raycaster.setFromCamera( mouse, camera );
 
 /*
-				if ( SELECTED ) {
+		if ( SELECTED ) {
 
-					var intersects = raycaster.intersectObject( plane );
+			var intersects = raycaster.intersectObject( plane );
 
-					if ( intersects.length > 0 ) {
+			if ( intersects.length > 0 ) {
 
-						SELECTED.position.copy( intersects[ 0 ].point.sub( offset ) );
+				SELECTED.position.copy( intersects[ 0 ].point.sub( offset ) );
 
-					}
+			}
 
-					return;
+			return;
 
-				}
+		}
 */
 
-				var intersects = raycaster.intersectObjects( cubes );
+		var intersects = raycaster.intersectObjects( cubes );
 
-				if ( intersects.length > 0 ) {
+		if ( intersects.length > 0 ) {
 
-console.log( '', intersects, mouse.x, mouse.y );
+//console.log( '', intersects, mouse.x, mouse.y );
 
-					if ( INTERSECTED != intersects[ 0 ].object ) {
+			if ( INTERSECTED != intersects[ 0 ].object ) {
 
-						if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+				if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
-						INTERSECTED = intersects[ 0 ].object;
-						INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+				INTERSECTED = intersects[ 0 ].object;
+				INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
 
 //						plane.position.copy( INTERSECTED.position );
 //						plane.lookAt( camera.position );
 
 
-					}
-
-					renderer.domElement.style.cursor = 'pointer';
-
-				} else {
-
-					if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-
-					INTERSECTED = null;
-
-					renderer.domElement.style.cursor = 'auto';
-
-				}
-
 			}
 
-			function onDocumentMouseDown( event ) {
+			renderer.domElement.style.cursor = 'pointer';
 
-				event.preventDefault();
+		} else {
 
-				raycaster.setFromCamera( mouse, camera );
+			if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
-				var intersects = raycaster.intersectObjects( cubes );
+			INTERSECTED = null;
 
-				if ( intersects.length > 0 ) {
+			renderer.domElement.style.cursor = 'auto';
 
-					controls.enabled = false;
+		}
+
+	}
+
+	function onDocumentMouseDown( event ) {
+console.log( '', intersects, mouse.x, mouse.y );
+		event.preventDefault();
+
+		raycaster.setFromCamera( mouse, camera );
+
+		var intersects = raycaster.intersectObjects( cubes );
+
+		if ( intersects.length > 0 ) {
+
+			controls.enabled = false;
 
 //					SELECTED = intersects[ 0 ].object;
 
 //					var intersects = raycaster.intersectObject( plane );
 
-					if ( intersects.length > 0 ) {
+			if ( intersects.length > 0 ) {
 
 //						offset.copy( intersects[ 0 ].point ).sub( plane.position );
-//console.log( '', intersects, mouse.x, mouse.y );
-					}
 
-					renderer.domElement.style.cursor = 'move';
-
-				}
 
 			}
 
-			function onDocumentMouseUp( event ) {
+			renderer.domElement.style.cursor = 'move';
 
-				event.preventDefault();
+		}
 
-				controls.enabled = true;
+	}
 
-				if ( INTERSECTED ) {
+	function onDocumentMouseUp( event ) {
+
+		event.preventDefault();
+
+		controls.enabled = true;
+
+		if ( INTERSECTED ) {
 
 //					plane.position.copy( INTERSECTED.position );
 
 //					SELECTED = null;
 
-				}
+		}
 
-				renderer.domElement.style.cursor = 'auto';
+		renderer.domElement.style.cursor = 'auto';
 
-			}
+	}
 
 
 	function animate( timestamp ) {
