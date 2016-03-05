@@ -11,3 +11,5 @@
 * Display sun times and position
 * Display moon position, illumination and times
 * Select locations from a gazetteer of with lat/lon of over 2,000 places names
+
+[Fog Sandbox R1]( http://jaanga.github.io/cookbook-threejs/functions/fog/fog-sandbox-r1.html )
