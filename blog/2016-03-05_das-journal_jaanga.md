@@ -13,3 +13,5 @@
 * Select locations from a gazetteer of with lat/lon of over 2,000 places names
 
 [Fog Sandbox R1]( http://jaanga.github.io/cookbook-threejs/functions/fog/fog-sandbox-r1.html )
+
+[Ricoh Theta R2]( http://jaanga.github.io/demo/gn/ricoh-theta-sandbox/ricoh-theta-sandbox-r2.html )
