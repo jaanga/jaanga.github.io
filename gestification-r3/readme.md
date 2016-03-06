@@ -10,6 +10,10 @@
 _[Gestification Blog]( request-gestification-blog-posts.html ) [Read Me]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r3/ )_
 
 
+## 2016-03-06
+
+[New Knuckles Each Loop-r1]( http://jaanga.github.io/gestification-r3/new-knuckles-each-loop/ )
+
 ## 2016-03-05
 
 [New Meshes Every Loop R1]( http://jaanga.github.io/gestification-r3/new-meshes-each-loop/new-meshes-each-loop-r1.html )

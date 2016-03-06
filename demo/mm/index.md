@@ -7,13 +7,14 @@ value='You are now in the home page view - Click this button to view the read me
 
 ## _disrupting the process of assembling things_
 
-You can run the apps here or click in the title under the app to run it full scree.
+You can run the four apps here or click the title under the app to run it full scree.
 
 Each of the apps supports the following:
 
 * Rotate = one finger / left mouse
 * Zoom = two fingers / scroll wheel << full screen only
 * Pan = three fingers / right mouse
+* Reset = click the on the title 
 
 See also: [Read Me]( http://jaanga.github.io/demo/mm/readme-reader.html )
 
