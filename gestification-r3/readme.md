@@ -14,6 +14,9 @@ _[Gestification Blog]( request-gestification-blog-posts.html ) [Read Me]( https:
 
 [New Knuckles Each Loop-r1]( http://jaanga.github.io/gestification-r3/new-knuckles-each-loop/ )
 
+* New meshes for knuckles only
+
+
 ## 2016-03-05
 
 [New Meshes Every Loop R1]( http://jaanga.github.io/gestification-r3/new-meshes-each-loop/new-meshes-each-loop-r1.html )
