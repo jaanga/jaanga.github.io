@@ -100,12 +100,12 @@
 
 		var geometry, material, mesh;
 		var text = '';
-		var f, p, b, l, n;
+//		var f, p, b, len, n, 
+		var v = new THREE.Vector3();
 
 		scene.remove( phalanges );
 
 		phalanges = new THREE.Object3D();
-
 		geometry = new THREE.BoxGeometry( 1, 1, 1 );
 		material = new THREE.MeshNormalMaterial();
 
@@ -126,12 +126,9 @@
 				for ( var k = 0; k < b.length; k++ ) {
 
 					mesh = new THREE.Mesh( geometry, material );
-					l = b[ k ].length ? b[ k ].length : 1;
-					mesh.scale.set( b[ k ].width, b[ k ].width, l ); 
-
+					mesh.scale.set( b[ k ].width, b[ k ].width,  b[ k ].length || 1 ); 
 					mesh.position.fromArray( p[ k ] );
-					n = p[ k + 1 ];
-					mesh.lookAt( v( n[ 0 ], n[ 1 ], n[ 2 ] )  );
+					mesh.lookAt( v.fromArray( p[ k + 1 ] ) );
 
 					phalanges.add( mesh );
 

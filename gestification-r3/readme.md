@@ -1,7 +1,7 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r3/ "View file as a web page." ) </span>
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/gestification-r3/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r3/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) �
+[Jaanga]( http://jaanga.github.io ) »
 
 [Gestification R3 Read Me]( index.html )
 ===
@@ -9,6 +9,13 @@
 
 _[Gestification Blog]( request-gestification-blog-posts.html ) [Read Me]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r3/ )_
 
+
+## 2016-03-05
+
+[New Meshes Every Loop R1]( http://jaanga.github.io/gestification-r3/new-meshes-each-loop/new-meshes-each-loop-r1.html )
+
+* Very simple Three.js template for Leap Motion devices. 
+* Creates entirely new meshes every frame.
 
 ## 2016-02-25
 
