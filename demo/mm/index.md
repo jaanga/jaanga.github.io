@@ -6,9 +6,16 @@ value='You are now in the home page view - Click this button to view the read me
 ===
 
 ## _disrupting the process of assembling things_
-lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
 
-[Read Me]( http://jaanga.github.io/demo/mm/readme-reader.html )
+You can run the apps here or click in the title under the app to run it full scree.
+
+Each of the apps supports the following:
+
+* Rotate = one finger / left mouse
+* Zoom = two fingers / scroll wheel << full screen only
+* Pan = three fingers / right mouse
+
+See also: [Read Me]( http://jaanga.github.io/demo/mm/readme-reader.html )
 
 
 <iframe class=ifr src='kallax-nxn/index.html'  ></iframe>
