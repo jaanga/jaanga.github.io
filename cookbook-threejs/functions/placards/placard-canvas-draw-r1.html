@@ -84,7 +84,7 @@
 		var placard = new THREE.Object3D();
 		var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
-		var texture = canvasMultilineText( text, { backgroundColor: color }   );
+		var texture = canvasDraw( text, { backgroundColor: color }   );
 		var spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
 		var sprite = new THREE.Sprite( spriteMaterial );
 		sprite.position.set( x, y, z ) ;
@@ -100,7 +100,7 @@
 		return placard;
 
 
-		function canvasMultilineText( textArray, parameters ) {
+		function canvasDraw( parameters ) {
 
 			parameters = parameters || {} ;
 			var width = parameters.width ? parameters.width : 300;
