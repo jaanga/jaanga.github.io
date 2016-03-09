@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>New Knuckles Each Loop R1</title>
+<title>New Positions Each Loop R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices. Creates entirely new meshes every frame.' >
 <meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -23,8 +23,8 @@
 
 	var loop = {};
 
-	var hands, hand;
-	var knuckles;
+
+	var positionsObject;
 
 	var stats, renderer, scene, camera, controls;
 
@@ -96,14 +96,14 @@
 
 	loop.animate = function( frame ) {
 
-//		var finger, positions; 
-
+		var hands, hand;
+		var finger, positions; 
 		var geometry, material, mesh;
 		var text = '';
 
-		scene.remove( knuckles );
+		scene.remove( positionsObject );
 
-		knuckles = new THREE.Object3D();
+		positionsObject = new THREE.Object3D();
 		geometry = new THREE.SphereBufferGeometry( 5 );
 		material = new THREE.MeshNormalMaterial();
 
@@ -124,7 +124,7 @@
 
 					mesh = new THREE.Mesh( geometry, material );
 					mesh.position.fromArray( positions[ k ] );
-					knuckles.add( mesh );
+					positionsObject.add( mesh );
 
 				}
 
@@ -134,7 +134,7 @@
 
 		}
 
-		scene.add( knuckles );
+		scene.add( positionsObject );
 		fingerData.innerHTML = text;
 
 	}

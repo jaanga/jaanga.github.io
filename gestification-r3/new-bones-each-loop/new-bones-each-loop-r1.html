@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>New Knuckles Each Loop R1</title>
+<title>New Bones Each Loop R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices. Creates entirely new meshes every frame.' >
 <meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -22,9 +22,7 @@
 <script>
 
 	var loop = {};
-
-	var hands, hand;
-	var knuckles;
+	var bonesObject;
 
 	var stats, renderer, scene, camera, controls;
 
@@ -96,15 +94,21 @@
 
 	loop.animate = function( frame ) {
 
-//		var finger, positions; 
-
+//		var hands, hand;
+//		var finger, bones; 
 		var geometry, material, mesh;
 		var text = '';
+//		n = new THREE.Vector3;
+//		p = new THREE.Vector3;
 
-		scene.remove( knuckles );
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	var axis = v( 0, 0, 1 );
 
-		knuckles = new THREE.Object3D();
-		geometry = new THREE.SphereBufferGeometry( 5 );
+		scene.remove( bonesObject );
+
+		bonesObject = new THREE.Object3D();
+		geometry = new THREE.CylinderGeometry( 1, 1, 1 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
 		material = new THREE.MeshNormalMaterial();
 
 		info.innerHTML = frame.dump();
@@ -118,13 +122,21 @@
 			for ( var j = 0; j < hand.fingers.length; j++ ) {
 
 				finger = hand.fingers[ j ];
-				positions = finger.positions;
+				bones = finger.bones;
 
-				for ( var k = 0; k < positions.length; k++ ) {
+				for ( var k = 0; k < bones.length; k++ ) {
+
+					b = bones[ k ];
+//					n = new THREE.Vector3().fromArray( b.nextJoint );
+//					p = new THREE.Vector3().fromArray( b.prevJoint );
 
 					mesh = new THREE.Mesh( geometry, material );
-					mesh.position.fromArray( positions[ k ] );
-					knuckles.add( mesh );
+//					mesh.position.lerpVectors( n, p, 0.5 );
+					mesh.position.fromArray( b.center() );
+					mesh.scale.set( 0.5 * b.width, 0.5 * b.width, b.length || 1 );
+					mesh.quaternion.setFromUnitVectors( axis, new THREE.Vector3().fromArray( b.direction() ) );
+//					mesh.lookAt( n );
+					bonesObject.add( mesh );
 
 				}
 
@@ -134,7 +146,7 @@
 
 		}
 
-		scene.add( knuckles );
+		scene.add( bonesObject );
 		fingerData.innerHTML = text;
 
 	}
