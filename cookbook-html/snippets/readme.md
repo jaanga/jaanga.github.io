@@ -31,6 +31,10 @@
 
 * [Request Animation Frame Read Me]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/ )
 
+## [Table with DIV ]( http://jaanga.github.io/cookbook-html/snippets/table-with-div/table-with-div-r1.html )
+
+* Using DIV instead if table,tr,td may look nicer
+
 ## Text to Voice
 
 [ Text to Voice]( http://jaanga.github.io/cookbook-html/snippets/text-to-voice/speech-synth-basic.html )
