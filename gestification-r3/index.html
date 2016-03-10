@@ -100,8 +100,8 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 
 				var file = response.tree[ key ].path;
 
-				if ( file.indexOf( urlSourceFilter ) === - 1 || file.indexOf( '.html' ) === -1 || file.indexOf( 'index' ) === -1 ) { continue; }
-				if ( file.indexOf( urlSourceFilter + 'index.html' ) > - 1 ) { continue; }
+				if ( file.indexOf( urlSourceFilter ) === -1 || file.indexOf( '.html' ) === -1 || file.indexOf( 'index' ) === -1 ) { continue; }
+				if ( file.indexOf( urlSourceFilter + 'index.html' ) > - 1 || file.indexOf( 'archive' ) > -1 ) { continue; }
 
 				files.push( file );
 
