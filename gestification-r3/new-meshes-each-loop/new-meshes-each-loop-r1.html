@@ -27,7 +27,7 @@
 	var phalanges;
 
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-	var stats, renderer, scene, camera, controls;
+	var menu, stats, renderer, scene, camera, controls;
 
 
 	init();
@@ -46,7 +46,7 @@
 
 		'';
 
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute';
 		menu.innerHTML = 
 

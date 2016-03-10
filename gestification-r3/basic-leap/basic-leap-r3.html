@@ -31,6 +31,7 @@
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	var axis = v( 0, 1, 0 );
 
+	var menu;
 	var stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
@@ -48,7 +49,7 @@
 
 		'';
 
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute';
 		menu.innerHTML = '<h2 ><a href="" >' + document.title + '</a> ' +
 			'<a href=http://jaanga.github.io/gestification-r3/basic-leap/basic-leap-r1.html >❦</a></h2>' +

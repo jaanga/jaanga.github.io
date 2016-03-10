@@ -63,6 +63,7 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 			'a, a:visited { color: crimson; text-decoration: none; }' +
 			'input[type=button]  { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 			'iframe { border: 0px solid green; height: 100%; width: 100%; }' +
+			'hr { margin-bottom: 100px; }' +
 
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
@@ -145,7 +146,6 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 			var frameTooMany = iframesActive.shift();
 			frameTooMany.innerHTML = '';
 
-
 		}
 
 		if ( activeContainer.innerHTML === '' ) {
@@ -186,6 +186,11 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 
 		that.contentWindow.controls.enableZoom = false;
 
+		if ( that.contentWindow.menu ) {
+
+			that.contentWindow.menu.style.display = 'none';
+
+		}
 	}
 
 	function animate() {
