@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Multiple Frames in Markdown R1</title>
+<title>Multiple Frames R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -12,7 +12,7 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-	var iframes = [];
+	var views = [];
 	var renderers = [];
 	var renderersLimit = 3;
 	var viewsLimit = 32;
@@ -22,7 +22,7 @@
 	var text = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 	init();
-	animate();
+//	animate();
 
 	function init() {
 
@@ -32,10 +32,7 @@
 			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0;  }' +
 			'h2 { margin: 0; }' +
 			'a { text-decoration: none; }' +
-			'iframe { border: 2px solid green; height: 300px; ' +
-//				'margin 0 0 0 ' + ( -0.5 * ( window.innerWidth - window.clientWidth ) + 10 ) + 'px; ' +
-//				'width: ' + ( window.innerWidth - 25 ) + 'px; ' +
-			'}' +
+			'iframe { border: 2px solid green; height: 100%; width: 100%; }' +
 
 			'.divView { border: 1px solid red; width: 512px; height:512px; }' +
 
@@ -65,15 +62,18 @@
 
 			contents.innerHTML = converter.makeHtml( xmlHttp.responseText );
 
-			iframes = document.getElementsByTagName( 'iframe' );
+			iframes = document.getElementsByClassName( 'ifr' );
 
-			for ( var i = 0; i < iframes.length; i++ ) {
+			if ( iframes !== undefined ) {
 
-				var ifr = iframes[ i ];
+				for ( var i = 0; i < iframes.length; i++ ) {
 
-				ifr.data = ifr.src;
-				ifr.id = 'ifr' + i ;
-				ifr.src = '';
+					ifr = iframes[ i ];
+					ifr.style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
+					ifr.style.width = ( window.innerWidth - 25 ) + 'px';
+					ifr.style.height = '300px';
+
+				}
 
 			}
 
@@ -83,26 +83,42 @@
 
 	}
 
-	function updateView( ifram ) {
 
+	function createMultipleViews() {
 
-		iframesActive = document.getElementsByClassName( 'ifr' );
+		for ( var i = 0; i < viewsLimit; i++ ) {
 
-		if ( iframesActive.length > renderersLimit ) {
+			content.innerHTML += 
 
-			var iframeDiscard = renderers.shift();
-			iframeDiscard.src = '';
-			iframeDiscard.className = '';
+				'<div id=ifr' + i + ' class=divView ></div>' +
+				'<h2>header ' + ( i + 1 ) + ' </h2>' + text +
+
+			'';
 
 		}
 
-		if ( ifram.src === window.location.href ) {
+		views = document.getElementsByClassName( 'divView' );
 
-			ifram.src = iframes[ ifram.id.slice( 3 ) ].data;
-			ifram.style.margin = '0 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
-			ifram.style.width = ( window.innerWidth - 25 ) + 'px';
-			ifram.className = 'ifr';
-			renderers.push( ifram );
+	}
+
+	function updateView( view ) {
+
+		var iframes = document.getElementsByTagName( 'iframe' );
+
+		if ( iframes.length > renderersLimit ) {
+
+			var frame = renderers.shift();
+			frame.innerHTML = '';
+
+		}
+
+		if ( view.innerHTML === '' ) {
+
+console.log( 'id', view.id );
+
+			view.innerHTML = '<iframe src=' + dwg + ' ></iframe>';
+
+			renderers.push( view );
 
 		}
 
@@ -112,15 +128,15 @@
 
 		requestAnimationFrame( animate );
 
-		for ( var i = 0; i < iframes.length; i++ ) {
+		for ( var i = 0; i < views.length; i++ ) {
 
-			var iframe = iframes[ i ];
+			var view = views[ i ];
 
-			var rect = iframe.getBoundingClientRect();
+			rect = view.getBoundingClientRect();
 
 			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
 
-			updateView( iframe );
+			updateView( view );
 
 		}
 
