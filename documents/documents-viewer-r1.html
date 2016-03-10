@@ -12,6 +12,7 @@
 
 	var defaultFile = './readme.md';
 	var documentsPath = 'http://jaanga.github.io/documents/';
+	var documentsPath = './';
 	var documents = [
 
 		[ 'Jaangs Practice Notes','jaanga-practice-notes/index.html' ],
@@ -19,6 +20,7 @@
 		[ 'Three.js Viewers', 'threejs-viewers/index.html' ],
 		[ 'Three.js Viewers Featured', 'threejs-viewers-featured/index.html' ],
 		[ 'CS 482', 'cs482/index.html' ],
+		[ 'Unity3D', 'index.html#./unity3d/unity3d.md' ],
 //		[ 'Outer Space', 'outer-space-book/index.html' ],
 
 	];
@@ -94,8 +96,6 @@
 			var xhr = new THREE.XHRLoader();
 			xhr.load( fileName, onLoad ) ;
 
-
-
 		} else {
 
 // should never get here
@@ -104,6 +104,8 @@
 		}
 
 		content.scrollTop = 0;
+
+
 
 			function onLoad( text ) {
 
