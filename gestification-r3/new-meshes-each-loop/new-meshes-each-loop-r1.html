@@ -100,7 +100,7 @@
 
 		var geometry, material, mesh;
 		var text = '';
-//		var f, p, b, len, n, 
+		var f, p, b, len, n;
 		var v = new THREE.Vector3();
 
 		scene.remove( phalanges );
@@ -134,7 +134,12 @@
 
 				}
 
-				text += f.toString()+ '<br>';
+				if ( window.self === window.top ) {
+
+					text += f.toString()+ '<br>';
+
+				}
+
 
 			}
 

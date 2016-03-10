@@ -138,7 +138,11 @@
 
 				positionsObject.add( new THREE.Line( geometryLine, materialLine ) );
 
-				text += finger.toString()+ '<br>';
+				if ( window.self === window.top ) {
+
+					text += finger.toString()+ '<br>';
+
+				}
 
 			}
 

@@ -152,7 +152,11 @@
 
 				}
 
-//				text += finger.toString()+ '<br>';
+				if ( window.self === window.top ) {
+
+					text += finger.toString()+ '<br>';
+
+				}
 
 			}
 
