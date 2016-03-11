@@ -15,3 +15,8 @@
 * Creates entirely new meshes every frame - a sphere at every joint plus tip
 * Connects meshes with cylinders
 * Adds a hemisphere light and Phong materials
+
+[Gestification 3]( http://jaanga.github.io/gestification-r3/ )
+
+* Improve the display of files
+	* Hide menus

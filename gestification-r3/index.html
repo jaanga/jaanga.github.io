@@ -167,6 +167,14 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 		var keywords = 'none';
 		var date = 'none';
 
+		that.contentWindow.controls.enableZoom = false;
+
+		if ( that.contentWindow.menu ) {
+
+			that.contentWindow.menu.style.display = 'none';
+
+		}
+
 		for ( var i = 0; i < metas.length; i++ ) {
 
 			if ( metas[ i ].name === 'description' ) { description = metas[ i ].content; }
@@ -184,13 +192,7 @@ _All the scripts here require a Leap Motion device in order to operate properly.
 
 		'';
 
-		that.contentWindow.controls.enableZoom = false;
 
-		if ( that.contentWindow.menu ) {
-
-			that.contentWindow.menu.style.display = 'none';
-
-		}
 	}
 
 	function animate() {

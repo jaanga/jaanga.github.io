@@ -7,6 +7,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [GN Read Me]( ./index.html )
 ===
 
+### [Ricoh Theta Video Viewer]( http://jaanga.github.io/demo/gn/ricoh-theta-video-viewer/index.html )
+
 
 ### [Ricoh Theta Sandbox]( http://jaanga.github.io/demo/gn/ricoh-theta-sandbox/index.html )
 
