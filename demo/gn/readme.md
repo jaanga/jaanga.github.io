@@ -7,8 +7,16 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [GN Read Me]( ./index.html )
 ===
 
+Features for both viewers
+
+* Rotate = one finger / left mouse
+* Zoom = two fingers / scroll wheel
+* Pan = three fingers / right mouse
+
 ### [Ricoh Theta Video Viewer]( http://jaanga.github.io/demo/gn/ricoh-theta-video-viewer/index.html )
 
+Latest update
+2016-03-11 ~ R1
 
 ### [Ricoh Theta Sandbox]( http://jaanga.github.io/demo/gn/ricoh-theta-sandbox/index.html )
 
@@ -16,9 +24,6 @@ Images from the [Ricoh Theta]( https://theta360.com/en/ ) work very well as the 
 
 Supports the following:
 
-* Rotate = one finger / left mouse
-* Zoom = two fingers / scroll wheel
-* Pan = three fingers / right mouse
 * Rotation = press space bar
 * Previous / Next image = left / right cursor keys
 
