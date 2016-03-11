@@ -9,10 +9,34 @@
 
 _[Gestification Blog]( request-gestification-blog-posts.html ) [Read Me]( https://github.com/jaanga/jaanga.github.io/tree/master/gestification-r3/ )_
 
+## [Retains Positions Each Loop]( http://jaanga.github.io/gestification-r3/retain-positions-each-loop/ )
+
+Update 2016-03-11
+
+* New meshes for positions
+* Retain for reuse when needed
+* Creates or uses no globals
+
+
+## [New Positions Each Loop Cylinder Light]( http://jaanga.github.io/gestification-r3/new-positions-each-loop-cylinder-light/ )
+
+Update 2016-03-10
+
+* New meshes for positions
+* Connected with cylinders
+* Adds light and Phong shading
+
+
+## [New Positions Each Loop Cylinder ]( http://jaanga.github.io/gestification-r3/new-positions-each-loop-cylinder/ )
+
+Update 2016-03-10
+
+* New meshes for positions
+* Connected with cylinders
 
 ## 2016-03-08
 
-[New Positions Each Loop Lined ]( http://jaanga.github.io/gestification-r3/new-positions-each-loop-lined/ )
+[New Positions Each Loop Line ]( http://jaanga.github.io/gestification-r3/new-positions-each-loop-line/ )
 
 * New meshes for positions
 * Connected with Lines
