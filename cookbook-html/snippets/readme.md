@@ -38,3 +38,9 @@
 ## Text to Voice
 
 [ Text to Voice]( http://jaanga.github.io/cookbook-html/snippets/text-to-voice/speech-synth-basic.html )
+
+## Time Zone
+
+[Time Given UTC Offset R1]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-given-utc-offset/time-given-utc-offset-r1.html )
+
+* Very R1
