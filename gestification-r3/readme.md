@@ -11,7 +11,7 @@ _[Gestification Blog]( request-gestification-blog-posts.html ) [Read Me]( https:
 
 ## [Retains Positions Each Loop]( http://jaanga.github.io/gestification-r3/retain-positions-each-loop/ )
 
-Update 2016-03-11
+Update 2016-03-11 / R1
 
 * New meshes for positions
 * Retain for reuse when needed

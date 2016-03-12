@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Equirec Image Flickr R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Ricoh Theta images as sky spheres. Simple slide viewer' >
+<meta name=keywords content='Ricoh Theta, WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-03-11' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+	var images = [
+
+		'https://farm2.staticflickr.com/1682/25058705923_01ce7c714a_o.jpg',
+
+		'https://farm2.staticflickr.com/1719/25047635814_027d01d13b_o.jpg',
+
+		'https://farm2.staticflickr.com/1678/25559422552_36770009b1_o.jpg',
+
+		'https://farm2.staticflickr.com/1712/24911049580_7fc13d3b04_o.jpg',
+
+		'https://farm2.staticflickr.com/1535/25513245582_b12859b268_o.jpg',
+
+		'https://farm2.staticflickr.com/1612/24937061804_a25be28848_o.jpg',
+
+		'https://farm2.staticflickr.com/1572/25567106875_80baa97b1b_o.jpg',
+
+		'https://farm2.staticflickr.com/1500/25199577209_d229ed03b3_o.jpg',
+
+		'https://farm2.staticflickr.com/1579/24878480494_9bc112273a_o.jpg',
+
+		'https://farm2.staticflickr.com/1618/25392121255_c5363a11e4_o.jpg',
+
+		'https://farm2.staticflickr.com/1561/25362993455_7a6b6f5a8f_o.jpg',
+
+		'https://farm2.staticflickr.com/1481/25336828016_60c0cdfccd_o.jpg',
+
+		'https://farm2.staticflickr.com/1509/25271764886_26df054050_o.jpg',
+
+		'https://farm2.staticflickr.com/1555/25241816396_6a74330b76_o.jpg'
+
+	];
+
+	var boxes = [];
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+			'h2 { margin: 0 }' +
+
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/demo/gn/ >&#x24D8;</a>' +
+			'</h2>' +
+			'<div id=imageMenu ></div>' +
+			'<p title="Press space bar to toggle rotation" ><input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate;  checked> Rotation</p>' +
+			'<div id=info ></div>' +
+
+		'';
+
+		var text = '';
+
+		for ( var i = 0; i < images.length; i++ ) {
+
+			text += '<p><button onclick=selectImage(' + i + '); >id ' + images[ i ].substr( 36, 11 ) + '</button></p>';
+
+		}
+
+		imageMenu.innerHTML = text;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; ';
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'keyup', onKeyUp, false );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 450, 0, 0 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 1200;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+//		var axisHelper = new THREE.AxisHelper( 500 );
+//		scene.add( axisHelper );
+
+// assets
+
+		geometry = new THREE.SphereGeometry( 500, 50, 25 );
+		material = new THREE.MeshBasicMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 30, 0 );
+		mesh.scale.z = -1;
+		scene.add( mesh );
+
+		selectImage( 0 );
+
+		controls.autoRotate = true;
+
+	}
+
+
+	function selectImage( index ) {
+
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+
+		loader.load(
+
+			images[ index ],
+			function ( texture ) {
+
+				texture.minFilter = texture.magFilter = THREE.NearestFilter;
+				mesh.material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+				mesh.name = index;
+
+			},
+			function ( xhr ) {
+
+				info.innerHTML = ( xhr.loaded / xhr.total * 100 ) + '% loaded';
+
+			},
+			function ( xhr ) {
+
+				info.innerHTML = 'An error happened';
+
+			}
+
+		);
+
+	}
+
+	function nextImage( direction ) {
+
+		index = parseInt( mesh.name, 10 ) + direction;
+		index = index < 0 ? images.length - 1: index;
+		index = index >= images.length ? 0 : index;
+		selectImage( index );
+
+	}
+
+	function onKeyUp ( event ) {
+
+// console.log( 'key', event.keyCode );
+
+		switch( event.keyCode ) {
+
+			case 32: /* space bar*/ controls.autoRotate=!controls.autoRotate; break;
+			case 37: /* left cursor */ nextImage( -1 ); break;
+			case 39: /* right cursor */ nextImage( 1 ); break;
+
+		}
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
+
