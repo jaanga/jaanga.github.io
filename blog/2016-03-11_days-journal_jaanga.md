@@ -17,3 +17,6 @@ Update 2016-03-11 / R1
 
 ## [Equirec Image Flickr]( http://jaanga.github.io/equirec/equirec-image-flickr/ )
 
+Plus much writing and some fixes on quiet project
+
+
