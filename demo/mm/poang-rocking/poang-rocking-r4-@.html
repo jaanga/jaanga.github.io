@@ -146,6 +146,7 @@
 		camera.position.set( -200, 120, -200 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		if ( window.self !== window.top ) { controls.enableZoom = false; }
 		controls.target.set( 20, 50, 50 );
 		controls.maxDistance = 800;
 

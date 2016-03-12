@@ -32,7 +32,7 @@ Reminders
 	var raycaster = new THREE.Raycaster();
 	var mouse = new THREE.Vector2();
 
-	if ( window.AudioContext !== undefined ) { var audioContext = new AudioContext(); }
+	if ( window.self === window.top && window.AudioContext !== undefined ) { var audioContext = new AudioContext(); }
 
 	var outFrame;
 
@@ -271,7 +271,7 @@ Reminders
 
 		if ( outFrame ) { outFrame.value = index; }
 
-		if ( window.AudioContext ) playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
+		if ( audioContext ) playNote( 350 + 350 * Math.random(), audioContext.currentTime, 0.1 );
 
 	}
 

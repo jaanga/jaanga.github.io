@@ -158,6 +158,7 @@
 		camera.position.set( 180, 180, 180 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		if ( window.self !== window.top ) { controls.enableZoom = false; }
 		controls.maxDistance = 800;
 		controls.dampingFactor = 0.25;
 		controls.enableDamping = true;

@@ -15,4 +15,5 @@ Update 2016-03-11 / R1
 * Creates or uses no globals
 
 
+## [Equirec Image Flickr]( http://jaanga.github.io/equirec/equirec-image-flickr/ )
 
