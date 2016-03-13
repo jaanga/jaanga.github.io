@@ -60,14 +60,14 @@
 
 	function getTime() {
 
-//		var lat, lon, txt;
+		var lat, lon, request;
 
 		lat = outLat.value = inpLat.valueAsNumber;
 		lon = outLon.value = inpLon.valueAsNumber;
 
 		timeStamp = Date.now().toFixed();
 
-		var request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp.substr( 0, 10 );
+		request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp.substr( 0, 10 );
 
 		requestFile( request );
 
@@ -93,7 +93,7 @@
 					'<h2>Time ZoneID:<br>' + time.timeZoneId + '</h2>' +
 
 					'<p> The local date and time is<br>' + calcTime( time.rawOffset + time.dstOffset ) + '</p>' +
-					'Time zone: ' + time.timeZoneName +
+					'<p>Time zone: ' + time.timeZoneName + '</p>' +
 					'<p>Thanks Google...</p>' +
 				'';
 
