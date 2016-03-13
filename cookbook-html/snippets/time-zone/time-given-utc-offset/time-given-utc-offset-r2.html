@@ -27,7 +27,7 @@
 		css.innerHTML =
 
 			'body { font: 12pt monospace; margin: 0; }' +
-//			'h2 { margin: 0; }' +
+			'h2 { margin: 0; }' +
 			'a { text-decoration: none; }' +
 
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
@@ -36,7 +36,7 @@
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
-			'#menu { margin: 0 20px; max-width: 400px; position: absolute; }' +
+			'#menu { margin: 0 20px; max-width: 350px; position: absolute; }' +
 
 		'';
 
@@ -61,42 +61,105 @@
 			'</p>' +
 */
 
-			'<div id=info ></div>' +
-
+			'<p id=info ></p>' +
+			'<div id=googleAPI ></div>' +
 		'';
 
- 
-		info.innerHTML = 
+		d = new Date();
+		var utcString = d.toUTCString();
+		var isoString = d.toISOString();
 
-			'<p>Bombay time is ' + timeRemote( 5.5 ) + '</p>' +
-			'<p>Honolulu time is ' + timeRemote( -10 ) + '</p>' +
-			'<p>London time is ' + timeRemote( 0 ) + '</p>' +
-			'<p>San Francisco time is ' + timeRemote( -8 ) + '</p>' +
-			'<p>Sydney time is ' + timeRemote( 11 ) + '</p>' +
+// http://stackoverflow.com/questions/10087819/convert-date-to-another-timezone-in-javascript
 
-		'';
+		var utc = new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta' } );
 
-	}
-
-	function timeRemote( offset ) {
-
-		var offset = offset ? offset : 5.5;
-
-		var d = new Date();
-
+/*
 		var localTime = d.getTime();
 
 		var localOffset = d.getTimezoneOffset() * 60000;
 
 		var utc = localTime + localOffset;
 
-		var remote = utc + ( 3600000 * offset );
+// obtain and add destination's UTC time offset
+// for example, Bombay 
+// which is UTC + 5.5 hours
 
-		var nd = new Date( remote );
+		var offset = 5.5;   
+		var bombay = utc + ( 3600000 * offset );
 
-		return nd.toLocaleString()
+		var nd = new Date( bombay ); 
+
+*/
+		info.innerHTML = 
+
+			'local ' + d + '<br>' +
+
+			'UTC ' + utcString + '<br>' +
+			'ISO ' + isoString + '<br>' +
+
+			'utc ' + utc + '<br>' +
+		'';
+
+
+
+		getTime();
+
 
 	}
+
+	function getTime() {
+
+		lat = 37.8;
+		lon = -122.4;
+
+		timeStamp = Date.now().toFixed();
+
+		var request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp.substr( 0, 10 );
+
+
+		requestFile( request );
+
+	}
+
+	function requestFile( fileName ) {
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+			function callback() {
+
+				if ( xhr.readyState != 4  ) { return; }
+				time = JSON.parse( xhr.responseText );
+
+console.log( '', time );
+
+				googleAPI.innerHTML = 
+
+					'<h2>Googel API</h2>' +
+					time.rawOffset + ' ' + time.dstOffset
+
+					calcTime( time.rawOffset + time.dstOffset );
+
+				'';
+
+			}
+
+	}
+
+	function calcTime( offset ) {
+
+	console.log( 'offset', offset );
+
+		var d = new Date();
+		var utc = d.getTime() + ( d.getTimezoneOffset() * 60000 );
+		var nd = new Date( utc + ( 1000 * offset ) );
+
+	console.log( 'The local time is ' + nd.toLocaleString() );
+
+	}
+
 
 
 </script>

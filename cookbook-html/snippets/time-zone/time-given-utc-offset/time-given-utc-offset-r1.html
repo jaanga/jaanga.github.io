@@ -109,7 +109,7 @@
 
 	}
 
-	function requestFile( fileName) {
+	function requestFile( fileName ) {
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
@@ -119,10 +119,9 @@
 			function callback() {
 
 				if ( xhr.readyState != 4  ) { return; }
-				text = xhr.responseText;
-				var lines = text.split(/\r\n|\n/);
+				time = JSON.parse( xhr.responseText );
 
-				console.log( text );
+				console.log( time );
 
 			}
 
