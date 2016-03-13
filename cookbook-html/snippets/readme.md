@@ -41,11 +41,11 @@
 
 ## Time Zone
 
-### [Time Given UTC Offset R1]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-given-utc-offset/time-given-utc-offset-r1.html )
+### [Time Given UTC Offset]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-given-utc-offset/time-given-utc-offset-r2.html )
 
 * Very R1
 
-## [Time Now Give Lat Lon R1]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-now-given-lat-lon/ )
+### [Time Now Give Lat Lon R1]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-now-given-lat-lon/ )
 
 Latest update: 2016-03-12 / R1
  
