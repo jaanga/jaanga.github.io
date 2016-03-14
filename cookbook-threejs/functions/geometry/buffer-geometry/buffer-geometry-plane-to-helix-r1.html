@@ -57,6 +57,9 @@
 				<a href="" > ${ document.title }</a> 
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+
+
+
 			<div id=info ></div>
 
 		`;
@@ -104,8 +107,69 @@
 		drawSpiralAlongY();
 		drawSpiralAlongZ();
 
+		geometry = drawUnitSpiralAlongZ();
+		meshU = new THREE.Mesh( geometry, material );
+		meshU.scale.multiplyScalar( 20 );
+		meshU.position.set( 0, 50, 0 );
+		scene.add( meshU );
+
+		var edgesHelper = new THREE.EdgesHelper( meshU );
+		scene.add( edgesHelper );
+
+		geometry = new THREE.BoxGeometry( 20, 20, 20 );
+		material = new THREE.MeshNormalMaterial( { wireframe: true } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 50, 0 );
+		scene.add( mesh );
+
 	}
+
 // needs PlaneGeometry version. See mm-object-r3...
+
+	function drawUnitSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+// 2016-03-13 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry\buffer-geometry/buffer-geometry-plane-to-helix-r1.html
+
+		var radiusOutside, radiusInside, segments, segmentsTotal, turns, pitch, pitchDelta, delta, angleDelta;
+		var geometry, vertices;
+
+		radiusInside = rIn ? rIn : 0.26;
+		radiusOutside = rOut ? rOut : 0.5;
+
+		segments = seg ? seg : 32;
+		turns = tur ? tur : 7;
+		segementsTotal = turns * segments;
+
+		pitch = pit ? pit : 1 / turns;
+		pitchDelta = pitch / segments;
+
+		angleDelta = pi2 / segments;
+
+		geometry = new THREE.PlaneBufferGeometry( 1, 1, 1, segementsTotal );
+		vertices = geometry.attributes.position.array;
+
+		for ( var i = 0; i < vertices.length; ) {
+
+			delta = i / 6;
+			vertices[ i++ ] = radiusInside * cos( angleDelta * delta );
+			vertices[ i++ ] = radiusInside * sin( angleDelta * delta );
+			vertices[ i++ ] = pitchDelta * delta;
+
+			vertices[ i++ ] = radiusOutside * cos( angleDelta * delta );
+			vertices[ i++ ] = radiusOutside * sin( angleDelta * delta );
+			vertices[ i++ ] = pitchDelta * delta;
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+		geometry.center();
+
+		return geometry;
+
+	}
+
+
 
 	function drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
 
@@ -124,7 +188,7 @@
 		pitch = pit ? pit : 15;
 		pitchDelta = pitch / segments;
 
-		angleDelta = pi2 / segments;
+		angleDelta = 0.5 * Math.PI / segments;
 
 		geometry = new THREE.PlaneBufferGeometry( 1, 1, 1, segementsTotal );
 
@@ -135,12 +199,12 @@
 			if ( vertices[ i ] < 0 ) {
 
 				delta = i / 6;
-				vertices[ i++ ] = radiusInside * cos( angleDelta * delta );
-				vertices[ i++ ] = radiusInside * sin( angleDelta * delta );
+				vertices[ i++ ] = radiusInside * Math.cos( angleDelta * delta );
+				vertices[ i++ ] = radiusInside * Math.sin( angleDelta * delta );
 				vertices[ i++ ] = pitchDelta * delta;
 
-				vertices[ i++ ] = radiusOutside * cos( angleDelta * delta );
-				vertices[ i++ ] = radiusOutside * sin( angleDelta * delta );
+				vertices[ i++ ] = radiusOutside * Math.cos( angleDelta * delta );
+				vertices[ i++ ] = radiusOutside * Math.sin( angleDelta * delta );
 				vertices[ i++ ] = pitchDelta * delta;
 
 			}
@@ -160,6 +224,9 @@
 		scene.add( edgesHelper );
 
 	}
+
+
+// earlier version - no parameters
 
 	function drawSpiralAlongY() {
 
@@ -231,6 +298,9 @@
 		meshZ.rotation.z += 0.005;
 
 		meshY.rotation.y -= 0.005;
+
+		meshU.rotation.z += 0.005;
+
 	}
 
 </script>

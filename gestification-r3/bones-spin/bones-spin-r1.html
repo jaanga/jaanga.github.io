@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Retain Positions Each Loop Cylinder Light R1</title>
+<title>Bones Spin R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices. 
 Creates new meshes only as needed - a sphere at every joint plus tip.
@@ -54,6 +54,10 @@ Removes meshes that are no longer needed.
 			'	<a href="" >' + document.title + '</a> ' +
 			'	<a href=http://jaanga.github.io/gestification-r3/ >&#x24D8;</a>' +
 			'</h2>' +
+			'<p>' +
+			'	<input type=radio name=type id=but1 />Boxes' +
+			'	<input type=radio name=type id=but2 checked />Spirals' +
+			'</p>' +
 			'<div id=info ></div>' +
 			'<div id=fingerData ></div>' +
 		'';
@@ -77,10 +81,6 @@ Removes meshes that are no longer needed.
 		controls.maxDistance = 800;
 
 		scene = new THREE.Scene();
-
-		var light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
-		light.position.set( -1, 1, 1 );
-		scene.add( light );
 
 // helpers
 
@@ -127,12 +127,24 @@ Removes meshes that are no longer needed.
 
 		} );
 
-		geometrySphere = new THREE.SphereBufferGeometry( 8 );
-		materialSphere = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+		geometrySphere = new THREE.SphereBufferGeometry( 10 );
+		materialSphere = new THREE.MeshNormalMaterial();
 
-		geometryCylinder = new THREE.CylinderGeometry( 5, 5, 1 );
-		geometryCylinder.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
-		materialCylinder = new THREE.MeshPhongMaterial();
+		if ( but2.checked === true ) {
+
+			geometryCylinder = drawUnitSpiralAlongZ( 0.25, 2, 12, 20 );
+
+		} else  {
+
+			geometryCylinder = new THREE.BoxGeometry( 3, 3, 1 );
+
+		}
+
+		geometryCylinder.applyMatrix( new THREE.Matrix4().makeScale( 5, 5, 1 ) );
+
+//		geometryCylinder = new THREE.CylinderGeometry( 5, 5, 1 );
+//		geometryCylinder.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+		materialCylinder = new THREE.MeshNormalMaterial( { side: 2 } );
 
 //		info.innerHTML = frame.dump();
 		info.innerHTML = frame.toString();
@@ -211,6 +223,49 @@ Removes meshes that are no longer needed.
 
 
 		fingerData.innerHTML = text;
+
+	}
+
+	function drawUnitSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+// 2016-03-13 ~ http://jaanga.github.io/cookbook-threejs/functions/geometry\buffer-geometry/buffer-geometry-plane-to-helix-r1.html
+
+		var radiusOutside, radiusInside, segments, segmentsTotal, turns, pitch, pitchDelta, delta, angleDelta;
+		var geometry, vertices;
+
+		radiusInside = rIn ? rIn : 0.26;
+		radiusOutside = rOut ? rOut : 0.5;
+
+		segments = seg ? seg : 32;
+		turns = tur ? tur : 7;
+		segementsTotal = turns * segments;
+
+		pitch = pit ? pit : 1 / turns;
+		pitchDelta = pitch / segments;
+
+		angleDelta = 0.5 * Math.PI / segments;
+
+		geometry = new THREE.PlaneBufferGeometry( 1, 1, 1, segementsTotal );
+		vertices = geometry.attributes.position.array;
+
+		for ( var i = 0; i < vertices.length; ) {
+
+			delta = i / 6;
+			vertices[ i++ ] = radiusInside * Math.cos( angleDelta * delta );
+			vertices[ i++ ] = radiusInside * Math.sin( angleDelta * delta );
+			vertices[ i++ ] = pitchDelta * delta;
+
+			vertices[ i++ ] = radiusOutside * Math.cos( angleDelta * delta );
+			vertices[ i++ ] = radiusOutside * Math.sin( angleDelta * delta );
+			vertices[ i++ ] = pitchDelta * delta;
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+		geometry.center();
+
+		return geometry;
 
 	}
 

@@ -102,10 +102,11 @@
 
 		function canvasMultilineText( textArray, parameters ) {
 
-			parameters = parameters || {} ;
-			var width = parameters.width ? parameters.width : 0;
+			var parameters = parameters || {} ;
+
 			var canvas = document.createElement( 'canvas' );
 			var context = canvas.getContext( '2d' );
+			var width = parameters.width ? parameters.width : 0;
 			var font = parameters.font ? parameters.font : '48px monospace';
 			var color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
 

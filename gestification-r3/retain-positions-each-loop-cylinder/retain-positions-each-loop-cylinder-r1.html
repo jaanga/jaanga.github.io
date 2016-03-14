@@ -78,10 +78,6 @@ Removes meshes that are no longer needed.
 
 		scene = new THREE.Scene();
 
-		var light = new THREE.HemisphereLight( 0xffbbbb, 0x444488 );
-		light.position.set( -1, 1, 1 );
-		scene.add( light );
-
 // helpers
 
 		geometry = new THREE.BoxGeometry( 300, 2, 300 );
@@ -128,11 +124,11 @@ Removes meshes that are no longer needed.
 		} );
 
 		geometrySphere = new THREE.SphereBufferGeometry( 8 );
-		materialSphere = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+		materialSphere = new THREE.MeshNormalMaterial();
 
 		geometryCylinder = new THREE.CylinderGeometry( 5, 5, 1 );
 		geometryCylinder.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
-		materialCylinder = new THREE.MeshPhongMaterial();
+		materialCylinder = new THREE.MeshNormalMaterial();
 
 //		info.innerHTML = frame.dump();
 		info.innerHTML = frame.toString();
