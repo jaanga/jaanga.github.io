@@ -102,3 +102,9 @@
 * Display data in UTC plus in the time zone of the remote location
 * Redesign permalinks
 * Add buttons
+
+
+***
+
+Quiet project has a domain name
+
