@@ -6,12 +6,16 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='
 * Uses [Google Maps Time Zone API]( https://developers.google.com/maps/documentation/timezone/intro ) to determine time zone
-	* Handles day light saving time and local time zone anomalies
+	* Handles daylight saving time and local time zone anomalies
 	* Ocean locations are timeless
 * Default latitude and longitude is San Francisco
 * Sliders update latitude and longitude and recalculates time in real-time
+* Sliders update UTC time
 * Buttons add selected cities
-* Permalinks support accepts latitude and longitude input
+* Permalinks support accepts latitude, longitude and UTC time input
+* Calculates and displays remote day and time - given UTC hours ans minutes
+	* Displays universal time
+	* Displays time zone and time zone ID
 ' >
 <meta name=keywords content='time,Google Maps API,JavaScript,GitHub,FOSS,3D,STEM' >
 <meta name=date content='2016-03-14' >
@@ -21,6 +25,10 @@
 
 	var lat = 37.8;
 	var lon = -122.4;
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+ 
+	var utcYear, utcMonth, utcDate;
 
 	var utcHour = 10;
 	var utcMinute = 10;
@@ -57,20 +65,20 @@
 			'	<a href=http://jaanga.github.io/cookbook-html/snippets/ >&#x24D8;</a>' +
 			'</h2>' +
 
-			'<p>Lat <input type=range id=inpLat max=90 min=-90 step=0.1 oninput=lat=this.valueAsNumber;getTime(); title="-90 to 90: OK" ><output id=outLat ></output></p>' +
-			'<p>Lon <input type=range id=inpLon max=180 min=-180 step=0.1 oninput=lon=this.valueAsNumber;getTime(); title="-180 to 180: OK" ><output id=outLon ></output></p>' +
+			'<p>Lat <input type=range id=inpLat max=90 min=-90 step=0.1 oninput=offset="";lat=this.valueAsNumber;getTime(); title="-90 to 90: OK" ><output id=outLat ></output></p>' +
+			'<p>Lon <input type=range id=inpLon max=180 min=-180 step=0.1 oninput=offset="";lon=this.valueAsNumber;getTime(); title="-180 to 180: OK" ><output id=outLon ></output></p>' +
 
-			'<p>UTC Hour <input type=range id=inpHour max=23 min=0 step=1 oninput=utcHour=this.valueAsNumber;getTime(); title="0 to 23" ><output id=outHour ></output></p>' +
-			'<p>UTC Minute <input type=range id=inpMinute max=59 min=0 step=1 oninput=utcMinute=this.valueAsNumber;getTime(); title="0 to 59" ><output id=outMinute ></output></p>' +
+			'<p>UTC Hour <input type=range id=inpHour max=23 min=0 step=1 oninput=offset="";utcHour=this.valueAsNumber;getTime(); title="0 to 23" ><output id=outHour ></output></p>' +
+			'<p>UTC Minute <input type=range id=inpMinute max=59 min=0 step=1 oninput=offset="";utcMinute=this.valueAsNumber;getTime(); title="0 to 59" ><output id=outMinute ></output></p>' +
 
 
-			'<p><button onclick=lat=21.3;lon=-157.8167;getTime(); >Honolulu</button></p>' +
-			'<p><button onclick=lat=51.5072;lon=-0.1275;getTime(); >London</button></p>' +
-			'<p><button onclick=lat=40.712;lon=-74.0059;getTime(); >New York</button></p>' +
-			'<p><button onclick=lat=32.6333;lon=51.6500;getTime(); >Isfahan</button></p>' +
-			'<p><button onclick=lat=-22.9068;lon=-43.1729;getTime(); >Rio de Janeiro </button></p>' +
-			'<p><button onclick=lat=37.796;lon=-122.398;getTime(); >San Francisco</button></p>' +
-			'<p><button onclick=lat=-33.8650;lon=151.2094;getTime(); >Sydney</button></p>' +
+			'<p><button onclick=offset="";lat=21.3;lon=-157.8167;getTime(); >Honolulu</button></p>' +
+			'<p><button onclick=offset="";lat=51.5072;lon=-0.1275;getTime(); >London</button></p>' +
+			'<p><button onclick=offset="";lat=40.712;lon=-74.0059;getTime(); >New York</button></p>' +
+			'<p><button onclick=offset="";lat=32.6333;lon=51.6500;getTime(); >Isfahan</button></p>' +
+			'<p><button onclick=offset="";lat=-22.9068;lon=-43.1729;getTime(); >Rio de Janeiro </button></p>' +
+			'<p><button onclick=offset="";lat=37.796;lon=-122.398;getTime(); >San Francisco</button></p>' +
+			'<p><button onclick=offset="";lat=-33.8650;lon=151.2094;getTime(); >Sydney</button></p>' +
 
 			'<p id=info ></p>' +
 
@@ -84,12 +92,24 @@
 
 		var request;
 
-		hashes = location.hash ? location.hash.split( '#' ) : [ 0, lat, lon, utcHour, utcMinute ];
+		if ( utcYear === undefined ) {
+
+			var date = new Date();
+			utcYear = date.getUTCFullYear();
+			utcMonth = date.getUTCMonth();
+			utcDate = date.getUTCDate();
+
+		}
+
+		hashes = location.hash ? location.hash.split( '#' ) : [ 0, lat, lon, utcYear, utcMonth, utcDate, utcHour, utcMinute ];
 
 		lat = hashes[ 1 ];
 		lon = hashes[ 2 ];
-		utcHour = hashes[ 3 ];
-		utcMinute = hashes[ 4 ];
+		utcYear = hashes[ 3 ];
+		utcMonth = hashes[ 4 ];
+		utcDate = hashes[ 5 ]; 
+		utcHour = hashes[ 6 ];
+		utcMinute = hashes[ 7 ];
 
 		outLat.value = inpLat.valueAsNumber = lat;
 		outLon.value = inpLon.valueAsNumber = lon;
@@ -97,8 +117,7 @@
 		outHour.value = inpHour.valueAsNumber = utcHour;
 		outMinute.value = inpMinute.valueAsNumber = utcMinute;
 
-
-		if ( offset === undefined ) {
+		if ( !offset ) {
 
 			timeStamp = Date.now().toFixed();
 
@@ -127,39 +146,49 @@
 
 				time = JSON.parse( xhr.responseText );
 
-				if ( time.status === 'OK' ) {
+				updateInfo( time );
 
-				var offset = time.rawOffset + time.dstOffset;
-				var localTime = calculateLocalTime( offset );
-
-				info.innerHTML = 
-
-					'<h2>Time ZoneID:<br>' + time.timeZoneId + '</h2>' +
-
-					'<p> The local date and time is<br>' + localTime + '</p>' +
-					'<p>Time zone: ' + time.timeZoneName + '</p>' +
-					'<p>Thanks Google...</p>' +
-				'';
-
-				} else {
-
-					info.innerHTML = 'the location is timeless';
-
-				}
-
-console.log( 'time ', time, utcHour, utcMinute );
+// console.log( 'time ', time, utcHour, utcMinute );
 
 			}
 
 	}
 
+	function updateInfo( time ) {
+
+		if ( time.status === 'OK' ) {
+
+			offset = time.rawOffset + time.dstOffset;
+
+			remoteTime = calculateLocalTime( offset );
+
+console.log( 'time ', remoteTime );
+
+			info.innerHTML = 
+				'<h2>Time ZoneID:<br>' + time.timeZoneId + '</h2>' +
+
+				'<p> Given a UTC time of ' + utcHour + ':' + utcMinute + '</p>' +
+				'<p> The date and time in this time zone is:<br>' + remoteTime.toLocaleString() + '</p>' +
+				'<p> The universal time is:<br>' + remoteTime.getTime() + '</p>' +
+				'<p>Time zone: ' + time.timeZoneName + '</p>' +
+				'<p>Thanks Google...</p>' +
+			'';
+
+		} else {
+
+			info.innerHTML = 'the location is timeless';
+
+		}
+
+	}
+
 	function calculateLocalTime( offset ) {
 
-		var date = new Date( '2016-01-01T' + ( '0' + utcHour ).slice( -2 ) + ':' + ( '0' + utcMinute ).slice( -2 ) + ':00' );
+		var date = new Date( utcYear + '-' + ( '0' + ( utcMonth + 1 ) ).slice( -2 ) + '-' + ( '0' + utcDate ).slice( -2 ) + 'T' + ( '0' + utcHour ).slice( -2 ) + ':' + ( '0' + utcMinute ).slice( -2 ) + ':00' );
 		var utc = date.getTime() + ( date.getTimezoneOffset() * 60000 );
 		var newDate = new Date( utc + ( 1000 * offset ) );
 
-		return newDate.toLocaleString();
+		return newDate;
 
 	}
 
