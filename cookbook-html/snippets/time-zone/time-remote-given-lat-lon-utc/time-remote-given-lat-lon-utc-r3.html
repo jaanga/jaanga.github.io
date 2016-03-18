@@ -133,8 +133,6 @@ console.log( '', timeStamp.getTime() );
 
 			timeStamp = timeStamp.getTime() / 1000;
 
-// // https://developers.google.com/maps/documentation/timezone/intro
-
 			request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp;
 
 			requestFile( request );
