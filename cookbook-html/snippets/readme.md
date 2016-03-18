@@ -26,6 +26,30 @@
 
 * Inter page communication
 
+## Maps
+
+### [Request Map Given Lat Lon]( http://jaanga.github.io/cookbook-html/snippets/maps/request-map-given-lat-lon/ )
+
+#### Features
+
+* Select latitude and longitude
+	* By using sliders
+	* By selecting a city from the gazetteer
+* Zoom levels 3 to 18
+	* Zoom levels 19 and 20 available from some sources
+* Display map tiles from any one of nine sources
+	* Google, OpenStreetMap and others
+* Gazetteer with over 2,000 place names
+	* Place names displayed in scrollable list
+* Near real-time data updates
+* Slide-out 'hamburger' menu helps viewing on mobile or tablet devices
+* Select number of tiles to display in the code
+
+##### Latest update: 2016-03-17 / R4
+
+* First commit
+
+
 
 ## Request Animation Frame
 

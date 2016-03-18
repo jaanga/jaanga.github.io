@@ -13,8 +13,8 @@
 
 	var gazetteer = 'http://ladybug-analysis-tools.github.io/ladybug-web/gazetteer/places-2000.csv';
 
-	var lat = 37.8;
-	var lon = -122.4;
+	var lat = 37.796;
+	var lon = -122.398;
 
 	var cities;
 
@@ -62,12 +62,12 @@
 			'	<a href=http://jaanga.github.io/cookbook-html/snippets/ >&#x24D8;</a>' +
 			'</h2>' +
 
-			'<p>Latitude<br><input type=range id=inpLat max=90 min=-90 step=0.01 title="-90 to 90: OK" ><output id=outLat ></output></p>' +
-			'<p>Longitude<br> <input type=range id=inpLon max=180 min=-180 step=0.01 title="-180 to 180: OK" ><output id=outLon ></output></p>' +
+			'<p>Latitude<br><input type=range id=inpLat max=90 min=-90 step=0.001 title="-90 to 90: OK" ><output id=outLat ></output></p>' +
+			'<p>Longitude<br> <input type=range id=inpLon max=180 min=-180 step=0.001 title="-180 to 180: OK" ><output id=outLon ></output></p>' +
 
-			'<p>Map overlay<br><select id=selMap onchange=setMapOverlay() /></select></p>' +
+			'<p>Map overlay<br><select id=selMap onchange=setMapOverlay() size=5 /></select></p>' +
 
-			'<p>Zoom<br><input type=range id=inpZoom max=18 min=1 step=1 value=12 title="1 to 18: OK" ><output id=outZoom ></output></p>' +
+			'<p>Zoom<br><input type=range id=inpZoom max=20 min=3 step=1 value=12 title="1 to 18: OK" ><output id=outZoom ></output></p>' +
 
 			'<p>Gazetteer<br><select id=selCity size="20" ></select></p>' +
 
@@ -165,6 +165,7 @@
 
 		}
 
+		selMap.selectedIndex = 0;
 	}
 
 	function setMapOverlay() {
@@ -182,7 +183,7 @@
 		tileX = lon2tile( lon, zoom  );
 		tileY = lat2tile( lat, zoom  );
 
-		var baseURL = mapTypes[ parent.selMap.selectedIndex ][ 1 ];
+		var baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
 
 		tileOffset = - Math.floor( 0.5 * tilesPerSide );
 
