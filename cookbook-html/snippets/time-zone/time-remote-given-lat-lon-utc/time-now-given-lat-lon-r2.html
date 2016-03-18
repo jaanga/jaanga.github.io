@@ -73,6 +73,8 @@
 
 	function getTime() {
 
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+
 		var request;
 
 		hashes = location.hash ? location.hash.split( '#' ) : [ 0, lat, lon ];
@@ -83,9 +85,16 @@
 		outLat.value = inpLat.valueAsNumber = lat;
 		outLon.value = inpLon.valueAsNumber = lon;
 
-		timeStamp = Date.now().toFixed();
+		tim = new Date();
 
-		request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp.substr( 0, 10 );
+
+		time = new Date( Date.UTC( tim.getUTCFullYear(), tim.getUTCMonth(), tim.getUTCDate(), tim.getUTCHours(), tim.getUTCMinutes() ) );
+
+		timeStamp = time.getTime() / 1000;
+
+// https://developers.google.com/maps/documentation/timezone/intro
+
+		request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp;
 
 		requestFile( request );
 
@@ -114,7 +123,10 @@
 					'<h2>Time ZoneID:<br>' + time.timeZoneId + '</h2>' +
 
 					'<p> The local date and time is<br>' + localTime + '</p>' +
-					'<p>Time zone: ' + time.timeZoneName + '</p>' +
+					'<p>Offset in hours: ' + offset / 3600 + '</p>' +
+//					'<p> The universal time is:<br>' + localTime.getTime() + '</p>' +
+					'<p>Time zone: ' + localTime.timeZoneName + '</p>' +
+
 					'<p>Thanks Google...</p>' +
 				'';
 

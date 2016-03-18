@@ -95,6 +95,7 @@
 		if ( utcYear === undefined ) {
 
 			var date = new Date();
+
 			utcYear = date.getUTCFullYear();
 			utcMonth = date.getUTCMonth();
 			utcDate = date.getUTCDate();
@@ -119,9 +120,22 @@
 
 		if ( !offset ) {
 
-			timeStamp = Date.now().toFixed();
+//			timeStamp = Date.now().toFixed();
 
-			request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp.substr( 0, 10 );
+			timeStamp = new Date( Date.UTC( utcYear, utcMonth, utcDate, utcHour, utcMinute ) );
+
+
+console.log( '', timeStamp.getTime() );
+
+//			timeStamp = timeStamp.getTime().toFixed().substr( 0, 10 );
+
+//			timeStamp = Math.floor( timeStamp.getTime() / 1000 );
+
+			timeStamp = timeStamp.getTime() / 1000;
+
+// // https://developers.google.com/maps/documentation/timezone/intro
+
+			request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + lat + ',' + lon + '&timestamp=' + timeStamp;
 
 			requestFile( request );
 
@@ -167,8 +181,9 @@ console.log( 'time ', remoteTime );
 			info.innerHTML = 
 				'<h2>Time ZoneID:<br>' + time.timeZoneId + '</h2>' +
 
-				'<p> Given a UTC time of ' + utcHour + ':' + utcMinute + '</p>' +
-				'<p> The date and time in this time zone is:<br>' + remoteTime.toLocaleString() + '</p>' +
+				'<p>Given a UTC time of ' + utcHour + ':' + utcMinute + '</p>' +
+				'<p>The date and time in this time zone is:<br>' + remoteTime.toLocaleString() + '</p>' +
+				'<p>Offset in hours: ' + offset / 3600 + '</p>' +
 				'<p> The universal time is:<br>' + remoteTime.getTime() + '</p>' +
 				'<p>Time zone: ' + time.timeZoneName + '</p>' +
 				'<p>Thanks Google...</p>' +
