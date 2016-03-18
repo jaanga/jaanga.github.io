@@ -18,6 +18,13 @@ _The files we use to start new projects_
 * [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )
 	* Derived from Exploratoria revisions
 
+## Hamburger Menu
+
+### [Hamburger Menu Demo]( http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child-menu-r3-fixed-width.html )
+
+* Sliding Menu
+
+
 * [Latest]( http://jaanga.github.io/cookbook-html/templates/latest/ )
 	* Sample file to take browser to most recent revision of a script
 	* Also use in 'dev' and 'build' folders

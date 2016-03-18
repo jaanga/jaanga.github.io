@@ -80,7 +80,8 @@
 	function getDate() {
 
 		var txt = 
-			'<p><a href= https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date target="_blank" >JavaScript Date Docs</a></p>' +
+			'<p><a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date target="_blank" >JavaScript Date Docs</a></p>' +
+			'<p><a href=https://en.wikipedia.org/wiki/Coordinated_Universal_Time target="_blank" >UTC</a></p>' +
 			'<h3>Local Time</h3>' +
 		'';
 		var a = '<p>';
@@ -276,7 +277,7 @@ console.log( '', date );
 
 			offset = time.rawOffset + time.dstOffset;
 
-			remoteTime = calculateLocalTime( dateUTC.getTime, offset );
+			remoteTime = calculateLocalTime( dateUTC.getTime(), offset );
 
 			info.innerHTML += 
 
@@ -300,7 +301,9 @@ console.log( '', date );
 
 	function calculateLocalTime( date, offset ) {
 
-		return  newDate = new Date( date + ( 1000 * offset ) );;
+		newDate = new Date( date + ( 1000 * offset ) );
+
+		return  newDate;
 
 	}
 
