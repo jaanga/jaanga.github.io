@@ -5,7 +5,9 @@
 <title>Simple Pointer R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Three.js template for Leap Motion devices.
-The simplest template possable?' >
+The simplest template possible?
+A single pointing mesh - attached to the first index finger that shows up.
+' >
 <meta name=keywords content='Leap Motion,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 <meta name=date content='2016-03-18' >
 </head>
@@ -35,6 +37,7 @@ The simplest template possable?' >
 
 		var geometry, material, mesh;
 
+// DOM
 		var css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
@@ -62,8 +65,8 @@ The simplest template possable?' >
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
+// Three.js
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
-//		renderer.setClearColor( 0xf0f0f0 );
 //		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
@@ -77,7 +80,6 @@ The simplest template possable?' >
 		scene = new THREE.Scene();
 
 // helpers
-
 		geometry = new THREE.BoxGeometry( 300, 2, 300 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
@@ -90,6 +92,7 @@ The simplest template possable?' >
 		var axisHelper = new THREE.AxisHelper( 150 );
 		scene.add( axisHelper );
 
+// assets
 		geometry = new THREE.BoxGeometry( 10, 10, 100 );
 		material = new THREE.MeshNormalMaterial();
 		pointer = new THREE.Mesh( geometry, material );
