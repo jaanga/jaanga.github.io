@@ -89,7 +89,7 @@
 
 		}
 
-		requestFile( gazetteer );
+		requestGazetteer( gazetteer );
 
 		selCity.oninput = function() {
 
@@ -110,7 +110,7 @@
 
 	}
 
-	function requestFile( fileName ) {
+	function requestGazetteer( fileName ) {
 
 		var xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );

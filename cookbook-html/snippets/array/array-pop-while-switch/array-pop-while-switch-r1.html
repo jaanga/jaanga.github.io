@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>array-pop-while-switch</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	var arr = ['bob','sally','robert','pinkie','peter','murgatroyd','penelope'];
+
+	var rand = Math.floor( arr.length * Math.random() ); 
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div>' +
+				'<button onclick=getGender() >get gender</button> ' +
+				'<button onclick=setValues() >set values</button> ' +
+				'<button onclick=getValuesSwitch() >get values switch</button> ' +
+				'<button onclick=getValuesMethod() >get values method</button> ' +
+			'</div>' +
+			'<div id=msg ></div>';
+
+	}
+
+	function getGender() {
+
+		var text = '';
+
+		a = arr.slice();
+
+		while ( a.length > 0 ) {
+
+			first = a.shift();
+
+			switch( first ) {
+
+				case 'bob':
+				case 'robert':
+					gender = 'boy';
+					break;
+				case 'sally':
+				case 'pinkie':
+					gender = 'girl'
+					break;
+				default:
+					gender = '???';;
+
+			}
+
+			text += a.length + ' ' + first + ' - ' + gender + ' ### ' + a + '<br>';
+		}
+
+		msg.innerHTML = text;
+
+	}
+
+	function setValues() {
+
+		var text = '';
+
+		a = arr.slice();
+
+		for ( var i = 0; i < a.length; i++ ) {
+
+			a[ i ] += '=' + Math.floor( 999 * Math.random() ); 
+
+			text += a[ i ] + '<br>';
+
+		}
+
+		msg.innerHTML = text;
+
+	}
+
+	function getValuesSwitch() {
+
+// create some data
+
+		var text = '';
+
+		a = arr.slice();
+
+		for ( var i = 0; i < a.length; i++ ) {
+
+			arr[ i ] += '=' + Math.floor( 999 * Math.random() ); 
+
+			text += a[ i ] + '=' + Math.floor( 999 * Math.random() ) + '#' 
+
+		}
+
+		hash = msg.innerHTML = '#' + text + '<br>';
+
+
+// play with the data 
+
+		text = '';
+
+		items = hash.split( '#' ) ;
+
+		item = items.shift(); // knock off first item
+
+		item = items.pop();
+
+		while ( items.length > 0 ) {
+
+			item = items.shift();
+
+			item = item.split( '=' );
+
+			switch( item[0] ) {
+
+				case 'bob':
+				case 'robert':
+					gender = 'boy';
+					break;
+				case 'sally':
+				case 'pinkie':
+					gender = 'girl'
+					break;
+				default:
+					gender = '???';;
+
+			}
+
+//			if ( item.length > 1 ) {
+
+				text += items.length + ' ' + item[0] + ' - ' + gender + ' ### ' + item[ 1 ] + '<br>';
+
+//			}
+
+		}
+
+		msg.innerHTML += text;
+
+	}
+
+
+	function getValuesMethod() {
+
+// create some data
+
+		var text = '';
+
+		a = arr.slice();
+
+		for ( var i = 0; i < a.length; i++ ) {
+
+			arr[ i ] += '=' + Math.floor( 999 * Math.random() ); 
+
+			text += a[ i ] + '=' + Math.floor( 999 * Math.random() ) + '#' 
+
+		}
+
+		hash = msg.innerHTML = '#' + text + '<br>';
+
+
+// play with the data 
+
+		text = '';
+
+		items = hash.split( '#' ) ;
+
+		item = items.shift(); // knock off first item
+
+		item = items.pop();
+
+		cases = {
+
+			bob: function() { return 'boy'; },
+
+			sally: function() { return 'girl'; }, 
+
+			_default: function() { return '???' ; }
+
+		};
+
+		cases.robert = cases.murgatroyd = cases.bob;
+
+		cases.pinky = cases.sally;
+
+		while ( items.length > 0 ) {
+
+			item = items.shift();
+
+			item = item.split( '=' );
+
+			gender = cases[ item[0] ] ? cases[ item[ 0 ] ]() : cases._default();
+
+console.log( item[ 0 ], text  );
+
+			text += items.length + ' ' + item[0] + ' - ' + gender + ' ### ' + item[ 1 ] + '<br>';
+
+		}
+
+		msg.innerHTML += text;
+
+	}
+
+
+</script>
+</body>
+</html>

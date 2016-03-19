@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>View Read Me</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js ></script>
+<script>
+// Let's a read me file written in MarkDown be viewable as HTML
+
+	var xmlHttp;
+
+	var converter = new Showdown.converter();
+
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML = 'body { font: 400 12pt monospace; margin: auto; max-width: 800px; }' +
+		'h2.close::before { content: "► "; }' +
+		'h2.open::before { content: "▼ "; }' +
+	'';
+
+	requestFile( 'readme.md' );
+
+	function requestFile( fileName ) {
+
+		xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.onreadystatechange = callback;
+		xmlHttp.send( null );
+
+	}
+
+	function callback() {
+
+		if ( xmlHttp.readyState !== 4  ) { return; }
+
+		var text = xmlHttp.responseText;
+		text = converter.makeHtml( text );
+
+		var doc = document.body.appendChild( document.createElement( 'div' ) );
+		doc.innerHTML = text;
+
+		items = document.body.getElementsByClassName( 'toggle' );
+
+		for ( var i = 0; i < items.length; i++ ) {
+
+			items[ i ].id = 't' + i;
+
+			if ( items[ i ].className.indexOf( 'open' ) === -1 ) {
+
+				items[ i ].className += ' close';
+				items[ i ].nextElementSibling.style.display = 'none';
+
+			}
+
+			items[ i ].onclick = function() { toggle( this ); };
+
+		}
+
+	}
+
+	function toggle( element ) {
+
+		content = document.getElementById( element.id );
+
+		if ( content.nextElementSibling.style.display === '' ) {
+
+			content.nextElementSibling.style.display = 'none';
+			element.className = 'toggle close';
+
+		} else {
+
+			content.nextElementSibling.style.display = '';
+			element.className = 'toggle open';
+
+		}
+
+	}
+
+</script>
+</body>
+</html>
