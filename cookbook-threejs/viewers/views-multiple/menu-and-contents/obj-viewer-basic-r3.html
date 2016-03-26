@@ -1,0 +1,225 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>OBJ Viewer Basic R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='View OBJ files in 3D. Set locstion.hash parameters to control URL, scale, rotation and position as well as camera position and target' >
+<meta name=keywords content='OBJ,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-03-03' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/loaders/OBJLoader.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/OBJLoader.js ></script>
+
+<script>
+
+	var fileNameDefault =  'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj#sx=0.3#sy=0.3#sz=0.3';
+
+	var parameters = new THREE.Object3D();
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML =
+
+			'<h2>' +
+			'	<a href="../../index.html" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/3d-models >❦</a>' +
+			'</h2>' +
+			'<div id=info ></div>' +
+			'<div id=progress ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		if ( location.hash === '' ) {
+
+			location.hash = fileNameDefault;
+
+		}
+
+		parseHash();
+
+	}
+
+
+	function parseHash() {
+
+		var hashes, hash, parameter, value;
+		var d2r = Math.PI / 180;
+
+		hashes = location.hash.split( '#' );
+
+		for ( var i = 0; i < hashes.length; i++ ) {
+
+			hash = hashes[ i ];
+
+			parameter = hash.slice( 0, 2 );
+			value = parseFloat( hash.slice( 3 ) );
+
+			if ( parameter === 'rx' ) { parameters.rotation.x = value * d2r;
+
+				} else if ( parameter === 'ry' ) { parameters.rotation.x = value * d2r;
+				} else if ( parameter === 'rz' ) { parameters.rotation.y = value * d2r;
+
+				} else if ( parameter === 'px' ) { parameters.position.x = value;
+				} else if ( parameter === 'py' ) { parameters.position.y = value;
+				} else if ( parameter === 'pz' ) { parameters.position.z = value;
+
+				} else if ( parameter === 'sx' ) { parameters.scale.x = value;
+				} else if ( parameter === 'sy' ) { parameters.scale.y = value;
+				} else if ( parameter === 'sz' ) { parameters.scale.z = value;
+
+				} else if ( parameter === 'cx' ) { camera.position.x = value;
+				} else if ( parameter === 'cy' ) { camera.position.y = value;
+				} else if ( parameter === 'cz' ) { camera.position.z = value;
+
+				} else if ( parameter === 'tx' ) { controls.target.x = value;
+				} else if ( parameter === 'ty' ) { controls.target.y = value;
+				} else if ( parameter === 'tz' ) { controls.target.z = value;
+
+			}
+
+		}
+
+		fileName = hashes[ 1 ];
+
+		loadOBJFileByURL( fileName );
+
+	}
+
+
+	function loadOBJFileByURL( fileName ) {
+
+		var loader = new THREE.OBJLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( fileName,
+			function ( object ) {
+
+				addObject( object );
+
+				info.innerHTML = 'File name: ' + fileName.split('/').pop() + '<br>' + '';
+
+			},
+			function( event ) {
+
+				progress.innerHTML = 'Loaded: ' + ( ( 100 * event.loaded / event.total ).toFixed() ) + '%'; }
+
+		);
+
+	}
+
+	function addObject( object ) {
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+			}
+
+		} );
+
+		object.scale.copy( parameters.scale );
+		object.rotation.copy( parameters.rotation );
+		object.position.copy( parameters.position );
+
+		scene.add( object );
+
+		bbh = new THREE.BoundingBoxHelper( object );
+		bbh.update();
+
+		scene.add( bbh );
+
+//console.log( bbh );
+//console.log( 'position', bbh.position );
+//console.log( 'scale', bbh.scale );
+
+		controls.target = bbh.position.clone();
+		camera.position.set( 1.5 * bbh.scale.x, 1.5 * bbh.scale.y, 1.5 * bbh.scale.z );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

@@ -19,6 +19,7 @@
 -->
 <script>
 
+	var spheres = [];
 	var skyboxURLs = [];
 
 	var p = 'https://mrdoob.github.io/three.js/examples/textures/cube/Bridge2/';
@@ -64,14 +65,20 @@
 
 			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
-/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
-			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
-			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
-*/
+			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 200px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -200px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 175px; }' +
+
 		'';
 
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
-		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		var hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		var menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
 		menu.innerHTML = 
 
 			'<h2>' +
@@ -79,16 +86,6 @@
 			'	 <a href=http://jaanga.github.io/ >❦</a>' +
 			'</h2>' +
 			'<p><select id=selSkybox onchange=updateSkyBox(skyboxURLs[this.selectedIndex][1]); ></select></p>' +
-/*
-			'<p><button onclick=updateSkyBox(skyboxURLs[0][1]); >Bridge2</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[1][1]); >Escher</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[2][1]); >Milk Way</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[3][1]); >Park2</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[4][1]); >Park3Med</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[5][1]); >Pisa</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[6][1]); >skybox</button></p>' +
-			'<p><button onclick=updateSkyBox(skyboxURLs[7][1]); >Swedish Royal Castle</button></p>' +
-*/
 
 			'<p><input type=checkbox id=chkSkybox onchange=updateSkyBox(); checked > Skybox</p>' +
 			'<p><input type=checkbox onchange=axisHelper.visible=axisHelper.visible===true?false:true; checked > Axis</p>' +
@@ -105,8 +102,10 @@
 		}
 
 		for (var i = 0; i < skyboxURLs.length; i++) {
+
 				selSkybox.appendChild( document.createElement( 'option' ) );
 				selSkybox.children[ i ].text = skyboxURLs[i][0];
+
 		}
 
 		selSkybox.selectedIndex = 3;
@@ -135,44 +134,50 @@
 		scene.add( axisHelper );
 
 // assets
+		drawSpheres();
+		geometry = new THREE.BoxGeometry( 500, 500, 500 );
+		material = new THREE.MeshBasicMaterial();
 
+		skybox = new THREE.Mesh( geometry, material );
 
+		scene.add( skybox );
+
+		chkSkybox.checked = true;
 
 		updateSkyBox( skyboxURLs[ 7 ][ 1 ] );
+
+
 
 	}
 
 	function updateSkyBox( urls ) {
 
-// 2016-02-25 ~ http://jaanga.github.io/cookbook-threejs/templates/toggle-skyboxes/toggle-skybox-r1.html
+// 2016-03-25 ~ http://jaanga.github.io/cookbook-threejs/templates/toggle-skyboxes/toggle-skybox-r2.html
 
-		scene.remove( skybox );
+		var loader, textureCube, shader;
 
-		if ( urls ) {
+		loader = new THREE.CubeTextureLoader();
+		loader.setCrossOrigin( 'anonymous' );
 
-			skybox = addSkyBox( urls );
-//			skybox.position.x = -30;
+		textureCube = loader.load( urls );
 
-			scene.add( skybox );
+		shader = THREE.ShaderLib[ 'cube' ];
+		shader.uniforms[ 'tCube' ].value = textureCube;
 
-			chkSkybox.checked = true;
+		skybox.material = new THREE.ShaderMaterial( {
 
-		}
+			fragmentShader: shader.fragmentShader,
+			vertexShader: shader.vertexShader,
+			uniforms: shader.uniforms,
+			depthWrite: false,
+			side: THREE.BackSide
 
-		function addSkyBox( urls ) {
+		} );
 
-			var geometry, material, mesh;
-			var loader, textureCube, shader;
+		for (var i = 0; i < 50; i++) {
 
-			loader = new THREE.CubeTextureLoader();
-			loader.setCrossOrigin( 'anonymous' );
 
-			textureCube = loader.load( urls );
-
-			shader = THREE.ShaderLib[ 'cube' ];
-			shader.uniforms[ 'tCube' ].value = textureCube;
-
-			material = new THREE.ShaderMaterial( {
+			spheres[ i ].material = new THREE.ShaderMaterial( {
 
 				fragmentShader: shader.fragmentShader,
 				vertexShader: shader.vertexShader,
@@ -182,22 +187,49 @@
 
 			} );
 
-			geometry = new THREE.BoxGeometry( 50, 50, 50 );
-
-			mesh = new THREE.Mesh( geometry, material );
-
-			return mesh;
 
 		}
 
 	}
 
+	function drawSpheres() {
+
+		var geometry, material, mesh;
+		geometry = new THREE.SphereBufferGeometry( 1, 50, 25 );
+
+		for (var i = 0; i < 50; i++) {
+
+			material = new THREE.MeshBasicMaterial();
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
+			mesh.scale.multiplyScalar( Math.random() * 3 + 8 );
+			spheres.push( mesh );
+
+			scene.add( mesh );
+
+		}
+
+	}
+
+
 	function animate() {
 
-		requestAnimationFrame( animate );
+		var timer = 0.0001 * Date.now();
+
+		for ( var i = 0; i < spheres.length; i ++ ) {
+
+			var sphere = spheres[ i ];
+
+			sphere.position.x = 50 * Math.cos( timer + i );
+			sphere.position.y = 50 * Math.sin( timer + i * 1.1 );
+
+		}
+
 		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
+		requestAnimationFrame( animate );
 
 	}
 

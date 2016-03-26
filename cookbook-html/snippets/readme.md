@@ -23,8 +23,11 @@ _This read me is still missing many links_
 
 ## GitHub API
 
-### [GitHub API File Viewer Babylon.js R1]( http://jaanga.github.io/cookbook-html/snippets/github-api/github-api-file-viewer-babylonjs-r1.html )
+### [GitHub API File Viewer Babylon.js R1]( http://jaanga.github.io/cookbook-html/snippets/github-api/file-viewers/github-api-file-viewer-babylonjs-r1.html )
 
+### [GitHub API File Explorer]( http://jaanga.github.io/cookbook-html/snippets/github-api/github-api-explorer/github-api-explorer-r1.html )
+
+github-api-explorer-r1
 
 
 ## Gradient Background

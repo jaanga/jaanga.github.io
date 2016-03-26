@@ -43,12 +43,12 @@
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute';
 		menu.innerHTML = '<h2 ><a href="" >' + document.title + '</a> ' +
-			'<a id=i href=http://jaanga.github.io/ >❦</a></h2>' +
+			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
 			'<div id=info ></div>' +
 		'';
 
 		stats = new Stats();
-		stats.domElement.style.cssText = 'position: absolute; right: 0; bottom: 0; z-index: 100; ';
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;';
 		document.body.appendChild( stats.domElement );
 
 		window.addEventListener( 'resize', onWindowResize, false );
@@ -96,7 +96,9 @@
 
 		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
 		lightDirectional.position.set( -size, size, size );
+		lightDirectional.shadow.camera.scale.multiplyScalar( 15 );
 
+/*
 		var d = size;
 		lightDirectional.shadow.camera.left = -d;
 		lightDirectional.shadow.camera.right = d;
@@ -111,6 +113,7 @@
 
 		lightDirectional.shadow.mapSize.width = 2048;  // default 512
 		lightDirectional.shadow.mapSize.height = 2048;
+*/
 
 		lightDirectional.castShadow = true;
 		scene.add( lightDirectional );
@@ -149,12 +152,7 @@
 	}
 
 
-
-
-
-
-
-
+// 
 
 
 	function drawHelpers() {
