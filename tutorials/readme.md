@@ -5,7 +5,7 @@
 [Tutorials Read Me]( ./index.html )
 ===
 
-Welcome Isaac Kendell, ace quality assurance specialist!
+Welcome Harry Keen, ace quality assurance specialist!
 
 <!--
 [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
