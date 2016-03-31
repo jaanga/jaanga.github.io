@@ -2,18 +2,20 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Basic HTML Template</title>
+<title>GitHub RSS</title>
 <!--
 <meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
 <meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
 -->
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='' >
+<meta name=description content='read GitHub Atom feeds' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-03-30' >
 </head>
 <body>
 <script>
+
+	var rss = 'http://github.com/ladybug-analysis-tools/ladybug-web/commits/gh-pages.atom';
 
 	init();
 
@@ -60,6 +62,50 @@
 			'<div id=info ></div>' +
 
 		'';
+
+/*
+		var xhr = new XMLHttpRequest();
+
+		xhr.onload = function() {
+
+			console.log(xhr.responseXML.documentElement.nodeName);
+
+		}
+
+		xhr.onerror = function() {
+
+			console.log("Error while getting XML.");
+
+		}
+
+		xhr.open("GET", rss );
+		xhr.responseType = "document";
+		xhr.send();
+*/
+
+
+		requestFile( rss );
+
+	}
+
+
+	function requestFile( fileName ) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.crossOrigin = "Anonymous";
+		xhr.open( 'GET', fileName, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState != 4  ) { return; }
+			text = xhr.responseText;
+			var lines = text.split(/\r\n|\n/);
+
+			console.log( text );
+
+		}
 
 	}
 

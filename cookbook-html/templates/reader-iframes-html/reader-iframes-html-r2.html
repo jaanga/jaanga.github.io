@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Reader Iframes HTML R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='HTML,CSS,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-02-28' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	init();
+
+	function init() {
+
+		var css, menu;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; overflow-x: hidden; right: 0;  }' +
+			'h1 { margin: 0; }' +
+			'h1 a { text-decoration: none; }' +
+			'iframe { border: 0px solid green; height: 360px; margin-left: ' + ( - 0.5 * window.innerWidth + 400 ) + 'px;  width: ' + window.innerWidth  + 'px; }' +
+
+		'';
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+//		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<div id=contents ></div>' +
+
+		'';
+
+		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
+
+		getMarkdown( fileName, contents );
+
+	}
+
+
+	function getMarkdown( fileName, target ) {
+
+		var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState != 4  ) { return; }
+
+			target.innerHTML = converter.makeHtml(  xhr.responseText );
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

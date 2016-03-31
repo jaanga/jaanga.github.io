@@ -24,6 +24,8 @@
 //	var urlSource = 'http://ladybug-analysis-tools.github.io/ladybug-web/';
 	var urlSource = '../../../../../ladybug-web/';
 
+	var converter;
+
 	var footer =
 
 		'<center title="dingbat" >' +
@@ -31,6 +33,7 @@
 		'</center>' +
 
 	'';
+
 
 	var iframeContainers = [];
 	var iframesActive = [];
@@ -43,7 +46,7 @@
 
 	function init() {
 
-		var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -53,13 +56,13 @@
 			'input[type=button]  { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 			'iframe { border: 0px solid green; height: 100%; width: 100%; }' +
 
-			'.divIframe { border: 1px solid crimson; height:512px; margin: 80px 0 0 ' + ( -0.5 * ( window.innerWidth - 1000 ) ) + 'px; width: ' + ( window.innerWidth - 200 ) + 'px; }' +
-			'div.readme { border: 1px solid blue; max-height:512px; overflow: auto; transform: scale( 0.75, 0.75 }; ' +
+			'.divIframe { border: 1px solid crimson; height:512px; margin: 80px 0 0 ' + ( -0.5 * ( window.innerWidth - 800 ) ) + 'px; width: ' + ( window.innerWidth - 20 ) + 'px; }' +
+			'div.readme { border: 1px solid blue; max-height:512px; overflow: hidden; transform: scale( 0.75, 0.75 }; ' +
 		'';
 
 		var contents = document.body.appendChild( document.createElement( 'div' ) );
-//		contents.innerHTML = converter.makeHtml( ta.innerText ) + '<div id=container ></div>';
-		contents.innerHTML = '<div id=header ></div>' +
+		contents.innerHTML = 
+			'<div id=header ></div>' +
 			'<div id=container ></div>';
 
 		getMarkdown( 'index.md', header );
@@ -67,8 +70,6 @@
 		requestFileNames();
 
 	}
-
-
 
 	function requestFileNames() {
 
@@ -184,7 +185,7 @@
 		folder = files[ index ].replace( 'index.html', '' );
 
 		thing = document.getElementById( 'readme' + index )
-		getMarkdown( urlSource + folder + 'readme.md', thing ) 
+		getMarkdown( urlSource + folder + 'readme.md', thing );
 
 
 		if ( that.contentWindow.controls ) {
@@ -224,26 +225,7 @@
 
 			if ( xhr.readyState != 4  ) { return; }
 
-			getGitHubParseMarkdown2HTML( xhr.responseText, target )
-
-		}
-
-	}
-
-	function getGitHubParseMarkdown2HTML( markdown, target ) {
-
-		var xhr = new XMLHttpRequest();
-		xhr.open( 'POST', 'https://api.github.com/markdown/raw' );
-		xhr.setRequestHeader('Content-Type', 'text/plain' );
-		xhr.onreadystatechange = callback;
-		xhr.send( markdown );
-
-		function callback() {
-
-			if ( xhr.readyState != 4  ) { return; }
-
-			target.innerHTML = xhr.responseText;
-//			target.className = 'readme';
+			target.innerHTML = converter.makeHtml(  xhr.responseText );
 
 		}
 
