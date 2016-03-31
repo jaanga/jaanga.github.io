@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Equirec Image Flickr R2</title>
+<title>Equirec Image Flickr R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -21,6 +21,7 @@
 <script>
 
 	var photos, globe, index, previousElement;
+	var spheres = [];
 
 	var stats, renderer, scene, camera, controls;
 
@@ -66,7 +67,7 @@
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 			'<p title="Press space bar to toggle rotation" ><input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate; checked> Rotation</p>' +
-
+			'<p><input type=checkbox id=chkBubbles onchange=updateBubbles(); > Add bubbles</p>' +
 			'<div id=info ></div>' +
 			'<div id=thumbnails ></div>' +
 		'';
@@ -108,6 +109,8 @@
 		requestFile( fileName )
 
 		controls.autoRotate = true;
+
+
 
 	}
 
@@ -163,7 +166,7 @@
 
 		fileName = 'https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=60a549a559bf2e60ce2a8f427e2a27e8&photo_id=' + photo.id + '&format=json&nojsoncallback=1';
 
-		var xhr = new XMLHttpRequest();
+		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
 		xhr.onload = callback;
 		xhr.send( null );
@@ -200,6 +203,9 @@
 				previousElement.style.backgroundColor = '';
 				previousElement = el;
 				index = i;
+
+				sphereTexture = texture;
+				updateBubbles();
 
 			},
 			function ( xhr ) {
@@ -241,6 +247,45 @@
 
 	}
 
+
+	function updateBubbles() {
+
+		if ( chkBubbles.checked === true ) {
+
+			drawSpheres();
+
+		} else {
+
+		for ( var i = 0; i < spheres.length; i++ ) {
+
+			scene.remove( spheres[ i ] );
+
+		}
+
+		}
+
+	}
+	function drawSpheres() {
+
+		var geometry, material, mesh;
+		geometry = new THREE.SphereBufferGeometry( 1, 50, 25 );
+
+		for (var i = 0; i < 50; i++) {
+
+			material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: sphereTexture } );
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 300 * Math.random() - 150, 600 * Math.random() - 300, 300 * Math.random() - 150 );
+			mesh.scale.multiplyScalar( Math.random() * 10 + 20 );
+			spheres.push( mesh );
+
+			scene.add( mesh );
+
+		}
+
+	}
+
+
 	function onWindowResize() {
 
 		camera.aspect = window.innerWidth / window.innerHeight;
@@ -251,6 +296,18 @@
 	}
 
 	function animate() {
+
+		var timer = 0.0001 * Date.now();
+
+		for ( var i = 0; i < spheres.length; i ++ ) {
+
+			var sphere = spheres[ i ];
+
+			sphere.position.x = 200 * Math.cos( timer + i );
+			sphere.position.y = 200 * Math.sin( timer + i * 1.1 );
+
+		}
+
 
 		requestAnimationFrame( animate );
 		controls.update();

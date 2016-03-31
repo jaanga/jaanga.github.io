@@ -1,7 +1,7 @@
 Equirec Read Me
 ===
 
-_Free open source uqurectangualar image and video viewers_
+_Free open source equirectangualar image and video viewers_
 
 Features for both viewers
 
