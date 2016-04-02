@@ -22,13 +22,14 @@ Features for all viewers
 
 ### Features
 
-* UsesFlickr API to source latest files for the group
-	* Displays hundred most recent files
+* UsesFlickr API to source latest files for the Ricoh Theta group
+	* Displays a hundred thumbnails at a time 
 * Built using [Three.js]( http://threejs.org )
 	* A JavaScript library for creating interactive 3D scripts that tun in your browser
 	* Free and open source
 * Toggle creation and removal of reflective 'soap bubbles'
 * Toggle camera rotation
+* Camera reset
 * Keyboard support
 	* Toggle rotation = press space bar
 	* Previous / Next image = left / right cursor keys
@@ -36,8 +37,26 @@ Features for all viewers
 
 ### Things to Do / Road Map
 
-* Allow showing thumbnails and displaying older files
+* Replay animations
 * Upload and display any 3D file as the 'bubble' type
 * Change the speed of the rotation
 * Slideshow capability
+
+## Updates
+
+### 2016-04-02
+
+* R4
+* Added numbered page jumps
+* Added reset view link
+* Add scroll top dingbat at bottom of thumbnails
+
+### R3
+
+* Added multiple pages
+
+### 2016-03-11
+
+* R1
+
 
