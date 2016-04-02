@@ -22,14 +22,17 @@ Features for all viewers
 
 ### Features
 
-* UsesFlickr API to source latest files for the Ricoh Theta group
+* Uses Flickr API to source latest files from the Flickr Ricoh Theta group
 	* Displays a hundred thumbnails at a time 
 * Built using [Three.js]( http://threejs.org )
 	* A JavaScript library for creating interactive 3D scripts that tun in your browser
 	* Free and open source
+	* Code is quite simple - anybody who know a bit of JavaScript should be able to edit / add new features
 * Toggle creation and removal of reflective 'soap bubbles'
 * Toggle camera rotation
 * Camera reset
+* 'Hamburger' button slides menu
+	* Allows full screen viewing
 * Keyboard support
 	* Toggle rotation = press space bar
 	* Previous / Next image = left / right cursor keys
