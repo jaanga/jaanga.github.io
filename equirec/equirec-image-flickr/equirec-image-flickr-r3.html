@@ -21,6 +21,7 @@
 <script>
 
 	var photos, globe, index, previousElement;
+	var page = 1, pages;
 	var spheres = [];
 
 	var stats, renderer, scene, camera, controls;
@@ -41,7 +42,7 @@
 			'h2 { margin: 0 }' +
 			'img { padding: 5px; }' +
 
-			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+			'button { background-color: #ccc; border: 2px #ccc solid; color: #888; }' +
 
 /*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -104,16 +105,27 @@
 		globe.scale.z = -1;
 		scene.add( globe );
 
-		fileName = 'https://api.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=60a549a559bf2e60ce2a8f427e2a27e8&group_id=2440649%40N22&format=json&nojsoncallback=1';
+		fileName = 'https://api.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=60a549a559bf2e60ce2a8f427e2a27e8&group_id=2440649%40N22&page=' + page + '&format=json&nojsoncallback=1';
 
-		requestFile( fileName )
+		requestFile( fileName );
 
 		controls.autoRotate = true;
 
-
-
 	}
 
+	function update( delta ) {
+
+		page += delta;
+
+		page = page < 1 ? pages : page;
+
+		page = page > pages ? 1 : page;
+
+		fileName = 'https://api.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=60a549a559bf2e60ce2a8f427e2a27e8&group_id=2440649%40N22&page=' + page + '&format=json&nojsoncallback=1';
+
+		requestFile( fileName );
+
+	}
 
 	function requestFile( fileName ) {
 
@@ -129,8 +141,10 @@
 			response = JSON.parse( xhr.responseText );
 
 			photos = response.photos.photo;
+			pages = response.photos.pages
 
-			txt = '';
+			txt = 'Page ' + page + ' of ' + pages  + 
+				' <button onclick=update(-1); >Previous</button onclick=update(-1); > <button onclick=update(1); >Next</button><br>';
 
 			for ( var i = 0; i < photos.length; i++ ) {
 
@@ -146,7 +160,7 @@
 
 			}
 
-			thumbnails.innerHTML += txt;
+			thumbnails.innerHTML = txt;
 			previousElement = img0;
 
 			index = Math.floor( Math.random() * photos.length );
