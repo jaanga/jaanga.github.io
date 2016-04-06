@@ -6,7 +6,10 @@ Loader Three.JS Read Me
 _A 3D Model file viewer_
 
 ***
+## Mission
 
+* To help the code in Loader.js from the Three.js Editor be available for a broad range of uses while remaining at a beginner level of coding complexity
+  
 ## Features
 
 * Loads 3D Models and displays them in your browser
@@ -51,5 +54,15 @@ _A 3D Model file viewer_
 * Save data to new JSON file.
 * Add gltf file format
  
+## Credits and Background
 
+Loader Three.js is based on the Loader.js file from the [Three.js Editor]( http://threejs.org/editor/ ).
+The challenge is to make as few edits as possible - so that any improvements to Loader.js may be quickly and easily adapted to this effort.
+
+
+## Change Log
+
+### 2016-04-05
+
+* R1
 
