@@ -1,6 +1,12 @@
 Loader Three.JS Read Me
 ===
 
+## [Loader Three.JS ]( http://jaanga.github.io/cookbook-threejs/viewers/loader-threejs/ )
+
+_ A 3D Model file viewer_
+
+***
+
 ## Features
 
 * Loads 3D Models and displays them in your browser
@@ -30,7 +36,20 @@ Loader Three.JS Read Me
 	* stl
 	* vtk
 	* wrl
-* Not all formats have 100% success. Hello .dae and .kmz files, we are looking at you
 
-## 
+## Issues
+
+* Not all formats have 100% success. Hello .dae and .kmz files, we are looking at you
+* Current release attempts to rescale objects in a 'zoom-all' fashion - has many issues
+
+## Road Map
+
+* Add materials
+* Add changing colors
+* Add location.hash support
+* Improve auto object scaling feature
+* Save data to new JSON file.
+* Add gltf file format
+ 
+
 
