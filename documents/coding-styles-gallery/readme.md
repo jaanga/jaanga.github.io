@@ -6,7 +6,7 @@
 Coding Styles Read Me
 ===
 
-_Coding without style is a recipe for making something un-fashionable_
+_Coding without style is a recipe for fashioning something un-fashionable_
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 

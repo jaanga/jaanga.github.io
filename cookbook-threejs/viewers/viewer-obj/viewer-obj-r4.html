@@ -1,15 +1,23 @@
 ﻿<!doctype html>
 <html lang=en >
 <head>
-<title>Viewer OBJ R3</title>
+<title>Viewer OBJ R4</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
 <body>
+<!--
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/loaders/OBJLoader.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/OBJLoader.js ></script>
+
 <script>
 
 //	var fileName = '../models/tree.obj';
@@ -61,25 +69,29 @@
 		menu.innerHTML = 
 
 			'<h2>' +
-			'	<a href="" >' + document.title + '</a>' +
-			'	<a href=http://jaanga.github.io/ >❦</a>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > ❦ </a>' +
 			'</h2>' +
 			'<p>Drag and drop files over this menu or <input type=file onchange=loadFileOBJByContent(this); /><p>' +
-			'<p>Scale: <input type=number id=inpScale value=0.3 ></p>' +
+			'<p>Scale: <input type=number id=inpScale value=0.3 onchange = updateObject(); ></p>' +
 			'<p>' +
 				'Rotation:<br>' +
-				'x: <input type=number id=inpRotX value=0 > y: <input type=number id=inpRotY value=0 > z: <input type=number id=inpRotZ value=0 >' +
+				'x: <input type=number id=inpRotX value=0 onchange = updateObject(); > ' +
+				'y: <input type=number id=inpRotY value=0 onchange = updateObject(); > ' +
+				'z: <input type=number id=inpRotZ value=0 onchange = updateObject(); >' +
 			'</p>' +
 			'<p>' +
 				'Position:<br>' +
-				'x: <input type=number id=inpPosX value=0 > y: <input type=number id=inpPosY value=0 > z: <input type=number id=inpPosZ value=0 >' +
+				'x: <input type=number id=inpPosX value=0 > y: <input type=number id=inpPosY value=0 > z: <input id=inpPosZ type=number >' +
 			'</p>' +
 //			'<p><input type=checkbox onchange=object.material.wireframe=!object.material.wireframe; > Wireframe</p>' +
 			'<p>Clear screen on open <input type=checkbox id=chkClearScreen checked ></p>' +
-			'<textarea id=txtArea style=height:300px;overflow:auto;width:100%; ></textarea>' +
+			'<textarea id=textArea style=height:300px;overflow:auto;width:100%; ></textarea>' +
 			'<p><button onclick=saveFile(); >Save File</button></p>' +
 			'<div id=info ></div>' +
 		'';
+
+		inpPosX.onchange = inpPosY.onchange = inpPosZ.onchange = updateProject;
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
@@ -160,7 +172,8 @@
 
 	function loadFileOBJByURL( fileName ) {
 
-//		var loader;
+		var loader;
+
 		loader = new THREE.OBJLoader();
 		loader.crossOrigin = 'anonymous';
 		loader.load( fileName, function ( obj ) {
@@ -170,9 +183,6 @@
 
 //			txtArea.innerHTML = JSON.stringify( object.toJSON() );
 
-			info.innerHTML = 'name: ' + fileName + '<br>' +
-
-			'';
 			info.innerHTML = '<h3>File name: ' + fileName.split('/').pop() + '</h3>';
 
 //console.log( 'object', object );
@@ -192,13 +202,14 @@
 
 			loader = new THREE.OBJLoader()
 			loader.crossOrigin = 'anonymous';
+
 			object = loader.parse( reader.result );
 
 //console.log( object  );
 
-			addObject( object );
+			addObject();
 
-			data =  reader.result;
+			data = reader.result;
 			txtArea.innerHTML = data;
 
 			info.innerHTML = 'name: ' + file.name + '<br>' +
@@ -221,24 +232,35 @@
 
 	}
 
-	function addObject( object ) {
+	function addObject() {
 
 		object.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
 
 				child.castShadow = child.receiveShadow = true;
-				child.material = material;
+//				child.material = material;
 				child.material.needsUpdate = true;
 			}
 
 		} );
 
-		s = parseFloat( inpScale.value );
+		updateObject();
+
+		scene.add( object );
+
+	}
+
+	function updateObject() {
+
+		if ( !object ) { return; }
+
+		var s = parseFloat( inpScale.value );
 
 		object.scale.set( s, s, s );
 
 		var d2r = Math.PI / 180;
+
 		rX = parseFloat( inpRotX.value ) * d2r;
 		rY = parseFloat( inpRotY.value ) * d2r;
 		rZ = parseFloat( inpRotZ.value ) * d2r;
@@ -247,17 +269,12 @@
 		pX = parseFloat( inpPosX.value );
 		pY = parseFloat( inpPosY.value );
 		pZ = parseFloat( inpPosZ.value );
+
 		object.position.set( pX, pY, pZ );
 
-object.updateMatrixWorld()
-
-		scene.add( object );
-
-console.log( '', object.children[ 1 ].geometry.attributes.position );
+// object.updateMatrixWorld();
 
 	}
-
-
 
 	function checkClearScreen() {
 

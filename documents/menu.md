@@ -11,7 +11,7 @@
 
 
 [Jaangs Practice Notes]( jaanga-practice-notes/index.html )  
-[Coding Styles]( coding-styles/index.html )  
+[Coding Styles Gallery]( coding-styles-gallery/index.html )  
 [Dirksen Examples]( josdirksen-examples/index.html)  
 [Scene.js Viewer]( scenejs-viewer/scenejs-viewer-basic/scenejs-viewer-basic-r1.html)  
 [Scene.js Viewer Stats]( scenejs-viewer/scenejs-viewer-stats/scenejs-viewer-stats-r1.html)  

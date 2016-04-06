@@ -5,22 +5,24 @@ _update 2016-02-01_
 
 ## Coding Style Guidelines
 
-The code should be as close as possible to readable English. 
+The code should be as close as possible to readable - or even spoken - English. 
+In other words it's great if you can read the code out load and it mean something.
 
 The coding style of an app should follow the style of the most-used library of the app.
+An the style of an app built with jQuery should follow the style of, say, the [jQuery API Documentation]( http://api.jquery.com/ ). 
+The style of an app built using Three.js should follow the style of, say, the [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ).
+The styles in both the above examples do tend to be fairly simple coding styles - which is great for our kinds of uses.
+On occasion a greater degree of complexity is required In that case then the source code of each library should be used as it respective style to follow.
 
-Absolute URLs are recommended for items that would otherwise have issues with loading into Code-Edit-View.
-
-Everything in Jaanga is written in client-side JavaScript.
-
-In the instance of a [Three.js]( http://threejs.org ) script, the style generally follows [Mr.doob Coding Style]( https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2 ).
 
 _What the following needs, more than anything, is links to sources that justify the following statement.
 This documents should not be the ideas popping out of an individuals head, but the result of a number of long term investigations.
 In other words, this document is not anecdotal but based on clinical studies. 
 The following should a demonstration based on the [scientific method]( https://en.wikipedia.org/wiki/Scientific_method )._
 
-* Code generally follows the [Three.js examples]( http://mrdoob.github.io/three.js/examples/ ) coding style more than the source code style
+* Code generally follows the [Three.js examples]( http://mrdoob.github.io/three.js/examples/ ) coding style
+	* In the instance of a [Three.js]( http://threejs.org ) script, the style generally follows [Mr.doob Coding Style]( https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2 ).
+	* Three.js source code style is used as a secondary reference
 	* Descriptive, informative variable names
 	* Functions are functions not variables
 	* Uses init() and animate() functions
@@ -35,7 +37,7 @@ The following should a demonstration based on the [scientific method]( https://e
 * Minimum notation or use of symbols
 	* Good: y = Math.floor( x );
 	* Not so good: y = ~~x;
-	* We do use semi-colons - it's like the period at the end of a sentence
+	* We do use semi-colons at the end of statements. The semicolon feels like the period at the end of a sentence. It allows you take take a breath before continuing
 		* But otherwise minimize the use of punctuation because punctuation tends to slow down the reading speed
 * All lower case
 	* Even !DOCTYPE
@@ -61,6 +63,11 @@ The following should a demonstration based on the [scientific method]( https://e
 	* Fork, edit/improve, share is the mantra
 	* GitHub is the platform
 
+Absolute URLs are recommended for items that would otherwise have issues with loading into Code-Edit-View.
+
+Everything in Jaanga is written in client-side JavaScript.
+
+
 ### Various Other Coding Quirks
 
 * CSS tags are in alphabetical order
@@ -80,17 +87,17 @@ The following should a demonstration based on the [scientific method]( https://e
 * Takes as much advantage of the HTML 5 [Document Object Model (DOM)]( http://en.wikipedia.org/wiki/Document_Object_Model ) as possible
 	* Example: `<tag id=thing >stuff</tag>`
 		* 'thing' is taken as a global variable directly and immediately
-		* `document.getElemenById` is never invoked
+		* `document.getElemenById is never invoked
 	* Implies no support for elderly browsers
 		* OK since WebGL cannot run in elderly browsers
 		* Follows the Mr.doob ethos of no nostalgia, remain calm and progress into the future ASAP
-* Code is highly-risk taking
+* Code here is highly-risk taking
 	* Example: Double quotes only used when absolutely necessary
 		* The world: <html lang="en">
 		* Us: <html lang=en >
 	* Example: plays happily, willfully with untyped variables 
 	* Example: see above / no support for elderly browsers
-* Code is designed to be load or render on demand
+* Code is designed to load or render on demand
 	* In other words to load and display something ASAP
 	* 'Just-in-time' library and data loading
 * Code style

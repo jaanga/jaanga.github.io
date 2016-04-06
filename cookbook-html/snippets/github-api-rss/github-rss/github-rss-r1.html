@@ -15,7 +15,7 @@
 <body>
 <script>
 
-	var rss = 'http://github.com/ladybug-analysis-tools/ladybug-web/commits/gh-pages.atom';
+	var rss = 'https://crossorigin.me/http://github.com/ladybug-analysis-tools/ladybug-web/commits/gh-pages.atom';
 
 	init();
 
@@ -47,17 +47,6 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
-
-			'<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>' +
-			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
-			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
-			'<p>Overlay: <select id=selList title="Select the 2D overlay" >select option<select></p>' +
-			'<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>' +
-			'<p>' +
-				'<input type=radio name=field id=but1 />button 1' +
-				'<input type=radio name=field id=but2 checked />button 2' +
-				'<input type=radio name=field id=but3 />button 3' +
-			'</p>' +
 
 			'<div id=info ></div>' +
 
@@ -92,18 +81,16 @@
 	function requestFile( fileName ) {
 
 		var xhr = new XMLHttpRequest();
-		xhr.crossOrigin = "Anonymous";
 		xhr.open( 'GET', fileName, true );
-		xhr.onreadystatechange = callback;
+		xhr.onload = callback;
 		xhr.send( null );
 
 		function callback() {
 
-			if ( xhr.readyState != 4  ) { return; }
-			text = xhr.responseText;
-			var lines = text.split(/\r\n|\n/);
+			text = xhr.responseXML;
+//			var lines = text.split(/\r\n|\n/);
 
-			console.log( text );
+			info.innerHTML = text;
 
 		}
 

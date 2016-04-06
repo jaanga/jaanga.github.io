@@ -7,6 +7,8 @@ Viewers Read Me
 
 ## Projects
 
+[ Loader Three.js R1 ]( http://jaanga.github.io/cookbook-threejs/viewers/loaer-threejs/ )
+
 [ Multiple Frames in Markdown R1 ]( http://jaanga.github.io/cookbook-threejs/viewers/multiple-iframes/multiple-iframes-in-markdown-file/ )
 
 [Jaanga File Viewer]( ./viewer-html-jaanga/viewer-html-jaanga-r1.html )

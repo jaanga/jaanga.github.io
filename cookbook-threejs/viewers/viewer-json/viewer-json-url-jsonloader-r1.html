@@ -2,10 +2,10 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Viewr JSON R1</title>
+<title>Viewer JSONLoader URL R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
-<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
 <meta name=date content='' >
 </head>
 <body>
@@ -20,18 +20,43 @@
 
 <script>
 
-	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js';
+//	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js';
 	var fileName = '../models/saab-37-viggen/viggen.json';
+//	var fileName = '../models/Female02_slim.js';
+//	var fileName = '../models/female02.json';
+
+
+	var va3c = 'http://va3c.github.io/'
+
+	files = [
+
+		[ 'Walt Disney', 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js'  ],
+
+		[ 'Robie House', va3c + '3d-warehouse-samples/robie-house/untitled/robie-house.js'],
+		[ 'Schroder House', va3c + '3d-warehouse-samples/schroder-house/untitled/schroder-house.js'],
+		[ 'Villa Savoye', va3c + '3d-warehouse-samples/villa-savoye/untitled/villa-savoye.js'],
+		[ 'Barcelona Pavilion', va3c + '3d-warehouse-samples/barcelona-pavilion/untitled/barcelona-pavilion.js' ],
+
+		[ 'ratamahatta', va3c + 'three.js/examples/models/animated/ratamahatta/ratamahatta.js'],
+		[ 'monster', 'http://mrdoob.github.io/three.js/examples/models/animated/monster/monster.js'],
+		[ 'cubecolors', 'http://mrdoob.github.io/three.js/examples/obj/cubecolors/cubecolors.js'],
+		[ 'female02', 'http://mrdoob.github.io/three.js/examples/obj/female02/Female02_slim.js'],
+		[ 'leeperrysmith', 'http://mrdoob.github.io/three.js/examples/obj/leeperrysmith/LeePerrySmith.js' ],
+
+	];
+
 	var stats, renderer, scene, camera, controls;
-	var geometry, material, mesh;
+	var geometry, material, mesh, light;
 
 	init();
 	animate();
 
 	function init() {
 
+		var geometry, material, mesh;
+
 		var css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = 
+		css.innerHTML =
 
 			'body { font: 12pt monospace; margin: 0; }' +
 			'h2 { margin: 0; }' +
@@ -56,13 +81,15 @@
 
 		var menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 			'	<a href="" >' + document.title + '</a>' +
 			'	<a href=http://jaanga.github.io/ >❦</a>' +
 			'</h2>' +
 			'<div id=info ></div>' +
+			'<div id=infoFileName ></div>' +
+
 		'';
 
 		stats = new Stats();
@@ -70,6 +97,7 @@
 		document.body.appendChild( stats.domElement );
 
 		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener ( 'hashchange', hashChange, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
@@ -102,14 +130,38 @@
 
 // assets
 
+		initMenu();
+
+		hashChange();
+
+	}
+
+	function initMenu() {
+
+		txt = '';
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			var file = files[ i ];
+
+			txt += '<p><a href=#' + file[ 1 ] + ' >' + file[ 0 ] + '</a></p>';
+
+		}
+
+		info.innerHTML += txt;
+
+	}
+
+
+	function hashChange() {
+
 		if ( location.hash ) {
 
 			loadFile( location.hash.substr( 1 ) );
 
 		} else {
 
-
-			loadFile( fileName );
+			loadFile( files[ 0 ][ 1 ]  );
 
 		}
 
@@ -117,20 +169,23 @@
 
 	function loadFile( fileName ) {
 
-//		scene = new THREE.Scene();
+		var loader = new THREE.JSONLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( fileName, function ( geometry, materials  ) {
 
-		var loader = new THREE.ObjectLoader();
-		loader.load( fileName, function ( object, materials ) {
+			scene.remove( mesh );
 
-/*
 			if ( materials ) {
 
-				material =  new THREE.MeshFaceMaterial( materials );
+console.log( 'materials', materials );
 
-				for (var i = 0, len = material.materials.length; i < len; i++) {
+				material =  new THREE.MultiMaterial( materials );
 
-					material.materials[i].side = 2;
-					material.materials[i].needsUpdate = true;
+				if ( !light ) {
+
+					light = new THREE.HemisphereLight(  );
+//					light = new THREE.AmbientLight(  );
+					scene.add( light );
 
 				}
 
@@ -141,11 +196,10 @@
 			}
 
 			mesh = new THREE.Mesh( geometry, material );
-*/
 
-			scene.add( object );
+			scene.add( mesh );
 
-			info.innerHTML = '<h3>' + fileName.split('/').pop() + '</h3>';
+			infoFileName.innerHTML = '<h3>' + fileName.split('/').pop() + '</h3>';
 
 // add loader.showStatus...
 
