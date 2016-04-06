@@ -1,9 +1,9 @@
 Loader Three.JS Read Me
 ===
 
-## [Loader Three.JS ]( http://jaanga.github.io/cookbook-threejs/viewers/loader-threejs/ )
+## Full screen: [Loader Three.JS ]( http://jaanga.github.io/cookbook-threejs/viewers/loader-threejs/ )
 
-_ A 3D Model file viewer_
+_A 3D Model file viewer_
 
 ***
 
