@@ -52,11 +52,9 @@
 	var Editor = function () {
 
 		this.loader = new Loader( this );
-		this.clear = function(){ scene.remove( project ); }
 		this.execute = function() { console.log( 'exec', this ); }
 
 	}
-
 
 	var stats, renderer, scene, camera, controls;
 
@@ -118,7 +116,7 @@
 			'<p><button onclick=scaleAndCenter(project); >Zoom All ( experimental )</button></p>' +
 			'<p><button onclick=resetColorsToPhong(project); >Reset Material to Phong</button></p>' +
 			'<p><input type=checkbox id=chkWire onchange=toggleWireframe(project); > Wireframe</p>' +
-
+			'<p><button onclick=saveFile(); >Save File</button></p>' +
 //			'<textarea id=txtarea style=height:500px;overflow:auto;width:100%; ></textarea>' +
 			'<div id=info ></div>' +
 
@@ -160,11 +158,11 @@
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 2000 );
 		camera.position.set( 100, 100, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+		controls.maxDistance = 2000;
 
 		scene = new THREE.Scene();
 
@@ -358,6 +356,19 @@ console.log( '', radius );
 			}
 
 		} );
+
+	}
+
+	function saveFile() {
+
+		var blob;
+
+		var blob = new Blob( [ JSON.stringify( scene.toJSON() ) ] );
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download =  project.name + '.json';
+		a.click();
+		delete a;
 
 	}
 
