@@ -211,17 +211,7 @@
 
 	var AddObjectCommand = function( object ) {
 
-console.log( 'object ', object );
-
-		if ( project ) {
 		scene.remove( project );
-
-		} else {
-
-
-
-		}
-
 
 		project = object;
 
@@ -235,8 +225,6 @@ console.log( 'object ', object );
 	}
 
 	var SetSceneCommand = function( object ) {
-
-console.log( 'set scene', object );
 
 		project = object;
 
@@ -256,7 +244,7 @@ console.log( 'set scene', object );
 
 			editor.loader.loadFile( file.files[0] );
 
-console.log( '', file );
+//console.log( '', file );
 
 		}
 
@@ -276,7 +264,6 @@ console.log( '', file );
 				child.geometry.computeFaceNormals();
 				child.geometry.computeVertexNormals();
 
-//				child.material = new THREE.MeshPhongMaterial( { color: 0x888888, side: 2 } );
 				child.material.needsUpdate = true;
 
 			}
@@ -312,16 +299,12 @@ console.log( '', file );
 
 	function scaleAndCenter( object) {
 
-//		var bbox, delta, radis;
+		var bbox, delta, radis;
 		bbox = new THREE.Box3();
 
 		object.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
-
-//				child.castShadow = true
-//				child.receiveShadow = true;
-//				child.material = new THREE.MeshNormalMaterial();
 
 				if ( child.geometry.attributes && child.geometry.attributes.position.array.length > 0 ) {
 
@@ -361,7 +344,6 @@ console.log( '', radius );
 
 	}
 
-
 	function resetColorsToPhong( object) {
 
 		resetMaterials( object )
@@ -369,8 +351,6 @@ console.log( '', radius );
 		object.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ) {
-
-
 
 				child.material = new THREE.MeshPhongMaterial( { color: 0x888888, side: 2 } );
 				child.material.needsUpdate = true;
