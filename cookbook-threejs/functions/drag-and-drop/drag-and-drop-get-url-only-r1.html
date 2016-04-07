@@ -1,0 +1,105 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>drag-and-drop-get-url-only-r1.html</title>
+<!--
+<meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
+-->
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<script>
+
+	init();
+
+	function init() {
+
+		var css, contents;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; }' +
+//			'h2 { margin: 0; }' +
+			'h2 a { text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/cookbook/threejs/functions/drag-and-drop  > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p><textarea id=textArea cols=50 rows=5 placeholder="Drop and drop a URL here..."></textarea></p>' +
+
+			'<div id=info ></div>' +
+
+		'';
+
+
+		textArea.addEventListener( 'dragover', function( event ){ event.preventDefault(); }, true );
+
+		textArea.addEventListener( 'drop', onDrop, false );
+
+		textArea.onmouseout = function() { info.innerText = textArea.innerText; };
+
+
+	}
+
+	function onDrop( event ) {
+
+		event.preventDefault(); 
+
+		var url = event.dataTransfer.getData( 'URL' );
+
+console.log( url );
+
+		textArea.innerText = url;
+
+/*
+		if ( imageUrl ) {
+
+			image.src = imageUrl;
+
+		} else {
+
+			var reader = new FileReader();
+
+			reader.onload = function ( event ) {
+
+				image.src = event.target.result;
+
+				image.onload = function() {
+
+					window.URL.revokeObjectURL( image.src );
+
+				}
+
+			};
+
+			reader.readAsDataURL( event.dataTransfer.files[ 0 ] );
+
+		}
+*/
+
+	}
+
+</script>
+</body>
+</html>
