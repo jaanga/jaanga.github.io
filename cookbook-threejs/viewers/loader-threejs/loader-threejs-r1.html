@@ -9,11 +9,11 @@
 <meta name=date content='' >
 </head>
 <body>
-
+<!--
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-
+-->
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
@@ -47,14 +47,16 @@
 
 	var project;
 
-	var scope = this;
+//	var scope = this;
 
-	var texturePath = 'file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/cookbook-threejs/viewers//models/';
+	var texturePath = '';
 
 	var stats, renderer, scene, camera, controls;
 
 	Number.prototype.format = function (){
-		return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+
+		return this.toString().replace( /(\d)(?=(\d{3})+(?!\d))/g, "$1," );
+
 	};
 
 	init();
@@ -217,10 +219,16 @@ console.log( '', file );
 
 	}
 
-/*
-var loader = function () {
 
+// https://github.com/mrdoob/three.js/blob/master/editor/js/Loader.js
+
+/*
+var Loader = function ( editor ) {
+
+	var scope = this;
 	var signals = editor.signals;
+
+	this.texturePath = '';
 
 	this.loadFile = function ( file ) {
 
@@ -268,11 +276,9 @@ updateScene( 'amfobject', amfobject );
 
 //					editor.execute( new SetSceneCommand( scene2 ) );
 
-
-
+resetMaterials( scene2 );
 
 updateScene( 'awd', scene2 );
-resetMaterials( scene2 );
 
 				}, false );
 				reader.readAsArrayBuffer( file );
@@ -290,10 +296,10 @@ resetMaterials( scene2 );
 					var scene2 = loader.parse( json );
 
 //					editor.execute( new SetSceneCommand( scene2 ) );
+
 resetMaterials( scene2 );
+
 updateScene( 'babylon', scene2 );
-
-
 
 				}, false );
 				reader.readAsText( file );
@@ -802,7 +808,6 @@ updateScene( 'json', result.scene );
 
 		}
 
-
 	}
 
 	function updateScene( type, object ) {
@@ -823,22 +828,22 @@ updateScene( 'json', result.scene );
 
 	function resetMaterials( scene ) {
 
-
 		scene.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh ||  child instanceof THREE.SkinnedMesh ) {
 
 				child.castShadow = true
 				child.receiveShadow = true;
+
 				child.geometry.computeFaceNormals();
 				child.geometry.computeVertexNormals();
+
 				child.material = new THREE.MeshPhongMaterial( { color: 0x888888, side: 2 } );
 				child.material.needsUpdate = true;
 
 			}
 
 		} );
-
 
 	}
 
@@ -870,8 +875,7 @@ updateScene( 'json', result.scene );
 
 	function scaleAndCenter( object) {
 
-//		var bbox;
- 
+//		var bbox, delta, radis;
 		bbox = new THREE.Box3();
 
 		object.traverse( function ( child ) {
@@ -888,7 +892,6 @@ updateScene( 'json', result.scene );
 					bbox.union( child.geometry.boundingBox );
 
 //console.log( '', child.geometry.boundingBox );
-
 
 				}
 

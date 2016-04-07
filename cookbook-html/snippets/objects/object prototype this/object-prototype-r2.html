@@ -1,8 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Basic HTML Template</title>
+<title>Object Prototype R2</title>
 <!--
 <meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
 <meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
@@ -14,6 +14,8 @@
 </head>
 <body>
 <script>
+
+	var JA = JA || { r: 'r1' };
 
 	init();
 
@@ -60,6 +62,36 @@
 			'<div id=info ></div>' +
 
 		'';
+
+
+
+
+		info.innerHTML = JA.r + '<br>';
+
+		JA.Stuff = function() {
+
+			this.title = 'Object Prototype R2';
+			this.description = 'A fact-based journey through the JavaScript objects.';
+			this.link = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects';
+
+		};
+
+// redefines the normal toString();
+
+		JA.Stuff.prototype.toString = function() {
+
+			return 'Title: ' + this.title + '<br>' + this.description + '<br>' + this.link;
+
+		}
+
+// Must new in order for all the pieces to be collected
+
+		p = new JA.Stuff();
+
+		info.innerHTML += p.toString();
+
+console.log( '', p );
+
 
 	}
 

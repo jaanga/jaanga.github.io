@@ -12,8 +12,8 @@ _A 3D Model file viewer_
   
 ## Features
 
-* Loads 3D Models and displays them in your browser
-* Load by drag and drop or by file open dialog box
+* Loads 3D models and displays them in your browser
+* Load files by drag and drop or by file open dialog box
 * Scale, rotate and position each model
 * Currently all models have their material changed to gray
 * Support all the file formats supported by the [Three.js Editor]( http://threejs.org/editor/ )

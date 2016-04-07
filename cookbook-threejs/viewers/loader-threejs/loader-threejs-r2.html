@@ -1,0 +1,404 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Loader Three.js R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/jszip.min.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/AMFLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/AWDLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/BabylonLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/ColladaLoader2.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/FBXLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/KMZLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/MD2Loader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/OBJLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/PlayCanvasLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/PLYLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/STLLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/UTF8Loader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/VRMLLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/VTKLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/ctm/lzma.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/ctm/ctm.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/ctm/CTMLoader.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/exporters/OBJExporter.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/exporters/STLExporter.js"></script>
+
+<script src="http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/deprecated/SceneLoader.js"></script>
+
+<script src=https://mrdoob.github.io/three.js/editor/js/Loader.js ></script>
+
+<script>
+
+	var project;
+	var editor
+
+	var Editor = function () {
+
+		this.loader = new Loader( this );
+		this.clear = function(){ scene.remove( project ); }
+		this.execute = function() { console.log( 'exec', this ); }
+
+	}
+
+
+	var stats, renderer, scene, camera, controls;
+
+	init();
+	animate();
+
+	function init() {
+
+		var geometry, material, mesh;
+		var css, hamburger, menu;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+			'button { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+			'input[type=number] { text-align: right; width: 50px; }' +
+
+
+/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
+*/
+			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/cookbook-threejs/viewers#loader-threejs/readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p>Drag and drop files over this menu or <input type=file id=inpFile onchange=openFile(this); /></p>' +
+			'<p>Scale: <input type=number id=inpScale value=1 onchange = updateProject(); ></p>' +
+			'<p>' +
+				'Rotation:<br>' +
+				'x: <input type=number id=inpRotX value=0 onchange = updateProject(); > ' +
+				'y: <input type=number id=inpRotY value=0 onchange = updateProject(); > ' +
+				'z: <input type=number id=inpRotZ value=0 onchange = updateProject(); >' +
+			'</p>' +
+			'<p>' +
+				'Position:<br>' +
+				'x: <input type=number id=inpPosX value=0 onchange = updateProject(); > y: <input type=number id=inpPosY value=0 onchange = updateProject(); > z: <input id=inpPosZ type=number value=0 onchange=updateProject(); >' +
+			'</p>' +
+			'<p><button onclick=scaleAndCenter(project); >Zoom All ( experimental )</button></p>' +
+			'<p><button onclick=resetColorsToPhong(project); >Reset Material to Phong</button></p>' +
+			'<p><input type=checkbox id=chkWire onchange=toggleWireframe(project); > Wireframe</p>' +
+
+//			'<textarea id=txtarea style=height:500px;overflow:auto;width:100%; ></textarea>' +
+			'<div id=info ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		menu.addEventListener( 'dragover', function ( event ) {
+
+			event.preventDefault();
+			event.dataTransfer.dropEffect = 'copy';
+
+		}, false );
+
+		menu.addEventListener( 'drop', function ( event ) {
+
+			event.preventDefault();
+
+			if ( event.dataTransfer.files.length > 0 ) {
+
+				editor.loader.loadFile( event.dataTransfer.files[ 0 ] );
+
+			}
+
+		}, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.shadowMap.enabled = true;
+//		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+//		renderer.gammaInput = true;
+//		renderer.gammaOutput = true;
+//		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+		directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		directionalLight.position.set( -100, 100, 100 );
+		directionalLight.shadow.camera.scale.multiplyScalar( 10 );
+		directionalLight.castShadow = true;
+
+		scene.add( directionalLight );
+		scene.add( new THREE.CameraHelper( directionalLight.shadow.camera ) );
+
+		lightAmbient = new THREE.HemisphereLight();
+		scene.add( lightAmbient );
+
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshPhongMaterial( { color: 0xaaaaa } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true
+		mesh.receiveShadow = true;
+		mesh.position.set( 0, -1, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, 0, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		editor = new Editor();
+
+	}
+
+	Number.prototype.format = function (){
+
+		return this.toString().replace( /(\d)(?=(\d{3})+(?!\d))/g, "$1," );
+
+	};
+
+	var AddObjectCommand = function( object ) {
+
+console.log( 'object ', object );
+
+		if ( project ) {
+		scene.remove( project );
+
+		} else {
+
+
+
+		}
+
+
+		project = object;
+
+		scene.add( project );
+
+		project.castShadow = true
+		project.receiveShadow = true;
+
+		if ( project.children ) { resetMaterials( scene ) } ;
+
+	}
+
+	var SetSceneCommand = function( object ) {
+
+console.log( 'set scene', object );
+
+		project = object;
+
+		scene = object;
+
+		info.innerHTML = 'Scene loaded! Best to reload before continuing';
+
+	}
+
+	function openFile( file ) {
+
+		var reader = new FileReader();
+		reader.onloadend = function( event ) {
+
+			info.innerHTML = 'name: ' + file.files[0].name + '<br>size: ' + file.files[0].size +
+				'<br>type: ' + file.files[0].type + '<br>modified: ' + file.files[0].lastModifiedDate;
+
+			editor.loader.loadFile( file.files[0] );
+
+console.log( '', file );
+
+		}
+
+		reader.readAsText( file.files[0] );
+
+	}
+
+	function resetMaterials( scene ) {
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ||  child instanceof THREE.SkinnedMesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+
+				child.geometry.computeFaceNormals();
+				child.geometry.computeVertexNormals();
+
+//				child.material = new THREE.MeshPhongMaterial( { color: 0x888888, side: 2 } );
+				child.material.needsUpdate = true;
+
+			}
+
+		} );
+
+	}
+
+	function updateProject() {
+
+		if ( !project ) { return; }
+
+		var s = parseFloat( inpScale.value );
+
+		project.scale.set( s, s, s );
+
+		var d2r = Math.PI / 180;
+
+		rX = parseFloat( inpRotX.value ) * d2r;
+		rY = parseFloat( inpRotY.value ) * d2r;
+		rZ = parseFloat( inpRotZ.value ) * d2r;
+		project.rotation.set( rX, rY, rZ );
+
+		pX = parseFloat( inpPosX.value );
+		pY = parseFloat( inpPosY.value );
+		pZ = parseFloat( inpPosZ.value );
+
+		project.position.set( pX, pY, pZ );
+
+// project.updateMatrixWorld();
+
+	}
+
+	function scaleAndCenter( object) {
+
+//		var bbox, delta, radis;
+		bbox = new THREE.Box3();
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+//				child.castShadow = true
+//				child.receiveShadow = true;
+//				child.material = new THREE.MeshNormalMaterial();
+
+				if ( child.geometry.attributes && child.geometry.attributes.position.array.length > 0 ) {
+
+					child.geometry.computeBoundingBox();
+					bbox.union( child.geometry.boundingBox );
+
+//console.log( '', child.geometry.boundingBox );
+
+				}
+
+			}
+
+		} );
+
+		delta = bbox.max.sub( bbox.min );
+		radius = bbox.getBoundingSphere().radius;
+		s = 100 / radius || 1;
+		os = object.scale; 
+		os.set( s * os.x, s * os.y, s * os.z ); 
+//		object.position.set( 0, -0.5 * s * delta.y, 0 );
+
+console.log( '', radius );
+
+	}
+
+	function toggleWireframe( object) {
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material.wireframe = ( chkWire.checked === true ) ? true : false;
+
+			}
+
+		} );
+
+	}
+
+
+	function resetColorsToPhong( object) {
+
+		resetMaterials( object )
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+
+
+				child.material = new THREE.MeshPhongMaterial( { color: 0x888888, side: 2 } );
+				child.material.needsUpdate = true;
+
+			}
+
+		} );
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
