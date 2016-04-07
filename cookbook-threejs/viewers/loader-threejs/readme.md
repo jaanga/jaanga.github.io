@@ -62,7 +62,10 @@ These efforts corroborate the effort here. Namely that cross origin issues preve
 On the other side of the coin, what works just fine is hosting files in the cloud. Files and textures load without issue.
 Loading files via location hash is easy and the location,hash may also contain any number of parameters.
 
+The issue here is that it may take much effort to ask ask users to host files on Dropbox and GitHub or places where the files can have a URL 
 
+What we need before too long is users. Once people are using these scripts we can begin to get a grasp on the typical workflow and program for its success.
+ 
 
 
 ## Road Map
@@ -87,12 +90,12 @@ The challenge is to make as few edits as possible - so that any improvements to 
 * R2
 * A major upgrade or a major shift in strategy. 
 	* R1 was built by forking and hacking Loader.js for the Three.js Editor 
-	* R2 fetch the original Loader.js at run time and uses that
-		* Why stand on the shoulders of giants when yu can use shoulders of giants?
+	* R2 fetches the original Loader.js from the Editor at run time and uses that
+		* Why stand on the shoulders of giants when you can use shoulders of giants?
 * Added save file capability
 * Added Zoom All - experimental
 * Added toggle wireframe
-* Added rset material to Phong
+* Added reset material to Phong
 
 ### 2016-04-05
 
