@@ -1,4 +1,4 @@
-﻿<span style=display:none; >[You are now in GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+<span style=display:none; >[You are now in GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/'; value='You are now in GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io/ ) »
@@ -43,6 +43,10 @@ Bugs on browsers other than Chrome need not be reported until such time as the w
 
 
 ## Change Log
+
+2016-04-07 ~2016
+
+* Edditing from CodeAnywhere
 
 2015-11-24 ~ Theo
 
