@@ -21,7 +21,7 @@
 
 			'* { box-sizing: border-box; vertical-align:top; }' +
 			'html, body { height: 100%; }' +
-			'body { font: 12pt monospace; margin: 0; /* overflow: hidden; */ }' +
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
 			'a { text-decoration: none; }' +
 
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
@@ -30,9 +30,9 @@
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
-			'#edit { border: 1px solid; height: 94%; padding: 5px; position: absolute; top: 5%; width: 50%; }' +
-			'#menu {  position: absolute; }' +
-			'#view { border: 1px solid; height: 94%; position: absolute; right: 0; top: 5%; width: 50%; }' +
+			'#edit { border: 1px solid; height: 94%; overflow: auto; padding: 5px; position: absolute; top: 5%; width: 50%; }' +
+			'#menu { position: absolute; }' +
+			'#view { border: 1px solid; height: 94%; overflow: auto; padding: 5px; position: absolute; right: 0; top: 5%; width: 50%; }' +
 
 		'';
 
@@ -54,7 +54,7 @@
 		edit = document.body.appendChild( document.createElement( 'div' ) );
 		edit.id = 'edit';
 
-		view = document.body.appendChild( document.createElement( 'iframe' ) );
+		view = document.body.appendChild( document.createElement( 'div' ) );
 		view.id = 'view';
 
 		window.addEventListener( 'hashchange', hashChange, false );
@@ -72,6 +72,14 @@
 		requestFile ( fileName, edit  );
 
 	}
+
+	view.onscroll = function(){
+
+// console.log( 'scr', view.scrollTop );
+
+		edit.scrollTop = view.scrollTop;
+
+	};
 
 	function openFile( that ) {
 
