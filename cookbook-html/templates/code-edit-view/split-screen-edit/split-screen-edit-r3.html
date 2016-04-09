@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Split Screen Edit R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-04-09' >
+</head>
+<body>
+<script>
+
+	init();
+
+	function init() {
+
+		var css, contents;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'* { box-sizing: border-box; vertical-align:top; }' +
+			'html, body { height: 100%; }' +
+			'body { font: 12pt monospace; margin: 0; /* overflow: hidden; */ }' +
+			'a { text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#edit { border: 1px solid; height: 94%; padding: 5px; position: absolute; top: 5%; width: 50%; }' +
+			'#menu {  position: absolute; }' +
+			'#view { border: 1px solid; height: 94%; position: absolute; right: 0; top: 5%; width: 50%; }' +
+
+		'';
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<p>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a id=info href="http://jaanga.github.io/cookbook-html/templates/code-edit-view/" target=_blank > 🛈 </a> ' +
+				'<input type=range class=bb id=inpSplit min=1 max=99 step=1 value=50 oninput=updateSplit(); /> ' +
+				'<input class=bb type=file id=inpFile onchange=openFile(this); /> ' +
+				'<button class=bb onclick=updateView(); >Update View</button> ' +
+				'<button class=bb onclick=saveFile(); >Save to File</button> ' +
+
+			'</p>' +
+		'';
+
+		edit = document.body.appendChild( document.createElement( 'div' ) );
+		edit.id = 'edit';
+
+		view = document.body.appendChild( document.createElement( 'iframe' ) );
+		view.id = 'view';
+
+		window.addEventListener( 'hashchange', hashChange, false );
+
+		hashChange();
+
+	}
+
+	function hashChange() {
+
+		var fileName = location.hash ? location.hash.substr( 1 ) : 'readme.md';
+
+		document.title = fileName.substr( 1 + fileName.lastIndexOf( '/' ) );
+
+		requestFile ( fileName, edit  );
+
+	}
+
+	function openFile( that ) {
+
+		var reader = new FileReader();
+		reader.onloadend = function() { updateView( reader.result ); };
+		reader.readAsText( that.files[0] );
+
+	}
+
+	function requestFile ( fileName, obj ) {
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.onload = function() {
+
+			obj.innerText = xmlHttp.responseText;
+
+		};
+		xmlHttp.send( null );
+
+	}
+
+	function saveFile() {
+
+		blob = new Blob( [ editor.getValue() ] );
+		a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = document.title;
+		a.click();
+
+	}
+
+	function updateSplit() {
+
+			edit.style.width = inpSplit.value + '%';
+			view.style.width = ( 100 - inpSplit.value ) + '%';
+
+	}
+
+</script>
+</body>
+</html>

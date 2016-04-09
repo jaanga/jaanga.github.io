@@ -87,6 +87,7 @@
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
 		'';
+
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
 		hamburger.innerHTML = '<div id=bars >☰</div>';
@@ -111,7 +112,9 @@
 			'</p>' +
 			'<p>' +
 				'Position:<br>' +
-				'x: <input type=number id=inpPosX value=0 onchange = updateProject(); > y: <input type=number id=inpPosY value=0 onchange = updateProject(); > z: <input id=inpPosZ type=number value=0 onchange=updateProject(); >' +
+				'x: <input type=number id=inpPosX value=0 onchange = updateProject(); > ' +
+				'y: <input type=number id=inpPosY value=0 onchange = updateProject(); > ' +
+				'z: <input id=inpPosZ type=number value=0 onchange=updateProject(); >' +
 			'</p>' +
 			'<p><button onclick=scaleAndCenter(project); >Zoom All ( experimental )</button></p>' +
 			'<p><button onclick=resetColorsToPhong(project); >Reset Material to Phong</button></p>' +

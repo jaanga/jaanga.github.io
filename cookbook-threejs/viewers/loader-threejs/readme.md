@@ -18,6 +18,7 @@ _A 3D Model file viewer_
 * Currently all models have their material changed to gray << fixed in R2
 * Support all the file formats supported by the [Three.js Editor]( http://threejs.org/editor/ )
 * Supported file formats include the following:
+
 	* amf
 	* awd
 	* babylon
