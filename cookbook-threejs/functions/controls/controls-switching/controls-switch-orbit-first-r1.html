@@ -24,6 +24,7 @@
 	var css, info, stats, renderer, scene, camera, controls, cam1, cam2, con1, con2;
 	var geometry, material, mesh;
 
+
 	var clock = new THREE.Clock();
 
 	init();
@@ -31,8 +32,8 @@
 
 	function init() {
 
-		//css = document.head.appendChild( document.createElement('style') );
-		//css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' ;
+		css = document.head.appendChild( document.createElement('style') );
+		css.innerHTML ='body { font: 400 12pt monospace; margin: 0; overflow: hidden; }' ;
 
 		//info = document.body.appendChild( document.createElement( 'div' ) );
 		//info.style.cssText = 'margin: 20px; position: absolute; ';
@@ -41,10 +42,10 @@
 		//		'<button onclick=setControlsOrbit(); >Orbit Controls</button></p>' +
 		//	'<div id=msg ></div>' +
 		//'';
-      
+
         info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'margin: 20px; position: absolute; ';
-		info.innerHTML = 
+		info.innerHTML =
 			'<p><button onclick=setControlsFirstPerson(); >First Person Controls</button> ' +
 				'<button onclick=setControlsOrbit(); >Orbit Controls</button></p>' +
 			'<div id=msg ></div>';
@@ -77,11 +78,9 @@
 		scene.add( mesh );
 
 		addBoxes();
-      
-        setupControls();
-        setControlsOrbit();
-      
-      
+
+		setupControls();
+		setControlsOrbit();
 
 	}
 
@@ -91,7 +90,7 @@
 		con1 = new THREE.FirstPersonControls( cam1 );
 		con1.lookSpeed = 0.05;
 		con1.movementSpeed = 50;
-      
+
         cam2 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
 		cam2.position.set( 100, 100, 100 );
 		con2 = new THREE.OrbitControls( cam2 );
@@ -108,6 +107,9 @@
         camera = cam2;
         controls = con2;
 	}
+
+
+
 
 
 	function addBoxes() {

@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Index Markdown Reader R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Markdown reader template file' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-04-03' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	var converter, contents;
+
+	init();
+
+	function init() {
+
+		var css, fileName;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0;  }' +
+			'h2 a { text-decoration: none; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		fileName = location.hash ? location.hash.slice( 1 ) : 'readme.md';
+
+		getFile( fileName, contents );
+
+	}
+
+	function getFile( fileName, target ) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = function() { target.innerHTML = converter.makeHtml( xhr.responseText ); };
+		xhr.send( null );
+
+	}
+
+</script>
+</body>
+</html>
