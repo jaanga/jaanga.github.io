@@ -1,0 +1,301 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>multiple-iframes-via-github-api-r3.html</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Home page gallery of a variety of scripts that enable you to view the sun path in new ways.' >
+<meta name=keywords content='GitHup API,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-03-29' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+//
+
+//	var urlAPIContents = 'https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/git/trees/gh-pages?recursive=1';
+	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+
+//	var urlSource = 'http://ladybug-analysis-tools.github.io/ladybug-web/';
+	var urlSource = './';
+
+	var iframeContainers = [];
+	var iframesActive = [];
+	var iframesActiveLimit = 3;
+
+	var converter, texts, files;
+
+	var footer =
+
+		'<hr>' +
+		'<center>' +
+		'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > <img src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f41e.png?v6" > </a></h1>' +
+		'</center>' +
+
+	'';
+
+	init();
+	animate();
+
+	function init() {
+
+		var css, contents;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace;  }' +
+			'a, a:visited { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+			'iframe { border: 0px solid green; height: 100%; width: 100%; }' +
+
+			'div.ifr { border: 1px solid crimson; height: 512px; margin: 150px 0 0 ' + 0.5 * ( 800 - window.innerWidth ) + 'px; width: ' + ( window.innerWidth - 12 ) + 'px; }' +
+			'div.readme { border: 1px solid blue; max-height:512px; overflow: hidden; transform: scale( 0.75 ); transform-origin: 0 0; }' +
+
+			'#tableOfContents { border: 1px solid green; max-width: 350px; position: absolute; right: 0; z-index: 10; }' +
+			'#contents { left: 0; right: 0; margin: 0 auto; position: absolute; max-width: 800px; top: 0; }' +
+
+		'';
+
+		tableOfContents = document.body.appendChild( document.createElement( 'div' ) );
+		tableOfContents.id = 'tableOfContents';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = 
+
+			'<div id=header ></div>' +
+			'<div id=container ></div>' +
+
+		'';
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		getMarkdown( 'readme.md', header );
+
+		if ( location.hash ) {
+
+			onHashChange()
+
+		} else {
+
+			requestAPIContents();
+
+		}
+
+	}
+
+	function onHashChange () {
+
+		getMarkdown( location.hash.substr( 1 ), contents );
+//		getMarkdown( location.hash, contents );
+
+	}
+
+	function requestAPIContents() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlAPIContents, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.readyState !== 4  ) { return; }
+
+			var response, file;
+
+			response = JSON.parse( xhr.response );
+			files = [];
+
+			for ( var i = 0; i < response.tree.length; i++ ) {
+
+				file = response.tree[ i ].path;
+
+				if ( ! file.includes( 'viewers' ) || file.includes( 'dev' ) || file.includes( 'build' ) || file.includes( 'latest' ) ) { continue; }
+				if ( file === 'index.html' || file.indexOf( '\index.html' ) === -1 ) { continue; }
+
+				files.push( file );
+
+			}
+
+			createMultipleViews();
+
+			createTableOfContents();
+
+		}
+
+	}
+
+	function createTableOfContents() {
+
+		var txt =  '<details open><summary>Contents</summary>';
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ];
+			fileArray = file.split( '/' );
+			folder = fileArray[ fileArray.length - 2 ];
+			txt += 
+
+//				'<div><a href=' + files[ i ] + ' >'+ files[ i ].replace( '\/index.html','' ) + '<a></div>' +
+				'<div><a href=' + files[ i ] + ' >'+ folder + '<a></div>' +
+
+			'';
+
+		}
+
+		tableOfContents.innerHTML = txt + '</details>';
+
+	}
+
+	function createMultipleViews() { // combine with above
+
+		var txt =  '';
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			txt += 
+
+				'<div class=ifr id=' + i + ' ></div>' +
+				'<div class=txt ></div>' +
+
+			'';
+
+		}
+
+		container.innerHTML = txt + footer;
+
+		iframeContainers = document.getElementsByClassName( 'ifr' );
+		texts = document.getElementsByClassName( 'txt' );
+
+	}
+
+	function updateIframe( activeContainer ) {
+
+		var iframes = document.getElementsByTagName( 'iframe' );
+
+		if ( iframes.length > iframesActiveLimit ) {
+
+			var frameTooMany = iframesActive.shift();
+			frameTooMany.innerHTML = '';
+
+		}
+
+		if ( activeContainer.innerHTML === '' ) {
+
+			var id = activeContainer.id;
+
+			activeContainer.innerHTML = '<iframe src="#' + urlSource + files[ id ] + '" onload=getFile(this,' + id + '); scrolling="no" ></iframe>';
+
+			iframesActive.push( activeContainer );
+
+		}
+
+	}
+
+	function getFile( that, index ) {
+
+		var metas = that.contentWindow.document.getElementsByTagName('meta'); ;
+		var description = 'none';
+		var keywords = 'none';
+		var date = 'none';
+		var b = '<br>';
+
+		for ( var i = 0; i < metas.length; i++ ) {
+
+			if ( metas[ i ].name === 'description' ) { description = metas[ i ].content; }
+			if ( metas[ i ].name === 'keywords' ) { keywords = metas[ i ].content; }
+			if ( metas[ i ].name === 'date' ) { date = metas[ i ].content; }
+
+		}
+
+		var folder = files[ index ].replace( 'index.html', '' );
+
+//		var folder = files[ index ].split('\\').pop().split('/').pop();
+
+		texts[ index ].innerHTML =
+
+			'<h2>full screen: <a href=' + that.src + ' >' + that.contentWindow.document.title + '</a></h2>' +
+			'<div >' +
+				'<b>Description</b>' + b + description + b +
+				'<b>Keywords</b>' + b + keywords + b +
+				'<b>Date</b>' + b + date + b +
+				'<b>Full screen: <a href=index.html#' + folder + 'readme.md >Read Me</a></b>' +
+			'</div>' +
+			'<div class=readme id=readme' + index + ' ></div>' +
+
+		'';
+
+		var rm = document.getElementById( 'readme' + index )
+		getMarkdown( urlSource + folder + 'readme.md', rm );
+
+
+		if ( that.contentWindow.controls ) {
+
+			that.contentWindow.controls.enableZoom = false;
+
+		} else if ( that.contentWindow.ifr && that.contentWindow.ifr.contentWindow.controls ) {
+
+// console.log( 'ddd', that.contentWindow.ifr.contentWindow );
+
+///that.contentWindow.ifr.contentWindow.controls   );
+
+			that.contentWindow.ifr.contentWindow.controls.enableZoom = false;
+
+		}
+
+		if ( that.contentWindow.menu ) {
+
+			that.contentWindow.menu.style.overflow = 'hidden';
+
+		}
+
+		if ( that.contentWindow.contents ) {
+
+			that.contentWindow.contents.style.overflow = 'hidden';
+
+		}
+
+	}
+
+	function getMarkdown( fileName, target ) {
+
+console.log( 'fileName', fileName);
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			target.innerHTML = converter.makeHtml( xhr.responseText );
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < iframeContainers.length; i++ ) {
+
+			var iframeContainer = iframeContainers[ i ];
+
+			var rect = iframeContainer.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			updateIframe( iframeContainer );
+
+		}
+
+	}
+
+</script>
+</body>
+</html>
