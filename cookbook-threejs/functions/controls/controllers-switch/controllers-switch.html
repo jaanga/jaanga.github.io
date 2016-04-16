@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Controllers Switch</title>
+<meta charset=utf-8 >
+<meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 >
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=first-person-controls-theo.js></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+	var info, renderer, scene, camera, controls, stats;
+	var clock = new THREE.Clock();
+
+	init();
+	animate();
+
+	function init() {
+		var geometry, material, mesh;
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden' ;
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'left: 20px; position: absolute; top: 0px;';
+		info.innerHTML = '<h1>' + document.title + '</h1>' +
+			'<p><a href=JavaScript:getOrbitController(); title="best for getting and overview of the whole project" >Orbit Controller</a></p>' +
+			'<p><a href=JavaScript:getFirstPersonController(); title="Enhanced version. Best for walkthroughs">First Person Controller</a></p>' +
+//			'<p><a href=JavaScript:controls.freeze=controls.freeze===true?false:true; title="Or press the spacebar" >Freeze camera</a></p>' +
+
+			'<p>Freeze <input type=checkbox id=chkFreeze ></p>' +
+			'<p>Look speed <input type=range id=rngLook ></p>' +
+			'<p>Movement speed <input type=range id=rngMove ></p>' +
+			'<div id=msg></div>';
+
+		chkFreeze.onchange = function() { controls.freeze=chkFreeze.checked; };
+
+		rngLook.min = rngMove.min = 0;
+		rngLook.max = rngMove.max = 100;
+		rngLook.step = rngMove.step = 1;
+		rngLook.value = rngMove.value = 50;
+
+		rngLook.onchange = function() { controls.lookSpeed = 0.001 * rngLook.value; }
+		rngMove.onchange = function() { controls.movementSpeed = 2 * rngMove.value; }
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; zIndex: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+		scene = new THREE.Scene();
+
+		getFirstPersonController();
+
+// ambient
+		light = new THREE.AmbientLight( 0xffffff * Math.random() );
+		scene.add( light );
+
+// light
+		light = new THREE.PointLight( 0xffffff * Math.random(), 0.8 );
+		light.position = camera.position;
+		scene.add( light );
+
+// ground plane
+		geometry = new THREE.BoxGeometry( 250, 5, 500, 10, 1, 10 );
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0xffffff * Math.random(), 
+			ambient: 0xffffff * Math.random(),
+			specular: 0xffffff * Math.random(),
+			shininess: 1,
+			side: THREE.DoubleSide
+		} );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -10, 0 );
+		scene.add( mesh );
+		scene.add( new THREE.BoxHelper( mesh ) );
+
+		geometry = new THREE.BoxGeometry( 20, 20, 20 );
+		for (var i = 0; i < 50; i++) {
+			material = new THREE.MeshPhongMaterial( {
+				color: 0xffffff * Math.random(), 
+				ambient: 0xffffff * Math.random(),
+				specular: 0xffffff * Math.random(),
+				shading: THREE.FlatShading,
+				shininess: 5
+			} );
+			//material = new THREE.MeshNormalMaterial( { opacity: 0.7, shading: THREE.SmoothShading, side: THREE.DoubleSide, transparent: true });
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 200 * Math.random() - 100, 100 * Math.random(), 400 * Math.random() - 200 );
+			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+			scene.add( mesh );
+
+			scene.add( new THREE.EdgesHelper( mesh ) );
+
+		}
+	}
+
+	function getOrbitController() {
+		chkFreeze.disabled = true;
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 200, 200, 200 );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+	}
+
+	function getFirstPersonController() {
+
+		chkFreeze.disabled = chkFreeze.checked = false;
+ 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -500, 0, 0 );
+
+		controls = new THREE.FirstPersonControls( camera, renderer.domElement );
+
+// camera swivel speed when no buttons pressed. Scroll mousewheel to speed up and slow down
+		controls.lookSpeedDefault = controls.lookSpeed = 0.025; // 0.0125;
+		controls.lookSpeedMin = 0.04;
+		controls.lookSpeedMax = 0.09;
+
+// Camera travel speed when left or right mouse button is pressed. Scroll mousewheel to speed up and slow down
+		controls.movementSpeedDefault = controls.movementSpeed = 100; // 0.5;
+		controls.movementSpeedMin = 0.05;
+		controls.movementSpeedMax = 200;
+
+// Camera direction in degrees of lat and lon
+//		controls.lon = 90; //-40;
+	}
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update( clock.getDelta() );
+		renderer.render( scene, camera );
+		stats.update();
+
+		if ( !controls.lookSpeed ) return;
+		msg.innerHTML = 'Debug:<br>' +
+			'Freeze: ' + controls.freeze + '<br>' +
+			'lookSpeed: ' + controls.lookSpeed.toFixed(3) + ' movementSpeed: ' + controls.movementSpeed;
+	}
+</script>
+</body>
+</html>

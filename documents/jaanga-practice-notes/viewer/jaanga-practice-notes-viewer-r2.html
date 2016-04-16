@@ -26,7 +26,7 @@
 
 ## Documents
 
-[Coding Style]( #../jaanga-coding-style-r1.md )
+[Coding Style & URL Naming]( #../jaanga-coding-style-r1.md )
 
 [Technology]( #../jaanga-tech-r1.md )
 
@@ -40,7 +40,7 @@
 
 //[🛈]( http://jaanga.github.io/documents/jaanga-coding-style/ )
 
-	var converter, content;
+	var converter, contents;
 
 	init();
 
@@ -60,7 +60,7 @@
 
 			#menu p { margin: 0 10px; }
 			#menu { background-color: #ccc;  height: 100%; max-width: 310px; opacity: 0.85; padding: 0 20px; overflow: auto; position: absolute; top: 0;}
-			#content { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
+			#contents { border-width: 0px; height: 100%; left: 330px; overflow: auto; position: absolute; top: 0; width: ${ window.innerWidth - 330 }px; }
 			#ifr { height: 100%; width: 800px; }
 
 `;
@@ -69,8 +69,8 @@
 		menu.id = 'menu';
 		menu.innerHTML = converter.makeHtml( menuMarkdown );
 
-		content = document.body.appendChild( document.createElement( 'div' ) );
-		content.id = 'content';
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
 
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'hashchange', onHashChange, false );
@@ -93,16 +93,16 @@
 
 			if ( fileName.substr( -3 ) === '.md' ) {
 
-					content.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
+					contents.innerHTML = '<div style=max-width:800px; >' + converter.makeHtml( text ) + '</div>';
 
 
 			} else {
 
-			content.innerHTML = '<iframe src=' + fileName + ' id=ifr style=width:100%; ></iframe>';
+			contents.innerHTML = '<iframe src=' + fileName + ' id=ifr style=width:100%; ></iframe>';
 
 			}
 
-			content.scrollTop = 0;
+			contents.scrollTop = 0;
 
 		}
 
@@ -110,7 +110,7 @@
 
 	function onWindowResize() {
 
-		content.style.width = ( window.innerWidth - 330 ) + 'px';
+		contents.style.width = ( window.innerWidth - 330 ) + 'px';
 
 	}
 

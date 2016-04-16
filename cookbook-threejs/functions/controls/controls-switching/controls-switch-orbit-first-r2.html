@@ -35,14 +35,6 @@
 		css = document.head.appendChild( document.createElement('style') );
 		css.innerHTML ='body { font: 400 12pt monospace; margin: 0; overflow: hidden; }' ;
 
-		//info = document.body.appendChild( document.createElement( 'div' ) );
-		//info.style.cssText = 'margin: 20px; position: absolute; ';
-		//info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
-		//	'<p><button onclick=setControlsFirstPerson(); >First Person Controls</button> ' +
-		//		'<button onclick=setControlsOrbit(); >Orbit Controls</button></p>' +
-		//	'<div id=msg ></div>' +
-		//'';
-
         info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'margin: 20px; position: absolute; ';
 		info.innerHTML =
@@ -115,8 +107,8 @@
 
 
 	function setControlsOrbit() {
-//        camera = cam2;
-//        controls = con2;
+		camera = cam2;
+		controls = con2;
 
 		position = camera.position.clone();
 		camera = cam2;
@@ -128,10 +120,6 @@
 
 
 	}
-
-
-
-
 
 	function addBoxes() {
 

@@ -1,9 +1,10 @@
 Jaanga Style Guide
 ===
 
-_update 2016-02-01_
+_update 2016-04-16_
 
-## Coding Style Guidelines
+## Coding Style & URL Naming Guidelines
+
 
 The code should be as close as possible to readable - or even spoken - English. 
 In other words it's great if you can read the code out load and it mean something.
@@ -131,8 +132,22 @@ Everything in Jaanga is written in client-side JavaScript.
 			* It's like the [gun on the mantle piece in a play]( https://en.wikipedia.org/wiki/Chekhov%27s_gun )
 		* This makes sense for one-liners only
 
+
+## URL Naming Conventions
+
+Use suggestions such as those provided in the following articles for naming repositories, folders and files
+
+* [11 Best Practices for URLs]( https://moz.com/blog/11-best-practices-for-urls )
+* [10 Naming Conventions That Lead to SEO Success]( https://blogs.adobe.com/digitalmarketing/search-marketing/10-naming-conventions-lead-seo-success/ )
+* [URL Naming Best Practices]( https://www.searchenginejournal.com/url-naming-best-practices/46740/ )
+
+In other words
+
+* all-lower-case-with-hyphens-between-words.got-it
+
+
 ***
 
 <center title="dingbat" >
-# ❦
+# <a href=javascript:contents.scrollTop=0; style=text-decoration:none; >❦</a>
 </center>

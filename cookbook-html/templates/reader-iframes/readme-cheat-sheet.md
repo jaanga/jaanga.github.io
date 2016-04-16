@@ -163,3 +163,5 @@ text text text
 <center title="dingbat" >
 ## <a href=javascript:content.scrollTop=0; >❦</a>
 </center>
+
+# <a href=javascript:contents.scrollTop=0; style=text-decoration:none; >❦</a>
