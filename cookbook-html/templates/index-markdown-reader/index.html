@@ -17,13 +17,17 @@ Markdown reader template file
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
+// original: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/index-markdown-reader
+
+	defaultFile = './xxxxx.html';
+
 	init();
 
 	function init() {
 
 		if ( location.hash ) {
 
-			var css, fileName, converter;
+			var css, fileName, contents, converter;
 
 			fileName = location.hash.slice( 1 );
 			document.title = fileName.split( '/' ).pop() + ' ~ ' + document.title;
@@ -32,12 +36,15 @@ Markdown reader template file
 			css.innerHTML =
 
 				'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0;  }' +
-				'h2 a { text-decoration: none; }' +
+				'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+				'h1 a, h2 a { text-decoration: none; }' +
+				'a { color: mediumblue; }' +
 
 			'';
 
 			contents = document.body.appendChild( document.createElement( 'div' ) );
 			contents.id = 'contents';
+
 			converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 			xhr = new XMLHttpRequest();
@@ -47,7 +54,7 @@ Markdown reader template file
 
 		} else {
 
-			window.location.href = './xxxxx.html' + location.hash;
+			window.location.href = defaultFile + location.hash;
 
 		}
 

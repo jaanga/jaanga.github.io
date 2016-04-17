@@ -1,8 +1,8 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R2</title>
+<title>Controls Orbit Morph R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -37,7 +37,7 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
 
 /*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -51,7 +51,7 @@
 		'';
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
 		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
@@ -66,6 +66,7 @@
 /*			'<p><button onclick=doIt(); >do it</button></p>' +
 			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
 */			'<div id=info ></div>' +
+			'<p><button onclick=morphOrbitFPS() >Morph FPS </button></p>' +
 
 		'';
 
@@ -74,6 +75,8 @@
 		document.body.appendChild( stats.domElement );
 
 		window.addEventListener( 'resize', onWindowResize, false );
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
@@ -110,6 +113,25 @@
 	}
 
 
+	function onDocumentMouseMove() {
+
+
+	}
+
+	function onDocumentMouseDown() {
+
+
+	}
+
+
+	function morphOrbitFPS() {
+
+
+
+
+
+	}
+
 	function onWindowResize() {
 
 		camera.aspect = window.innerWidth / window.innerHeight;
@@ -122,7 +144,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 
@@ -131,3 +153,4 @@
 </script>
 </body>
 </html>
+

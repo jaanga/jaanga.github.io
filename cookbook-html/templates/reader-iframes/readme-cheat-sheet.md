@@ -164,4 +164,6 @@ text text text
 ## <a href=javascript:content.scrollTop=0; >❦</a>
 </center>
 
-# <a href=javascript:contents.scrollTop=0; style=text-decoration:none; >❦</a>
+<center title="dingbat" >
+# <a href=javascript:window.scrollTop=0; style=text-decoration:none; >❦</a>
+</center>

@@ -1,8 +1,8 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R2</title>
+<title>Place Maps Under R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -19,6 +19,12 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
+
+	var xLen = 3;
+	var zLen = 3;
+
+	var object
+	var maps = [];
 
 	var stats, renderer, scene, camera, controls;
 
@@ -62,11 +68,12 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
-			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
-/*			'<p><button onclick=doIt(); >do it</button></p>' +
-			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
-*/			'<div id=info ></div>' +
 
+			'<p>slide x: <input type=range id=inpSlideX max=50 min=-50 step=1 value=-50 oninput=slideBox(); title="0 to 10: OK" > <output id=outX >value</output></p>' +
+			'<p>slide z: <input type=range id=inpSlideZ max=50 min=-50 step=1 value=-0 oninput=slideBox(); title="0 to 10: OK" > <output id=outZ >value</output></p>' +
+
+			'<div id=infoX ></div>' +
+			'<div id=infoZ ></div>' +
 		'';
 
 		stats = new Stats();
@@ -106,9 +113,81 @@
 
 // assets
 
+		geometry = new THREE.BoxGeometry( 5, 20, 5 );
+		material = new THREE.MeshNormalMaterial();
+		object = new THREE.Mesh( geometry, material );
+		object.position.set( -50, 35, 0 );
+		scene.add( object );
+
+		geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
 	}
 
+
+	function slideBox() {
+
+		xPos = outX.value = object.position.x = inpSlideX.valueAsNumber;
+		zPos= outZ.value = object.position.z = inpSlideZ.valueAsNumber;
+
+		xMin = 10 * Math.floor( xPos / 10 ) - 10;
+		xMax = xMin + 20;
+
+		zMin = 10 * Math.floor( zPos / 10 ) - 10;
+		zMax = zMin + 20;
+
+// console.log( '', xMin, xPos, xMax );
+// console.log( '', zMin, zPos, zMax );
+
+		geometry = new THREE.BoxGeometry( 8, 5, 8 );
+		material = new THREE.MeshNormalMaterial();
+
+		if ( xPos > xMin && xPos < xMax  ) {
+
+			zMap = zMin + 10;
+
+			for ( var xMap = xMin; xMap <= xMax; xMap += 10 ) {
+
+				if ( !scene.getObjectByName( 'map' + xMap + '-' + zMap ) ) {
+ 
+					geometry = new THREE.BoxGeometry( 8, 8, 8 );
+					map = new THREE.Mesh( geometry, material );
+					map.position.set( xMap, 10, zMap );
+					map.name = 'map' + xMap + '-' + zMap;
+					scene.add( map );
+
+					infoX.innerHTML = 'X Add ' + map.name + ' maps: ' + (scene.children.length - 4 );
+
+				}
+
+			}
+
+		}
+
+		if ( zPos > zMin && zPos < zMax  ) {
+
+			xMap = xMin + 0;
+
+			for ( var zMap = zMin; zMap <= zMax; zMap += 10 ) {
+
+				if ( !scene.getObjectByName( 'map' + xMap + '-' + zMap ) ) {
+
+
+					geometry = new THREE.BoxGeometry( 8, 5, 8 ); 
+					map = new THREE.Mesh( geometry, material );
+					map.position.set( xMap, 10, zMap );
+					map.name = 'map' + xMap + '-' + zMap;
+					scene.add( map );
+
+					infoZ.innerHTML = 'Z Add ' + map.name + ' maps: ' + ( scene.children.length - 4 );
+
+				}
+
+			}
+
+		}
+
+
+	}
 
 	function onWindowResize() {
 

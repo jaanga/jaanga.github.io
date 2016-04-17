@@ -6,7 +6,7 @@
 Jaanga Practice Notes Read Me
 ===
 
-_You can't enjoy the show without a program_
+_You can't enjoy the game without a program << old quote / saying used at baseball games / can't find source_
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
 ~ [Documents]( http://jaanga.github.io/documents ) 
@@ -18,16 +18,8 @@ _You can't enjoy the show without a program_
 
 ##Overview
 
-Five pages to help you to help others
+Documents intended to help you to help others
 
-<!--
-### [Template Three.js Draw Things - Demo - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
-
-### Sample Web Page / Source Code
-
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html width=100% height=600px ></iframe>  
-###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
--->
 
 ## Concept
 
