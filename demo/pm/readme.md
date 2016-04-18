@@ -10,7 +10,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## _2016-04-18_
 
-[Plane Donuts R1]( http://jaanga.github.io/demo/pm/plane-donuts/plane-donuts-r2.html ) 
+[Plane Donuts R2]( http://jaanga.github.io/demo/pm/plane-donuts/plane-donuts-r2.html ) 
 
 * Gently slide the lerp slider from left to right
 * Works only once. Reload to do it again
