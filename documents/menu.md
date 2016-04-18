@@ -1,6 +1,6 @@
-﻿[Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/documents/ )
+﻿[Jaanga]( http://jaanga.github.io ) »
 
-[Documents Viewer R2]( documents-viewer-r2.html )<!-- [🛈]( http://jaanga.github.io/documents/ ) -->
+[Documents Viewer]( index.html )<!-- [🛈]( http://jaanga.github.io/documents/ ) -->
 ===
 
 [Read Me]( #readme.md )
