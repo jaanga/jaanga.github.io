@@ -30,10 +30,10 @@
 
 	init();
 	animate();
-		var geometry, material, mesh;
+
 	function init() {
 
-
+		var geometry, material, mesh;
 		var css, hamburger, menu;
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
@@ -45,10 +45,10 @@
 
 			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
 
-/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
-*/
+
 			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
@@ -100,7 +100,7 @@
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
+//		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -10, 0 );
@@ -113,7 +113,7 @@
 
 		drawDonut()
 
-		toggleTopology();
+		addPlane();
 
 	}
 
@@ -149,13 +149,14 @@
 					( majorRadius + minorRadius * Math.cos( v )) * Math.sin( u ), minorRadius * Math.sin( v ) ); 
 
 				verticesDonut.push( vertex );
+
 			}
 
 		}
 
 	}
 
-	function toggleTopology() {
+	function addPlane() {
 
 		count = 0;
 
@@ -175,8 +176,6 @@
 
 		}
 
-//		donut.geometry.verticesNeedUpdate = true;
-
 	}
 
 	function lerp() {
@@ -189,6 +188,8 @@
 
 				vertex = donut.geometry.vertices[ i ];
 
+// http://mrdoob.github.io/three.js/docs/#Reference/Math/Vector3
+
 //				vertex.lerpVectors(  verticesPlane[ i ], verticesDonut[ i ], alpha );
 				vertex.lerp( verticesPlane[ i ], alpha );
 
@@ -197,6 +198,8 @@
 		donut.geometry.verticesNeedUpdate = true;
 
 	}
+
+
 
 	function onWindowResize() {
 
