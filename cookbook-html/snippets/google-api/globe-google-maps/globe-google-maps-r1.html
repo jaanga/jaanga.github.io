@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>sphere-resolution-fps-r1.html</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+	var info, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	var target;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement('style') );
+		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' ;
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'margin: 20px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg ></div>' +
+			'<p>Map overlay: <select id=selMap onchange=setTextureMap() /></select><p>' +
+		'';
+
+		getTextureMaps();
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+// ground box
+//		geometry = new THREE.SphereGeometry( 5, 50, 25 ); // 512 = longitude 
+		material = new THREE.MeshNormalMaterial( { wireframe: false }  );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 30, 0 );
+//		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 50, 10 );
+		mesh.position.set( 0, 0, 0 );
+		scene.add( mesh );
+
+// axes
+		var axisHelper = new THREE.AxisHelper( 150 );
+		scene.add( axisHelper );
+
+		geometry = new THREE.SphereGeometry( 50, 50, 25, 0, Math.PI * 2, 0.08, 2.98 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 0, 0 );
+		scene.add( mesh );
+
+	}
+
+	function setTextureMap() {
+
+		if ( parent.selMap.selectedIndex === 0 && mapMaterial.type !== 'MeshNormalMaterial'  ) {
+
+			mapMaterial = new THREE.MeshNormalMaterial( { shading: THREE.SmoothShading, side: 2 } );
+			mesh.material = mapMaterial;
+			mesh.material.needsUpdate = true;
+
+		} else if ( parent.selMap.selectedIndex > 0 && parent.selMap.selectedIndex < 10 ){
+
+			var dir = mapTypes[ parent.selMap.selectedIndex ][ 1 ]; // 'http://b.tile.openstreetmap.org/';
+			var count = 0;
+tileX = 0;
+tileY = 0;
+zoom = 5;
+tiles = Math.pow( 2, zoom );
+
+			var size = 256 * tiles;
+			var half = 256;
+
+			var canvasMap = document.createElement( 'canvas' );
+
+//			canvasMap = document.body.appendChild( document.createElement( 'canvas' ) );
+//			canvasMap.style.cssText = 'border: 1px solid gray; position: absolute; top: 0; z-index:-10;';
+			canvasMap.width = canvasMap.height = size;
+			var contextMap = canvasMap.getContext( '2d' );
+
+			for ( var x = 0; x < tiles; x++ ) {
+
+				for ( var y = 0; y < tiles; y++ ) {
+
+					if ( parent.selMap.selectedIndex < 5 ) {
+
+						loadImage( ( 8 * tileX + x ) + '&y=' + ( 8 * tileY + y ) + '&z=' + ( zoom  ), 256 * x, 256 * y );
+
+					} else {
+
+						loadImage( ( zoom + 3 ) + '/' + ( 8 * tileX + x ) + '/' + ( 8 * tileY + y ) + '.png', 256 * x, 256 * y );
+
+					}
+
+				}
+//console.log(  'z', zoom, 'tilex', ( 4 * tileX + x ), 'y',  ( 4 * tileY + y )  );
+			}
+
+			function loadImage( fileName, x, y ) {
+
+				var img = document.createElement( 'img' );
+				img.crossOrigin = 'Anonymous';
+				img.src = dir + fileName;
+
+				img.onload = function(){
+
+					contextMap.drawImage( img, 0, 0, 256, 256, x, y, 256, 256 );
+
+					if ( ++count === tiles * tiles ) {
+
+						var texture = new THREE.Texture( canvasMap );
+//						texture.minFilter = texture.magFilter = THREE.NearestFilter;
+						texture.needsUpdate = true;
+
+						mapMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, shading: THREE.SmoothShading } );
+						mesh.material = mapMaterial;
+						mesh.material.needsUpdate = true;
+
+					}
+
+				}
+
+			}
+
+		} else {
+
+		}
+
+	}
+
+	function getTextureMaps() {
+
+		mapTypes = [
+			['Default colors',''],
+			['Google Maps','http://mt1.google.com/vt/x='],
+			['Google Maps Terrain','http://mt1.google.com/vt/lyrs=t&x='],
+			['Google Maps Satellite','http://mt1.google.com/vt/lyrs=s&x='],
+			['Google Maps Hybrid','http://mt1.google.com/vt/lyrs=y&x='],
+			['Open Street Map','http://tile.openstreetmap.org/'],
+			['Open Cycle Map', 'http://tile.opencyclemap.org/cycle/'],
+			['MapQuest OSM', 'http://otile3.mqcdn.com/tiles/1.0.0/osm/'],
+			['MapQuest Satellite', 'http://otile3.mqcdn.com/tiles/1.0.0/sat/'],
+			['Stamen terrain background','http://tile.stamen.com/terrain-background/'],
+			['HeightMap','../../../terrain/'],
+			['Wireframe','']
+		];
+
+		for ( var i = 0; i < mapTypes.length; i++ ) {
+
+			parent.selMap.appendChild( document.createElement( 'option' ) );
+			parent.selMap.children[ i ].text = mapTypes[ i ][ 0 ];
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

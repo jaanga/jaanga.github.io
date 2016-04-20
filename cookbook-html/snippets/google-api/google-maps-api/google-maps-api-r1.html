@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>google-maps-api-r1.html</title>
+<meta charset=utf-8>
+</head>
+<body>
+<script>
+
+// https://developers.google.com/maps/documentation/static-maps/intro#URL_Parameters
+
+// this file: C:\Users\Theo\Dropbox\Public\code-cookbook\0-cookbook-general\canvas\google-maps-api\google-maps-api-r1.html
+
+//	var image;
+
+//	var lat = 37.796; //Santa Cruz
+//	var lon = -122.398;
+
+//	var lat = 37.5; //Santa Cruz
+//	var lon = -122.5;
+//	var zoom = 16;
+
+	var lat = 41.5861554761;
+	var lon = 1.6519343471;
+
+	var zoom = 12;
+
+	var width = 1024
+	var height = 1024;
+
+	init()
+
+	function init() {
+
+		document.body.style.font = 'bold 12pt monospace';
+
+		var info = document.createElement( 'div' );
+		document.body.appendChild( info );
+			info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+
+			'<p><input type=range id=inpLat min=37 max=38 step=0.01 value=37 onmousemove=lat=parseFloat(inpLat.value);updateMap(); ></p>' +
+
+			'<img id=image >' + 
+
+		'';
+//		image.id = 'image';
+
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		context = canvas.getContext("2d");
+
+//		image = document.createElement( 'img' );
+
+//		document.body.appendChild( image );
+//		image.style.cssText = 'border: 1px red solid; position: absolute; top: 0; right: 0px; z-index: -10; ';
+/*
+		image.onload = function() {
+
+//			canvas.width = image.width;
+//			canvas.height = image.height;
+//			context.drawImage( image, 0, 0 );
+
+
+		};
+*/
+
+
+		updateMap();
+
+	}
+
+	function updateMap() {
+
+		image.src = 'http://maps.googleapis.com/maps/api/staticmap?center=' + lat + ',' + lon + '&maptype=hybrid&zoom=' + zoom + '&scale=2&size=' + width + 'x' + height ;
+
+	}
+
+</script>
+</body>
+</html>
