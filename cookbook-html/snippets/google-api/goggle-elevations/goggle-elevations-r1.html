@@ -12,7 +12,7 @@
 <body>
 <script>
 
-	source = 'https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034|36.455556,-116.866667';
+	source = 'https://maps.googleapis.com/maps/api/elevation/json?locations=39.7391536,-104.9847034|36.455556,-116.866667&key=AIzaSyAb-nGaZ-oFLIAD5K7Zd7pDSPhEkhRLI0s';
 
 	init();
 
@@ -59,9 +59,10 @@
 
 	function requestFile( fileName ) {
 
-		var xhr = new XMLHttpRequest();
+		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
-		xhr.crossOrigin = 'Anonymous';
+//		xhr.crossOrigin = 'Anonymous';
+		xhr.setRequestHeader("Access-Control-Allow-Origin", "https://maps.googleapis.com");
 		xhr.onload = callback;
 		xhr.send( null );
 
