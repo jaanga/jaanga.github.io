@@ -29,9 +29,12 @@
 
 	var peep;
 	var index = 0;
+	var delta = 0.1;
+
 	var gpxPath = [];
 	var ground;
 	var frame = 0;
+	var curve;
 
 	var latMin = 39.34208359569311;
 	var latMax = 39.38350763171911;
@@ -304,8 +307,8 @@
 			curve = new THREE.CatmullRomCurve3()
 			curve.points = gpxPath;
 
-			camPath = new THREE.Geometry();
-			camPath.vertices = curve.getPoints( 2000 );
+//			camPath = new THREE.Geometry();
+//			camPath.vertices = curve.getPoints( 2000 );
 
 
 			material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
@@ -378,16 +381,21 @@
 		stats.update();
 		renderer.render( scene, camera );
 
-		if ( frame++ % 30 === 0 ) {
+//		if ( frame++ % 30 === 0 ) {
 
-			p = camPath.vertices[ index ];
-			p1 = camPath.vertices[ 1 + index++ ];
-			index = index >= camPath.vertices.length ? 0 : index;
+//			p = camPath.vertices[ index ];
+//			p1 = camPath.vertices[ 1 + index++ ];
+			p = curve.getPointAt( delta );
+			p1 = curve.getPointAt( delta - 0.1 );
+			delta += 0.0001;
+			delta = delta > 1 ? 0.1 : delta;
+//			index = index >= camPath.vertices.length ? 0 : index;
+
 	//		aircraft.rotation.set( r.y, r.z, r.x );
 			peep.position.set( p1.x, p1.y, p1.z );
 			peep.lookAt( p );
 
-		}
+//		}
 
 	}
 
