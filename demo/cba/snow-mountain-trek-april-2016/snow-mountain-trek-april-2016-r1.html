@@ -25,6 +25,7 @@
 	var gpxFileDefault = '../elevations/Snow_Mountain_Actual.gpx';
 	var gpxFile;
 	var gpxPath;
+	var camPath = [];
 
 	var peep;
 	var index = 0;
@@ -112,7 +113,7 @@
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.001, 1000 );
 		camera.position.set( -100, 200, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
@@ -170,7 +171,7 @@
 		peep.remove( cameraFollow );
 		scene.remove( cameraHelper );
 
-		cameraFollow = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.000001, 5 );
+		cameraFollow = new THREE.PerspectiveCamera( 90, window.innerWidth / window.innerHeight, 0.0000001, 500 );
 		cameraFollow.applyMatrix( new THREE.Matrix4().makeTranslation( x, z, 0.01 ) );
 		peep.add( cameraFollow );
 
@@ -299,6 +300,14 @@
 
 			}
 
+
+			curve = new THREE.CatmullRomCurve3()
+			curve.points = gpxPath;
+
+			camPath = new THREE.Geometry();
+			camPath.vertices = curve.getPoints( 2000 );
+
+
 			material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
 			line = new THREE.Line( geometry, material );
 
@@ -371,12 +380,12 @@
 
 		if ( frame++ % 30 === 0 ) {
 
-			p = gpxPath[ index ];
-			p1 = gpxPath[ 1 + index++ ];
-			index = index >= gpxPath.length ? 0 : index;
+			p = camPath.vertices[ index ];
+			p1 = camPath.vertices[ 1 + index++ ];
+			index = index >= camPath.vertices.length ? 0 : index;
 	//		aircraft.rotation.set( r.y, r.z, r.x );
-			peep.position.set( p.x, p.y, p.z );
-			peep.lookAt( p1 );
+			peep.position.set( p1.x, p1.y, p1.z );
+			peep.lookAt( p );
 
 		}
 
