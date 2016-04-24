@@ -1,0 +1,222 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Request Google Elevation Service R4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='FGx,Google Maps API,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-04-22' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js ></script>
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/elevation
+
+	var startTime = Date.now();
+
+//	var lat = 41.5861554761;
+//	var lon = 1.6519343471;
+
+// gathered from another script:
+/*
+	var latMin = 41.5558446627;
+	var latMax = 41.603583114;
+	var lonMin = 1.6481309452;
+	var lonMax = 1.7103687843;
+*/
+
+	var latMin = 39.34208359569311;
+	var latMax = 39.38350763171911;
+	var lonMin = -122.75735308416188;
+	var lonMax = -122.74197028018534;
+
+	var centerLat = latMin + 0.5 * ( latMax - latMin );
+	var centerLon = lonMin + 0.5 * ( lonMax - lonMin );
+
+// the goal is to obtain to 1024 x 1024 as quickly as possible
+ 
+	var samples = 512;
+	var latDelta = ( latMax - latMin ) / samples;
+
+	var elevations;
+	var count = 0;
+	var index = 0;
+	var zoom = 13;
+
+	var delay = 2000;
+
+	init();
+
+	function init() {
+
+		var css, contents;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'* { box-sizing: border-box; vertical-align:top; }' +
+			'body { font: 12pt monospace; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+			'#mapDiv { height: 512px; width: 512px; }' +
+
+			'#txtArea { border: 1px solid; height: 250px; margin: 10px 0; width: 100%; overflow: auto; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://fgx.github.io/sandbox/request-google-elevation-service/#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p><button onclick=getParams(); >get parameters</button> - ' +
+			'<button onclick=nextElev(); >get elevations</button> <output outSamples >samples: ' + samples + '</output></p>' +
+
+			'<div id=mapDiv ></div>' +
+			'<textarea id=txtArea ></textarea>' +
+			'<p><button onclick=saveFile(); >Save File</button></p>' +
+			'<p id=messages1 ></p>' +
+			'<p id=messages2 ></p>' +
+		'';
+
+		elevations = [];
+
+		map = new google.maps.Map( mapDiv, {
+
+			zoom: zoom,
+			center: { lat: centerLat, lng: centerLon }
+//			mapTypeId: 'terrain'
+
+		});
+
+		elevator = new google.maps.ElevationService;
+
+	}
+
+	function getParams() {
+
+console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
+
+		latMin =  map.getBounds().getSouthWest().lat();
+		latMax =  map.getBounds().getNorthEast().lat();
+		lonMin = map.getBounds().getSouthWest().lng();
+		lonMax = map.getBounds().getNorthEast().lng();
+
+		latDelta = ( latMax - latMin ) / samples;
+
+	}
+
+	function nextElev() {
+
+		lat = latMax - count * latDelta;
+
+		path = [ { lat: lat, lng: lonMin }, {lat: lat, lng: lonMax } ];
+
+		displayPathElevation( path, elevator, map );
+
+		if ( count++ < samples - 1 ) {
+
+			setTimeout( nextElev, delay );
+
+		} else {
+
+console.log( 'complete count', count, 'elevations',  elevations.length );
+
+			messages2.innerHTML += ' - complete count: ' + count ; 
+
+		}
+
+	}
+
+	function displayPathElevation( path, elevator, map ) {
+
+		new google.maps.Polyline({
+
+			path: path,
+			strokeColor: '#0000CC',
+			opacity: 0.1,
+			strokeWeight: 1,
+			map: map
+
+		});
+
+		elevator.getElevationAlongPath({
+
+			'path': path,
+			'samples': samples
+
+		}, function( results, status ) {
+
+			if ( status === google.maps.ElevationStatus.OK ) {
+
+				if ( results ) {
+
+					tempArr = [];
+
+					for ( var i = 0; i < samples; i++ ) {
+
+						elevations[ index++ ] = results[ i ].elevation.toFixed( 1 );
+
+						tempArr.push( results[ i ].elevation.toFixed( 1 ) );
+
+					}
+
+					txtArea.value = tempArr;
+
+					messages1.innerHTML = 'count: ' + count + ' - elevations: ' + elevations.length + ' - spec count: ' + ( count * samples ) ;
+
+					messages2.innerHTML = 'time: ' + ( Date.now() - startTime ) + ' - delay : ' + delay + ' - results length: ' + tempArr.length + ' - resolution: ' + results[ count - 1 ].resolution;
+ 
+
+				} else {
+
+					messages2.innerHTML = 'No results found';
+
+				}
+
+			} else {
+
+				messages2.innerHTML = 'Elevation service failed due to: ' + status;
+
+				if ( status === 'OVER_QUERY_LIMIT' ) {
+
+console.log( 'status', status );
+
+					delay += 500;
+
+					--count;
+
+				}
+
+			}
+
+		} );
+
+	}
+
+
+	function saveFile() {
+
+		txtArea.value = elevations.slice( 0, samples * samples );
+
+		var blob = new Blob( [ txtArea.value ] );
+
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = 'elevations-' + samples + 'x' + samples + '.txt';
+		a.click();
+
+		delete a;
+
+	}
+
+</script>
+</body>
+</html>

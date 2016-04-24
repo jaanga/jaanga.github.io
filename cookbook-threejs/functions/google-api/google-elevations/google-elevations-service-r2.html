@@ -21,9 +21,11 @@
 	var centerLat = latMin + 0.5 * ( latMax - latMin );
 	var centerLon = lonMin + 0.5 * ( lonMax - lonMin );
 
-	var samples = 30;
+	var samples = 256;
 	var paths;
 	var elevations;
+
+	var count = 0;
 
 	init();
 
@@ -34,11 +36,13 @@
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-			'body { font: 12pt monospace; margin: 0; }' +
+			'body { font: 12pt monospace; }' +
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
 			'#mapDiv { height: 500px; }' +
+
+			'#txtArea { border: 1px solid; height: 50px; margin: 10px; width: 100%; overflow: auto; }' +
 
 		'';
 
@@ -51,17 +55,18 @@
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 
-			'<p><button onclick=getElevations(); >get elevations</button></p>' +
+			'<p><button onclick=nextElev(); >get elevations</button></p>' +
 
 			'<div id=mapDiv ></div>' +
-			'<div id=info ></div>' +
+			'<textarea id=txtArea ></textarea>' +
+			'<p><button onclick=saveFile(); >Save File</button></p>' +
 		'';
 
 		elevations = [];
 
-		var elevator = new google.maps.ElevationService;
+		elevator = new google.maps.ElevationService;
 
-		var map = new google.maps.Map( mapDiv, {
+		map = new google.maps.Map( mapDiv, {
 
 			zoom: 13,
 			center: { lat: centerLat, lng: centerLon }
@@ -69,19 +74,29 @@
 
 		});
 
+	}
+
+	function nextElev() {
+
 		latDelta = ( latMax - latMin ) / samples;
 
-		for ( var i = 0; i <= samples; i++ ) {
+		lat = latMin + count * latDelta;
 
-			lat = latMin + i * latDelta;
+		path = [ { lat: lat, lng: lonMin }, {lat: lat, lng: lonMax } ];
 
-			path = [ { lat: lat, lng: lonMin }, {lat: lat, lng: lonMax } ];
+		displayPathElevation( path, elevator, map );
 
-			displayPathElevation( path, elevator, map );
+		count++;
+
+		if ( count < samples ) {
+
+			delay = count % 4 === 0 ? 30000 : 500;
+
+			setTimeout( nextElev, delay );
+
+console.log( 'count', count, 'elevations', elevations.length );
 
 		}
-
-console.log( 'elevations', elevations );
 
 	}
 
@@ -117,23 +132,45 @@ console.log( 'elevations', elevations );
 
 					for ( var i = 0; i < results.length; i++ ) {
 
-						elevations.push( results[ i ].elevation );
+						elevations.push( results[ i ].elevation.toFixed( 1 ) );
 
 					}
 
+					if ( count === samples ) { outputElevations(); };
+
 				} else {
 
-					info.innerHTML = 'No results found';
+					txtArea.innerHTML = 'No results found';
 
 				}
 
 			} else {
 
-				info.innerHTML = 'Elevation service failed due to: ' + status;
+				txtArea.innerHTML = 'Elevation service failed due to: ' + status;
 
 			}
 
 		});
+
+	}
+
+
+	function outputElevations() {
+
+		txtArea.value = elevations
+
+	}
+
+	function saveFile() {
+
+		var blob = new Blob( [ txtArea.value ] );
+
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = 'elevations.txt';
+		a.click();
+
+		delete a;
 
 	}
 
