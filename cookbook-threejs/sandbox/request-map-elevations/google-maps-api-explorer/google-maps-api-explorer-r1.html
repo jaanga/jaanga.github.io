@@ -21,16 +21,19 @@
 
 // gathered from another script:
 /*
+// Igualada Spain
 	var latMin = 41.5558446627;
 	var latMax = 41.603583114;
 	var lonMin = 1.6481309452;
 	var lonMax = 1.7103687843;
 */
 
+// Snow Mountain, Mendocino County
 	var latMin = 39.34208359569311;
 	var latMax = 39.38350763171911;
 	var lonMin = -122.75735308416188;
 	var lonMax = -122.74197028018534;
+
 
 	var centerLat = latMin + 0.5 * ( latMax - latMin );
 	var centerLon = lonMin + 0.5 * ( lonMax - lonMin );
@@ -38,14 +41,18 @@
 // the goal is to obtain to 1024 x 1024 as quickly as possible
  
 	var samples = 30;
-	var latDelta = ( latMax - latMin ) / samples;
+	var latPathDelta = ( latMax - latMin ) / samples;
 
 	var elevations;
 	var count = 0;
 	var index = 0;
-	var zoom = 13;
 
-	var delay = 2000;
+	var zoom = 13;
+	var width = 512;
+	var height = 512;
+
+	var delay = 200;
+	var delta = 200;
 
 	init();
 
@@ -61,9 +68,9 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'#mapDiv { height: 512px; width: 512px; }' +
+			'#mapDiv { display: inline-block; height: 512px; width: 512px; }' +
 
-			'#txtArea { border: 1px solid; height: 250px; margin: 10px 0; width: 100%; overflow: auto; }' +
+			'#txtArea { border: 1px solid; height: 512px; margin: 0; width: 60%; overflow: auto; }' +
 
 		'';
 
@@ -76,10 +83,17 @@
 				'<a href=http://fgx.github.io/sandbox/request-google-elevation-service/#readme.md > &#x24D8; </a>' +
 			'</h2>' +
 
-			'<p><button onclick=getParams(); >get parameters</button> - ' +
-			'<button onclick=nextElev(); >get elevations</button> <output id=outSamples >samples: ' + samples + '</output></p>' +
+			'<p>' +
 
-			'<div id=mapDiv ></div>' +
+				'<button onclick=getParams(); >get parameters</button> - ' +
+				'<button onclick=nextElev(); >get elevations</button> ' +
+			'</p>' +
+			'<p>' +
+				'<output id=outSamples >samples: ' + samples + '</output>' +
+
+			'</p>' +
+
+			'<div id=mapDiv ></div> ' +
 			'<textarea id=txtArea ></textarea>' +
 			'<p><button onclick=saveFile(); >Save File</button></p>' +
 			'<p id=messages1 ></p>' +
@@ -88,13 +102,23 @@
 
 		elevations = [];
 
+
 		map = new google.maps.Map( mapDiv, {
 
 			zoom: zoom,
-			center: { lat: centerLat, lng: centerLon }
+			center: { lat: centerLat, lng: centerLon },
 //			mapTypeId: 'terrain'
 
 		});
+
+		path = [ {lat: latMin, lng: lonMin}, {lat: latMax, lng: lonMin}, {lat: latMax, lng: lonMax}, {lat: latMin, lng: lonMax}, {lat: latMin, lng: lonMin} ];
+
+		new google.maps.Polyline({
+			path: path,
+			strokeColor: '#0000CC',
+			opacity: 0.4,
+			map: map
+		  });
 
 		elevator = new google.maps.ElevationService;
 
@@ -109,16 +133,33 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 		lonMin = map.getBounds().getSouthWest().lng();
 		lonMax = map.getBounds().getNorthEast().lng();
 
-		latDelta = ( latMax - latMin ) / samples;
+		latDelta = ( latMax - latMin );
+		lonDelta = ( lonMax - lonMin );
 
-		outSamples.innerHTML += '- lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) +
-			' - lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ); 
+		latDegreesPerPixel = latDelta / 512;
+		lonDegreesPerPixel = lonDelta / 512;
+
+		latPixelsPerDegree = 512 / latDelta;
+		lonPixelsPerDegree = 512 / lonDelta;
+
+
+//console.log( 'wid', wid, 'hgt', hgt );
+
+		outSamples.innerHTML += '<br>Map lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) +
+			' - lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) +
+
+			' latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) +
+
+			'<br>latDegreesPerPixel: ' + latDegreesPerPixel.toFixed( 6 ) + ' lonDegreesPerPixel: ' + lonDegreesPerPixel.toFixed( 6 ) +
+			'<br>latPixelsPerDegree: ' + latPixelsPerDegree.toFixed( 6 ) + ' lonPixelsPerDegree: ' + lonPixelsPerDegree.toFixed( 6 ) +
+
+		''; 
 
 	}
 
 	function nextElev() {
 
-		lat = latMax - count * latDelta;
+		lat = latMax - count * latPathDelta;
 
 		path = [ { lat: lat, lng: lonMin }, {lat: lat, lng: lonMax } ];
 
@@ -192,7 +233,7 @@ console.log( 'complete count', count, 'elevations',  elevations.length );
 
 console.log( 'status', status );
 
-					delay += 500;
+					delay += delta;
 
 					--count;
 
