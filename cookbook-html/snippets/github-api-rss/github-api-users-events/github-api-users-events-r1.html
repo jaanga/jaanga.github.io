@@ -12,8 +12,10 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-	var user = 'https://api.github.com/users/theo-armour/events';
+	var user = 'theo-armour';
+//	var user = 'https://api.github.com/users/geoffmcl/events';
 //	var user = 'https://api.github.com/users/mostaphaRoudsari/events';
+
 	var converter, contents;
 
 	init();
@@ -28,22 +30,26 @@
 		css.innerHTML =
 
 			'body { font: 12pt monospace;  }' +
-			'h2 a { text-decoration: none; }' +
+			'h1 a { text-decoration: none; }' +
 
 		'';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-		fileName = location.hash ? location.hash.slice( 1 ) : user;
+		user = location.hash ? location.hash.slice( 1 ) : user;
 
-		getFile( fileName, contents );
+		getFile( user, contents );
 
 	}
 
-	function getFile( fileName, target ) {
+	function getFile( user, target ) {
 
-		var xhr = new XMLHttpRequest();
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/events';
+
+		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
 		xhr.onload = callback;
 		xhr.send( null );
@@ -52,7 +58,7 @@
 
 			events = JSON.parse( xhr.responseText );
 
-			txt = '';
+			txt = '<h1><a href="" >GitHub user events:</a> <a href=https://github.com/' + user + '>' + user + '</a></h1>';
 
 			dates = [];
 
@@ -93,6 +99,7 @@
 			contents.innerHTML = txt;
 
 console.log( '', events );
+
 		}
 
 	}
