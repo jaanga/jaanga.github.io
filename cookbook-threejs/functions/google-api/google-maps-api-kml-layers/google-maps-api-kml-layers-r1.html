@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta charset=utf-8 >
+<title>KML Layers</title>
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js ></script>
+<script>
+
+	initMap();
+
+	function initMap() {
+
+		var css, map;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'html, body { height: 100%; margin: 0; padding: 0; }' +
+			'#map { height: 100%; }' +
+
+		'';
+
+		map = document.body.appendChild( document.createElement( 'div' ) );
+		map.id = 'map';
+
+		var map = new google.maps.Map( map, {
+
+//			zoom: 16,
+//			center: { lat: 41.5861554761, lng: 1.6519343471 }
+
+		});
+
+		var layer = new google.maps.KmlLayer({
+
+			url: 'http://fgx.github.io/sandbox/flightpath/LEIG-L1500-01.kml',
+			map: map
+
+		});
+
+	}
+
+</script>
+</body>
+</html>

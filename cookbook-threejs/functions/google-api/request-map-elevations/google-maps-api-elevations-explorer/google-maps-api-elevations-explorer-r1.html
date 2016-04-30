@@ -20,20 +20,20 @@
 //	var lon = 1.6519343471;
 
 // gathered from another script:
-/*
+
 // Igualada Spain
 	var latMin = 41.5558446627;
 	var latMax = 41.603583114;
 	var lonMin = 1.6481309452;
 	var lonMax = 1.7103687843;
-*/
 
+/*
 // Snow Mountain, Mendocino County
 	var latMin = 39.34208359569311;
 	var latMax = 39.38350763171911;
 	var lonMin = -122.75735308416188;
 	var lonMax = -122.74197028018534;
-
+*/
 
 	var centerLat = latMin + 0.5 * ( latMax - latMin );
 	var centerLon = lonMin + 0.5 * ( lonMax - lonMin );
@@ -47,7 +47,7 @@
 	var count = 0;
 	var index = 0;
 
-	var zoom = 13;
+	var zoom = 15;
 	var width = 512;
 	var height = 512;
 
@@ -68,7 +68,7 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'#mapDiv { display: inline-block; height: 512px; width: 512px; }' +
+			'#mapDiv { display: inline-block; height: 2048px; width: 2048px; }' +
 
 			'#txtArea { border: 1px solid; height: 512px; margin: 0; width: 60%; overflow: auto; }' +
 
@@ -102,12 +102,11 @@
 
 		elevations = [];
 
-
 		map = new google.maps.Map( mapDiv, {
 
 			zoom: zoom,
 			center: { lat: centerLat, lng: centerLon },
-//			mapTypeId: 'terrain'
+			mapTypeId: 'satellite'
 
 		});
 

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Basic HTML Template</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+<style>
+	  html, body, #map-canvas {
+		height: 100%;
+		margin: 0px;
+		padding: 0px
+	  }
+	  pre{background:#fff;opacity:.8}
+</style>
+</head>
+<body>
+<div id="map-canvas"></div>
+<script src=https://maps.googleapis.com/maps/api/js ></script>
+<script>
+
+// http://jsfiddle.net/doktormolle/55Nke/
+// http://stackoverflow.com/questions/23457916/how-to-get-latitude-and-longitude-bounds-from-google-maps-x-y-and-zoom-parameter
+
+	MERCATOR = {
+
+		fromLatLngToPoint:function(latLng){
+
+			var siny = Math.min( Math.max( Math.sin( latLng.lat * ( Math.PI / 180 ) ), -0.9999 ), 0.9999 );
+
+			return {
+				x: 128 + latLng.lng * (256/360),
+				y: 128 + 0.5 * Math.log((1 + siny) / (1 - siny)) * -(256 / (2 * Math.PI))
+			};
+
+		},
+
+		fromPointToLatLng: function( point ){
+
+			return {
+
+				lat: ( 2 * Math.atan(Math.exp((point.y - 128) / -(256 / (2 * Math.PI)))) - Math.PI / 2)/ (Math.PI / 180),
+				lng:  (point.x - 128) / (256 / 360)
+
+
+			};
+
+		},
+
+		getTileAtLatLng:function(latLng,zoom){
+
+			var t=Math.pow(2,zoom),
+				s=256/t,
+				p=this.fromLatLngToPoint(latLng);
+				return {x:Math.floor(p.x/s),y:Math.floor(p.y/s),z:zoom};
+
+		},
+
+		getTileBounds:function( tile ){
+
+			tile=this.normalizeTile( tile );
+
+			var t=Math.pow( 2,tile.z ),
+				s=256/t,
+				sw={x:tile.x*s,
+					y:(tile.y*s)+s},
+				ne={x:tile.x*s+s,
+					y:(tile.y*s)};
+
+				return {
+
+					sw:this.fromPointToLatLng( sw ),
+					ne:this.fromPointToLatLng( ne )
+
+				}
+		},
+
+		normalizeTile:function(tile){
+
+			var t=Math.pow(2,tile.z);
+			tile.x=((tile.x%t)+t)%t;
+			tile.y=((tile.y%t)+t)%t;
+
+			return tile;
+
+		}
+
+	}
+
+/** @constructor */
+
+	function CoordMapType( tileSize ) {
+
+		this.tileSize = tileSize;
+
+	}
+
+	CoordMapType.prototype.getTile = function( coord, zoom, ownerDocument) {
+
+		var tile = MERCATOR.normalizeTile( { x:coord.x, y:coord.y, z:zoom } );
+		var tileBounds=MERCATOR.getTileBounds(tile);
+
+		var div = ownerDocument.createElement('div');
+
+		div.innerHTML =
+		'<pre><strong>tile:\n['+tile.x+','+tile.y+']</strong>\
+		\nbounds:{\nsw:['+tileBounds.sw.lat+','+tileBounds.sw.lng+'],\
+		\nne:['+tileBounds.ne.lat+','+tileBounds.ne.lng+']\n}</pre>';
+		  div.style.width = this.tileSize.width + 'px';
+		  div.style.height = this.tileSize.height + 'px';
+		  div.style.fontSize = '10';
+		  div.style.borderStyle = 'solid';
+		  div.style.borderWidth = '1px';
+		  div.style.borderColor = '#AAAAAA';
+		  return div;
+
+	};
+
+	var map;
+
+	function initialize() {
+
+
+		var mapOptions = {
+
+			zoom: 1,
+			center: new google.maps.LatLng( 41.850033,-87.6500523 ) // Chicago
+
+		};
+
+		map = new google.maps.Map( document.getElementById( 'map-canvas' ), mapOptions );
+		r = new google.maps.Rectangle()
+
+// Insert this overlay map type as the first overlay map type at
+// position 0. Note that all overlay map types appear on top of
+// their parent base map.
+
+		map.overlayMapTypes.insertAt( 0, new CoordMapType( new google.maps.Size( 256, 256 ) ) );
+
+		google.maps.event.addListener(map,'click',function(e){
+
+			var b = MERCATOR.getTileBounds( MERCATOR.getTileAtLatLng( { lat:e.latLng.lat(), lng:e.latLng.lng()}, this.getZoom() ) );
+
+			r.setOptions( { bounds:new google.maps.LatLngBounds(
+
+				new google.maps.LatLng( b.sw.lat, b.sw.lng ),
+				new google.maps.LatLng( b.ne.lat, b.ne.lng) ), 
+				map: map } )
+
+		});
+
+		google.maps.event.addListener( map, 'zoom_changed', function(){
+
+			r.setMap( null );
+
+		});
+
+	}
+
+	google.maps.event.addDomListener( window, 'load', initialize );
+
+</script>
+</body>
+</html>
