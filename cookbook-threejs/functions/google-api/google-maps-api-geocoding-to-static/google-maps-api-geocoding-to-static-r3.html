@@ -18,7 +18,7 @@
 	var contents, map;
 	var geocoder;
 
-	var zoom = 12;
+	var zoom = 15;
 	var scale = 2;
 	var canvasSize = 2048;
 	var tileSize = 512;
@@ -47,20 +47,20 @@
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
-			'#contents { height: 100%; text-align: center; }' +
+//			'#contents { height: 100%; text-align: center; }' +
 
-			'#contents { height: ' + canvasSize + 'px;; width: ' + canvasSize + 'px; }' +
+//			'#contents { height: ' + canvasSize + 'px;; width: ' + canvasSize + 'px; }' +
 //			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
 		'';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 //		contents = document.createElement( 'div' );
 		contents.id = 'contents';
-		contents.innerHTML = '<h1>Stuff</h1>';
+//		contents.innerHTML = '<h1>Stuff</h1>';
 
 		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
 		canvas.width = canvas.height = scale * canvasSize;
-		canvas.style.cssText = 'border: 1px solid gray; ';
+//		canvas.style.cssText = 'border: 1px solid gray; ';
 		context = canvas.getContext( '2d' );
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
@@ -87,13 +87,12 @@
 		map = new google.maps.Map( contents, {
 
 			zoom: zoom,
-			scale: scale,
 			center: { lat: 37.796, lng: -122.398 },
-			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
+//			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
 
 		});
 
-		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
+//		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
 
 		geocoder = new google.maps.Geocoder();
 
@@ -154,7 +153,7 @@
 
 //		}
 
-		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
+//		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
 
 	}
 
@@ -169,7 +168,7 @@
 
 				point = markerAtOffset( x * tileSize - offset, y * tileSize - offset );
 
-console.log( 'pt', x, y, point.lat(), point.lng() );
+//console.log( 'pt', x, y, point.lat(), point.lng() );
 
 				img = document.createElement( 'img' );
 				img.attributes.x = x * scale * tileSize;
@@ -178,7 +177,7 @@ console.log( 'pt', x, y, point.lat(), point.lng() );
 
 					context.drawImage( event.path[ 0 ], scale * canvasSize - scale * tileSize - event.path[ 0 ].attributes.x, event.path[ 0 ].attributes.y ); 
 
-console.log( 'xy', event.path[ 0 ].attributes.y, offset - event.path[ 0 ].attributes.x ,  event.path[ 0 ]  );
+//console.log( 'xy', event.path[ 0 ].attributes.y, offset - event.path[ 0 ].attributes.x ,  event.path[ 0 ]  );
 
 				};
 
@@ -210,7 +209,7 @@ console.log( 'xy', event.path[ 0 ].attributes.y, offset - event.path[ 0 ].attrib
 		);
 
 		var newPoint = map.getProjection().fromPointToLatLng( worldCoordinateNewCenter );
-		var marker = new google.maps.Marker( { map: map, position: newPoint } );
+//		var marker = new google.maps.Marker( { map: map, position: newPoint } );
 
 		return newPoint;
 
