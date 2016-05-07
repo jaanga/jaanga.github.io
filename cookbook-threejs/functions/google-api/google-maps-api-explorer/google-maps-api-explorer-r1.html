@@ -37,8 +37,8 @@
 */
 
 	var zoom = 15;
-	var width = 256;
-	var height = 256;
+	var width = 1024;
+	var height = 1024;
 
 	var TILE_SIZE = 256;
 
@@ -61,8 +61,8 @@
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+			'#hamburger { left: 575px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -575px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 550px; }' +
 
 			'#contents { position: absolute; right: 0; }' +
@@ -75,7 +75,7 @@
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars >☰</div>';
+		hamburger.innerHTML = '<div id=bars >&#9776;</div>';
 		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
@@ -86,7 +86,7 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
-
+			'<p>click map to see position details</p>' +
 			'<p><button onclick=getParams(); >get params</button></p>' +
 
 			'<div id=info ></div>' +
@@ -116,6 +116,8 @@
 		'';
 
 		setMap();
+
+		google.maps.event.addDomListener( window, 'load', getParams );
 
 	}
 
@@ -167,8 +169,6 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 		});
 
-// https://developers.google.com/maps/documentation/javascript/events#EventsOverview
-
 		var marker = new google.maps.Marker({
 
 			position: {lat: latitude, lng: longitude } ,
@@ -176,6 +176,7 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 		});
 
+// https://developers.google.com/maps/documentation/javascript/events#EventsOverview
 
 		map.addListener('click', function( event ) {
 //		map.addListener('mousemove', function( event ) {  // fun
@@ -220,7 +221,7 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 // The mapping between latitude, longitude and pixels is defined by the web
 // mercator projection.
 
-	function project(latLng) {
+	function project( latLng ) {
 
 		var siny = Math.sin( latLng.lat() * Math.PI / 180 );
 
@@ -265,8 +266,6 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 		return 180 / pi * Math.atan( 0.5 * ( Math.exp( n ) - Math.exp( -n ) ));
 
 	}
-
-	google.maps.event.addDomListener( window, 'load', getParams );
 
 </script>
 </body>

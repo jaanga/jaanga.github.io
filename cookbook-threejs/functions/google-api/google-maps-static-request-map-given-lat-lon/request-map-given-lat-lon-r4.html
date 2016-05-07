@@ -20,9 +20,9 @@
 
 	var mapOverlay, contextMapOverlay;
 
-	var zoom = 12;
+	var zoom = 15;
 	var pixelsPerTile = 256;
-	var tilesPerSide = 3;
+	var tilesPerSide = 2;
 
 	init();
 
@@ -103,10 +103,6 @@
 			setMapOverlay();
 
 		}
-
-
-
-//		setMapOverlay();
 
 	}
 
@@ -210,6 +206,8 @@
 
 			}
 
+
+
 		}
 
 		function loadImage( fileName, x, y ) {
@@ -220,7 +218,7 @@
 
 			img.onload = function(){
 
-				contextMapOverlay.drawImage( img, 0, 0, 256, 256, x, y, pixelsPerTile, pixelsPerTile );
+				contextMapOverlay.drawImage( img, x, y, pixelsPerTile, pixelsPerTile );
 
 			}
 

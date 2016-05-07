@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Google Maps API Elevations Explorer R1</title>
+<title>Google Maps API Elevations Explorer R4</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='FGx,Google Maps API,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -40,18 +40,20 @@
 
 // the goal is to obtain to 1024 x 1024 as quickly as possible
  
-	var samples = 30;
-	var latPathDelta = ( latMax - latMin ) / samples;
+	var samples = 1024;
+	var folder = '../elevations/';
+	var fileName = 'elevations-' + samples + 'x' + samples + '.txt';
+	var latPathDelta;
+	var lonPathDelta;
 
 	var elevations;
 	var count = 0;
 	var index = 0;
 
-	var zoom = 15;
-	var width = 512;
-	var height = 512;
+	var zoom = 13;
+	var size = 512;
 
-	var delay = 200;
+	var delay = 4000;
 	var delta = 200;
 
 	init();
@@ -65,10 +67,10 @@
 
 			'* { box-sizing: border-box; vertical-align:top; }' +
 			'body { font: 12pt monospace; }' +
-			'a {text-decoration: none; }' +
-			'h2 { margin: 0 }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
 
-			'#mapDiv { display: inline-block; height: 2048px; width: 2048px; }' +
+			'#mapDiv { display: inline-block; height: ' + size + 'px; width: ' + size + 'px; }' +
 
 			'#txtArea { border: 1px solid; height: 512px; margin: 0; width: 60%; overflow: auto; }' +
 
@@ -84,15 +86,12 @@
 			'</h2>' +
 
 			'<p>' +
-
 				'<button onclick=getParams(); >get parameters</button> - ' +
-				'<button onclick=nextElev(); >get elevations</button> ' +
-			'</p>' +
-			'<p>' +
-				'<output id=outSamples >samples: ' + samples + '</output>' +
-
+				'<button onclick=getElevation(); >get elevations</button> ' +
 			'</p>' +
 
+			'<p id=samples >Samples: ' + samples + '</p>' +
+			'<p id=params ></p>' +
 			'<div id=mapDiv ></div> ' +
 			'<textarea id=txtArea ></textarea>' +
 			'<p><button onclick=saveFile(); >Save File</button></p>' +
@@ -106,7 +105,7 @@
 
 			zoom: zoom,
 			center: { lat: centerLat, lng: centerLon },
-			mapTypeId: 'satellite'
+//			mapTypeId: 'satellite'
 
 		});
 
@@ -120,6 +119,11 @@
 		  });
 
 		elevator = new google.maps.ElevationService;
+
+		google.maps.event.addDomListener( window, 'load', getParams );
+
+		requestFile( folder + fileName );
+
 
 	}
 
@@ -135,38 +139,62 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 		latDelta = ( latMax - latMin );
 		lonDelta = ( lonMax - lonMin );
 
-		latDegreesPerPixel = latDelta / 512;
-		lonDegreesPerPixel = lonDelta / 512;
+		latPathDelta = ( latMax - latMin ) / ( samples - 1 );
+		lonPathDelta = ( lonMax - lonMin ) / ( samples  - 1);
 
-		latPixelsPerDegree = 512 / latDelta;
-		lonPixelsPerDegree = 512 / lonDelta;
+		latDegreesPerPixel = latDelta / size;
+		lonDegreesPerPixel = lonDelta / size;
 
+		latPixelsPerDegree = size / latDelta;
+		lonPixelsPerDegree = size / lonDelta;
+
+
+		path = [ {lat: latMin, lng: lonMin}, {lat: latMax, lng: lonMin}, {lat: latMax, lng: lonMax}, {lat: latMin, lng: lonMax}, {lat: latMin, lng: lonMin} ];
+
+		new google.maps.Polyline({
+			path: path,
+			strokeColor: '#00CC00',
+			opacity: 0.4,
+			map: map
+		  });
 
 //console.log( 'wid', wid, 'hgt', hgt );
 
-		outSamples.innerHTML += '<br>Map lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) +
-			' - lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) +
-
-			' latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) +
-
-			'<br>latDegreesPerPixel: ' + latDegreesPerPixel.toFixed( 6 ) + ' lonDegreesPerPixel: ' + lonDegreesPerPixel.toFixed( 6 ) +
-			'<br>latPixelsPerDegree: ' + latPixelsPerDegree.toFixed( 6 ) + ' lonPixelsPerDegree: ' + lonPixelsPerDegree.toFixed( 6 ) +
+		params.innerHTML += 'lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) + '<br>' +
+			'lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) + '<br>' +
+			'latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) + '<br>' +
+			'latDegreesPerPixel: ' + latDegreesPerPixel.toFixed( 6 ) + ' lonDegreesPerPixel: ' + lonDegreesPerPixel.toFixed( 6 ) + '<br>' +
+			'latPixelsPerDegree: ' + latPixelsPerDegree.toFixed( 6 ) + ' lonPixelsPerDegree: ' + lonPixelsPerDegree.toFixed( 6 ) +
 
 		''; 
 
 	}
 
-	function nextElev() {
+	function getElevation() {
 
-		lat = latMax - count * latPathDelta;
+		lat = latMax - Math.floor( 0.5 * count ) * latPathDelta;
 
-		path = [ { lat: lat, lng: lonMin }, {lat: lat, lng: lonMax } ];
+		if ( count % 2 === 0 ) {
 
-		displayPathElevation( path, elevator, map );
+			lonStepMin = lonMin;
+			lonStepMax = 0.5 * ( lonMax - lonMin ) + lonMin;
+			color = '#0000CC';
+ 
+		} else {
 
-		if ( count++ < samples - 1 ) {
+			lonStepMin = 0.5 * ( lonMax - lonMin ) + lonMin;
+			lonStepMax = lonMax;
+			color = '#cc0000';
 
-			setTimeout( nextElev, delay );
+		}
+
+		path = [ { lat: lat, lng: lonStepMin }, {lat: lat, lng: lonStepMax } ];
+
+		displayPathElevation( path, elevator, map, color );
+
+		if ( count++ < 2 * samples - 1 ) {
+
+			setTimeout( getElevation, delay );
 
 		} else {
 
@@ -178,22 +206,24 @@ console.log( 'complete count', count, 'elevations',  elevations.length );
 
 	}
 
-	function displayPathElevation( path, elevator, map ) {
+	function displayPathElevation( path, elevator, map, color ) {
 
 		new google.maps.Polyline({
 
 			path: path,
-			strokeColor: '#0000CC',
+			strokeColor: color,
 			opacity: 0.1,
 			strokeWeight: 1,
 			map: map
 
 		});
 
+		halfSamples = 0.5 * samples;
+
 		elevator.getElevationAlongPath({
 
 			'path': path,
-			'samples': samples
+			'samples': halfSamples
 
 		}, function( results, status ) {
 
@@ -203,11 +233,11 @@ console.log( 'complete count', count, 'elevations',  elevations.length );
 
 					tempArr = [];
 
-					for ( var i = 0; i < samples; i++ ) {
+					for ( var i = 0; i < halfSamples; i++ ) {
 
-						elevations[ index++ ] = results[ i ].elevation.toFixed( 1 );
+						elevations[ index++ ] = results[ i ].elevation.toFixed();
 
-						tempArr.push( results[ i ].elevation.toFixed( 1 ) );
+						tempArr.push( results[ i ].elevation.toFixed() );
 
 					}
 
@@ -215,8 +245,9 @@ console.log( 'complete count', count, 'elevations',  elevations.length );
 
 					messages1.innerHTML = 'count: ' + count + ' - elevations: ' + elevations.length + ' - spec count: ' + ( count * samples ) ;
 
-					messages2.innerHTML = 'time: ' + ( Date.now() - startTime ) + ' - delay : ' + delay + ' - results length: ' + tempArr.length + ' - resolution: ' + results[ count - 1 ].resolution;
- 
+					messages2.innerHTML = 'time: ' + ( Date.now() - startTime ) + ' - delay : ' + delay + ' - results length: ' + tempArr.length + '<br>' +
+//						resolution: ' + results[ count - 1 ].resolution;
+					'';
 
 				} else {
 
@@ -245,6 +276,28 @@ console.log( 'status', status );
 	}
 
 
+
+
+	function requestFile( fileName ) {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = xhr.responseText;
+			elevations = response.split( ',' );
+			index = elevations.length
+			count = elevations.length / ( 0.5 * samples );
+			console.log( index, count );
+
+		}
+
+	}
+
+
 	function saveFile() {
 
 		txtArea.value = elevations.slice( 0, samples * samples );
@@ -253,7 +306,7 @@ console.log( 'status', status );
 
 		var a = document.body.appendChild( document.createElement( 'a' ) );
 		a.href = window.URL.createObjectURL( blob );
-		a.download = 'elevations-' + samples + 'x' + samples + '.txt';
+		a.download = fileName;
 		a.click();
 
 		delete a;

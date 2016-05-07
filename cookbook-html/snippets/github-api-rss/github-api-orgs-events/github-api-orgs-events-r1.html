@@ -26,10 +26,11 @@
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-			'body { font: 12pt monospace;  }' +
-			'h1 a { text-decoration: none; }' +
-
-		'';
+			'body { font: 12pt monospace; max-width: 900px; } \
+			h1 a { text-decoration: none; } \
+			img { max-width: 860px; } \
+			div.issue { border: 1px solid #aaa; box-sizing: border-box; padding: 10px; transform: scale( 0.85 );  } \
+		';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
@@ -63,22 +64,30 @@
 
 					dates.push( event.created_at.slice( 0, 10 ) )
 
-					txt += '<h3>' + event.created_at.slice( 0, 10 ) + '</h3>';
+					txt += '<h2>' + event.created_at.slice( 0, 10 ) + '</h2>';
 
 				}
 
 				url = event.repo.name;
 
-				link = ' repo:<a href=http://' + url.replace( '/', '.github.io/' ) + ' >' + event.repo.name + '</a>';
+				link = ' repo: <a href=http://' + url.replace( '/', '.github.io/' ) + ' >' + event.repo.name + '</a>';
 
-				actor = ' actor:<a href=' + event.actor.url + ' >' + event.actor.login + '</a> ';
+				actor = ' actor: <a href=' + event.actor.url + ' > ' + event.actor.login + '</a> ';
 
-				if ( event.type === 'IssuesEvent' || event.type === 'IssueCommentEvent' ) {
+				if ( event.type === 'IssuesEvent' ) {
 
+					prefix = '<h3>Issue Event</h3>'; 
+					add = ' ' + event.type + ' <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a> ' + 
+						'<div class=issue >' +converter.makeHtml( event.payload.issue.body ) + '</div>' ;
+
+				} else if ( event.type === 'IssueCommentEvent' ) {
+
+					prefix = '<h3>Issue Comment</h3>'; 
 					add = ' ' + event.type + ' <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a> ';
 
 				} else if ( event.type === 'PushEvent' ){
 
+					prefix = '<h3>PushEvent</h3>'; 
 					add = ' ' + event.type + ' size: ' + event.payload.size + ' - ' + event.payload.commits[ 0 ].message;
 
 				} else {
@@ -87,7 +96,7 @@
 
 				}
 
-				txt += i + '. ' + event.created_at.slice( 11, -1 ) + link + actor + add + '<br>';
+				txt += prefix + i + '. ' + event.created_at.slice( 11, -1 ) + link + actor + add;
 
 			}
 

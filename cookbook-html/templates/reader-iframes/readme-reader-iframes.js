@@ -1,4 +1,4 @@
-
+﻿
 	var converter, contents;
 
 	init();

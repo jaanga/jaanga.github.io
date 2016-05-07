@@ -11,12 +11,13 @@
 <meta name=date content='2016-04-29' >
 </head>
 <body>
-<script src=https://maps.googleapis.com/maps/api/js?libraries=places ></script>
+<script src=https://maps.googleapis.com/maps/api/js></script>
 <script>
 
-//  http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
+// http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
+// https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
 
-	var contents, map;
+	var contents, map. infoWindow;
 
 	init();
 
@@ -27,7 +28,8 @@
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
-			'body { font: 12pt monospace; margin: 0; }' +
+			'html { height: 100%; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; }' +
 //			'h2 { margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
@@ -41,7 +43,7 @@
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
-			'#contents { text-align: center; }' +
+			'#contents { height: 100%; text-align: center; }' +
 //			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
 		'';
 
@@ -51,7 +53,7 @@
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars >?</div>';
+		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
 		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
@@ -67,14 +69,14 @@
 
 		'';
 
-		var map = new google.maps.Map(document.getElementById('map'), {
+		map = new google.maps.Map( contents, {
 
 			center: { lat: -34.397, lng: 150.644 },
 			zoom: 12
 
 		});
 
-		var infoWindow = new google.maps.InfoWindow({map: map});
+		infoWindow = new google.maps.InfoWindow({map: map});
 
 // Try HTML5 geolocation.
 
@@ -108,9 +110,8 @@
 
 		}
 
-
-
 	}
+
 
 	function handleLocationError( browserHasGeolocation, infoWindow, pos ) {
 

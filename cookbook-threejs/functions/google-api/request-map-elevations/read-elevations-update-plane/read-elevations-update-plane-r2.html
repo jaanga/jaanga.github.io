@@ -20,11 +20,9 @@
 
 <script>
 
-	var fileName512 = '../elevations/elevations-snow-mountain-512x512.txt'; // broken data
+// https://developers.google.com/maps/documentation/javascript/elevation
 
-	var gpxFileDefault = '../elevations/Snow_Mountain_Actual.gpx';
-	var gpxFile;
-	var gpxPath;
+	var fileName512 = '../elevations/elevations-snow-mountain-512x512.txt'; // broken data
 
 	var ground;
 
@@ -166,7 +164,8 @@
 			ground.geometry.verticesNeedUpdate = true;
 			ground.geometry.normalsNeedUpdate = true;
 
-		requestOverlay();
+			requestOverlay();
+
 		}
 
 	}

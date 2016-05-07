@@ -48,7 +48,7 @@
 	var index = 0;
 
 	var zoom = 15;
-	var width = 512;
+	var size = 512;
 	var height = 512;
 
 	var delay = 200;
@@ -60,23 +60,45 @@
 
 		var css, contents;
 
-		css = document.head.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
 
-			'* { box-sizing: border-box; vertical-align:top; }' +
-			'body { font: 12pt monospace; }' +
-			'a {text-decoration: none; }' +
-			'h2 { margin: 0 }' +
+			'body { font: 12pt monospace; margin: 0; }' +
+//			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
 
-			'#mapDiv { display: inline-block; height: 2048px; width: 2048px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
-			'#txtArea { border: 1px solid; height: 512px; margin: 0; width: 60%; overflow: auto; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#contents { display: inline-block; height: ' + size + 'px; width: ' + size + 'px; }' +
+
+			'#contents { text-align: center; }' +
+//			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
+
+			'#txtArea { border: 1px solid; height: 512px; margin: 0; overflow: auto; }' +
+
 
 		'';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
-		contents.innerHTML = 
+		contents.innerHTML = '<h1>Stuff</h1>';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
@@ -102,11 +124,12 @@
 
 		elevations = [];
 
-		map = new google.maps.Map( mapDiv, {
+		map = new google.maps.Map( contents, {
 
 			zoom: zoom,
 			center: { lat: centerLat, lng: centerLon },
-			mapTypeId: 'satellite'
+			mapTypeId: 'satellite',
+			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_CENTER }
 
 		});
 

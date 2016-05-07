@@ -35,14 +35,15 @@
 ## [Lorenz Attractor]( http://jaanga.github.io/algesurf/chaotic-maps/lorenz-attractor/r2/lorenz-attractor.html )
 
 # Fun
-
+## [Equirec]( http://jaanga.github.io/equirec/ ) ~ [App]( http://jaanga.github.io/equirec/equirec-image-flickr/ )
 ## [SP 500]( http://jaanga.github.io/sp500/dev/index.html ) [no shade]( http://jaanga.github.io/sp500/dev/index.html#intelhd )
 ## [Femur Heart UCSH]( http://theo-armour.github.io/ucsf/ )
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
 ## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [pm]( http://jaanga.github.io/demo/pm/ )  [rb]( http://jaanga.github.io/demo/rb/shower-the-monkey/shower-the-monkey-r1.html ) [ms]( http://jaanga.github.io/demo/ms/ )
+## [Moving Manuals]( http://jaanga.github.io/moving-manuals/ ) ~ [not Kallax]( http://jaanga.github.io/moving-manuals/kallax-nxn/ )
 
-# [Terrain]( http://jaanga.github.io/terrain-viewer/readme-reader.html )
+# [Terrain]( http://jaanga.github.io/terrain-viewer/readme-reader.html ) ~ 
 
 ## [unFlatland R11]( http://jaanga.github.io/terrain-viewer/un-flatland/latest/ ) &nbsp; [GH]( https://github.com/jaanga/terrain-viewer/tree/gh-pages/un-flatland )
 ## [USGS 1 Second]( http://jaanga.github.io/terrain-usgs-viewers/png-usgs-viewer-3d-unflatland/latest/ )
@@ -54,8 +55,9 @@
 
 
 # [FGX]( http://fgx.github.io/ )
+## [FGx FlightPath]( http://fgx.github.io/sandbox/flightpath/ )
 ## [FGx Aircraft]( http://fgx.github.io/fgx-aircraft-overview/latest/ )
-## [FGx 3D Globe]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
+## ## [FGx 3D Globe]( http://fgx.github.io/fgx-globe/index.html ) [FGx 3D Globe R5]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
 ## [FGx Plane Spotter]( http://jaanga.github.io/fgx-plane-spotter/latest/ ) 
 ## [Craziness]( http://jaanga.github.io/terrain-viewer/un-flatland/r11/un-flatland-r11-debug.html ) <span style=font-size:7pt; >Click 'addPath' then 'toggleFollow'</span>
 

@@ -49,7 +49,7 @@
 
 //			'#contents { height: 100%; text-align: center; }' +
 
-//			'#contents { height: ' + canvasSize + 'px;; width: ' + canvasSize + 'px; }' +
+			'#contents { height: ' + canvasSize + 'px;; width: ' + canvasSize + 'px; }' +
 //			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
 		'';
 
@@ -88,7 +88,7 @@
 
 			zoom: zoom,
 			center: { lat: 37.796, lng: -122.398 },
-//			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
+			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
 
 		});
 
@@ -116,7 +116,6 @@
 		} );
 
 	}
-
 
 	function geocodeAddress( geocoder, resultsMap ) {
 
@@ -153,7 +152,7 @@
 
 //		}
 
-//		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
+		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
 
 	}
 
@@ -209,7 +208,7 @@
 		);
 
 		var newPoint = map.getProjection().fromPointToLatLng( worldCoordinateNewCenter );
-//		var marker = new google.maps.Marker( { map: map, position: newPoint } );
+		var marker = new google.maps.Marker( { map: map, position: newPoint } );
 
 		return newPoint;
 
