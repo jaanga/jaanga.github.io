@@ -57,7 +57,7 @@
 # [FGX]( http://fgx.github.io/ )
 ## [FGx FlightPath]( http://fgx.github.io/sandbox/flightpath/ )
 ## [FGx Aircraft]( http://fgx.github.io/fgx-aircraft-overview/latest/ )
-## ## [FGx 3D Globe]( http://fgx.github.io/fgx-globe/index.html ) [FGx 3D Globe R5]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
+## [FGx 3D Globe]( http://fgx.github.io/fgx-globe/index.html ) [FGx 3D Globe R5]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
 ## [FGx Plane Spotter]( http://jaanga.github.io/fgx-plane-spotter/latest/ ) 
 ## [Craziness]( http://jaanga.github.io/terrain-viewer/un-flatland/r11/un-flatland-r11-debug.html ) <span style=font-size:7pt; >Click 'addPath' then 'toggleFollow'</span>
 
