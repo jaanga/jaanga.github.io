@@ -1,5 +1,6 @@
-
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ "View file as a web page." ) </span>
+<span style=display:none; >
+[You are now in GitHub source code view - click this link to view Read Me file as a web page]
+( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) » 
@@ -7,13 +8,19 @@
 
 [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
 ===
+
 Interesting things you can do with Markdown.
+
+## Updated 2016-05-10
+
+* http://jaanga.github.io/cookbook-html/templates/index.html#readme-cheat-sheet.md
+
 
 ### Figures
 
 <figure>
 <a href=http://google.com >
-<img src=http://lorempixel.com/200/200/ >
+<img src="http://lorempixel.com/200/200/" >
 <figcaption>Fig1. - A view of image 1</figcaption>
 <a>
 </figure>
@@ -30,17 +37,6 @@ Interesting things you can do with Markdown.
 </a>
 </figure>
 
-<figure >
-<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
-<figcaption>Fig4. - A view of the caption</figcaption>
-</a>
-</figure>
-
-<figure >
-<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
-<figcaption>Fig5. - A view of the caption</figcaption>
-</a>
-</figure>
 
 ### Horizontal rules
 
@@ -58,8 +54,7 @@ ___
 
 ### Images
 
-![ text ]( http://lorempixel.com/image_output/800/600 =400x300 )
-
+![ text ]( http://lorempixel.com/800/600 =400x300 )
 
 ### Links
 

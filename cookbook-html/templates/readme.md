@@ -7,6 +7,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [HTML Templates Read Me]( index.html )
 ===
 
+## [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
+
 _The files we use to start new projects_
 
 * [Basic HTML]( http://jaanga.github.io/cookbook-html/templates/basic-html/ )

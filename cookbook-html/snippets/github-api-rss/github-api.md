@@ -1,6 +1,30 @@
 ﻿
 
-Activity
+################ API
+
+https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+
+
+
+### https://developer.github.com/v3/
+
+https://api.github.com/rate_limit
+https://help.github.com/categories/search/
+https://help.github.com/articles/searching-repositories/
+https://help.github.com/articles/searching-code/ << Only files under 384k are searched
+
+
+http://stackoverflow.com/questions/12882049/list-all-java-repositories-on-github-using-api?rq=1
+https://github.com/search?q=3D+extension:stl&type=Code&s=indexed
+
+https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+https://api.github.com/search/repositories?q=language:Java&sort=stars&order=desc
+
+
+// http://stackoverflow.com/questions/14731459/github-api-fetch-all-folders-and-files-in-single-get-request
+
+
+
+## Activity
 
 https://api.github.com/events
 https://api.github.com/feeds
