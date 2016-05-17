@@ -2,7 +2,7 @@
 
 	var defaultHash =  'readme.md';
 	var defaultFile = 'index.html';
-	var readerSource = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
+	var readerSource = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
 	var contents; // must be global
 
 //	init();
