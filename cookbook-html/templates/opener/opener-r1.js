@@ -1,9 +1,10 @@
-// r1 2016-05-17
+// r1 2016-05-16
 
 	var defaultHash =  'readme.md';
 	var defaultFile = 'index.html';
+
 	var readerSource = 'http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
-	var contents; // must be global
+	var contents;
 
 //	init();
 
