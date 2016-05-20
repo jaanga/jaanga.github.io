@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R2 Hamburger</title>
+<title>Mirror R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -10,14 +10,14 @@
 </head>
 <body>
 <!--
-<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-<script src=httpa://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/Mirror.js ></script>
 <script>
 
 	var stats, renderer, scene, camera, controls;
@@ -76,7 +76,7 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
-//		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setClearColor( 0xaaaaaa );
 //		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
@@ -94,11 +94,11 @@
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
+		mesh.position.set( 0, -61, 0 );
 		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
+		gridHelper.position.set( 0, -60, 0 );
 		scene.add( gridHelper );
 
 		var axisHelper = new THREE.AxisHelper( 50 );
@@ -106,6 +106,14 @@
 
 // assets
 
+		verticalMirror = new THREE.Mirror( renderer, camera, { clipBias: 0.003, textureWidth: 1024, textureHeight: 1024, color:0x889999 } );
+
+		var verticalMirrorMesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 100, 100 ), verticalMirror.material );
+		verticalMirrorMesh.add( verticalMirror );
+
+//		verticalMirrorMesh.position.y = 35;
+		verticalMirrorMesh.position.z = -45;
+		scene.add( verticalMirrorMesh );
 
 	}
 
@@ -125,6 +133,7 @@
 //		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
+		verticalMirror.render();
 
 	}
 
