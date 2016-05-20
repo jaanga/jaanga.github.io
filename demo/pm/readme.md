@@ -1,8 +1,10 @@
-﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/demo/pm/index.html "View file as a web page." ) </span>
+﻿<span style=display:none; >
+[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
+( https://jaanga.github.io/demo/pm/index.html "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/pm/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
-[Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/pm/  ) »
+[Jaanga]( https://jaanga.github.io ) » [Demo]( https://jaanga.github.io/demo/pm/  ) »
 
 [PM Read Me]( ./index.html )
 ===
@@ -11,6 +13,9 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ## 2016-05-19
 
 [sugihara-folded-plate-r1.html]( http://jaanga.github.io/demo/pm/sugihara/sugihara-folded-plate-r1.html )
+
+* see http://home.mims.meiji.ac.jp/~sugihara/ambiguousc/ambiguouscylindere.html
+
 
 ## _2016-04-18_
 
