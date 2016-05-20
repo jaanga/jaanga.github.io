@@ -8,6 +8,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ===
 
 
+## 2016-05-19
+
+[sugihara-folded-plate-r1.html]( http://jaanga.github.io/demo/pm/sugihara/sugihara-folded-plate-r1.html )
+
 ## _2016-04-18_
 
 [Plane Donuts R2]( http://jaanga.github.io/demo/pm/plane-donuts/plane-donuts-r2.html ) 
