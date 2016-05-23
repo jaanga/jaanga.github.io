@@ -130,6 +130,7 @@
 // assets
 
 		geometry = new THREE.PlaneBufferGeometry( 100, 100 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 
 		material = new THREE.MeshBasicMaterial( { /* map: buildTexture(),*/ color: 0x00ff00, side: 2, transparent: true } );
 //		material = new THREE.MeshBasicMaterial( {color: 0xff0000 , side: 2 } );

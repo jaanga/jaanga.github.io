@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic R2</title>
+<title>Map Tiles Canvas R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -22,6 +22,20 @@
 
 	var lat = 37.8;
 	var lon = -122.4;
+
+	var mapTypes = [
+
+		['Google Maps','http://mt1.google.com/vt/x='],
+		['Google Maps Terrain','http://mt1.google.com/vt/lyrs=t&x='],
+		['Google Maps Satellite','http://mt1.google.com/vt/lyrs=s&x='],
+		['Google Maps Hybrid','http://mt1.google.com/vt/lyrs=y&x='],
+		['Open Street Map','http://tile.openstreetmap.org/'],
+		['Open Cycle Map', 'http://tile.opencyclemap.org/cycle/'],
+		['MapQuest OSM', 'http://otile3.mqcdn.com/tiles/1.0.0/osm/'],
+		['MapQuest Satellite', 'http://otile3.mqcdn.com/tiles/1.0.0/sat/'],
+		['Stamen terrain background','http://tile.stamen.com/terrain-background/']
+
+	];
 
 	var mapOverlay, contextMapOverlay;
 
@@ -49,10 +63,10 @@
 
 			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
-/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
-*/
+
 			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
@@ -72,6 +86,9 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
+			'<p>Slide X <input type=range id=inpSlideX min=0 max=2000 step=1 value=100 onmousemove=slideView(); > <output id=out ></output></p>' +
+			'<p>Slide Y <input type=range id=inpSlideY min=0 max=2000 step=1 value=100 onmousemove=slideView(); > <output id=out ></output></p>' +
+
 			'<div id=info ></div>' +
 
 		'';
@@ -117,54 +134,41 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 
 		material = new THREE.MeshBasicMaterial( { /* map: buildTexture(),*/ side: 2 } );
-
 		map = new THREE.Mesh( geometry, material );
 		scene.add( map );
 
-		getMapOverlays();
+		texture = new THREE.Texture(  );
+		texture.minFilter = texture.magFilter = THREE.NearestFilter;
 
-		setMapOverlay();
-
-	}
-
-	function getMapOverlays() {
-
-		mapOverlay = document.createElement( 'canvas' );
-		mapOverlay.width = mapOverlay.height = pixelsPerTile * tilesPerSide;
-//		document.body.appendChild( mapOverlay );
-//		mapOverlay.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; z-index:-10;';
-		contextMapOverlay = mapOverlay.getContext( '2d' );
-
-		mapTypes = [
-
-			['Google Maps','http://mt1.google.com/vt/x='],
-			['Google Maps Terrain','http://mt1.google.com/vt/lyrs=t&x='],
-			['Google Maps Satellite','http://mt1.google.com/vt/lyrs=s&x='],
-			['Google Maps Hybrid','http://mt1.google.com/vt/lyrs=y&x='],
-			['Open Street Map','http://tile.openstreetmap.org/'],
-			['Open Cycle Map', 'http://tile.opencyclemap.org/cycle/'],
-			['MapQuest OSM', 'http://otile3.mqcdn.com/tiles/1.0.0/osm/'],
-			['MapQuest Satellite', 'http://otile3.mqcdn.com/tiles/1.0.0/sat/'],
-			['Stamen terrain background','http://tile.stamen.com/terrain-background/']
-
-		];
+		getMap();
 
 	}
 
-	function setMapOverlay() {
+	function getView() {
 
-		var baseURL, tileX, tileY, tileOffset;
 
-//		inpLat.value = outLat.value = lat;
-//		inpLon.value = outLon.value = lon;
-//		inpZoom.value = outZoom.value = zoom;
+
+	}
+
+	function getMap() {
+
+		var tileX, tileY, tileOffset, baseURL;
+
+		canvasMap = document.createElement( 'canvas' );
+		canvasMap.width = canvasMap.height = pixelsPerTile * tilesPerSide;
+//		document.body.appendChild( canvasMap );
+//		canvasMap.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; z-index:-10;';
+		contextMap = canvasMap.getContext( '2d' );
+
+		canvasView = document.createElement( 'canvas' );
+		canvasView.width = canvasView.height = 500;
+		contextView = canvasView.getContext( '2d' );
 
 		tileX = lon2tile( lon, zoom  );
 		tileY = lat2tile( lat, zoom  );
+		tileOffset = - Math.floor( 0.5 * tilesPerSide );
 
 		baseURL = mapTypes[ 3 ] [ 1 ];
-
-		tileOffset = - Math.floor( 0.5 * tilesPerSide );
 
 		for ( var x = 0; x < tilesPerSide; x++ ) {
 
@@ -182,24 +186,32 @@
 			var img = document.createElement( 'img' );
 			img.crossOrigin = 'anonymous';
 			img.src = baseURL + fileName;
-			img.onload = function(){
+			img.onload = function( event ){
 
-				contextMapOverlay.drawImage( img, x, y, pixelsPerTile, pixelsPerTile );
+				contextMap.drawImage( img, x, y, pixelsPerTile, pixelsPerTile );
 
 				if ( ++count === tilesPerSide * tilesPerSide ) {
 
-					var texture = new THREE.Texture( mapOverlay );
-					texture.minFilter = texture.magFilter = THREE.NearestFilter;
-					texture.needsUpdate = true;
-
-					map.material.map = texture;
-					map.material.needsUpdate = true;
+					slideView()
 
 				}
 
 			}
 
 		}
+
+	}
+
+	function slideView() {
+
+		imageData = contextMap.getImageData( inpSlideX.valueAsNumber, inpSlideY.valueAsNumber, 500, 500 );
+		contextView.putImageData( imageData, 0, 0 );
+
+		texture.image = canvasView;
+		texture.needsUpdate = true;
+
+		map.material.map = texture;
+		map.material.needsUpdate = true;
 
 	}
 

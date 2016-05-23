@@ -1,8 +1,8 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>Controls Fly R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -15,12 +15,16 @@
 <script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/FlyControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
 
+// https://github.com/mrdoob/three.js/blob/master/examples/js/controls/FlyControls.js
+
 	var stats, renderer, scene, camera, controls;
+
+	var clock = new THREE.Clock();
 
 	init();
 	animate();
@@ -82,10 +86,14 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+		camera.position.set( 5, 5, 5 );
 
-		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+		controls = new THREE.FlyControls( camera, renderer.domElement );
+
+//		controls.movementSpeed = 450.0;
+//		controls.rollSpeed = 0.005;
+		controls.dragToLook = false;
+		controls.autoForward = false;
 
 		scene = new THREE.Scene();
 
@@ -122,7 +130,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update( 20 * clock.getDelta() );
 		stats.update();
 		renderer.render( scene, camera );
 
