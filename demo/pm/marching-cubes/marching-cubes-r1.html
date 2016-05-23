@@ -53,12 +53,12 @@
 				<a href="" >${ document.title }</a>
 				 <a href=http://jaanga.github.io/demo/pm >❦</a>
 			</h2>
-
+			<p><input type=checkbox onchange=march.material.wireframe=!march.material.wireframe; > Wireframe</p>
 			<div id=info ></div>
 
 		`;
 
-//			<p><input type=checkbox onchange=march.material.wireframe=!march.material.wireframe; > Wireframe</p>
+
 //			<p><button onclick=doIt(); >do it</button></p>
 
 		stats = new Stats();
@@ -114,9 +114,9 @@
 			var y = -extent + j * step;
 			var z = -extent + k * step;
 
-//			march.field.push( [ Math.pow( x, 3) + Math.pow( x, 2 ) + Math.pow( y, 2 ) ] );
+			march.field.push( [ Math.pow( x, 3) + Math.pow( x, 2 ) + Math.pow( y, 2 ) ] );
 //			march.field.push( [ Math.pow( x, 2 ) + Math.pow( y, 2 ) * Math.pow( z, 3 ) - Math.pow( z, 4 ) ] );
-			march.field.push( [ (Math.pow( x, 2 ) + Math.pow( y, 2 ) - Math.pow( z, 2 ) - 5 ) ] );
+//			march.field.push( [ (Math.pow( x, 2 ) + Math.pow( y, 2 ) - Math.pow( z, 2 ) - 5 ) ] );
 
 		}}}
 
