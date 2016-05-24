@@ -11,9 +11,22 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## 2016-05-23
 
-[GitHub API Fies in Repo R1]( http://jaanga.github.io/demo/pm/github-api-files-in-repo/github-api-files-in-repo-r1.html )
+[SageMath Documentation GitHub API Files in Repo for R1]( http://jaanga.github.io/demo/pm/github-api-files-in-repo/github-api-files-in-repo-r1.html )
 
 * No hierarchy yet. Just straight file dump
+
+[SageMath Documentation Absolute Links R1]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/sage-documentation-home-page.html )
+
+* SageMath Documentation home page edited to have absolute links 
+
+[Sage Documentation Site Map Maker R1]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/sage-documentation-site-map-maker-r1.html )
+
+* Reads the SageMath Documentation home page file and creates a savable site map
+
+[Site Map]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/site-map.html )
+
+* A sit emap produced using Sage Documentation Site Map Maker 
+
 
 ## 2016-05-19
 
