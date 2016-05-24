@@ -15,7 +15,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 * No hierarchy yet. Just straight file dump
 
-[SageMath Documentation Absolute Links R1]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/sage-documentation-home-page.html )
+[SageMath Documentation Absolute Links R1]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/sage-documentation-home-page-r1.html )
 
 * SageMath Documentation home page edited to have absolute links 
 
