@@ -25,7 +25,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Site Map]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/site-map.html )
 
-* A sit emap produced using Sage Documentation Site Map Maker 
+* A site map produced using Sage Documentation Site Map Maker 
 
 
 ## 2016-05-19
