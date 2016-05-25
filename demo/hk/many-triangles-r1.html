@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>Many Triangles R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -121,7 +121,6 @@
 
 	function manyTriangles() {
 
-		scene.remove( all_shapes );
 		all_shapes = new THREE.Object3D();
 		var length = 10000; //inpLength.valueAsNumber; 
 		var material = new THREE.MeshPhongMaterial( { color: 0x888800, side: 2 } );
@@ -130,9 +129,13 @@
 
 			var geometry = new THREE.Geometry(); 
 
-			geometry.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
-			geometry.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
-			geometry.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
+			geometry.vertices.push(
+
+				new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ),
+				new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ),
+				new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) 
+
+			);
 
 			geometry.faces.push( new THREE.Face3( 0, 1, 2 ) );
 			geometry.computeFaceNormals();

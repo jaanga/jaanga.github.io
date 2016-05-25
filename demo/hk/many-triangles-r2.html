@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>Many Triangles R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -95,6 +95,7 @@
 		var light1 = new THREE.DirectionalLight( 0xffffff, 0.5 );
 		light1.position.set( 1, 1, 1 );
 		scene.add( light1 );
+
 		var light2 = new THREE.DirectionalLight( 0xffffff, 1.5 );
 		light2.position.set( 0, -1, 0 );
 		scene.add( light2 );
@@ -116,8 +117,8 @@
 		scene.add( axisHelper );
 
 // assets
-		manyTriangles();
 
+		manyTriangles();
 
 	}
 
@@ -136,9 +137,7 @@
 			geometry2.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
 			geometry2.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
 			geometry2.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
-
 			geometry2.faces.push( new THREE.Face3( 0, 1, 2 ) );
-
 			geometry.merge( geometry2 );
 
 		}

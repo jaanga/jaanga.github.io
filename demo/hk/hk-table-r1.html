@@ -111,7 +111,7 @@
 			face = faces[ i ];
 
 			geometry2 = new THREE.Geometry();
-			geometry2.vertices = geometry2.vertices.concat( [ v( face[ 0 ] ), v( face[ 1 ] ), v( face[ 2 ] ) ] );
+			geometry2.vertices.push( v( face[ 0 ] ), v( face[ 1 ] ), v( face[ 2 ] ) );
 			geometry2.faces.push( new THREE.Face3( 0, 1, 2 ) );
 			geometry.merge( geometry2 );
 
