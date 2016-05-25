@@ -21,15 +21,12 @@
 
 	var timeZone, offsetThere, utcZero;
 
-	var lat = 37.8;
-	var lon = -122.4;
-
 	var a = '<p>';
 	var b = '</p>';
 
 	var locations = [
 
-		[ 21.3, 157.8167, 'Honolulu'],
+		[ 21.3, -157.8167, 'Honolulu'],
 		[ 32.6333, 51.6500, 'Isfahan' ],
 		[ 51.5072, -0.1275, 'London' ],
 		[ 18.975, 72.8258, 'Mumbai'],
@@ -42,8 +39,6 @@
 //		[ , , ''],
 
 	];
-
-	var date, dateUTC;
 
 	init();
 
@@ -81,14 +76,14 @@
 					' title= "JavaScript Date instance that represents a single moment in time. Date objects based on number of milliseconds since 1 January, 1970 UTC." >JavaScript Date Object</a> - ' +
 				'<a href=https://en.wikipedia.org/wiki/Coordinated_Universal_Time target="_blank" title="Mean solar time at 0° longitude" >UTC</a> - ' +
 				'<a href=https://en.wikipedia.org/wiki/Julian_day target="_blank" ' +
-					'title="Number of days since noon GMT, January 1, 4713 BC" >Jullian Day</a> - ' +
-				'<a href=https://en.wikipedia.org/wiki/Julian_year_(astronomy) target="_blank" title="365.25 days of 86400 SI seconds each" >Jullian Year</a> ' +
+					'title="Number of days since noon GMT, January 1, 4713 BC" >Julian Day</a> - ' +
+				'<a href=https://en.wikipedia.org/wiki/Julian_year_(astronomy) target="_blank" title="365.25 days of 86400 SI seconds each" >Julian Year</a> ' +
 			'</p>' +
 
 			'<div id=dateMethods ></div>' +
 			'<div id=utcTime ></div>' +
 			'<div id=offsets ></div>' +
-			'<div id=remoteTimesRequest ></div>' +
+			'<div id=remoteDate ></div>' +
 			'<div id=info ></div>' +
 
 		'';
@@ -96,17 +91,15 @@
 		getDate();
 		getUTCTime();
 		getOffsets();
-		getRemoteTimeRequest();
+		getRemoteDate();
 
 	}
 
 	function getDate() {
 
-		var txt;
+		var txt, date;
 
-		txt = 
-			'<h3>Local Time</h3>' +
-		'';
+		txt = '<h3>Date Methods</h3>' + '';
 
 		date = new Date();
 
@@ -191,7 +184,7 @@
 
 	function getUTCTime() {
 
-		var txt 
+		var txt;
 
 		txt = '<h3>UTC Time </h3>';
 
@@ -201,7 +194,7 @@
 			date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds() ) );
 
 		txt += a + 'new Date( Date.UTC( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), ' +
-			' date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds() ) ) = <br>' + 
+			' date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds() ) ) = <br>' +
 			dateUTC + ' << gets converted to local time' + b;
 
 		txt += a + 'dateUTC.getTime() = ' + dateUTC.getTime() + ' << QED' + b;
@@ -251,13 +244,14 @@
 
 		txt += a + 'dateUTC.toLocaleTimeString() = ' + dateUTC.toLocaleTimeString() + ' << OK' + b;
 
-
 		offsets.innerHTML = txt;
 
 	}
 
 
-	function getRemoteTimeRequest() {
+//
+
+	function getRemoteDate() {
 
 		var locate, dateHere, offsetHere, dateUTCZero, timeStamp, locate;
 
@@ -283,7 +277,7 @@
 
 		txt = '<h3>Remote Times Now Given Lat Lon Request</h3>' +
 
-			'<p>Given a UTC time at 0&deg; longitude of ' + dateUTCZero.getHours() + ':' + ( "0" + dateUTCZero.getMinutes() ).slice( - 2 ) + '</p>';
+			'<p>Given a UTC time at 0&deg; longitude of ' + dateUTCZero.getHours() + ':' + ( "0" + dateUTCZero.getMinutes() ).slice( - 2 ) + '</p>' +
 
 			'date: ' + date + b +
 			'offsetHere: ' + offsetHere + b +
@@ -293,10 +287,9 @@
 //			'date: ' + date + b +
 		'';
 
-		remoteTimesRequest.innerHTML = txt;
+		remoteDate.innerHTML = txt;
 
 	}
-
 
 	function requestRemoteTimeZone( url, locate ) {
 
@@ -315,14 +308,14 @@
 
 					offsetThere = ( timeZone.rawOffset + timeZone.dstOffset ) /  3600;
 
-					remoteTime = new Date( utcZero + 3600000 * offsetThere );
+					dateThere = new Date( utcZero + 3600000 * offsetThere );
 
-					updateInfo( remoteTime, locate );
+					updateUserInterface( dateThere, locate );
 
 
 				} else {
 
-					info.innerHTML += 'the location is timeless';
+					info.innerHTML = '<b>Ooops: ' + locate[ 2 ] + ': the location is timeless</b>';
 
 				}
 
@@ -330,17 +323,21 @@
 
 	}
 
-	function updateInfo( remoteTime, locate ) {
+	function updateUserInterface( dateThere, locate ) {
 
-		info.innerHTML += 
+		info.innerHTML +=
 
 			'<h3>' + locate[ 2 ] + '</h3>' +
-			'<p> lat: ' + locate[ 0 ] + ' lon: ' + locate[ 1 ] + '</p>' +
-			'<p>Time ZoneID:' + timeZone.timeZoneId + '</p>' +
+
+//			'<p>Given a UTC time at 0&deg; longitude of ' + ( "0" + inpHours.value ).slice( - 2 ) + ':' + ( "0" + inpMinutes.value ).slice( - 2 ) + '</p>' +
+			'<p>At latitude: ' + locate[ 0 ] + ' longitude: ' + locate[ 1 ] + '</p>' +
+			'<p>Time Zone ID: ' + timeZone.timeZoneId + '</p>' +
 			'<p>Time zone: ' + timeZone.timeZoneName + '</p>' +
 			'<p>Offset in hours: ' + offsetThere + '</p>' +
-			'<p>The ' + locate[ 2 ] + ' date and time is: ' + remoteTime.toLocaleString() + '</p>' +
-			'<p> The ' + locate[ 2 ] + ' universal time is:' + remoteTime.getTime() + '</p>' +
+			'<p>Raw offset in minutes: ' + timeZone.rawOffset + '</p>' +
+			'<p>Daylight saving offset in minutes: ' + timeZone.dstOffset + '</p>' +
+			'<p>The ' + locate[ 2 ] + ' date and time is : ' + dateThere.toLocaleString() + '</p>' +
+			'<p>The ' + locate[ 2 ] + ' universal time is: ' + dateThere.getTime() + '</p>' +
 
 		'';
 
@@ -348,7 +345,7 @@
 
 
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
-/* 
+/*
 
 Date.UTC()
 Date.now()

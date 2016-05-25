@@ -23,9 +23,10 @@
 <body>
 <script>
  
+	var timeZone, offsetThere, utcZero;
+
 	var locations = [
 
-//		[ , , ''],
 		[ 21.3, -157.8167, 'Honolulu'],
 		[ 32.6333, 51.6500, 'Isfahan' ],
 		[ 51.5072, -0.1275, 'London' ],
@@ -36,9 +37,9 @@
 		[ 31.2, 121.5, 'Shanghai'],
 		[ -33.8650, 151.2094, 'Sydney' ]
 
-	];
+//		[ , , ''],
 
-	var timeZone, offsetThere, utcZero;
+	];
 
 	init();
 
@@ -75,9 +76,9 @@
 
 			'<p>City<br><select id=selLocation size=10 onchange=getTime(); ></select></p>' +
 
-			'<p>UTC Hours &nbsp; <input type=range id=inpHours max=23 min=0 step=1 oninput=updateTime(); > ' +
+			'<p>UTC Hours &nbsp; <input type=range id=inpHours max=23 min=0 step=1 oninput=updateDate(); > ' +
 				'<output id=outHours ></output></p>' +
-			'<p>UTC Minutes <input type=range id=inpMinutes max=59 min=0 step=1 oninput=updateTime(); title="0 to 59" > ' +
+			'<p>UTC Minutes <input type=range id=inpMinutes max=59 min=0 step=1 oninput=updateDate(); title="0 to 59" > ' +
 				'<output id=outMinutes ></output></p>' +
 
 			'<p id=info ></p>' +
@@ -94,11 +95,11 @@
 
 		selLocation.selectedIndex = 6;
 
-		getTime();
+		getRemoteDate();
 
 	}
 
-	function getTime() {
+	function getRemoteDate() {
 
 		var locate, dateHere, offsetHere, dateUTCZero, timeStamp;
 
@@ -115,12 +116,6 @@
 		request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + locate[ 0 ] + ',' + locate[ 1 ] + '&timestamp=' + timeStamp;
 
 		requestRemoteTimeZone( request );
-
-		dateUTCZero = new Date( utcZero );
-
-		outHours.value = inpHours.value = dateUTCZero.getHours();
-		inpMinutes.value = dateUTCZero.getMinutes();
-		outMinutes.value = ( '0' + dateUTCZero.getMinutes() ).slice( - 2 );
 
 	}
 
@@ -141,10 +136,9 @@
 
 					offsetThere = ( timeZone.rawOffset + timeZone.dstOffset ) /  3600;
 
-					remoteTime = new Date( utcZero + 3600000 * offsetThere );
+					dateThere = new Date( utcZero + 3600000 * offsetThere );
 
-					updateInfo( remoteTime );
-
+					updateUserInterface( dateThere );
 
 				} else {
 
@@ -156,19 +150,21 @@
 
 	}
 
-	function updateTime() {
+	function updateDate() {
+
+		var date;
 
 		date = new Date( utcZero );
 
-		remoteTime = new Date( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), inpHours.valueAsNumber + offsetThere, inpMinutes.valueAsNumber );
+		dateThere = new Date( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), inpHours.valueAsNumber + offsetThere, inpMinutes.valueAsNumber );
 
-		updateInfo( remoteTime );
+		updateUserInterface( dateThere );
 
 	}
 
-	function updateInfo( remoteTime ) {
+	function updateUserInterface( dateThere ) {
 
-		var locate;
+//		var locate, dateUTCZero;
 
 		locate = locations[ selLocation.selectedIndex ];
 
@@ -183,13 +179,18 @@
 			'<p>Offset in hours: ' + offsetThere + '</p>' +
 			'<p>Raw offset in minutes: ' + timeZone.rawOffset + '</p>' +
 			'<p>Daylight saving offset in minutes: ' + timeZone.dstOffset + '</p>' +
-			'<p>The ' + locate[ 2 ] + ' date and time is : ' + remoteTime.toLocaleString() + '</p>' +
-			'<p>The ' + locate[ 2 ] + ' universal time is: ' + remoteTime.getTime() + '</p>' +
+			'<p>The ' + locate[ 2 ] + ' date and time is : ' + dateThere.toLocaleString() + '</p>' +
+			'<p>The ' + locate[ 2 ] + ' universal time is: ' + dateThere.getTime() + '</p>' +
 
 		'';
 
+		dateUTCZero = new Date( utcZero );
+
+		inpHours.value = dateUTCZero.getHours();
+		inpMinutes.value = dateUTCZero.getMinutes();
+
 		outHours.value = inpHours.value;
-		outMinutes.value = inpMinutes.value;
+		outMinutes.value = ( '0' + dateUTCZero.getMinutes() ).slice( - 2 );
 
 	}
 
