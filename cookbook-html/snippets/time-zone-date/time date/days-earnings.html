@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Earnings</title>
+<meta charset=utf-8 />
+<style>
+
+body { font: bold 300pt monospace; text-align: center; }
+
+</style>
+</head>
+<body>
+
+<div id=message ></div>
+
+<script>
+
+	var dollarsPerHour = 15;
+
+	var dollarsPerMilliSecond = dollarsPerHour / 3600000;
+
+	var today = new Date();
+
+	var startTime = today.setHours( 9 );
+	startTime = today.setMinutes( 0 );
+
+	update();
+
+	setInterval( update, 5000 );
+
+	function update(){
+
+		var earnings = dollarsPerMilliSecond * ( Date.now() - startTime );
+
+		document.title = message.innerHTML = earnings.toFixed( 2 );
+
+	}
+
+</script>
+
+</body>
+</html>
