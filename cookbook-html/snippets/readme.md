@@ -149,3 +149,10 @@ _This read me is still missing many links_
 ## Web Audio
 
 
+## Change Log
+
+### 2016-05-24
+
+* Update index.html to use opener.js
+* Add github-api-files-in-snippets-r1 as default file to open
+
