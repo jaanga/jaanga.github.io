@@ -17,12 +17,15 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 // https://developers.google.com/maps/documentation/timezone/intro
 // http://www.w3schools.com/jsref/jsref_obj_date.asp
+// http://www.ecma-international.org/ecma-262/6.0/#sec-date-objects
+
+	var timeZone, offsetThere, utcZero;
 
 	var lat = 37.8;
 	var lon = -122.4;
 
-		var a = '<p>';
-		var b = '</p>';
+	var a = '<p>';
+	var b = '</p>';
 
 	var locations = [
 
@@ -254,19 +257,17 @@
 	}
 
 
-	function requestRemoteTimeZone() {
+	function getRemoteTimeRequest() {
 
-		var date, offsetHere, utcZero, dateUTCZero, timeStamp, locate;
+		var locate, dateHere, offsetHere, dateUTCZero, timeStamp, locate;
 
 		dateHere = new Date();
 
 		offsetHere = dateHere.getTimezoneOffset();
 
-		utcZero = date.getTime() + offsetHere * 60000; // number of milliseconds since 1 January 1970 at zero longitude
+		utcZero = dateHere.getTime() + offsetHere * 60000; // number of milliseconds since 1 January 1970 at zero longitude
 
-		dateUTCZero = new Date( utcZero );
-
-		timeStamp = dateUTCZero.getTime() / 1000;
+		timeStamp = utcZero / 1000;
 
 		for ( var i = 0; i < locations.length; i++ ) {
 
@@ -274,9 +275,11 @@
 
 			request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + locate[ 0 ] + ',' + locate[ 1 ] + '&timestamp=' + timeStamp;
 
-			requestRemoteTimeZone( dateUTCZero, request, locate );
+			requestRemoteTimeZone( request, locate );
 
 		}
+
+		dateUTCZero = new Date( utcZero );
 
 		txt = '<h3>Remote Times Now Given Lat Lon Request</h3>' +
 
@@ -295,9 +298,9 @@
 	}
 
 
-	function requestRemoteTimeZone( dateUTCZero, url, locate ) {
+	function requestRemoteTimeZone( url, locate ) {
 
-		var xhr, response;
+		var xhr;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', url, true );
@@ -306,15 +309,15 @@
 
 			function callback() {
 
-				response = JSON.parse( xhr.responseText );
+				timeZone = JSON.parse( xhr.responseText );
 
-				if ( response.status === 'OK' ) {
+				if ( timeZone.status === 'OK' ) {
 
-					offset = response.rawOffset + response.dstOffset;
+					offsetThere = ( timeZone.rawOffset + timeZone.dstOffset ) /  3600;
 
-					remoteTime = new Date( dateUTCZero.getTime() + ( 1000 * offset ) );
+					remoteTime = new Date( utcZero + 3600000 * offsetThere );
 
-					updateInfo( response, remoteTime, locate );
+					updateInfo( remoteTime, locate );
 
 
 				} else {
@@ -327,15 +330,15 @@
 
 	}
 
-	function updateInfo( time, remoteTime, locate ) {
+	function updateInfo( remoteTime, locate ) {
 
 		info.innerHTML += 
 
 			'<h3>' + locate[ 2 ] + '</h3>' +
 			'<p> lat: ' + locate[ 0 ] + ' lon: ' + locate[ 1 ] + '</p>' +
-			'<p>Time ZoneID:' + time.timeZoneId + '</p>' +
-			'<p>Time zone: ' + time.timeZoneName + '</p>' +
-			'<p>Offset in hours: ' + offset / 3600 + '</p>' +
+			'<p>Time ZoneID:' + timeZone.timeZoneId + '</p>' +
+			'<p>Time zone: ' + timeZone.timeZoneName + '</p>' +
+			'<p>Offset in hours: ' + offsetThere + '</p>' +
 			'<p>The ' + locate[ 2 ] + ' date and time is: ' + remoteTime.toLocaleString() + '</p>' +
 			'<p> The ' + locate[ 2 ] + ' universal time is:' + remoteTime.getTime() + '</p>' +
 
