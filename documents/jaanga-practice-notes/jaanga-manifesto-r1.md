@@ -3,7 +3,7 @@ Jaanga Manifesto
 
 Efforts are ways of using your knowledge
 
-All efforts herein are owned by you outthere
+All efforts herein are owned by you out there
 
 Code is a way of sharing effort
 

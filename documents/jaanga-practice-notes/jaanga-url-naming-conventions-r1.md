@@ -10,3 +10,11 @@ In other words
 
 * all-lower-case-with-hyphens-between-words.got-it
 
+#### _This is about URLs. Why does this affect the naming of folders and files on your own locall computer?_This
+
+The days when files and folders only appeared on your computer are long gone.
+Increasingly files are shared over networks and stored in the cloud.
+When that happens folder and file names become part of a URL.
+
+
+
