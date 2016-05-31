@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Random Gradient Background-gradient R2</title>
+<meta charset=utf-8>
+</head>
+<body>
+<script>
+
+	init() 
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; height: ' + window.innerHeight + 'px; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg ></div>';
+
+		setRandomGradientBackground();
+
+	}
+
+	function setRandomGradientBackground() {
+		var col1 = "#" + Math.random().toString(16).slice(2, 8);
+		var col2 = "#" + Math.random().toString(16).slice(2, 8);
+		var col3 = "#" + Math.random().toString(16).slice(2, 8);
+		var x = ( Math.random() * window.innerWidth ).toFixed(0);
+		var y = ( Math.random() * window.innerHeight ).toFixed(0);
+
+		document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%)';
+	}
+
+</script>
+</body>
+</html>

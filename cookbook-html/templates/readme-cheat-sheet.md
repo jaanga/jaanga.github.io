@@ -1,21 +1,32 @@
 <span style=display:none; >
 [You are now in GitHub source code view - click this link to view Read Me file as a web page]
-( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
+( http://jaanga.github.io/cookbook-html/templates/ "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) » 
-[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) » [Reader Iframes]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/  ) 
+[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) » 
 
 [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
 ===
 
 Interesting things you can do with Markdown.
 
-## Updated 2016-05-10
+
+### Updated 2016-05-25
 
 * http://jaanga.github.io/cookbook-html/templates/index.html#readme-cheat-sheet.md
 
 
+### Images
+
+![External Link Icon]( Icon_External_Link.png =100x100 )
+
+
+![ text ]( http://lorempixel.com/800/600 =400x300 )
+
+![ text ]( http://lorempixel.com/800/600 =200x150 )
+
+ 
 ### Figures
 
 <figure>
@@ -28,12 +39,6 @@ Interesting things you can do with Markdown.
 <figure >
 <a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
 <figcaption>Fig2. - A view of the caption</figcaption>
-</a>
-</figure>
-
-<figure >
-<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
-<figcaption>Fig3. - A view of the caption</figcaption>
 </a>
 </figure>
 
@@ -52,16 +57,14 @@ Interesting things you can do with Markdown.
 
 ___
 
-### Images
 
-![ text ]( http://lorempixel.com/800/600 =400x300 )
-
-### Links
+### Links of Interest
 
 https://github.com/showdownjs/showdown  
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 
 http://google.com
+
 
 
 ### Strike through
@@ -106,6 +109,7 @@ http://google.com
 		* item
 * item
 
+
 ### Text
 
 	_italics_
@@ -115,6 +119,7 @@ _italics_
 	**Bold**
 
 **Bold**
+
 
 ### Code
 ```
@@ -131,6 +136,7 @@ text with `back quote` characters
 
 text text text
 
+
 ### Quotes
 ```
 > quote
@@ -142,10 +148,10 @@ text text text
 > quote
 > quote
 
+
+### Footers
+
 <br>
-
-###### Heading 6 - use as caption to a full screen iframe
-
 
 ***
 

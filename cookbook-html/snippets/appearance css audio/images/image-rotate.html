@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title>image rotate</title>
+<meta charset='utf-8'>
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<img id="image" src="fg_generic_craft.png" />
+<script>
+
+document.body.style.cssText = ' font: bold 12pt monospace; ';
+var info = document.body.appendChild( document.createElement( 'div' ) );
+info.innerHTML = '<h1>Howdy</h1>';
+
+//image.style.position = 'absolute';
+//image.style.left = '5%';
+image.style.webkitTransform = image.style.MozTransform = image.style.transform = 'rotate(-70deg)';
+</script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css"> 
+
+#menu { width:60px;
+-webkit-transition-property:width;
+-webkit-transition-duration:1s; }
+#menu:hover { width:700px; }
+
+#txt2 { top: 100px; width: }
+#menu:hover #txt2 { top: 0px;
+-webkit-transition-property:top;
+-webkit-transition-duration:1s; }
+
+#txt3 { top: 0px; left: 70px;}
+#menu:hover #txt3 { top: 180px; left: 180px;
+-webkit-transition-property:top,left;
+-webkit-transition-duration:1s; 
+}
+</style>
+</head>
+<body>
+<script>
+document.body.style.font = '11pt monospace';
+document.body.style.margin = '0';
+document.body.style.overflow = 'hidden';
+	
+var menu = document.createElement( 'div' );
+document.body.appendChild( menu );
+menu.id = 'menu';
+//menu.style.border = '2pt solid #000';
+menu.style.font = 'bold 36pt monospace';
+menu.style.height = '500px';
+menu.style.left = '0px';
+menu.style.overflow = 'hidden';
+menu.style.position = 'absolute';
+menu.style.top = '20px';
+//menu.style.width = '80px';
+
+var txt1 = document.createElement( 'div' );
+menu.appendChild( txt1 );
+
+txt1.id = 'txt1';
+txt1.style.backgroundColor = '#f00';
+txt1.innerHTML = 'Menu'; 
+txt1.style.left = '-135px';
+txt1.style.paddingLeft = '20px';
+txt1.style.position = 'absolute';
+txt1.style.top = '200px';
+txt1.style.width = '300px';
+txt1.style.WebkitTransform = 'rotateZ(90deg)';
+
+var txt2 = document.createElement( 'div' );
+menu.appendChild( txt2 );
+
+txt2.innerHTML = '<div> Iteration system wide engenders economies of scale,' +
+ 'cross-media technology, presentation action items and life cycle replication.</div>';
+txt2.id = 'txt2';
+txt2.style.border = '2pt solid #000';
+txt2.style.font = '12pt monospace';
+txt2.style.left = '100px';
+txt2.style.position = 'absolute';
+// txt2.style.top = '100px';
+txt2.style.width = '200px';
+
+var txt3 = document.createElement( 'div' );
+menu.appendChild( txt3 );
+
+txt3.innerHTML = '<div>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</div>';
+txt3.id = 'txt3';
+txt3.style.border = '2pt solid #000';
+txt3.style.font = '12pt monospace';
+//txt3.style.left = '70px';
+txt3.style.position = 'absolute';
+//txt3.style.top = '100px';
+txt3.style.width = '500px';
+
+function bigIt() {
+	thing.style.width = '300px';
+	thing.webkitTransitionProperty = 'width';
+	thing.webkitTransitionDiration = '5s';
+}
+</script>
+<!--
+<div id="info"></div>
+<p>Hover over the div element above, to see the transition effect.</p>
+-->
+</body>
+</html>

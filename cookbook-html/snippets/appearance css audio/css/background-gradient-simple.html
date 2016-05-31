@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>background-gradient-simple.html</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+<style>
+/* http://stackoverflow.com/questions/2869212/css3-gradient-background-set-on-body-doesnt-stretch-but-instead-repeats */
+
+	html {
+		height: 90%; /* adjust to no show scroll bar */
+	}
+	body {
+		background: purple; /* Old browsers */
+		background: -moz-radial-gradient( top right, purple 30%, black ); /* FF3.6+ */
+		background: -webkit-radial-gradient( top right, purple 30%, black ); /* Chrome10+,Safari5.1+ */
+		background: -o-linear-gradient( top right, purple 30%, black ); /* Opera 11.10+ */
+		background: -ms-linear-gradient( top right, purple 30%, black ); /* IE10+ */
+		background: linear-gradient( top right, purple 30%, black ); /* W3C */
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-position: 0px 0px;
+		color: lavender;
+		font: bold 18pt monospace;
+		height: 100%;
+		width: 95%; /* adjust to no show scroll bar */
+	}
+
+</style>
+</head>
+<body>
+<script>
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<div id=msg ></div>';
+
+</script>
+</body>
+</html>

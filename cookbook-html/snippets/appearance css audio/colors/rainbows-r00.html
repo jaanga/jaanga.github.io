@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 >
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+// http://krazydad.com/tutorials/makecolors.php
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>Rainbows</h1>' +
+		'<div id=msg></div>';
+
+	var
+	frequency1 = 0.3, 
+	frequency2 = 0.3, 
+	frequency3 = 0.3, 
+	phase1 = 0, 
+	phase2 = 2 * Math.PI / 3, 
+	phase3 = 4 * Math.PI / 3 , 
+	center = 128; //255 / 2, 
+	amplitude = 127; // / 2, 
+	len = 80;
+
+	makeColorGradient( frequency1, frequency2, frequency3, phase1, phase2, phase3, center, amplitude, len );
+
+	function makeColorGradient( frequency1, frequency2, frequency3, phase1, phase2, phase3, center, amplitude, len ) {
+		if ( len == undefined ) len = 50;
+		if ( center == undefined ) center = 128;
+		if ( amplitude == undefined ) amplitude = 127;
+		var red, grn, blu;
+		for ( var i = 0; i < len; ++i) {
+			red = Math.sin( frequency1 * i + phase1 ) * amplitude + center;
+			grn = Math.sin( frequency2 * i + phase2 ) * amplitude + center;
+			blu = Math.sin( frequency3 * i + phase3 ) * amplitude + center;
+			document.write( '<font color="' + RGB2Color(red,grn,blu) + '">&#9608;</font>');  // Note that &#9608; is a unicode character that makes a solid block
+		}
+
+		document.write( '<br>');
+
+		for ( i = 0; i < len; ++i) {
+			red = Math.sin( frequency1 * i + phase1) * amplitude + center;
+			grn = Math.sin( frequency2 * i + phase2) * amplitude + center;
+			blu = Math.sin( frequency3 * i + phase3) * amplitude + center;
+			document.write( '<font color="#' + rgbToHex(red,grn,blu) + '">&#9608;</font>');  // box character
+		}
+	}
+
+	function RGB2Color(r,g,b) {
+		var str = '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
+console.log( str );
+		return str;
+	}
+
+	function byte2Hex( n ) {
+		var nybHexString = "0123456789ABCDEF";
+		return String( nybHexString.substr( ( n >> 4 ) & 0x0F, 1 ) ) + nybHexString.substr( n & 0x0F, 1 );
+	}
+
+// http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
+	function rgbToHex(r, g, b) {
+		if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
+		var str = ( ( r << 16 ) | ( g << 8 ) | b ).toString( 16 );
+		str = ('0' + str).slice(-6); 
+console.log ( str );
+		return str;
+	}
+
+
+</script>
+</body>
+</html>

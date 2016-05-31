@@ -1,20 +1,23 @@
+
+
 Jaanga Style Guide
 ===
 
-_update 2016-05-19_
+_update 2016-05-31_
 
 ## Coding Style & URL Naming Guidelines
 
 You should be able to download or copy a folder to your computer and it should just run.
 
 The code should be as close as possible to readable - or even spoken - English. 
-In other words it's great if you can read the code out load and it mean something.
+* In other words it's great if you can read the code out load and it mean something.
+* It should only take ypu a few minutes to gt the idea of what it does.
 
 The coding style of an app should follow the style of the most-used library of the app.
-The style of an app built with jQuery should follow the style of, say, the [jQuery API Documentation]( http://api.jquery.com/ ). 
-The style of an app built using Three.js should follow the style of, say, the [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ).
-The styles in both the above examples do tend to be fairly simple coding styles - which is great for our kinds of uses.
-On occasion a greater degree of complexity is required In that case then the source code of each library should be used as it respective style to follow.
+* The style of an app built with jQuery should follow the style of, say, the [jQuery API Documentation]( http://api.jquery.com/ ). 
+* The style of an app built using Three.js should follow the style of, say, the [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ).
+* The styles in both the above examples do tend to be fairly simple coding styles - which is great for our kinds of uses.
+* On occasion a greater degree of complexity is required In that case then the source code of each library should be used as it respective style to follow.
 
 
 _What the following needs, more than anything, is links to sources that justify the following statement.

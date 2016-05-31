@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 >
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+// Marianas Trench - 10,911 meters
+// Mount Everest - 8,848 meters
+
+// http://krazydad.com/tutorials/makecolors.php
+	var frequency1 = 0.0001, 
+	frequency2 = 0.0002, 
+	frequency3 = 0.0008, 
+	phase1 = 0, 
+	phase2 = 2, // 2 * Math.PI / 3, 
+	phase3 = 4, // 4 * Math.PI / 3 , 
+	center = 128; //255 / 2, 
+	amplitude = 127; // / 2;
+
+	var sin = function( n ) { return Math.sin( n ); };
+
+	var list = [];
+
+	init();
+
+	function init() {
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<h1>Global Heightmap Color Range Viewer ~ ' +
+				'<a id=aHelp href=# onclick=help.style.display="block"; >&#x24D8;</a>' +
+			'</h1>' +
+			'<div id=menu>' +
+				'Frequency 1:<input id=inpFrequency1 > ' +
+				'Frequency 2:<input id=inpFrequency2 > ' +
+				'Frequency 3:<input id=inpFrequency3 >' +
+				'<br>' +
+				'Phase 1:<input id=inpPhase1 > ' +
+				'Phase 2:<input id=inpPhase2 > ' +
+				'Phase 3:<input id=inpPhase3 > - ' +
+				'Center:<input id=inpCenter > ' +
+				'Amplitude:<input id=inpAmplitude > - ' +
+				'<a href=JavaScript:drawColors(); >Go</a>' +
+			'</div>' +
+			'<div id=vals></div>' +
+			'<div id=msg></div>';
+
+		inpFrequency1.type = 'range';
+		inpFrequency1.min = 0.00001;
+		inpFrequency1.max = 0.001;
+		inpFrequency1.step = 0.0001;
+		inpFrequency1.title = inpFrequency1.value = frequency1;
+		inpFrequency1.onchange = function() { inpFrequency1.title = frequency1 = parseFloat( this.value); };
+
+		inpFrequency2.type = 'range';
+		inpFrequency2.min = 0.00001;
+		inpFrequency2.max = 0.001;
+		inpFrequency2.step = 0.0001;
+		inpFrequency2.title = inpFrequency2.value = frequency2;
+		inpFrequency2.onchange = function() { inpFrequency2.title = frequency2 = parseFloat( this.value); };
+
+		inpFrequency3.type = 'range';
+		inpFrequency3.min = 0.00001;
+		inpFrequency3.max = 0.001;
+		inpFrequency3.step = 0.0001;
+		inpFrequency3.title = inpFrequency3.value = frequency3;
+		inpFrequency3.onchange = function() { inpFrequency3.title = frequency3 = parseFloat( this.value); };
+
+		inpPhase1.type = 'range';
+		inpPhase1.min = 0;
+		inpPhase1.max = Math.PI * 2;
+		inpPhase1.step = 0.1;
+		inpPhase1.title = inpPhase1.value = phase1;
+		inpPhase1.onchange = function() { inpPhase1.title = phase1 = parseFloat( this.value); };
+
+		inpPhase2.type = 'range';
+		inpPhase2.min = 0;
+		inpPhase2.max = Math.PI * 2;
+		inpPhase2.step = 0.1;
+		inpPhase2.title = inpPhase2.value = phase2;
+		inpPhase2.onchange = function() { inpPhase2.title = phase2 = parseFloat( this.value); };
+
+		inpPhase3.type = 'range';
+		inpPhase3.min = 0;
+		inpPhase3.max = Math.PI * 2;
+		inpPhase3.step = 0.1;
+		inpPhase3.title = inpPhase3.value = phase3;
+		inpPhase3.onchange = function() { inpPhase3.title = phase3 = parseFloat( this.value); };
+
+		inpCenter.type = 'range';
+		inpCenter.min = 0;
+		inpCenter.max = 255;
+		inpCenter.step = 0.5;
+		inpCenter.title = inpCenter.value = center;
+		inpCenter.onchange = function() { inpCenter.title = center = parseFloat( this.value); };
+
+		inpAmplitude.type = 'range';
+		inpAmplitude.min = 0;
+		inpAmplitude.max = 255;
+		inpAmplitude.step = 0.5;
+		inpAmplitude.title = inpAmplitude.value = amplitude;
+		inpAmplitude.onchange = function() { inpAmplitude.title = phase1 = parseFloat( this.value); };
+
+		for ( var i = 0; i < 9000; i += 10 ) {
+			list.push( i );
+		}
+
+		drawColors();
+		addHelp();
+	}
+
+	function drawColors() {
+		vals.innerHTML = 'Settings: Frequency1: ' + frequency1 + ' Frequency2: ' + frequency2 + ' Frequency3: ' + frequency3 + 
+			' - Phase1: ' + phase1 + ' Phase2: ' + phase2 + ' Phase3: ' + phase3.toFixed(3) + ' - Center: ' + center + ' Amplitude: ' + amplitude;
+
+		msg.innerHTML = '';
+
+		for (var i = 0, len = list.length; i < len; i++) {
+			if ( i % 50 === 0 ) msg.innerHTML += '<br>' + ('hts: ' + ( i * 10 + 1) + '-' + ( i * 10 + 500) + ' ... ' ).substr(0,15) ;
+			msg.innerHTML += '<font size=48 color="#' + getColorOnGradient( list[i] ) + '" style=margin-left:1px; >&#9608;</font>';
+		}
+	}
+
+	function getColorOnGradient( number ) {
+		var red = sin( frequency1 * number + phase1 ) * amplitude + center;
+		var grn = sin( frequency2 * number + phase2 ) * amplitude + center;
+		var blu = sin( frequency3 * number + phase3 ) * amplitude + center;
+		var str = ( ( red << 16 ) | ( grn << 8 ) | blu ).toString( 16 );
+		str = ( '0' + str ).slice(-6); 
+// console.log ( str );
+		return str;
+	}
+
+	function addHelp() {
+		help = document.body.appendChild( document.createElement( 'div' ) );
+		help.style.cssText = 'display: none; background-color: #ccc; left: 50px; opacity: 0.9; padding: 20px; ' +
+			'bottom: 0; left: 0; height: 370px; margin: auto; position: absolute; right: 0; top: 0; width: 500px; zIndex:10; ';
+		help.innerHTML =
+			'<div onclick=help.style.display="none"; >' +
+				'<h3>Global Heightmap Color Range Viewer</h3>' +
+// 				'<h4>Major Issues include the following:</h4>' +
+				'<ul>' +
+					'<li>Color selection concept from: <a href="http://krazydad.com/tutorials/makecolors.php" target="_blank">Making annoying rainbows in javascript</a> ' +
+						'- A tutorial by jim bumgardner</li>' +
+		//			'<li>High elevations truncated</li>' +
+		//			'<li>Occasional repeating of rows or columns of tiles</li>' +
+		//			'<li>Altitudes indicate relative not actual positions</li>' +
+		//			'<li>Zoom level 7 and lower: elevations not drawn properly & many other issues</li>' +
+				'</ul>' +
+				'<a href="https://github.com/jaanga/terrain-viewer/tree/gh-pages/xxx" target="_blank">Source code</a><br>' +
+				'<small>' +
+				'<a href="http://jaanga.github.io" target="_blank">jaanga</a><br>' +
+				'copyright &copy; 2014 Jaanga authors ~ MIT license</small><br><br>' +
+				'<i>Click anywhere in this message to hide...</i>' +
+		'</div>';
+		aHelp.style.cssText += 'text-decoration: none; ';
+		aHelp.title = 'Get help and information';
+		//aHelp.onclick = 'help.style.display="block";';
+	}
+
+/*
+		var
+		frequency1 = 0.3, 
+		frequency2 = 0.3, 
+		frequency3 = 0.3, 
+		phase1 = 0, 
+		phase2 = 2 * Math.PI / 3, 
+		phase3 = 4 * Math.PI / 3 , 
+		center = 128; //255 / 2, 
+		amplitude = 127; // / 2, 
+		len = 80;
+
+		makeColorGradient( frequency1, frequency2, frequency3, phase1, phase2, phase3, center, amplitude, len );
+*/
+	function makeColorGradient( frequency1, frequency2, frequency3, phase1, phase2, phase3, center, amplitude, len ) {
+		if ( len == undefined ) len = 50;
+		if ( center == undefined ) center = 128;
+		if ( amplitude == undefined ) amplitude = 127;
+		var red, grn, blu;
+		for ( var i = 0; i < len; ++i) {
+			red = Math.sin( frequency1 * i + phase1 ) * amplitude + center;
+			grn = Math.sin( frequency2 * i + phase2 ) * amplitude + center;
+			blu = Math.sin( frequency3 * i + phase3 ) * amplitude + center;
+			document.write( '<font color="' + RGB2Color(red,grn,blu) + '">&#9608;</font>');  // Note that &#9608; is a unicode character that makes a solid block
+		}
+
+		document.write( '<br>');
+
+		for ( i = 0; i < len; ++i) {
+			red = Math.sin( frequency1 * i + phase1) * amplitude + center;
+			grn = Math.sin( frequency2 * i + phase2) * amplitude + center;
+			blu = Math.sin( frequency3 * i + phase3) * amplitude + center;
+			document.write( '<font color="#' + rgbToHex(red,grn,blu) + '">&#9608;</font>');  // box character
+		}
+	}
+
+	function RGB2Color(r,g,b) {
+		var str = '#' + byte2Hex(r) + byte2Hex(g) + byte2Hex(b);
+console.log( str );
+		return str;
+	}
+
+	function byte2Hex( n ) {
+		var nybHexString = "0123456789ABCDEF";
+		return String( nybHexString.substr( ( n >> 4 ) & 0x0F, 1 ) ) + nybHexString.substr( n & 0x0F, 1 );
+	}
+
+// http://stackoverflow.com/questions/6735470/get-pixel-color-from-canvas-on-mouseover
+	function rgbToHex(r, g, b) {
+		if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
+		var str = ( ( r << 16 ) | ( g << 8 ) | b ).toString( 16 );
+		str = ('0' + str).slice(-6); 
+console.log ( str );
+		return str;
+	}
+
+</script>
+</body>
+</html>

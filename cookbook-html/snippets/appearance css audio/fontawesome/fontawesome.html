@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Fort Awesome</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+<link rel=stylesheet href=http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css />
+</head>
+<body>
+<script>
+// http://fortawesome.github.io/Font-Awesome/icons/
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<p><a href="http://fortawesome.github.io/Font-Awesome/icons/" target="_blank">fo*r*tawesome</a></p>' +
+		'<div id=msg >' +
+			'<i class="fa fa-external-link"></i><br>' +
+		'</div>';
+
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Page Animation R1</title>
+<meta charset=utf-8 />
+<meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
+<style>
+
+#content{
+	-webkit-animation-duration: 3s;
+	-webkit-animation-name: slidein;
+	position: absolute;
+	top: -500px;
+}
+
+@-webkit-keyframes slidein {
+  from {
+	top: 0px;
+  }
+  to {
+	top: -500px;
+  }
+}
+
+</style>
+</head>
+<body>
+<script>
+
+	init();
+
+	function init() {
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?<br><br>';
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerText = 'body { font: 600 12pt monospace;  margin: 0; text-align: center; }' +
+			'h1 a {text-decoration: none; }' +
+			'.group { outline: 0px solid red; margin: 0 auto; max-width: 900px; }' +
+			'.group:after { content:""; display: table; clear: both; }' +
+			'#menu { outline: 1px solid red; float: left; width: 24%; }' +
+			'#content { outline: 1px solid red; margin: 5px 0 0 25%; height: 600px; overflow: hidden; }' + 
+			'@media screen and (max-width: 480px) { #menu, #content { float: none; margin: 0; width: auto; } }' +
+		'';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<div class=group >' + 
+			'<div id=menu >' + 
+				'<a href=#p1 >p1</a><br>' +
+				'<a href=#p2 >p2</a><br>' +
+				'<a href=#p3 >p3</a><br>' +
+				'<a href=#p4 >p4</a><br>' +
+				'<a href=#p5 >p5</a><br>' +
+			'</div>' +
+			'<div id=content >' + 
+				'<a id=p1 >p1</a> ' + txt + '<img src=http://lorempixel.com/400/200 /><br>' + txt +
+				'<a id=p2 >p2</a> ' + txt + '<img src=http://lorempixel.com/400/200 /><br>' + txt +
+				'<a id=p3 >p3</a> ' + txt + '<img src=http://lorempixel.com/400/200 /><br>' + txt +
+				'<a id=p4 >p4</a> ' + txt + '<img src=http://lorempixel.com/400/200 /><br>' + txt +
+				'<a id=p5 >p5</a> ' + txt + '<img src=http://lorempixel.com/400/200 /><br>' + txt +
+		'</div>';
+
+	}
+
+</script>
+</body>
+</html>

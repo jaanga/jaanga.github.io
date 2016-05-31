@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Color Palette</title>
+<style type="text/css">
+div{margin:0;width:20px;height:20px;float:left}
+.clear{clear:both}
+</style>
+</head>
+<body>
+<script>
+// http://stackoverflow.com/questions/11162664/generate-color-palette-using-javascript
+
+var r = 0,
+    g = 255,
+    b = 45;
+
+function createBr() {
+    var b = document.createElement('br');
+    b.style.clear = 'both';
+    document.body.appendChild(b);
+}
+
+function createDiv(r,g,b) {
+var a = document.createElement('div');
+a.style.background = 'rgb(' + r + ',' + g + ',' + b + ')';
+document.body.appendChild(a);
+}
+
+
+function createColorPaletteXXX(value) {
+var v = 255/value;
+    for(i = 0; i < v; i++) {
+        r = r + value;
+        g = g + value;
+        b = b + value;
+        createDiv(r,g,b);
+    }
+createBr();
+}
+
+function createColorPalette(value) {
+    var v = 255/value;
+    for ( var rStep = 0, r = 0; rStep < v; rStep++) {    
+        for( var gStep = 0, g = 0; gStep < v; gStep++ ) {       
+            for( var bStep = 0, b = 0; bStep < v; bStep++ ) {                                                  
+                createDiv(r,g,b);
+                b += value;
+            }
+            g += value;
+        }
+        r += value;
+    }
+    createBr();
+}
+
+// put in 5,15,17 or 51 as value below
+createColorPalette(17);
+</script>
+</body>
+</html>

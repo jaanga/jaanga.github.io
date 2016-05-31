@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Multiple Images with Positioned Text</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+<style>
+
+	body {
+		border: 1px solid gray;
+		margin: auto;
+		text-align: center;
+		width: 800px;
+	}
+	.pic {
+		border: 1px solid red;
+		float: left;
+		height: 200px;
+//		width: 200px; 
+		position: relative;
+	}
+
+	.pic-text1 {
+		color: green;
+		position: absolute;
+		right: 5px;
+		top: 5px;
+	}
+
+	.pic-text2 {
+		bottom: 5px;
+		color: blue;
+		left: 5px;
+		position: absolute;
+	}
+
+</style>
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<div id=msg ></div>';
+
+	for (var i = 0, len = 10; i < len; i++) {
+		var hgt = ( 50 + Math.random() * 200 );
+		var wid = ( 50 + Math.random() * 200 );
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.className = 'pic';
+		info.style.cssText += 'height: ' + hgt + 'px; width: ' + wid + 'px;';
+		info.innerHTML = 
+			'<img src=../images/lightning.jpg height= ' + hgt + ' width=' + wid + ' />' +
+			'<div class=pic-text1  >text1 ' +  i  + '</div>' +
+			'<div class=pic-text2  >text2 ' +  i  + '</div>';
+	}
+
+</script>
+</body>
+</html>

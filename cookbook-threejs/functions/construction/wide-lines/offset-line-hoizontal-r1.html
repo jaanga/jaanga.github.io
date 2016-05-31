@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>offset-line-r1.html</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+
+	var css, info, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement('style') );
+		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' ;
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'margin: 20px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg ></div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+// ground box
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -10, 0 );
+		scene.add( mesh );
+
+		mesh = new THREE.GridHelper( 50, 10 );
+		mesh.position.set( 0, -9, 0 );
+		scene.add( mesh );
+
+// axes
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+
+		var points = [ v( -30, 0, 10 ), v( -10, 0, 50 ), v( 70, 0, 70 ), v( 50, 0, 10 ), v( 10, 0, 15 ) ];
+
+		line = li3( points )
+
+		scene.add( line );
+
+		offset( points, 8 );
+
+		offset( points, -8 );
+
+	}
+
+	function offset( pointsArray, width ) {
+
+		var lines = [];
+		var points = [];
+		var pt1, pt2, pt3;
+
+		for ( var i = 0; i < pointsArray.length - 1; i++ ) {
+
+			pt1 = pointsArray[ i ];
+			vectorDelta = pointsArray[ i + 1 ].clone().sub( pt1 );
+			angle1 = Math.atan2( vectorDelta.z, vectorDelta.x );
+
+			pt2 = v( pt1.x + width * Math.cos( angle1 - Math.PI / 2 ), 0, pt1.z - width * Math.sin( angle1 + Math.PI / 2 ) );
+			length = pt1.distanceTo( pointsArray[ i + 1] );
+
+			pt3 = v( pt2.x + length * Math.cos( angle1 ), 0, pt2.z + length * Math.sin( angle1 ) )
+
+			if ( i === 0 ) {
+
+				line2 = new THREE.Line3( pt1, pt2 );
+				lines.push( line2 );
+
+			}
+
+			line2 = new THREE.Line3( pt2, pt3 );
+			lines.push( line2 );
+
+		}
+
+		line2 = new THREE.Line3( pt2, pt3 );
+//			lines.push( line2 );
+
+		for ( var i = 0; i < lines.length; i++ ) {
+
+			if ( i < lines.length - 1 ) {
+
+				pt = intersectionTwoLines2( lines[ i ], lines [ i + 1 ] );
+
+			} else {
+
+				line = lines[ lines.length - 1 ];
+
+				vectorDelta = line.end.clone().sub( line.start );
+				angle2 = Math.atan2( vectorDelta.z, vectorDelta.x );
+
+				pt = v( line.end.x + width * Math.cos( angle2 - Math.PI / 2 ), 0, line.end.z - width * Math.sin( angle2 + Math.PI / 2 ) );
+
+				line2 = new THREE.Line3( line.end, pt );
+
+// console.log( line2 );
+
+				pt = intersectionTwoLines2( lines[ i ], line2 );
+
+			}
+
+			points.unshift( pt );
+
+		}
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = points;
+
+		material = new THREE.LineBasicMaterial( { color: 'red' } );
+
+		line = new THREE.Line( geometry, material );
+
+		scene.add( line );
+
+	}
+
+	function intersectionTwoLines2( line1, line2 ) {
+// http://jsfiddle.net/justin_c_rounds/Gd2S2/
+
+			line1Start = line1.start;
+			line1End = line1.end;
+
+			line2Start = line2.start;
+			line2End = line2.end;
+
+			denominator = ( (line2End.z - line2Start.z ) * ( line1End.x - line1Start.x ) )
+				- ( ( line2End.x - line2Start.x ) * ( line1End.z - line1Start.z ) );
+
+			if ( denominator == 0 ) {
+
+console.log( 'not' );
+
+				return;
+
+			}
+
+			a = line1Start.z - line2Start.z;
+			b = line1Start.x - line2Start.x;
+
+			numerator1 = ( (line2End.x - line2Start.x ) * a ) - ( (line2End.z - line2Start.z ) * b );
+			numerator2 = ( (line1End.x - line1Start.x ) * a ) - ( (line1End.z - line1Start.z ) * b );
+
+			a = numerator1 / denominator;
+			b = numerator2 / denominator;
+
+			x = line1Start.x + ( a * (line1End.x - line1Start.x ));
+			z = line1Start.z + ( a * (line1End.z - line1Start.z ));
+
+			return v( x, 0, z);
+
+	}
+
+
+	function li3( points) {
+
+		var geometry = new THREE.Geometry();
+
+		geometry.vertices = points;
+
+		material = new THREE.LineBasicMaterial( { color: 'blue' } );
+
+		return new THREE.Line( geometry, material );
+
+	}
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>css</title>
+<meta charset='utf-8' />
+<meta name="author" content="Theo Armour">
+<style>
+/*
+p:before {content: "» ";}
+p:after {content: "| ";}
+a {color: #aaa; text-decoration: none;}
+*/
+</style>
+</head>
+<body>
+<script type='text/javascript'>
+  document.body.style.cssText = 'font: bold 18pt monospace; margin: 0;';
+  
+  sidebarVisible = true;
+  helpVisible = false;
+
+/*  
+  var css = document.createElement('style');
+  css.type = 'text/css';
+  var styles = 'a { color: #066; text-decoration: none;} p:before {content: "» ";}  p:after {content: "| ";}';
+  var styles = ' body { color: #888; text-align: right; }';  
+  css.appendChild(document.createTextNode(styles));
+  document.getElementsByTagName("head")[0].appendChild(css);
+*/
+  
+  var sheet = document.createElement('style')
+  sheet.innerHTML = 'div {border: 2px solid black; background-color: blue;} a { color: #dd0; text-decoration: none;} p:before {content: "» ";}  p:after {content: "| ";} ';
+  document.body.appendChild(sheet);
+  
+  
+
+  var header = document.createElement( 'div' );
+  document.body.appendChild( header );
+  header.style.cssText = 'background-color: #ddd; border: 1px solid red; position: fixed; right: 35px; top: 30px; width: 250px; z-index: 100; ';
+  header.innerHTML='<h3 style="margin: 0; text-align:right">' +
+  '<a href="#" onclick="toggleMenu()">[X]</a></h3><h1 style="margin: 0;">howdy</h1>' +
+  '<div style="text-align:right"><a href="#" onclick="toggleHelp()">?</a>';
+
+  var sidebar = document.createElement( 'div' );
+  document.body.appendChild( sidebar );
+  sidebar.style.cssText = 'background-color: #ddd; border-radius: 10px; box-shadow: 10px 10px 5px #444; height: 85%; overflow: auto; ' +
+    'padding: 140px 5px 5px 15px; opacity: 0.9; position: fixed; top: 30px; width: 260px; z-index: -1; right: 20px;'; 
+  sidebar.innerHTML='';
+  var txt = 'lorem ipsum, quia <a href="#" target="_blank">dolor sit</a>, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+  for (var i = 0; i < 5; i++) {
+    sidebar.innerHTML += '<h2 id="h' + i + '" onclick="showText(' + i + ')" style="margin:0;padding:0;" > - Text ' + i + '</h2><p id="p' + i + '" >' + txt + '</p>';
+  } 
+
+  var helpbar = document.createElement( 'div' );
+  document.body.appendChild( helpbar );
+  helpbar.style.cssText = 'background-color: #eee; border-radius: 10px; box-shadow: 10px 10px 5px #444; display: none; height: 200px%; overflow: auto; ' +
+    'padding: 5px 5px 5px 15px; opacity: 0.9; position: fixed; top: 200px; width: 400px; z-index: 200; right: 100px'; 
+  helpbar.innerHTML = '<div onclick="toggleHelp()"><h3>help</h3><br>Iteration system wide engenders economies of scale, cross-media technology, ' +
+    'presentation action items and life cycle replication.</div>'; 
+
+  function toggleMenu() {
+    if (sidebarVisible) {
+      sidebar.style.display = 'none';
+      sidebarVisible = false;
+    } else {
+      sidebar.style.display = 'block';
+      sidebarVisible = true;
+    }
+  }
+  
+  function toggleHelp() {
+    if (helpVisible) {
+      helpbar.style.display = 'none';
+      helpVisible = false;
+    } else {
+      helpbar.style.display = 'block';
+      helpVisible = true;
+    }
+  }  
+  
+  function showText(i) {
+    var t = document.getElementById('p' + i);
+    var h = document.getElementById('h' + i);
+    if (t.style.display == '' || t.style.display == 'block' ) {
+      t.style.display = 'none';
+      h.innerHTML = ' + Text ' + i;
+    } else {
+      t.style.display = 'block';
+      h.innerHTML = ' - Text ' + i;
+    }
+  }  
+</script>
+</body>
+</html>

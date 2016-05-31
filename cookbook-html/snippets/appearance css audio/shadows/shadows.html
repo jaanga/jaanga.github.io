@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Howdy</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+
+</head>
+<body>
+<script>
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h1 { margin: 0; text-shadow: 0.1em 0.1em 0.2em #888 }' +
+
+		'';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<div id=msg ></div>';
+
+</script>
+</body>
+</html>

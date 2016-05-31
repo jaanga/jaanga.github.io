@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>background-gradient</title>
+<meta charset=utf-8>
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+
+<script>
+/*
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML = 'body { font: bold 36pt monospace; height: 800px; margin: 0; overflow: hidden; text-align: center; ' +
+		// 'background: #860432; '+
+		'background: -webkit-gradient(radial, center center, 0, center center, 460, from(#8dc63f), to(#205075));  ' +  //  Safari 4-5, Chrome 1-9
+		'outline: 2px solid green;' +
+	'}' ;
+
+*/
+
+		css = document.body.appendChild( document.createElement('style') );
+		
+		var col1 = "#" + Math.random().toString(16).slice(2, 8);
+		var col2 = "#" + Math.random().toString(16).slice(2, 8);
+		var col3 = "#" + Math.random().toString(16).slice(2, 8);
+		var X = ( Math.random() * window.innerWidth ).toFixed(0);
+		var Y = (Math.random() * window.innerHeight).toFixed(0);
+		var center =  20 + (Math.random() * 60).toFixed(0);
+		console.log( col1, col2, X, Y );
+		css.innerHTML = 'body { font: 600 36pt monospace; margin: 0; height: 1000px; overflow: hidden; text-align: center; ' +
+			'text-shadow: 2px 2px 2px pink, 2px -2px 2px #444; ' +
+			'background: -webkit-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%);' +
+			'background: -moz-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%);' +
+			'background: radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%);' +
+			// 'background: radial-gradient(45px 45px, cover, rgb(255, 0, 0) 0%, rgb(0, 0, 255) 100%); }' +
+		'';
+	
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg ></div>';
+
+	
+	//info.style.cssText = ' font: bold 12pt monospace; height: 300px; ' +
+		//'background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#b8042f), to(#860432); ' +
+		//'background: -webkit-gradient(radial, center center, 0, center center, 460, from(#8dc63f), to(#205075)); /* Safari 4-5, Chrome 1-9 */ ' +
+		//'background: -webkit-linear-gradient(#b8042f, #860432);' +
+		//'outline: 1px solid red;' +
+	//'';
+/*
+	var tab = document.getElementById("tab");
+	tab.style.cssText = 'height:300px;';
+	tab.style.background = "#860432";
+	tab.style.background = "-moz-linear-gradient(#b8042f, #860432)";
+	tab.style.background = "-o-linear-gradient(#b8042f, #860432)";
+	tab.style.background = "-webkit-gradient(linear, 0% 0%, 0% 100%, from(#b8042f), to(#860432))";
+	// tab.style.background = "-webkit-linear-gradient(#b8042f, #860432)";
+*/
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>array of colors</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	var count = 24;
+	var colors;
+
+	init();
+
+	function init() {
+
+		txt = '';
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg ></div>' +
+			'<div id=divColor ></div>' +
+		'';
+
+		colors = colorful( count ); 
+ 
+		for ( var i = 0; i < count; i++ ) {
+
+			txt += '<div style="background-color: hsl(' + colors[i] + ', 80%, 50% ); float: left; height: 100px; margin: 20px; width: 100px; "  ></div>';
+
+		} 
+
+		divColor.innerHTML = txt;
+
+	}
+
+
+	function colorful( count ) {
+
+		var colors = [];
+		var delta = 360 / count;
+
+		for ( var i = 0; i < count; i++ ) {
+
+			colors.push( i *  delta );
+
+		}
+
+		return colors;
+
+	}
+
+</script>
+</body>
+</html>

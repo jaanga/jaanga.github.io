@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<title>JavaScript CSS</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Theo Armour">
+<style>
+body {font: 12pt monospace;}
+</style>
+</head>
+<body>
+<script type='text/javascript'>
+container = document.createElement( 'div' );
+document.body.appendChild( container );
+container.id = 'mydiv';
+container.style.left = '200px';
+container.style.padding = '20px';
+container.style.position = 'absolute';
+container.style.top = '200px';
+container.style.width = '200px';
+container.innerHTML='Conceptualizing random endpoints in a access matrix provides reach extensions enterprise wide. Respective divisions historically insignificant, upscale trend lines in a management inventory analysis survivability format.';
+
+function getsupportedprop(proparray){
+    var root=document.documentElement //reference root element of document
+    for (var i=0; i<proparray.length; i++){ //loop through possible properties
+        if (typeof root.style[proparray[i]]=="string"){ //if the property value is a string (versus undefined)
+            return proparray[i] //return that string
+        }
+    }
+}
+ 
+//SAMPLE USAGE
+var boxshadowprop=getsupportedprop(['boxShadow', 'MozBoxShadow', 'WebkitBoxShadow']) //get appropriate CSS3 box-shadow property
+// document.getElementById("mydiv").style[boxshadowprop]="5px 5px 1px #818181" //set CSS shadow for "mydiv"
+mydiv.style[boxshadowprop]="15px 5px 1px #818181" //set CSS shadow for "mydiv"
+
+var boxshadowprop=getsupportedprop(['boxShadow', 'MozBoxShadow', 'WebkitBoxShadow']) //get appropriate CSS3 box-shadow property
+// document.getElementById("mydiv").style[boxshadowprop]="5px 5px 1px #818181" //set CSS shadow for "mydiv"
+mydiv.style[boxshadowprop]="15px 5px 1px #818181" //set CSS shadow for "mydiv"
+
+
+function alertboxshadow(){
+    alert(getsupportedprop(['WebkitTransform']))
+}
+
+</script>
+<a href="JavaScript:alertboxshadow()">alert</a>
+</body>
+</html>

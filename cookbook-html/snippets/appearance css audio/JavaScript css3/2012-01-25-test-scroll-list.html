@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<title>try</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Theo Armour">
+<style>
+body {font: 12pt monospace;}
+</style>
+</head>
+<body>
+<script type='text/javascript'>
+container = document.createElement( 'div' );
+document.body.appendChild( container );
+container.innerHTML='howdy';
+
+var info = document.createElement( 'div' );
+info.style.backgroundColor = '#ddd';
+info.style.borderRadius = '8px';
+info.style.height = '600px';
+info.style.left = '10px';
+info.style.opacity = '0.95';
+info.style.padding = '28px 20px';
+info.style.position = 'absolute';
+info.style.top = '10px'; 
+info.style.textAlign = 'left';   
+//info.style.textShadow = '10px';
+info.style.width = '500px';
+info.style.overflow = 'scroll';
+info.style.zIndex = '1001';
+info.innerHTML = "<div><ul id='UL'>" +
+"<li id='L1'><a href='#' onClick='Update()'>Update</a> &nbsp;</li>" +
+"</ul></div>";
+container.appendChild( info );
+
+for (var i = 0; i < 10; i++) {
+	var li = document.createElement('li');
+	li.id = 'item' + i;
+    li.innerHTML = 'item ' + i;
+	UL.style.listStyleType = 'none';
+	UL.style.margin = '0';
+	UL.style.padding = '0';
+	UL.appendChild(li);
+}
+
+item2.innerHTML = "time: " + new Date().getTime();
+
+var list = [];
+for (var i = 0; i < 50; i++) {
+	var li = document.createElement('li');
+	li.id = 'item' + i;
+    li.innerHTML = 'item ' + i;
+	list.push(li);
+	UL.appendChild(li);
+}
+
+function Update() {
+	for (var i = 0; i < 50; i++) {
+		list[i].innerHTML =  i + " new time: " + new Date().getTime();
+	}
+}
+
+</script>
+</body>
+</html>

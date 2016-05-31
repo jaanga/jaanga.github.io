@@ -18,7 +18,7 @@
 	* Displays time zone and time zone ID
 ' >
 <meta name=keywords content='time,Google Maps API,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-03-17' >
+<meta name=date content='2016-05-25' >
 </head>
 <body>
 <script>
@@ -74,14 +74,14 @@
 			'</h2>' +
 			'<p><button onclick=requestCheck() >Check UTC</button></p>' +
 
-			'<p>City<br><select id=selLocation size=10 onchange=getTime(); ></select></p>' +
+			'<p>City<br><select id=selLocation size=10 onchange=getDateOffsetThere(); ></select></p>' +
 
-			'<p>UTC Hours &nbsp; <input type=range id=inpHours max=23 min=0 step=1 oninput=updateDate(); > ' +
+			'<p>Hours &nbsp; <input type=range id=inpHours max=23 min=0 step=1 oninput=setDateThere(); > ' +
 				'<output id=outHours ></output></p>' +
-			'<p>UTC Minutes <input type=range id=inpMinutes max=59 min=0 step=1 oninput=updateDate(); title="0 to 59" > ' +
+			'<p>Minutes <input type=range id=inpMinutes max=59 min=0 step=1 oninput=setDateThere(); title="0 to 59" > ' +
 				'<output id=outMinutes ></output></p>' +
 
-			'<p id=info ></p>' +
+			'<p id=contentsDates ></p>' +
 
 		'';
 
@@ -95,11 +95,11 @@
 
 		selLocation.selectedIndex = 6;
 
-		getRemoteDate();
+		getDateOffsetThere();
 
 	}
 
-	function getRemoteDate() {
+	function getDateOffsetThere() {
 
 		var locate, dateHere, offsetHere, dateUTCZero, timeStamp;
 
@@ -115,13 +115,13 @@
 
 		request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + locate[ 0 ] + ',' + locate[ 1 ] + '&timestamp=' + timeStamp;
 
-		requestRemoteTimeZone( request );
+		requestTimeZoneThere( request );
 
 	}
 
-	function requestRemoteTimeZone( url ) {
+	function requestTimeZoneThere( url ) {
 
-		var xhr;
+		var xhr, dateThereNow;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', url, true );
@@ -136,9 +136,9 @@
 
 					offsetThere = ( timeZone.rawOffset + timeZone.dstOffset ) /  3600;
 
-					dateThere = new Date( utcZero + 3600000 * offsetThere );
+//					dateThereNow = new Date( utcZero + 3600000 * offsetThere );
 
-					updateUserInterface( dateThere );
+					setDateThereNow();
 
 				} else {
 
@@ -150,29 +150,53 @@
 
 	}
 
-	function updateDate() {
+	function setDateThereNow() {
 
-		var date;
+		var dateThereNow;
 
-		date = new Date( utcZero );
+		dateThereNow = new Date( utcZero + 3600000 * offsetThere );
 
-		dateThere = new Date( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), inpHours.valueAsNumber + offsetThere, inpMinutes.valueAsNumber );
+		inpHours.value = dateThereNow.getHours();
+		inpMinutes.value = dateThereNow.getMinutes();
 
-		updateUserInterface( dateThere );
+		setContentsDates( dateThereNow );
 
 	}
 
-	function updateUserInterface( dateThere ) {
+	function setDateThere() {
 
-//		var locate, dateUTCZero;
+		var date, dateThere;
+
+		date = new Date( utcZero + 3600000 * offsetThere );
+
+		year = document.getElementById( 'inpYear' ) ? inpYear.valueAsNumber : date.getYear();
+		month = document.getElementById( 'inpMonth' ) ? inpMonth.valueAsNumber : date.getMonth();
+		day = document.getElementById( 'inpDate' ) ? inpDate.valueAsNumber : date.getDate();
+		hours = document.getElementById( 'inpHours' ) ? inpHours.valueAsNumber: date.getHours();
+		minutes = document.getElementById( 'inpMinutes' ) ? inpMinutes.valueAsNumber: date.getMinutes();
+
+		dateThere = new Date( year, month, day, hours, minutes, date.getSeconds() );
+
+		setContentsDates( dateThere );
+
+	}
+
+	function setContentsDates( dateThere ) {
+
+// console.log( 'dateThere', dateThere );
+
+		var locate, dateUTC;
 
 		locate = locations[ selLocation.selectedIndex ];
 
-		info.innerHTML = 
+		dateUTC = new Date( dateThere - 3600000 * offsetThere  ) ;
+
+		contentsDates.innerHTML = 
 
 			'<h3>' + locate[ 2 ] + '</h3>' +
 
-			'<p>Given a UTC time at 0&deg; longitude of ' + ( "0" + inpHours.value ).slice( - 2 ) + ':' + ( "0" + inpMinutes.value ).slice( - 2 ) + '</p>' +
+			'<p>Given a UTC time at 0&deg; longitude of: ' + 
+				( "0" + dateUTC.getHours() ).slice( - 2 ) + ':' + ( "0" + dateUTC.getMinutes() ).slice( - 2 ) + '</p>' +
 			'<p>At latitude: ' + locate[ 0 ] + ' longitude: ' + locate[ 1 ] + '</p>' +
 			'<p>Time Zone ID: ' + timeZone.timeZoneId + '</p>' +
 			'<p>Time zone: ' + timeZone.timeZoneName + '</p>' +
@@ -184,13 +208,8 @@
 
 		'';
 
-		dateUTCZero = new Date( utcZero );
-
-		inpHours.value = dateUTCZero.getHours();
-		inpMinutes.value = dateUTCZero.getMinutes();
-
-		outHours.value = inpHours.value;
-		outMinutes.value = ( '0' + dateUTCZero.getMinutes() ).slice( - 2 );
+		outHours.value = ( '0' + inpHours.value ).slice( -2 );
+		outMinutes.value = ( '0' + inpMinutes.value ).slice( -2 );
 
 	}
 

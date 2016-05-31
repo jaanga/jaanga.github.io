@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Color Viewer</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+		var css = document.head.appendChild( document.createElement('style') );
+		css.innerHTML ='body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+			'div { margin: 20px; }' +
+		'';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg1 ></div>' +
+		'<div style="border: solid black 1px; background-color: rgba(255, 54, 130, 1 ); width: 100px; height: 100px;" ></div>' +
+		'<div style="border: solid black 1px; background-color: #FF3682; width: 100px; height: 100px;" ></div>' +
+
+		'<div style="border: solid black 1px; background-color: rgb( 159, 145, 255 ); width: 100px; height: 100px;" ></div>' +
+		'<div style="border: solid black 1px; background-color: #9691ff; width: 100px; height: 100px;" ></div>' +
+
+
+	'';
+
+
+
+</script>
+</body>
+</html>

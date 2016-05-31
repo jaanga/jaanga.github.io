@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css"> 
+#info {
+width:60px;
+/* background:red; */
+transition-property:width;
+transition-duration:5s;
+/* Firefox 4 */
+-moz-transition-property:width;
+-moz-transition-duration:5s;
+/* Safari and Chrome */
+-webkit-transition-property:width;
+-webkit-transition-duration:1s;
+/* Opera */
+-o-transition-property:width;
+-o-transition-duration:5s;
+}
+
+#info:hover {width:700px;}
+
+#menu { -webkit-transform: rotateZ(90deg);}
+
+#txt2 {top: 100px; width: 100px;}
+
+#info:hover #txt2 {top: 0px;
+-webkit-transition-property:top;
+-webkit-transition-duration:3s;}
+
+#txt3 {top: 0px;}
+#info:hover #txt3 {top: 180px;
+-webkit-transition-property:top;
+-webkit-transition-duration:1.5s;}
+
+</style>
+</head>
+<body>
+<script>
+document.body.style.font = '11pt monospace';
+document.body.style.margin = '0';
+document.body.style.overflow = 'hidden';
+	
+var info = document.createElement( 'div' );
+document.body.appendChild( info );
+info.id = 'info';
+//info.style.border = '2pt solid #000';
+info.style.font = 'bold 36pt monospace';
+info.style.height = '500px';
+info.style.left = '0px';
+info.style.overflow = 'hidden';
+info.style.position = 'absolute';
+info.style.top = '20px';
+//info.style.width = '80px';
+
+var menu = document.createElement( 'div' );
+info.appendChild( menu );
+menu.id = 'menu';
+menu.style.backgroundColor = '#f00';
+menu.style.borderLeft = '15pt solid #f00';
+menu.innerHTML = 'Menu'; 
+menu.style.left = '-135px';
+//menu.style.paddingLeft = '10px';
+menu.style.position = 'absolute';
+menu.style.top = '200px';
+menu.style.width = '300px';
+
+var txt2 = document.createElement( 'div' );
+info.appendChild( txt2 );
+
+txt2.innerHTML = '<div> Iteration system wide engenders economies of scale,' +
+ 'cross-media technology, presentation action items and life cycle replication.</div>';
+txt2.id = 'txt2';
+txt2.style.border = '2pt solid #000';
+txt2.style.font = '12pt monospace';
+txt2.style.left = '100px';
+txt2.style.position = 'absolute';
+// txt2.style.top = '100px';
+txt2.style.width = '200px';
+
+var txt3 = document.createElement( 'div' );
+info.appendChild( txt3 );
+
+txt3.innerHTML = '<div>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</div>';
+txt3.id = 'txt3';
+txt3.style.border = '2pt solid #000';
+txt3.style.font = '12pt monospace';
+txt3.style.left = '70px';
+txt3.style.position = 'absolute';
+// txt2.style.top = '100px';
+txt3.style.width = '500px';
+
+function bigIt() {
+	thing.style.width = '300px';
+	thing.webkitTransitionProperty = 'width';
+	thing.webkitTransitionDiration = '5s';
+}
+</script>
+<!--
+<div id="info"></div>
+<p>Hover over the div element above, to see the transition effect.</p>
+-->
+</body>
+</html>

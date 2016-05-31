@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>css numbering</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+// See https://developer.mozilla.org/en-US/docs/Web/API/window.getComputedStyle
+
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML = 'body { font: bold 12pt monospace; counter-reset:section;}' +
+		'p:before { counter-increment: section; content: "Paragraph " counter( section ) ". "; }' +
+	'';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>Howdy</h1>' +
+		'<p>aaa bbb ccc ddd eee fff eee ggg</p>' +
+		'<p id=p2 >aaa bbb ccc ddd eee fff eee ggg</p>' +
+		'<p>aaa bbb ccc ddd eee fff eee ggg</p>' +
+		'<p>aaa bbb ccc ddd eee fff eee ggg</p>' +
+	'';
+
+	var para = document.querySelector('p');
+	var result = getComputedStyle( para, ':before').content;
+	console.log( result );
+
+	var element = document.getElementById('p2');
+    var style = window.getComputedStyle(element, ':before');
+    var bits = style.getPropertyValue( 'counter-increment' );
+	console.log( style, bits );
+
+</script>
+</body>
+</html>
