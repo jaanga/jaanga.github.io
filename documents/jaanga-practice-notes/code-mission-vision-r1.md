@@ -131,6 +131,18 @@ There are no black boxes - with things in other places - that you never look at.
 
 Instead of a huge file of opaque CSS rules that are mostly never invoked, there's half a dozen rules just for the script in play.
 
+
+## Links of Interest
+
+* [Brett Victor]( http://worrydream.com/ )
+* [It's OK not to use tools ]( https://signalvnoise.com/posts/3752-its-ok-not-to-use-tools )
+* [The Art of Shipping Early and Often]( http://themacro.com/articles/2016/02/tips-ship-early-and-often/ )
+* [Write code that is easy to delete, not easy to extend]( http://programmingisterrible.com/post/139222674273/write-code-that-is-easy-to-delete-not-easy-to )
+* [move fast & break nothing]( https://zachholman.com/talk/move-fast-break-nothing/ )
+* [Norris Numbers]( http://www.teamten.com/lawrence/writings/norris-numbers.html )
+	* Good reasons for keeping your code small
+	* Note: author still thinks bigger is better
+
 ***
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >

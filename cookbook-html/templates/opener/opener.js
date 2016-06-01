@@ -42,6 +42,7 @@
 		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 		url = location.hash.slice( 1 );
+
 		document.title = url.split( '/' ).pop() + ' ~ ' + document.title;
 
 		xhr = new XMLHttpRequest();
