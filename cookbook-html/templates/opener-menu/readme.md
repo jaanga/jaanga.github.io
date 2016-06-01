@@ -16,6 +16,14 @@
 
 [dev notes]( index.html#dev-notes.md )
 
+## Change Log
+
+### 2016-05-31
+
+* First commit
+* Using in Jaanga Documents Practice Guide
+
+
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
 </center>

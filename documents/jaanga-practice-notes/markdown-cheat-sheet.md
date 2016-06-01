@@ -15,13 +15,13 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ### Updated 2016-05-31
 
 * http://jaanga.github.io/documents/jaanga-practice-notes/viewer/menu-contents-in-markdown-r1.html#../markdown-cheat-sheet.md
-* [local]( ./menu-contents-in-markdown-r1.html#../markdown-cheat-sheet.md)
+* [local]( ./index.html#markdown-cheat-sheet.md)
 
 ### Images
 
 #### External Link icon file
 
-![External Link Icon]( ../../files/Icon_External_Link.png =100x100 )  
+![External Link Icon]( ../files/Icon_External_Link.png =100x100 )  
 
 #### lorempixel - for random images
 
