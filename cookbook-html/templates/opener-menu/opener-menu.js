@@ -3,7 +3,8 @@
 	var defaultHash =  'readme.md';
 	var readerSource = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
 	var reader, converter;
-	var contents; // must be global
+	var contents;
+	var title = document.title;
 
 //	init();
 
@@ -64,14 +65,13 @@
 
 		url = location.hash ? location.hash.slice( 1 ) : defaultHash;
 
-		document.title = url.split( '/' ).pop() + ' ~ ' + document.title;
+		document.title = url.split( '/' ).pop() + ' ~ ' + title;
 
 		getMarkdown( url, contents )
 
 	}
 
 	function getMarkdown( url, target ) {
-
 
 		var xhr = new XMLHttpRequest();
 		xhr.open( 'GET', url, true );

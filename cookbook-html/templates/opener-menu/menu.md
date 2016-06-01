@@ -14,7 +14,7 @@
 
 [File 2]( #../test/file2.md )
 
-[Read Me Cheat Sheet]( readme-cheat-sheet.md )
+[Read Me Cheat Sheet]( #../test/readme-cheat-sheet.md )
 
 
 ***
