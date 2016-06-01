@@ -14,7 +14,7 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 
 ### Updated 2016-05-31
 
-* http://jaanga.github.io/documents/jaanga-practice-notes/viewer/menu-contents-in-markdown-r1.html#../markdown-cheat-sheet.md
+* http://jaanga.github.io/documents/jaanga-practice-notes/#markdown-cheat-sheet.md
 * [local]( ./index.html#markdown-cheat-sheet.md)
 
 ### Images

@@ -24,6 +24,11 @@ It then becomes good practice to assume that all your files will eventually be p
 From time to time is is necessary or expedient to edit a URL using your keyboard and typing characters.
 If you know the URL is all lower case this can speed things up and reduce errors.
 
+Another very good reason is that some operating systems differentiate between the case of folder and file names - and others do not.
+If you stick to lower case you may simplify the process of moving files from one OS to another OS.
+  
+
+
 
 
 
