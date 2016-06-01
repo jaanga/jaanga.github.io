@@ -1,17 +1,14 @@
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]
+( http://jaanga.github.io/documents/jaanga-practice-notes/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/jaanga-practice-notes/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 
-Jaanga Style Guide
+Code Style
 ===
 
 _update 2016-05-31_
 
-## Coding Style & URL Naming Guidelines
-
-You should be able to download or copy a folder to your computer and it should just run.
-
-The code should be as close as possible to readable - or even spoken - English. 
-* In other words it's great if you can read the code out load and it mean something.
-* It should only take ypu a few minutes to gt the idea of what it does.
+## Standing on shoulders of giants
 
 The coding style of an app should follow the style of the most-used library of the app.
 * The style of an app built with jQuery should follow the style of, say, the [jQuery API Documentation]( http://api.jquery.com/ ). 
@@ -20,10 +17,13 @@ The coding style of an app should follow the style of the most-used library of t
 * On occasion a greater degree of complexity is required In that case then the source code of each library should be used as it respective style to follow.
 
 
-_What the following needs, more than anything, is links to sources that justify the following statement.
+## JavaScript
+
+_What the following needs, more than anything, is links to sources that justify the following statement._
+
 This documents should not be the ideas popping out of an individuals head, but the result of a number of long term investigations.
 In other words, this document is not anecdotal but based on clinical studies. 
-The following should a demonstration based on the [scientific method]( https://en.wikipedia.org/wiki/Scientific_method )._
+The following should a demonstration based on the [scientific method]( https://en.wikipedia.org/wiki/Scientific_method ).
 
 * Code generally follows the [Three.js examples]( http://mrdoob.github.io/three.js/examples/ ) coding style
 	* In the instance of a [Three.js]( http://threejs.org ) script, the style generally follows [Mr.doob Coding Style]( https://github.com/mrdoob/three.js/wiki/Mr.doob%27s-Code-Style%E2%84%A2 ).
@@ -33,7 +33,7 @@ The following should a demonstration based on the [scientific method]( https://e
 	* Uses init() and animate() functions
 	* Loads libraries from GitHub via a CDN
 	* No external js or css files other then standard Three.js files
-	* You should be able to move from reading Mr.doob's examples to reading Jaanga examples with little or no hesitation
+	* You should be able to move from reading Mr.doob's examples to reading our examples with little or no hesitation
 	* In other words, code for youngsters/oldsters/beginners
 * Lots of white space
 	* Good: x = 23 * y + 54 * z
@@ -55,22 +55,33 @@ The following should a demonstration based on the [scientific method]( https://e
 * Very limited usage of libraries
 	* No need to know Three.js and jQuery and whatever before you begin
 	* Knowing some JavaScript and something about a single library should be good enough in most instances
-* Lots of small apps
-	* Not one big app
-* Emphasis on astronomy, physics, math but not coding
-	* We seek great visualizations not great code
-	* The code is not there to impress programmers or to show off programming skills
-		* Unless that skill is about making code simpler and easier to digest
-	* The code must be easy to read so that the physics, math, engineering or whatever stands out not the techie bits
-	* Typically you are looking at two screens or windows - one showing the simulation and the other showing the code
-		* The task is to reduce the multi-tasking to a minimum
-* Sharing is of the essence
-	* Fork, edit/improve, share is the mantra
+* Take as much advantage as possible of the HTML 5 [Document Object Model (DOM)]( http://en.wikipedia.org/wiki/Document_Object_Model ) as possible
+	* Example: `<tag id=thing >stuff</tag>`
+		* 'thing' is taken as a global variable directly and immediately
+		* `document.getElemenById is never invoked
+	* Implies no support for elderly browsers
+		* OK since WebGL cannot run in elderly browsers
+		* Follows the Mr.doob ethos of no nostalgia, remain calm and progress into the future ASAP
+* More
 	* GitHub is the platform
+	* Absolute URLs are recommended for items that would otherwise have issues with loading into Code-Edit-View.
+	* Everything here is written in client-side JavaScript.
 
-Absolute URLs are recommended for items that would otherwise have issues with loading into Code-Edit-View.
+### HTML
 
-Everything in Jaanga is written in client-side JavaScript.
+* HTML is created as and when needed
+	* Example
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );  
+		contents.id = 'contents';  
+		contents.innerHTML =  
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+		'';
+
 
 ### CSS
 
@@ -78,32 +89,16 @@ Everything in Jaanga is written in client-side JavaScript.
 	* Tags
 	* Classes
 	* IDs
-* Within each section CSS tags are in alphabetical order
+* Within each of these sections the CSS items are listed in alphabetical order
 * CSS parameters are listed in alphabetical order
-
+	* Example: #bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; } 
 
 ### Various Other Coding Quirks
 
-* Latitude and longitude are always specified in this order
-	* lat = 2 * x
-	* lon = 3 * y
-* X and y are always specified in this order
-	* x = lon - 10;
-	* y = lat + 5;
-* Width and height are always specified in this order 
-	* width = lon / 2
-	* height = lat / 3
 * Separation of 3D in-world code and 2D user interface code
 	* All interaction with the Three.js code for 3D interaction is via embedded iframes
 	* Allows parent window to use any of the many popular JavaScript libraries
 	* Makes no attempt to turn Three.js code into, say, jQuery and ditto _vice versa_
-* Takes as much advantage of the HTML 5 [Document Object Model (DOM)]( http://en.wikipedia.org/wiki/Document_Object_Model ) as possible
-	* Example: `<tag id=thing >stuff</tag>`
-		* 'thing' is taken as a global variable directly and immediately
-		* `document.getElemenById is never invoked
-	* Implies no support for elderly browsers
-		* OK since WebGL cannot run in elderly browsers
-		* Follows the Mr.doob ethos of no nostalgia, remain calm and progress into the future ASAP
 * Code here is highly-risk taking
 	* Example: Double quotes only used when absolutely necessary
 		* The world: <html lang="en">
@@ -113,10 +108,6 @@ Everything in Jaanga is written in client-side JavaScript.
 * Code is designed to load or render on demand
 	* In other words to load and display something ASAP
 	* 'Just-in-time' library and data loading
-* Code style
-	* Generally follows '[MDCS]( https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2 )'
-	* As generous horizontally but much more greedy vertically
-	* Also passes jsHint
 * Code is designed to be seriously easy
 	* Encourages engineers, architects and designers and non-professional programmers to add features
 	* No need to know jQuery, Backbone, Angular. Get going if you only know a tiny bit of JavaScript
@@ -143,7 +134,15 @@ Everything in Jaanga is written in client-side JavaScript.
 		* As a variable declaration it can be placed at the top of a function add thus advertises its usage later on
 			* It's like the [gun on the mantle piece in a play]( https://en.wikipedia.org/wiki/Chekhov%27s_gun )
 		* This makes sense for one-liners only
-
+* Latitude and longitude are always specified in this order
+	* lat = 2 * x
+	* lon = 3 * y
+* X and y are always specified in this order
+	* x = lon - 10;
+	* y = lat + 5;
+* Width and height are always specified in this order 
+	* width = lon / 2
+	* height = lat / 3
 
 
 ***
