@@ -1,4 +1,10 @@
-﻿## URL Naming Conventions
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]
+( http://jaanga.github.io/documents/jaanga-practice-notes/ "View file as a web page." ) </span>
+<input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/jaanga-practice-notes/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
+
+
+
+## URL Naming Conventions
 
 Use suggestions such as those provided in the following articles for naming your repositories, folders and files:
 
