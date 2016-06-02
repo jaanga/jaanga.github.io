@@ -26,7 +26,8 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 
 ## Iframes
 
-<iframe class=ifr src=http://example.com/ width=100% height=600px ><img src=http://lorempixel.com/800/600 ></iframe>
+<iframe class=ifr src=http://example.com/ width=100% height=600px ></iframe>
+<img src=http://lorempixel.com/800/600  style=display:none; >
 
 ## Details & Summary
 
