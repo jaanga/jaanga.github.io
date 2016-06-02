@@ -33,7 +33,7 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ## Details & Summary
 
 <details>
-<summary style=text-size:18pt; >Summary</summary>
+<summary style=font-size:200%; >Summary</summary>
 Thing Details Details Details Details Details
 </details>
 
@@ -48,7 +48,7 @@ Thing Details Details Details Details Details
 
 ![ text ]( http://lorempixel.com/800/300 )
 
-<img src=http://lorempixel.com/800/300 width-250 height-200>
+<img src=http://lorempixel.com/800/300 width=250 height=200>
 
 
 2016-06-02 - no longer working
