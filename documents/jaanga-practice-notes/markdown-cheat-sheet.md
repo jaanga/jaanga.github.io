@@ -35,12 +35,18 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 Thing Details Details Details Details Details
 </details>
 
+<details>
+<summary>Summary</summary>
+Thing Details Details Details Details Details
+</details>
+
 ### Images
 
 #### External Link icon file
 
 ![External Link Icon]( ../files/Icon_External_Link.png )  
 
+<img src=../files/Icon_External_Link.png width="50" height="50" >
 
 #### lorempixel - for random images
 
