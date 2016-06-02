@@ -45,9 +45,16 @@ Thing Details Details Details Details Details
 
 #### lorempixel - for random images
 
-![]( http://lorempixel.com/800/300 =250x250)
+![ text ]( http://lorempixel.com/800/300 =250x250 )
 
-![]( http://lorempixel.com/800/300 | width=100)
+<img src=http://lorempixel.com/800/300 width-250 height-200>
+
+
+2016-06-02 - no longer working
+
+	![ text ]( http://lorempixel.com/800/300 =250x250 )
+
+	![ text ]( http://lorempixel.com/800/300 | width=100 )
 
  
 
