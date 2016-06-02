@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>Trim Four Points R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -21,6 +21,12 @@
 <script>
 
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var pi = Math.PI;
+	var pi05 = pi * 0.5;
+	var cos = Math.cos;
+	var sin = Math.sin;
+
 	var stats, renderer, scene, camera, controls;
 
 	init();
@@ -108,65 +114,118 @@
 // assets
 
 
-
 		geometry = new THREE.Geometry();
-		geometry.vertices = [ v( -100, 10, -100 ), v( 100, 10, 100 ),  ];
-		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-		line1 = new THREE.Line( geometry, material );
-		scene.add( line1 );
+		points = [];
+	
+		for ( var i = 0; i < 5; i++ ) {
 
-		geometry = new THREE.Geometry();
-		geometry.vertices = [ v( -80, 10, 100 ), v( 100, 10, -70 ),  ];
-		line2 = new THREE.Line( geometry, material );
+			pt = new THREE.Vector3( 100 * Math.random() - 50, 0 , 100 * Math.random() - 50 );
+			points.push( pt );
 
-		scene.add( line2 );
+console.log( 'point', pt );
 
-		pt = intersectionTwoLines( line1, line2 );
+		}
 
-		geometry = new THREE.Geometry();
-		geometry.vertices = [ v( -100, 0, -100 ), pt, v( 100, 0, -70 ),  ];
+
+		points = [ v( -20, 10, 20), v( 20, 10, 20 ), v( 20, 10, 10 ), v( 30, 10, 10 ), v( 30, 10, -10 ), v( 20, 10, -10 ) ];
+
+		points = [ v( -40, 10, -20), v( -20, 10, 0 ), v( 10, 10, 0 ), v( 20, 10, -10 ), v( 30, 10, -10 ), v( 40, 10, 0 ), v( 35, 10, 10 ), v( 40, 10, 20 ), 
+			 v( 30, 10, 30 ), v( 20, 10, 30 ), v( 10, 10, 20 ), v( 0, 10, 20 ), v( -10, 10, 30 ), v( -20, 10, 28 ), v( -30, 10, 20 ), 
+			v( -20, 10, 10 ), v( -30, 10, 0 ), v( -20, 10, -10 ), v( -20, 10, -20 ), v( -10, 10, -20 ), v( -10, 10, -30 ), v( -20, 10, -30 ) ];
+
+		geometry.vertices = points;
 		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-		line3 = new THREE.Line( geometry, material );
+		line = new THREE.Line( geometry, material );
 
-		scene.add( line3 );
+		scene.add( line );
 
-console.log( '', pt );
+
+		angles = getAngles( points )
+
+//console.log( 'angles', angles );
+
+		var radius = 3;
+
+		for ( var i = 0; i < angles.length; i++ ) {
+
+			pt = points[ i ].clone().add( new THREE.Vector3( radius * cos( angles[ i ] + pi05 ), 0, radius * sin( angles[ i ] + pi05 ) ) ); 
+
+				geometry = new THREE.BoxGeometry( 2, 2, 2 );
+				material = new THREE.MeshNormalMaterial();
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.copy( pt );
+//				scene.add( mesh );
+
+		}
+
+		for ( var i = 0; i < angles.length - 1; i++ ) {
+
+			if ( angles[ i ] - angles[ i + 1 ] > 0 ) {
+
+				pt = points[ i + 1 ].clone().add( new THREE.Vector3( radius * cos( angles[ i ] - pi05 - 0.3 ), 0, radius * sin( angles[ i ] - pi05 - 0.3 ) ) ); 
+
+			} else {
+
+				pt = points[ i + 1 ].clone().add( new THREE.Vector3( radius * cos( angles[ i ] + pi05 + 0.3 ), 0, radius * sin( angles[ i ] + pi05  + 0.3 ) ) ); 
+
+			}
+
+console.log( 'delta', angles[ i ].toFixed( 3 ), angles[ i + 1 ].toFixed( 3 ), ( angles[ i ] - angles[ i + 1 ] ).toFixed( 3 ) );
+
+				geometry = new THREE.BoxGeometry( 2, 2, 2 );
+				material = new THREE.MeshNormalMaterial();
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.copy( pt );
+				scene.add( mesh );
+
+		}
+
 
 	}
 
-	function intersectionTwoLines( line1, line2 ) {
 
-		l1Start = line1.geometry.vertices[ 0 ];
-		l1End = line1.geometry.vertices[ 1 ];
 
-		l2Start = line2.geometry.vertices[ 0 ];
-		l2End = line2.geometry.vertices[ 1 ];
+	function getAngles( points ) {
+
+		var angles, point;
+
+		angles = [];
+
+		for ( var i = 0; i < points.length - 1; i++) {
+
+			point = points[ i + 1 ].clone().sub( points[ i ] );
+
+			angles.push( Math.atan2( point.z, point.x ) );
+
+		}
+
+		return angles;
+
+	}
+
+
+
+
+	function intersectionFourPoints( l1Start, l1End, l2Start, l2End ) {
+
+		var denominator, a, b, numerator1, numerator2, x, z;
 
 		denominator = ( (l2End.z - l2Start.z ) * ( l1End.x - l1Start.x ) ) - ( ( l2End.x - l2Start.x ) * ( l1End.z - l1Start.z ) );
 
-//console.log( denominator  );
-
-		if ( denominator == 0 ) {
-
-console.log( 'not' );
-
-			return;
-
-		}
+		if ( denominator == 0 ) { console.log( 'not' ); return; }
 
 		a = l1Start.z - l2Start.z;
 		b = l1Start.x - l2Start.x;
 
-		numerator1 = ( (l2End.x - l2Start.x ) * a ) - ( (l2End.z - l2Start.z ) * b );
-		numerator2 = ( (l1End.x - l1Start.x ) * a ) - ( (l1End.z - l1Start.z ) * b );
+		numerator1 = ( ( l2End.x - l2Start.x ) * a ) - ( ( l2End.z - l2Start.z ) * b );
+		numerator2 = ( ( l1End.x - l1Start.x ) * a ) - ( ( l1End.z - l1Start.z ) * b );
 
 		a = numerator1 / denominator;
-		b = numerator2 / denominator;
 
-		x = l1Start.x + ( a * (l1End.x - l1Start.x ) );
-		z = l1Start.z + ( a * (l1End.z - l1Start.z ) );
+		x = l1Start.x + ( a * ( l1End.x - l1Start.x ) );
+		z = l1Start.z + ( a * ( l1End.z - l1Start.z ) );
 
-		return v( x, 0, z );
+		return new THREE.Vector3( x, 0, z );
 
 	}
 

@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>Infinite Landscape R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -20,7 +20,16 @@
 
 <script>
 
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	var geometryMap, materialMap, meshMap;
+
+	var landscape = [];
+	var columns = 7
+	var rows = 5;
+	var x = 0; // Math.floor( 1000 * Math.random() );
+	var y = 0; //Math.floor( 1000 * Math.random() );
+	var z = 0;
+	var target = new THREE.Object3D();
+
 	var stats, renderer, scene, camera, controls;
 
 	init();
@@ -63,10 +72,13 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
-			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
-/*			'<p><button onclick=doIt(); >do it</button></p>' +
-			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
-*/			'<div id=info ></div>' +
+
+			'<p><button onclick=goNorth(); >North</button></p>' +
+			'<p><button onclick=goSouth(); >South</button></p>' +
+			'<p><button onclick=goEast(); >East</button></p>' +
+			'<p><button onclick=goWest(); >West</button></p>' +
+
+			'<div id=info ></div>' +
 
 		'';
 
@@ -75,6 +87,7 @@
 		document.body.appendChild( stats.domElement );
 
 		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'keydown', onKeyUp, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
@@ -82,11 +95,12 @@
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
 		camera.position.set( 100, 100, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
+		controls.target = target.position;
 
 		scene = new THREE.Scene();
 
@@ -96,7 +110,7 @@
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
+//		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -10, 0 );
@@ -107,67 +121,146 @@
 
 // assets
 
-
-
-		geometry = new THREE.Geometry();
-		geometry.vertices = [ v( -100, 10, -100 ), v( 100, 10, 100 ),  ];
-		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-		line1 = new THREE.Line( geometry, material );
-		scene.add( line1 );
-
-		geometry = new THREE.Geometry();
-		geometry.vertices = [ v( -80, 10, 100 ), v( 100, 10, -70 ),  ];
-		line2 = new THREE.Line( geometry, material );
-
-		scene.add( line2 );
-
-		pt = intersectionTwoLines( line1, line2 );
-
-		geometry = new THREE.Geometry();
-		geometry.vertices = [ v( -100, 0, -100 ), pt, v( 100, 0, -70 ),  ];
-		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-		line3 = new THREE.Line( geometry, material );
-
-		scene.add( line3 );
-
-console.log( '', pt );
+		initLandscape();
 
 	}
 
-	function intersectionTwoLines( line1, line2 ) {
 
-		l1Start = line1.geometry.vertices[ 0 ];
-		l1End = line1.geometry.vertices[ 1 ];
+	function initLandscape() {
 
-		l2Start = line2.geometry.vertices[ 0 ];
-		l2End = line2.geometry.vertices[ 1 ];
+		geometryMap = new THREE.BoxGeometry( 0.8, 0.2, 0.8 );
+		materialMap = new THREE.MeshNormalMaterial();
 
-		denominator = ( (l2End.z - l2Start.z ) * ( l1End.x - l1Start.x ) ) - ( ( l2End.x - l2Start.x ) * ( l1End.z - l1Start.z ) );
+		for ( var i = 0; i < rows; i++ ) {
 
-//console.log( denominator  );
+			landscape[ i ] = [];
 
-		if ( denominator == 0 ) {
+			for ( var j = 0; j < columns; j++ ) {
 
-console.log( 'not' );
+				mesh = new THREE.Mesh( geometryMap, materialMap );
+				mesh.position.set( j - 0.5 * columns, 0, i - 0.5 * rows );
+				scene.add( mesh );
 
-			return;
+				landscape[ i ].push( mesh );
+
+			}
+
+		} 
+
+		controls.target.set( 0, 0, 0 );
+		camera.position.set( 10, 10, 10 );
+		x = 0;
+		z = 0;
+
+	}
+
+	function goNorth() {
+
+		var row, newRow = [], mesh;
+
+		row = landscape.pop();
+
+		for ( var i = 0; i < columns; i++ ) {
+
+			scene.remove( row[ i ] );
+			mesh = new THREE.Mesh( geometryMap, materialMap );
+			mesh.position.set( x + i - 0.5 * columns, 0, z - 1 - 0.5 * rows  );
+			scene.add( mesh );
+
+			newRow.push( mesh );
 
 		}
 
-		a = l1Start.z - l2Start.z;
-		b = l1Start.x - l2Start.x;
+		landscape.unshift( newRow );
+		z--;
+		target.position.z = z;
+		camera.position.z--;
+	}
 
-		numerator1 = ( (l2End.x - l2Start.x ) * a ) - ( (l2End.z - l2Start.z ) * b );
-		numerator2 = ( (l1End.x - l1Start.x ) * a ) - ( (l1End.z - l1Start.z ) * b );
 
-		a = numerator1 / denominator;
-		b = numerator2 / denominator;
+	function goSouth() {
 
-		x = l1Start.x + ( a * (l1End.x - l1Start.x ) );
-		z = l1Start.z + ( a * (l1End.z - l1Start.z ) );
+		var row, newRow = [];
 
-		return v( x, 0, z );
+		row = landscape.shift();
 
+		for ( var i = 0; i < columns; i++ ) {
+
+			scene.remove( row[ i ] );
+			mesh = new THREE.Mesh( geometryMap, materialMap );
+			mesh.position.set( x + i - 0.5 * columns, 0, z + rows - 0.5 * rows );
+			scene.add( mesh );
+
+			newRow.push( mesh );
+
+		}
+
+		landscape.push( newRow );
+
+
+		z++;
+		target.position.z = z;
+		camera.position.z++;
+	}
+
+	function goEast() {
+
+
+		for ( var i = 0; i < landscape.length; i++ ) {
+
+			mesh = landscape[ i ].shift();
+
+			scene.remove( mesh );
+			mesh = new THREE.Mesh( geometryMap, materialMap );
+			mesh.position.set( x + columns - 0.5 * columns, 0, z + i - 0.5 * rows );
+			scene.add( mesh );
+
+			landscape[ i ].push( mesh );
+
+		}
+
+		x++;
+		target.position.x = x;
+		camera.position.x++;
+	}
+
+	function goWest() {
+
+
+		for ( var i = 0; i < landscape.length; i++ ) {
+
+			mesh = landscape[ i ].pop();
+
+			scene.remove( mesh );
+			mesh = new THREE.Mesh( geometryMap, materialMap );
+			mesh.position.set( x - 1 - 0.5 * columns, 0, z + i - 0.5 * rows );
+			scene.add( mesh );
+
+			landscape[ i ].unshift( mesh );
+
+		}
+
+		x--;
+		target.position.x = x;
+		camera.position.x--;
+	}
+
+	function onKeyUp ( event ) {
+
+//console.log( 'key', event.keyCode );
+
+		controls.enableKeys = false;
+		event.preventDefault();
+
+		switch( event.keyCode ) {
+
+			case 37: /* cursor left  */ goWest();  break;
+			case 38: /* cursor up    */ goNorth(); break;
+			case 39: /* cursor right */ goEast();  break;
+			case 40: /* cursor down  */ goSouth(); break;
+		}
+
+		info.innerHTML = 'x:' + x + ' z: ' + z;
 	}
 
 	function onWindowResize() {
@@ -182,7 +275,7 @@ console.log( 'not' );
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 

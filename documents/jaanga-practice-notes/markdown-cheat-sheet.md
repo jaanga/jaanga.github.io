@@ -15,7 +15,15 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ### Updated 2016-05-31
 
 * http://jaanga.github.io/documents/jaanga-practice-notes/#markdown-cheat-sheet.md
-* [local]( ./index.html#markdown-cheat-sheet.md)
+* [local]( ./index.html#markdown-cheat-sheet.md )
+
+
+## Iframes
+
+<iframe class=ifr src=http://jaanga.github.io/ width=100% height=600px >
+![ text ]( http://lorempixel.com/800/600 =400x300 )
+</iframe>  
+
 
 ### Images
 

@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>offset-shape-r2.html</title>
+<title>Offset Shape R3.html</title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
 </head>
@@ -27,6 +27,8 @@
 		info.style.cssText = 'margin: 20px; position: absolute; ';
 		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
 			'<div id=msg ></div>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+
 		'';
 
 		stats = new Stats();
@@ -72,16 +74,17 @@
 
 		scene.add( line );
 
-		offset( points );
+		filletCorner( points );
 
 	}
 
 
-	function offset( dataArray ) {
+	function filletCorner( points ) {
 
+/*
 		var distance = 8;
 
-		var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+//		var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
 		lines = [];
 		points = [];
 
@@ -120,28 +123,35 @@
 			points.unshift( pt );
 
 		}
+*/
 
 		path = createPath( points );
 		var geometry = path.createSpacedPointsGeometry( 100 );
 		var shape = new THREE.Shape( geometry.vertices );
 		geometry = shape.extrude( { amount: 20, bevelEnabled: false} );
 
-		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: true } );
 
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.z = -30;
 		scene.add( mesh );
 
 		edges = new THREE.EdgesHelper( mesh, 0x333333 );
-		scene.add( edges );
+//		scene.add( edges );
 
 	}
 
-	function createPath( points ) {
+	function createPath( p ) {
+
+		points = p.reverse();
+
+		var pi05 = Math.PI * 0.5;
 
 		var radius = 3;
 		var path = new THREE.Path();
-		var angles = [];
+//		var angles 
+
+		angles = [];
 
 		for ( var i = 0; i < points.length; i++) {
 
@@ -159,23 +169,27 @@
 
 		}
 
-		for ( var i = 0; i < points.length; i++ ) {
+		path.absarc( points[ 0 ].x, points[ 0 ].y, radius, angles[ points.length - 1 ] + pi05, angles[ 0 ] - pi05, false );
 
-			if ( i === 0 ) {
+		for ( var i = 1; i < points.length - 1; i++ ) {
 
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ points.length - 1 ] + Math.PI / 2, angles[ i ] - Math.PI / 2, false );
+console.log( 'angles', angles[ i - 1], angles[ i ] );
 
-			} else if ( i === points.length - 1 ) {
+//			if ( i === points.length - 1 ) {
 
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i - 1 ] - Math.PI / 2, angles[ i ] + Math.PI / 2, false );
+//				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i - 1 ] - pi05, angles[ i ] + pi05, false );
 
-			} else {
+//			} else {
 
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i - 1 ] - Math.PI / 2, angles[ i ] - Math.PI / 2, false );
+				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i - 1 ] - pi05, angles[ i ] - pi05, false );
 
-			}
+//			}
 
 		}
+
+		path.absarc( points[ points.length - 1 ].x, points[ points.length - 1 ].y, radius, angles[ points.length - 1 - 1 ] - pi05, angles[ points.length - 1 ] + pi05, false );
+
+//		path.absarc( points[ points.length - 1 ].x, points[ points.length - 1 ].y, radius, angles[ points.length - 1 ] - pi05, angles[ points.length ] - pi05, false );
 
 		return path;
 
