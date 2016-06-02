@@ -31,7 +31,7 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ## Details & Summary
 
 <details>
-<h2 style=display:inline;margin:0;padding:0; ><summary style=display:inline;margin:0;padding:0; >Summary</summary></h2>
+<summary><h2 style=display:inline-block;margin:0;padding:0; >Summary</h2></summary>
 Thing Details Details Details Details Details
 </details>
 
