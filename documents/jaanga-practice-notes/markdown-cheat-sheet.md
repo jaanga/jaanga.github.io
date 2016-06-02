@@ -32,8 +32,13 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 
 ## Details & Summary
 
+<details><summary><h2 style=display:inline; >Summary</h2></summary>
+Thing Details Details Details Details Details
+</details>
+
+
 <details>
-<summary><h2 style=display:inline; >Summary<h2></summary>
+<summary>Summary</summary>
 Thing Details Details Details Details Details
 </details>
 
@@ -43,11 +48,23 @@ Thing Details Details Details Details Details
 
 ![External Link Icon]( ../files/Icon_External_Link.png )  
 
+<img src=../files/Icon_External_Link.png width="50" height="50" >
+
+
+
 #### lorempixel - for random images
 
 ![ text ]( http://lorempixel.com/800/300 )
 
-![ text ]( http://lorempixel.com/800/300 )
+
+
+2016-06-02 - no longer working
+
+<img src=http://lorempixel.com/800/300 width="250" height="200" >
+
+	![ text ]( http://lorempixel.com/800/300 =250x250 )
+
+	![ text ]( http://lorempixel.com/800/300 | width=100 )
 
  
 
@@ -219,3 +236,9 @@ Figures seem to be one per line. So they are not really useful for making galler
 <center title="dingbat" >
 # <a href=javascript:window.scrollTop=0; style=text-decoration:none; >❦</a>
 </center>
+
+<style>
+
+summary { color: red; }
+
+</style>
