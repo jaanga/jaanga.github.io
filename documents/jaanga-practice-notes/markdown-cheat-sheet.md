@@ -36,7 +36,6 @@ Thing Details Details Details Details Details
 </details>
 
 <details>
->>>>>>> origin/master
 <summary>Summary</summary>
 Thing Details Details Details Details Details
 </details>
@@ -234,8 +233,4 @@ Figures seem to be one per line. So they are not really useful for making galler
 # <a href=javascript:window.scrollTop=0; style=text-decoration:none; >❦</a>
 </center>
 
-<style>
-
-summary { color: red; }
-
-</style>
+<style>summary { color: red; }</style>
