@@ -33,7 +33,7 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ## Details & Summary
 
 <details>
-<summary><h2 style=display:inline; >Summary<h2></summary>
+<summary><h2 style=display:inline-block;margin:0; >Summary<h2></summary>
 Thing Details Details Details Details Details
 </details>
 
@@ -43,9 +43,10 @@ Thing Details Details Details Details Details
 
 ![External Link Icon]( ../files/Icon_External_Link.png )  
 
+
 #### lorempixel - for random images
 
-![ text ]( http://lorempixel.com/800/300 =250x250 )
+![ text ]( http://lorempixel.com/800/300 )
 
 <img src=http://lorempixel.com/800/300 width-250 height-200>
 
@@ -57,8 +58,6 @@ Thing Details Details Details Details Details
 	![ text ]( http://lorempixel.com/800/300 | width=100 )
 
  
-
-
 ### Horizontal rules
 
 #### What you type
