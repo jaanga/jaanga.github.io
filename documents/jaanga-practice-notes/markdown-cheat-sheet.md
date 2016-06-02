@@ -45,9 +45,9 @@ Thing Details Details Details Details Details
 
 #### lorempixel - for random images
 
-![ text ]( http://lorempixel.com/800/300 )
+![ text ]( http://lorempixel.com/800/300 =250x250)
 
-![ text ]( http://lorempixel.com/800/300 )
+![ text ]( http://lorempixel.com/800/300 | width=100)
 
  
 
