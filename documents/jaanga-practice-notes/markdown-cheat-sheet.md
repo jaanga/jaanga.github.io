@@ -33,7 +33,7 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ## Details & Summary
 
 <details>
-<summary style=font-size:18pt; >Summary</summary>
+<summary style=text-size:18pt; >Summary</summary>
 Thing Details Details Details Details Details
 </details>
 
