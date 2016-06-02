@@ -30,7 +30,7 @@ Display an `<iframe>` when viewed using GitHub pages and as an `<img>` when view
 
 <iframe class=ifr src=http://example.com/ width=100% height=600px ></iframe>
 
-<img src=../files/img_the_screm.png style=display:none; >
+<img src=../files/img_the_scream.jpg style=display:none; >
 
 ## Details & Summary
 
