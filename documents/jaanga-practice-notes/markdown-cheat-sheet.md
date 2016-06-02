@@ -26,21 +26,22 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 
 ## Iframes
 
-<iframe class=ifr src=http://example.com/ width=100% height=600px >
-<img src=http://lorempixel.com/800/600 >
-</iframe>  
+<iframe class=ifr src=http://example.com/ width=100% height=600px ><img src=http://lorempixel.com/800/600 ></iframe>
 
 ## Details & Summary
 
-<details><summary><h2 style=display:inline; >Summary</h2></summary>
+<details>
+<summary><h2 style=display:inline-block;margin:0;padding:0; >Summary</h2></summary>
 Thing Details Details Details Details Details
 </details>
 
-
 <details>
+>>>>>>> origin/master
 <summary>Summary</summary>
 Thing Details Details Details Details Details
 </details>
+
+
 
 ### Images
 
@@ -51,24 +52,20 @@ Thing Details Details Details Details Details
 <img src=../files/Icon_External_Link.png width="50" height="50" >
 
 
-
 #### lorempixel - for random images
 
 ![ text ]( http://lorempixel.com/800/300 )
 
 
-
 2016-06-02 - no longer working
 
-<img src=http://lorempixel.com/800/300 width="250" height="200" >
+	<img src=http://lorempixel.com/800/300 width=250 height=200>
 
 	![ text ]( http://lorempixel.com/800/300 =250x250 )
 
 	![ text ]( http://lorempixel.com/800/300 | width=100 )
 
  
-
-
 ### Horizontal rules
 
 #### What you type
