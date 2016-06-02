@@ -21,7 +21,7 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 ## Iframes
 
 <iframe class=ifr src=http://jaanga.github.io/ width=100% height=600px >
-![ text ]( http://lorempixel.com/800/600 =400x300 )
+![ text ]( http://lorempixel.com/800/600 )
 </iframe>  
 
 
@@ -29,31 +29,15 @@ Interesting things you can do with HTML and Markdown - particularly when as part
 
 #### External Link icon file
 
-![External Link Icon]( ../files/Icon_External_Link.png =100x100 )  
+![External Link Icon]( ../files/Icon_External_Link.png )  
 
 #### lorempixel - for random images
 
-![ text ]( http://lorempixel.com/800/600 =400x300 )
+![ text ]( http://lorempixel.com/800/600 )
 
-![ text ]( http://lorempixel.com/800/600 =200x150 )
+![ text ]( http://lorempixel.com/800/600 )
 
  
-#### Figures
-
-Figures seem to be one per line. So they are not really useful for making galleries. ;-(
-
-<figure>
-<a href=http://google.com >
-<img src="http://lorempixel.com/200/200/" >
-<figcaption>Fig1. - A view of image 1</figcaption>
-<a>
-</figure>
-
-<figure >
-<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
-<figcaption>Fig2. - A view of the caption</figcaption>
-</a>
-</figure>
 
 
 ### Horizontal rules
@@ -179,6 +163,33 @@ https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 <!--
 http://google.com
 -->
+
+## Things working not so well
+
+### Details & Summary
+
+<details>
+<summary>Summary</summary>
+Details Details Details Details Details
+</details>
+
+#### Figures
+
+Figures seem to be one per line. So they are not really useful for making galleries. ;-(
+
+<figure>
+<a href=http://google.com >
+<img src="http://lorempixel.com/200/200/" >
+<figcaption>Fig1. - A view of image 1</figcaption>
+<a>
+</figure>
+
+<figure >
+<a href=http://google.com ><img src="http://lorempixel.com/200/200/" >
+<figcaption>Fig2. - A view of the caption</figcaption>
+</a>
+</figure>
+
 
 
 ### Footers
