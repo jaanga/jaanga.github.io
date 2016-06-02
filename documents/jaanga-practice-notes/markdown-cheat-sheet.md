@@ -32,6 +32,10 @@ Display an `<iframe>` when viewed using GitHub pages and as an `<img>` when view
 
 <img src=../files/img_the_scream.jpg style=display:none; >
 
+You should see 'The Scream' when viewing via GitHub Source.
+
+You should see 'Example.com' when viewing via GitHub Pages.
+
 ## Details & Summary
 
 <details>
