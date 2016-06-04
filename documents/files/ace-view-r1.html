@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Ace File Viewer R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js ></script>
+<script>
+
+	var fileName = 'index.html';
+
+	init();
+
+	function init() {
+
+		var css;
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'html { height: 100%; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; }' +
+			'#edit { border: 0px solid; height: 100%; width: 100%; }' +
+
+		'';
+
+		edit = document.body.appendChild( document.createElement( 'div' ) );
+		edit.id = 'edit';
+
+		editor = ace.edit( 'edit' );
+		editor.$blockScrolling = Infinity;
+		editor.getSession().setMode("ace/mode/javascript");
+
+		fileName = location.hash ? location.hash.slice( 1 ) : fileName;
+
+		 getFile( fileName );
+
+	}
+
+	function getFile( url ) {
+
+		var xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', url, true );
+		xhr.onload = function() { editor.setValue( xhr.responseText, -1 ) };
+		xhr.send( null );
+
+	}
+
+</script>
+</body>
+</html>

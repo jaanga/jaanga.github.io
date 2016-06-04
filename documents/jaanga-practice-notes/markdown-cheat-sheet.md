@@ -11,6 +11,7 @@
 Interesting things you can do with HTML and Markdown - particularly when as part of a GitHub Read Me file.
 
 
+<script src="https://gist.github.com/theo-armour/8512f48f176082bb56e525462c4c67a6.js"></script>
 
 ### Updated 2016-06-02
 
@@ -35,6 +36,15 @@ Display an `<iframe>` when viewed using GitHub pages and as an `<img>` when view
 You should see 'The Scream' when viewing via GitHub Source.
 
 You should see 'Example.com' when viewing via GitHub Pages.
+
+
+## File Viewer
+
+<iframe class=ifr src=../files/ace-view-r1.html#../../index.html width=100% height=600px ></iframe>
+
+<iframe class=ifr src=../ace-view-r1.html#https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/analemma-3d-r14.html width=100% height=600px ></iframe>
+
+jaanga.github.io/cookbook-html/snippets/libraries/ace-editor/ace-view-r1.html
 
 ## Details & Summary
 
@@ -188,10 +198,33 @@ text text text
 > quote
 
 
-### Links of Interest
+## Links of Interest
 
-https://github.com/showdownjs/showdown  
-https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+* https://help.github.com/articles/basic-writing-and-formatting-syntax/
+* https://guides.github.com/features/mastering-markdown/
+* https://github.com/showdownjs/showdown  
+* https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+* https://help.github.com/articles/github-flavored-markdown  
+* http://daringfireball.net/projects/markdown/syntax
+* https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+* http://www.reddit.com/wiki/commenting
+
+## Alternatives
+
+<https://github.com/evilstreak/markdown-js>  
+<https://github.com/chjj/marked>
+
+* require node
+
+<http://strapdownjs.com/>
+
+* cannot interpret readme.md
+* embedded usage only
+* requires node
+
+<http://epiceditor.com/>
+
+* a live editor...
 
 <!--
 http://google.com

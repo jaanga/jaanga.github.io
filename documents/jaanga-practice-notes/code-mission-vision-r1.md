@@ -143,6 +143,18 @@ Instead of a huge file of opaque CSS rules that are mostly never invoked, there'
 	* Good reasons for keeping your code small
 	* Note: author still thinks bigger is better
 
+
+
+## Cookbook Meaning
+
+* http://english.stackexchange.com/questions/70799/meaning-of-cookbook-in-title-of-instructional-book
+* https://en.wikipedia.org/wiki/Cookbook#Usage_outside_the_world_of_food 
+* https://en.wikibooks.org/wiki/Coding_Cookbook
+* https://www.quora.com/Computer-Programming-How-should-I-study-the-OReilly-cookbook-books-I-dont-feel-I-internalize-much-just-by-reading-them-as-Im-a-very-hands-on-learner
+
+
+
+
 ***
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
