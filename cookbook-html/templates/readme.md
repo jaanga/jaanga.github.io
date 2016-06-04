@@ -7,7 +7,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [HTML Templates Read Me]( index.html )
 ===
 
-## >> [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
+## >> [Read Me Cheat Sheet]( http://jaanga.github.io/documents/jaanga-practice-notes/index.html#markdown-cheat-sheet.md )
 
 ***
 

@@ -4,7 +4,7 @@
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
 
-[Snippets Read Me]( index.html )
+[Examples Read Me]( index.html#readme.md )
 ===
 
 _Cookbook code useful in adding to bigger projects/ Places to start. Test cases._

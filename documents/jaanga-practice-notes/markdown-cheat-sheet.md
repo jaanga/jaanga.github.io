@@ -42,7 +42,9 @@ You should see 'Example.com' when viewing via GitHub Pages.
 
 <iframe class=ifr src=../files/ace-view-r1.html#../../index.html width=100% height=600px ></iframe>
 
+<!--
 <iframe class=ifr src=../ace-view-r1.html#https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/analemma-3d-r14.html width=100% height=600px ></iframe>
+-->
 
 jaanga.github.io/cookbook-html/snippets/libraries/ace-editor/ace-view-r1.html
 
