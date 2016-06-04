@@ -17,6 +17,14 @@
 	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 	var urlBase = 'http://jaanga.github.io/';
 
+	var user = 'jaanga';
+	var repo = 'jaanga.github.io';
+	var branch = 'master';
+	var folder = 'cookbook-threejs\/examples\/';
+
+	var tree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+	var urlBase = 'http://' + user + '.github.io/';
+
 	init();
 
 	function init() {
@@ -28,7 +36,7 @@
 			'body { font: 12pt monospace; }' +
 			'a { color: crimson; text-decoration: none; }' +
 
-//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+			'#contents { left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
 
 		'';
 
@@ -52,7 +60,7 @@
 	function requestAPIContents() {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open( 'GET', urlAPIContents, true );
+		xhr.open( 'GET', tree, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
@@ -67,7 +75,7 @@
 
 				file = response.tree[ i ].path;
 
-				if ( file.indexOf( 'examples' ) === -1 ) { continue; }
+				if ( file.indexOf( folder ) === -1 ) { continue; }
 
 				if ( file.indexOf( '.md' ) === -1 && file.indexOf( '.html' ) === -1 ) { continue; }
 

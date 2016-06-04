@@ -3,7 +3,7 @@
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 
-[Functions Read Me]( index.html )
+[Examples Read Me]( index.html )
 ===
 
 ## Angles Normalize
