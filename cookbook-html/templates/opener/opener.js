@@ -36,7 +36,7 @@
 			a { color: crimson; text-decoration: none; }  \
 		';
 
-		contents = !contents ? document.body.appendChild( document.createElement( 'div' ) )  : contents;
+		contents = !contents ? document.body.appendChild( document.createElement( 'div' ) ) : contents;
 		contents.id = 'contents';
 
 		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });

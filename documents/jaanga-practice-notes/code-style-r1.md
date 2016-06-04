@@ -67,6 +67,10 @@ The following should a demonstration based on the [scientific method]( https://e
 	* Absolute URLs are recommended for items that would otherwise have issues with loading into Code-Edit-View.
 	* Everything here is written in client-side JavaScript.
 
+
+.js files is not what we do. We do cookbook code. Everything in the one script.
+No black boxes. Nothing hidden away in remote places.
+
 ### HTML
 
 * HTML is created as and when needed
