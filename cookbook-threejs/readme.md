@@ -8,7 +8,7 @@
 
 ## Projects
 
-[Functions]( http://jaanga.github.io/cookbook-threejs/functions/ ) 
+[Examples]( http://jaanga.github.io/cookbook-threejs/examples/ ) 
 
 * Useful cookbook code samples
 
