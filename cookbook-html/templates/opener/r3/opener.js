@@ -27,6 +27,5 @@
 		xhr.onload = function() { contents.innerHTML = converter.makeHtml( xhr.responseText ); };
 		xhr.send( null );
 
-		window.addEventListener( 'hashchange', onHashChange, false );
 
 	}
