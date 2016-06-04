@@ -13,7 +13,15 @@
 
 ***
 
-[dev notes]( index.html#dev-notes.md )
+* [dev notes]( #dev-notes.md )
+* [index.html]( index.html )
+* [test/file1]( #../test/file1.md )
+* [test/file2]( #../test/file2.md )
+* [test/readme-cheat-sheet]( #../../documents/jaanga-practice-notes/markdown-cheat-sheet.md )
+* [opener.js]( opener.js )
+
+
+
 
 <center title="dingbat" >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
