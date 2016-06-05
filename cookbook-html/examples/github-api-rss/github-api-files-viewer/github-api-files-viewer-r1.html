@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Files Viewer</title>
+<title>GitHub API Files Viewer R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
@@ -14,9 +14,12 @@ Menu and contents in HTML.
 <script>
 
 	var places = [
-		[ 'title', 'user', 'repo', 'branch', 'folder' ],
-		[ 'Jaanga HTML Cookbook Examples', 'jaanga', 'jaanga.github.io', 'master', 'cookbook-threejs\/examples\/' ],
-		[ 'Jaanga Three.js Cookbook Examples','jaanga', 'jaanga.github.io', 'master', 'cookbook-html\/examples\/' ]
+//		[ 'title', 'user', 'repo', 'branch', 'folder' ],
+		[ 'Jaanga Three.js Cookbook Examples','jaanga', 'jaanga.github.io', 'master', 'cookbook-threejs\/examples\/' ],
+		[ 'Jaanga Three.js Cookbook Templates','jaanga', 'jaanga.github.io', 'master', 'cookbook-threejs\/templates\/' ],
+
+		[ 'Jaanga HTML Cookbook Examples', 'jaanga', 'jaanga.github.io', 'master', 'cookbook-html\/examples\/' ],
+		[ 'Jaanga HTML Cookbook Templates', 'jaanga', 'jaanga.github.io', 'master', 'cookbook-html\/templates\/' ],
 
 	]
 
@@ -30,10 +33,10 @@ Menu and contents in HTML.
 		css.innerHTML = 
 
 			'html { height: 100%; }' +
-			'body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
-			'iframe, #contents { height: 100%; width: 100%; }' +
+			'iframe, #contents { border: 0px solid red; height: 100%; overflow: hidden; width: 100%; }' +
 
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
@@ -42,9 +45,9 @@ Menu and contents in HTML.
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 			'#fileNames h4 { margin-bottom: 0; }' +
 			'#fileNames div { cursor: pointer; }' +
-			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
-				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+			'#hamburger { right: 325px; position: absolute; top: 20px; transition: right 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; right: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: right 1s; width: 300px; }' +
 
 
 		'';
@@ -56,7 +59,7 @@ Menu and contents in HTML.
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
 		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
-		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+		bars.onclick = function() { hamburger.style.right = hamburger.style.right === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
@@ -68,12 +71,16 @@ Menu and contents in HTML.
 			'</h2>' +
 
 			'<p>' +
-				'Select:<br><select id=selList onchange=requestAPIContents() title="Select the item" size=5 >' +
+				'Select:<br><select id=selList onchange=requestAPIContents() title="Select the item" size=8 >' +
 				'<select>' +
 			'</p>' +
 
 			'<div id=fileCount ></div>' +
 			'<div id=fileNames ></div>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:menu.scrollTop=0; > ❦ </h1>' +
+			'</center>' +
 
 		'';
 
@@ -87,7 +94,7 @@ Menu and contents in HTML.
 
 		}
 
-		selList.selectedIndex = 1;
+		selList.selectedIndex = location.hash ? location.hash.slice( 1 ) : 0;
 
 		requestAPIContents();
 
@@ -135,6 +142,7 @@ Menu and contents in HTML.
 
 			createTableOfContents();
 
+			load( urlBase + folder + 'readme.md' );
 		}
 
 	}
@@ -144,7 +152,6 @@ Menu and contents in HTML.
 		var txt, headers, file,
 
 		txt =  '';
-
 		headers = [];
 
 		for ( var i = 0; i < files.length; i++ ) {
@@ -174,16 +181,47 @@ Menu and contents in HTML.
 	}
 
 	function load( fName ) {
-console.log( 'fName', fName);
-		document.title = fName + ' - File Viewer Basic';
 
-		contents.innerHTML = '<iframe src = "' + fName + '"; ></iframe>';
+//console.log( 'fName', fName);
+
+		if ( fName.slice( -5 ) === '.html' ) {
+
+			contents.innerHTML = '<iframe src = "' + fName + '"; ></iframe>';
+			contents.style.cssText = '';
+
+		} else {
+
+console.log( 'fName', fName );
+
+			var readerSource = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
+
+			reader = document.body.appendChild( document.createElement( 'script' ) );
+			reader.onload = callback;
+			reader.src = readerSource;
+
+
+			function callback() {
+
+				converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+				xhr = new XMLHttpRequest();
+				xhr.open( 'get', fName, true );
+				xhr.onload = function() { contents.innerHTML = converter.makeHtml( xhr.responseText ); };
+				xhr.send( null );
+
+				contents.style.cssText = ' left: 0; margin: 0 auto; max-width: 800px; overflow: auto; position.absolute; right: 0; ';
+
+			}
+		}
+
+		document.title = fName + ' - GitHub API File Viewer R1';
 
 //		selected.style.color = ``;
 //		selected = document.getElementById( 'mnu_' + fName );
 //		selected.style.color = `red`;
 
 //		fileName = fName;
+
 
 	}
 
