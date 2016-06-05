@@ -7,6 +7,11 @@
 [Examples Read Me]( index.html#readme.md )
 ===
 
+### _new 'GitHub API Files Viewer' / new menu at right / changes everything_
+
+
+
+
 _Cookbook code useful in adding to bigger projects/ Places to start. Test cases._
 
 _This read me is still missing many links_
