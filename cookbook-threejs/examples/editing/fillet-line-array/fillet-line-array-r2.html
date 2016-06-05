@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Fillet Line Array R1</title>
+<title>Fillet Line Array R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -70,9 +70,7 @@
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
-/*			'<p><button onclick=doIt(); >do it</button></p>' +
-			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
-*/			'<div id=info ></div>' +
+			'<div id=info ></div>' +
 
 		'';
 
@@ -116,8 +114,6 @@
 		points = initLine();
 
 
-
-
 		path = createPath( points );
 		var geometry = path.createSpacedPointsGeometry( 100 );
 		var shape = new THREE.Shape( geometry.vertices );
@@ -134,30 +130,58 @@
 
 	}
 
+
 	function initLine() {
 
-		points = [ v( 10, 0, 0 ), v( 20, 0, 0 ), v( 20, 10, 0 ), v( 30, 10, 0 ), v( 30, 20, 0 ), v( 20, 20, 0 ), v( 20, 30, 0 ),
-			v( 10, 30, 0 ), v(  10, 20, 0 ), v( 0, 20, 0 ), v( 0, 10, 0 ), v( 10, 10, 0 ) ];
+		points = [ 
 
-		radii = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ];
+			[ v( 10, 0, 0 ), 1, false ],
 
+			[ v( 20, 0, 0 ), 4, false ],
+			[ v( 20, 10, 0 ), 2, true ], 
+			[ v( 30, 10, 0 ), 1, false ], 
+			[ v( 30, 20, 0 ), 1, false ], 
+			[ v( 20, 20, 0 ), 2, true ], 
+			[ v( 20, 30, 0 ), 1, false ],
+
+			[ v( 10, 28, 0 ), 1, false ], 
+			[ v( 10, 20, 0 ), 1, true ], 
+			[ v( 0, 20, 0 ), 3, false ], 
+			[ v( 0, 10, 0 ), 1, false ], 
+			[ v( 10, 10, 0 ), 1, true ], 
+			[ v( 10, 0, 0 ), 1, false ],
+
+			[ v( 20, 0, 0 ), 1, false ]
+		];
+
+		ang = [];
+
+		for ( var i = 1; i < points.length; i++) {
+
+			p = points[ i - 1 ][ 0 ].clone().sub( points[ i ][ 0 ] );
+			ang.push( Math.atan2( p.y, p.x ) );
+
+//			angles.push( [ a2, a1 ] );
+		}
+
+		ang2 = '';
 		angles = [];
 
-		for ( var i = 0; i < points.length; i++) {
+		for ( var i = 0; i < ang.length - 1; i++) {
 
-			if ( i + 1 < points.length ) {
+			a1 = ang[ i ] + pi;
+			if ( a1 > pi ) a1 -= 2 * pi;
+			a2 = ang[ i + 1 ] - 0 ;
 
-				p = points[ i + 1 ].clone().sub( points[ i ] );
+			ang2 += ( i + 1 ) + ' [ ' + a2.toFixed( 3 ) + ',' + a1.toFixed( 3 ) + ' ],' + '<br>';
 
-			} else {
+			if ( i === 5 ) ang2 += '<br>';
 
-				p = points[ i ].clone().sub( points[ 0 ] );
-
-			}
-
-			angles.push( Math.atan2( p.y, p.x ) );
-
+			angles.push( [ a2, a1 ] );
+			
 		}
+
+		info.innerHTML = ang2;
 
 		var geometry = new THREE.Geometry();
 		geometry.vertices = points;
@@ -175,43 +199,29 @@
 		var radius = 1;
 		path = new THREE.Path();
 
-		angles = [ [ pi, -pi05, false], 
-
-			[ -pi05, 0, false ], [ pi, pi05, true ],[ -pi05, 0, false ],[ 0, pi05, false ],[ -pi05, pi, true ], [ 0, pi05, false ], 
-			[ pi05, pi, false ], [ 0, -pi05, true ],[ pi05, pi, false ],[ pi, -pi05, false ],[ pi05, 0, true ],  [ pi05, pi, false ] ]
-
-		for ( var i = 0; i < points.length; i++ ) {
-
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i ][ 0 ], angles[ i ][ 1 ], angles[ i ][ 2 ]);
-
-		}
-
-		return path;
-
-	}
+		dangles = [ 
 
 
+			[ -pi05, 0, false ],
+			[ pi, pi05, true ], 
+			[ -pi05, 0, false ], 
+			[ 0, pi05, false ], 
+			[ -pi05, pi, true ],
+			[ 0, pi05, false ], 
 
-	function xxxcreatePath( points ) {
+			[ pi05, pi, false ], 
+			[ 0, -pi05, true ], 
+			[ pi05, pi, false ], 
+			[ pi, -pi05, false ], 
+			[ pi05, 0, true ],
+			[ pi, -pi05, false ]
 
-		var radius = 1;
-		path = new THREE.Path();
+		];
 
-		for ( var i = 0; i < points.length; i++ ) {
+		for ( var i = 1; i < points.length - 1; i++ ) {
 
-			if ( i === 0 ) {
-
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ points.length - 1 ] + Math.PI / 2, angles[ i ] - Math.PI / 2, false );
-
-			} else if ( i === points.length - 1 ) {
-
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i - 1 ] - Math.PI / 2, angles[ i ] + Math.PI / 2, false );
-
-			} else {
-
-				path.absarc( points[ i ].x, points[ i ].y, radius, angles[ i - 1 ] - Math.PI / 2, angles[ i ] - Math.PI / 2, false );
-
-			}
+				point = points[ i ][ 0 ];
+				path.absarc( point.x, point.y, points[ i ][ 1 ], angles[ i - 1 ][ 0 ], angles[ i - 1 ][ 1 ], points[ i ][ 2 ] );
 
 		}
 
