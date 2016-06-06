@@ -2,7 +2,7 @@
 ===
 
 
-## [Time Remote Given Lat Lon UTC]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-remote-given-lat-lon-utc/ )
+## [Time Remote Given Lat Lon UTC]( http://jaanga.github.io/cookbook-html/examples/time-zone/time-remote-given-lat-lon-utc/ )
 
 ### Features
  

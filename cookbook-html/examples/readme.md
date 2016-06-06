@@ -1,6 +1,6 @@
 <span style=display:none; >
-[You are now in GitHub source code view - Click here to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/snippets/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/snippets/'; value='You are now in GitHub web page view - Click here to view Read Me file as source code' />
+[You are now in GitHub source code view - Click here to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/examples/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/'; value='You are now in GitHub web page view - Click here to view Read Me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
 
@@ -19,26 +19,26 @@ _This read me is still missing many links_
 
 ## Array Associative
 
-### [Array Associative R1]( http://jaanga.github.io/cookbook-html/snippets/array-associative/array-associative-r1.html )
+### [Array Associative R1]( http://jaanga.github.io/cookbook-html/examples/array-associative/array-associative-r1.html )
 
 
 ## Events
 
-### [mousedown-mousemove]( http://jaanga.github.io/cookbook-html/snippets/events/mousedown-mousemove-r1.html )
+### [mousedown-mousemove]( http://jaanga.github.io/cookbook-html/examples/events/mousedown-mousemove-r1.html )
 
 
 ## GitHub API
 
-### [GitHub API File Viewer Babylon.js R1]( http://jaanga.github.io/cookbook-html/snippets/github-api-rss/file-viewers/github-api-file-viewer-babylonjs-r1.html )
+### [GitHub API File Viewer Babylon.js R1]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/file-viewers/github-api-file-viewer-babylonjs-r1.html )
 
-### [GitHub API File Explorer]( http://jaanga.github.io/cookbook-html/snippets/github-api-rss/github-api-explorer/github-api-explorer-r1.html )
+### [GitHub API File Explorer]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-explorer/github-api-explorer-r1.html )
 
-### [GitHub RSS R1]( http://jaanga.github.io/cookbook-html/snippets/github-api-rss/github-rss/github-rss-r1.html )
+### [GitHub RSS R1]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-rss/github-rss-r1.html )
 
 
 ## Gradient Background
 
-### [Gradient Background Demo ]( http://jaanga.github.io/cookbook-html/snippets/gradient-background/gradient-background-r1.html )
+### [Gradient Background Demo ]( http://jaanga.github.io/cookbook-html/examples/gradient-background/gradient-background-r1.html )
 
 * Pretty colors in the background
 
@@ -47,7 +47,7 @@ _This read me is still missing many links_
 
 ## Location Hash
 
-### [Location Hash Demo]( http://jaanga.github.io/cookbook-html/snippets/location-hash/location-hash-parse-variable-lengths-r1.html )
+### [Location Hash Demo]( http://jaanga.github.io/cookbook-html/examples/location-hash/location-hash-parse-variable-lengths-r1.html )
 
 * Inter page communication
 
@@ -56,7 +56,7 @@ _This read me is still missing many links_
 
 ## Maps
 
-### [Request Map Given Lat Lon]( http://jaanga.github.io/cookbook-html/snippets/maps/request-map-given-lat-lon/ )
+### [Request Map Given Lat Lon]( http://jaanga.github.io/cookbook-html/examples/maps/request-map-given-lat-lon/ )
 
 #### Features
 
@@ -85,11 +85,11 @@ _This read me is still missing many links_
 
 ## Request Animation Frame
 
-* [Request Animation Frame Read Me]( http://jaanga.github.io/cookbook-html/snippets/request-animation-frame/ )
+* [Request Animation Frame Read Me]( http://jaanga.github.io/cookbook-html/examples/request-animation-frame/ )
 
 ## Table with DIV
 
-### [Table with DIV ]( http://jaanga.github.io/cookbook-html/snippets/table-with-div/table-with-div-r1.html )
+### [Table with DIV ]( http://jaanga.github.io/cookbook-html/examples/table-with-div/table-with-div-r1.html )
 
 * Using DIV instead if table,tr,td may look nicer
 
@@ -97,14 +97,14 @@ _This read me is still missing many links_
 
 ## Text to Voice
 
-[ Text to Voice]( http://jaanga.github.io/cookbook-html/snippets/text-to-voice/speech-synth-basic.html )
+[ Text to Voice]( http://jaanga.github.io/cookbook-html/examples/text-to-voice/speech-synth-basic.html )
 
 
 
 
 ## Time Zone
 
-### [Time Now]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-now/ )
+### [Time Now]( http://jaanga.github.io/cookbook-html/examples/time-zone/time-now/ )
 
 #### Features
 
@@ -122,7 +122,7 @@ _This read me is still missing many links_
 * First commit
 
 
-### [Time Remote Given Lat Lon UTC]( http://jaanga.github.io/cookbook-html/snippets/time-zone/time-remote-given-lat-lon-utc/ )
+### [Time Remote Given Lat Lon UTC]( http://jaanga.github.io/cookbook-html/examples/time-zone/time-remote-given-lat-lon-utc/ )
 
 #### Features
  
@@ -159,5 +159,5 @@ _This read me is still missing many links_
 ### 2016-05-24
 
 * Update index.html to use opener.js
-* Add github-api-files-in-snippets-r1 as default file to open
+* Add github-api-files-in-examples-r1 as default file to open
 
