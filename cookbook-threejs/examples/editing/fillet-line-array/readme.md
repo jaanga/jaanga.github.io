@@ -13,9 +13,12 @@
 
 ## [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
+<img src=https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png style=display:none; >
+
+
+
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
-<img src=https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png style=display:none; >
 
 _Fillet Line Array_
 
@@ -40,7 +43,7 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 ## To Do
 
-<iframe class=ifr src=http://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r3.html width=100% height=600 ></iframe>
+<iframe class=ifr src=https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r3.html width=100% height=600 ></iframe>
 
 
 ## Issues
