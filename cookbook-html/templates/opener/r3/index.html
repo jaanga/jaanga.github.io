@@ -29,22 +29,22 @@
 
 //		location.hash = defaultHash;
 
-		if ( location.hash && location.hash.indexOf( '.md' ) > -1 ) {
+	if ( location.hash && location.hash.indexOf( '.md' ) > -1 ) {
 
-			var reader;
+		var reader;
 
-			reader = document.body.appendChild( document.createElement( 'script' ) );
-			reader.onload = function() { onHashChange(); };
-			reader.src = readerSource;
+		reader = document.body.appendChild( document.createElement( 'script' ) );
+		reader.onload = function() { onHashChange(); };
+		reader.src = readerSource;
 
-		} else {
+	} else {
 
-			init();
-			animate();
+		init();
+		animate();
 
-		}
+	}
 
-		window.addEventListener( 'hashchange', onHashChange, false );
+	window.addEventListener( 'hashchange', onHashChange, false );
 
 </script>
 </body>

@@ -1,5 +1,11 @@
 Edit Mesh Read Me
 ===
+
+
+!!! Bad file!!!
+===
+
+
 [Web page version]( http://va3c.github.io/viewer/cookbook/edit-mesh/ ) - 
 [Source code version]( https://github.com/va3c/viewer/tree/gh-pages/cookbook/edit-mesh/ )
 
