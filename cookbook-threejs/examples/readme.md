@@ -1,5 +1,5 @@
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-threejs/functions/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/functions'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-threejs/examples/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 
@@ -16,11 +16,11 @@
 
 ## Camera Near Far Sections
 
-* [Camera Near Far Sections R2]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r2.html )
+* [Camera Near Far Sections R2]( http://jaanga.github.io/cookbook-threejs/examples/camera-near-far-sections/camera-near-far-sections-r2.html )
 
 	* Still broken
 
-* [Camera Near Far Sections R1]( http://jaanga.github.io/cookbook-threejs/functions/camera-near-far-sections/camera-near-far-sections-r1.html )
+* [Camera Near Far Sections R1]( http://jaanga.github.io/cookbook-threejs/examples/camera-near-far-sections/camera-near-far-sections-r1.html )
 
 	* Needs work
 
@@ -68,7 +68,7 @@
 
 ## Mouse Over
 
-[Mouse Over]( http://jaanga.github.io/cookbook-threejs/functions/mouseover/r1/threejs-mouseover.html )
+[Mouse Over]( http://jaanga.github.io/cookbook-threejs/examples/mouseover/r1/threejs-mouseover.html )
 
 ## Remove and Add Lights
 
@@ -98,7 +98,7 @@
 *  See [Tween.js Turns Tweening and Animating in 3D into a Joy]( http://jaanga.github.io/request-jaanga-blog-posts.html#2016-01-15_tweenjs-makes-tweening-in-3d-a-joy_moving-manuals.md )
 
 
-### [Tween.js Film Clips R6]( http://jaanga.github.io/cookbook-threejs/functions/tweening/tweenjs-film-clips/tweenjs-film-clips-r6.html )
+### [Tween.js Film Clips R6]( http://jaanga.github.io/cookbook-threejs/examples/tweening/tweenjs-film-clips/tweenjs-film-clips-r6.html )
 
 * Tween position and rotation of multiple objects
 * 'Frame' data stored in each the object
