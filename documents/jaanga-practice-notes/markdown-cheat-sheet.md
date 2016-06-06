@@ -38,9 +38,20 @@ You should see 'The Scream' when viewing via GitHub Source.
 You should see 'Example.com' when viewing via GitHub Pages.
 
 
-## File Viewer
+
+## Code  or File Viewer / Ace Editor
+
+<iframe class=ifr src=http://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#http://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html width=100% height=600 ></iframe>
+
+<input type=button onclick=window.location.href='https://github.com/ladybug-analysis-tools/ladybug-web/blob/gh-pages/analemma-3d/analemma-3d-r14.html';
+value='Ladybug Web Analemma 3D: the entire source code listing' >
+
+
 
 <iframe class=ifr src=../files/ace-view-r1.html#../../index.html width=100% height=600px ></iframe>
+
+
+
 
 <!--
 <iframe class=ifr src=../ace-view-r1.html#https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/analemma-3d-r14.html width=100% height=600px ></iframe>
