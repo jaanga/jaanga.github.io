@@ -15,7 +15,7 @@
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
-<img src=../files/img_the_scream.jpg style=display:none; >
+<img src=https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png style=display:none; >
 
 _Fillet Line Array_
 
@@ -65,4 +65,4 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 ### 2016-06-04 ~ R2 
 
-![image](https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png =800x600 )
+![image]( https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png )
