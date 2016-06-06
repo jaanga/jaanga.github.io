@@ -50,7 +50,8 @@
 			<center><p id=buttons ></p></center>
 		`;
 		
-		var ifr = document.getElementById('ifr');
+		#var ifr = document.getElementById('ifr');
+		ifr.id = 'ifr';
 
 		for ( var i = 0; i < sites.length; i++ ) {
 
@@ -72,7 +73,6 @@
 
 		}
 
-		ifr.id = 'ifr';
 		ifr.onload = function() {
 
 			ifr.contentWindow.view.onload = function(){ 
