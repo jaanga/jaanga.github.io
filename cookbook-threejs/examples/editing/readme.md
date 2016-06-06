@@ -11,7 +11,7 @@
 
 ![image](https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png)
 
-## [Fillet Line Array R2]( http://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r2.html )
+## [Fillet Line Array R3]( http://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r3.html )
 
 The mission is to help the peeps at OpenDesk transfer data fron their SketchUp files over to Three,js.
 
