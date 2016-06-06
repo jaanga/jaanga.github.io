@@ -3,7 +3,7 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/editing/fillet-line-array/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( https://jaanga.github.io/cookbook-threejs/  ) &raquo;
-[Examples]( https://jaanga.github.io/cookbook-threejs/examples/editing ) &raquo;
+[Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
 
 
 
@@ -11,9 +11,11 @@
 ===
 
 
-## [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
+## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
-<img src=https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png style=display:none; >
+
+
+<img src="https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png" style=display:none; width=800 >
 
 
 
@@ -68,4 +70,4 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 ### 2016-06-04 ~ R2 
 
-![image]( https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png )
+![image]( https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png =800x500 )
