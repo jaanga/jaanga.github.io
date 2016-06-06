@@ -68,4 +68,6 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 ### 2016-06-04 ~ R2 
 
-![image]( https://cloud.githubusercontent.com/assets/547626/15804351/071d0a50-2aba-11e6-8940-1d7df887aec6.png | =800x500 )
+<img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" width=800 >
+
+
