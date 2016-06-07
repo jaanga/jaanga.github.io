@@ -8,7 +8,6 @@
 [Infinite Landscape Read Me]( index.html#readme.md )
 ===
 
-## Concept
 
 ## Full Screen: [Infinite Landscape]( https://jaanga.github.io/cookbook-threejs/examples/controls/infinite-landscape/index.html )
 
@@ -20,26 +19,37 @@
 _Infinite Landscape_
 
 
+## Concept
+
+Using buttons, cursor keys, mouse or a 3D input device, to be able to traverse landscape composed of gridded tiles 
+where each tile represents a unique location with the conditions that
+only a small array of rows and columns of tiles adjacent to the camera target is visible at any time 
+thus keeping the number of items to be rendered to a reasonable limits - such as no more than a million vertices at any given moment.
+
+
+
+
 ## Things To Do
 
-<iframe src=https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-threejs/examples/editing/controls/infinite-landscape/infinite-landscape-r3.html width=100% height=600 ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-threejs/examples/controls/infinite-landscape/infinite-landscape-r4.html width=100% height=600 ></iframe>
 
 * Edit this code
 
 
 ## Issues
 
-
+* Too many to catalog
 
 ## Users
 
-Intended for  
+Intended for Leap Motion device, FGx and terrain projects
 
 
 ## Change Log
 
 ### 2016-06-06 ~ R4
 
+* Add random placement within a 1000x1000 grid of points 
 * Add readme
 
 
