@@ -5,19 +5,19 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
 
-[XXXXXX Read Me]( index.html#readme.md )
+[Controls Fly Read Me]( index.html#readme.md )
 ===
 
 ## Concept
 
-## Full Screen: [ XXXXX ]( https://jaanga.github.io/cookbook-threejs/examples/controls/controls-fly/index.html )
+## Full Screen: [ Controls Fly ]( https://jaanga.github.io/cookbook-threejs/examples/controls/controls-fly/index.html )
 
 
-<img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" style=display:none; width=800 >
+<img src="" style=display:none; width=800 >
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/controls/controls-fly/index.html width=100% height=600px ></iframe>
 
-_ _
+_Controls Fly_
 
 
 ## Things To Do
@@ -33,12 +33,14 @@ _ _
 
 ## Users
 
-Intended for  
+Intended for  Leap Motion devices and terrain apps
 
 
 ## Change Log
 
-###
+### 2016-06-06
+
+* Add Read Me
 
 
 <center title="Jaanga ~ your 3D happy place" >
