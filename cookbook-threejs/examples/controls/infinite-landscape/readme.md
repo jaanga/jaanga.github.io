@@ -21,7 +21,7 @@ _Infinite Landscape_
 
 ## Concept
 
-Using buttons, cursor keys, mouse or a 3D input device, to be able to traverse landscape composed of gridded tiles 
+Using buttons, cursor keys, mouse or a 3D input device, to be able to traverse landscape composed of a grid of tiles 
 where each tile represents a unique location with the conditions that
 only a small array of rows and columns of tiles adjacent to the camera target is visible at any time 
 thus keeping the number of items to be rendered to a reasonable limits - such as no more than a million vertices at any given moment.
@@ -49,6 +49,7 @@ Intended for Leap Motion device, FGx and terrain projects
 
 ### 2016-06-06 ~ R4
 
+* Improvements to the movements
 * Add random placement within a 1000x1000 grid of points 
 * Add readme
 

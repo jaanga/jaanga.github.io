@@ -13,7 +13,7 @@
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
 
-<img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/15846078/59d4ce3e-2c2e-11e6-8c68-c6f5587ca724.png" style=display:none; width=800 >
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
@@ -27,7 +27,7 @@ Currently they are creating humongous Three.js JSON files using Python.
 
 The concept here is:
 
-Given a .CSV file or Google Spreadsheet or parametric data is some format that contains points that form a polygon and fillet radii for each point, 
+Given a .CSV file or Google Spreadsheet or parametric data in some format that contains points that form a polygon and fillet radii for each point, 
 create Three.js path that can extrude to a 3D shape.
 
 Allow for both convex and concave curves / inside and outside fillets.
@@ -72,4 +72,11 @@ Intended for OpenDesk/WikiHouse...
 
 <img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" width=800 >
 
+
+###
+
+
+<center title="Jaanga ~ your 3D happy place" >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+</center>
 
