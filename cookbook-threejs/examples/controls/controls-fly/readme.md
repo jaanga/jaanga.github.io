@@ -33,7 +33,8 @@ _Controls Fly_
 
 ## Users
 
-Intended for  Leap Motion devices and terrain apps
+Intended for Leap Motion devices and terrain apps
+
 
 
 ## Change Log

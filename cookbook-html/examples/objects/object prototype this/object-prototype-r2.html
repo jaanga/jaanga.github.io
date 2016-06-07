@@ -7,7 +7,7 @@
 <meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
 <meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
 -->
-<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 <meta name=date content='' >
@@ -47,7 +47,7 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
-
+/*
 			'<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>' +
 			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
 			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
@@ -58,6 +58,7 @@
 				'<input type=radio name=field id=but2 checked />button 2' +
 				'<input type=radio name=field id=but3 />button 3' +
 			'</p>' +
+*/
 
 			'<div id=info ></div>' +
 
@@ -84,13 +85,19 @@
 
 		}
 
+		JA.Stuff.prototype.print = function () {
+
+			console.log( this.title, '\n', this.description );
+
+		}
+
 // Must new in order for all the pieces to be collected
 
 		p = new JA.Stuff();
 
 		info.innerHTML += p.toString();
 
-console.log( '', p );
+		p.print();
 
 
 	}
