@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Infinite Landscape R3</title>
+<title>Infinite Landscape R4</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
-<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=keywords content='Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-06-06' >
 </head>
 <body>
 <!--
@@ -25,9 +25,10 @@
 	var landscape = [];
 	var columns = 7
 	var rows = 5;
-	var x = 0; // Math.floor( 1000 * Math.random() );
-	var y = 0; //Math.floor( 1000 * Math.random() );
-	var z = 0;
+	var x = Math.floor( 1000 * Math.random() );
+	var z = Math.floor( 1000 * Math.random() );
+	var y = 0;
+
 	var target = new THREE.Object3D();
 
 	var stats, renderer, scene, camera, controls;
@@ -70,7 +71,7 @@
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
-				'<a href=index.htmlreadme.md > &#x24D8; </a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
 			'</h2>' +
 
 			'<p><button onclick=goNorth(); >North</button></p>' +
@@ -99,7 +100,7 @@
 		camera.position.set( 100, 100, 100 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+		controls.maxDistance = 2000;
 		controls.target = target.position;
 
 		scene = new THREE.Scene();
@@ -117,10 +118,10 @@
 //		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 500, 100 );
-		gridHelper.position.set( 0, -10, 0 );
+		gridHelper.position.set( 500, -10, 500 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 500 );
+		axisHelper = new THREE.AxisHelper( 500 );
 		scene.add( axisHelper );
 
 // assets
@@ -135,19 +136,16 @@
 		geometryMap = new THREE.BoxGeometry( 8, 2, 8 );
 		materialMap = new THREE.MeshPhongMaterial();
 
-		x = 0;
-		z = 0;
-
 		for ( var i = 0; i < rows; i++ ) {
 
 			landscape[ i ] = [];
 
 			for ( var j = 0; j < columns; j++ ) {
-				materialMap = new THREE.MeshPhongMaterial();
-				materialMap.color.r = 1 / i;
-				materialMap.color.b = 1 / j;
+
+				materialMap = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() } );
+
 				mesh = new THREE.Mesh( geometryMap, materialMap );
-				mesh.position.set( 10 * ( j - 0.5 * ( columns - 1 ) ), 0, 10 * ( i - 0.5 * ( rows - 1 ) ) );
+				mesh.position.set( x + 10 * ( j - 0.5 * ( columns - 1 ) ), 0, z + 10 * ( i - 0.5 * ( rows - 1 ) ) );
 				scene.add( mesh );
 
 				landscape[ i ].push( mesh );
@@ -156,8 +154,10 @@
 
 		} 
 
-		controls.target.set( 0, 0, 0 );
-		camera.position.set( 100, 100, 100 );
+		controls.target.set( x, 0, z );
+		camera.position.set( x + 100, 100, z + 100 );
+
+		setUI();
 
 
 	}
@@ -166,19 +166,17 @@
 
 		var row, newRow = [], mesh;
 
-		if ( z % 10 === 0 && z !== 0 ) {
+		if ( z % 10 === 0 ) {
 
 			row = landscape.pop();
 
 			for ( var i = 0; i < columns; i++ ) {
 
 				scene.remove( row[ i ] );
-				materialMap = new THREE.MeshPhongMaterial();
-				materialMap.color.r = Math.abs( Math.sin(  z ) );
-				materialMap.color.b = Math.abs( Math.sin(  i ) );;
 
+				materialMap = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() } );
 				mesh = new THREE.Mesh( geometryMap, materialMap );
-				mesh.position.set( 10 * ( x + i - 0.5 * ( columns - 1 ) ), 0, z - 10 * 0.5 * ( rows - 1 ) );
+				mesh.position.set( x + 10 * ( i - 0.5 * ( columns - 1 ) ), 0, z - 10 * 0.5 * ( rows - 1 ) );
 				scene.add( mesh );
 
 				newRow.push( mesh );
@@ -197,17 +195,19 @@
 
 	function goSouth() {
 
-		var row, newRow = [];
+		var row, mesh, newRow = [];
 
-		if ( z % 10 === 0 && z !== 0 ) {
+		if ( z % 10 === 0 ) {
 
 			row = landscape.shift();
 
 			for ( var i = 0; i < columns; i++ ) {
 
 				scene.remove( row[ i ] );
+
+				materialMap = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() } );
 				mesh = new THREE.Mesh( geometryMap, materialMap );
-				mesh.position.set( 10 * ( x + i - 0.5 * ( columns - 1 )), 0, z + 10 * 0.5 * ( rows - 1 ) );
+				mesh.position.set( x + 10 * ( i - 0.5 * ( columns - 1 )), 0, z + 10 * 0.5 * ( rows - 0.25 ) );
 				scene.add( mesh );
 
 				newRow.push( mesh );
@@ -225,15 +225,17 @@
 
 	function goEast() {
 
-		if ( x % 10 === 0 && x !== 0 ) {
+		if ( x % 10 === 0 ) {
 
 			for ( var i = 0; i < landscape.length; i++ ) {
 
 				mesh = landscape[ i ].shift();
 
 				scene.remove( mesh );
+				materialMap = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() } );
+
 				mesh = new THREE.Mesh( geometryMap, materialMap );
-				mesh.position.set( x + 10 * ( 1 - 0.5 * ( columns - 1 ) ), 0, z - 10 * ( i - 0.5 * ( rows - 1 ) ) );
+				mesh.position.set( x + 10 * ( columns - 0.5 * ( columns - 1 ) ), 0, z - 10 * ( i - 0.5 * ( rows - 1 ) ) );
 				scene.add( mesh );
 
 				landscape[ i ].push( mesh );
@@ -249,15 +251,17 @@
 
 	function goWest() {
 
-		if ( x % 10 === 0 && x !== 0 ) {
+		if ( x % 10 === 0 ) {
 
 			for ( var i = 0; i < landscape.length; i++ ) {
 
 				mesh = landscape[ i ].pop();
 
 				scene.remove( mesh );
+				materialMap = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() } );
+
 				mesh = new THREE.Mesh( geometryMap, materialMap );
-				mesh.position.set( x - 10 * ( 1 - 0.5 * ( columns - 1 ) ), 0, z - 10 * ( i - 0.5 * ( rows - 1 ) ) );
+				mesh.position.set( x - 10 * ( columns - 0.5 * ( columns - 1 ) ), 0, z - 10 * ( i - 0.5 * ( rows - 1 ) ) );
 				scene.add( mesh );
 
 				landscape[ i ].unshift( mesh );
@@ -286,7 +290,15 @@
 			case 40: /* cursor down  */ goSouth(); break;
 		}
 
-		info.innerHTML = 'x:' + x + ' z: ' + z;
+		setUI();
+	}
+
+	function setUI() {
+
+		info.innerHTML = 'x:' + x + ' z:' + z;
+		axisHelper.position.set( x, 0, z );
+
+
 	}
 
 	function onWindowResize() {

@@ -6,7 +6,6 @@
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
 
 
-
 [Fillet Line Array Read Me]( index.html#readme.md )
 ===
 
@@ -40,10 +39,12 @@ Allow for both convex and concave curves / inside and outside fillets.
 * Displays angle calculations
 
 
-## To Do
+## Things To Do
 
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r3.html width=100% height=600 ></iframe>
+
+* Edit this code
 
 
 ## Issues
@@ -54,9 +55,10 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 ## Users
 
+Intended for OpenDesk/WikiHouse...
 
 
-### Change Log
+## Change Log
 
 ### 2016-06-06 ~ R3
 
