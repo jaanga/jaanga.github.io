@@ -5,17 +5,17 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
 
-[fillet-two-lines Read Me]( index.html#readme.md )
+[Fillet Two LinesRead Me]( index.html#readme.md )
 ===
 
-## Full Screen: [ fillet-two-lines ]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html )
+## Full Screen: [ Fillet Two Lines ]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html )
 
 
 <img src="XXXX" style=display:none; width=800 >
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html width=100% height=600px ></iframe>
 
-_ _
+_Fillet Two Lines_
 
 ***
 
@@ -23,12 +23,18 @@ _ _
 
 ### Mission
 
-* Determine if the amgle between two lines is convex, concave of straight
+* Draw a 3D shape indicating the fillet
+* Determine if the angle between two lines is convex, concave of straight
 
 
 ## Features
 
-* TBD
+* Draws lines, segment and shape
+* Sliders allow you o adjust the angles
+* Readout identifies if the angle is convex or concave
+* The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
+* Click three bars( 'hamburger' ) icon to slide menu in or out
+
 
 
 ## Things To Do
@@ -47,8 +53,20 @@ _ _
 
 Intended for  
 
+## Credits
+
+* [StackOverflow: find convex an concave corners in a polygon]( http://stackoverflow.com/questions/13426362/find-convex-an-concave-corners-in-a-polygon )
+	* See response by http://stackoverflow.com/users/4004357/w-f
+
 
 ## Change Log
+
+### 2016-06-08 R2.1
+
+* Add 3D geometry
+* update readme
+
+
 
 ### 2016-06-06
 
