@@ -73,7 +73,7 @@ Intended for OpenDesk/WikiHouse...
 <img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" width=800 >
 
 
-###
+***
 
 
 <center title="Jaanga ~ your 3D happy place" >

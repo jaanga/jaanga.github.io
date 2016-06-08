@@ -23,7 +23,7 @@ _ _
 
 ### Mission
 
-* TBD
+* Determine if the amgle between two lines is convex, concave of straight
 
 
 ## Features
