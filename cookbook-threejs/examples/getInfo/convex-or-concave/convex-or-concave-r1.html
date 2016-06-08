@@ -75,9 +75,9 @@
 
 //			'<p><button onclick=doIt(); >do it</button></p>' +
 
-			'<p>angle 1: <input type=range id=inpAngle1 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi / 10 ) + ' oninput=out.value=inpAngle1.value;setLine(); title="0 to 10: OK" > <output id=out >' + ( pi / 20 ) + '</output></p>' +
+			'<p>angle 1: <input type=range id=inpAngle1 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi / 10 ) + ' oninput=out.value=inpAngle1.value;setLine(); title="0 to 10: OK" > <output id=out >' + ( pi / 20 ) + ' radians</output></p>' +
 
-			'<p>angle 2: <input type=range id=inpAngle2 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi / 10 ) + ' oninput=out2.value=-inpAngle2.value;setLine(); title="0 to 10: OK" > <output id=out2 >-' + ( pi / 20 ) + '</output></p>' +
+			'<p>angle 2: <input type=range id=inpAngle2 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi / 10 ) + ' oninput=out2.value=-inpAngle2.value;setLine(); title="0 to 10: OK" > <output id=out2 >-' + ( pi / 20 ) + ' radians</output></p>' +
 
 
 			'<p id=info ></p>' +
@@ -140,13 +140,13 @@
 
 		var angle = ( ( Math.atan2( pointNext.x, pointNext.y ) - Math.atan2( pointPrevious.x, pointPrevious.y ) + pi2 ) % ( pi2 ) ) - pi;
 
-		if ( angle < 0.1 ) {
+		if ( angle > 0.1 ) {
 
-			txt = 'Angle is convex';
+			txt = 'Angle ' + angle.toFixed( 3 ) + ' is concave';
 
-		} else if ( angle > -0.1 ) {
+		} else if ( angle < -0.1 ) {
 
-			txt = 'Angle is concave';
+			txt = 'Angle ' + angle.toFixed( 3 ) + ' is convex';
 
 		} else {
 

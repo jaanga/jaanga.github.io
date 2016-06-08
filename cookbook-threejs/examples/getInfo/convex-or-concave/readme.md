@@ -34,6 +34,8 @@ _Convex or Concave_
 ## Features
 
 * Sliders adjust the angles
+* The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
+* Click three bars( 'hamburger' ) icon to slide menu in or out
 
 
 ## Things To Do
@@ -50,13 +52,14 @@ _Convex or Concave_
 
 ## Users
 
-Intended for  
+Intended for general math visualization
 
 
 ## Change Log
 
 ### 2016-06-06
 
+* First commit
 * Add Read Me
 
 ***
