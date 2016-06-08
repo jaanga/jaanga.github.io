@@ -29,6 +29,9 @@ _XXXXXX_
 ## Features
 
 * TBD
+* The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
+* Click three bars( 'hamburger' ) icon to slide menu in or out
+
 
 ## Things To Do
 
