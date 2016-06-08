@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>Fillet Two Lines R2.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-06-08' >
 </head>
 <body>
 <!--
@@ -19,6 +19,15 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
+
+	var line;
+	var radius = 50;
+
+	var pi = Math.PI;
+	var pi2 = pi * 2;
+	var cos = Math.cos;
+	var sin = Math.sin;
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 
 	var stats, renderer, scene, camera, controls;
 
@@ -39,10 +48,10 @@
 
 			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
 
-/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
-*/
+
 			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
@@ -64,11 +73,14 @@
 			'</h2>' +
 			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
 
-/*			'<p><button onclick=doIt(); >do it</button></p>' +
-			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
-*/
+//			'<p><button onclick=doIt(); >do it</button></p>' +
 
-			'<div id=info ></div>' +
+			'<p>angle 1: <input type=range id=inpAngle1 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi / 10 ) + ' oninput=out.value=inpAngle1.value;setLine(); title="0 to 10: OK" > <output id=out >' + ( pi / 20 ) + '</output></p>' +
+
+			'<p>angle 2: <input type=range id=inpAngle2 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi / 10 ) + ' oninput=out2.value=-inpAngle2.value;setLine(); title="0 to 10: OK" > <output id=out2 >-' + ( pi / 20 ) + '</output></p>' +
+
+
+			'<p id=info ></p>' +
 
 		'';
 
@@ -109,9 +121,60 @@
 
 // assets
 
+// http://stackoverflow.com/questions/13426362/find-convex-an-concave-corners-in-a-polygon
+
+		setLine();
 
 	}
 
+
+	function setLine() {
+
+		pointOrigin = v( 0, 0, 0 );
+
+//		pointNext = new THREE.Vector3( -20, -1, 0 );
+		pointNext = v( radius * cos( inpAngle1.valueAsNumber ), radius * sin( inpAngle1.valueAsNumber ), 0 );
+
+//		pointPrevious = new THREE.Vector3( 20, 0, 0 );
+		pointPrevious = v( radius * cos( - inpAngle2.valueAsNumber ), radius * sin( - inpAngle2.valueAsNumber ), 0 );
+
+		var angle = ( ( Math.atan2( pointNext.x, pointNext.y ) - Math.atan2( pointPrevious.x, pointPrevious.y ) + pi2 ) % ( pi2 ) ) - pi;
+
+		if ( angle < 0.1 ) {
+
+			txt = 'Angle is convex';
+
+		} else if ( angle > -0.1 ) {
+
+			txt = 'Angle is concave';
+
+		} else {
+
+			txt = 'Angle is straight';
+
+		}
+
+		info.innerHTML = txt;
+
+		addLine( [ pointNext, pointOrigin, pointPrevious ] );
+
+
+	}
+
+	function addLine( vertices ) {
+
+		var geometry, material;
+
+		scene.remove( line );
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = vertices || [ v( -30, 0, 0 ),  v( 30, 30, -30 ), v( 50, 0, 0 ) ];
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		line = new THREE.Line( geometry, material );
+
+		scene.add( line );
+
+	}
 
 	function onWindowResize() {
 
@@ -125,7 +188,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 

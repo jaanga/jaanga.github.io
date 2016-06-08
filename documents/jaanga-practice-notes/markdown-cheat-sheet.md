@@ -273,20 +273,17 @@ Figures seem to be one per line. So they are not really useful for making galler
 
 ***
 
-<center title="dingbat" >
-# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
-</center>
 
 <center title="dingbat" >
 # <span onclick=window.scrollTo(0,0); style=cursor:pointer; >❦</span>
 </center>
 
 <center title="dingbat" >
-## <a href=javascript:content.scrollTop=0; >❦</a>
+## <a href=javascript:contents.scrollTop=0; >❦</a>
 </center>
 
 <center title="dingbat" >
-# <a href=javascript:window.scrollTop=0; style=text-decoration:none; >❦</a>
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
 
 <style>summary { color: red; }</style>

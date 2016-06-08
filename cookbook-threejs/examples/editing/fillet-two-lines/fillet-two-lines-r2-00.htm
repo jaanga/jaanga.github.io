@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>fillet-two-lines-r2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -37,7 +37,7 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
 /*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -109,6 +109,31 @@
 
 // assets
 
+// http://stackoverflow.com/questions/13426362/find-convex-an-concave-corners-in-a-polygon
+
+		radius = 15;
+		nbSegments = 20;
+
+		nextEdge = new THREE.Vector3( -20, -1, 0);
+		previousEdge = new THREE.Vector3( 20, 0, 0);
+
+		var angle = ( ( Math.atan2( nextEdge.x, nextEdge.y ) - Math.atan2( previousEdge.x, previousEdge.y ) + Math.PI * 2 ) %  ( Math.PI * 2 ) ) - Math.PI;
+
+		if ( angle > 0 ) {
+
+			txt = 'convex';
+
+		} else if ( angle < 0 ) {
+
+			txt = 'concave';
+
+		} else {
+
+			txt = 'straight';
+
+		}
+
+		info.innerHTML = txt;
 
 	}
 

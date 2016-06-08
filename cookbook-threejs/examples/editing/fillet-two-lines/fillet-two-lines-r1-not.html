@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Template Three.js Basic Hamburger R2</title>
+<title>fillet-two-lines-r1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -37,7 +37,7 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
 /*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -60,7 +60,7 @@
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
-				'<a href=index.html#readme.md > &#x24D8; </a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
 
@@ -109,6 +109,24 @@
 
 // assets
 
+		radius = 15;
+		nbSegments = 20;
+
+		p0 = new THREE.Vector3( 0, 10, 0);
+		p1 = new THREE.Vector3( 20, 200, 0);
+		p2 = new THREE.Vector3( 2, 0, 0);
+
+		startAngle = Math.acos( p0.dot( p1 ) / ( p0.length() * p1.length() ) );
+		angle = Math.acos( p1.dot( p2 ) / ( p1.length() * p2.length() ) );
+console.log( 'startAngle', startAngle, 'angle', angle );
+		geometry = new THREE.CircleGeometry( radius, nbSegments, startAngle, angle );
+
+		// remove center vertex
+//		geometry.vertices.splice(0,1);
+
+		mesh = new THREE.Mesh( geometry, material );
+//		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
 
 	}
 
