@@ -39,8 +39,14 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ### 2016-06-09 R3
 
-* Go to top of page
-* Load all ten pages one after another
+* Add descriptions to list of orgs
+* Add dates and descriptions to list of repos
+* Add optgroup to list of users
+* Add labels to events
+* Fix some links issues
+* Work on CSS
+* Add go to top of page
+* Add Load all ten pages one after another
 
 ### 2016-06-03
 
