@@ -11,7 +11,7 @@
 ## Full Screen: [ Map Tiles Canvas ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/map-tiles-canvas/index.html )
 
 
-<img src="XXXX" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/15918096/f00124f4-2db7-11e6-9053-7f2b57e0e2e3.png" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/map-tiles-canvas/index.html width=100% height=600px ></iframe>
 
@@ -23,7 +23,7 @@ _Map Tiles Canvas_
 
 ### Mission
 
-* TBD
+* To create a map tile 'layer' or texture that may be used to overlay 3D meshes
 
 
 ## Features
