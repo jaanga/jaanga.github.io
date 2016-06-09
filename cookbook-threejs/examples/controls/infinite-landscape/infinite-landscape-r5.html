@@ -133,7 +133,8 @@
 
 	function initLandscape() {
 
-		geometryMap = new THREE.BoxGeometry( 8, 2, 8 );
+		geometryMap = new THREE.PlaneBufferGeometry( 8, 8 );
+		geometryMap.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 		materialMap = new THREE.MeshPhongMaterial();
 
 		for ( var i = 0; i < rows; i++ ) {
@@ -142,7 +143,7 @@
 
 			for ( var j = 0; j < columns; j++ ) {
 
-				materialMap = new THREE.MeshPhongMaterial({ color: 0xffffff * Math.random() } );
+				materialMap = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), side: 2 } );
 
 				mesh = new THREE.Mesh( geometryMap, materialMap );
 				mesh.position.set( x + 10 * ( j - 0.5 * ( columns - 1 ) ), 0, z + 10 * ( i - 0.5 * ( rows - 1 ) ) );
@@ -306,6 +307,7 @@
 		}
 
 		setUI();
+
 	}
 
 	function setUI() {
