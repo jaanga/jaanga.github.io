@@ -1,0 +1,328 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Users Events R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Markdown reader template file' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-05-15' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	var users = [ 
+
+		'Theo-Armour', 
+		'#Three.js',
+		'MrDoob', 
+		'WestLangley', 
+		'zz85',
+		'#FGx',
+		'GeoffMcl', 
+		'#Ladybug',
+		'MostaphaRoudsari', 
+		'#Xplora',
+		'PaulMasson',
+		'#???',
+		'alavit-d',
+		'#OpenDesk',
+		'harrykeen18' 
+
+	];
+
+	var converter, contents;
+	var hashes, name, page;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace;  }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
+			'img { max-width: 800px; }' +
+
+			'div.issue { border: 1px solid #aaa; box-sizing: content-box; height: 100%; overflow: auto; padding: 10px; transform: scale( 0.85 ); transform-origin: top left; width: 100%; }' +
+			'select { width: 200px; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#contents { border: 0px #ccc solid; left: 50px; margin: 0 auto; width: 700px; position: absolute; right: 0; top: 0; transition: left 1s; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 0px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' + // max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'margin: 0; opacity: 0.98; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p>And also my home page as a work-in-progress. Let\'s see what we are working on these days - asap.</p>' +
+
+			'<p>' +
+				'Selected Orgs & Users:<br><select id=selUser onchange=location.hash=this.value; title="Select the GitHub user" size=15 >' +
+				'<select>' +
+			'</p>' +
+
+			'<p><input></p>' +
+
+			'<details open>' +
+				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
+				'<div id=organizations ></div>' +
+			'</details><br>' +
+
+			'<details open>' +
+				'<summary><h3 style=display:inline; >Repositories</h3></summary>' +
+				'<div id=repositories ></div>' +
+			'</details>' +
+
+			'<div id=info ></div><br>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:window.scrollTo(0,0); >❦</a></h1>' +
+			'</center>' +
+
+		'';
+
+		contents = hamburger.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		for ( var i = 0; i < users.length; i++ ) {
+
+			user = users[ i ];
+			if ( user.startsWith('#') ) {
+
+			selUser.appendChild( document.createElement( 'optgroup' ) );
+			selUser.children[ i ].label = user.slice( 1 );
+
+			} else {
+
+			selUser.appendChild( document.createElement( 'option' ) );
+			selUser.children[ i ].text = user;
+
+			}
+
+		}
+
+		selUser.selectedIndex = 0;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		onHashChange();
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash ? location.hash.split( '#' ) : '';
+		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
+		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
+
+		getEvents( name, page, contents );
+
+		getOrgs( name, page, contents ); 
+
+		getRepos( name, page, contents ); 
+
+		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
+
+	}
+
+	function getOrgs( user, page, contents ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/orgs';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			orgs = JSON.parse( xhr.responseText );
+
+//console.log( 'orgs', orgs );
+
+			txt = '';
+
+			for ( var i = 0; i < orgs.length; i++ ) {
+
+				org = orgs[ i ];
+
+				txt += '<div><a href=https://github.com/' + org.login + ' >' + org.login + '</a><br>' + 
+
+					'<small>' + org.description + '</small></div>';
+
+			}
+
+			organizations.innerHTML = txt;
+
+		}
+
+	}
+
+	function getRepos( user, page, contents ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/repos';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			repos = JSON.parse( xhr.responseText );
+
+//console.log( 'repos', repos );
+
+			txt = '';
+
+			for ( var i = 0; i < repos.length; i++ ) {
+
+				repo = repos[ i ];
+
+				txt += '<div><a href=' + repo.html_url + ' >' + repo.name + '</a><br>' + 
+
+					'<small>' + repo.updated_at.slice( 0, 10 ) + ' - ' + repo.description + '</small></div>';
+
+			}
+
+			repositories.innerHTML = txt;
+
+		}
+
+	}
+
+
+	function getEvents( user, page, target ) {
+
+// very messy in here
+
+		var fileName, xhr, events;
+
+		fileName = 'https://api.github.com/users/' + user + '/events?page=' + page;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			events = JSON.parse( xhr.responseText );
+
+//console.log( 'events', events );
+
+			buttons = 'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
+				'<button onclick=window.scrollTo(0,0); >top</button>';
+
+			txt = '<h1>user: <a href=https://github.com/' + user + '>' + user + '</a> ' + buttons + '</h1>';
+
+			dates = [];
+			eventHeadings = [];
+
+			for ( var i = 0; i < events.length; i++ ) {
+
+				event = events[ i ];
+
+				if ( dates.indexOf( event.created_at.slice( 0, 10 ) ) === -1 ) {
+
+					dates.push( event.created_at.slice( 0, 10 ) )
+
+					txt += '<hr style=margin-top:70px; ><h2>' + event.created_at.slice( 0, 10 ) + '</h2>';
+
+					eventHeadings = [];
+
+				}
+
+				if ( eventHeadings.indexOf( event.type ) === -1 ) {
+
+					eventHeadings.push( event.type )
+
+					txt += '<h3 style=margin:0; >' + event.type + '</h3>';
+
+				}
+
+				url = event.repo.name;
+
+				link = 'Repository: <a href=http://github.com/' + event.repo.name + ' > ' + event.repo.name + '</a><br>';
+
+//console.log( 'event', event );
+
+				if ( event.type === 'IssuesEvent' /* || event.type === 'IssueCommentEventxxx' */ ) {
+
+					add = 'Title <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a>' + 
+						'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
+						'<div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>' +
+					'';
+
+//console.log( 'event', event.payload.issue );
+
+				} else if ( event.type === 'IssueCommentEvent' ) {
+
+					add = 'Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a>' + 
+						'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
+						'<div class=issue >' + converter.makeHtml( event.payload.comment.body ) + '</div>' ;
+					'';
+
+				} else if ( event.type === 'PushEvent' ){
+
+					add = ' ' + event.type + ' size: ' + event.payload.size + ' - ' + event.payload.commits[ 0 ].message + '<br>';
+
+				} else {
+
+
+				}
+
+				txt += ( i + 1 ) + '. ' + event.created_at.slice( 11, -1 ) + '<br>' + link + add;
+
+			}
+
+			target.innerHTML += txt + '<h1>' + buttons + '</h1>';
+
+// console.log( '', events );
+
+		}
+
+	}
+
+	function proceed( delta ) {
+
+		page += delta;
+		page = page < 1 ? 10 : page;
+		page = page > 10 ? 1 : page;
+		location.hash = '#' + name + '#' + page;
+
+	}
+
+</script>
+</body>
+</html>
