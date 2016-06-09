@@ -1,26 +1,31 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
 ( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/'; 
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/github-api-users-events/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 
-[Theo Armour Read Me]( index.html#readme.md )
+[GitHub API Users Events Read Me]( index.html#readme.md )
 ===
 
-## [theo-armour.github.io]( https://theo-armour.github.io/index.html )
+## Full Screen: [GitHub API Users Events]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/index.html )
 
 
-* https://api.github.com/users/theo-armour/events
+## Features
+* Go to top of page
+* Load all ten pages one after another
+
 
 ## Wish List
 
-* Go to top of page
-* Put the scale div inside a fixed height container
-* Load all ten pages one after another
 * Make my memberships in other orgs all public
 * Make menu and content scroll independently??
 * Add a blogging capability
 * Add scaled thumbnails to repos and orgs 
+* Put the scale div inside a fixed height container << mo help
+
+## Uses
+
+* https://api.github.com/users/theo-armour/events
 
 ## Links of Interest
 
@@ -31,6 +36,11 @@ value='You are now in a GitHub web page view - Click this button to view this re
 > Consider the process of writing the Readme for your project as the true act of creation. This is where all your brilliant ideas should be expressed. This document should stand on its own as a testament to your creativity and expressiveness. The Readme should be the single most important document in your codebase; writing it first is the proper thing to do.
 
 ## Change log
+
+### 2016-06-09 R3
+
+* Go to top of page
+* Load all ten pages one after another
 
 ### 2016-06-03
 
