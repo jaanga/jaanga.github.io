@@ -11,9 +11,9 @@
 ## Full Screen: [ Fillet Two Lines ]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html )
 
 
-<img src="XXXX" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/15915086/2e073288-2d9b-11e6-97d8-cb53ab297f1b.png" style=display:none; width=800 >
 
-<iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html width=100% height=600px ></iframe>
 
 _Fillet Two Lines_
 
@@ -34,7 +34,7 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 ## Features
 
 * Draws lines, segment and shape
-* Sliders allow you o adjust the angles
+* Sliders allow you to adjust the angles
 * Readout identifies if the angle is convex or concave
 * The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
 * Click three bars( 'hamburger' ) icon to slide menu in or out
@@ -63,7 +63,7 @@ Intended for
 	* See response by http://stackoverflow.com/users/4004357/w-f
 
 
-## Change Log
+
 
 ### 2016-06-08 R2.1
 

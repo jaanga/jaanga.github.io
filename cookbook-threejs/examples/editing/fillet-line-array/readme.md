@@ -13,7 +13,7 @@
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
 
-<img src="https://cloud.githubusercontent.com/assets/547626/15846078/59d4ce3e-2c2e-11e6-8c68-c6f5587ca724.png" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" style=display:none; width=800 >
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
