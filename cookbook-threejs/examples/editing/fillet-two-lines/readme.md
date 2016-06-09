@@ -5,7 +5,7 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
 
-[Fillet Two LinesRead Me]( index.html#readme.md )
+[Fillet Two Lines Read Me]( index.html#readme.md )
 ===
 
 ## Full Screen: [ Fillet Two Lines ]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html )
@@ -20,6 +20,10 @@ _Fillet Two Lines_
 ***
 
 ## Concept
+
+_A work in progress - not there yet..._
+
+A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/ ) 
 
 ### Mission
 
