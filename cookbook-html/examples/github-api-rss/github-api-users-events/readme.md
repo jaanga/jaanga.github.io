@@ -37,6 +37,12 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## Change log
 
+### 2016-06-10 R4
+
+* Calling functions using bracket names
+	* Simplifies branching a lot
+* Code clean-up
+
 ### 2016-06-09 R3
 
 * Add descriptions to list of orgs

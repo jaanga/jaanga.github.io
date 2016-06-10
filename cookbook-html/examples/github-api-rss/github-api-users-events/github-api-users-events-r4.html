@@ -1,0 +1,508 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Users Events R4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Use GitHub API to gather a users organization, repos and events.
+Select user from drop-down ist or by input.
+Display all ten pageea of user events 0ne-by-one or all at once.
+List user events in an informative manner.
+' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-06-10' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+// https://developer.github.com/v3/
+
+	var users = [ 
+
+		'Theo-Armour', 
+		'#Three.js',
+		'MrDoob', 
+		'WestLangley', 
+		'zz85',
+		'#FGx',
+		'GeoffMcl', 
+		'#Ladybug',
+		'MostaphaRoudsari', 
+		'#Xplora',
+		'PaulMasson',
+		'#???',
+		'alavit-d',
+		'#OpenDesk',
+		'harrykeen18',
+		'#Abantech',
+		'GMelencio',
+		'jamesAbantech',
+		'#Wiredcraft',
+		'hunvreus',
+		'quentinberder',
+		'#Autodesk',
+		'jeremytammik',
+		'Autodesk'
+
+	];
+
+	eventSet = {};
+
+	var converter, contents;
+	var hashes, name, page;
+	var count = 1;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace;  }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
+			'img { max-width: 800px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'select { width: 200px; }' +
+
+			'div.issue { border: 1px solid #aaa; box-sizing: content-box; max-height: 600px; overflow: auto; padding: 10px; transform: scale( 0.85 ); transform-origin: top left; width: 100%; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#contents { border: 0px #ccc solid; left: 50px; margin: 0 auto; width: 700px; position: absolute; right: 0; top: 0; transition: left 1s; }' +
+			'#hamburger { left: 325px; position: absolute; top: 0px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' + // max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'margin: 0; opacity: 0.98; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
+
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p>And also my home page as a work-in-progress. Let\'s see what we are working on these days - asap.</p>' +
+
+			'<p>' +
+				'Selected Orgs & Users:<br><select id=selUser onchange=initUser(this.value); title="Select the GitHub user" size=15 >' +
+				'<select>' +
+			'</p>' +
+
+			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
+			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
+
+			'<details open>' +
+				'<summary><h3 style=display:inline; id=sumName ></h3></summary>' +
+				'<div id=divUser ></div>' +
+			'</details><br>' +
+
+			'<details open>' +
+				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
+				'<div id=organizations ></div>' +
+			'</details><br>' +
+
+			'<details open>' +
+				'<summary><h3 style=display:inline; >Repositories</h3></summary>' +
+				'<div id=repositories ></div>' +
+			'</details>' +
+
+			'<div id=info ></div><br>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:window.scrollTo(0,0); >❦</a></h1>' +
+			'</center>' +
+
+		'';
+
+		contents = hamburger.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		for ( var i = 0; i < users.length; i++ ) {
+
+			user = users[ i ];
+			if ( user.startsWith('#') ) {
+
+			selUser.appendChild( document.createElement( 'optgroup' ) );
+			selUser.children[ i ].label = user.slice( 1 );
+
+			} else {
+
+			selUser.appendChild( document.createElement( 'option' ) );
+			selUser.children[ i ].text = user;
+
+			}
+
+		}
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		selUser.selectedIndex = 0;
+
+		onHashChange();
+
+	}
+
+	function initUser( user ) {
+
+		count = 1;
+
+		location.hash = user;
+
+		contents.innerHTML = '';
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash ? location.hash.split( '#' ) : '';
+
+		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
+		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
+
+		getEvents( name, page, contents );
+
+		getOrgs( name, page, contents ); 
+
+		getRepos( name, page, contents ); 
+
+		getUser( name );
+
+		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
+
+	}
+
+	function getUser( user ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user;;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			user = JSON.parse( xhr.responseText );
+
+//console.log( 'user', user );
+
+			txt = '<div><img src=' + user.avatar_url +  ' width=80; ></div>' +
+				( user.blog  ? '<div>www: <a href=http://' + user.login + '.github.io >' + user.name + '</a></div>' : '' ) +
+				( user.location  ? '<div>place: ' + user.location + ' </div>' : '' ) +
+				( user.bio  ? '<div>bio: ' + user.bio + ' </div>' : '' ) +
+				( user.compaany  ? '<div>co: <a href=' + user.company + ' >' + user.company + '</a></div>' : '' ) +
+			'';
+
+			sumName.innerHTML = '<a href=http://' + user.login + '.github.io >' + user.name + '</a>';
+			divUser.innerHTML = txt;
+
+		}
+
+	}
+
+	function getOrgs( user, page, contents ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/orgs';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			orgs = JSON.parse( xhr.responseText );
+
+//console.log( 'orgs', orgs );
+
+			txt = '';
+
+			for ( var i = 0; i < orgs.length; i++ ) {
+
+				org = orgs[ i ];
+
+				txt += '<div><a href=https://github.com/' + org.login + ' >' + org.login + '</a><br>' + 
+
+					'<small>' + org.description + '</small></div>';
+
+			}
+
+			organizations.innerHTML = txt;
+
+		}
+
+	}
+
+	function getRepos( user, page, contents ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/repos';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			repos = JSON.parse( xhr.responseText );
+
+//console.log( 'repos', repos );
+
+			txt = '';
+
+			for ( var i = 0; i < repos.length; i++ ) {
+
+				repo = repos[ i ];
+
+				txt += '<div><a href=' + repo.html_url + ' >' + repo.name + '</a><br>' + 
+
+					'<small>' + repo.updated_at.slice( 0, 10 ) + ' - ' + repo.description + '</small></div>';
+
+			}
+
+			repositories.innerHTML = txt;
+
+		}
+
+	}
+
+
+	function getEvents( user, page, target ) {
+
+// https://developer.github.com/v3/activity/events/
+
+// very messy in here
+
+		var fileName, xhr, events, event, eventHeading, dates, txt;
+
+		fileName = 'https://api.github.com/users/' + user + '/events?page=' + page;
+
+		pageHeader =
+		'<h1>' +
+			'user: <a href=https://github.com/' + user + '>' + user + '</a> ' + 
+			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
+//			'<button onclick=window.scrollTo(0,0); >top</button>' +
+		'</h1>';
+
+		pageFooter = 
+		'<h1>' +
+			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
+			'<button onclick=window.scrollTo(0,0); >top</button>' +
+		'</h1>';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			dates = [];
+			events = JSON.parse( xhr.responseText );
+
+//console.log( 'events', events );
+
+
+			pageContent = '';
+
+			for ( var i = 0; i < events.length; i++ ) {
+
+				event = events[ i ];
+
+				if ( dates.indexOf( event.created_at.slice( 0, 10 ) ) === -1 ) {
+
+					dates.push( event.created_at.slice( 0, 10 ) )
+
+					pageContent += 
+						'<hr style=margin-top:70px; >' +
+						'<h2>' + event.created_at.slice( 0, 10 ) + '</h2>';
+
+				}
+
+				if ( event.type !== eventHeading ) {
+
+					eventHeading = event.type
+
+					pageContent += '<h3 style=margin:0; >' + event.type + '</h3>';
+
+				}
+
+				pageContent += 
+					'<div>' + ( i + 1 ) + '. ' + event.created_at.slice( 11, -1 ) + '</div>' +
+					'<div>Repository: <a href=http://github.com/' + event.repo.name + ' > ' + event.repo.name + '</a></div>' +
+				'';
+
+				if ( eventSet[ 'on' + event.type ] !== undefined ) {
+
+					pageContent += eventSet[ 'on' + event.type ]( event );
+
+				} else {
+
+//console.log( 'non-event', event );
+
+					pageContent += '<div>Parsing this event\'s data is still not complete...</div>';
+
+				}
+
+			}
+
+			if ( chkLoadAll.checked && count < 10 ) {
+
+				target.innerHTML += pageHeader + pageContent + pageFooter;
+				count++;
+				proceed( 1 );
+
+			} else {
+
+				target.innerHTML = pageHeader + pageContent + pageFooter;
+				window.scrollTo( 0, 0 );
+
+			}
+
+		}
+
+	}
+
+	eventSet.onCreateEvent = function( event ) {
+
+		txt =
+			'<div>Description: ' + event.payload.description + '</div>' +
+			'<div>Branch: ' + event.payload.master_branch + '</div>' +
+		'';
+		return txt;
+
+	}
+
+	eventSet.onDeleteEvent = function( event ) {
+
+		txt =
+			'<div>Pusher: ' + event.payload.pusher_type + '<div>' + 
+			'<div>Ref: ' + event.payload.ref + '<div>' + 
+			'<div>Ref Type: ' + event.payload.ref_type + '<div>' + 
+		'';
+		return txt;
+
+	}
+
+	eventSet.onIssuesEvent = function( event ) {
+
+		txt = 
+			'<div>Title <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
+			'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
+				( event.payload.action === 'opened' ? 
+				'<div>Action: opened</div><div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>' :
+				'<div>Action: closed</div>' ) +
+		'';
+		return txt;
+
+	}
+
+
+	eventSet.onIssueCommentEvent = function( event ) {
+
+		txt = 
+			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
+			( event.payload.issue.labels.length ? '<div>Labels: ' + event.payload.issue.labels[ 0 ].name  + '</div>' : '' ) +
+			'<div class=issue >' + converter.makeHtml( event.payload.comment.body ) + '</div>' ;
+		'';
+		return txt;
+
+	}
+
+	eventSet.onMemberEvent = function( event ) {
+
+		txt =
+			'<div>Member: ' + '<a href=' + event.payload.member.html_url + ' > ' + event.payload.member.html_url + '</a></div>' +
+			'<div>Action: ' + event.payload.action + '</div>' +
+		'';
+		return txt;
+
+	}
+
+	eventSet.onPushEvent = function( event ) {
+//console.log( 'onEvent', event );
+		txt =
+			'<div>Message: ' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message : '' ) + 
+				' - Size: ' + event.payload.size + ' - Commits: ' + event.payload.commits.length + '</div>' +
+		'';
+		return txt;
+
+	}
+
+	eventSet.onPullRequestEvent = function( event ) {
+
+		txt =
+			'<div>Title: ' + event.payload.pull_request.title + '</div>' +
+			'<div>Action: ' + event.payload.action + '</div>' +
+		'';
+		return txt;
+
+	}
+
+	eventSet.onPullRequestReviewCommentEvent = function( event ) {
+
+		txt =
+
+			'<div>Path: ' + event.payload.comment.path + '</div>' +
+			'<div>Action: ' + event.payload.action + '</div>' +
+			'<div class=issue >Comment: ' + event.payload.comment.body + '</div>' +
+		'';
+		return txt;
+
+	}
+
+	eventSet.onReleaseEvent = function( event ) {
+
+		txt =
+			'<div>Name: ' + event.payload.release.name + '<div>' + 
+			'<h3 style=color:magenta; >Action: ' + event.payload.action + '</h3>' + 
+			'<div>Prerelease: ' + event.payload.release.prerelease + '<div>' + 
+		'';
+		return txt;
+
+	}
+
+	eventSet.onWatchEvent = function( event ) {
+
+		txt =
+			'<div>Action: ' + event.payload.action + '</div>' +
+		'';
+		return txt;
+
+	}
+
+	function proceed( delta ) {
+
+		page += delta;
+		page = page < 1 ? 10 : page;
+		page = page > 10 ? 1 : page;
+		location.hash = '#' + name + '#' + page;
+
+	}
+
+</script>
+</body>
+</html>
