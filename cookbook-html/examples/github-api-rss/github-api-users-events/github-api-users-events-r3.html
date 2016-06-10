@@ -39,12 +39,11 @@
 		'jeremytammik',
 		'Autodesk'
 
-
-
 	];
 
 	var converter, contents;
 	var hashes, name, page;
+	var count;
 
 	init();
 
@@ -69,8 +68,8 @@
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
-			'#contents { border: 0px #ccc solid; left: 50px; margin: 0 auto; width: 700px; position: absolute; right: 0; top: 0; transition: left 1s; }' +
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#contents { border: 0px #ccc solid; left: 50px; margin: 0 auto; width: 700px; position: absolute; right: 0; top: 0; transition: left 1s; }' +
 			'#hamburger { left: 325px; position: absolute; top: 0px; transition: left 1s; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' + // max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'margin: 0; opacity: 0.98; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
@@ -80,6 +79,7 @@
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
 		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
+
 		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
@@ -94,11 +94,12 @@
 			'<p>And also my home page as a work-in-progress. Let\'s see what we are working on these days - asap.</p>' +
 
 			'<p>' +
-				'Selected Orgs & Users:<br><select id=selUser onchange=location.hash=this.value; title="Select the GitHub user" size=15 >' +
+				'Selected Orgs & Users:<br><select id=selUser onchange=initUser(this.value); title="Select the GitHub user" size=15 >' +
 				'<select>' +
 			'</p>' +
 
-			'<p><input placeholder="coming soon"></p>' +
+			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
+			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
 
 			'<details open>' +
 				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
@@ -138,14 +139,25 @@
 
 		}
 
-		selUser.selectedIndex = 0;
-
 		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		selUser.selectedIndex = 0;
+		count = 1;
 
 		onHashChange();
 
 	}
 
+	function initUser( user ) {
+
+		count = 1;
+
+		location.hash = user;
+
+		contents.innerHTML = '';
+
+
+	}
 	function onHashChange() {
 
 		hashes = location.hash ? location.hash.split( '#' ) : '';
@@ -318,7 +330,7 @@
 
 				} else if ( event.type === 'PullRequestEvent' ) {
 
-console.log( 'PullRequestEvent', event );
+//console.log( 'PullRequestEvent', event );
 
 					txt +=
 						'<div>Title: ' + event.payload.pull_request.title + '</div>' +
@@ -328,22 +340,36 @@ console.log( 'PullRequestEvent', event );
 
 				} else {
 
-console.log( 'non-event', event );
+//console.log( 'non-event', event );
 
-					txt += '<div>Parsing this data still not complete...</div>';
+					txt += '<div>Parsing this event\'s data is still not complete...</div>';
 
 				}
 
-
 			}
 
-			target.innerHTML = txt + 
+			txt += 
 			'<h1>' +
 				'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 				'<button onclick=window.scrollTo(0,0); >top</button>' +
 			'</h1>';
 
-			window.scrollTo( 0, 0 );
+			target.innerHTML += txt;
+
+//			window.scrollTo( 0, 0 );
+
+			if ( chkLoadAll.checked && count < 10 ) {
+
+				count++;
+//				target.innerHTML += txt;
+				proceed( 1 );
+
+			} else {
+
+//				target.innerHTML = txt;
+//				count = 0;
+
+			}
 
 		}
 
