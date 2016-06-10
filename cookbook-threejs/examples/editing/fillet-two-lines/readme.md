@@ -28,7 +28,8 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 ### Mission
 
 * Draw a 3D shape indicating the [fillet]( https://en.wikipedia.org/wiki/Fillet_(mechanics) ) of specified radius between two co-planar lines
-
+* Find intersections and tangents quickly and easily 
+* Update 3D geometry in real-time
 
 ### Vision
 
@@ -98,12 +99,12 @@ Intended for OpenDesk/WikiHouse/AEC projects
 * Add and display offset lines at fillet radius distance
 * Add and display marker at intersection point of the two offsets
 * Add and display markers at fillet and line intersections 
-* Code streamline - a lot
+* Code streamlined - a lot
 
 Nice gentle progress. 
 
-Being able to visualize diffs in real-time using things like sliders really helps with debugging.
- 
+Being able to visualize diffs - such as changing the angles of the lines in real-time using things like sliders - really helps with debugging.
+
 ### 2016-06-08 R2.1
 
 * Add 3D geometry
