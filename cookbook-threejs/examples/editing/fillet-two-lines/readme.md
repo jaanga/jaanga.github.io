@@ -21,7 +21,7 @@ _Fillet Two Lines_
 
 ## Concept
 
-_2016-06-09 ~ A work in progress - getting there..._
+_2016-06-10 ~ A work in progress - getting even more there..._
 
 A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/ ) 
 
@@ -39,13 +39,16 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 ## Features
 
 * Draws lines, segment and shape
-* Sliders allow you to adjust the angles and see results in real-time
+* Sliders allow you to adjust the angles and fillet radius and see results in real-time
 * Determines if the angle between two lines is convex, concave or straight
 * Readout identifies if the angle is convex or concave
-* Finds and displays maker at center of fillet
-* Finds and displays fillet and edge tangent points
+* Finds and displays maker at center of fillet and edge tangent points
+* Displays fillet as 3D shape
 * The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
 * Click three bars( 'hamburger' ) icon to slide menu in or out
+* Display mesh as solid or wireframe
+* Direct link to this read me file
+* Click on title to reload 
 
 
 
@@ -54,6 +57,9 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 * Use one/two/three fingers to rotate/zoom/pan the display in 3D
 	* Or left/scroll/right with your pointing device 
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+* Display mesh as solid or wireframe
+* Direct link to this read me file
+* Click on title to reload 
 * Press Control-U/Command-Option-U to view the source code
 * Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
 
@@ -76,6 +82,8 @@ value='Source code listing' >
 
 ## Issues
 
+* Does not yet handle convex / concave angle transition
+* Stacking of visualization elements needs work to help you see more clearly what is gong on
 
 
 ## Users
@@ -92,6 +100,12 @@ Intended for OpenDesk/WikiHouse/AEC projects
 
 ## Change Log
 
+
+### 2016-06-10 R4
+
+* Fillet starting to be drawn properly
+* Add fillet radius slider
+* Number of circle segments depends on size os angle
 
 ### 2016-06-09 R3
 

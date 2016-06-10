@@ -34,6 +34,9 @@ _XXXXXX_
 * TBD
 * The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
 * Click three bars( 'hamburger' ) icon to slide menu in or out
+* Display mesh as solid or wireframe
+* Direct link to this read me file
+* Click on title to reload 
 
 
 ## Things you can do using this script
