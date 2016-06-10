@@ -237,7 +237,7 @@
 
 // very messy in here
 
-		var fileName, xhr, events, event, eventHeadings, dates, txt;
+		var fileName, xhr, events;
 
 		fileName = 'https://api.github.com/users/' + user + '/events?page=' + page;
 
@@ -248,17 +248,17 @@
 
 		function callback() {
 
-			dates = [];
 			events = JSON.parse( xhr.responseText );
 
 //console.log( 'events', events );
 
-			txt = 
-			'<h1>' +
-				'user: <a href=https://github.com/' + user + '>' + user + '</a> ' + 
-				'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
-//				'<button onclick=window.scrollTo(0,0); >top</button>' +
-			'</h1>';
+			buttons = 'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
+				'<button onclick=window.scrollTo(0,0); >top</button>';
+
+			txt = '<h1>user: <a href=https://github.com/' + user + '>' + user + '</a> ' + buttons + '</h1>';
+
+			dates = [];
+			eventHeadings = [];
 
 			for ( var i = 0; i < events.length; i++ ) {
 
@@ -268,9 +268,7 @@
 
 					dates.push( event.created_at.slice( 0, 10 ) )
 
-					txt += 
-						'<hr style=margin-top:70px; >' +
-						'<h2>' + event.created_at.slice( 0, 10 ) + '</h2>';
+					txt += '<hr style=margin-top:70px; ><h2>' + event.created_at.slice( 0, 10 ) + '</h2>';
 
 					eventHeadings = [];
 
@@ -284,25 +282,22 @@
 
 				}
 
-//console.log( 'event', event );
+				url = event.repo.name;
 
-				txt += 
-					'<div>' + ( i + 1 ) + '. ' + event.created_at.slice( 11, -1 ) + '</div>';
-					'<div>Repository: <a href=http://github.com/' + event.repo.name + ' > ' + event.repo.name + '</a></div>' +
-				'';
+				link = 'Repository: <a href=http://github.com/' + event.repo.name + ' > ' + event.repo.name + '</a><br>';
+
+//console.log( 'event', event );
 
 				if ( event.type === 'IssuesEvent' /* || event.type === 'IssueCommentEventxxx' */ ) {
 
-					txt += 
-						'<div>Title <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
+					add = 'Title <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a>' + 
 						'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
 						'<div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>' +
 					'';
 
 				} else if ( event.type === 'IssueCommentEvent' ) {
 
-					txt += 
-						'<div.Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
+					add = 'Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a>' + 
 						'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
 						'<div class=issue >' + converter.makeHtml( event.payload.comment.body ) + '</div>' ;
 					'';
@@ -311,39 +306,23 @@
 
 //console.log( 'event', event.payload );
 
-					txt +=
-						'<div>Message: ' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message : '' ) + 
-							' - Size: ' + event.payload.size + '</div>' +
-					'';
-
-				} else if ( event.type === 'PullRequestEvent' ) {
-
-console.log( 'PullRequestEvent', event );
-
-					txt +=
-						'<div>Title: ' + event.payload.pull_request.title + '</div>' +
-						'<div>Action: ' + event.payload.action + '</div>' +
-
-					'';
+					add = ' ' + event.type + ' size: ' + event.payload.size + ' - ' + 
+					( event.payload.commits.length ? event.payload.commits[ 0 ].message : '' ) + '<br>';
 
 				} else {
 
-console.log( 'non-event', event );
-
-					txt += '<div>Parsing this data still not complete...</div>';
+console.log( 'event', event );
+ 
 
 				}
 
+				txt += ( i + 1 ) + '. ' + event.created_at.slice( 11, -1 ) + '<br>' + link + add;
 
 			}
 
-			target.innerHTML = txt + 
-			'<h1>' +
-				'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
-				'<button onclick=window.scrollTo(0,0); >top</button>' +
-			'</h1>';
+			target.innerHTML = txt + '<h1>' + buttons + '</h1>';
 
-			window.scrollTo( 0, 0 );
+// console.log( '', events );
 
 		}
 

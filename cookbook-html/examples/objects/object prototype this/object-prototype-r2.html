@@ -17,6 +17,9 @@
 
 	var JA = JA || { r: 'r1' };
 
+	var NS = NS || {};
+
+
 	init();
 
 	function init() {
@@ -25,7 +28,7 @@
 		var css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-			'body { font: 12pt monospace; }' +
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; position.absolute; right: 0; width: 800px; }' +
 //			'h2 { margin: 0; }' +
 			'h2 a { text-decoration: none; }' +
 
@@ -60,12 +63,51 @@
 			'</p>' +
 */
 
-			'<div id=info ></div>' +
+			'<p><button onclick=NS.foo(); >Named Space a++</button></p>' +
+			'<p><button onclick=NS.bar(); >Named Space a--</button></p>' +
+
+			'<p id=pNS >a:</p>' +
+			'<p id=info ></p>' +
 
 		'';
 
+/*
+
+Named spaces are quite powerful, but you can't 'new' them
 
 
+*/
+
+		NS.a = 23;
+
+		NS.foo = function() {
+
+			this.a++;
+			this.b = 23;
+
+			NS.setUI( this.a );
+
+		}
+
+
+		NS.bar = function() {
+
+			this.a--;
+
+console.log( 'b', this.b );
+
+			NS.setUI( this.a );
+
+		}
+
+		NS.setUI = function( text ) {
+
+			pNS.innerHTML = 'a:' + text;
+
+		};
+
+
+// prototype
 
 		info.innerHTML = JA.r + '<br>';
 
@@ -98,6 +140,7 @@
 		info.innerHTML += p.toString();
 
 		p.print();
+
 
 
 	}

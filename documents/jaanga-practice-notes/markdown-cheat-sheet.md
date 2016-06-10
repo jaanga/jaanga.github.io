@@ -1,3 +1,6 @@
+
+
+
 <span style=display:none; >
 [You are now in GitHub source code view - click this link to view Read Me file as a web page]
 ( http://jaanga.github.io/documents/jaanga-practice-notes/ "View file as a web page." ) </span>
@@ -130,6 +133,8 @@ ___
 
 #### What you type
 
+
+
 ```
 | h1    |    h2   |      h3 |
 |:------|:-------:|--------:|
@@ -137,10 +142,17 @@ ___
 | *foo* | **bar** | ~~baz~~ |
 ```
 
+#### What you see
+
 | h1    |    h2   |      h3 |
 |:------|:-------:|--------:|
 | 100   | [a][1]  | ![b][2] |
 | *foo* | **bar** | ~~baz~~ |
+
+
+
+
+
 
 ### Lists
 
