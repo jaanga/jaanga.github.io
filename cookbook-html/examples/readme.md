@@ -7,12 +7,31 @@
 [Examples Read Me]( index.html#readme.md )
 ===
 
+_Cookbook code useful in adding to bigger projects/ Places to start. Test cases._
+
+
 ### _new 'GitHub API Files Viewer' / new menu at right / changes everything_
 
 
+***
+
+## Concept
+
+### Mission
+
+* Examples to help you build and share your 3D portfolio
+	* But many files here are old, broken or not just very useful. So it goes
+* Help you explore the GitHub API
+* Help you explore audio, graphics and animation techniques
+ 
+
+### Vision
+
+* To show that you can do a lot with just plain JavaScript
 
 
-_Cookbook code useful in adding to bigger projects/ Places to start. Test cases._
+
+<!--
 
 _This read me is still missing many links_
 
@@ -152,12 +171,24 @@ _This read me is still missing many links_
 
 
 ## Web Audio
+-->
 
 
 ## Change Log
+
+### 2016-06-10
+
+* Now using github-api-files-viewer-r1.html
+* Update Read me
 
 ### 2016-05-24
 
 * Update index.html to use opener.js
 * Add github-api-files-in-examples-r1 as default file to open
 
+
+***
+
+<center title='Jaanga ~ your 3D happy place' >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+</center>

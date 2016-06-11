@@ -21,7 +21,10 @@ Menu and contents in HTML.
 		[ 'Jaanga HTML Cookbook Examples', 'jaanga', 'jaanga.github.io', 'master', 'cookbook-html\/examples\/' ],
 		[ 'Jaanga HTML Cookbook Templates', 'jaanga', 'jaanga.github.io', 'master', 'cookbook-html\/templates\/' ],
 
-	]
+	];
+
+	var readerSource = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
+
 
 	init();
 
@@ -113,6 +116,8 @@ Menu and contents in HTML.
 		tree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
 		urlBase = 'http://' + user + '.github.io/';
 
+		urlBase = '../../../../';
+
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', tree, true );
 		xhr.onload = callback;
@@ -143,6 +148,7 @@ Menu and contents in HTML.
 			createTableOfContents();
 
 			load( urlBase + folder + 'readme.md' );
+
 		}
 
 	}
@@ -193,7 +199,7 @@ Menu and contents in HTML.
 
 console.log( 'fName', fName );
 
-			var readerSource = 'https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js';
+// no, load at get go...
 
 			reader = document.body.appendChild( document.createElement( 'script' ) );
 			reader.onload = callback;
