@@ -52,9 +52,9 @@ _XXXXXX_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
-	'https://jaanga.github.io/cookbook-threejs/examples/xxxxxx/xxxxxx-r1.html' width=100% height=600 ></iframe>
+	'https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/xxxxxx/xxxxxx-r1.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/ladybug-analysis-tools/ladybug-web/blob/gh-pages/xxxxxx/xxxxxx-r1.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/xxxxxx/xxxxxx-r1.html';
 value='Source code listing' >
 
 
