@@ -7,7 +7,28 @@
 [Examples Read Me]( index.html )
 ===
 
+_Cookbook code useful in adding to bigger projects/ Places to start. Test cases._
 
+
+### _new 'GitHub API Files Viewer' / new menu at right / changes everything_
+
+
+***
+
+## Concept
+
+### Mission
+
+* Examples to help you create and share your 3D portfolio
+	* But many files here are old, broken or not just very useful. So it goes
+
+### Vision
+
+* To show that you can do a lot with Three.js just plain JavaScript
+
+
+
+<!--
 
 ## Camera Near Far Sections
 
@@ -116,6 +137,8 @@
 
 [Tween.js Camera]( ./tweening/tweenjs-camera/tweenjs-camera-r1.html )
 
+-->
+
 
 ## Links of Interest
 
@@ -123,3 +146,19 @@
 [Dirksen 1]( http://www.smartjava.org/content/all-109-examples-my-book-threejs-threejs-version-r63 )
 
 <http://codedan.net/MonkeyX/WebGL/three.js/Example_0006/WebGL/MonkeyGame.html>
+
+
+
+## Change Log
+
+### 2016-06-10
+
+* Now using github-api-files-viewer-r1.html
+* Update Read me
+
+
+***
+
+<center title='Jaanga ~ your 3D happy place' >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+</center>

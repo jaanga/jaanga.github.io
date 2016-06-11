@@ -28,9 +28,10 @@ Menu - hamburger style - on right because most of my scripts have their title on
 
 ## To Do / Wish List
 
-
+* View source code
+* Open in new tab
 * Highlight selected item on menu
-* Add many more destinations - including third parties suchas as Three.js and Tony Parisi
+* Add many more destinations - including third parties such as as Three.js and Tony Parisi
 * Select way of viewing: menu, single page or gallery
 * Show recent events
 * Show blog posts

@@ -70,7 +70,7 @@ Menu and contents in HTML.
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
-				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+				'<a href=http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-viewer/github-api-files-viewer-r1.html#readme.md > &#x24D8; </a>' +
 			'</h2>' +
 
 			'<p>' +
@@ -116,7 +116,7 @@ Menu and contents in HTML.
 		tree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
 		urlBase = 'http://' + user + '.github.io/';
 
-		urlBase = '../../../../';
+//		urlBase = '../../../../';
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', tree, true );
@@ -125,7 +125,7 @@ Menu and contents in HTML.
 
 		function callback() {
 
-			var response, file;
+//			var response, file;
 
 			response = JSON.parse( xhr.response );
 			files = [];
@@ -197,7 +197,7 @@ Menu and contents in HTML.
 
 		} else {
 
-console.log( 'fName', fName );
+//console.log( 'fName', fName );
 
 // no, load at get go...
 
