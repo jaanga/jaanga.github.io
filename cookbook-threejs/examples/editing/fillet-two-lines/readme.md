@@ -70,7 +70,7 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
 	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r2.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r5.html';
 value='Source code listing' >
 
 
