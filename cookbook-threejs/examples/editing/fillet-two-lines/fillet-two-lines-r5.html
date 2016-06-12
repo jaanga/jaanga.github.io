@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Fillet Two Lines R5</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Draw a 3D shape indicating a fillet between two co-planar lines of given fillet radius ' >
+<meta name=keywords content='Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-06-12' >
+</head>
+<body>
+<!--
+<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+// http://stackoverflow.com/questions/13426362/find-convex-an-concave-corners-in-a-polygon
+
+	var fillet = {
+
+		radius : 10
+
+	}
+
+	var radius = 50;
+	var line, circle;
+	var iLine1, iLine2, iBox, tan1, tan2;
+	var deltaAngle;
+
+//	var points, angles;
+//	var convex;
+
+	var pi = Math.PI;
+	var pi2 = pi * 2;
+	var pi05 = pi * 0.5;
+	var cos = Math.cos;
+	var sin = Math.sin;
+	var abs = Math.abs;
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var stats, renderer, scene, camera, controls;
+
+	init();
+	animate();
+
+	function init() {
+
+		var geometry, material, mesh;
+		var css, hamburger, menu;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
+
+			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+			'<p><input type=checkbox onchange=fillet.shape.material.wireframe=!fillet.shape.material.wireframe; > Wireframe</p>' +
+
+//			'<p><button onclick=doIt(); >do it</button></p>' +
+
+			'<p>angle 1:<br><input type=range id=inpAngle1 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi * 0.85 ) + ' oninput=setLine(); title="0 to 10: OK" > <output id=outAng1 >' + ( pi / 20 ) + '</output></p>' +
+
+			'<p>angle 2:<br><input type=range id=inpAngle2 max=' + pi2 + ' min=0 step=' + ( pi / 20 ) + ' value=' + ( pi * 0.4 ) + ' oninput=setLine(); title="0 to 10: OK" > <output id=outAng2 >-' + ( pi / 20 ) + '</output></p>' +
+
+			'<p>Fillet Radius: <input type=range id=inpFilletRadius max=30 min=1 step=1 value=10 oninput=setLine(); title="1 to 20: OK" > <output id=outRad >10</output></p>' +
+
+			'<p id=pAngleType ></p>' +
+
+			'<p id=pAngles ></p>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -41, 0 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -40, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		setLine();
+
+	}
+
+	function setLine() {
+
+		var points, angles;
+
+		outAng1.value = inpAngle1.valueAsNumber.toFixed( 4 );
+		outAng2.value = - inpAngle2.valueAsNumber.toFixed( 4 );
+		outRad.value = inpFilletRadius.valueAsNumber.toFixed( 4 );
+
+		fillet.radius = inpFilletRadius.valueAsNumber;
+
+		fillet.points = getPoints();
+
+		fillet.angles = getAnglesTypeVector( fillet.points );
+
+		line = addLine( line, fillet.points );
+
+		circle = addCircle( circle, fillet.points, fillet.angles );
+
+		getIntersection( fillet, fillet.angles );
+
+		addFillet( fillet );
+
+	}
+
+	function getPoints() {
+
+// get in counter-clockwise order
+
+		var pointOrigin, pointPrevious, pointNext;
+
+		pointOrigin = v( 0, 0, 0 );
+
+		pointPrevious = v( radius * cos( inpAngle1.valueAsNumber ), radius * sin( inpAngle1.valueAsNumber ), 0 );
+
+		pointNext = v( radius * cos( - inpAngle2.valueAsNumber ), radius * sin( - inpAngle2.valueAsNumber ), 0 );
+
+		points = [ pointPrevious, pointOrigin, pointNext ];
+
+		return points;
+
+	}
+
+
+	function getIntersection( obj, angles ) {
+
+		var p1, p2, p3, p4, p5, p6, p7, a0, a1;
+		p1 = obj.points[ 0 ];
+		p2 = obj.points[ 1 ];
+		p3 = obj.points[ 2 ];
+
+		a0 = angles[ 0 ];
+		a1 = angles[ 1 ];
+
+		if ( fillet.convex ) {
+
+			p4 = v( p2.x + fillet.radius * cos( a0 + pi05 ), p2.y + fillet.radius * sin( a0 + pi05 ), 0 );
+			p5 = v( p1.x + fillet.radius * cos( a0 + pi05 ), p1.y + fillet.radius * sin( a0 + pi05 ), 0 );
+
+			p6 = v( p2.x + fillet.radius * cos( a1 - pi05 ), p2.y + fillet.radius * sin( a1 - pi05 ), 0 );
+			p7 = v( p3.x + fillet.radius * cos( a1 - pi05 ), p3.y + fillet.radius * sin( a1 - pi05 ), 0 );
+
+		} else {
+
+			p4 = v( p2.x + fillet.radius * cos( a0 - pi05 ), p2.y + fillet.radius * sin( a0 - pi05 ), 0 );
+			p5 = v( p1.x + fillet.radius * cos( a0 - pi05 ), p1.y + fillet.radius * sin( a0 - pi05 ), 0 );
+
+			p6 = v( p2.x + fillet.radius * cos( a1 + pi05 ), p2.y + fillet.radius * sin( a1 + pi05 ), 0 );
+			p7 = v( p3.x + fillet.radius * cos( a1 + pi05 ), p3.y + fillet.radius * sin( a1 + pi05 ), 0 );
+
+		}
+		scene.remove( iLine1, iLine2 );
+
+		iLine1 = addLine( iLine1, [ p4, p5 ], 0xff00ff );
+		iLine2 = addLine( iLine2, [ p6, p7 ], 0xff00ff );
+
+		scene.add( iLine1, iLine2 );
+
+		fillet.centerPoint = getIntersectFourPoints( p4, p5, p6, p7 );
+
+		iBox = addMarker( iBox, fillet.centerPoint );
+
+		getTangentPoints( fillet.centerPoint, angles );
+
+	}
+
+
+	function getTangentPoints( center, angles ) {
+
+		fillet.startPoint = v( center.x + fillet.radius * cos( angles[ 0 ] - pi05 ), center.y + fillet.radius * sin( angles[ 0 ] - pi05 ), 0 );
+
+		tan1 = addMarker( tan1, fillet.startPoint );
+
+		fillet.endPoint = v( center.x + fillet.radius * cos( angles[ 1 ] + pi05 ), center.y + fillet.radius * sin( angles[ 1 ] + pi05 ), 0 );
+
+		tan2 = addMarker( tan2, fillet.endPoint );
+
+	}
+
+
+	function addMarker( mesh, point ) {
+
+		scene.remove( mesh );
+		geometry = new THREE.BoxGeometry( 2, 2, 2 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( point );
+		scene.add( mesh );
+		return mesh;
+
+	}
+
+
+	function getAnglesTypeVector( points ) {
+
+		var angles, angText, a1, a2;
+
+		angles = [];
+		angText = '';
+
+		p = points[ 0 ].clone().sub( points[ 1 ] );
+		a1 = Math.atan2( p.y, p.x );
+
+//		a1 = a1 + pi;
+//		if ( a1 > pi ) a1 -= pi2;
+
+		p = points[ 1 ].clone().sub( points[ 2 ] );
+		a2 = Math.atan2( p.y, p.x );
+
+		a2 = a2 + pi;
+		if ( a2 > pi ) a2 -= pi2;
+
+		angles.push( a1, a2 );
+
+		angText += ' [ ' + a1.toFixed( 3 ) + ',' + a2.toFixed( 3 ) + ' ]' + '<br>';
+
+		deltaAngle = ( a1 - a2 );
+
+		deltaAngle = ( deltaAngle + pi2 ) % pi2 - pi;
+
+		angleTxt = deltaAngle + pi;
+
+		if ( deltaAngle > 0.1 ) {
+
+			txt = 'Angle ' + angleTxt.toFixed( 4 ) + ' is convex';
+
+			fillet.convex = true;
+
+		} else if ( deltaAngle < -0.1 ) {
+
+			txt = 'Angle ' + angleTxt.toFixed( 4 ) + ' is concave';
+
+			fillet.convex = false;
+
+		} else {
+
+			txt = 'Angle ' + angleTxt.toFixed( 4 ) + ' is straight';
+
+			fillet.convex = true;
+
+		}
+
+		pAngles.innerHTML = 
+
+			'Vector method<br>Angles:<br>' + angText+ '<br>' +
+			'delta angle: ' + deltaAngle.toFixed( 4 ) + '<br>' +
+			txt +
+
+		'';
+
+		return angles;
+
+	}
+
+
+	function addLine( line, points, color ) {
+
+		var geometry, material;
+
+		scene.remove( line );
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = points || [ v( -30, 0, 0 ),  v( 30, 30, -30 ), v( 50, 0, 0 ) ];
+		color = color || 0x000000;
+		material = new THREE.LineBasicMaterial( { color: color } );
+		line = new THREE.Line( geometry, material );
+
+		scene.add( line );
+
+		return line;
+
+	}
+
+
+	function addCircle( circle, points, angles ) {
+
+		var delta, segments, geometry, material;
+
+		scene.remove( circle );
+
+		delta = angles[ 1 ] - angles[ 0 ];
+
+//radius, segments, thetaStart, thetaLength
+
+		geometry = new THREE.CircleGeometry( radius, 10 * abs( delta ), angles[ 0 ], delta );
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		circle = new THREE.Mesh( geometry, material );
+		circle.position.copy( points[ 1 ] );
+		circle.position.z = -10;
+
+		scene.add( circle );
+
+		return circle;
+
+	}
+
+	function addFillet( obj ) {
+
+		scene.remove( obj.shape, obj.edges );
+
+		path = createPath( obj );
+
+		obj.shape = drawShape( path );
+		obj.shape.position.z = -7;
+
+		obj.edges = new THREE.EdgesHelper( obj.shape, 0x333333 );
+
+		scene.add( obj.shape, obj.edges );
+
+	}
+
+	function createPath( obj ) {
+
+		var path, a1, a2;
+
+		path = new THREE.Path();
+
+		if ( obj.convex ) {
+
+			a1 = obj.angles[ 0 ] - pi05;
+			a2 = obj.angles[ 1 ] + pi05;
+
+		} else {
+
+			a1 = obj.angles[ 0 ] + pi05;
+			a2 = obj.angles[ 1 ] - pi05;
+
+		}
+
+			path.moveTo( obj.points[ 2 ].x, obj.points[ 2 ].y );
+			path.lineTo( obj.points[ 2 ].x, obj.points[ 2 ].y );
+			path.absarc( fillet.centerPoint.x, fillet.centerPoint.y, fillet.radius, a2, a1, ! obj.convex );
+			path.lineTo( obj.points[ 0 ].x, obj.points[ 0 ].y );
+
+
+		return path;
+
+	}
+
+	function drawShape( path ) {
+
+		var geometry, shape, material, mesh;
+
+		geometry = path.createSpacedPointsGeometry( 100 );
+		shape = new THREE.Shape( geometry.vertices );
+
+//		shape = new THREE.Shape();
+//		shape.fromPoints( path.getPoints() );
+
+
+		geometry = shape.extrude( { amount: 5, bevelEnabled: false } );
+
+		material = new THREE.MeshNormalMaterial();
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		return mesh;
+
+	}
+
+	function getIntersectFourPoints( p1, p2, p3, p4 ) {
+
+		var denominator, numerator, a, x, y;
+
+		denominator = ( p4.y - p3.y ) * ( p2.x - p1.x ) - ( p4.x - p3.x ) * ( p2.y - p1.y );
+
+		if ( denominator == 0 ) { console.log( 'not' ); return; }
+
+		numerator = ( p1.y - p3.y ) * ( p4.x - p3.x ) - ( p1.x - p3.x ) * ( p4.y - p3.y );
+
+		a = numerator / denominator;
+
+		x = p1.x + a * ( p2.x - p1.x );
+		y = p1.y + a * ( p2.y - p1.y );
+
+		return new THREE.Vector3( x, y, 0 );
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
+   

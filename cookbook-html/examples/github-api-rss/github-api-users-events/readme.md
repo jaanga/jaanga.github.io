@@ -33,6 +33,7 @@ _GitHub API Users Events_
 
 ## Features
 
+* List languages of repos
 * Use GitHub API to gather a users organization, repos and events
 * Select user from drop-down ist or by input
 * Display all ten pages of user events one-by-one or all at once
@@ -43,7 +44,8 @@ _GitHub API Users Events_
 
 ## Wish List
 
-* To make lists of orgs and users available via Gists
+* To make lists of orgs and users available via Gist
+	* Select using location.hash
 * Add more users
 * Center on page
 * Make menu and content scroll independently??

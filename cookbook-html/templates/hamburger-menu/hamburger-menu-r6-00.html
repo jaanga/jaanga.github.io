@@ -24,9 +24,7 @@ Menu and contents in HTML.
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
-			'html { height: 100%; }' +
-			'body { border: 0px solid red; font: 12pt monospace; height: 100%; ' +
-				'left: 0; margin: 0 auto; max-width: 1100px;  /* overflow: auto hidden; */ position: absolute; right: 0; }' +
+			'body { font: 12pt monospace; margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
 
@@ -34,14 +32,25 @@ Menu and contents in HTML.
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
-			'#contents { border: 1px #ccc solid; left: 400px; max-width: 800px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
-			'#hamburger { color: crimson; cursor: pointer; font-size: 24pt; left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; height: 98%; ' +
-				'opacity: 0.85; overflow: auto; padding: 0 10px;  position: absolute; /*top: -20px;*/ transition: left 1s; max-width: 300px; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
 
 		'';
 
-		menu = document.body.appendChild( document.createElement( 'div' ) );
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = 'contents';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML = 
 
@@ -92,37 +101,10 @@ Menu and contents in HTML.
 			'<div id=info ></div>' +
 
 			'<center title="dingbat" >' +
-			'<h1><a href=javascript:menu.scrollTop=0; > ❦ </h1>' +
+			'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a></h1>' +
 			'</center>' +
 
 		'';
-
-		hamburger = document.body.appendChild( document.createElement( 'div' ) );
-		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '&#9776';
-
-		hamburger.onclick = function() { 
-
-			if ( hamburger.style.left === '325px' || hamburger.style.left === '' ) {
-
-				hamburger.style.left = 0; 
-				menu.style.left = '-325px';
-				contents.style.left = '50px'; 
-
-
-			} else {
-
-				hamburger.style.left = '325px'; 
-				menu.style.left = 0; 
-				contents.style.left = '400px'; 
-
-			}
-
-		};
-
-		contents = document.body.appendChild( document.createElement( 'div' ) );
-		contents.id = 'contents';
-		contents.innerHTML = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
 	}
 

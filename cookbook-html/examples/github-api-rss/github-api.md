@@ -5,6 +5,13 @@ GitHub API
 
 ## Documentation: https://developer.github.com/v3/
 
+### Bookmarks
+
+5 entertaining things you can find with the GitHub Search API
+* https://gist.github.com/jasonrudolph/6065289
+
+
+
 ### Help
 
 * https://help.github.com/categories/search/
@@ -27,9 +34,11 @@ GitHub API
 
 ## GitHub Data
 
-https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+
+fun look at issues
+* https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+
 
-* fun look at issues
+
+## Usage Limits
 
 https://api.github.com/rate_limit
 
@@ -43,7 +52,24 @@ https://github.com/timeline
 https://github.com/jaanga/timeline
 
 
-Miscellaneous
+## Gists
+
+* https://developer.github.com/v3/gists/
+* https://developer.github.com/changes/2014-02-21-gist-raw-file-url-change/
+
+* https://gist.github.com/search?q=user:theo-armour
+
+* https://api.github.com/users/theo-armour/gists
+
+* https://api.github.com/gists/bb9527c8cff89a417b09eaeb6c8ae330
+
+* https://gist.githubusercontent.com/VonC/9184693/raw/testNewGist
+
+* https://gist.githubusercontent.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330/raw
+
+
+
+## Miscellaneous
 
 https://api.github.com/emojis
 https://api.github.com/gitignore/templates
@@ -61,10 +87,59 @@ https://api.github.com/orgs/ladybug-analysis-tools/repos
 https://api.github.com/orgs/ladybug-analysis-tools/events <<
 
 
+## Repos
+
+http://stackoverflow.com/questions/15831313/is-it-possible-to-get-commits-history-for-one-file-in-github-api
+
+http://api.github.com/repos/:owner/:repo/commits?path=PATH_TO_FILE
+
+e.g.
+
+https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
+
+https://api.github.com/repos/jaanga/jaanga.github.io/issues
+https://api.github.com/repos/jaanga/jaanga.github.io/commits
+https://api.github.com/repos/jaanga/jaanga.github.io/trees << none
+https://api.github.com/repos/jaanga/jaanga.github.io/branches
+https://api.github.com/repos/jaanga/jaanga.github.io/tags
+https://api.github.com/repos/jaanga/jaanga.github.io/References << not
+https://api.github.com/repos/jaanga/jaanga.github.io/events
+https://api.github.com/repos/jaanga/jaanga.github.io/followers << not
+https://api.github.com/repos/jaanga/jaanga.github.io/labels
+https://api.github.com/repos/jaanga/jaanga.github.io/comments
+
+https://api.github.com/repos/jquery/jquery/contributors?anon=true
+
+https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+
 ## Users
 
 https://api.github.com/users/theo-armour
  
+
+## Search
+
+* https://developer.github.com/v3/search/
+
+https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+
+https://api.github.com/search/code?q=3D+extension:stl << not
+https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
+
+
+### Issues
+
+https://api.github.com/search/issues?q=windows+label:bug+language:python+state:open&sort=created&order=asc
+
+https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc
+
+https://api.github.com/user/jaanga/issues
+
+
+### Regular GitHub Search
+
+https://github.com/search?q=NASA-3D&extension:stl&type=Code&s=indexed
+https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
 
 ## Ladybug Web
 

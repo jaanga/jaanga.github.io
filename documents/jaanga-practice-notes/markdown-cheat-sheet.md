@@ -56,8 +56,6 @@ value='Ladybug Web Analemma 3D: the entire source code listing' >
 <iframe class=ifr src=../files/ace-view-r1.html#../../index.html width=100% height=600px ></iframe>
 
 
-
-
 <!--
 <iframe class=ifr src=../ace-view-r1.html#https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/analemma-3d-r14.html width=100% height=600px ></iframe>
 -->
@@ -77,6 +75,10 @@ Thing Details Details Details Details Details
 </details>
 
 
+## Emoji
+
+* http://www.emoji-cheat-sheet.com/
+
 
 ### Images
 
@@ -85,6 +87,19 @@ Thing Details Details Details Details Details
 ![External Link Icon]( ../files/Icon_External_Link.png )  
 
 <img src=../files/Icon_External_Link.png width="50" height="50" >
+
+## Video
+
+
+Just replace the YOUTUBE_VIDEO_ID_HERE for the id of your video. An image will appear and will redirect automatically to the video in youtube.
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE" target="_blank">
+ <img src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg" alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" />
+</a>
+Or use pure markdown (without dimensions):
+[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+Do you have another tip that could be useful and we don't have in this collection ? Please share it with us in the comment box.
+githubmarkdownreadmerepositorycenter
+
 
 
 #### lorempixel - for random images
@@ -235,6 +250,8 @@ text text text
 * http://daringfireball.net/projects/markdown/syntax
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 * http://www.reddit.com/wiki/commenting
+
+* https://stackedit.io/
 
 ## Alternatives
 

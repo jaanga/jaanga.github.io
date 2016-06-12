@@ -21,7 +21,6 @@ _Fillet Two Lines_
 
 ## Concept
 
-_2016-06-10 ~ A work in progress - getting even more there..._
 
 A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/ ) 
 
@@ -29,12 +28,12 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 
 * Draw a 3D shape indicating the [fillet]( https://en.wikipedia.org/wiki/Fillet_(mechanics) ) of specified radius between two co-planar lines
 * Find intersections and tangents quickly and easily 
-* Update 3D geometry in real-time
+* Update 3D geometry - angles and radius - in real-time
 
 ### Vision
 
 * Make it easy to add curved corners to lots of things 
-
+* To be a good demo of updating geometry in real time as a useful visualization tool 
 
 ## Features
 
@@ -54,10 +53,11 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 
 ## Things you can do using this script
 
+* Drag the sliders to update the angles and fillet radius
 * Use one/two/three fingers to rotate/zoom/pan the display in 3D
 	* Or left/scroll/right with your pointing device 
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
-* Display mesh as solid or wireframe
+* Display fillet shape as solid or wireframe
 * Direct link to this read me file
 * Click on title to reload 
 * Press Control-U/Command-Option-U to view the source code
@@ -82,14 +82,13 @@ value='Source code listing' >
 
 ## Issues
 
-* Does not yet handle convex / concave angle transition
-* Stacking of visualization elements needs work to help you see more clearly what is gong on
+* Does not handle straight line very well
+* using `shape.fromPoints( path.getPoints() );` would simplify matters
 
 
 ## Users
 
 Intended for OpenDesk/WikiHouse/AEC projects
-
 
 
 ## Credits
@@ -100,6 +99,13 @@ Intended for OpenDesk/WikiHouse/AEC projects
 
 ## Change Log
 
+### 2016-06-12
+
+* Handles convex / concave angle transition
+* Stacking of visualization elements adjusted to help you see more clearly what is gong on
+* Fillet is now a JavaScript object
+	* Perhaps a bit smarter than it was before
+* Code cleanup
 
 ### 2016-06-10 R4
 
