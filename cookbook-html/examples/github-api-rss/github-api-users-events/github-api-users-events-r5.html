@@ -67,7 +67,7 @@ List user events in an informative manner.
 //			'body { font: 12pt monospace;  }' +
 			'html { height: 100%; }' +
 			'body { border: 0px solid red; font: 12pt monospace; height: 100%; ' +
-				'left: 0; margin: 0 auto; max-width: 1100px;  /* overflow: auto hidden; */ position: absolute; right: 0; }' +
+				'left: 0; margin: 0 auto; max-width: 1000px;  /* overflow: auto hidden; */ position: absolute; right: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
 			'img { max-width: 800px; }' +
@@ -86,7 +86,7 @@ List user events in an informative manner.
 				'margin: 0; opacity: 0.98; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 */
 
-			'#contents { border: 1px #ccc solid; left: 400px; max-width: 800px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
+			'#contents { border: 0px #ccc solid; left: 375px; max-width: 700px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
 			'#hamburger { color: crimson; cursor: pointer; font-size: 24pt; left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; height: 98%; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px;  position: absolute; /*top: -20px;*/ transition: left 1s; max-width: 300px; }' +
@@ -118,14 +118,19 @@ List user events in an informative manner.
 				'<div id=divUser ></div>' +
 			'</details><br>' +
 
-			'<details open>' +
+			'<details>' +
 				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
 				'<div id=organizations ></div>' +
-			'</details><br>' +
+			'</details>' +
 
-			'<details open>' +
+			'<details>' +
 				'<summary><h3 style=display:inline; >Repositories</h3></summary>' +
 				'<div id=repositories ></div>' +
+			'</details>' +
+
+			'<details>' +
+				'<summary><h3 style=display:inline; >Gists</h3></summary>' +
+				'<div id=divGists ></div>' +
 			'</details>' +
 
 			'<div id=info ></div><br>' +
@@ -140,11 +145,8 @@ List user events in an informative manner.
 		hamburger.id = 'hamburger';
 		hamburger.innerHTML = ' &#9776 ';
 
-//		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
-
 		hamburger.onclick = function() { 
 
-//			if ( hamburger.style.left === '325px' || hamburger.style.left === '' ) {
 			if ( menu.style.left !== '-325px' ) {
 
 				hamburger.style.left = 0; 
@@ -156,7 +158,7 @@ List user events in an informative manner.
 
 				hamburger.style.left = '325px'; 
 				menu.style.left = 0; 
-				contents.style.left = '400px'; 
+				contents.style.left = '375px'; 
 
 			}
 
@@ -215,7 +217,15 @@ List user events in an informative manner.
 
 		getUser( name );
 
+		getGists( name );
+
 		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
+
+		for ( var i = 0; i < selUser.options.length; i++ ) {
+
+			if ( selUser.options[ i ].value === name ) { selUser.selectedIndex = i; }
+
+		}
 
 	}
 
@@ -280,6 +290,39 @@ List user events in an informative manner.
 			}
 
 			organizations.innerHTML = txt;
+
+		}
+
+	}
+
+	function getGists( user, page, contents ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/gists';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			gists = JSON.parse( xhr.responseText );
+
+			txt = '';
+
+			for ( var i = 0; i < gists.length; i++ ) {
+
+				gist = gists[ i ];
+console.log( 'gist', gist );
+				txt += '<div><a href=' + gist.html_url + ' >' + gist.description + '</a><br>' + 
+
+					'<small>' + gist.updated_at.slice( 0, 10 ) + '</small></div>';
+
+			}
+
+			divGists.innerHTML = txt;
 
 		}
 

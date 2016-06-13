@@ -97,6 +97,12 @@ value='Source code listing' >
 
 ## Change log
 
+### 2016-06-13 R5
+
+
+* Update the selUser.selectedIndex with any onHashChange event
+* Centered the content in window
+
 ### 2016-06-10 R4
 
 * Add much to this read me file
