@@ -145,7 +145,7 @@ List user events in an informative manner.
 		hamburger.onclick = function() { 
 
 //			if ( hamburger.style.left === '325px' || hamburger.style.left === '' ) {
-			if ( menu.style.left === '' ) {
+			if ( menu.style.left !== '-325px' ) {
 
 				hamburger.style.left = 0; 
 				menu.style.left = '-325px';
