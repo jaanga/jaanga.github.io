@@ -8,15 +8,15 @@
 <meta name=keywords content='Skybox,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 </head>
 <body>
-
+<!--
 <script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
-<!--
+-->
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
--->
+
 <script>
 
 	var spheres = [];
@@ -28,22 +28,22 @@
 	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/Escher/';
 	skyboxURLs.push( [ 'escher', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/MilkyWay/';
+	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/MilkyWay/';
 	skyboxURLs.push( [ 'MilkyWay', [ p + 'dark-s_px.jpg', p + 'dark-s_nx.jpg', p + 'dark-s_py.jpg', p + 'dark-s_ny.jpg',p + 'dark-s_pz.jpg', p +'dark-s_nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Park2/';
+	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/Park2/';
 	skyboxURLs.push( [ 'Park2', [ p + 'posx.jpg', p + 'negx.jpg', p + 'posy.jpg', p + 'negy.jpg',p + 'posz.jpg',p +'negz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Park3Med/';
+	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/Park3Med/';
 	skyboxURLs.push( [ 'Park3Med', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/pisa/';
+	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/pisa/';
 	skyboxURLs.push( [ 'pisa', [ p + 'px.png', p + 'nx.png', p + 'py.png', p + 'ny.png',p + 'pz.png',p +'nz.png' ] ] );
 
 	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
 	skyboxURLs.push( [ 'skyboxX', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
-	p = 'https://mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
+	p = 'https://rawgit.com/mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
 	skyboxURLs.push( [ 'SwedishRoyalCastle', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
 	var skybox;

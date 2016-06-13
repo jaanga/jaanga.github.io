@@ -70,7 +70,7 @@ A precursor to [Fillet Line Array]( http://jaanga.github.io/cookbook-threejs/exa
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
 	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/index.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r5.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r6.html';
 value='Source code listing' >
 
 
@@ -83,8 +83,6 @@ value='Source code listing' >
 ## Issues
 
 * Does not handle straight line very well
-* using `shape.fromPoints( path.getPoints() );` would simplify matters
-
 
 ## Users
 
@@ -98,6 +96,13 @@ Intended for OpenDesk/WikiHouse/AEC projects
 
 
 ## Change Log
+
+### 2016-06-13
+
+* Fillet drawn correctly except if straight line or start < pi05 and end angle > pi05
+	* These cases may be unusual in a manifold polyline
+	* Will fix as and when there is use cases demand
+* Uses `shape.fromPoints( path.getPoints() );` to simplify shape
 
 ### 2016-06-12
 
