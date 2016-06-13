@@ -5,17 +5,23 @@
 <title>Ace File Viewer R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
-<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=keywords content='Ace Code Editor,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-06-12' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js ></script>
+<!--
+looks like no need to load
+<script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/mode-markdown.js ></script>
+-->
 <script>
 
 // https://ace.c9.io/#nav=about
 // https://jaanga.github.io/cookbook-html/examples/libraries-editor/ace-editor
 
 	var fileName = 'https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/analemma-3d-r14.html';
+	var fileName = 'https://gist.githubusercontent.com/theo-armour/6276c89b02bd8c476cff1fefd9a2de65/raw';
+
 	var editor;
 
 	init();
@@ -38,7 +44,8 @@
 
 		editor = ace.edit( 'edit' );
 		editor.$blockScrolling = Infinity;
-		editor.getSession().setMode("ace/mode/javascript");
+//		editor.setTheme("ace/theme/monokai");
+		editor.getSession().setMode("ace/mode/markdown");
 
 		fileName = location.hash ? location.hash.slice( 1 ) : fileName;
 

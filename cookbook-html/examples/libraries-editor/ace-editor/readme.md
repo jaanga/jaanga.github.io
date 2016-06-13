@@ -60,6 +60,9 @@ value='Source code listing' >
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
 
+## Wish List
+
+* Add menu and link to read me at bottom right
 
 ## Issues
 
@@ -69,14 +72,23 @@ Intended for xxx
 
 ## Goals
 
+* Savinf edits
+
+
+
 ## Links of Interest
 
-
+* https://ace.c9.io/#nav=about
+* https://ace.c9.io/tool/mode_creator.html
+	* Displays themes and modes
+	* Has save function
 
 
 ## Change Log
 
-### 
+### 2016-06-12
+
+* Add read me
 
 * First commit
 * Add Read Me
