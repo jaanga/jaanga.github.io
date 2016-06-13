@@ -12,13 +12,17 @@
 <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js ></script>
 <script>
 
+// https://ace.c9.io/#nav=about
+// https://jaanga.github.io/cookbook-html/examples/libraries-editor/ace-editor
+
 	var fileName = 'https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/analemma-3d-r14.html';
+	var editor;
 
 	init();
 
 	function init() {
 
-		var css;
+		var css, edit;
 
 		css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
