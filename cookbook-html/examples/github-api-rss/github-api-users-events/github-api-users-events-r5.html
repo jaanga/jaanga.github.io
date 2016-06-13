@@ -57,7 +57,7 @@ List user events in an informative manner.
 
 	function init() {
 
-		var css, hamburger, menu;
+		var css;
 
 		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
@@ -138,9 +138,29 @@ List user events in an informative manner.
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
+		hamburger.innerHTML = ' &#9776 ';
 
-		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+//		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		hamburger.onclick = function() { 
+
+//			if ( hamburger.style.left === '325px' || hamburger.style.left === '' ) {
+			if ( menu.style.left === '' ) {
+
+				hamburger.style.left = 0; 
+				menu.style.left = '-325px';
+				contents.style.left = '50px'; 
+
+
+			} else {
+
+				hamburger.style.left = '325px'; 
+				menu.style.left = 0; 
+				contents.style.left = '400px'; 
+
+			}
+
+		};
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
