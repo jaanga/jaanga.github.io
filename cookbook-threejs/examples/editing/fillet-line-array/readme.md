@@ -9,6 +9,8 @@
 [Fillet Line Array Read Me]( index.html#readme.md )
 ===
 
+_2016-06-14: Very much a WIP - but the script is beginning to be able to handle convex and concave angles._
+_Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r6.html )_
 
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
@@ -62,27 +64,29 @@ Allow for both convex and concave curves / inside and outside fillets.
 value='Source code listing' >
 
 
-* Open this file: https://github.com/ladybug-analysis-tools/ladybug-web/blob/gh-pages/analemma-3d/analemma-3d-r14.html
+* Open the latest file here: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/editing/fillet-line-array/
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
 
 
-
-
-* Edit this code
-
-
 ## Issues
 
 * Handles the angles incorrectly when adjacent fillets are of different radii. 
-* Mishandles calculated concavity / convexity
+
 
 
 ## Users
 
 Intended for OpenDesk/WikiHouse...
 
+## Links of Interest
+
+### Polyline
+* http://www.webopedia.com/TERM/P/polyline.html
+* https://en.wikipedia.org/wiki/Polygonal_chain
+* http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.graphiti.doc%2Fresources%2Fdocu%2Fgfw%2Fpolygon-and-polyline.htm
+* https://msdn.microsoft.com/en-us/library/cc294631.aspx
 
 ## Change Log
 
@@ -90,7 +94,7 @@ Intended for OpenDesk/WikiHouse...
 
 * Beginning to handle concavity and convexity
 * Displays offset lines
-* Displys markers at intersections of offset lines
+* Displays markers at intersections of offset lines
 
 ### 2016-06-06 ~ R3
 
