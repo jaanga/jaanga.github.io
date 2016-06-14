@@ -37,12 +37,38 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 * Multiple examples
 * Displays angle calculations
+* The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
+* Click three bars( 'hamburger' ) icon to slide menu in or out
+* Display mesh as solid or wireframe
+* Direct link to this read me file
+* Click on title to reload 
 
 
-## Things To Do
+## Things you can do using this script
+
+* Use one/two/three fingers to rotate/zoom/pan the display in 3D
+	* Or left/scroll/right with your pointing device 
+* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+* Press Control-U/Command-Option-U to view the source code
+* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
 
 
-<iframe class=ifr src=https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r3.html width=100% height=600 ></iframe>
+## Things you can do by editing the code
+
+<iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
+	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r5.html' width=100% height=600 ></iframe>
+
+<input type=button onclick=window.location.href='https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r5.html';
+value='Source code listing' >
+
+
+* Open this file: https://github.com/ladybug-analysis-tools/ladybug-web/blob/gh-pages/analemma-3d/analemma-3d-r14.html
+* Click the 'Raw' icon and save the raw file to your computer
+* Once you've downloaded the file, you can click it to run it.
+* Open the file with a text editor
+
+
+
 
 * Edit this code
 
@@ -59,6 +85,12 @@ Intended for OpenDesk/WikiHouse...
 
 
 ## Change Log
+
+### 2016-06-14 ~ R5
+
+* Beginning to handle concavity and convexity
+* Displays offset lines
+* Displys markers at intersections of offset lines
 
 ### 2016-06-06 ~ R3
 
