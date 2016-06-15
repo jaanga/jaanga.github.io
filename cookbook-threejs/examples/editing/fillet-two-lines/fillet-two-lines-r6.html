@@ -423,25 +423,7 @@
 
 	}
 
-	function drawShape( path ) {
 
-		var geometry, shape, material, mesh;
-
-//		geometry = path.createSpacedPointsGeometry( 100 );
-//		shape = new THREE.Shape( geometry.vertices );
-
-		shape = new THREE.Shape();
-		shape.fromPoints( path.getPoints() );
-
-		geometry = shape.extrude( { amount: 5, bevelEnabled: false } );
-
-		material = new THREE.MeshNormalMaterial();
-
-		mesh = new THREE.Mesh( geometry, material );
-
-		return mesh;
-
-	}
 
 	function getIntersectFourPoints( p1, p2, p3, p4 ) {
 

@@ -88,7 +88,18 @@ Intended for OpenDesk/WikiHouse...
 * http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.graphiti.doc%2Fresources%2Fdocu%2Fgfw%2Fpolygon-and-polyline.htm
 * https://msdn.microsoft.com/en-us/library/cc294631.aspx
 
+
+
+
 ## Change Log
+
+### 2016-06-15 ~ R6
+
+* Draws shapes with correct center point but incorrect start and end angles
+* Deletes all existing geometry before creating new geometry
+* Finds all intersection points for a closed polygon
+
+
 
 ### 2016-06-14 ~ R5
 
