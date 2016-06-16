@@ -16,7 +16,7 @@ _Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/ex
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
 
-<img src="https://cloud.githubusercontent.com/assets/547626/15840421/b5e9c7f4-2bfe-11e6-9c84-86e99d1be608.png" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/16134528/88a0f2dc-33d2-11e6-8f2f-38a17df93079.png" style=display:none; width=800 >
 
 <iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
@@ -59,9 +59,9 @@ Allow for both convex and concave curves / inside and outside fillets.
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
-	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r5.html' width=100% height=600 ></iframe>
+	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r7.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r5.html';
+<input type=button onclick=window.location.href='https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r7.html';
 value='Source code listing' >
 
 
