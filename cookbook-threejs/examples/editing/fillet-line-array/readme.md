@@ -73,8 +73,8 @@ value='Source code listing' >
 ## Wish list
 
 * Handle variable fillet radii
-* Centers and raddi from a GitHub Gist
-
+* Centers and radii from a GitHub Gist
+* Use shape.fromPoints( obj.path ) to reduce number of faces
 
 ## Issues
 
