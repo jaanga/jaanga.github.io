@@ -10,8 +10,8 @@
 ===
 
 _2016-06-16: it's working!_
-_Draws a fresh polygon each time you click 'Example Random'_
-_Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r6.html )_
+_Draws a fresh polygon each time you click 'Example Random'_  
+_Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r6.html )_  
 
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
