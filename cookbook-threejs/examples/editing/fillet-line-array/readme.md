@@ -9,7 +9,8 @@
 [Fillet Line Array Read Me]( index.html#readme.md )
 ===
 
-_2016-06-14: Very much a WIP - but the script is beginning to be able to handle convex and concave angles._
+_2016-06-16: it's working!_
+_ Draws a fresh polygon each time you click 'Example Random'_
 _Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r6.html )_
 
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
@@ -37,7 +38,7 @@ Allow for both convex and concave curves / inside and outside fillets.
 
 ## Features
 
-* Multiple examples
+* Display multiple examples by clicking buttons
 * Displays angle calculations
 * The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
 * Click three bars( 'hamburger' ) icon to slide menu in or out
@@ -69,6 +70,11 @@ value='Source code listing' >
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
 
+## Wish list
+
+* Handle variable fillet radii
+* Centers and raddi from a GitHub Gist
+
 
 ## Issues
 
@@ -83,6 +89,7 @@ Intended for OpenDesk/WikiHouse...
 ## Links of Interest
 
 ### Polyline
+
 * http://www.webopedia.com/TERM/P/polyline.html
 * https://en.wikipedia.org/wiki/Polygonal_chain
 * http://help.eclipse.org/mars/index.jsp?topic=%2Forg.eclipse.graphiti.doc%2Fresources%2Fdocu%2Fgfw%2Fpolygon-and-polyline.htm
@@ -90,8 +97,13 @@ Intended for OpenDesk/WikiHouse...
 
 
 
-
 ## Change Log
+
+
+### 2016-06-16 ~ R7
+
+* It's working
+* Needs a big code clean-up
 
 ### 2016-06-15 ~ R6
 
