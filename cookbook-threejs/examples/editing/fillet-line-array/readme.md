@@ -15,10 +15,9 @@ _Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/ex
 
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
-
 <img src="https://cloud.githubusercontent.com/assets/547626/16134528/88a0f2dc-33d2-11e6-8f2f-38a17df93079.png" style=display:none; width=800 >
 
-<iframe class=ifr src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
 
 _Fillet Line Array_
@@ -69,6 +68,8 @@ value='Source code listing' >
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
+
+
 
 ## Wish list
 

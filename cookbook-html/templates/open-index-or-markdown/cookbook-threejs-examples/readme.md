@@ -29,6 +29,7 @@ _XXXXXX_
 
 * TBD
 
+
 ## Features
 
 * TBD
@@ -44,6 +45,7 @@ _XXXXXX_
 * Use one/two/three fingers to rotate/zoom/pan the display in 3D
 	* Or left/scroll/right with your pointing device 
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+* Click the [Stats]( https://github.com/mrdoob/stats.js/ ) box in the top corner to toggle FPS / MS / MB views
 * Press Control-U/Command-Option-U to view the source code
 * Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
 
@@ -66,15 +68,16 @@ value='Source code listing' >
 
 ## Issues
 
+
 ## Users
 
 Intended for xxx
 
+
 ## Goals
 
+
 ## Links of Interest
-
-
 
 
 ## Change Log
