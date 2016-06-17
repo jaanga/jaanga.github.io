@@ -1,4 +1,9 @@
-﻿
+﻿---
+layout: post
+title: Blogging Like a Boss
+---
+
+yaml tables. must be first thing in the gist
 
 GitHub API
 ===
@@ -57,6 +62,13 @@ https://github.com/jaanga/timeline
 * https://developer.github.com/v3/gists/
 * https://developer.github.com/changes/2014-02-21-gist-raw-file-url-change/
 
+***
+
+* https://gist.github.com/
+* https://gist.github.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330#file-gist-tips-and-bookmarks-md
+
+***
+
 * https://gist.github.com/search?q=user:theo-armour
 
 * https://api.github.com/users/theo-armour/gists
@@ -66,6 +78,7 @@ https://github.com/jaanga/timeline
 * https://gist.githubusercontent.com/VonC/9184693/raw/testNewGist
 
 * https://gist.githubusercontent.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330/raw
+
 
 
 

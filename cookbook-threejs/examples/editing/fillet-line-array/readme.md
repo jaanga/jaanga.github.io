@@ -9,7 +9,7 @@
 [Fillet Line Array Read Me]( index.html#readme.md )
 ===
 
-_2016-06-16: it's working!_
+_2016-06-17: it's working!_
 _Draws a fresh polygon each time you click 'Example Random'_  
 _Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-two-lines/fillet-two-lines-r6.html )_  
 
@@ -58,9 +58,9 @@ Allow for both convex and concave curves / inside and outside fillets.
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
-	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r7.html' width=100% height=600 ></iframe>
+	'https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r8.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r7.html';
+<input type=button onclick=window.location.href='https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/fillet-line-array-r8.html';
 value='Source code listing' >
 
 
@@ -75,13 +75,8 @@ value='Source code listing' >
 
 * Handle variable fillet radii
 * Centers and radii from a GitHub Gist
-* Use shape.fromPoints( obj.path ) to reduce number of faces
 
 ## Issues
-
-* Handles the angles incorrectly when adjacent fillets are of different radii. 
-
-
 
 ## Users
 
@@ -100,8 +95,13 @@ Intended for OpenDesk/WikiHouse...
 
 ## Change Log
 
+### 2016-06-17 ~ R8 ~ 572 lines
 
-### 2016-06-16 ~ R7
+* Variable fillet radii data points added
+* Use shape.fromPoints( obj.path.getPoints() ) to reduce number of faces
+* Code clean up
+
+### 2016-06-16 ~ R7 ~ 572 lines
 
 * It's working
 * Needs a big code clean-up
