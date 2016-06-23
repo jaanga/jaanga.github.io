@@ -33,11 +33,6 @@ _XXXXXX_
 ## Features
 
 * TBD
-* The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
-* Click three bars( 'hamburger' ) icon to slide menu in or out
-* Display mesh as solid or wireframe
-* Direct link to this read me file
-* Click on title to reload 
 
 
 ## Things you can do using this script
@@ -45,6 +40,9 @@ _XXXXXX_
 * Use one/two/three fingers to rotate/zoom/pan the display in 3D
 	* Or left/scroll/right with your pointing device 
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+* Click the check box to display mesh as solid or wireframe
+* Click the 'I' in the circle to go to the read me file
+* Click on the title to reload the script
 * Click the [Stats]( https://github.com/mrdoob/stats.js/ ) box in the top corner to toggle FPS / MS / MB views
 * Press Control-U/Command-Option-U to view the source code
 * Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors

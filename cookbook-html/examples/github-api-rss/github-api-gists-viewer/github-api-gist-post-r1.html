@@ -75,7 +75,7 @@
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'PATCH', fileName, true );
-		xhr.setRequestHeader("Content-type", "application/json");
+		xhr.setRequestHeader( "Content-type", "application/json" );
 
 //		files = {"description":"the description for this gist","public":true,"files":{ "file1.txt":{"content":"String file contents testing "}}}
 //		files = {"files":{ "file1.txt":{"content":"String file contents"}}}
@@ -84,7 +84,7 @@
 			"description": "the description for this gist",
 			"files": {
 				"test-editing.md": {
-				"content": "updated file contents"
+				"content": "updated file contents: " + ( new Date() )
 				}
 			}
 		}

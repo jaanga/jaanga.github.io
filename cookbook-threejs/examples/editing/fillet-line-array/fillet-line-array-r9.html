@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Fillet Line Array R8</title>
+<title>Fillet Line Array R9</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Given array of points and radii, create a path with fillets at each vertex' >
 <meta name=keywords content='Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-06-17' >
+<meta name=date content='2016-06-23' >
 </head>
 <body>
 <!--
@@ -20,16 +20,17 @@
 
 <script>
 
-	var line;
-	var markerStart;
-	var iLine1, iLine2, iBox, tan1, tan2;
-
 	var polygon = {
 
 		sides: 15,
-		radius: 3,
+		depth: 5
 
 	};
+
+// construction lines
+
+	var line;
+	var iLine1, iLine2, iBox, tan1, tan2;
 
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	var pi = Math.PI;
@@ -39,8 +40,6 @@
 	var sin = Math.sin;
 	var abs = Math.abs;
 	var ran = Math.random;
-
-	var points, angles, path, line, shape, edges;
 
 	var stats, renderer, scene, camera, controls;
 
@@ -117,7 +116,7 @@
 		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -40, 0 );
+		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
 
 		var axisHelper = new THREE.AxisHelper( 50 );
@@ -192,7 +191,7 @@
 
 		];
 
-		obj.radii = [ 3, 0.1, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3 ];
+		obj.radii = [ 1, 5, 3, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3 ];
 
 	}
 
@@ -216,7 +215,7 @@
 
 		];
 
-		obj.radii = [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ];
+		obj.radii = [ 3, 1, 3, 5, 3, 2, 3, 4, 3, 5, 3, 1, 3 ];
 
 	}
 
@@ -233,9 +232,11 @@
 			radius = 10 + 40 * ran(); 
 			points.push( v( radius * cos( i * delta ), radius * sin( i * delta ), 0 ) );
 
+			obj.radii[ i ] = ran() * 8;
+
 		}
 
-		obj.radii = [ 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 ];
+//		obj.radii = [ 3, 1, 3, 5, 3, 2, 3, 4, 3, 3, 5, 3, 1, 3, 2, 3, 4 ];
 
 	}
 
@@ -280,12 +281,12 @@
 
 	function getAngles( obj ) {
 
-		var points, angles, convexities, angText, a1, a2;
+		var points, angles, convexities, text, p, a1, a2, deltaAngle;
 
 		points = obj.points;
 		angles = obj.angles = [];
 		convexities = obj.convexities = [];
-		angText = '';
+		text = '';
 
 		for ( var i = 1; i < points.length - 1; i++) {
 
@@ -303,7 +304,7 @@
 
 			angles.push( a1 );
 
-			angText += ( i ) + ' 1:' + a1.toFixed( 3 ) + ' 2:' + a2.toFixed( 3 );
+			text += ( i ) + ' 1:' + a1.toFixed( 3 ) + ' 2:' + a2.toFixed( 3 );
 
 			deltaAngle = ( a1 - a2 );
 
@@ -311,34 +312,34 @@
 
 			deltaText = deltaAngle + pi;
 
-			if ( deltaAngle > 0.1 ) {
+			if ( deltaAngle > 0 ) {
 
-				angText += ' &Delta;' + deltaText.toFixed( 3 ) + ': convex<br>';
+				text += ' &Delta;' + deltaText.toFixed( 3 ) + ': convex<br>';
 
 				convexities.push( true );
 
-			} else if ( deltaAngle < -0.1 ) {
+			} else if ( deltaAngle < 0 ) {
 
-				angText += ' &Delta;' + deltaText.toFixed( 3 ) + ': concave<br>';
+				text += ' &Delta;' + deltaText.toFixed( 3 ) + ': concave<br>';
 
 				convexities.push( false );
 
 			} else {
 
-				angText += ' &Delta;' + deltaText.toFixed( 3 ) + ': straight<br>';
+				text += ' &Delta;' + deltaText.toFixed( 3 ) + ': straight<br>';
 
 				convexities.push( undefined );
 
 			}
 
-			if ( i % 5  === 0 ) angText += '<br>';
+			if ( i % 5  === 0 ) text += '<br>';
 
 		}
 
 		angles.push( angles[ 0 ] );
 		convexities.push( convexities[ 0 ] );
 
-		pAngles.innerHTML = 'Angles:<br>' + angText+ '<br>';
+		pAngles.innerHTML = 'Angles:<br>' + text+ '<br>';
 
 		return angles;
 
@@ -347,7 +348,7 @@
 
 	function getIntersections( obj ) {
 
-		var intersections, intersect, p1, p2, p3, p4, p5, p6, p7, a0, a1, ang;
+		var intersections, intersect, p1, p2, p3, p4, p5, p6, p7, a0, a1, delta;
 
 		intersections = [];
 
@@ -360,14 +361,14 @@
 			a0 = obj.angles[ i - 1 ];
 			a1 = obj.angles[ i ] + pi;
 
-			ang = obj.convexities[ i - 1 ] === true ? - pi05 : pi05;
+			delta = obj.convexities[ i - 1 ] === true ? - pi05 : pi05;
 			rad = obj.radii[ i - 1 ];
 
-			p4 = v( p2.x + rad * cos( a0 - ang ), p2.y + rad * sin( a0 - ang ), 0 );
-			p5 = v( p1.x + rad * cos( a0 - ang ), p1.y + rad * sin( a0 - ang ), 0 );
+			p4 = v( p2.x + rad * cos( a0 - delta ), p2.y + rad * sin( a0 - delta ), 0 );
+			p5 = v( p1.x + rad * cos( a0 - delta ), p1.y + rad * sin( a0 - delta ), 0 );
 
-			p6 = v( p2.x + rad * cos( a1 + ang ), p2.y + rad * sin( a1 + ang ), 0 );
-			p7 = v( p3.x + rad * cos( a1 + ang ), p3.y + rad * sin( a1 + ang ), 0 );
+			p6 = v( p2.x + rad * cos( a1 + delta ), p2.y + rad * sin( a1 + delta ), 0 );
+			p7 = v( p3.x + rad * cos( a1 + delta ), p3.y + rad * sin( a1 + delta ), 0 );
 
 			iLine1 = addLineFromPoints( iLine1, [ p4, p5 ], 0xff00ff );
 			iLine2 = addLineFromPoints( iLine2, [ p6, p7 ], 0xff00ff );
@@ -390,19 +391,20 @@
 
 	function getTangentPoints( obj ) {
 
-		var center, angle0, angle1, startPoint, endPoint;
+		var center, angle0, angle1, radius, delta, startPoint, endPoint;
 
 		for ( var i = 1; i < obj.points.length - 1; i++ ) {
 
 			center = obj.centerPoints[ i - 1 ];
 			angle0 = obj.angles[ i - 1 ];
 			angle1 = obj.angles[ i ];
+			radius = obj.radii[ i - 1 ];
 
-			ang = obj.convexities[ i - 1 ] === true ? - pi05 : pi05;
+			delta = obj.convexities[ i - 1 ] === true ? - pi05 : pi05;
 
-			startPoint = v( center.x + obj.radius * cos( angle0 + ang ), center.y + obj.radius * sin( angle0 + ang ), 0 );
+			startPoint = v( center.x + radius * cos( angle0 + delta ), center.y + radius * sin( angle0 + delta ), 0 );
 
-			endPoint = v( center.x + obj.radius * cos( angle1 + ang ), center.y + obj.radius * sin( angle1 + ang ), 0 );
+			endPoint = v( center.x + radius * cos( angle1 + delta ), center.y + radius * sin( angle1 + delta ), 0 );
 
 			addMarker( obj.markers, startPoint, 0.5 );
 			addMarker( obj.markers, endPoint, 0.5 );
@@ -413,13 +415,17 @@
 
 	function createPath( obj ) {
 
-		var path, a1, a2;
+		var radius, path, a1, a2;
+
+
 
 		path = polygon.path = new THREE.Path();
 
 		path.moveTo( obj.points[ 0 ].x, obj.points[ 0 ].y );
 
 		for ( var i = 1; i < polygon.points.length - 1; i++ ) {
+
+			radius = obj.radii[ i - 1 ];
 
 			if ( obj.convexities[ i - 1 ] === true ) {
 
@@ -433,14 +439,14 @@
 
 				}
 
-				path.absarc( obj.centerPoints[ i - 1 ].x, obj.centerPoints[ i - 1  ].y, obj.radius, a1, a2, false );
+				path.absarc( obj.centerPoints[ i - 1 ].x, obj.centerPoints[ i - 1  ].y, radius, a1, a2, false );
 
 			} else {
 
 				a1 = obj.angles[ i - 1 ] + pi05;
 				a2 = obj.angles[ i ] + pi05;
 
-				path.absarc( obj.centerPoints[ i - 1 ].x, obj.centerPoints[ i - 1  ].y, obj.radius, a1, a2, true );
+				path.absarc( obj.centerPoints[ i - 1 ].x, obj.centerPoints[ i - 1  ].y, radius, a1, a2, true );
 
 			}
 
@@ -464,7 +470,7 @@
 		shape = new THREE.Shape();
 		shape.fromPoints( obj.path.getPoints() );
 
-		geometry = shape.extrude( { amount: 5, bevelEnabled: false } );
+		geometry = shape.extrude( { amount: polygon.depth, bevelEnabled: false } );
 
 		material = new THREE.MeshNormalMaterial();
 

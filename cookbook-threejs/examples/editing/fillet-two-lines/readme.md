@@ -97,12 +97,16 @@ Intended for OpenDesk/WikiHouse/AEC projects
 
 ## Change Log
 
+### 2016-06-23
+
+* R6 is broken!
+
 ### 2016-06-13
 
 * Fillet drawn correctly except if straight line or start < pi05 and end angle > pi05
 	* These cases may be unusual in a manifold polyline
 	* Will fix as and when there is use cases demand
-* Uses `shape.fromPoints( path.getPoints() );` to simplify shape
+* Uses `shape.fromPoints( path.getPoints() )` to simplify shape
 
 ### 2016-06-12
 
