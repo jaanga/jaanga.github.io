@@ -87,6 +87,8 @@ value='Source code listing' >
 
 ## Issues
 
+* If the fillets overlap curious examples may be created
+
 ## Users
 
 Intended for OpenDesk/WikiHouse...
