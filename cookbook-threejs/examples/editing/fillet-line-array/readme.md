@@ -14,7 +14,7 @@ _Builds upon [Fillet Two Lines R6]( https://jaanga.github.io/cookbook-threejs/ex
 
 ## Full Screen: [Fillet Line Array]( https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html )
 
-<img src="https://cloud.githubusercontent.com/assets/547626/16134528/88a0f2dc-33d2-11e6-8f2f-38a17df93079.png" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/16319300/90643f04-3947-11e6-8edc-3e86f4639ede.png" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/examples/editing/fillet-line-array/index.html width=100% height=600px ></iframe>
 
@@ -40,7 +40,7 @@ Allow for polygonal holes
 
 ### Vision
 
-* To make the design and creation of CC cutouts as easy as slicing a pie
+* To make the design and creation of CNC cutouts as easy as slicing a pie
 
 
 ## Features
