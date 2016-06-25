@@ -21,29 +21,34 @@ _GitHub API Users Events_
 
 ### Mission
 
-* To demonstrate that the GitHub API is accessible by beginner to intermedate coders
-* To demonstrate that you can do many nice things with the GitHub API without having to use a server or a terminal window or locahost
+* To demonstrate that the GitHub API is accessible by beginner to intermediate coders
+* To demonstrate that you can do many nice things with the GitHub API without having to use a server or a terminal window or localhost
 * To enable you to see what your peeps have been working on and playing with
 
 
 ### Vision
 
 * Create buddy lists that talk to each other
-* Find ways of showing more fun things
+* Find ways of showing more fun things to do with coding and sharing
+
 
 ## Features
 
-* List languages of repos
-* Use GitHub API to gather a users organization, repos and events
-* Select user from drop-down ist or by input
+
+* Uses the GitHub API to gather a user's organizations, gists, repos and events
+	* Organizations: displays title and description
+	* Gists: displays title and data
+	* Repositiries - displays title, data & if forked
+* Select user from drop-down list or by text input
+	* Displays user's profile data
 * Display all ten pages of user events one-by-one or all at once
 * List user events in an informative manner
-* Go to top of page
-* Load all ten pages one after another
+
 
 
 ## Wish List
 
+* List languages of repos
 * To make lists of orgs and users available via Gist
 	* Select using location.hash
 * Add more users
@@ -84,8 +89,8 @@ value='Source code listing' >
 ## Uses
 
 * https://api.github.com/users/theo-armour/events
-
 * https://theo-armour.github.io/
+
 
 ## Links of Interest
 
@@ -96,6 +101,15 @@ value='Source code listing' >
 > Consider the process of writing the Readme for your project as the true act of creation. This is where all your brilliant ideas should be expressed. This document should stand on its own as a testament to your creativity and expressiveness. The Readme should be the single most important document in your codebase; writing it first is the proper thing to do.
 
 ## Change log
+
+### 2016-06-24 ~ R6
+
+* Add link to commit in PushEvent
+* Code clean up
+* Reorder menu. Open repositories details
+* Add to user list
+* Add 'fork - if forked - to repos 
+* Update read me
 
 ### 2016-06-13 R5
 

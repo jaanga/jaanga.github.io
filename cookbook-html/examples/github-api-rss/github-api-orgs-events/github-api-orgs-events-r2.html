@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Orgs Events R1</title>
+<title>GitHub API Orgs Events R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Markdown reader template file' >
 <meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
@@ -12,7 +12,13 @@
 <script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-	var user = 'https://api.github.com/orgs/fgx/events';
+//	var user = 'https://api.github.com/orgs/fgx/events';
+
+	var org = 'jaanga';
+
+	var orgEvents = 'https://api.github.com/orgs/' + org + '/events';
+
+
 	var converter, contents;
 
 	init();
@@ -26,16 +32,19 @@
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-			'body { font: 12pt monospace; max-width: 900px; } \
-			h1 a { text-decoration: none; } \
-			img { max-width: 860px; } \
-			div.issue { border: 1px solid #aaa; box-sizing: border-box; padding: 10px; transform: scale( 0.85 );  } \
-		';
+			'body { font: 12pt monospace; max-width: 900px; }' +
+			'h1 a { text-decoration: none; }' +
+			'img { max-width: 860px; }' +
+			'div.issue { border: 1px solid #aaa; box-sizing: border-box; padding: 10px; transform: scale( 0.85 );  }' +
+
+			'#contents { left: 0; margin: 0 auto; max-width: 800px; overflow: auto; position: absolute; right: 0; }' +
+
+		'';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-		fileName = location.hash ? location.hash.slice( 1 ) : user;
+		fileName = location.hash ? location.hash.slice( 1 ) : orgEvents;
 
 		getFile( fileName, contents );
 
@@ -52,7 +61,7 @@
 
 			events = JSON.parse( xhr.responseText );
 
-			txt = '<h1><a href="">FGx Recent Events</a> <a href=index.html#readme.md> &#x24D8; </a></h1>';
+			txt = '<h1><a href="">' + org + ' Recent Events</a> <a href=index.html#readme.md> &#x24D8; </a></h1>';
 
 			dates = [];
 

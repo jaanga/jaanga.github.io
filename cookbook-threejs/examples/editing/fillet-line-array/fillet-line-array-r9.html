@@ -472,7 +472,7 @@
 
 		geometry = shape.extrude( { amount: polygon.depth, bevelEnabled: false } );
 
-		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshNormalMaterial( { opacity: 0.7, side: THREE.DoubleSide, transparent: true } );
 
 		mesh = new THREE.Mesh( geometry, material );
 

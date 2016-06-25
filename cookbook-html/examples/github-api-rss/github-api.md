@@ -15,9 +15,10 @@ GitHub API
 5 entertaining things you can find with the GitHub Search API
 * https://gist.github.com/jasonrudolph/6065289
 
+fun look at issues
+* https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+
 
-
-### Help
+### GitHub Help
 
 * https://help.github.com/categories/search/
 * https://help.github.com/articles/searching-repositories/
@@ -37,24 +38,61 @@ GitHub API
 
 
 
-## GitHub Data
-
-fun look at issues
-* https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+
-
-
-## Usage Limits
-
-https://api.github.com/rate_limit
 
 
 ## Activity
 
-https://api.github.com/events
-https://api.github.com/feeds
+* https://developer.github.com/v3/activity/events/
+* https://api.github.com/events
+* https://api.github.com/feeds
 
-https://github.com/timeline
-https://github.com/jaanga/timeline
+* https://github.com/timeline
+* https://github.com/jaanga/timeline
+
+
+### Commits
+
+https://api.github.com/repos/jaanga/jaanga.github.io/commits
+https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=readme.md
+
+
+### Events
+
+https://api.github.com/repos/jaanga/jaanga.github.io/events?path=cookbook-html/examples << not
+https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << not
+
+### Issues
+
+
+https://api.github.com/repos/jaanga/jaanga.github.io/issues
+
+https://api.github.com/repos/jaanga/jaanga.github.io/issues?state=closed
+
+
+https://api.github.com/repos/jaanga/jaanga.github.io/trees << none
+https://api.github.com/repos/jaanga/jaanga.github.io/branches
+https://api.github.com/repos/jaanga/jaanga.github.io/tags << not
+https://api.github.com/repos/jaanga/jaanga.github.io/references << not
+https://api.github.com/repos/jaanga/jaanga.github.io/events?state=open
+
+
+https://api.github.com/repos/jaanga/jaanga.github.io/followers << not
+https://api.github.com/repos/jaanga/jaanga.github.io/labels
+https://api.github.com/repos/jaanga/jaanga.github.io/comments
+
+https://api.github.com/repos/jaanga/jaanga.github.io/commit_activity
+
+
+
+https://api.github.com/repos/jquery/jquery/contributors?anon=true
+https://api.github.com/repos/jquery/jquery/contributors?login=jeresig << nope
+
+
+https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+https://api.github.com/repos/jquery/jquery/issues?state=closed << works
+https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
+
+
 
 
 ## Gists
@@ -70,25 +108,27 @@ https://github.com/jaanga/timeline
 ***
 
 * https://gist.github.com/search?q=user:theo-armour
-
 * https://api.github.com/users/theo-armour/gists
-
 * https://api.github.com/gists/bb9527c8cff89a417b09eaeb6c8ae330
-
 * https://gist.githubusercontent.com/VonC/9184693/raw/testNewGist
-
 * https://gist.githubusercontent.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330/raw
+
+
 
 
 
 
 ## Miscellaneous
 
+* https://developer.github.com/v3/misc/
+
 https://api.github.com/emojis
 https://api.github.com/gitignore/templates
 https://api.github.com/licenses
 https://api.github.com/meta
-https://api.github.com/rate_limit
+
+
+### Rate Limits
 
 https://api.github.com/rate_limit
 
@@ -99,8 +139,14 @@ https://api.github.com/orgs/ladybug-analysis-tools <<
 https://api.github.com/orgs/ladybug-analysis-tools/repos
 https://api.github.com/orgs/ladybug-analysis-tools/events <<
 
+https://api.github.com/orgs/jaanga/events?path=cookbook-html
+
+
 
 ## Repos
+
+* https://developer.github.com/v3/repos/contents/
+
 
 http://stackoverflow.com/questions/15831313/is-it-possible-to-get-commits-history-for-one-file-in-github-api
 
@@ -110,49 +156,72 @@ e.g.
 
 https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
 
-https://api.github.com/repos/jaanga/jaanga.github.io/issues
-https://api.github.com/repos/jaanga/jaanga.github.io/commits
-https://api.github.com/repos/jaanga/jaanga.github.io/trees << none
-https://api.github.com/repos/jaanga/jaanga.github.io/branches
-https://api.github.com/repos/jaanga/jaanga.github.io/tags
-https://api.github.com/repos/jaanga/jaanga.github.io/References << not
-https://api.github.com/repos/jaanga/jaanga.github.io/events
-https://api.github.com/repos/jaanga/jaanga.github.io/followers << not
-https://api.github.com/repos/jaanga/jaanga.github.io/labels
-https://api.github.com/repos/jaanga/jaanga.github.io/comments
+https://api.github.com/repos/jaanga/jaanga.github.io << lists all calls
 
-https://api.github.com/repos/jquery/jquery/contributors?anon=true
 
-https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
+
+
+https://api.github.com/repos/mrdoob/three.js/contents/examples
+
+
+
+
 
 ## Users
 
 https://api.github.com/users/theo-armour
- 
 
-## Search
+https://api.github.com/users/theo-armour/events
+
+
+https://api.github.com/users/jaanga/events?path=cookbook-html/examples
+ 
+https://api.github.com/users/jaanga/events?login=redheli
+
+
+## API Search
 
 * https://developer.github.com/v3/search/
+* http://stackoverflow.com/questions/24132790/how-to-search-for-code-in-github-with-github-api
+
 
 https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
 
 https://api.github.com/search/code?q=3D+extension:stl << not
 https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
 
-
-### Issues
-
 https://api.github.com/search/issues?q=windows+label:bug+language:python+state:open&sort=created&order=asc
 
-https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc
+https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc << ignores the repo
 
-https://api.github.com/user/jaanga/issues
+https://api.github.com/search/issues?q=repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
+
+https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=created&order=asc
+
+
+https://api.github.com/search/repositories?q=examples
+
+https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+
+
+https://api.github.com/repos/izuzak/pmrpc/commits?path=examples
+https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/examples
 
 
 ### Regular GitHub Search
 
+
+
 https://github.com/search?q=NASA-3D&extension:stl&type=Code&s=indexed
 https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
+
+
+
+
+
+
+
 
 ## Ladybug Web
 

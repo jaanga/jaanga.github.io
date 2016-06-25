@@ -2,15 +2,15 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Users Events R5</title>
+<title>GitHub API Events R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='Use GitHub API to gather a users organization, repos and events.
+<meta name=description content='Use GitHub API to gather users or organization, events.
 Select user from drop-down list or by input.
 Display all ten pages of user events one-by-one or all at once.
 List user events in an informative manner.
 ' >
 <meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
-<meta name=date content='2016-06-10' >
+<meta name=date content='2016-06-24' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
@@ -20,6 +20,7 @@ List user events in an informative manner.
 
 	var users = [ 
 
+		['jaanga', 'jaanga.github.io', 'cookbook-html/examples' ],
 		'Theo-Armour', 
 		'#Three.js',
 		'MrDoob', 
@@ -88,8 +89,9 @@ List user events in an informative manner.
 
 			'#contents { border: 0px #ccc solid; left: 375px; max-width: 700px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
 			'#hamburger { color: crimson; cursor: pointer; font-size: 24pt; left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; height: 98%; ' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; /* height: 98%; */ ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px;  position: absolute; /*top: -20px;*/ transition: left 1s; max-width: 300px; }' +
+			'#menu h3 { display: inline; }' +
 
 		'';
 
@@ -113,25 +115,31 @@ List user events in an informative manner.
 			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
 			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
 
-			'<details open>' +
-				'<summary><h3 style=display:inline; id=sumName ></h3></summary>' +
+			'<details open >' +
+				'<summary><h3 id=sumName ></h3></summary>' +
 				'<div id=divUser ></div>' +
 			'</details><br>' +
 
-			'<details>' +
+/*
+			'<details open >' +
 				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
 				'<div id=organizations ></div>' +
 			'</details>' +
 
-			'<details>' +
-				'<summary><h3 style=display:inline; >Repositories</h3></summary>' +
+*/
+
+			'<details open >' +
+				'<summary><h3>Repositories</h3></summary>' +
 				'<div id=repositories ></div>' +
 			'</details>' +
 
+
+/*
 			'<details>' +
 				'<summary><h3 style=display:inline; >Gists</h3></summary>' +
 				'<div id=divGists ></div>' +
 			'</details>' +
+*/
 
 			'<div id=info ></div><br>' +
 
@@ -169,7 +177,7 @@ List user events in an informative manner.
 
 		for ( var i = 0; i < users.length; i++ ) {
 
-			user = users[ i ];
+			user = users[ i ][ 0 ];
 			if ( user.startsWith('#') ) {
 
 			selUser.appendChild( document.createElement( 'optgroup' ) );
@@ -207,17 +215,19 @@ List user events in an informative manner.
 		hashes = location.hash ? location.hash.split( '#' ) : '';
 
 		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
+
+		user = users[ selUser.selectedIndex ];
 		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
 
-		getEvents( name, page, contents );
+		getEvents( user, page, contents );
 
-		getOrgs( name, page, contents ); 
+//		getOrgs( name, page, contents ); 
 
 		getRepos( name, page, contents ); 
 
 		getUser( name );
 
-		getGists( name );
+//		getGists( name );
 
 		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
 
@@ -244,16 +254,16 @@ List user events in an informative manner.
 
 			user = JSON.parse( xhr.responseText );
 
-//console.log( 'user', user );
+console.log( 'user', user );
 
 			txt = '<div><img src=' + user.avatar_url +  ' width=80; ></div>' +
-				( user.blog  ? '<div>www: <a href=http://' + user.login + '.github.io >' + user.name + '</a></div>' : '' ) +
+				( user.blog  ? '<div>www: <a href=http://' + user.blog + ' >' + user.blog + '</a></div>' : '' ) +
 				( user.location  ? '<div>place: ' + user.location + ' </div>' : '' ) +
 				( user.bio  ? '<div>bio: ' + user.bio + ' </div>' : '' ) +
 				( user.company  ? '<div>co: <a href=' + user.company + ' >' + user.company + '</a></div>' : '' ) +
 			'';
 
-			sumName.innerHTML = '<a href=http://' + user.login + '.github.io >' + user.name + '</a>';
+			sumName.innerHTML = '<a href=http://' + user.login + '.github.io >' + ( user.name || user.login )  + '</a>';
 			divUser.innerHTML = txt;
 
 		}
@@ -366,13 +376,15 @@ List user events in an informative manner.
 
 // https://developer.github.com/v3/activity/events/
 
-		var fileName, xhr, events, event, eventHeading, dates, txt;
+		var xhr, events, event, eventHeading, dates, txt;
+//		var fileName;
 
-		fileName = 'https://api.github.com/users/' + user + '/events?page=' + page;
+//		fileName = 'https://api.github.com/users/' + user[ 0 ] + '/events?path=' + user[ 2 ];
+		fileName = 'https://api.github.com/users/' + user[ 0 ] + '/events?repos=jaanga.github.io';
 
 		pageHeader =
 		'<h1>' +
-			'user: <a href=https://github.com/' + user + '>' + user + '</a> ' + 
+			'user: <a href=https://github.com/' + user[ 0 ] + '>' + user[ 0 ] + '</a> ' + 
 			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 //			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';

@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Users Events R5</title>
+<title>GitHub API Users Events R6</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Use GitHub API to gather a users organization, repos and events.
 Select user from drop-down list or by input.
@@ -23,12 +23,17 @@ List user events in an informative manner.
 		'Theo-Armour', 
 		'#Three.js',
 		'MrDoob', 
+		'bhouston',
+		'gero3',
 		'WestLangley', 
 		'zz85',
 		'#FGx',
 		'GeoffMcl', 
+		'pedromorgan',
 		'#Ladybug',
 		'MostaphaRoudsari', 
+		'chriswmackey',
+		'ayezioro',
 		'#Xplora',
 		'PaulMasson',
 		'#???',
@@ -64,8 +69,7 @@ List user events in an informative manner.
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-//			'body { font: 12pt monospace;  }' +
-			'html { height: 100%; }' +
+//			'html { height: 100%; }' +
 			'body { border: 0px solid red; font: 12pt monospace; height: 100%; ' +
 				'left: 0; margin: 0 auto; max-width: 1000px;  /* overflow: auto hidden; */ position: absolute; right: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
@@ -78,19 +82,11 @@ List user events in an informative manner.
 
 			'div.issue { border: 1px solid #aaa; box-sizing: content-box; max-height: 600px; overflow: auto; padding: 10px; transform: scale( 0.85 ); transform-origin: top left; width: 100%; }' +
 
-/*
-			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#contents { border: 0px #ccc solid; left: 50px; margin: 0 auto; width: 700px; position: absolute; right: 0; top: 0; transition: left 1s; }' +
-			'#hamburger { left: 325px; position: absolute; top: 0px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' + // max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
-				'margin: 0; opacity: 0.98; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
-*/
-
 			'#contents { border: 0px #ccc solid; left: 375px; max-width: 700px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
 			'#hamburger { color: crimson; cursor: pointer; font-size: 24pt; left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; height: 98%; ' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; /* height: 98%; */ ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px;  position: absolute; /*top: -20px;*/ transition: left 1s; max-width: 300px; }' +
-
+			'#menu h3 { display: inline; }' +
 		'';
 
 
@@ -114,24 +110,26 @@ List user events in an informative manner.
 			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
 
 			'<details open>' +
-				'<summary><h3 style=display:inline; id=sumName ></h3></summary>' +
+				'<summary><h3 id=sumName ></h3></summary>' +
 				'<div id=divUser ></div>' +
 			'</details><br>' +
 
 			'<details>' +
-				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
+				'<summary><h3>Organizations</h3></summary>' +
 				'<div id=organizations ></div>' +
 			'</details>' +
 
 			'<details>' +
-				'<summary><h3 style=display:inline; >Repositories</h3></summary>' +
-				'<div id=repositories ></div>' +
-			'</details>' +
-
-			'<details>' +
-				'<summary><h3 style=display:inline; >Gists</h3></summary>' +
+				'<summary><h3>Gists</h3></summary>' +
 				'<div id=divGists ></div>' +
 			'</details>' +
+
+			'<details open >' +
+				'<summary><h3>Repositories</h3></summary>' +
+				'<div id=divRepositories ></div>' +
+			'</details>' +
+
+
 
 			'<div id=info ></div><br>' +
 
@@ -328,7 +326,7 @@ List user events in an informative manner.
 
 	function getRepos( user, page, contents ) {
 
-		var fileName, xhr;
+		var fileName, xhr, repos, txt;
 
 		fileName = 'https://api.github.com/users/' + user + '/repos';
 
@@ -351,11 +349,11 @@ List user events in an informative manner.
 
 				txt += '<div><a href=' + repo.html_url + ' >' + repo.name + '</a><br>' + 
 
-					'<small>' + repo.updated_at.slice( 0, 10 ) + ' - ' + repo.description + '</small></div>';
+					'<small>' + repo.updated_at.slice( 0, 10 ) + ( repo.fork === true ? ' - fork - ' : ' - ' ) + repo.description + '</small></div>';
 
 			}
 
-			repositories.innerHTML = txt;
+			divRepositories.innerHTML = txt;
 
 		}
 
@@ -481,7 +479,7 @@ List user events in an informative manner.
 	eventSet.onIssuesEvent = function( event ) {
 
 		txt = 
-			'<div>Title <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
+			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
 			'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
 				( event.payload.action === 'opened' ? 
 				'<div>Action: opened</div><div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>' :
@@ -518,11 +516,11 @@ List user events in an informative manner.
 
 	eventSet.onPushEvent = function( event ) {
 
-//console.log( 'onEvent', event );
+//console.log( 'onEvent', event, event.payload.head  );
 
 		txt =
-			'<div>Message: ' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message : '' ) + 
-				' - Size: ' + event.payload.size + ' - Commits: ' + event.payload.commits.length + '</div>' +
+			'<div>Message: <a href=https://github.com/' + event.repo.name + '/commit/' + event.payload.head + '>' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message + '</a>' : '' ) + 
+				' - Size: ' + event.payload.size + ' - Length: ' + event.payload.commits.length + '</div>' +
 		'';
 
 		return txt;
@@ -543,7 +541,6 @@ List user events in an informative manner.
 	eventSet.onPullRequestReviewCommentEvent = function( event ) {
 
 		txt =
-
 			'<div>Path: ' + event.payload.comment.path + '</div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
 			'<div class=issue >Comment: ' + event.payload.comment.body + '</div>' +
