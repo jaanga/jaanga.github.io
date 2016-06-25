@@ -71,8 +71,7 @@ _GitHub API Users Events_
 
 ## Things you can do by editing the code
 
-<iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#' +
-	'https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/github-api-users-events-r6.html' width=100% height=600 ></iframe>
+<iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/github-api-users-events-r6.html' width=100% height=600 ></iframe>
 
 <input type=button onclick=window.location.href='https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/github-api-users-events-r6.html';
 value='Source code listing' >
