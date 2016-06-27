@@ -20,20 +20,21 @@ List user events in an informative manner.
 
 	var users = [
 
-		['jaanga', 'jaanga.github.io', 'cookbook-html/examples' ],
-		['fgx', 'fgx.github.io', '' ],
-		['mrdoob', 'mrdoob.github.io', ''],
-		['Autodesk', 'autodesk.github.io', ''],
-		['LeapMotion', 'leapmotion.gitub.io', ''],
-		['NASA', 'nasa.github.io', '' ],
-		['ladybug-analysis-tools' ],
-		['OpenDesk' ],
-		['WikiHouse' ],
-		['Abantech' ],
-		['Wiredcraft' ],
-		['SageMath'],
-		['google'],
-		['facebook']
+		'jaanga',
+		'fgx',
+		'mrdoob',
+		'exploratoria',
+		'Autodesk',
+		'LeapMotion',
+		'NASA',
+		'ladybug-analysis-tools',
+		'OpenDesk',
+		'WikiHouse',
+		'Abantech',
+		'Wiredcraft',
+		'SageMath',
+		'google',
+		'facebook'
 	];
 
 	eventSet = {};
@@ -89,7 +90,7 @@ List user events in an informative manner.
 			'</p>' +
 
 			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
-			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
+//			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
 
 			'<div id=info ></div><br>' +
 
@@ -127,7 +128,7 @@ List user events in an informative manner.
 
 		for ( var i = 0; i < users.length; i++ ) {
 
-			user = users[ i ][ 0 ];
+			user = users[ i ];
 			if ( user.startsWith('#') ) {
 
 			selUser.appendChild( document.createElement( 'optgroup' ) );
@@ -145,7 +146,9 @@ List user events in an informative manner.
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
-		onHashChange();
+//		onHashChange();
+
+		initUser( selUser.value );
 
 	}
 
@@ -165,11 +168,9 @@ List user events in an informative manner.
 
 		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
 
-		user = users[ selUser.selectedIndex ];
-
 		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
 
-		getEvents( user, page, contents );
+		getEvents( name, page, contents );
 
 		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
 
@@ -188,11 +189,11 @@ List user events in an informative manner.
 
 		var fileName, xhr, events, event, eventHeading, dates, txt;
 
-		fileName = 'https://api.github.com/users/' + user[ 0 ] + '/events?page=' + page;
+		fileName = 'https://api.github.com/users/' + user + '/events?page=' + page;
 
 		pageHeader =
 		'<h1>' +
-			'Org: <a href=https://github.com/' + user[ 0 ] + '>' + user[ 0 ] + '</a> ' +
+			'Org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
 			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 //			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';
@@ -261,18 +262,18 @@ console.log( 'non-event', event );
 
 			}
 
-			if ( chkLoadAll.checked && count < 10 ) {
+/*			if ( chkLoadAll.checked && count < 10 ) {
 
 				target.innerHTML += pageHeader + pageContent + pageFooter;
 				count++;
 				proceed( 1 );
 
 			} else {
-
+*/
 				target.innerHTML = pageHeader + pageContent + pageFooter;
 				window.scrollTo( 0, 0 );
 
-			}
+//			}
 
 		}
 
@@ -342,9 +343,7 @@ console.log( 'non-event', event );
 	}
 
 	eventSet.onIssuesEvent = function( event ) {
-
-console.log( 'onEvent', event  );
-
+//console.log( 'onEvent', event  );
 		txt =
 			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' +
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
