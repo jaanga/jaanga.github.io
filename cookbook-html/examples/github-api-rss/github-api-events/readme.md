@@ -11,7 +11,7 @@
 ## Full Screen: [ GitHub API Events ]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-events/index.html )
 
 
-<img src="XXXX" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/16370238/d1583ff8-3bf2-11e6-85c2-d4cef82dede1.png" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-events/index.html width=100% height=600px ></iframe>
 
