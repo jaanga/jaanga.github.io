@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Events R1</title>
+<title>GitHub API Events R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Use GitHub API to gather users or organization, events.
 Select user from drop-down list or by input.
@@ -10,7 +10,7 @@ Display all ten pages of user events one-by-one or all at once.
 List user events in an informative manner.
 ' >
 <meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
-<meta name=date content='2016-06-24' >
+<meta name=date content='2016-06-26' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
@@ -18,7 +18,7 @@ List user events in an informative manner.
 
 // https://developer.github.com/v3/
 
-	var users = [ 
+	var users = [
 
 		['jaanga', 'jaanga.github.io', 'cookbook-html/examples' ],
 		['fgx', 'fgx.github.io', '' ],
@@ -26,12 +26,14 @@ List user events in an informative manner.
 		['Autodesk', 'autodesk.github.io', ''],
 		['LeapMotion', 'leapmotion.gitub.io', ''],
 		['NASA', 'nasa.github.io', '' ],
-		'#Ladybug',
-		'#OpenDesk',
-		'#Abantech',
-
-		'#Wiredcraft',
-
+		['ladybug-analysis-tools' ],
+		['OpenDesk' ],
+		['WikiHouse' ],
+		['Abantech' ],
+		['Wiredcraft' ],
+		['SageMath'],
+		['google'],
+		['facebook']
 	];
 
 	eventSet = {};
@@ -51,7 +53,6 @@ List user events in an informative manner.
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-//			'body { font: 12pt monospace;  }' +
 			'html { height: 100%; }' +
 			'body { border: 0px solid red; font: 12pt monospace; height: 100%; ' +
 				'left: 0; margin: 0 auto; max-width: 1000px;  /* overflow: auto hidden; */ position: absolute; right: 0; }' +
@@ -65,14 +66,6 @@ List user events in an informative manner.
 
 			'div.issue { border: 1px solid #aaa; box-sizing: content-box; max-height: 600px; overflow: auto; padding: 10px; transform: scale( 0.85 ); transform-origin: top left; width: 100%; }' +
 
-/*
-			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#contents { border: 0px #ccc solid; left: 50px; margin: 0 auto; width: 700px; position: absolute; right: 0; top: 0; transition: left 1s; }' +
-			'#hamburger { left: 325px; position: absolute; top: 0px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' + // max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
-				'margin: 0; opacity: 0.98; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
-*/
-
 			'#contents { border: 0px #ccc solid; left: 375px; max-width: 700px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
 			'#hamburger { color: crimson; cursor: pointer; font-size: 24pt; left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; /* height: 98%; */ ' +
@@ -81,17 +74,14 @@ List user events in an informative manner.
 
 		'';
 
-
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=index.html#readme.md > &#x24D8; </a>' +
 			'</h2>' +
-
-//			'<p>And also my home page as a work-in-progress. Let\'s see what we are working on these days - asap.</p>' +
 
 			'<p>' +
 				'Selected Orgs & Users:<br><select id=selUser onchange=initUser(this.value); title="Select the GitHub user" size=15 >' +
@@ -100,32 +90,6 @@ List user events in an informative manner.
 
 			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
 			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
-
-			'<details open >' +
-				'<summary><h3 id=sumName ></h3></summary>' +
-				'<div id=divUser ></div>' +
-			'</details><br>' +
-
-/*
-			'<details open >' +
-				'<summary><h3 style=display:inline; >Organizations</h3></summary>' +
-				'<div id=organizations ></div>' +
-			'</details>' +
-
-*/
-
-			'<details open >' +
-				'<summary><h3>Repositories</h3></summary>' +
-				'<div id=repositories ></div>' +
-			'</details>' +
-
-
-/*
-			'<details>' +
-				'<summary><h3 style=display:inline; >Gists</h3></summary>' +
-				'<div id=divGists ></div>' +
-			'</details>' +
-*/
 
 			'<div id=info ></div><br>' +
 
@@ -139,20 +103,20 @@ List user events in an informative manner.
 		hamburger.id = 'hamburger';
 		hamburger.innerHTML = ' &#9776 ';
 
-		hamburger.onclick = function() { 
+		hamburger.onclick = function() {
 
 			if ( menu.style.left !== '-325px' ) {
 
-				hamburger.style.left = 0; 
+				hamburger.style.left = 0;
 				menu.style.left = '-325px';
-				contents.style.left = '50px'; 
+				contents.style.left = '50px';
 
 
 			} else {
 
-				hamburger.style.left = '325px'; 
-				menu.style.left = 0; 
-				contents.style.left = '375px'; 
+				hamburger.style.left = '325px';
+				menu.style.left = 0;
+				contents.style.left = '375px';
 
 			}
 
@@ -177,10 +141,9 @@ List user events in an informative manner.
 			}
 
 		}
+		selUser.selectedIndex = 2;
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
-
-		selUser.selectedIndex = 0;
 
 		onHashChange();
 
@@ -208,14 +171,6 @@ List user events in an informative manner.
 
 		getEvents( user, page, contents );
 
-//		getOrgs( name, page, contents ); 
-
-		getRepos( name, page, contents ); 
-
-		getUser( name );
-
-//		getGists( name );
-
 		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
 
 		for ( var i = 0; i < selUser.options.length; i++ ) {
@@ -226,91 +181,23 @@ List user events in an informative manner.
 
 	}
 
-	function getUser( user ) {
-
-		var fileName, xhr;
-
-		fileName = 'https://api.github.com/users/' + user;;
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			user = JSON.parse( xhr.responseText );
-
-//console.log( 'user', user );
-
-			txt = '<div><img src=' + user.avatar_url +  ' width=80; ></div>' +
-				( user.blog  ? '<div>www: <a href=http://' + user.login + '.github.io >' + user.name + '</a></div>' : '' ) +
-				( user.location  ? '<div>place: ' + user.location + ' </div>' : '' ) +
-				( user.bio  ? '<div>bio: ' + user.bio + ' </div>' : '' ) +
-				( user.company  ? '<div>co: <a href=' + user.company + ' >' + user.company + '</a></div>' : '' ) +
-			'';
-
-			sumName.innerHTML = '<a href=http://' + user.login + '.github.io >' + user.name + '</a>';
-			divUser.innerHTML = txt;
-
-		}
-
-	}
-
-	function getRepos( user, page, contents ) {
-
-		var fileName, xhr, repos, txt;
-
-		fileName = 'https://api.github.com/users/' + user + '/repos';
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			repos = JSON.parse( xhr.responseText );
-
-//console.log( 'repos', repos );
-
-			txt = '';
-
-			for ( var i = 0; i < repos.length; i++ ) {
-
-				repo = repos[ i ];
-
-				txt += '<div><a href=' + repo.html_url + ' >' + repo.name + '</a><br>' + 
-
-					'<small>' + repo.updated_at.slice( 0, 10 ) + ( repo.fork === true ? ' - fork - ' : ' - ' ) + repo.description + '</small></div>';
-
-			}
-
-			repositories.innerHTML = txt;
-
-		}
-
-	}
-
 
 	function getEvents( user, page, target ) {
 
 // https://developer.github.com/v3/activity/events/
 
-		var xhr, events, event, eventHeading, dates, txt;
-//		var fileName;
+		var fileName, xhr, events, event, eventHeading, dates, txt;
 
-//		fileName = 'https://api.github.com/users/' + user[ 0 ] + '/events?path=' + user[ 2 ];
-		fileName = 'https://api.github.com/users/' + user[ 0 ] + '/events';
+		fileName = 'https://api.github.com/users/' + user[ 0 ] + '/events?page=' + page;
 
 		pageHeader =
 		'<h1>' +
-			'user: <a href=https://github.com/' + user[ 0 ] + '>' + user[ 0 ] + '</a> ' + 
+			'Org: <a href=https://github.com/' + user[ 0 ] + '>' + user[ 0 ] + '</a> ' +
 			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 //			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';
 
-		pageFooter = 
+		pageFooter =
 		'<h1>' +
 			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 			'<button onclick=window.scrollTo(0,0); >top</button>' +
@@ -338,9 +225,12 @@ List user events in an informative manner.
 
 					dates.push( event.created_at.slice( 0, 10 ) )
 
-					pageContent += 
+					pageContent +=
 						'<hr style=margin-top:70px; >' +
-						'<h2>' + event.created_at.slice( 0, 10 ) + '</h2>';
+						'<h2>' + event.created_at.slice( 0, 10 ) + '</h2>' +
+					'';
+
+					eventHeading = '';
 
 				}
 
@@ -352,8 +242,8 @@ List user events in an informative manner.
 
 				}
 
-				pageContent += 
-					'<div>' + ( i + 1 ) + '. ' + event.created_at.slice( 11, -1 ) + '</div>' +
+				pageContent +=
+					'<div>#' + ( i + 1 ) + ' ' + event.created_at.slice( 11, -1 ) + '</div>' +
 					'<div>Repository: <a href=http://github.com/' + event.repo.name + ' > ' + event.repo.name + '</a></div>' +
 				'';
 
@@ -363,9 +253,9 @@ List user events in an informative manner.
 
 				} else {
 
-//console.log( 'non-event', event );
+console.log( 'non-event', event );
 
-					pageContent += '<div>Parsing this event\'s data is still not complete...</div>';
+					pageContent += '<div>Parsing this type of event is still not complete...</div>';
 
 				}
 
@@ -388,12 +278,26 @@ List user events in an informative manner.
 
 	}
 
+// https://developer.github.com/v3/activity/events/types/
+
+	eventSet.onCommitCommentEvent = function( event ) {
+
+		txt =
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
+			'<div>Body: <a href=' + event.payload.comment.html_url + ' >' + event.payload.comment.body + '</div>' +
+		'<br>';
+
+		return txt;
+
+	}
+
 	eventSet.onCreateEvent = function( event ) {
 
 		txt =
 			'<div>Description: ' + event.payload.description + '</div>' +
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Branch: ' + event.payload.master_branch + '</div>' +
-		'';
+		'<br>';
 
 		return txt;
 
@@ -402,10 +306,36 @@ List user events in an informative manner.
 	eventSet.onDeleteEvent = function( event ) {
 
 		txt =
-			'<div>Pusher: ' + event.payload.pusher_type + '<div>' + 
-			'<div>Ref: ' + event.payload.ref + '<div>' + 
-			'<div>Ref Type: ' + event.payload.ref_type + '<div>' + 
-		'';
+			'<div>Pusher: ' + event.payload.pusher_type + '<div>' +
+			'<div>Ref: ' + event.payload.ref + '<div>' +
+			'<div>Ref Type: ' + event.payload.ref_type + '<div>' +
+		'<br>';
+
+		return txt;
+
+	}
+
+	eventSet.onForkEvent = function( event ) {
+
+		txt =
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
+//			'<div>Body: <a href=' + event.payload.comment.html_url + ' >' + event.payload.comment.body + '</div>' +
+		'<br>';
+
+		return txt;
+
+	}
+
+	eventSet.onGollumEvent = function( event ) {
+//console.log( 'onEvent', event  );
+		txt =
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
+				( event.payload.action === 'created' ?
+					'<div>Action: wiki created</div>'
+					:
+					'<div>Action: wiki edited</div>'
+				) +
+		'<br>';
 
 		return txt;
 
@@ -413,13 +343,18 @@ List user events in an informative manner.
 
 	eventSet.onIssuesEvent = function( event ) {
 
-		txt = 
-			'<div>Title <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
+console.log( 'onEvent', event  );
+
+		txt =
+			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' +
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
-				( event.payload.action === 'opened' ? 
-				'<div>Action: opened</div><div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>' :
-				'<div>Action: closed</div>' ) +
-		'';
+				( event.payload.action === 'opened' ?
+					'<div>Action: opened</div><div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>'
+					:
+					'<div>Action: closed</div>'
+				) +
+		'<br>';
 
 		return txt;
 
@@ -428,11 +363,12 @@ List user events in an informative manner.
 
 	eventSet.onIssueCommentEvent = function( event ) {
 
-		txt = 
-			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' + 
-			( event.payload.issue.labels.length ? '<div>Labels: ' + event.payload.issue.labels[ 0 ].name  + '</div>' : '' ) +
+		txt =
+			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' +
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
+				( event.payload.issue.labels.length ? '<div>Labels: ' + event.payload.issue.labels[ 0 ].name  + '</div>' : '' ) +
 			'<div class=issue >' + converter.makeHtml( event.payload.comment.body ) + '</div>' ;
-		'';
+		'<br>';
 
 		return txt;
 
@@ -443,7 +379,7 @@ List user events in an informative manner.
 		txt =
 			'<div>Member: ' + '<a href=' + event.payload.member.html_url + ' > ' + event.payload.member.html_url + '</a></div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
-		'';
+		'<br>';
 
 		return txt;
 
@@ -451,12 +387,11 @@ List user events in an informative manner.
 
 	eventSet.onPushEvent = function( event ) {
 
-//console.log( 'onEvent', event );
-
 		txt =
-			'<div>Message: ' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message : '' ) + 
-				' - Size: ' + event.payload.size + ' - Commits: ' + event.payload.commits.length + '</div>' +
-		'';
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
+			'<div>Message: <a href=https://github.com/' + event.repo.name + '/commit/' + event.payload.head + '>' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message + '</a>' : '' ) +
+				' - Size: ' + event.payload.size + ' - Length: ' + event.payload.commits.length + '</div>' +
+		'<br>';
 
 		return txt;
 
@@ -465,22 +400,24 @@ List user events in an informative manner.
 	eventSet.onPullRequestEvent = function( event ) {
 
 		txt =
-			'<div>Title: ' + event.payload.pull_request.title + '</div>' +
+			'<div>Title: <a href=' + event.payload.pull_request.html_url + ' >' + event.payload.pull_request.title + '</a></div>' +
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
-		'';
+			'<div>Body: ' + event.payload.pull_request.body + '</div>' +
+		'<br>';
 
 		return txt;
 
 	}
 
 	eventSet.onPullRequestReviewCommentEvent = function( event ) {
-
+console.log( 'onEvent', event  );
 		txt =
-
-			'<div>Path: ' + event.payload.comment.path + '</div>' +
+			'<div>Path: <a href=' + event.payload.pull_request.html_url + ' >' + event.payload.comment.path + '</div>' +
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
 			'<div class=issue >Comment: ' + event.payload.comment.body + '</div>' +
-		'';
+		'<br>';
 
 		return txt;
 
@@ -489,10 +426,10 @@ List user events in an informative manner.
 	eventSet.onReleaseEvent = function( event ) {
 
 		txt =
-			'<div>Name: ' + event.payload.release.name + '<div>' + 
-			'<h3 style=color:magenta; >Action: ' + event.payload.action + '</h3>' + 
-			'<div>Prerelease: ' + event.payload.release.prerelease + '<div>' + 
-		'';
+			'<div>Name: ' + event.payload.release.name + '<div>' +
+			'<h3 style=color:magenta; >Action: ' + event.payload.action + '</h3>' +
+			'<div>Prerelease: ' + event.payload.release.prerelease + '<div>' +
+		'<br>';
 
 		return txt;
 
@@ -501,12 +438,14 @@ List user events in an informative manner.
 	eventSet.onWatchEvent = function( event ) {
 
 		txt =
+			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.display_login + '</a></div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
-		'';
+		'<br>';
 
 		return txt;
 
 	}
+
 
 	function proceed( delta ) {
 

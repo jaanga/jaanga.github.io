@@ -12,22 +12,32 @@
 [opener dev notes]( #dev-notes.md )
 ===
 
-Opens a script as default
+## Mission
 
-or
+* Index file deals with multiple file types
+	*.JS and .MD today. HTML on the way
+* Opens a .JS script or .MD markdown file as default or an HTML file as default
+	* Set default file using variable
+* Using`hashchange` event and location.hash, opens .JS, .MD or .HTML files
+* Markdown is translated to HTML and centered on screen
+* Loads any required scripts
+* Separate HTML and JavaScript files
+	* Can use JS hint
+	* On-the-fly HTML and CSS appears more natural. May cause fewer WTF
+* Small, simple and fairly easy to understand
 
-Open a markdown file as default.
 
-or
 
-Open any markdown using location.hash
-
-Markdown is centered on screen
 
 for simpler version see _latest_ folder
 
 
 ## Change log
+
+### 2016-06-26 ~ R4
+
+* Seems to be working
+
 
 ### 2016-06-04
 

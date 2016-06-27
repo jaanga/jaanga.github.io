@@ -148,6 +148,20 @@ No black boxes. Nothing hidden away in remote places.
 	* width = lon / 2
 	* height = lat / 3
 
+## Variable Names
+
+* [A Guide to Naming Variables]( https://a-nickels-worth.blogspot.com/2016/04/a-guide-to-naming-variables.html ) !!!
+* [Good Variable Names]( http://c2.com/cgi/wiki?GoodVariableNames )
+* [7+1 tips for naming variables]( http://www.makinggoodsoftware.com/2009/05/04/71-tips-for-naming-variables/ )
+* [Is there an excuse for short variable names?]( http://programmers.stackexchange.com/questions/176582/is-there-an-excuse-for-short-variable-names )
+* [15 Ways to Write Self-documenting JavaScript]( https://www.sitepoint.com/self-documenting-javascript/ ) !!!
+
+
+
+
+
+
+
 
 ***
 

@@ -5,17 +5,17 @@
 [Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaangas.github.io/cookbook-html/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-html/examples/ ) &raquo;
 
-[GitHub API Events Read Me]( https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html#readme.md )
+[XXXXXX Read Me]( https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html#readme.md )
 ===
 
-## Full Screen: [ GitHub API Events ]( https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html )
+## Full Screen: [ XXXXXX ]( https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html )
 
 
 <img src="XXXX" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html width=100% height=600px ></iframe>
 
-_GitHub API Events_
+_XXXXXX_
 
 ***
 
@@ -75,10 +75,6 @@ Intended for xxx
 
 
 ## Change Log
-
-### 2016-06-26 ~ R2
-
-* Add actor's login and link
 
 ### 
 

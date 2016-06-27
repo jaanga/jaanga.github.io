@@ -18,7 +18,9 @@ GitHub API
 fun look at issues
 * https://github.com/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+
 
+
 ### GitHub Help
+
 
 * https://help.github.com/categories/search/
 * https://help.github.com/articles/searching-repositories/
@@ -50,18 +52,50 @@ fun look at issues
 * https://github.com/jaanga/timeline
 
 
-### Commits
+## Commits
 
 https://api.github.com/repos/jaanga/jaanga.github.io/commits
 https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=readme.md
 
 
-### Events
+## Events
 
 https://api.github.com/repos/jaanga/jaanga.github.io/events?path=cookbook-html/examples << not
 https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << not
 
-### Issues
+
+
+
+## Gists
+
+* https://developer.github.com/v3/gists/
+* https://gist.githubusercontent.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330
+
+### Raw
+
+
+* https://developer.github.com/changes/2014-02-21-gist-raw-file-url-change/
+* https://gist.githubusercontent.com/VonC/9184693/raw/testNewGist
+
+
+
+
+### Links of Interest
+
+* https://gist.github.com/
+* https://gist.github.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330#file-gist-tips-and-bookmarks-md
+
+***
+
+* https://gist.github.com/search?q=user:theo-armour
+* https://api.github.com/users/theo-armour/gists
+* https://api.github.com/gists/bb9527c8cff89a417b09eaeb6c8ae330
+
+
+
+
+
+## Issues
 
 
 https://api.github.com/repos/jaanga/jaanga.github.io/issues
@@ -95,27 +129,6 @@ https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 
 
 
-## Gists
-
-* https://developer.github.com/v3/gists/
-* https://developer.github.com/changes/2014-02-21-gist-raw-file-url-change/
-
-***
-
-* https://gist.github.com/
-* https://gist.github.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330#file-gist-tips-and-bookmarks-md
-
-***
-
-* https://gist.github.com/search?q=user:theo-armour
-* https://api.github.com/users/theo-armour/gists
-* https://api.github.com/gists/bb9527c8cff89a417b09eaeb6c8ae330
-* https://gist.githubusercontent.com/VonC/9184693/raw/testNewGist
-* https://gist.githubusercontent.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330/raw
-
-
-
-
 
 
 ## Miscellaneous
@@ -143,6 +156,28 @@ https://api.github.com/orgs/jaanga/events?path=cookbook-html
 
 
 
+
+### Commits
+
+https://api.github.com/repos/jaanga/jaanga.github.io/commits
+
+
+
+### Contents
+
+https://api.github.com/repos/jaanga/jaanga.github.io/readme
+
+
+https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
+
+
+### Pages
+
+https://api.github.com/repos/jaanga/jaanga.github.io/pages/
+
+
+
+
 ## Repos
 
 * https://developer.github.com/v3/repos/contents/
@@ -162,9 +197,47 @@ https://api.github.com/repos/jaanga/jaanga.github.io << lists all calls
 https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
 
 
+
+### Commits
+
+https://api.github.com/repos/jaanga/jaanga.github.io/commits
+
+https://api.github.com/repos/izuzak/pmrpc/commits?path=examples
+https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/examples
+
+### Contents
+
+https://api.github.com/repos/jaanga/jaanga.github.io/readme
+
+
+https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
+
 https://api.github.com/repos/mrdoob/three.js/contents/examples
 
 
+### Issues
+
+https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+
+### Statistics
+
+https://api.github.com/repos/jaanga/jaanga.github.io/stats/contributors
+
+
+https://api.github.com/repos/jaanga/jaanga.github.io/stats/commit_activity
+
+https://api.github.com/repos/jaanga/jaanga.github.io/stats/code_frequency
+
+https://api.github.com/repos/jaanga/jaanga.github.io/stats/participation
+
+https://api.github.com/repos/jaanga/jaanga.github.io/stats/punch_card
+
+https://api.github.com/repos/theo-armour/theo-armour.github.io/stats/code_frequency
+
+
+### Webhooks
+
+https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 
 
 
@@ -186,27 +259,60 @@ https://api.github.com/users/jaanga/events?login=redheli
 * http://stackoverflow.com/questions/24132790/how-to-search-for-code-in-github-with-github-api
 
 
-https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+### Code
 
 https://api.github.com/search/code?q=3D+extension:stl << not
-https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
+
+https://api.github.com/search/code?q=MIT%32License%32path:project.clj
+
+### Issues
+
 
 https://api.github.com/search/issues?q=windows+label:bug+language:python+state:open&sort=created&order=asc
 
 https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc << ignores the repo
 
-https://api.github.com/search/issues?q=repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
+https://api.github.com/search/issues?q=@paulmasson+repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
+
+
+
+https://api.github.com/search/issues?q=language:js+created:2016-06-25
+
+
+
+js or JavaScript: both OK
+
+
+https://api.github.com/search/issues?q=created:2016-06-25&sort=comments&order=desc
+
+### Repos
+
+https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+
+https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
 
 https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=created&order=asc
 
 
-https://api.github.com/search/repositories?q=examples
+https://api.github.com/search/repositories?q=jaanga
+https://api.github.com/search/repositories?q=user:jaanga
 
-https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+
+From https://gist.github.com/jasonrudolph/6065289
+https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc  
+
+https://api.github.com/search/repositories?q=@jeresig-language:javascript << not
+
+### Users
+
+From https://gist.github.com/jasonrudolph/6065289
 
 
-https://api.github.com/repos/izuzak/pmrpc/commits?path=examples
-https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/examples
+https://api.github.com/search/users?q=followers:0
+https://api.github.com/search/users?q=followers:>20
+https://api.github.com/search/users?q=followers:%3E20
+
+
 
 
 ### Regular GitHub Search
