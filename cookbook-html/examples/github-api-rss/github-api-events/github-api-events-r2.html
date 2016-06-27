@@ -92,7 +92,7 @@ List user events in an informative manner.
 			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
 //			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
 
-			'<div id=info ></div><br>' +
+			'<div id=info >Click the page number at the top of the page to view the raw data</div><br>' +
 
 			'<center title="dingbat" >' +
 			'<h1><a href=javascript:window.scrollTo(0,0); >❦</a></h1>' +
@@ -194,7 +194,7 @@ List user events in an informative manner.
 		pageHeader =
 		'<h1>' +
 			'Org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
-			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
+			'page <button onclick=proceed(-1); >prev</button> <a href=' + fileName + ' > ' + page + '</a> <button onclick=proceed(1); >next</a></button> ' +
 //			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';
 
