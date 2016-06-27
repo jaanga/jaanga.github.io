@@ -152,7 +152,7 @@ https://api.github.com/orgs/ladybug-analysis-tools <<
 https://api.github.com/orgs/ladybug-analysis-tools/repos
 https://api.github.com/orgs/ladybug-analysis-tools/events <<
 
-https://api.github.com/orgs/jaanga/events?path=cookbook-html
+https://api.github.com/orgs/jaanga
 
 
 

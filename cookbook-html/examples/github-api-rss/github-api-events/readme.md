@@ -23,7 +23,9 @@ _GitHub API Events_
 
 ### Mission
 
-* To provide a fast and effective way to visualize the events of a number of GitHub orgs or users with many followers
+* To provide a fast and effective way to visualize the just events of a number of GitHub orgs or users with many followers
+* To be combined with other modules to show many aspects of an organization's profile
+
 
 ### Vision
 
@@ -69,8 +71,6 @@ Intended for xxx
 ## Goals
 
 ## Links of Interest
-
-
 
 
 ## Change Log
