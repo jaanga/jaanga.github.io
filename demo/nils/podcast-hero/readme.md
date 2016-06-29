@@ -22,12 +22,20 @@ _Podcast Hero_
 ### Mission
 
 * Entry level code to create lively voice-drive presentations
+* Possible to create presentations in multiple languages
+* Allows for collaboration, commenting, issue-tracking when hosted on GitHub
+
 
 ### Vision
 
-* TBD
+* New ways of showing you new things - and old things too
+
 
 ## Features
+
+* Reads text to speak and creates speech output
+* Reads text to display and creates a slide
+* Reads style data and adjust slide graphics
 
 
 
@@ -48,20 +56,36 @@ value='Source code listing' >
 
 ## Issues
 
+* Tested on Chome and Firefox only
+* Button working on Android phone, though working on Android tablet
+* Not a good voice on Chromebooks
+
 ## Users
 
-Intended for xxx
+Intended for 
+
+* Small groups of collaborators where one or more members know a bit about programming
+* People who want to work with FOSS tools
+* People looking to create presentations out of the scope of what is possible with apps such as PowerPoint and KeyNote
 
 ## Goals
 
+* Be as good as [prezi]( http://prezi.com )
+
+
 ## Links of Interest
 
+Fast and furious presentation methods
 
+* https://en.wikipedia.org/wiki/Takahashi_method
+* http://presentationzen.blogs.com/presentationzen/2005/10/the_lessig_meth.html
+* http://presentationswithresults.com/lawrence-lessigs-unique-presentation-style/
+* http://www.adviseamerica.com/5-examples-of-great-presentation-design/
 
 
 ## Change Log
 
-### 
+### 2016-06-29 R1 ~ 163 lines including content
 
 * First commit
 * Add Read Me
