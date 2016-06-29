@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Podcast Hero R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='' >
+<meta name=keywords content='Speeh Synthesizer,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-06-29' >
+</head>
+<body>
+<script>
+
+// https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis
+
+	var synth = window.speechSynthesis;
+	var voices = [];
+
+	var slides = [
+
+		[ 'Become a Pobcast Hero', 'PodCast Hero', 'red px144' ],
+		[ 'Use your words to change the world', 'the wor(l)d', 'blue px144' ],
+		[ 'Start with a good microphone', 'microphone', 'green px144' ],
+		[ 'Give your voice a feel good starting point', 'start nice', 'red px72' ],
+		[ 'Find a mike using wirecutter', '<a href="http://thewirecutter.com/reviews/the-best-usb-microphone/" >www.wirecutter.com</a>', 'blue px72' ],
+		[ 'Set up a mirror', 'mirror', ' px216' ],
+		[ 'Or turn on your web cam', 'Turn on', ' px72' ],
+		[ 'So you can look at person in the eye when you talk', 'Eyes have it', ' px144' ],
+
+
+		[ '', '', ' px' ],
+	];
+	var text = 'Hello, nils!';
+
+	var index = 1000;
+
+	init();
+
+	function init() {
+
+		var css, contents;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; }' +
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'.blue { color: blue; }' +
+			'.green { color: green; }' +
+			'.magenta { color: magenta; }' +
+			'.orange { color: orange; }' +
+			'.brown { color: brown; }' +
+			'.red { color: red; }' +
+
+			'.px48 { font-size: 48px; }' +
+			'.px72 { font-size: 72px; }' +
+			'.px144 { font-size: 144px; }' +
+			'.px216 { font-size: 216px; }' +
+
+			'#slideText { bottom: 0; max-height: 300px; left: 0; margin: auto; max-width: 800px; position: absolute; right:0; text-align: center; top: 0; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+/*
+			'<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>' +
+			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
+			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
+			'<p>Overlay: <select id=selList title="Select the 2D overlay" >' +
+				'<option>aaa aaa aaa</option>' +
+				'<option>bbb bbb</option>' +
+				'<option>cc cc cc cc</option>' +
+			'<select></p>' +
+			'<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>' +
+			'<p>' +
+				'<input type=radio name=field id=but1 />button 1' +
+				'<input type=radio name=field id=but2 checked />button 2' +
+				'<input type=radio name=field id=but3 />button 3' +
+			'</p>' +
+*/
+
+			'<div id=info ></div>' +
+
+//			'<p><button onclick=sayThis(text); >Say hello</button></p>' +
+//			'<p><button onclick="sayThis(\'testing, testing 1 2 3\');" >Say testing</button></p>' + // ye, quotes like this needed
+			'<p><button onclick=index=0;showSlide(); >Start slide show</button></p>' +
+		'';
+
+		slideText = document.body.appendChild( document.createElement( 'div' ) );
+		slideText.id = 'slideText';
+		slideText.innerHTML = 'oooooooooooo';
+
+
+		if ( 'speechSynthesis' in window ) {
+
+			info.innerHTML = 'Speech synthesis good to go! Note: his script talks out load. Press \'start slide show\'';
+
+		} else {
+
+			info.innerHTML = 'Sorry, speech synthesis isn\'t supported in this browser.';
+
+		}
+
+		synth.onvoiceschanged = function() {
+
+			voices = window.speechSynthesis.getVoices();
+			sayThis( 'Hello, Nils!' );
+
+		};
+
+
+
+	}
+
+	function showSlide() {
+
+		if ( index < slides.length ) {
+
+			slide = slides[ index++ ];
+
+			sayThis( slide[ 0 ] );
+			slideText.innerHTML = slide[ 1 ];
+			slideText.className = slide[ 2 ];
+
+		}
+
+	}
+
+
+	function sayThis( text ) {
+
+		var utterThis;
+
+		synth.cancel();
+
+		utterThis = new SpeechSynthesisUtterance( text );
+
+		if ( voices.length > 0 ) {
+
+			utterThis.voice = voices[ 2 ];
+
+		}
+
+		synth.speak( utterThis );
+
+		utterThis.onend = showSlide;
+
+	}
+
+</script>
+</body>
+</html>

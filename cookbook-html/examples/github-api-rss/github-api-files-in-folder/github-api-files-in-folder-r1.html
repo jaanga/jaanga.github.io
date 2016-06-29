@@ -15,8 +15,12 @@
 //	var urlAPIContents = 'https://api.github.com/repos/sagemath/documentation/git/trees/gh-pages?recursive=1';
 //	var urlBase = 'http://sagemath.github.io/documentation/';
 
-	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
-	var urlBase = 'http://jaanga.github.io/';
+//	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+//	var urlBase = 'http://jaanga.github.io/';
+
+//	var urlAPIContents = 'https://api.github.com/repos/fgx/fgx.github.io/git/trees/master?recursive=1';
+	var urlAPITreeContents = 'https://api.github.com/repos/fgx/fgx.github.io/git/trees/82968813a499e36ef22c08eaf17f920cb609af17'
+	var urlBase = 'http://fgx.github.io/';
 
 	var user = 'jaanga';
 	var repo = 'jaanga.github.io';
@@ -49,6 +53,11 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/cookbook-html/examples/#readme.md > &#x24D8; </a>' +
 			'</h2>' +
+
+			'<p>' +
+				'<select id=selFiles onchange=doSelect(this); size=5 ></select>' +
+			'</p>' +
+
 			'<p id=message ></p>' +
 			'<div id=items ></div>' +
 
@@ -57,14 +66,14 @@
 			'</center>' +
 		'';
 
-		requestAPIContents()
+		getAPITreeContents()
 
 	}
 
-	function requestAPIContents() {
+	function getAPITreeContents() {
 
 		var xhr = new XMLHttpRequest();
-		xhr.open( 'GET', tree, true );
+		xhr.open( 'GET', urlAPITreeContents, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
@@ -78,22 +87,23 @@
 			for ( var i = 0; i < response.tree.length; i++ ) {
 
 				file = response.tree[ i ].path;
-
-				if ( file.indexOf( folder ) === -1 ) { continue; }
-
-				if ( file.indexOf( '.md' ) === -1 && file.indexOf( '.html' ) === -1 ) { continue; }
-
 				files.push( file );
+				selFiles.appendChild( document.createElement( 'option' ) );
+				selFiles.children[ i ].text = file;
 
 			}
 
-//console.log( 'files', files );
+
+		selFiles.selectedIndex = 1;
+
+console.log( 'files', files );
 
 			message.innerHTML = 'Files count: ' + files.length;
 
-			createTableOfContents();
+//			createTableOfContents();
 
 		}
+
 
 	}
 

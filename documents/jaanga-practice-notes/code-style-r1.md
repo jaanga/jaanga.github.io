@@ -150,6 +150,10 @@ No black boxes. Nothing hidden away in remote places.
 
 ## Variable Names
 
+
+* Use the same variable names and style that the documentation of your language uses
+* Use the same variable names and style that your library uses
+
 * [A Guide to Naming Variables]( https://a-nickels-worth.blogspot.com/2016/04/a-guide-to-naming-variables.html ) !!!
 * [Good Variable Names]( http://c2.com/cgi/wiki?GoodVariableNames )
 * [7+1 tips for naming variables]( http://www.makinggoodsoftware.com/2009/05/04/71-tips-for-naming-variables/ )

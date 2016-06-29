@@ -72,7 +72,13 @@
 
 		loader = new THREE.TextureLoader();
 		loader.crossOrigin = 'anonymous';
+
+// load a resource
 		loader.load(
+
+// resource URL
+//			'http://mrdoob.github.io/three.js/examples/textures/land_ocean_ice_cloud_2048.jpg',
+//			'http://mrdoob.github.io/three.js/examples/textures/water.jpg',
 
 			'http://i.imgur.com/RPv6ofy.jpg',
 
@@ -81,8 +87,31 @@
 //				geometry = new THREE.SphereGeometry( 50, 50, 25 );
 
 				sphere1.material = new THREE.MeshBasicMaterial( { map: texture } );
+
+//				mesh = new THREE.Mesh( geometry, material );
+//				mesh.position.set( -50, 30, 0 );
+//				scene.add( mesh );
+
 			}
 
+/*
+
+// Function called when download progresses
+
+			function ( xhr ) {
+
+				msg1.innerHTML = ( xhr.loaded / xhr.total * 100 ) + '% loaded';
+
+			},
+
+// Function called when download errors
+
+			function ( xhr ) {
+
+				msg1.innerHTML = 'An error happened';
+
+			}
+*/
 		);
 
 		geometry = new THREE.SphereGeometry( 50, 50, 25 );
@@ -91,6 +120,35 @@
 		sphere1.position.set( -50, 30, 0 );
 		scene.add( sphere1 );
 
+
+/*
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( 'http://i.imgur.com/RPv6ofy.jpg', this.callback );
+		loader.callback = function( texture ){ 
+
+			sphere1.material = new THREE.MeshBasicMaterial( { map: texture } );
+
+		}
+
+		image = document.createElement( 'img' );
+		image.crossOrigin = 'anonymous';
+		image.onload = function() { 
+
+				texture = new THREE.Texture( image );
+				texture.needsUpdate = true;
+
+				geometry = new THREE.SphereGeometry( 50, 50, 25 );
+				var material = new THREE.MeshBasicMaterial( { map: texture } );
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.set( 50, 30, 0 );
+				scene.add( mesh );
+
+		};
+
+//		image.src = 'http://mrdoob.github.io/three.js/examples/textures/land_ocean_ice_cloud_2048.jpg';
+		image.src = 'http://i.imgur.com/RPv6ofy.jpg';
+*/
 	}
 
 
