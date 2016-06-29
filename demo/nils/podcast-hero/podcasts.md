@@ -17,7 +17,7 @@ Follow Salmon Khan
 Bill Gates funds his Khan Academy
 Why
 
-Vecause he teaches everything about math
+Because he teaches everything about math
 
 Keep it to about three minutes
 

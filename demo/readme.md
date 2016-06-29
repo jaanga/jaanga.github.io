@@ -50,7 +50,7 @@
 
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
-## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [pm]( http://jaanga.github.io/demo/pm/ )  [rb]( http://jaanga.github.io/demo/rb/shower-the-monkey/shower-the-monkey-r1.html ) [ms]( http://jaanga.github.io/demo/ms/ )
+## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [pm]( http://jaanga.github.io/demo/pm/ )  [rb]( http://jaanga.github.io/demo/rb/shower-the-monkey/shower-the-monkey-r1.html ) [ms]( http://jaanga.github.io/demo/ms/ )
 
 ## [Moving Manuals]( http://jaanga.github.io/moving-manuals/ ) ~ [not Kallax]( http://jaanga.github.io/moving-manuals/kallax-nxn/ )
 

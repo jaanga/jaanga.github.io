@@ -26,9 +26,24 @@
 		[ 'Set up a mirror', 'mirror', ' px216' ],
 		[ 'Or turn on your web cam', 'Turn on', ' px72' ],
 		[ 'So you can look at person in the eye when you talk', 'Eyes have it', ' px144' ],
+		[ 'Follow the podcasts by Salmon Khan', 'Salman Khan', 'orange px144' ],
+		[ 'Not just because Bill Gates funds his Khan Academy', 'Khan Academy', 'px144' ],
+		[ 'Not Because he teaches everything about math', '+-= Math =+-', 'brown px72' ],
+		[ 'Really because he keep it to about three minutes', '3"', 'px144' ],
+		[ 'We call this \'Just in Time\' learning', 'just-in-time', 'px144' ],
+		[ 'Build up a library of material', 'lib', 'px144' ],
+		[ 'Two hundred words per post ', '200/post', ' px 144' ],
+		[ 'One or two links', '&#128279;', ' px216' ],
+		[ 'Create a channel on YouTube', 'You youTube you', 'blue px144' ],
+		[ 'It\'s free. People can like you.','<3 <3', 'magenta px144' ],
+		[ 'Stand on the shoulders of giants', 'giant shoulders', ' px72' ],
+		[ 'Use their techniques for the graphics', 'good design', 'brown px144' ],
+		[ 'Takahashi method', 'Takahashi Method', 'green px144' ],
+		[ 'Professor Lawrence Lessig', 'Prof Lessig<br>woot woot', 'orange px144' ],
 
+		[ 'More info - click the \i in the circle\'', '<a href=index.html#readme.md>&#x24D8;</a>', 'red px216' ],
 
-		[ '', '', ' px' ],
+//		[ '', '', ' px 144' ],
 	];
 	var text = 'Hello, nils!';
 
@@ -75,22 +90,6 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
-/*
-			'<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>' +
-			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
-			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
-			'<p>Overlay: <select id=selList title="Select the 2D overlay" >' +
-				'<option>aaa aaa aaa</option>' +
-				'<option>bbb bbb</option>' +
-				'<option>cc cc cc cc</option>' +
-			'<select></p>' +
-			'<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>' +
-			'<p>' +
-				'<input type=radio name=field id=but1 />button 1' +
-				'<input type=radio name=field id=but2 checked />button 2' +
-				'<input type=radio name=field id=but3 />button 3' +
-			'</p>' +
-*/
 
 			'<div id=info ></div>' +
 
@@ -101,12 +100,12 @@
 
 		slideText = document.body.appendChild( document.createElement( 'div' ) );
 		slideText.id = 'slideText';
-		slideText.innerHTML = 'oooooooooooo';
+		slideText.innerHTML = 'welcome Nils';
 
 
 		if ( 'speechSynthesis' in window ) {
 
-			info.innerHTML = 'Speech synthesis good to go! Note: his script talks out load. Press \'start slide show\'';
+			info.innerHTML = 'Speech synthesis good to go! Note: this script talks out load. Press \'start slide show\'';
 
 		} else {
 
@@ -117,7 +116,7 @@
 		synth.onvoiceschanged = function() {
 
 			voices = window.speechSynthesis.getVoices();
-			sayThis( 'Hello, Nils!' );
+			sayThis( 'Hello Nils!' );
 
 		};
 
