@@ -58,7 +58,8 @@
 		css.innerHTML =
 
 			'body { font: 12pt monospace; }' +
-			'a { color: crimson; text-decoration: none; }' +
+			'h2 a { color: crimson; text-decoration: none; }' +
+			'a { color: crimson; }' +
 
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
@@ -98,7 +99,8 @@
 
 //			'<p><button onclick=sayThis(text); >Say hello</button></p>' +
 //			'<p><button onclick="sayThis(\'testing, testing 1 2 3\');" >Say testing</button></p>' + // ye, quotes like this needed
-			'<p><button onclick=index=0;showSlide(); >Start slide show</button></p>' +
+//			'<p><button on=index=0;showSlide(); >Start slide show</button></p>' +
+			'<p><a href=JavaScript:index=0;showSlide(); >Start slide show</a></p>' +
 		'';
 
 
@@ -115,7 +117,12 @@
 		synth.onvoiceschanged = function() {
 
 			voices = window.speechSynthesis.getVoices();
-			sayThis( 'Hello Nils!' );
+
+			if ( window.self === window.top ) {
+
+				sayThis( 'Hello Nils!' );
+
+			}
 
 		};
 
