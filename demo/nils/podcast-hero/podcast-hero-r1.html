@@ -32,8 +32,8 @@
 		[ 'Really because he keep it to about three minutes', '3"', 'px144' ],
 		[ 'We call this \'Just in Time\' learning', 'just-in-time', 'px144' ],
 		[ 'Build up a library of material', 'lib', 'px144' ],
-		[ 'Two hundred words per post ', '200/post', ' px 144' ],
-		[ 'One or two links', '&#128279;', ' px216' ],
+		[ 'Two hundred words per post ', '200/post', ' px144' ],
+		[ 'One or two links', '&#128279; &#128279;', 'green px216' ],
 		[ 'Create a channel on YouTube', 'You youTube you', 'blue px144' ],
 		[ 'It\'s free. People can like you.','<3 <3', 'magenta px144' ],
 		[ 'Stand on the shoulders of giants', 'giant shoulders', ' px72' ],
@@ -81,6 +81,9 @@
 			'#slideText { bottom: 0; max-height: 300px; left: 0; margin: auto; max-width: 800px; position: absolute; right:0; text-align: center; top: 0; }' +
 
 		'';
+		slideText = document.body.appendChild( document.createElement( 'div' ) );
+		slideText.id = 'slideText';
+		slideText.innerHTML = 'welcome Nils';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
@@ -88,7 +91,7 @@
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
-				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
 			'</h2>' +
 
 			'<div id=info ></div>' +
@@ -97,10 +100,6 @@
 //			'<p><button onclick="sayThis(\'testing, testing 1 2 3\');" >Say testing</button></p>' + // ye, quotes like this needed
 			'<p><button onclick=index=0;showSlide(); >Start slide show</button></p>' +
 		'';
-
-		slideText = document.body.appendChild( document.createElement( 'div' ) );
-		slideText.id = 'slideText';
-		slideText.innerHTML = 'welcome Nils';
 
 
 		if ( 'speechSynthesis' in window ) {
