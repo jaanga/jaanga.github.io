@@ -55,9 +55,17 @@ value='Source code listing' >
 
 ## Issues
 
-* Tested on Chome and Firefox only
+* Tested on Chrome and Firefox only
 * Button working on Android phone, though working on Android tablet
 * Not a good voice on Chromebooks
+
+
+## To Do
+
+* Read content data from CSV or Gist file
+* Save presentation as WebM video
+* Ability Embed and control Three.js scenes
+ 
 
 ## Users
 
