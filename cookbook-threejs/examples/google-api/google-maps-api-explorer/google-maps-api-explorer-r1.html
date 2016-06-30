@@ -36,11 +36,16 @@
 	var lonMax = -122.74197028018534;
 */
 
-	var zoom = 15;
+	var zoom = 18;
 	var width = 1024;
 	var height = 1024;
+	var map;
 
 	var TILE_SIZE = 256;
+	var b = '<br>';
+
+	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+	var d2r = pi / 180, r2d = 180 / pi;  // degrees / radians
 
 	init();
 
@@ -102,20 +107,33 @@
 
 		'';
 
+		getTile( latitude, longitude);
 
+/*
 		tileX = lon2tile( longitude, zoom );
 		tileY = lat2tile( latitude, zoom );
 
-		latY = tile2lat( tileY, zoom );
-		lonX = tile2lon( tileX, zoom );
+		ULlat = tile2lat( tileY, zoom );
+		ULlon = tile2lon( tileX, zoom );
+
+		LRlat = tile2lat( tileY + 1, zoom );
+		LRlon = tile2lon( tileX + 1, zoom );
 
 		info.innerHTML = '<h3>info</h3>' +
-			'lat:' + latitude + ' lon:' + longitude + ' zoom:' + zoom + '<br>' +
-			'tileX:' + tileX + ' tileY:' + tileY + '<br>' + 
-			'tile latY:' + latY + ' lonX:' + lonX + '<br>' + 
-		'';
+			'zoom:' + zoom + b +
+			'lat:' + latitude + b +
+			'lon:' + longitude + b +
+			'tileX:' + tileX + b +
+			'tileY:' + tileY + b + b +
+			'UL lat:' + ULlat + b +
+			'UL lon:' + ULlon + b + 
+			'LR lat:' + LRlat + b +
+			'LR lon:' + LRlon + b + 
+			'<a href=http://c.tile.opencyclemap.org/cycle/' + zoom + '/' + tileX + '/' + tileY + '.png >tile</a>' +
+		b;
+*/
 
-		setMap();
+		initMap();
 
 		google.maps.event.addDomListener( window, 'load', getParams );
 
@@ -140,32 +158,52 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 		latPixelsPerDegree = 512 / latDelta;
 		lonPixelsPerDegree = 512 / lonDelta;
 
+		outSamples.innerHTML += '<h3>params</h3>' +
+			'lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) + b +
+			'lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) + b +
+			'latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) + b +
 
-		outSamples.innerHTML += '<h3>params</h3>Map lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) +
-			' - lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) +
+			'DegreesPerPixel - lat: ' + latDegreesPerPixel.toFixed( 6 ) + ' lon: ' + lonDegreesPerPixel.toFixed( 6 ) + b +
+			'PixelsPerDegree - lat: ' + latPixelsPerDegree.toFixed( 6 ) + ' lon: ' + lonPixelsPerDegree.toFixed( 6 ) + b +
 
-			' latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) +
-
-			'<br>DegreesPerPixel - lat: ' + latDegreesPerPixel.toFixed( 6 ) + ' lon: ' + lonDegreesPerPixel.toFixed( 6 ) +
-			'<br>PixelsPerDegree - lat: ' + latPixelsPerDegree.toFixed( 6 ) + ' lon: ' + lonPixelsPerDegree.toFixed( 6 ) +
-
-		''; 
+		b; 
 
 	}
 
 
-	function setMap() {
+	function initMap() {
+
+//		var map;
 
 		contents.style.width = width + 'px';
 		contents.style.height = height + 'px';
 		contents.style.textAlign = 'right';
 
-//		var map;
-
 		map = new google.maps.Map( contents, {
 
+			zoom: zoom,
 			center: { lat: latitude, lng: longitude },
-			zoom: zoom
+			mapTypeId: google.maps.MapTypeId.TERRAIN,
+
+//			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+				position: google.maps.ControlPosition.TOP_RIGHT
+			},
+
+/*,
+			zoomControl: true,
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.LEFT_CENTER
+			},
+			scaleControl: true,
+			streetViewControl: true,
+			streetViewControlOptions: {
+				position: google.maps.ControlPosition.LEFT_TOP
+			},
+*/
+			fullscreenControl: true
+
 
 		});
 
@@ -176,14 +214,59 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 		});
 
+		var tileCoordinates = [
+			{ lat: ULlat, lng: ULlon },
+			{ lat: ULlat, lng: LRlon },
+			{ lat: LRlat, lng: LRlon },
+			{ lat: LRlat, lng: ULlon }
+		];
+
+		var tilePath = new google.maps.Polygon( {
+			path: tileCoordinates,
+			geodesic: true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+		} );
+
+		tilePath.setMap( map );
+
+		var flightPlanCoordinates = [
+			{ lat: 37.772, lng: -122.214 },
+			{ lat: 21.291, lng: -157.821 },
+			{ lat: -18.142, lng: 178.431 },
+			{ lat: -27.467, lng: 153.027 }
+		];
+
+		var flightPath = new google.maps.Polyline( {
+			path: flightPlanCoordinates,
+			geodesic: true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+		} );
+
+		flightPath.setMap( map );
+
 // https://developers.google.com/maps/documentation/javascript/events#EventsOverview
 
-		map.addListener('click', function( event ) {
-//		map.addListener('mousemove', function( event ) {  // fun
+		map.addListener( 'click', onClick ); 
+//		map.addListener( 'mousemove', onClick );
+
+	}
+
+
+	function onClick( event ) {
+
+console.log( 'event', event );
 
 			var scale = 1 << zoom;
 
 			latLng = event.latLng;
+
+			latitude = latLng.lat();
+			longitude = latLng.lng();
+			getTile( latitude, longitude);
 
 			var worldCoordinate = project( latLng );
 
@@ -201,11 +284,12 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 			);
 
-			msg1.innerHTML = '<h3>click</h3>lat:' + event.latLng.lat() + ' lon:' + event.latLng.lng();
+			msg1.innerHTML = '<h3>click</h3>' +
+				'lat:' + event.latLng.lat() + b +
+				'lon:' + event.latLng.lng();
 			msg2.innerHTML = 'World Coordinate: ' + worldCoordinate;
 			msg3.innerHTML = 'Pixel Coordinate: ' + pixelCoordinate;
 			msg4.innerHTML = 'Tile Coordinate: ' + tileCoordinate;
-
 
 			var marker = new google.maps.Marker({
 
@@ -214,7 +298,55 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 			});
 
-		});
+
+
+	}
+
+	function getTile( latitude, longitude) {
+
+		tileX = lon2tile( longitude, zoom );
+		tileY = lat2tile( latitude, zoom );
+
+		ULlat = tile2lat( tileY, zoom );
+		ULlon = tile2lon( tileX, zoom );
+
+		LRlat = tile2lat( tileY + 1, zoom );
+		LRlon = tile2lon( tileX + 1, zoom );
+
+		info.innerHTML = '<h3>info</h3>' +
+			'<img src=http://c.tile.opencyclemap.org/cycle/' + zoom + '/' + tileX + '/' + tileY + '.png >' + b +
+			'zoom:' + zoom + b +
+			'lat:' + latitude + b +
+			'lon:' + longitude + b +
+			'tileX:' + tileX + b +
+			'tileY:' + tileY + b + b +
+			'UL lat:' + ULlat + b +
+			'UL lon:' + ULlon + b + 
+			'LR lat:' + LRlat + b +
+			'LR lon:' + LRlon + b + 
+
+			'&Del;lat:' + ( ULlat - LRlat ) + b +
+			'&Del;lon:' + ( ULlon - LRlon ) + b +
+			'Meters/tile: ' + ( pi2 * 6378137 * Math.cos( latitude * d2r ) / Math.pow( 2, zoom ) ) + b +
+			'Meters/degree: ' + ( pi2 * 6378137 * Math.cos( latitude * d2r ) / 360 ) + b +
+			b;
+
+		var tileCoordinates = [
+			{ lat: ULlat, lng: ULlon },
+			{ lat: ULlat, lng: LRlon },
+			{ lat: LRlat, lng: LRlon },
+			{ lat: LRlat, lng: ULlon }
+		];
+
+		var tilePath = new google.maps.Polygon( {
+			path: tileCoordinates,
+			geodesic: true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+		} );
+
+		tilePath.setMap( map );
 
 	}
 
@@ -228,12 +360,12 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 // Truncating to 0.9999 effectively limits latitude to 89.189. This is
 // about a third of a tile past the edge of the world tile.
 
-		siny = Math.min(Math.max( siny, -0.9999 ), 0.9999 );
+		siny = Math.min( Math.max( siny, -0.9999 ), 0.9999 );
 
 		return new google.maps.Point(
 
-			TILE_SIZE * (0.5 + latLng.lng() / 360),
-			TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI))
+			TILE_SIZE * ( 0.5 + latLng.lng() / 360 ),
+			TILE_SIZE * ( 0.5 - Math.log((1 + siny ) / ( 1 - siny ) ) / ( 4 * Math.PI ) )
 
 		);
 
