@@ -74,9 +74,9 @@ Uses Github API to find directories with readme.md files.' >
 
 				file = response.tree[ i ].path;
 
-				if ( !file.match( 'menu-contents-browser' ) ) { continue; }
+				if ( !file.match( defaultFolder ) ) { continue; }
 
-				if ( !file.match( 'readme.md' ) ) { continue; }
+				if ( !file.match( defaultFile ) ) { continue; }
 
 				files.push( file );
 
