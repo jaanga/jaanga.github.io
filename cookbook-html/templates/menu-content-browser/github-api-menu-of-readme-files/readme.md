@@ -5,7 +5,7 @@
 [Jaanga]( http://jaanga.github.io ) » [XXXXXX]( http://jaanga.github.io/XXXXXX/  ) » 
 
 
-[GitHub API Menu of Read Me Files]( index/html )
+[GitHub API Menu of Read Me Files]( index.html )
 ===
 
 
@@ -13,10 +13,22 @@
 
 * Uses GitHub API
 * Finds all files in a specified folder with file name 'readme.md'
+* Creates a web page with all the file names in a menu
+* Click the file name lobks to view the contents if the read me in HTML
+
 
 ## Where Used
 
-* https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/examples/google-api/readme.md
+* https://jaanga.github.io/cookbook-html/templates/menu-contents-browser/
+* https://jaanga.github.io/cookbook-threejs/examples/google-api/
+* http://fgx.github.io/sandbox/
+
+## Change Log
+
+### 2016-07-01 ~ 
+
+* GitHub API Menu of Read Me R1 
+
 
 ***
 

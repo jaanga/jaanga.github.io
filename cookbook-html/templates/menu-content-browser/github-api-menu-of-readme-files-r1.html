@@ -2,21 +2,25 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Menu GitHub API Read Me Jaanga R2</title>
+<title>GitHub API Menu of Read Me Files R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
-<meta name=description content='Browse and view files on FGx written in Markdown format. Uses Github API to find directories with readme files.' >
-<meta name=keywords content='FGx, GitHub API,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-04-26' >
+<meta name=description content='Browse and view files written in Markdown format.
+Uses Github API to find directories with readme.md files.' >
+<meta name=keywords content='Jaanga,GitHub API,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-01' >
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
 <script>
 
-//file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/cookbook-html/templates/menu-contents-browser/menu-github-api-readme-jaanga/menu-readme-jaanga-r2.html
+// https://jaanga.github.io/cookbook-html/templates/menu-contents-browser/menu-github-api-readme-jaanga/
 
 	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
-	var defaultFile = './readme.md';
+	var defaultFile = 'readme.md';
+	var defaultFolder = 'cookbook-html/templates/menu-contents-browser/';
+
 	var files;
 
 	init();
@@ -53,25 +57,26 @@
 
 	function requestAPIContents() {
 
-		var xhr = new XMLHttpRequest();
+		var xhr, response, file;
+
+		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', urlAPIContents, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
 		function callback() {
 
-			var response, file;
-
 			response = JSON.parse( xhr.response );
+
 			files = [];
 
 			for ( var i = 0; i < response.tree.length; i++ ) {
 
 				file = response.tree[ i ].path;
 
-				if ( file.indexOf( 'menu-contents-browser' ) === -1 ) { continue; }
+				if ( !file.match( 'menu-contents-browser' ) ) { continue; }
 
-				if ( file.indexOf( 'readme.md' ) === -1 ) { continue; }
+				if ( !file.match( 'readme.md' ) ) { continue; }
 
 				files.push( file );
 
@@ -87,13 +92,20 @@
 
 	function createTableOfContents() {
 
-		var txt =  '<h2>Menu</h2>';
+		var txt
+
+		txt =  
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>';
 
 		for ( var i = 0; i < files.length; i++ ) {
 
+			file = files[ i ].replace( defaultFolder, '' );
 			txt += 
 
-				'<h3><a href=#../../../' + files[ i ] + ' >'+ files[ i ].replace( '\/readme.md','' ) + '<a></h3>' +
+				'<h3><a href=#' + file + ' >'+ file + '<a></h3>' +
 
 			'';
 
@@ -106,7 +118,9 @@
 
 	function hashChange() {
 
-		var fileName = location.hash ? location.hash.slice( 1 ) : defaultFile;
+		var fileName;
+
+		fileName = location.hash ? location.hash.slice( 1 ) : defaultFile;
 
 		getMarkdown( fileName, contents );
 
@@ -114,9 +128,7 @@
 
 	function getMarkdown( fileName, target ) {
 
-		var converter, xhr;
-
-		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+		var xhr;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
