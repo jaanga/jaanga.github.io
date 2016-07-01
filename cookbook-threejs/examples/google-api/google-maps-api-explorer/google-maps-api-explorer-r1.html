@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Google Maps API Explorer R1</title>
+<title>Google Maps API Explorer R1.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Maps API
 ' >
@@ -28,14 +28,6 @@
 	var latitude = 37.79679;
 	var longitude = -122.39812;
 
-/*
-// Snow Mountain, Mendocino County
-	var latMin = 39.34208359569311;
-	var latMax = 39.38350763171911;
-	var lonMin = -122.75735308416188;
-	var lonMax = -122.74197028018534;
-*/
-
 	var zoom = 18;
 	var width = 1024;
 	var height = 1024;
@@ -57,7 +49,7 @@
 		css.innerHTML = 
 
 			'body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; padding: 0; }' +
-//			'h2 { margin: 0; }' +
+			'h2, h3 { margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
 
@@ -91,10 +83,10 @@
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=index.html#readme.md > &#x24D8; </a>' +
 			'</h2>' +
-			'<p>click map to see position details</p>' +
+			'<div>click map to see position details</div>' +
 			'<p><button onclick=getParams(); >get params</button></p>' +
 
-			'<div id=info ></div>' +
+			'<div id=menuTileInfo ></div>' +
 
 			'<p>' +
 				'<output id=outSamples ></output>' +
@@ -107,31 +99,7 @@
 
 		'';
 
-		getTile( latitude, longitude);
-
-/*
-		tileX = lon2tile( longitude, zoom );
-		tileY = lat2tile( latitude, zoom );
-
-		ULlat = tile2lat( tileY, zoom );
-		ULlon = tile2lon( tileX, zoom );
-
-		LRlat = tile2lat( tileY + 1, zoom );
-		LRlon = tile2lon( tileX + 1, zoom );
-
-		info.innerHTML = '<h3>info</h3>' +
-			'zoom:' + zoom + b +
-			'lat:' + latitude + b +
-			'lon:' + longitude + b +
-			'tileX:' + tileX + b +
-			'tileY:' + tileY + b + b +
-			'UL lat:' + ULlat + b +
-			'UL lon:' + ULlon + b + 
-			'LR lat:' + LRlat + b +
-			'LR lon:' + LRlon + b + 
-			'<a href=http://c.tile.opencyclemap.org/cycle/' + zoom + '/' + tileX + '/' + tileY + '.png >tile</a>' +
-		b;
-*/
+//		getTile( latitude, longitude);
 
 		initMap();
 
@@ -158,15 +126,16 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 		latPixelsPerDegree = 512 / latDelta;
 		lonPixelsPerDegree = 512 / lonDelta;
 
-		outSamples.innerHTML += '<h3>params</h3>' +
+		outSamples.innerHTML += '<h3>map bounds parameters</h3>' +
 			'lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) + b +
 			'lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) + b +
 			'latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) + b +
 
 			'DegreesPerPixel - lat: ' + latDegreesPerPixel.toFixed( 6 ) + ' lon: ' + lonDegreesPerPixel.toFixed( 6 ) + b +
 			'PixelsPerDegree - lat: ' + latPixelsPerDegree.toFixed( 6 ) + ' lon: ' + lonPixelsPerDegree.toFixed( 6 ) + b +
+		''; 
 
-		b; 
+		getTile( latitude, longitude);
 
 	}
 
@@ -183,12 +152,18 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 			zoom: zoom,
 			center: { lat: latitude, lng: longitude },
-			mapTypeId: google.maps.MapTypeId.TERRAIN,
+//			mapTypeId: google.maps.MapTypeId.TERRAIN,
+
+//			mapTypeId: 'hybrid',
+//			mapTypeId: 'roadmap',
+//			mapTypeId: 'satellite',
+			mapTypeId: 'terrain',
 
 //			mapTypeControl: true,
 			mapTypeControlOptions: {
 				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
 				position: google.maps.ControlPosition.TOP_RIGHT
+//				position: 'TOP_RIGHT' // not
 			},
 
 /*,
@@ -202,8 +177,8 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 				position: google.maps.ControlPosition.LEFT_TOP
 			},
 */
-			fullscreenControl: true
 
+			fullscreenControl: true
 
 		});
 
@@ -213,23 +188,6 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 			map: map
 
 		});
-
-		var tileCoordinates = [
-			{ lat: ULlat, lng: ULlon },
-			{ lat: ULlat, lng: LRlon },
-			{ lat: LRlat, lng: LRlon },
-			{ lat: LRlat, lng: ULlon }
-		];
-
-		var tilePath = new google.maps.Polygon( {
-			path: tileCoordinates,
-			geodesic: true,
-			strokeColor: '#FF0000',
-			strokeOpacity: 1.0,
-			strokeWeight: 2
-		} );
-
-		tilePath.setMap( map );
 
 		var flightPlanCoordinates = [
 			{ lat: 37.772, lng: -122.214 },
@@ -252,9 +210,30 @@ console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
 
 		map.addListener( 'click', onClick ); 
 //		map.addListener( 'mousemove', onClick );
+		map.addListener( 'zoom_changed', onZoomChanged );
+		map.addListener( 'center_changed', onCenterChanged );
 
 	}
 
+
+	function onCenterChanged( event ) {
+
+
+
+			latLng = map.center;
+
+			latitude = latLng.lat();
+			longitude = latLng.lng();
+console.log( 'map', map, latitude, longitude );
+
+
+	}
+
+	function onZoomChanged( event ) {
+
+		getTile();
+
+	}
 
 	function onClick( event ) {
 
@@ -266,7 +245,6 @@ console.log( 'event', event );
 
 			latitude = latLng.lat();
 			longitude = latLng.lng();
-			getTile( latitude, longitude);
 
 			var worldCoordinate = project( latLng );
 
@@ -284,9 +262,7 @@ console.log( 'event', event );
 
 			);
 
-			msg1.innerHTML = '<h3>click</h3>' +
-				'lat:' + event.latLng.lat() + b +
-				'lon:' + event.latLng.lng();
+			msg1.innerHTML = '<h3>extra click data</h3>';
 			msg2.innerHTML = 'World Coordinate: ' + worldCoordinate;
 			msg3.innerHTML = 'Pixel Coordinate: ' + pixelCoordinate;
 			msg4.innerHTML = 'Tile Coordinate: ' + tileCoordinate;
@@ -298,11 +274,11 @@ console.log( 'event', event );
 
 			});
 
-
+			getTile();
 
 	}
 
-	function getTile( latitude, longitude) {
+	function getTile() {
 
 		tileX = lon2tile( longitude, zoom );
 		tileY = lat2tile( latitude, zoom );
@@ -313,9 +289,9 @@ console.log( 'event', event );
 		LRlat = tile2lat( tileY + 1, zoom );
 		LRlon = tile2lon( tileX + 1, zoom );
 
-		info.innerHTML = '<h3>info</h3>' +
+		menuTileInfo.innerHTML = '<h3>tile info</h3>' +
 			'<img src=http://c.tile.opencyclemap.org/cycle/' + zoom + '/' + tileX + '/' + tileY + '.png >' + b +
-			'zoom:' + zoom + b +
+			'zoom:' + map.zoom + b +
 			'lat:' + latitude + b +
 			'lon:' + longitude + b +
 			'tileX:' + tileX + b +
@@ -329,7 +305,7 @@ console.log( 'event', event );
 			'&Del;lon:' + ( ULlon - LRlon ) + b +
 			'Meters/tile: ' + ( pi2 * 6378137 * Math.cos( latitude * d2r ) / Math.pow( 2, zoom ) ) + b +
 			'Meters/degree: ' + ( pi2 * 6378137 * Math.cos( latitude * d2r ) / 360 ) + b +
-			b;
+			'';
 
 		var tileCoordinates = [
 			{ lat: ULlat, lng: ULlon },
@@ -380,7 +356,7 @@ console.log( 'event', event );
 
 	function lat2tile( lat, zoom ) {
 
-		var pi = Math.PI
+		var pi = Math.PI;
 		return Math.floor(( 1 - Math.log( Math.tan( lat * pi / 180) + 1 / Math.cos( lat * pi / 180)) / pi )/2 * Math.pow(2, zoom) );
 
 	}
@@ -393,7 +369,7 @@ console.log( 'event', event );
 
 	function tile2lat( y, zoom ) {
 
-		var pi = Math.PI
+		var pi = Math.PI;
 		var n = pi - 2 * pi * y / Math.pow( 2, zoom );
 		return 180 / pi * Math.atan( 0.5 * ( Math.exp( n ) - Math.exp( -n ) ));
 

@@ -23,14 +23,10 @@ _Google Maps API Explorer_
 
 ### Mission
 
-
+* To help you explore and show you what you can do with the Google Map API
+ 
 
 ## Features
-
-* Select origin by latitude and longitude.
-* Use buttons, cursor keys or pointing device.
-* The 3D views below enable you to rotate and pan using one, two or three fingers or left button, scroll wheel and right buttons on your pointing device. 
-* Click three bars( 'hamburger' ) icon to slide menu in or out
 
 
 ## Things To Do
@@ -44,13 +40,17 @@ _Google Maps API Explorer_
 
 ## Links of Interest
 
-* https://developers.google.com/maps/documentation/javascript/tutorial#Audience
+* https://developers.google.com/maps/documentation/javascript/tutorial
 
 
 
 
 
 ## Change Log
+
+### 2016-06-30 ~ R1.1
+
+* Many updates
 
 ### 2016-06-29 ~ 
 
