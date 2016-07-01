@@ -37,6 +37,10 @@ value='You are now in GitHub web page view - Click this button to view Read Me f
 
 ## Links of Interest
 
+* https://developers.google.com/maps/documentation/javascript/tutorial
+* https://developers.google.com/maps/documentation/javascript/elevation
+
+
 
 ## Change Log
 
