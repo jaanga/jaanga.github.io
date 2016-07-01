@@ -5,7 +5,7 @@
 [Jaanga]( http://jaanga.github.io ) » [XXXXXX]( http://jaanga.github.io/XXXXXX/  ) » 
 
 
-[Menu GitHub API Read Me Jaanga]( index/html )
+[GitHub API Menu of Read Me Files]( index/html )
 ===
 
 
