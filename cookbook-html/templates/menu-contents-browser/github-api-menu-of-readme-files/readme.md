@@ -14,6 +14,9 @@
 * Uses GitHub API
 * Finds all files in a specified folder with file name 'readme.md'
 
+## Where Used
+
+* https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/examples/google-api/readme.md
 
 ***
 

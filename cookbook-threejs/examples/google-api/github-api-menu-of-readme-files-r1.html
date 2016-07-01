@@ -19,7 +19,7 @@ Uses Github API to find directories with readme.md files.' >
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 	var defaultFile = 'readme.md';
-	var defaultFolder = 'cookbook-html/templates/menu-contents-browser/';
+	var defaultFolder = 'cookbook-threejs/examples/google-api/';
 
 	var files;
 
@@ -57,26 +57,25 @@ Uses Github API to find directories with readme.md files.' >
 
 	function requestAPIContents() {
 
-		var xhr, response, file;
-
-		xhr = new XMLHttpRequest();
+		var xhr = new XMLHttpRequest();
 		xhr.open( 'GET', urlAPIContents, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
 		function callback() {
 
-			response = JSON.parse( xhr.response );
+			var response, file;
 
+			response = JSON.parse( xhr.response );
 			files = [];
 
 			for ( var i = 0; i < response.tree.length; i++ ) {
 
 				file = response.tree[ i ].path;
 
-				if ( !file.match( 'menu-contents-browser' ) ) { continue; }
+				if ( !file.match( defaultFolder ) ) { continue; }
 
-				if ( !file.match( 'readme.md' ) ) { continue; }
+				if ( !file.match( defaultFile) ) { continue; }
 
 				files.push( file );
 
@@ -92,9 +91,8 @@ Uses Github API to find directories with readme.md files.' >
 
 	function createTableOfContents() {
 
-		var txt
+		var txt =  
 
-		txt =  
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
 				'<a href=index.html#readme.md > &#x24D8; </a>' +
@@ -105,7 +103,7 @@ Uses Github API to find directories with readme.md files.' >
 			file = files[ i ].replace( defaultFolder, '' );
 			txt += 
 
-				'<h3><a href=#../' + file + ' >'+ file + '<a></h3>' +
+				'<h3><a href=#' + file + ' >'+ file + '<a></h3>' +
 
 			'';
 
@@ -120,7 +118,7 @@ Uses Github API to find directories with readme.md files.' >
 
 		var fileName;
 
-		fileName = location.hash ? location.hash.slice( 1 ) : '../' + defaultFile; // '../' not usually needed
+		fileName = location.hash ? location.hash.slice( 1 ) : defaultFile;
 
 		getMarkdown( fileName, contents );
 
