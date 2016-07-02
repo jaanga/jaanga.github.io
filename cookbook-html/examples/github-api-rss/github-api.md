@@ -153,6 +153,7 @@ https://api.github.com/orgs/ladybug-analysis-tools/repos
 https://api.github.com/orgs/ladybug-analysis-tools/events <<
 
 https://api.github.com/orgs/jaanga
+* lists number of repos
 
 
 
@@ -246,6 +247,8 @@ https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 ## Users
 
 https://api.github.com/users/theo-armour
+
+* lists repo count. gists, etc
 
 https://api.github.com/users/theo-armour/events
 

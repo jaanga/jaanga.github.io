@@ -64,6 +64,12 @@ value='Source code listing' >
 * Open the file with a text editor
 
 
+## To Do
+
+* Save partial file and restart - much faster
+* UI to set samples and tiles
+
+
 ## Issues
 
 
