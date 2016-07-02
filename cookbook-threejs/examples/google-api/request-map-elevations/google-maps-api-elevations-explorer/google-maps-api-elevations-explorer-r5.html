@@ -41,7 +41,7 @@
 // the goal is to obtain to 1024 x 1024 as quickly as possible
  
 	var samples = 1024;
-	var folder = '../elevations/';
+	var folder = './google-elevations/';
 	var fileName = 'elevations-' + samples + 'x' + samples + '.txt';
 	var latPathDelta;
 	var lonPathDelta;
@@ -289,8 +289,8 @@ console.log( 'status', status );
 
 			response = xhr.responseText;
 			elevations = response.split( ',' );
-			index = elevations.length
-			count = elevations.length / ( 0.5 * samples );
+			index = elevations.length;
+			count = Math.sqrt( elevations.length );
 			console.log( index, count );
 
 		}
