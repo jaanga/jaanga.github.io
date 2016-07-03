@@ -62,6 +62,10 @@ value='Source code listing' >
 
 ## To Do
 
+* Add pause/resume
+* Add volume
+* Add location.hash to jump to slide
+* Add emojis / interpret Markdown?
 * Read content data from CSV or Gist file
 * Save presentation as WebM video
 * Ability Embed and control Three.js scenes
