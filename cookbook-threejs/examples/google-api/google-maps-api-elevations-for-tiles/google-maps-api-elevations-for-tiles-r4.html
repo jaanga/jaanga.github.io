@@ -27,16 +27,16 @@
 
 
 // San Francisco
-	var latitude = 37.79679;
-	var longitude = -122.39812;
+//	var latitude = 37.79679;
+//	var longitude = -122.39812;
 
 // VNLK
 //	var latitude = 27.71110193545;
 //	var longitude = 86.71228385040001;
 
 // YGIL / Gilgandra
-//	var latitude = -31.7276314069;
-//	var longitude = 148.63915118805;
+	var latitude = -31.7276314069;
+	var longitude = 148.63915118805;
 
 	var zoom = 14;
 	var tiles = 3;
@@ -147,7 +147,7 @@
 				'<summary><h3>About</h3></summary>' +
 				'<p>Copyright &copy; 2016 Jaanga authors. MIT license.</p>' +
 				'<p>Thank you <a href=https://developers.google.com/maps/documentation/javascript/elevation > Google Maps </a></p>' +
-				'<p>Click the \'i in a circle\' info icon for more help</p>' +
+				'<p>Click the \'i in a circle\' info icon for more <a href=href=index.html#readme.md >help</a></p>' +
 			'</details>' +
 
 			'<hr>' +
@@ -371,7 +371,7 @@
 // 500 sample ~ 4000-9000 delay ~ 2535 seconds: over query limit at 217 bump to 4500, 327 bump to 5000, 376 ~ 5500, 416 ~ 6000, 431 ~ 6500, 445~7000, 474~8000, 
 // 485~8500, 496~9000
 		delay = samples <= 500 ? 4000 : delay;
-		delay = samples <= 250 ? 1800 : delay;
+		delay = samples <= 250 ? 2000 : delay;
 		delay = samples <= 100 ? 700 : delay;
 		delay = samples <= 50 ? 250 : delay;
 		delay = samples <= 33 ? 5 : delay;

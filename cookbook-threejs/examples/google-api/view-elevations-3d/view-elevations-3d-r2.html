@@ -30,6 +30,7 @@
 //	var fileName = '../elevations/elevations_28_87-10-500x500.txt';
 
 	var fileName = '../elevations/elevations_37.7968_-122.3981_z14_t3_250x250_.txt';
+	var fileName = '../elevations/elevations_-31.7276_148.6392_z14_t3_30x30_.txt';
 
 	var ground;
 	var segments;
@@ -81,12 +82,12 @@
 			'</h2>' +
 
 			'<p>Elevations<br>' +
-				'<select id=selFiles onchange=getElevationsFile(); size=10 ></select>' +
+				'<select id=selFiles onchange=getElevationsFile(urlBase+this.value); size=20 ></select>' +
 			'</p>' +
 
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
-			'<p>vertical scale: <input type=range id=inpVertical max=0.5 min=0.001 step=0.001 value=0.2 oninput=drawGround(); title="0 to 10: OK" ><br>' +
+			'<p>vertical scale: <input type=range id=inpVertical max=0.5 min=0.001 step=0.001 value=0.1 oninput=drawGround(); title="0 to 10: OK" ><br>' +
 				'<output id=outVertical >value</output></p>' +
 
 			'<div id=menuInfo ></div>' +
@@ -155,17 +156,17 @@
 
 			selFiles.selectedIndex = 24;
 
-			getElevationsFile();
+			fileName = location.hash ? location.hash.slice( 1 ) : urlBase + selFiles.value;
+
+			getElevationsFile( fileName );
 
 		}
 
 	}
 
-	function getElevationsFile() {
+	function getElevationsFile( fileName ) {
 
 		var xhr, response, vertices;
-
-		fileName = location.hash ? location.hash.slice( 1 ) : urlBase + selFiles.value;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
@@ -217,13 +218,25 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertical.valueAsNumber, 1 ) );
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
-		geometry.center();
+		geometry.computeBoundingSphere();
+//		geometry.center();
 
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		ground = new THREE.Mesh( geometry, material );
 		scene.add( ground );
 
+		updateCamera();
+
 		outVertical.value = inpVertical.value;
+
+	}
+
+
+	function updateCamera() {
+
+		target = ground.geometry.boundingSphere.center;
+		camera.position.copy( target.clone().add( new THREE.Vector3( 100, 100, 100 ) ) );
+		controls.target.copy( target );
 
 	}
 
