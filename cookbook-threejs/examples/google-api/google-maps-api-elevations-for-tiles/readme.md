@@ -11,7 +11,7 @@
 ## Full Screen: [ Google Maps API Elevations for Tiles ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html )
 
 
-<img src="XXX" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/16543909/d572ff4a-40a4-11e6-81b8-e321f751e2a4.png" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html width=100% height=600px ></iframe>
 
@@ -32,7 +32,16 @@ _Google Maps API Elevations for Tiles_
 
 ## Features
 
-* TBD
+## Features
+
+* Specify latitude, longitude, zoom level, number of tiles per side, number of samples per side
+* App obtains - using Google Maps API - elevations for every sample
+* Respects usage limits
+* Tested to 
+    * 250,000 elevations gathered in just over an hour.
+   * 900 elevations in a few seconds
+* Saves data to a local file
+* Reports on many types of data 
 
 
 ## Things you can do using this script
