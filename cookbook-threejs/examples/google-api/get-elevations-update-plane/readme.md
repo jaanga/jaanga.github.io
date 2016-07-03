@@ -9,9 +9,7 @@
 ===
 
 
-## [Get Elevations Update Plane]( https://jaanga.github.io/cookbook-threejs/examples/google-api/get-elevations-update-plane/ )
-
-## Full Screen: [ Google Maps API Elevations for Tiles ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html )
+## Full Screen:[Get Elevations Update Plane]( https://jaanga.github.io/cookbook-threejs/examples/google-api/get-elevations-update-plane/ )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/16543983/ab66ecf4-40a7-11e6-9618-6484df7206fc.png" style=display:none; width=800 >
