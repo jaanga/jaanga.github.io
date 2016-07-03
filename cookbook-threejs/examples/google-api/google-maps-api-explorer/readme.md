@@ -48,6 +48,14 @@ _Google Maps API Explorer_
 
 ## Change Log
 
+### 2016-07-02 ~ R2
+
+* Many updates
+* User input
+* Detail views
+* Meters per tile lat/lon
+
+
 ### 2016-06-30 ~ R1.1
 
 * Many updates

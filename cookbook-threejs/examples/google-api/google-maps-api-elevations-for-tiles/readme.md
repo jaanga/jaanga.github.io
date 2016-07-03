@@ -86,9 +86,13 @@ Intended for xxx
 
 ## Change Log
 
-### 2016-07-01 ~ 
+### 2016-07-02 ~ R3
+
+* Add latitude/longitude input
+* Add link to OSM source of algorithms for lat/lon to tile numbers and vice versa
 
 
+### 2016-07-01 ~ R2
 
 * Update read me / add index
 

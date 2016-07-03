@@ -41,7 +41,7 @@
 		[ 'Takahashi method', 'Takahashi Method', 'green px144' ],
 		[ 'Professor Lawrence Lessig', 'Prof Lessig<br>woot woot', 'orange px144' ],
 
-		[ 'More info - click the \i in the circle\'', '<a href=index.html#readme.md>&#x24D8;</a>', 'red px216' ],
+		[ 'More info - click the \i in the circle\'', '<a class=plain href=index.html#readme.md>&#x24D8;</a>', 'red px216' ],
 
 //		[ '', '', ' px 144' ],
 	];
@@ -58,7 +58,7 @@
 		css.innerHTML =
 
 			'body { font: 12pt monospace; }' +
-			'h2 a { color: crimson; text-decoration: none; }' +
+			'h2 a, .plain { color: crimson; text-decoration: none; }' +
 			'a { color: crimson; }' +
 
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
@@ -134,7 +134,7 @@
 
 		if ( index < slides.length ) {
 
-			slide = slides[ index++ ];
+			slide = slides[ index ];
 
 			sayThis( slide[ 0 ] );
 			slideText.innerHTML = slide[ 1 ];
@@ -160,6 +160,8 @@
 		}
 
 		synth.speak( utterThis );
+
+		index++;
 
 		utterThis.onend = showSlide;
 

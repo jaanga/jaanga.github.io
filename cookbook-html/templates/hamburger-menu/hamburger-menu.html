@@ -59,6 +59,7 @@ Menu and contents in HTML.
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 
+/*
 			'<p>' +
 				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
 			'</p>' +
@@ -68,7 +69,7 @@ Menu and contents in HTML.
 					'<option title="this is a" >aaa aaa aaa</option>' +
 					'<option>bbb bbb bbb</option>' +
 					'<option>cc cc cc cc</option>' +
-				'<select>' +
+				'</select>' +
 			'</p>' +
 
 			'<p>' +
@@ -91,12 +92,21 @@ Menu and contents in HTML.
 				'<input id=inpPretty type=checkbox > Pretty colors ' +
 			'</p>' +
 
-			'<details>' +
+			'<details open>' +
 				'<summary><h3 style=display:inline; >Summary</h3></summary>' +
 				'<p> - by Refsnes Data. All Rights Reserved.</p>' +
 				'<p>All content and graphics on this web site are the property of the company Refsnes Data.</p>' +
 			'</details>' +
 
+			'<p>Sample: <input list=numbers id=inpSamples min=1 max=1024 value=' + samples + ' onchange=initMap(); title="Select the number of samples" ></p>' +
+				'<datalist id=numbers >' +
+				'<option value=10 >' +
+				'<option value=30 >' +
+				'<option value=50 >' +
+				'<option value=100 >' +
+				'<option value=512 >' +
+				'</datalist>' +
+*/
 
 			'<div id=info ></div>' +
 
