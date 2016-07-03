@@ -72,6 +72,17 @@ value='Source code listing' >
 
 ## Issues
 
+The Google Maps API has strict rate limits for dowmloading elevations.
+Figuring out how stay stay under the rate limits and yet be as fast as possible is an amusing challenge.
+There seem to be a variety os spped bumps
+
+* No more than 512 elevations in a single ask
+* No more than 1000 elevations in under a second
+* No more than ?? elevations in under a minute?
+* No more than ?? elevations in under x minutes>
+ 
+
+
 
 ## Users
 
@@ -88,6 +99,9 @@ Intended for xxx
 
 ### 2016-07-02 ~ R3
 
+* Menu uses details/summary
+* Many updates to the data display
+* Add zoom and samples input
 * Add latitude/longitude input
 * Add link to OSM source of algorithms for lat/lon to tile numbers and vice versa
 

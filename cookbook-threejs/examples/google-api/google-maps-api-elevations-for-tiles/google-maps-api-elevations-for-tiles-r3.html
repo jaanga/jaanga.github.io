@@ -40,7 +40,7 @@
 
 	var zoom = 14;
 	var tiles = 1;
-	var samples = 480; // 512 appears to be the max for a single call
+	var samples = 30; // 512 appears to be the max for a single call
 
 //	var width = 1024;
 //	var height = 1024;
@@ -57,8 +57,12 @@
 
 // samples ~ delay ~ seconds
 // 30 ~ 10 ~ 4/ 50 ~ 250 ~ 15 / 100 ~ 200 ~ 76 ... 250 ~ 77
-// 250 ~ 500? ~ 488
-	var delay = 2500;
+// 250 ~ 500? ~ 488 / 480 ~ 2500-8500 ~ 2149
+
+
+// 500 sample ~ 4000-9000 delay ~ 2535 seconds: over query limit at 217 bump to 4500, 327 bump to 5000, 376 ~ 5500, 416 ~ 6000, 431 ~ 6500, 445~7000, 474~8000, 
+// 485~8500, 496~9000
+	var delay = 10;
 	var increment = 500;
 //	var delay = 4000;
 	var latDelta;
@@ -88,7 +92,6 @@
 			'summary h3 { display:inline; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-
 			'#contents { position: absolute; right: 0; }' +
 //			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
 			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
@@ -128,7 +131,8 @@
 				'<option value=30 >' +
 				'<option value=50 >' +
 				'<option value=100 >' +
-				'<option value=512 >' +
+				'<option value=500 >' +
+				'<option value=1000 >' +
 				'</datalist>' +
 
 			'<p>' +
@@ -172,6 +176,8 @@
 		longitude = parseFloat( inpLongitude.value );
 
 		zoom = selZoom.selectedIndex + 1;
+
+		samples = parseInt( inpSamples.value, 10 );
 
 		map = new google.maps.Map( contents, {
 
@@ -348,15 +354,15 @@
 
 			count++;
 
-			if ( count % speedBump === 0 ) {
+//			if ( count % speedBump === 0 ) {
 
-				setTimeout( nextElev, 5000 );
+//				setTimeout( nextElev, 5000 );
 
-			} else {
+//			} else {
 
 				setTimeout( nextElev, delay );
 
-			}
+//			}
 
 		} else {
 
