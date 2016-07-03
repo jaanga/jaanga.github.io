@@ -92,6 +92,11 @@ Fast and furious presentation methods
 
 ## Change Log
 
+### 2016-07-02 R1.1
+
+* Move index update - to see if this fixes iPhone problem
+* remove underscore from i in circle
+
 ### 2016-06-29 R1 ~ 163 lines including content
 
 * First commit

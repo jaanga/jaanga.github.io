@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Podcast Hero R1</title>
+<title>Podcast Hero R1.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
-<meta name=keywords content='Speeh Synthesizer,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-06-29' >
+<meta name=keywords content='Speech Synthesizer,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-07-02' >
 </head>
 <body>
 <script>
@@ -16,11 +16,13 @@
 	var synth = window.speechSynthesis;
 	var voices = [];
 
+http://www.emoji-cheat-sheet.com/
+
 	var slides = [
 
-		[ 'Become a Pobcast Hero', 'PodCast Hero', 'red px144' ],
+		[ 'Become a Pobcast Hero<br>:loudspeaker:', 'PodCast Hero', 'red px144' ],
 		[ 'Use your words to change the world', 'the wor(l)d', 'blue px144' ],
-		[ 'Start with a good microphone', 'microphone', 'green px144' ],
+		[ ':microphone: Start with a good microphone', 'microphone', 'green px144' ],
 		[ 'Give your voice a feel good starting point', 'start nice', 'red px72' ],
 		[ 'Find a mike using wirecutter', '<a href="http://thewirecutter.com/reviews/the-best-usb-microphone/" >www.wirecutter.com</a>', 'blue px72' ],
 		[ 'Set up a mirror', 'mirror', ' px216' ],
@@ -45,7 +47,7 @@
 
 //		[ '', '', ' px 144' ],
 	];
-	var text = 'Hello, nils!';
+	var text = 'Hello, Nils!<br>:sunglasses:';
 
 	var index = 1000;
 
@@ -120,7 +122,7 @@
 
 			if ( window.self === window.top ) {
 
-				sayThis( 'Hello Nils!' );
+				sayThis( 'Hello Nils!<br>:sunglasses:' );
 
 			}
 
