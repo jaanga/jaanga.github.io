@@ -20,7 +20,7 @@ http://www.emoji-cheat-sheet.com/
 
 	var slides = [
 
-		[ 'Become a Pobcast Hero<br>:loudspeaker:', 'PodCast Hero', 'red px144' ],
+		[ 'Become a Pobcast Hero, 'PodCast Hero<br>', 'red px144' ],
 		[ 'Use your words to change the world', 'the wor(l)d', 'blue px144' ],
 		[ ':microphone: Start with a good microphone', 'microphone', 'green px144' ],
 		[ 'Give your voice a feel good starting point', 'start nice', 'red px72' ],
@@ -47,7 +47,7 @@ http://www.emoji-cheat-sheet.com/
 
 //		[ '', '', ' px 144' ],
 	];
-	var text = 'Hello, Nils!<br>:sunglasses:';
+	var text = 'Hello, Nils!';
 
 	var index = 1000;
 
@@ -86,7 +86,7 @@ http://www.emoji-cheat-sheet.com/
 		'';
 		slideText = document.body.appendChild( document.createElement( 'div' ) );
 		slideText.id = 'slideText';
-		slideText.innerHTML = 'welcome Nils';
+		slideText.innerHTML = 'welcome Nils<br>:sunglasses:';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
@@ -100,7 +100,7 @@ http://www.emoji-cheat-sheet.com/
 			'<div id=info ></div>' +
 
 //			'<p><button onclick=sayThis(text); >Say hello</button></p>' +
-//			'<p><button onclick="sayThis(\'testing, testing 1 2 3\');" >Say testing</button></p>' + // ye, quotes like this needed
+//			'<p><button onclick="sayThis(\'testing, testing 1 2 3\');" >Say testing</button></p>' + // yes, quotes like this needed
 //			'<p><button on=index=0;showSlide(); >Start slide show</button></p>' +
 			'<p><a href=JavaScript:index=0;showSlide(); >Start slide show</a></p>' +
 		'';
@@ -122,7 +122,7 @@ http://www.emoji-cheat-sheet.com/
 
 			if ( window.self === window.top ) {
 
-				sayThis( 'Hello Nils!<br>:sunglasses:' );
+				sayThis( 'Hello Nils!' );
 
 			}
 
