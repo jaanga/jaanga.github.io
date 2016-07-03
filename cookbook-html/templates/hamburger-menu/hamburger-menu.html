@@ -47,7 +47,7 @@ Menu and contents in HTML.
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
+		hamburger.innerHTML = '<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>';
 		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
@@ -55,8 +55,9 @@ Menu and contents in HTML.
 		menu.innerHTML = 
 
 			'<h2>' +
-				'<a href="" >' + document.title + '</a>' +
-				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+//				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 
 /*
@@ -92,10 +93,11 @@ Menu and contents in HTML.
 				'<input id=inpPretty type=checkbox > Pretty colors ' +
 			'</p>' +
 
-			'<details open>' +
-				'<summary><h3 style=display:inline; >Summary</h3></summary>' +
-				'<p> - by Refsnes Data. All Rights Reserved.</p>' +
-				'<p>All content and graphics on this web site are the property of the company Refsnes Data.</p>' +
+			'<details open >' +
+				'<summary><h3 style=display:inline; >About</h3></summary>' +
+				'<p>Copyright &copy; 2016 Jaanga authors. MIT license.</p>' +
+				'<p>Click the \'i in a circle\' icon for more help</p>' +
+				'<p></p>' +
 			'</details>' +
 
 			'<p>Sample: <input list=numbers id=inpSamples min=1 max=1024 value=' + samples + ' onchange=initMap(); title="Select the number of samples" ></p>' +
@@ -110,8 +112,10 @@ Menu and contents in HTML.
 
 			'<div id=info ></div>' +
 
+			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; ><h1> &#x2766 <h1></a></center>' +
+
 			'<center title="dingbat" >' +
-			'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a></h1>' +
+			'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1>' +
 			'</center>' +
 
 		'';

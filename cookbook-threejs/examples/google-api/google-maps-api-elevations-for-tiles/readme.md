@@ -91,8 +91,6 @@ There seem to be a variety os spped bumps
 * No more than ?? elevations in under x minutes>
  
 
-
-
 ## Users
 
 Intended for xxx
@@ -105,6 +103,16 @@ Intended for xxx
 
 
 ## Change Log
+
+2016-07-03 ~ 
+
+* Add about box
+* Add messages div, rejig elevations messages
+* Add tiles input
+* Adjust menu spacing
+* Add selective delay
+* Add multi-tile capability
+* Diplay borders of indicidual tiles
 
 ### 2016-07-02 ~ R3
 

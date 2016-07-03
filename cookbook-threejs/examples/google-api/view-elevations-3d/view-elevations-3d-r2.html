@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Elevations Update Plane R1</title>
+<title>View Elevations 3D R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-06-30' >
+<meta name=date content='2016-07-03' >
 </head>
 <body>
 <!--
@@ -28,9 +28,8 @@
 //	var fileName = '../elevations/elevations-vnlk-02-512x512.txt';
 //	var fileName = '../elevations/elevations_-34_151-30x30.txt';
 //	var fileName = '../elevations/elevations_28_87-10-500x500.txt';
-	var fileName = '../elevations/elevations_38_-122-1-30x30.txt';
 
-//	var fileName = location.hash ? location.hash.slice( 1 ) : '../elevations/elevations_38_-122-100x100.txt';
+	var fileName = '../elevations/elevations_37.7968_-122.3981_z14_t3_250x250_.txt';
 
 	var ground;
 	var segments;
@@ -87,7 +86,7 @@
 
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
-			'<p>vertical scale: <input type=range id=inpVertical max=0.5 min=0.001 step=0.001 value=0.3 oninput=drawGround(); title="0 to 10: OK" ><br>' +
+			'<p>vertical scale: <input type=range id=inpVertical max=0.5 min=0.001 step=0.001 value=0.2 oninput=drawGround(); title="0 to 10: OK" ><br>' +
 				'<output id=outVertical >value</output></p>' +
 
 			'<div id=menuInfo ></div>' +
@@ -121,7 +120,7 @@
 
 // assets
 
-//		location.hash = fileName;
+		location.hash = fileName;
 
 		getAPITreeContents();
 
