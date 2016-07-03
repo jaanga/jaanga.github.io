@@ -246,9 +246,15 @@ https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 
 ## Users
 
-https://api.github.com/users/theo-armour
+* https://developer.github.com/v3/users/
 
+
+https://api.github.com/users
+* all users starting with is:1
+
+https://api.github.com/users/theo-armour
 * lists repo count. gists, etc
+
 
 https://api.github.com/users/theo-armour/events
 

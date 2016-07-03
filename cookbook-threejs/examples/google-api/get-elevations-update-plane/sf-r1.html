@@ -36,8 +36,8 @@
 	var latitude = 37.79679;
 	var longitude = -122.39812;
 
-	var zoom = 14;
-	var tiles = 1;
+	var zoom = 16;
+	var tiles = 4;
 
 	var ground;
 	var segments;
@@ -59,7 +59,7 @@
 	var placeMapCanvas, placeMapContext;
 
 	var pixelsPerTile = 256;
-	var tilesPerSide = 20; // odd number please
+//	var tilesPerSide = 4; // odd number please
 	var tilesPerSideSquared = tiles * tiles;
 
 	var b = '<br>';
@@ -113,7 +113,7 @@
 
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
-			'<p>vertical scale: <input type=range id=inpVertical max=0.5 min=0.001 step=0.001 value=0.012 oninput=drawGround(); title="0 to 10: OK" ><br>' +
+			'<p>vertical scale: <input type=range id=inpVertical max=0.5 min=0.001 step=0.001 value=0.3 oninput=drawGround(); title="0 to 10: OK" ><br>' +
 				'<output id=outVertical >value</output></p>' +
 
 			'<div id=menuInfo ></div>' +
@@ -263,13 +263,13 @@
 
 	function drawMapOverlay() {
 
-		var baseURL, tileX, tileY, tileOffset, count;
+//		var baseURL, tileX, tileY, tileOffset, count;
 
 		baseURL = mapTypes[ 2 ][ 1 ];
 
 		tileOffset = Math.floor( 0.5 * tiles );
-		tileX = lon2tile( longitude, zoom ) - tileOffset;
-		tileY = lat2tile( latitude, zoom ) - tileOffset;
+		tileX = lon2tile( longitude, zoom ) - 2;
+		tileY = lat2tile( latitude, zoom )  - 1;
 
 		count = 0;
 
@@ -295,8 +295,8 @@
 
 			'UL TileX: ' + tileX + ' ' + tile2lon( tileX, zoom ) + b +
 			'UL TileY: ' + tileY + ' ' + tile2lat( tileY, zoom )  + b +
-			'LR TileX: ' + ( tileX + tilesPerSide ) + ' ' + tile2lon( tileX + tilesPerSide + 1 , zoom )  + b +
-			'LR TileY: ' + ( tileY + tilesPerSide ) + ' ' + tile2lat( tileY + tilesPerSide + 1 , zoom )  + b +
+			'LR TileX: ' + ( tileX + tiles ) + ' ' + tile2lon( tileX + tiles + 1 , zoom )  + b +
+			'LR TileY: ' + ( tileY + tiles ) + ' ' + tile2lat( tileY + tiles + 1 , zoom )  + b +
 		b;
 
 			function loadImage( fileName, x, y ) {
