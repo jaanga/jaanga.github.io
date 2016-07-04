@@ -8,7 +8,7 @@
 [XXXXX Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html#readme.md )
 ===
 
-## Full Screen: [ Google Maps API Elevations for Tiles ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/xxxxxx/index.html )
+## Full Screen: [ XXXXX ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/xxxxxx/index.html )
 
 
 <img src="XXXX" style=display:none; width=800 >
