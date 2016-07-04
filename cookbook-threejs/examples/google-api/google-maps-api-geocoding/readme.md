@@ -10,8 +10,7 @@
 
 ## Full Screen: [ Google API Geocoding Service Tiles ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-geocoding/index.html )
 
-
-<img src="XXXX" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/16568705/49fbe668-41e2-11e6-8f22-4b2c2f71c7f0.png" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-geocoding/index.html width=100% height=600px ></iframe>
 
@@ -23,7 +22,7 @@ _Google API Geocoding Service_
 
 ### Mission
 
-* Enter address get map - using very simple JavaScript
+* Enter address get map - using very simple JavaScript ~ gazetteer of the future available yesterday
 * Template for use with other scripts
 
 ### Vision
@@ -33,10 +32,13 @@ _Google API Geocoding Service_
 
 ## Features
 
-* TBD
+
 * Enter address get map
 * Displays lat/lon
 * Display address and vicinity
+* Click three bars( 'hamburger' ) icon to slide menu in or out
+* Direct link to this read me file
+* Click on title to reload 
 
 ## Things you can do using this script
 
@@ -86,8 +88,6 @@ Intended for xxx
 
 ## Change Log
 
-### 
-
 ### 2016-07-04 R3
 
 * Add index and read me
@@ -95,6 +95,7 @@ Intended for xxx
 	* Lat/long
 	* Address
 * Code cleanup
+* Add better help/UI
 
 
 ### 2016-05-01 R2 
