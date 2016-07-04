@@ -32,8 +32,7 @@ _Google Maps API Elevations for Tiles_
 
 ## Features
 
-## Features
-
+* Obtain latitude and longitude for any location using Google Maps Geocoding 
 * Specify latitude, longitude, zoom level, number of tiles per side, number of samples per side
 * App obtains - using Google Maps API - elevations for every sample
 * Respects usage limits
@@ -75,8 +74,8 @@ value='Source code listing' >
 
 ## To Do
 
-* move messages into rextarea
-* Add geocoding to get lan & lon of any location
+* move messages into textarea
+
 * Add ability to send directly to View Elevations 3D script
 * Save partial file and restart - much faster
 
@@ -116,10 +115,20 @@ Intended for xxx
 
 ## Links of Interest
 
+* https://developers.google.com/maps/documentation/elevation/start
+* https://developers.google.com/maps/documentation/geocoding/start
+
 
 ## Change Log
 
-2016-07-03 ~ 
+### 2016-07-04 ~ R5
+
+* Update meta data
+* Add new Jaanga titling
+* Add Google Maps Geocoding to get lan & lon of any location
+
+
+### 2016-07-03 ~ R4
 
 * Add about box
 * Add messages div, re-jig elevations messages

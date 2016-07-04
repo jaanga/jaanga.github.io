@@ -2,13 +2,13 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Child Menu R6</title>
+<title>Hamburger Menu</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
 ' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-04-29' >
+<meta name=date content='2016-07-04' >
 </head>
 <body>
 <script>
@@ -38,7 +38,6 @@ Menu and contents in HTML.
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
-
 		'';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
@@ -55,7 +54,8 @@ Menu and contents in HTML.
 		menu.innerHTML = 
 
 			'<h2>' +
-				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a> ~ ' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 //				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
@@ -114,9 +114,7 @@ Menu and contents in HTML.
 
 			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; title="Jaanga - your 3D happy place" ><h1> &#x2766 <h1></a></center>' +
 
-			'<center title="dingbat" >' +
-			'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1>' +
-			'</center>' +
+//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
 
 		'';
 
