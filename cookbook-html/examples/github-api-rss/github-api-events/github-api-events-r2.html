@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Events R2</title>
+<title>GitHub API Events R2.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Use GitHub API to gather users or organization, events.
 Select user from drop-down list or by input.
@@ -20,6 +20,8 @@ List user events in an informative manner.
 
 	var users = [
 
+		'theo-armour',
+		'paulmasson',
 		'jaanga',
 		'fgx',
 		'mrdoob',
@@ -142,7 +144,8 @@ List user events in an informative manner.
 			}
 
 		}
-		selUser.selectedIndex = 2;
+
+		selUser.selectedIndex = 1;
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
@@ -159,6 +162,8 @@ List user events in an informative manner.
 		location.hash = user;
 
 		contents.innerHTML = '';
+
+		onHashChange();
 
 	}
 
@@ -386,10 +391,24 @@ console.log( 'non-event', event );
 
 	eventSet.onPushEvent = function( event ) {
 
+//console.log( 'push event', event );
+
+		txt = '';
+		b = '<br>';
+		actor = event.actor.login;
+		for ( var i = 0; i < event.payload.commits.length; i++ ) {
+
+			commit = event.payload.commits[ i ];
+			txt += '<div><a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message + '</a></div>';
+
+		}
+
 		txt =
-			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
-			'<div>Message: <a href=https://github.com/' + event.repo.name + '/commit/' + event.payload.head + '>' + ( event.payload.commits.length ? event.payload.commits[ 0 ].message + '</a>' : '' ) +
-				' - Size: ' + event.payload.size + ' - Length: ' + event.payload.commits.length + '</div>' +
+			'<div>Actor: <a href=http://github.com/' + actor + ' >' + actor + '</a></div>' +
+			'<div>Message(s):</div>' + 
+//				( event.payload.commits.length ? event.payload.commits[ 0 ].message + '</a>' : '' ) + '</div>' +
+				txt +
+			'<div>Size: ' + event.payload.size + ' - Length: ' + event.payload.commits.length + '</div>' +
 		'<br>';
 
 		return txt;
@@ -410,7 +429,9 @@ console.log( 'non-event', event );
 	}
 
 	eventSet.onPullRequestReviewCommentEvent = function( event ) {
-console.log( 'onEvent', event  );
+
+//console.log( 'onEvent', event  );
+
 		txt =
 			'<div>Path: <a href=' + event.payload.pull_request.html_url + ' >' + event.payload.comment.path + '</div>' +
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +

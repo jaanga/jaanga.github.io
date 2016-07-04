@@ -75,6 +75,10 @@ Intended for xxx
 
 ## Change Log
 
+### 2016-07-03 ~ R2.1
+
+* Allowed for multiple commits 
+
 ### 2016-06-26 ~ R2
 
 * Add actor's login and link to many events

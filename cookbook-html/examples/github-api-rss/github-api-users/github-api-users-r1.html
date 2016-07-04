@@ -20,11 +20,13 @@ List user events in an informative manner.
 // https://developer.github.com/v3/
 
 
-	eventSet = {};
+	usersXX = {}
 
 	var converter, contents;
 	var hashes, name, page;
 	var count = 1;
+
+	var b = '<br>';
 
 	init();
 
@@ -74,7 +76,8 @@ List user events in an informative manner.
 
 			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
 //			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
-//			'<div id=info >Click the page number at the top of the page to view the raw data</div><br>' +
+
+			'<div id=menuUserInfo ></div>' +
 
 			'<center title="dingbat" >' +
 			'<h1><a href=javascript:window.scrollTo(0,0); >❦</a></h1>' +
@@ -124,7 +127,8 @@ List user events in an informative manner.
 			}
 
 		}
-		selUser.selectedIndex = 2;
+
+		selUser.selectedIndex = 1;
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
@@ -136,11 +140,12 @@ List user events in an informative manner.
 
 	function initUser( user ) {
 
-		count = 1;
 
 		location.hash = user;
 
 		contents.innerHTML = '';
+
+//		onHashChange();
 
 	}
 
@@ -170,6 +175,7 @@ List user events in an informative manner.
 // https://developer.github.com/v3/activity/events/
 
 		var fileName, xhr, events, event, eventHeading, dates, txt;
+//		var keys;
 
 		fileName = 'https://api.github.com/users/' + user;
 
@@ -194,90 +200,218 @@ List user events in an informative manner.
 		function callback() {
 
 			dates = [];
+			menuUserInfo.innerHTML = '';
+
 			response = JSON.parse( xhr.responseText );
 
-//console.log( 'resonse', response );
+//console.log( 'response', response );
 
-		var keys = Object.keys( response );
+			keys = Object.keys( response );
 
-		for ( var i = 0; i < keys.length; i++ ) {
+			for ( var i = 0; i < keys.length; i++ ) {
 
-			contents.innerHTML += keys[ i ] + ': ' + response[ keys[ i ] ] + '<br>';
+				contents.innerHTML += keys[ i ] + ': ' + response[ keys[ i ] ] + '<br>';
 
-		}
-
-/*
-			pageContent = '';
-
-			for ( var i = 0; i < events.length; i++ ) {
-
-				event = events[ i ];
-
-				if ( dates.indexOf( event.created_at.slice( 0, 10 ) ) === -1 ) { // first time we have seen this day
-
-					dates.push( event.created_at.slice( 0, 10 ) )
-
-					pageContent +=
-						'<hr style=margin-top:70px; >' +
-						'<h2>' + event.created_at.slice( 0, 10 ) + '</h2>' +
-					'';
-
-					eventHeading = '';
-
-				}
-
-				if ( event.type !== eventHeading ) { // first time we have seen this type of event on this day
-
-					eventHeading = event.type
-
-					pageContent += '<h3 style=margin:0; >' + event.type + '</h3>';
-
-				}
-
-				pageContent +=
-					'<div>#' + ( i + 1 ) + ' ' + event.created_at.slice( 11, -1 ) + '</div>' +
-					'<div>Repository: <a href=http://github.com/' + event.repo.name + ' > ' + event.repo.name + '</a></div>' +
-				'';
-
-				if ( eventSet[ 'on' + event.type ] !== undefined ) {
-
-					pageContent += eventSet[ 'on' + event.type ]( event );
-
-				} else {
-
-console.log( 'non-event', event );
-
-					pageContent += '<div>Parsing this type of event is still not complete...</div>';
-
-				}
+				usersXX[ "" + keys[ i ] ]( response[ keys[ i ] ] );
 
 			}
 
-/*			if ( chkLoadAll.checked && count < 10 ) {
-
-				target.innerHTML += pageHeader + pageContent + pageFooter;
-				count++;
-				proceed( 1 );
-
-			} else {
-*/
-/*
-				target.innerHTML = pageHeader + pageContent + pageFooter;
-				window.scrollTo( 0, 0 );
-
-//			}
-
-
-*/
 
 		}
 
 	}
 
 
+	usersXX.login = function( item ) {
 
+//console.log( '', item  );
 
+		menuUserInfo.innerHTML += 'Login: ' + '<a href=' + response.html_url + ' >' + item + '</a>' + b;
 
+	}
+	usersXX.id = function( item ) {
+
+//console.log( '', item  );
+
+		menuUserInfo.innerHTML += 'ID: <a href=https://api.github.com/user/' + item + ' >' + item.toLocaleString() + '</a>' + b;
+
+	}
+	usersXX.avatar_url = function( item ) {
+
+//console.log( '', item  );
+		menuUserInfo.innerHTML += '<img src=' + item + ' width=100% >' + b;
+
+	}
+
+	usersXX.gravatar_id = function( item ) {
+
+//console.log( '', item  );
+
+		if ( item ) { menuUserInfo.innerHTML += 'Gravater ID: ' + item + b; }
+
+	}
+
+	usersXX.url = function( item ) {
+
+//console.log( '', item  );
+
+//		menuUserInfo.innerHTML += 'url: ' + item + b;
+
+	}
+
+	usersXX.html_url = function( item ) {
+
+//console.log( 'html_url', item  );
+
+//		menuUserInfo.innerHTML += 'html url: ' + item + b;
+
+	}
+
+	usersXX.followers_url = function( item ) {
+
+//		menuUserInfo.innerHTML += 'Followers: ' + item + b;
+
+	}
+
+	usersXX.following_url = function( item ) {
+
+//		menuUserInfo.innerHTML += 'Following: ' + item + b;
+
+	}
+
+	usersXX.gists_url = function( item ) {
+
+//		menuUserInfo.innerHTML += 'Gists: ' + item + b;
+
+	}
+
+	usersXX.starred_url = function( item ) {
+
+//console.log( '', item  );
+
+		menuUserInfo.innerHTML += 'starred ' + item + b;
+
+	}
+
+	usersXX.subscriptions_url = function( item ) {
+
+		menuUserInfo.innerHTML += 'subscriptions: ' + item + b;
+
+	}
+
+	usersXX.organizations_url = function( item ) {
+
+		menuUserInfo.innerHTML += 'Orgs: ' + item + b;
+
+	}
+
+	usersXX.repos_url = function( item ) {
+
+//		menuUserInfo.innerHTML += 'Repos: ' + item + b;
+
+	}
+
+	usersXX.events_url = function( item ) {
+
+		menuUserInfo.innerHTML += 'Events: <a href=' + response.events_url + ' >' + item + '</a>' + b;
+
+	}
+
+	usersXX.received_events_url = function( item ) {
+
+		menuUserInfo.innerHTML += 'Received: ' + item + b;
+
+	}
+
+	usersXX.type = function( item ) {
+
+		menuUserInfo.innerHTML += 'Type: ' + item + b;
+
+	}
+
+	usersXX.site_admin = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Site admin: ' + item + b; }
+
+	}
+
+	usersXX.name = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Name: ' + item + b; }
+
+	}
+
+	usersXX.company = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Company: ' + item + b; }
+
+	}
+
+	usersXX.blog = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Blog: ' + item + b; }
+
+	}
+
+	usersXX.location = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Location: ' + item + b; }
+
+	}
+
+	usersXX.email = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Email: ' + item + b; }
+	}
+
+	usersXX.hireable = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Hireable: ' + item + b; }
+
+	}
+
+	usersXX.bio = function( item ) {
+
+		if ( item ) { menuUserInfo.innerHTML += 'Bio: ' + item + b; }
+
+	}
+
+	usersXX.public_repos = function( item ) {
+
+		menuUserInfo.innerHTML += 'Public repos: <a href=' + response.repos_url + ' >' + item + '</a>' + b;
+
+	}
+
+	usersXX.public_gists = function( item ) {
+
+//console.log( 'response.gists_url', response.gists_url );
+		menuUserInfo.innerHTML += 'Gists:  <a href=https://api.github.com/users/' + response.login + '/gists >' + item + '</a>' + b;
+
+	}
+
+	usersXX.followers = function( item ) {
+
+		menuUserInfo.innerHTML += 'Followers: <a href=' + response.followers_url + ' >' + item + '</a>' + b;
+
+	}
+
+	usersXX.following = function( item ) {
+
+		menuUserInfo.innerHTML += 'Following: <a href=' + response.following_url + ' >' + item + '</a>' + b;
+
+	}
+
+	usersXX.created_at = function( item ) {
+
+		menuUserInfo.innerHTML += 'Joined: ' + ( new Date( item ) ).toLocaleDateString() + b;
+
+	}
+
+	usersXX.updated_at = function( item ) {
+
+		menuUserInfo.innerHTML += 'Updated: ' + ( new Date( item ) ).toLocaleDateString() + b;
+
+	}
 
 </script>
 </body>
