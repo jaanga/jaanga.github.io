@@ -43,9 +43,16 @@ WIP
 
 ## To Do List
 
-
+* Add about box and tooltips
 
 ## Change Log
+
+### 2016-07-03 ~ R2
+
+* Add read and parse file name
+* Add items to menu and tweak
+* Move ground to center of lat and lon
+* Add update camera and target function
 
 ### 2016-07-02 
 

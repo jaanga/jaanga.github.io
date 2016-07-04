@@ -29,8 +29,11 @@
 //	var fileName = '../elevations/elevations_-34_151-30x30.txt';
 //	var fileName = '../elevations/elevations_28_87-10-500x500.txt';
 
-	var fileName = '../elevations/elevations_37.7968_-122.3981_z14_t3_250x250_.txt';
-	var fileName = '../elevations/elevations_-31.7276_148.6392_z14_t3_30x30_.txt';
+//	var fileName = '../elevations/elevations_-31.7276_148.6392_z14_t3_100x100_.txt';
+
+	var fileName = '../elevations/elevations_-31.7276_148.6392_z14_t3_250x250_.txt';
+	var fileName = '../elevations/elevations_-31.7300_148.6392_z12_t4_500x500_.txt';
+	var fileName = '../elevations/elevations_27.7111_86.7123_z12_t4_500x500_.txt';
 
 	var ground;
 	var segments;
@@ -180,8 +183,9 @@
 
 			segments = Math.sqrt( elevations.length ) - 1;
 
-			drawGround();
 			setMenuInfo();
+
+			drawGround();
 
 		}
 
@@ -189,11 +193,28 @@
 
 	function setMenuInfo() {
 
+		var parameters;
+
+		parameters = fileName.split( '_' );
+
+		latitude = parseFloat( parameters[ 1 ] );
+		longitude = parseFloat( parameters[ 2 ] );
+		zoom =  parseFloat( parameters[ 3 ].slice( 1 ) );
+		tiles = parseFloat( parameters[ 4 ].slice( 1 ) );
+
 		menuInfo.innerHTML =
-			'File: ' + fileName + b +
-			'Segments: ' + ( segments + 1 ) + b +
-			'Max: ' + Math.max( ...elevations ) + b +
-			'Min: ' + Math.min( ...elevations ) + b +
+			'File: ' + fileName + b + b +
+
+			'Latitude: ' + latitude + b +
+			'Longitude: ' + longitude + b +
+			'Zoom: ' + zoom + b +
+			'Tiles: ' + tiles + b + b +
+
+			'Segments: ' + ( segments + 1 ) + b + b +
+
+			'Elevation' + b +
+			'&bull; Maximum: ' + Math.max( ...elevations ) + b +
+			'&bull; Minimum: ' + Math.min( ...elevations ) + b +
 			b;
 
 	}
@@ -218,11 +239,13 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertical.valueAsNumber, 1 ) );
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
+		geometry.computeBoundingBox();
 		geometry.computeBoundingSphere();
 //		geometry.center();
 
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		ground = new THREE.Mesh( geometry, material );
+		ground.position.set( longitude, 0, latitude );
 		scene.add( ground );
 
 		updateCamera();
@@ -234,7 +257,9 @@
 
 	function updateCamera() {
 
-		target = ground.geometry.boundingSphere.center;
+		var target;
+
+		target = new THREE.Vector3( longitude, ground.geometry.boundingSphere.center.y, latitude );
 		camera.position.copy( target.clone().add( new THREE.Vector3( 100, 100, 100 ) ) );
 		controls.target.copy( target );
 

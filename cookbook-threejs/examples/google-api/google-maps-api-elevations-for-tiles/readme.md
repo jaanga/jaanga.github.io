@@ -75,21 +75,36 @@ value='Source code listing' >
 
 ## To Do
 
+* move messages into rextarea
+* Add geocoding to get lan & lon of any location
+* Add ability to send directly to View Elevations 3D script
 * Save partial file and restart - much faster
-* UI to set samples and tiles
+
 
 
 ## Issues
 
-The Google Maps API has strict rate limits for dowmloading elevations.
+### Rate limits
+The Google Maps API has strict rate limits for downloading elevations.
 Figuring out how stay stay under the rate limits and yet be as fast as possible is an amusing challenge.
-There seem to be a variety os spped bumps
+There seem to be a variety of speed bumps
 
 * No more than 512 elevations in a single ask
 * No more than 1000 elevations in under a second
 * No more than ?? elevations in under a minute?
 * No more than ?? elevations in under x minutes>
  
+### File Names
+
+Using file names to convey essential meta data. Is this a good thing?
+
+Example
+elevations_-31.7300_148.6392_z12_t4_500x500_.txt
+
+This gives: latitude, longitude, zoom, tiles and samples.
+Tile numbers could be given instead. This would save some calculating and might avoid an error or two.
+But nobody knows tile number and lat/lon is familiar to all
+
 
 ## Users
 
@@ -107,12 +122,15 @@ Intended for xxx
 2016-07-03 ~ 
 
 * Add about box
-* Add messages div, rejig elevations messages
+* Add messages div, re-jig elevations messages
 * Add tiles input
 * Adjust menu spacing
 * Add selective delay
 * Add multi-tile capability
-* Diplay borders of indicidual tiles
+* UI to set samples and tiles
+* Display borders of individual tiles
+* Fix a variety of variable-related errors
+
 
 ### 2016-07-02 ~ R3
 
