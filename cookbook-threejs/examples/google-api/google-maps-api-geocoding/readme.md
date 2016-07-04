@@ -55,13 +55,13 @@ _Google API Geocoding Service_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-geocoding/google-api/google-maps-api-geocoding-r3.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-geocoding/google-maps-api-geocoding-r3.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geocoding/google-api/google-maps-api-geocoding-r3.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geocoding/google-maps-api-geocoding-r3.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-api/google-maps-api-geocoding/google-maps-api-geocoding-r3.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geocoding/google-maps-api-geocoding-r3.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
