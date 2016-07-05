@@ -17,8 +17,6 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 // https://developers.google.com/maps/documentation/javascript/tutorial
 // https://developers.google.com/maps/documentation/javascript/elevation
 
-
-
 	var placeholder = 'Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal';
 	var latitude = 27.71110193545;
 	var longitude = 86.71228385040001;
@@ -27,7 +25,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 	var zoom = 12;
 	var tiles = 3;
-	var samples = 30; // 512 appears to be the max for a single call
+	var samples = 33; // 512 appears to be the max for a single call
 
 	var map;
 	var geocoder;
@@ -40,9 +38,9 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 	var count = 0;
 	var index = 0;
 
-	var delay = 1000;
 	var increment = 500;
 	var delay = 4000;
+	var thisDelay = 0;
 
 	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
 	var d2r = pi / 180;
@@ -98,9 +96,6 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 			'<p><input id=inpAddress class=controls placeholder="' + placeholder + '" onchange=geocodeAddress(geocoder,map); title="Thank you Google!" > ' +
 				'<button onclick=geocodeAddress(geocoder, map); >geocode </button></p>' +
 
-			'<p id=menuMessage >message</p>' +
-
-
 			'<p>Latitude : <input id=inpLatitude size=12 value=' + latitude + ' onchange=initMap(); ></p>' +
 			'<p>Longitude: <input id=inpLongitude size=12 value=' + longitude + ' onchange=initMap(); ></p>' +
 
@@ -116,7 +111,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 			'<textarea id=txtArea ></textarea>' +
 
-			'<div id=menuMessages >message: loaded OK</div>' +
+//			'<div id=menuMessages >message: loaded OK</div>' +
 			'<div id=menuElevations ></div>' +
 			'<div id=menuTileInfo ></div>' +
 			'<div id=menuImage ></div>' +
@@ -232,7 +227,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 			} else {
 
-				menuMessage.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+				txtArea.innerText = 'Geocode was not successful for the following reason: ' + status;
 
 			}
 
@@ -244,7 +239,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 		if ( !place.geometry ) {
 
-			menuMessage.innerHTML = 'Autocomplete\'s returned place contains no geometry';
+			txtArea.innerText = 'Autocomplete\'s returned place contains no geometry';
 
 			return;
 
@@ -266,10 +261,8 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 			initMap();
 
-			menuMessage.innerHTML = 
-//				'<p>Latitude: ' + place.geometry.location.lat() + '</p>' +
-//				'<p>Longitude: ' + place.geometry.location.lng() + '</p>' +
-				( place.vicinity ? '<p>Vicinity:<br>' + place.vicinity + '</p>' : '' ) +
+			txtArea.innerHTML = 
+				( place.vicinity ? 'Vicinity:\n' + place.vicinity : '' ) +
 //				'<p>Address:<br>' + place.adr_address + '</p>' +
 			'';
 
@@ -418,17 +411,11 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 		startTime = Date.now();
 
-// samples ~ delay ~ seconds
-// 30 ~ 10 ~ 4/ 50 ~ 250 ~ 15 /
-// 100 ~ 200 ~ 76 ... 250 ~ 77 / 100~700d~71s / 100~600d~74s
-// 250 ~ 500? ~ 488 / 480 ~ 2500-8500 ~ 2149
-
-
-// 500 sample ~ 4000-9000 delay ~ 2535 seconds: over query limit at 217 bump to 4500, 327 bump to 5000, 376 ~ 5500, 416 ~ 6000, 431 ~ 6500, 445~7000, 474~8000,
-// 485~8500, 496~9000
 		delay = samples <= 500 ? 4000 : delay;
 		delay = samples <= 250 ? 2000 : delay;
+		delay = samples <= 200 ? 1600 : delay;
 		delay = samples <= 100 ? 700 : delay;
+		delay = samples <= 66 ? 400 : delay;
 		delay = samples <= 50 ? 250 : delay;
 		delay = samples <= 33 ? 5 : delay;
 
@@ -436,7 +423,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 // console.log( 'delay', delay );
 
-		speedBump = Math.floor( 1000 / samples );
+//		speedBump = Math.floor( 1000 / samples );
 
 		nextElevations();
 
@@ -484,19 +471,20 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 			count++;
 
-			if ( count % 50 === 0 ) {
+			thisDelay = ( samples > 250 && count % 200 === 0 ) ? 90000 : delay;
 
-				setTimeout( nextElevations, 60000 );
+			thisDelay = count > 320 ? 5000 : delay;
+			thisDelay = count > 400 ? 6000 : delay;
+			thisDelay = count > 450 ? 7000 : delay;
+			thisDelay = count > 480 ? 8000 : delay;
+			thisDelay = count > 490 ? 9000 : delay;
 
-			} else {
-
-				setTimeout( nextElevations, delay );
-
-			}
+			setTimeout( nextElevations, thisDelay );
 
 		} else {
 
-			menuMessages.innerHTML = 'complete count: ' + ( count + 1 ) + b;
+console.log( 'complete count', count );
+//			txtArea.innerText = 'complete count: ' + ( count + 1 ) + b;
 
 		}
 
@@ -545,13 +533,13 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 				} else {
 
-					menuMessages.innerHTML = 'No results found';
+					txtArea.innerText = 'No results found';
 
 				}
 
 			} else {
 
-				menuMessages.innerHTML = 'Elevation service failed due to: ' + status;
+				txtArea.innerText = 'Elevation service failed due to: ' + status;
 
 				if ( status === 'OVER_QUERY_LIMIT' ) {
 
@@ -580,13 +568,12 @@ console.log( 'count', count, 'status', status );
 			'specified: ' + ( ( count ) * samples ) + b + b +
 
 			'time: ' + ( ( Date.now() - startTime ) / 1000 ).toFixed( 1 ) + b +
-			'delay: ' + delay + b +
+			'delay: ' + thisDelay + b +
 			'results length: ' + tempArr.length + b +
 
 		'</details>' + b;
 
 	}
-
 
 
 //
