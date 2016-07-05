@@ -47,6 +47,10 @@ WIP
 
 ## Change Log
 
+### 2016-07-04 ~ R3
+
+* Add open file from hard disk, read and display
+
 ### 2016-07-03 ~ R2
 
 * Add read and parse file name

@@ -74,14 +74,15 @@ value='Source code listing' >
 
 ## To Do
 
-* move messages into textarea
-
+* Update 3D Display while drawing 
+* Able to do 1000x1000 maps reliably and quickly
 * Add ability to send directly to View Elevations 3D script
 * Save partial file and restart - much faster
 
 
-
 ## Issues
+
+* Not able to close tab or Google Chrome  - for a very, very long time - after saving
 
 ### Rate limits
 The Google Maps API has strict rate limits for downloading elevations.
@@ -121,12 +122,23 @@ Intended for xxx
 
 ## Change Log
 
+### 2016-07-04 ~ R6
+
+* Add 3D display
+* Add 3D Display menu items
+	* Visible checkbox
+	* Wireframe checkbox
+	* Auto-rotate checkbox
+	* Vertical scale
+* Tiles and Samples both dropdown lists
+
+
 ### 2016-07-04 ~ R5
 
 * Update meta data
 * Add new Jaanga titling
 * Add Google Maps Geocoding to get lan & lon of any location
-
+* Move messages into textarea
 
 ### 2016-07-03 ~ R4
 
