@@ -11,9 +11,11 @@
 ## Full Screen: [ XXXXXX ]( https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html )
 
 
-<img src="XXXX" style=display:none; width=800 >
+<img src="" style=display:none; width=800 >
+
 
 <iframe src=https://jaanga.github.io/cookbook-html/examples/xxxxxx/index.html width=100% height=600px ></iframe>
+
 
 _XXXXXX_
 

@@ -8,41 +8,35 @@
 Menu and contents in HTML.
 ' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-07-05' >
+<meta name=date content='2016-07-04' >
 </head>
 <body>
 <script>
 
 //  http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
 
-	var bars;
-
 	init();
 
 	function init() {
 
-		var css, contents, hamburger, menu;
+		var css, hamburger, menu, contents;
 
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
 			'body { font: 12pt monospace; margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
-			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
 
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-
-//			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
-			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute;  transition: left 1s; }' +
-
-			'#hamburger { background-color: #eee; left: 325px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
-			'#hamburger h2 { margin: 0; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' +
-				'opacity: 0.85; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
 		'';
 
@@ -52,19 +46,21 @@ Menu and contents in HTML.
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars onclick=slideMenu(); title="Click this hamburger to slide the menu" > &#9776 </div>';
+		hamburger.innerHTML = '<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
 		menu.innerHTML = 
 
 			'<h2>' +
-				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a> ~ ' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+//				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 
-
+/*
 			'<p>' +
 				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
 			'</p>' +
@@ -99,12 +95,12 @@ Menu and contents in HTML.
 
 			'<details open >' +
 				'<summary><h3 style=display:inline; >About</h3></summary>' +
-				'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
-				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+				'<p>Copyright &copy; 2016 Jaanga authors. MIT license.</p>' +
+				'<p>Click the \'i in a circle\' icon for more help</p>' +
 				'<p></p>' +
 			'</details>' +
 
-			'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
+			'<p>Sample: <input list=numbers id=inpSamples min=1 max=1024 value=' + samples + ' onchange=initMap(); title="Select the number of samples" ></p>' +
 				'<datalist id=numbers >' +
 				'<option value=10 >' +
 				'<option value=30 >' +
@@ -112,6 +108,7 @@ Menu and contents in HTML.
 				'<option value=100 >' +
 				'<option value=512 >' +
 				'</datalist>' +
+*/
 
 			'<div id=info ></div>' +
 
@@ -122,13 +119,6 @@ Menu and contents in HTML.
 		'';
 
 	}
-
-	function slideMenu() { 
-
-		hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; 
-		contents.style.left = contents.style.left === "0px" ? "375px" : 0; 
-
-	};
 
 </script>
 </body>

@@ -1,4 +1,5 @@
-﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/ "View file as a web page." ) </span>
+﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]
+( http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/jaanga-copyright-and-mit-license.md'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 [Jaanga]( http://jaanga.github.io ) »
@@ -21,7 +22,7 @@ and their rights with regards to their ability to copy and redistribute that sof
 [jaanga.github.io]( http://jaanga.github.io/ )  
 [github.com/jaanga]( https://github.com/jaanga/ )
 
-Copyright © 2015 Jaanga authors
+Copyright © 2016 Jaanga authors
 
 <br>
 
