@@ -38,7 +38,11 @@ _View Elevations 3D_
 
 ## To Do List
 
-* Add about box and tooltips
+* Add geocoding - so get vicinity from lat/lon
+* Find nearby places vie Google Maps API and indicate on map
+* Open and view KML files
+* Save to file
+* Auto-optimize vertical scale
 
 
 
@@ -46,8 +50,9 @@ _View Elevations 3D_
 
 ### 2016-07-05 ~ R4
 
+* Fix display of file info if no info
 * Edit links in read me to match new app title
-
+* Add about box and tooltips
 
 
 ### 2016-07-04 ~ R3

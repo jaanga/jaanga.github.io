@@ -331,6 +331,14 @@
 
 	}
 
+
+
+// TMS
+
+// Source http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
+
+
+
 	function lon2tile( lon, zoom ) {
 
 		return Math.floor( ( lon + 180 ) / 360 * Math.pow( 2, zoom ) );
@@ -357,6 +365,7 @@
 		return 180 / pi * Math.atan( 0.5 * ( Math.exp( n ) - Math.exp( -n ) ));
 
 	}
+
 
 	function onWindowResize() {
 

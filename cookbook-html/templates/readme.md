@@ -26,7 +26,7 @@ _The files we use to start new projects_
 
 ## Hamburger Menu
 
-### [Hamburger Menu Demo]( http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child-menu-r3-fixed-width.html )
+### [Hamburger Menu Demo]( http://jaanga.github.io/cookbook-html/templates/hamburger-menu/ )
 
 * Sliding Menu
 

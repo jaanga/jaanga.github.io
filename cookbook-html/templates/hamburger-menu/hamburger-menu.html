@@ -13,9 +13,7 @@ Menu and contents in HTML.
 <body>
 <script>
 
-//  http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
-
-	var bars;
+//  http://jaanga.github.io/cookbook-html/templates/hamburger-menu/
 
 	init();
 
@@ -97,13 +95,6 @@ Menu and contents in HTML.
 				'<input id=inpPretty type=checkbox > Pretty colors ' +
 			'</p>' +
 
-			'<details open >' +
-				'<summary><h3 style=display:inline; >About</h3></summary>' +
-				'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
-				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-				'<p></p>' +
-			'</details>' +
-
 			'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
 				'<datalist id=numbers >' +
 				'<option value=10 >' +
@@ -113,7 +104,14 @@ Menu and contents in HTML.
 				'<option value=512 >' +
 				'</datalist>' +
 
-			'<div id=info ></div>' +
+			'<div id=menuInfo ></div>' +
+
+			'<details open >' +
+				'<summary><h3 style=display:inline; >About</h3></summary>' +
+				'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+				'<p></p>' +
+			'</details>' +
 
 			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; title="Jaanga - your 3D happy place" ><h1> &#x2766 <h1></a></center>' +
 
