@@ -44,9 +44,13 @@ Bugs on browsers other than Chrome need not be reported until such time as the w
 
 ## Change Log
 
+2016-07-04 
+
+* New logo
+
 2016-04-07 ~2016
 
-* Edditing from CodeAnywhere
+* Editing from CodeAnywhere
 
 2015-11-24 ~ Theo
 
