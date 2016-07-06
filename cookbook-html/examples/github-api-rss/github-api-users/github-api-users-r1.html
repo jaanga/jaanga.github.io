@@ -289,7 +289,7 @@ List user events in an informative manner.
 
 //console.log( '', item  );
 
-		menuUserInfo.innerHTML += 'starred ' + item + b;
+		menuUserInfo.innerHTML += 'starred <a href=https://github.com/stars/' + response.login + ' >starred</a>' + b;
 
 	}
 
@@ -301,25 +301,25 @@ List user events in an informative manner.
 
 	usersXX.organizations_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Orgs: ' + item + b;
+		menuUserInfo.innerHTML += 'Orgs: <a href=https://api.github.com/orgs/' + response.login + ' >orgs</a>' + b;
 
 	}
 
 	usersXX.repos_url = function( item ) {
 
-//		menuUserInfo.innerHTML += 'Repos: ' + item + b;
+		menuUserInfo.innerHTML += 'Repos: <a href=https://github.com/' + response.login + '?tab=repositories >repos</a>' + b;
 
 	}
 
 	usersXX.events_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Events: <a href=' + response.events_url + ' >' + item + '</a>' + b;
+		menuUserInfo.innerHTML += 'Events: <a href=' + response.events_url + ' >events</a>' + b;
 
 	}
 
 	usersXX.received_events_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Received: ' + item + b;
+		menuUserInfo.innerHTML += 'Received Events: <a href=' + response.received_events_url + ' >received events</a>' + b;
 
 	}
 

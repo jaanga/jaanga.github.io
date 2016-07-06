@@ -194,6 +194,8 @@ https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
 
 https://api.github.com/repos/jaanga/jaanga.github.io << lists all calls
 
+https://api.github.com/repos/mrdoob/three.js
+https://github.com/mrdoob?tab=repositories
 
 https://developer.github.com/v3/git/trees/
 https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
