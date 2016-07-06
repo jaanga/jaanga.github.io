@@ -33,7 +33,8 @@ Uses Github API to find directories with readme.md files.' >
 		css.innerHTML =
 
 			'body { font: 12pt monospace; margin: 0; }' +
-			'a { color: crimson; text-decoration: none; }' +
+			'h2 a { color: crimson; }' +
+			'a { text-decoration: none; }' +
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
 			'#menu { box-sizing: border-box; background-color: #ccc; height: 100%; max-width: 300px; overflow: auto; padding: 0 10px; position: absolute; }' +
@@ -94,8 +95,9 @@ Uses Github API to find directories with readme.md files.' >
 		var txt =  
 
 			'<h2>' +
-				'<a href="" >' + document.title + '</a>' +
-				'<a href=index.html#readme.md > &#x24D8; </a>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
+				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>';
 
 		for ( var i = 0; i < files.length; i++ ) {
@@ -103,13 +105,24 @@ Uses Github API to find directories with readme.md files.' >
 			file = files[ i ].replace( defaultFolder, '' );
 			txt += 
 
-				'<h3><a href=#' + file + ' >'+ file + '<a></h3>' +
+				'<h3><a href=#' + file + ' >'+ file.replace( '/readme.md', '' ).replace( /-/g, ' ' ) + '<a></h3>' +
 
 			'';
 
 		}
 
-		menu.innerHTML = txt + '';
+		menu.innerHTML = txt + 
+
+			'<details >' +
+				'<summary><h3 style=display:inline; >About</h3></summary>' +
+				'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+				'<p></p>' +
+			'</details>' +
+
+			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; title="Jaanga - your 3D happy place" ><h1> &#x2766 <h1></a></center>' +
+
+		'';
 
 	}
 

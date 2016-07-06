@@ -3,10 +3,10 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/'; 
 value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaangas.github.io/cookbook-threejs/  ) &raquo;
+[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaangas.github.io/cookbook-threejs/ ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
 
-[Google API Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/index.html#readme.md )
+[Google Maps API Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/index.html#readme.md )
 ===
 
 
@@ -16,11 +16,13 @@ value='You are now in GitHub web page view - Click this button to view Read Me f
 
 ### Mission
 
-* TBD
+* Explore ways of using the Google Maps API in innovative ways
+* Provide examples usable by entry level programmers
+* Make new kinds of maps
 
 ### Vision
 
-* TBD
+* Help peeps see things in terrain that they have never seen before
 
 
 ## Features
@@ -44,10 +46,17 @@ value='You are now in GitHub web page view - Click this button to view Read Me f
 
 ## Change Log
 
+### 2016-07-06
 
-Editing from android
+* Add to read me
+* Update 'Menu of Read Me' code
+	* New style header and footer
+	* More regex to the links
 
 ### 2016-07-01
+
+
+Editing from android
 
 * Add GitHub API Menu of Read Me Files as default UI
 * Add Read Me

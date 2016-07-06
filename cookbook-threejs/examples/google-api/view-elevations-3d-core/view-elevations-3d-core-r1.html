@@ -2,12 +2,12 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>View Elevations 3D R4</title>
+<title>View Elevations 3D Core R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Read a file of elevations. Create a Three.js 3D Mesh.
-Select files from list of samples. Select files using OS file open dialog.' >
+' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-07-05' >
+<meta name=date content='2016-07-06' >
 </head>
 <body>
 <!--
@@ -21,17 +21,10 @@ Select files from list of samples. Select files using OS file open dialog.' >
 
 <script>
 
-	var urlAPITreeContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
-	var urlBase = 'https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations/';
-
-	var fileName;
-	var defaultFileIndex = 25;
-
 	var ground;
-	var segments;
 	var elevations;
-
 	var parameters;
+	var segments;
 
 	var mapTypes = [
 
@@ -50,7 +43,6 @@ Select files from list of samples. Select files using OS file open dialog.' >
 	var placeMapCanvas, placeMapContext;
 
 	var pixelsPerTile = 256;
-//	var tilesPerSide = 4; // odd number please
 	var tilesPerSideSquared;
 
 	var b = '<br>';
@@ -76,7 +68,7 @@ Select files from list of samples. Select files using OS file open dialog.' >
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#hamburger { background-color: #eee; left: 325px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger { background-color: #eee; left: 0px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
 			'#hamburger h2 { margin: 0; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
@@ -96,12 +88,6 @@ Select files from list of samples. Select files using OS file open dialog.' >
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
-
-			'<p>Elevations<br>' +
-				'<select id=selFiles onchange=getElevationsFile(urlBase+this.value); size=20 style=width:280px;  ></select>' +
-			'</p>' +
-
-			'<input type=file id=inpFile onchange=openFile(this); />' +
 
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
@@ -149,172 +135,42 @@ Select files from list of samples. Select files using OS file open dialog.' >
 // assets
 
 		placeMapCanvas = document.createElement( 'canvas' );
-//		placeMapCanvas.width = placeMapCanvas.height = pixelsPerTile * tiles;
-//		document.body.appendChild( placeMapCanvas );
-//		placeMapCanvas.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; z-index:-10;';
 		placeMapContext = placeMapCanvas.getContext( '2d' );
 
-
-//		location.hash = fileName;
-
-		getAPITreeContents();
-
 	}
 
-	function getAPITreeContents() {
-
-		var xhr, response, files, file, element;
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'GET', urlAPITreeContents, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			response = JSON.parse( xhr.response );
-			files = [];
-
-			for ( var i = 0; i < response.tree.length; i++ ) {
-
-				file = response.tree[ i ].path;
-
-				if ( file.indexOf( 'elevations\/' ) === -1 || file.slice( -4 ) !== '.txt' ) { continue; }
-
-				file = file.slice( file.lastIndexOf( '\/' ) + 1 );
-				files.push( file );
-
-				selFiles[ selFiles.length ] = new Option( file, file);
-
-			}
-
-			selFiles.selectedIndex = defaultFileIndex;
-
-			fileName = location.hash ? location.hash.slice( 1 ) : urlBase + selFiles.value;
-
-			getElevationsFile( fileName );
-
-		}
-
-	}
-
-	function openFile( files ) {
-
-		var reader = new FileReader();
-		reader.onloadend = function( event ) {
-
-			data = reader.result;
-
-			elevations = data.split( ',' );
-
-			fileName = files.files[0].name;
- 
-			segments = Math.sqrt( elevations.length ) - 1;
-
-			getFileParamters();
-
-			setMenuInfo();
-
-			drawGround();
-
-		}
-
-		reader.readAsText( files.files[ 0 ] );
-
-	}
-
-
-	function getElevationsFile( fName ) {
-
-		var xhr, response, vertices;
-
-		fileName = fName;
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'GET', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			response = xhr.responseText;
-			elevations = response.split( ',' );
-
-			segments = Math.sqrt( elevations.length ) - 1;
-
-			getFileParamters();
-
-			setMenuInfo();
-
-			drawGround();
-
-		}
-
-	}
-
-	function processElevations( elevs, fName ) {
+	function processElevations( elevs, params ) {
 
 			elevations = elevs;
+			parameters = params;
 
 			segments = Math.sqrt( elevations.length ) - 1;
-
-			fileName = fName;
-
-			getFileParamters();
 
 			setMenuInfo();
 
 			drawGround();
-
-	}
-
-	function getFileParamters() {
-
-		parameters = {};
-
-		parametersArray = fileName.split( '_' );
-
-		if ( parametersArray.length > 5 ) {
-
-			parameters.latitude = parseFloat( parametersArray[ 1 ] );
-			parameters.longitude = parseFloat( parametersArray[ 2 ] );
-			parameters.zoom =  parseFloat( parametersArray[ 3 ].slice( 1 ) );
-			parameters.tiles = parseFloat( parametersArray[ 4 ].slice( 1 ) );
-
-		} else {
-
-
-		}
-
 
 	}
 
 	function setMenuInfo() {
 
-		if ( parameters !== undefined ) {
+		menuInfo.innerHTML =
 
-			menuInfo.innerHTML =
-				'File: ' + fileName + b + b +
+			'Latitude: ' + parameters.latitude + b +
+			'Longitude: ' + parameters.longitude + b +
+			'Zoom: ' + parameters.zoom + b +
+			'Tiles: ' + parameters.tiles + b + b +
 
-				'Latitude: ' + parameters.latitude + b +
-				'Longitude: ' + parameters.longitude + b +
-				'Zoom: ' + parameters.zoom + b +
-				'Tiles: ' + parameters.tiles + b + b +
+			'Segments: ' + ( segments + 1 ) + b + b +
 
-				'Segments: ' + ( segments + 1 ) + b + b +
-				( elevations.length <= 500 ? (
-				'Elevation' + b +
+			( elevations.length <= 500 ?
+				( 'Elevation' + b +
 				'&bull; Maximum: ' + Math.max( ...elevations ) + b +
-				'&bull; Minimum: ' + Math.min( ...elevations ) + b ) : '' ) + 
-			b;
-
-		} else {
-
-			menuInfo.innerHTML =
-				'File: ' + fileName + b +
-			b;
-
-		}
+				'&bull; Minimum: ' + Math.min( ...elevations ) + b
+				)
+				: '' 
+			) + 
+		b;
 
 	}
 
@@ -344,26 +200,23 @@ Select files from list of samples. Select files using OS file open dialog.' >
 
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		ground = new THREE.Mesh( geometry, material );
-//		ground.position.set( longitude, 0, latitude );
 		scene.add( ground );
-
-//		updateCamera();
 
 		outVertical.value = inpVertical.value;
 
-			placeMapCanvas.width = placeMapCanvas.height = pixelsPerTile * parameters.tiles;
-//			document.body.appendChild( placeMapCanvas );
-//			placeMapCanvas.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; top: 0; z-index:-10;';
-			tilesPerSideSquared = parameters.tiles * parameters.tiles;
+		placeMapCanvas.width = placeMapCanvas.height = pixelsPerTile * parameters.tiles;
+//		document.body.appendChild( placeMapCanvas );
+//		placeMapCanvas.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; top: 0; z-index:-10;';
+		tilesPerSideSquared = parameters.tiles * parameters.tiles;
 
-			drawMapOverlay();
+		drawMapOverlay();
 
 	}
 
 
 	function drawMapOverlay() {
 
-//		var baseURL, tileX, tileY, tileOffset, count;
+		var baseURL, tileX, tileY, tileOffset, count;
 
 		baseURL = mapTypes[ 2 ][ 1 ];
 
@@ -398,6 +251,7 @@ Select files from list of samples. Select files using OS file open dialog.' >
 			'UL TileY: ' + tileY + ' ' + tile2lat( tileY, parameters.zoom ).toFixed( 4 )  + b +
 			'LR TileX: ' + ( tileX + parameters.tiles ) + ' ' + tile2lon( tileX + parameters.tiles + 1 , parameters.zoom ).toFixed( 4 )  + b +
 			'LR TileY: ' + ( tileY + parameters.tiles ) + ' ' + tile2lat( tileY + parameters.tiles + 1 , parameters.zoom ).toFixed( 4 )  + b +
+
 		b;
 
 			function loadImage( fileName, x, y ) {
@@ -405,7 +259,6 @@ Select files from list of samples. Select files using OS file open dialog.' >
 				var img, texture;
 				img = document.createElement( 'img' );
 				img.crossOrigin = 'anonymous';
-//				img.src = 'http://c.tile.opencyclemap.org/cycle/14/2621/6331.png'; //baseURL + fileName;
 				img.src = baseURL + fileName;
 
 				texture = new THREE.Texture( placeMapCanvas );
@@ -421,7 +274,6 @@ Select files from list of samples. Select files using OS file open dialog.' >
 					if ( count === tilesPerSideSquared ) {
 
 						ground.material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
-//						placeMap.position.y = flightPathBox.geometry.boundingBox.min.y;
 						ground.material.needsUpdate = true;
 
 					}
@@ -429,19 +281,6 @@ Select files from list of samples. Select files using OS file open dialog.' >
 				}
 
 			}
-
-	}
-
-
-//
-
-	function updateCamera() {
-
-		var target;
-
-		target = new THREE.Vector3( longitude, ground.geometry.boundingSphere.center.y, latitude );
-		camera.position.copy( target.clone().add( new THREE.Vector3( 80, 80, 80 ) ) );
-		controls.target.copy( target );
 
 	}
 

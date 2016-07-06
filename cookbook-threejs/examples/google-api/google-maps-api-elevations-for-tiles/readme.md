@@ -124,6 +124,13 @@ Intended for xxx
 
 ## Change Log
 
+### 2016-07-06 ~ R7
+
+* Drop internal 3D display
+* Switch to 3D display using iframe
+	* Link to 'View Elevation 3D'
+
+
 ### 2016-07-04 ~ R6
 
 * Add 3D display
