@@ -76,7 +76,9 @@ value='Source code listing' >
 
 ## To Do
 
-* Try ignoring over_query_limit. Add delay to console output
+* Input lat/lon via location hash
+* Change lat/lon update location
+* Drag map updates location
 * Update 3D Display while drawing 
 * Able to do 1000x1000 maps reliably and quickly
 * Add ability to send directly to View Elevations 3D Display script
@@ -124,6 +126,13 @@ Intended for xxx
 
 
 ## Change Log
+
+### 2016-07-07 ~ R8
+
+* Fix min/max errors when large number of elevations
+* Keep correct number of elevations
+* Ignoring over_query_limit for most part
+* Add delay to console output
 
 ### 2016-07-06 ~ R7
 
