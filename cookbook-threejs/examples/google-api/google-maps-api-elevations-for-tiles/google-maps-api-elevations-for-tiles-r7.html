@@ -22,6 +22,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 	var latitude = 27.71110193545;
 	var longitude = 86.71228385040001;
 
+
 	var startTime = Date.now();
 
 	var zoom = 12;
@@ -36,6 +37,8 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 	var latDelta;
 
 	var elevations = [];
+	var resolution = [];
+
 	var count = 0;
 	var index = 0;
 
@@ -202,6 +205,9 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 		zoom = selZoom.selectedIndex + 1;
 		tiles = selTiles.selectedIndex + 1;
 		samples = parseInt( selSamples.value, 10 );
+
+		elevations = [];
+		resolution = [];
 
 		map = new google.maps.Map( contents, {
 
@@ -443,9 +449,9 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 		startTime = Date.now();
 
-		delay = samples <= 500 ? 4000 : delay;
-		delay = samples <= 250 ? 2000 : delay;
-		delay = samples <= 200 ? 1600 : delay;
+		delay = samples <= 500 ? 2000 : delay;
+		delay = samples <= 250 ? 1200 : delay; // 1800
+		delay = samples <= 200 ? 800 : delay;
 		delay = samples <= 100 ? 700 : delay;
 		delay = samples <= 66 ? 400 : delay;
 		delay = samples <= 50 ? 250 : delay;
@@ -499,15 +505,15 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 			count++;
 
-			thisDelay = ( samples > 250 && count % 200 === 0 ) ? 90000 : delay;
+//			thisDelay = ( samples > 250 && count % 200 === 0 ) ? 90000 : delay;
 
-			thisDelay = count > 320 ? 5000 : delay;
-			thisDelay = count > 400 ? 6000 : delay;
-			thisDelay = count > 450 ? 7000 : delay;
+//			thisDelay = count > 320 ? 5000 : delay;
+//			thisDelay = count > 400 ? 6000 : delay;
+//			thisDelay = count > 450 ? 7000 : delay;
 //			thisDelay = count > 480 ? 8000 : delay;
 //			thisDelay = count > 490 ? 9000 : delay;
 
-			setTimeout( nextElevations, thisDelay );
+			setTimeout( nextElevations, delay );
 
 		} else {
 
@@ -558,6 +564,8 @@ console.log( 'complete count', count );
 
 	function getElevations( path, map, elevations ) {
 
+
+
 		elevator.getElevationAlongPath( {
 
 			'path': path,
@@ -577,11 +585,14 @@ console.log( 'complete count', count );
 
 						tempArr.push( results[ i ].elevation.toFixed( 1 ) );
 
+						if ( results[ i ].resolution && resolution.indexOf( results[ i ].resolution.toFixed( 1 ) ) === -1 ) { resolution.push( results[ i ].resolution.toFixed( 1 ) ); }
+
 					}
 
 					txtArea.value = tempArr;
 
 					setMenuElevations( tempArr, results );
+
 
 				} else {
 
@@ -595,9 +606,9 @@ console.log( 'complete count', count );
 
 				if ( status === 'OVER_QUERY_LIMIT' ) {
 
-console.log( 'count', count, 'status', status );
+//console.log( 'count', count, 'status', status, 'delay', delay );
 
-					delay += increment;
+//					delay += increment;
 
 					--count;
 
@@ -620,9 +631,9 @@ console.log( 'count', count, 'status', status );
 			'specified: ' + ( ( count ) * samples ) + b + b +
 
 			'time: ' + ( ( Date.now() - startTime ) / 1000 ).toFixed( 1 ) + b +
-			'delay: ' + thisDelay + b +
+			'delay: ' + delay + b +
 			'results length: ' + tempArr.length + b +
-
+			'resolutions: ' + resolution + b + 
 		'</details>' + b;
 
 	}

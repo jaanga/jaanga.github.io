@@ -64,6 +64,16 @@ value='Source code listing' >
 * Open the file with a text editor
 
 
+## To Do / Wish List
+
+* Add Auto-rotate & toggle
+* Add sea level indicator
+* Load file via location.hash
+* Link to escape iframe
+* More overlays?
+ 
+
+
 ## Issues
 
 
@@ -81,6 +91,8 @@ Intended for xxx
 ## Change Log
 
 ### 
+
+### 2016-07-06 ~ R1
 
 * First commit
 * Add Read Me

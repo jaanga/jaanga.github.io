@@ -33,14 +33,15 @@ _Google Maps API Elevations for Tiles_
 ## Features
 
 * Obtain latitude and longitude for any location using Google Maps Geocoding
-* Given latitude, longitude, zoom level, number of tiles per side, number of samples per side, app obtains - using Google Maps API - elevations for every sample
+* Given latitude, longitude, zoom level, number of tiles per side, number of samples per side
+	* App obtains - using Google Maps API - elevations for every sample
 * Choose the quality of the data - can be sub-meter accurate where such data is available
 * Respects Google's usage limits
 * Tested to 
 	* 250,000 elevations gathered in just over an hour.
 	* 900 elevations in a few seconds
-* Displays elevations in 3D
-* Saves data to a local file
+* Displays elevations in 3D in window
+* Save data to a local file
 * Reports on many aspects of the of the data 
 
 
@@ -78,7 +79,7 @@ value='Source code listing' >
 * Try ignoring over_query_limit. Add delay to console output
 * Update 3D Display while drawing 
 * Able to do 1000x1000 maps reliably and quickly
-* Add ability to send directly to View Elevations 3D script
+* Add ability to send directly to View Elevations 3D Display script
 * Save partial file and restart - much faster
 
 

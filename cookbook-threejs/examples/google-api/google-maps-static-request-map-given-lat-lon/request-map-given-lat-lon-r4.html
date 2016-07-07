@@ -213,7 +213,7 @@
 			var img = document.createElement( 'img' );
 			img.crossOrigin = 'anonymous';
 			img.src = baseURL + fileName;
-
+console.log( '', img.src );
 			img.onload = function(){
 
 				contextMapOverlay.drawImage( img, x, y, pixelsPerTile, pixelsPerTile );
