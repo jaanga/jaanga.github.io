@@ -160,15 +160,15 @@
 
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
 
-//			min = Math.min.apply( null, elevations ),
-//			max = Math.max.apply( null, elevations);
+			min = Math.min.apply( null, elevations ),
+			max = Math.max.apply( null, elevations);
 
-			scale = 0.01; // 25  / ( max - min );
+			scale = 25  / ( max - min );
 
 			outVertical.value = inpVertical.value = scale;
 			inpVertical.max = 2 * scale;
 
-console.log( 'min', min, 'max', max, 'scale', scale  );
+// console.log( 'min', min, 'max', max, 'scale', scale  );
 
 			setMenuInfo();
 
