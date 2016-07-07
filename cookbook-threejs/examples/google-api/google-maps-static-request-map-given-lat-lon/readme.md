@@ -5,13 +5,13 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
 
-[Request Map Given Lat Lon Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html#readme.md )
+[Google Maps Static Request Map Given Lat Lon Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html#readme.md )
 ===
 
-## Full Screen: [ Google Maps API Elevations for Tiles ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-static-request-map-given-lat-lon/index.html )
+## Full Screen: [ Google Maps Static Request Map Given Lat Lon ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-static-request-map-given-lat-lon/index.html )
 
 
-<img src="XXXX" style=display:none; width=800 >
+<img src="" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-static-request-map-given-lat-lon/index.html width=100% height=600px ></iframe>
 
