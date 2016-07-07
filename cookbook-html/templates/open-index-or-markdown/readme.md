@@ -56,7 +56,7 @@ _Open Index or Markdown_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/open-index-or-markdown/index.html' width=100% height=600 ></iframe>
+	http://jaanga.github.io/cookbook-html/templates/open-index-or-markdown/index.html' width=100% height=600 ></iframe>
 
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/open-index-or-markdown/index.html';
 value='Source code listing' >
