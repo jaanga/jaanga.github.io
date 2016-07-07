@@ -13,7 +13,7 @@
 
 <img src="" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/view-elevations-3d-core/index.html width=100% height=600px ></iframe>
+<iframe src=http://jaanga.github.io/cookbook-threejs/examples/google-api/view-elevations-3d-core/index.html#../elevations/elevations_27.7111_86.7123_z12_t4_500x500_.txt width=100% height=600px ></iframe>
 
 _View Elevations 3D Core_
 
