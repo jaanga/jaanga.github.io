@@ -60,8 +60,8 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 			'body { font: 12pt monospace; height: 100%; margin: 0; }' +
 			'h3 { margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
-			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
-			'iframe { height: 100%; width: 100%; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'iframe { background-color: white; border: 0px; height: 100%; margin-top: 20px; width: 100%; }' +
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -75,7 +75,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 			'#txtArea { border: 1px solid; height: 50px; margin: 10px 0; width: 100%; overflow: auto; }' +
 
-			'#threejs { background-color: white; border: 2px solid red; height: 80%; min-width: 60%;' +
+			'#threejs { background-color: #ccc; border: 2px solid #888; height: 80%; min-width: 70%;' +
 				'overflow: hidden; left: 350px; position: absolute; resize: none; top: 100px; }' +
 
 		'';
@@ -113,16 +113,24 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 			'<p>Tiles: <select id=selTiles onchange=initMap(); type=number size=1 ></select></p>' +
 			'<p>Samples: <select id=selSamples onchange=initMap(); title="Select the number of samples" size=1 ></select></p>' +
 
-			'<p>' +
+			'<p>Map overlay: <select id=selMap onchange=initMap() size=1 />' +
+				'<option>Hybrid</option><option>Roadmap</option><option>Satellite</option><option selected >Terrain</option>' +
+			'</select>' +
+
+
+			'</p>' +
+
+			'<hr>' +
+
+			'<p style=margin-top:10px; >' +
 				'<button onclick=setElevations(); >Get Elevations</button> &nbsp; ' +
 				'<button onclick=saveFile(); >Save File</button>' +
 			'</p>' +
 
 			'<textarea id=txtArea ></textarea>' +
 
-
 			'<details open>' +
-				'<summary><h3>3D Display</h3></summary>' +
+				'<summary><h3>3d display</h3></summary>' +
 				'<p><input type=checkbox onchange=threejs.style.display=threejs.style.display===""?"none":""; > Visible</p>' +
 //				'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 //				'<p><input type=checkbox onchange=controls.autoRotate=!controls.autoRotate; checked > Auto-Rotate</p>' +
@@ -174,10 +182,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 		setMenuElevations( [], []  ); // just to populate screen space
 
-
 //
-
-//		threejs.style.display = 'none';
 
 		geocoder = new google.maps.Geocoder();
 		elevator = new google.maps.ElevationService;
@@ -202,10 +207,7 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 			zoom: zoom,
 			center: { lat: latitude, lng: longitude },
-//			mapTypeId: 'hybrid',
-//			mapTypeId: 'roadmap',
-//			mapTypeId: 'satellite',
-			mapTypeId: 'terrain',
+			mapTypeId: selMap.value.toLowerCase(),
 
 			mapTypeControlOptions: {
 				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -225,7 +227,6 @@ Set latitude, longitude, zoom level, number of tiles and samples. Save data to t
 
 		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
 		origin_autocomplete.bindTo( 'bounds', map );
-
 		origin_autocomplete.addListener( 'place_changed', function() {
 
 			place = origin_autocomplete.getPlace();

@@ -15,9 +15,9 @@
 <script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
 
@@ -25,13 +25,14 @@
 	var elevations;
 	var parameters;
 	var segments;
+	var min, max;
 
 	var mapTypes = [
 
-		['Google Maps','https://mt1.google.com/vt/x='],
-		['Google Maps Terrain','https://mt1.google.com/vt/lyrs=t&x='],
-		['Google Maps Satellite','https://mt1.google.com/vt/lyrs=s&x='],
-		['Google Maps Hybrid','https://mt1.google.com/vt/lyrs=y&x='],
+		['Google Maps','http://mt1.google.com/vt/x='],
+		['Google Maps Terrain','http://mt1.google.com/vt/lyrs=t&x='],
+		['Google Maps Satellite','http://mt1.google.com/vt/lyrs=s&x='],
+		['Google Maps Hybrid','http://mt1.google.com/vt/lyrs=y&x='],
 		['Open Street Map','http://tile.openstreetmap.org/'],
 		['Open Cycle Map', 'http://tile.opencyclemap.org/cycle/'],
 		['MapQuest OSM', 'http://otile3.mqcdn.com/tiles/1.0.0/osm/'],
@@ -77,7 +78,7 @@
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars onclick=hamburger.style.left=hamburger.style.left==="0px"?"325px":0; title="Click this hamburger to slide the menu" > &#9776 </div>';
+		hamburger.innerHTML = '<div id=bars onclick=hamburger.style.left=hamburger.style.left===""?"325px":""; title="Click this hamburger to slide the menu" > &#9776 </div>';
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
@@ -88,6 +89,8 @@
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
+
+			'<p>Map overlay<br><select id=selMap onchange=drawGround() size=5 /></select></p>' +
 
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
@@ -106,6 +109,15 @@
 			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; title="Jaanga - your 3D happy place" ><h1> &#x2766 <h1></a></center>' +
 
 		'';
+
+		for ( var i = 0; i < mapTypes.length; i++ ) {
+
+			selMap.appendChild( document.createElement( 'option' ) );
+			selMap.children[ i ].text = mapTypes[ i ][ 0 ];
+
+		}
+
+		selMap.selectedIndex = 2;
 
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
@@ -146,6 +158,18 @@
 
 			segments = Math.sqrt( elevations.length ) - 1;
 
+// http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
+
+			min = Math.min.apply( null, elevations ),
+			max = Math.max.apply( null, elevations);
+
+			scale = 25  / ( max - min );
+
+			outVertical.value = inpVertical.value = scale;
+			inpVertical.max = 2 * scale;
+
+console.log( 'min', min, 'max', max, 'scale', scale  );
+
 			setMenuInfo();
 
 			drawGround();
@@ -156,11 +180,14 @@
 
 		menuInfo.innerHTML =
 
-			'Latitude: ' + parameters.latitude + b +
-			'Longitude: ' + parameters.longitude + b +
-			'Zoom: ' + parameters.zoom + b +
-			'Tiles: ' + parameters.tiles + b + b +
+			'Latitude: ' + parameters.latitude.toFixed( 4 ) + b +
+			'Longitude: ' + parameters.longitude.toFixed( 4 ) + b + b +
 
+			'Maximum elevation: ' + max + 'm' + b +
+			'Minimum elevation: ' + min + 'm' + b + b +
+
+			'Zoom: ' + parameters.zoom + b +
+			'Tiles: ' + parameters.tiles + b +
 			'Segments: ' + ( segments + 1 ) + b + b +
 
 			( elevations.length <= 500 ?
@@ -192,6 +219,7 @@
 
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI  ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertical.valueAsNumber, 1 ) );
+//		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertica, 1 ) );
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 		geometry.computeBoundingBox();
@@ -202,14 +230,14 @@
 		ground = new THREE.Mesh( geometry, material );
 		scene.add( ground );
 
-		outVertical.value = inpVertical.value;
-
 		placeMapCanvas.width = placeMapCanvas.height = pixelsPerTile * parameters.tiles;
 //		document.body.appendChild( placeMapCanvas );
 //		placeMapCanvas.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; top: 0; z-index:-10;';
 		tilesPerSideSquared = parameters.tiles * parameters.tiles;
 
 		drawMapOverlay();
+
+		outVertical.value = inpVertical.value;
 
 	}
 
@@ -218,7 +246,7 @@
 
 		var baseURL, tileX, tileY, tileOffset, count;
 
-		baseURL = mapTypes[ 2 ][ 1 ];
+		baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
 
 		tileOffset = Math.floor( 0.5 * parameters.tiles );
 
@@ -231,15 +259,15 @@
 
 			for ( var y = 0; y < parameters.tiles; y++ ) {
 
-//				if ( selMap.selectedIndex < 4 ) {
+				if ( selMap.selectedIndex < 4 ) {
 
 					loadImage( ( x + tileX ) + '&y=' + ( y + tileY ) + '&z=' + parameters.zoom, x, y );
 
-//				} else {
+				} else {
 
-//					loadImage( zoom + '/scale=2/' + ( x + tileX ) + '/' + ( y + tileY ) + '.png', x , y );
+					loadImage( parameters.zoom + '/scale=2/' + ( x + tileX ) + '/' + ( y + tileY ) + '.png', x , y );
 
-//				}
+				}
 
 			}
 
@@ -257,6 +285,7 @@
 			function loadImage( fileName, x, y ) {
 
 				var img, texture;
+
 				img = document.createElement( 'img' );
 				img.crossOrigin = 'anonymous';
 				img.src = baseURL + fileName;
