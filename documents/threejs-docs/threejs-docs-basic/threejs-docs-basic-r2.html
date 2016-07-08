@@ -18,6 +18,7 @@ Menu and contents in HTML.
 	var urlBase = 'https://mrdoob.github.io/three.js/';
 
 	var fileName;
+	var selected;
 
 	var b = '<br>';
 
@@ -81,7 +82,6 @@ Menu and contents in HTML.
 			'<h2>' +
 				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-//				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
 
 			'<p id=fileCount ></p>' +
@@ -99,12 +99,13 @@ Menu and contents in HTML.
 			'<p id=fileHeaders ></p>' +
 			'<hr style=clear:both; >' +
 
-
 			'<p id=fileNames ></p>' +
 
 			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; ><h1> &#x2766 <h1></a></center>' +
 
 		'';
+
+		selected = menu;
 
 		requestAPIContents();
 
@@ -222,7 +223,7 @@ Menu and contents in HTML.
 
 			}
 
-			txt += '<div onclick=load("' + urlBase + files[ i ] + '");  >' + ( i + 1 ) + ' ' + fName + '</div>';
+			txt += '<div onclick=load("' + files[ i ] + '");  >' + ( i + 1 ) + ' ' + fName + '</div>';
 
 		}
 
@@ -233,7 +234,7 @@ Menu and contents in HTML.
 
 	function listAlphabetical() {
 
-		var txt, obj, file, keys;
+//		var txt, obj, file, keys;
 
 		txt = '';
 		obj = {};
@@ -250,9 +251,12 @@ Menu and contents in HTML.
 
 		for ( i = 0; i < keys.length; i++ ) {
 
-			txt += '<div onclick=load("' + urlBase + obj[ keys[ i ] ] + '");  >' + ( i + 1 ) + ' ' + keys[ i ] + '</div>';
+			txt += '<div id=mnu_' + keys[ i ] + ' onclick=load("' + obj[ keys[ i ] ] + '");  >' + ( i + 1 ) + ' ' + keys[ i ] + '</div>';
 
 		}
+
+
+
 
 		fileHeaders.innerHTML = '';
 		fileNames.innerHTML = txt;
@@ -265,15 +269,24 @@ Menu and contents in HTML.
 		fileName = fName;
 
 		loadDocs( fileName );
+
+		blameName = fileName.replace( 'docs\/api', '' ).replace( '.html', '.js' );
+		file = fileName.split( '/' ).pop().replace( '.html', '' );
+
 		pageLinks.innerHTML =
+			'<div style=float:right;text-align:right; >' + b +
+			'<p><button onclick=loadDocs(fileName); >Docs</button></p>' +
+			'<p><button onclick=loadSource(fileName); >Source</button><p>' +
+			'<p><a href=https://github.com/mrdoob/three.js/blame/master/src' + blameName + ' target="_blank">Blame</a></p>' +
+			'<p><a href=https://github.com/mrdoob/three.js/commits/master/src' + blameName + ' target="_blank">History</a></p>' +
+			'<p><a href=https://github.com/mrdoob/three.js/blob/master/src' + blameName + ' target="_blank">Normal</a></p>' +
+			'<p><a href=https://www.google.com/#q=' + file + '&tbs=qdr:y target="_blank">Google</a></p>' +
+			'<p><a href=http://stackoverflow.com/search?q=%5Bthree.js%5D+' + file + ' target="_blank">stacko\'flow</a></p>' +
 
-			'<button onclick=loadDocs(fileName); >' + fileName + '<button>' + b +
-			'<button onclick=loadSource(fileName); >' + fileName + '<button>' + b +
-
-		'';
-
+		'</div>';
 
 	}
+
 	function loadSource() {
 
 		name = 'https://rawgit.com/mrdoob/three.js/dev/src' + fileName.replace( 'docs\/api', '' ).replace( '.html', '.js' );
@@ -284,16 +297,16 @@ Menu and contents in HTML.
 
 	function loadDocs( fName ) {
 
-//console.log( 'fName', fName);
+console.log( 'fName', fName);
 
 		contents.innerHTML = '<iframe src = "' + urlBase + fName + '"; ></iframe>';
 //		contents.style.cssText = '';
 
 		document.title = fName.split( '/' ).pop() + ' - GitHub API File Viewer R1';
 
-//		selected.style.color = ``;
-//		selected = document.getElementById( 'mnu_' + fName );
-//		selected.style.color = `red`;
+		selected.style.color = ``;
+		selected = document.getElementById( 'mnu_' + fName.split( '/' ).pop() );
+		selected.style.color = `red`;
 
 //		fileName = fName;
 
