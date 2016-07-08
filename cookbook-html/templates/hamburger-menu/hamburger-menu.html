@@ -44,9 +44,11 @@ Menu and contents in HTML.
 
 		'';
 
+		txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
-		contents.innerHTML = 'contents';
+		contents.innerHTML = 'contents' + txt;
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
@@ -58,14 +60,16 @@ Menu and contents in HTML.
 
 			'<h2>' +
 				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
-				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
-				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+				' ~ <a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
 
 
 			'<p>' +
 				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
 			'</p>' +
+
+//			txt +
 
 			'<p>' +
 				'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
@@ -124,7 +128,7 @@ Menu and contents in HTML.
 	function slideMenu() { 
 
 		hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; 
-		contents.style.left = contents.style.left === "0px" ? "375px" : 0; 
+		contents.style.left = ( contents.style.left === "0px" || contents.style.left === "25px" ) ? "375px" : "25px"; 
 
 	};
 

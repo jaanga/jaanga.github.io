@@ -3,18 +3,91 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-docs/threejs-docs-basic/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
-[Jaanga]( http://jaanga.github.io ) » [Documents]( http://jaanga.github.io/cookbook-html/templates/  ) » [Three.js Docs]( http://jaanga.github.io/cookbook-html/templates/  ) »
+[Jaanga]( https://jaanga.github.io ) &raquo; [Documents]( http://jaanga.github.io/documents/  ) &raquo;
 
-[Three.js Docs Basic Read Me]( index.html#readme.md )
+
+[Three.js Docs Basic Read Me]( https://jaanga.github.io/documents/threejs-docs/threejs-docs-basic/index.html#readme.md )
 ===
 
+## Full Screen: [ Three.js Docs Basic ]( https://jaanga.github.io/documents/threejs-docs/threejs-docs-basic/index.html )
 
-## [Three.js Docs Basic ]( index.html )
 
-Source: 
+<img src="" style=display:none; width=800 >
 
-[test.md]( #test.md )
 
-lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. 
-ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+<iframe src=https://jaanga.github.io/documents/threejs-docs/threejs-docs-basic/index.html width=100% height=600px ></iframe>
 
+
+_Three.js Docs Basic_
+
+***
+
+## Concept
+
+### Mission
+
+* TBD
+* An investigation into fresh ways of creating and maintaining online documents/
+
+### Vision
+
+* TBD
+
+## Features
+
+* TBD
+* Click three bars( 'hamburger' ) icon to slide menu in or out
+* Direct link to this read me file
+* Click on title to reload 
+
+
+## Things you can do using this script
+
+
+* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+* Press Control-U/Command-Option-U to view the source code
+* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
+
+
+
+## Things you can do by editing the code
+
+<iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
+	http://jaanga.github.io/documents/threejs-docs/threejs-docs-basic/threejs-docs-basic-r2.html' width=100% height=600 ></iframe>
+
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-docs/threejs-docs-basic/threejs-docs-basic-r2.html';
+value='Source code listing' >
+
+
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/documents/threejs-docs/threejs-docs-basic/threejs-docs-basic-r2.html
+* Click the 'Raw' icon and save the raw file to your computer
+* Once you've downloaded the file, you can click it to run it.
+* Open the file with a text editor
+
+
+## Issues
+
+## Users
+
+Intended for xxx
+
+## Goals
+
+## Links of Interest
+
+
+
+
+## Change Log
+
+### 
+
+* First commit
+* Add Read Me
+
+
+***
+
+<center title='Jaanga ~ your 3D happy place' >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+</center>

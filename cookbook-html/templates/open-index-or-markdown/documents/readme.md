@@ -1,30 +1,26 @@
 ﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
-( http://jaanga.github.io/cookbook-html/templates/xxxxxx/#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/xxxxxx/'; 
+( http://jaanga.github.io/documents/xxxxxx/#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/xxxxxx/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
-[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
-[Templates]( https://jaanga.github.io/cookbook-html/templates/ ) &raquo;
+[Jaanga]( https://jaanga.github.io ) &raquo; [Documents]( http://jaanga.github.io/documents/  ) &raquo;
 
 
-[XXXXXX Read Me]( https://jaanga.github.io/cookbook-html/templates/xxxxxx/index.html#readme.md )
+[XXXXXX Read Me]( https://jaanga.github.io/documents/xxxxxx/index.html#readme.md )
 ===
 
-## Full Screen: [ XXXXXX ]( https://jaanga.github.io/cookbook-html/templates/xxxxxx/index.html )
+## Full Screen: [ XXXXXX ]( https://jaanga.github.io/documents/xxxxxx/index.html )
 
 
 <img src="" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/cookbook-html/templates/xxxxxx/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/documents/xxxxxx/index.html width=100% height=600px ></iframe>
 
 
 _XXXXXX_
 
 ***
-
-[test.md]( #test.md )
-
 
 ## Concept
 
@@ -56,13 +52,13 @@ _XXXXXX_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	http://jaanga.github.io/cookbook-html/templates/xxxxxx/xxxxxx-r1.html' width=100% height=600 ></iframe>
+	http://jaanga.github.io/documents/xxxxxx/xxxxxx-r1.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/xxxxxx/xxxxxx-r1.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/xxxxxx/xxxxxx-r1.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/xxxxxx/xxxxxx-r1.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/documents/xxxxxx/xxxxxx-r1.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor

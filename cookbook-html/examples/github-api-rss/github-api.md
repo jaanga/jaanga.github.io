@@ -282,6 +282,13 @@ https://api.github.com/search/code?q=3D+extension:stl << not
 
 https://api.github.com/search/code?q=MIT%32License%32path:project.clj
 
+
+### Filles
+
+https://api.github.com/search/code?q=addClass+repo:jquery/jquery+filename:classes.js
+
+https://api.github.com/search/code?q=repo:mrdoob/three.js+filename:CameraHelper.js
+
 ### Issues
 
 

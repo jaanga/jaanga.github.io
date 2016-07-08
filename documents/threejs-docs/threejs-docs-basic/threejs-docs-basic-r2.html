@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Three.js Docs Basic R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
+Menu and contents in HTML.
+' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-07' >
+<link href=http://fonts.googleapis.com/css?family=Inconsolata rel=stylesheet type=text/css >
+</head>
+<body>
+<script>
+
+	var tree = 'https://api.github.com/repos/mrdoob/three.js/git/trees/gh-pages?recursive=1';
+	var urlBase = 'https://mrdoob.github.io/three.js/';
+
+	var fileName;
+
+	var b = '<br>';
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu, contents;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'html, body { font: 12pt inconsolata,monospace; height: 100%; margin: 0; overflow: hidden; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
+			'iframe, #contents { border: 0px solid red; height: 100%; overflow: hidden; width: 100%; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'p { margin: 0 0 5pt 0; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+//			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; transition: left 1s; }' +
+
+			'#fileNames { cursor: pointer; }' +
+			'#hamburger { background-color: #eee; left: 325px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; height: ' + window.innerHeight + 'px; left: -325px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = 'contents' +
+
+			'<p>' +
+				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
+			'</p>' +
+
+			'<p>' +
+				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
+			'</p>' +
+
+		'';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars onclick=slideMenu(); title="Click this hamburger to slide the menu" > &#9776 </div>';
+
+		styles = [ createGroups, createTableOfContents, listAlphabetical ];
+		pageTypes = [ loadDocs, loadSource, loadMeta ];
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+//				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p id=fileCount ></p>' +
+
+			'<p style=float:left;>' +
+				'<select id=selContents onchange=styles[this.selectedIndex](); >' +
+					'<option selected > Grouped </option>' +
+					'<option> Table of Contents </option>' +
+					'<option> Alphabetical </option>' +
+				'<select>' +
+			'</p>' +
+
+			'<div id=pageLinks ></div>' +
+
+			'<p id=fileHeaders ></p>' +
+			'<hr style=clear:both; >' +
+
+
+			'<p id=fileNames ></p>' +
+
+			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; ><h1> &#x2766 <h1></a></center>' +
+
+		'';
+
+		requestAPIContents();
+
+	}
+
+	function requestAPIContents() {
+
+		var place, user, repo, branch, xhr;
+//		var response, file;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', tree, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.response );
+			files = [];
+
+			for ( var i = 0; i < response.tree.length; i++ ) {
+
+				file = response.tree[ i ].path;
+
+				if ( file.indexOf( 'docs' ) === -1 ) { continue; }
+
+				if ( file.indexOf( '.html' ) === -1 ) { continue; }
+
+				files.push( file );
+
+			}
+
+			fileCount.innerHTML = 'Files count: ' + files.length;
+
+			createGroups();
+
+		}
+
+	}
+
+
+	function createGroups() {
+
+		var headers;
+		var txt, file, fileName;
+
+		fileHeaders.innerHTML = '<select id=selHeaders size=20 onchange=onHeaderSelected() ></select>';
+
+		headers = [];
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ].split( '/' );
+			fileName = file.pop();
+			file = file.join( '/' ).replace( 'docs/', '' );
+
+			if ( headers.indexOf( file ) === -1 ) {
+
+				selHeaders[ selHeaders.length ] = new Option( file  );
+
+				headers.push( file );
+
+			}
+
+		}
+
+		selHeaders.selectedIndex = 25;
+
+	}
+
+
+	function onHeaderSelected() {
+
+		var txt, header, name;
+
+		txt = '';
+
+		header = selHeaders.value;
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			if ( files[ i ].includes( header ) ) {
+
+				name = files[ i ].replace( ( "docs\/" + header + "\/" ), '' ).replace( '.html', '' );
+
+				txt += '<p onclick=load("' + files[ i ] + '");  >' + name + '</p>';
+
+			}
+
+		}
+
+		fileNames.innerHTML = txt;
+
+	}
+
+
+	function createTableOfContents() {
+
+		var txt, headers, file, fName;
+
+		txt =  '';
+		headers = [];
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ].split( '/' );
+
+			fName = file.pop();
+			file = file.join( '/' ).replace( 'cookbook-html/examples/', '' );
+
+			if ( headers.indexOf( file ) === -1 ) {
+
+				txt += '<h4>' + file.replace( 'docs', '' ) + '</h4>';
+				headers.push( file );
+
+			}
+
+			txt += '<div onclick=load("' + urlBase + files[ i ] + '");  >' + ( i + 1 ) + ' ' + fName + '</div>';
+
+		}
+
+		fileHeaders.innerHTML = '';
+		fileNames.innerHTML = txt + '';
+
+	}
+
+	function listAlphabetical() {
+
+		var txt, obj, file, keys;
+
+		txt = '';
+		obj = {};
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ].split( '/' ).pop();
+			obj[ file ] = files[ i ];
+
+		}
+
+		keys = Object.keys( obj );
+		keys.sort();
+
+		for ( i = 0; i < keys.length; i++ ) {
+
+			txt += '<div onclick=load("' + urlBase + obj[ keys[ i ] ] + '");  >' + ( i + 1 ) + ' ' + keys[ i ] + '</div>';
+
+		}
+
+		fileHeaders.innerHTML = '';
+		fileNames.innerHTML = txt;
+
+	}
+
+
+	function load( fName ) {
+
+		fileName = fName;
+
+		loadDocs( fileName );
+		pageLinks.innerHTML =
+
+			'<button onclick=loadDocs(fileName); >' + fileName + '<button>' + b +
+			'<button onclick=loadSource(fileName); >' + fileName + '<button>' + b +
+
+		'';
+
+
+	}
+	function loadSource() {
+
+		name = 'https://rawgit.com/mrdoob/three.js/dev/src' + fileName.replace( 'docs\/api', '' ).replace( '.html', '.js' );
+ 
+		contents.innerHTML = '<iframe src = "' + name + '"; ></iframe>';
+
+	}
+
+	function loadDocs( fName ) {
+
+//console.log( 'fName', fName);
+
+		contents.innerHTML = '<iframe src = "' + urlBase + fName + '"; ></iframe>';
+//		contents.style.cssText = '';
+
+		document.title = fName.split( '/' ).pop() + ' - GitHub API File Viewer R1';
+
+//		selected.style.color = ``;
+//		selected = document.getElementById( 'mnu_' + fName );
+//		selected.style.color = `red`;
+
+//		fileName = fName;
+
+	}
+
+	function loadMeta() {
+
+
+	}
+
+	function slideMenu() { 
+
+		hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; 
+		contents.style.left = ( contents.style.left === "0px" || contents.style.left === "25px" ) ? "375px" : "25px"; 
+
+	}
+
+</script>
+</body>
+</html>
