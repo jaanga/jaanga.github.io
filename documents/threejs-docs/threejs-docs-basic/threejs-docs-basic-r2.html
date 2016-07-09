@@ -105,6 +105,7 @@ Menu and contents in HTML.
 
 		'';
 
+		menu
 		selected = menu;
 
 		requestAPIContents();
@@ -191,7 +192,7 @@ Menu and contents in HTML.
 
 				name = files[ i ].replace( ( "docs\/" + header + "\/" ), '' ).replace( '.html', '' );
 
-				txt += '<p onclick=load("' + files[ i ] + '");  >' + name + '</p>';
+				txt += '<p id=mnu_' + name + ' onclick=load("' + files[ i ] + '");  >' + name + '</p>';
 
 			}
 
@@ -213,7 +214,7 @@ Menu and contents in HTML.
 
 			file = files[ i ].split( '/' );
 
-			fName = file.pop();
+			fName = file.pop().replace( '.html', '' ) ;
 			file = file.join( '/' ).replace( 'cookbook-html/examples/', '' );
 
 			if ( headers.indexOf( file ) === -1 ) {
@@ -223,7 +224,7 @@ Menu and contents in HTML.
 
 			}
 
-			txt += '<div onclick=load("' + files[ i ] + '");  >' + ( i + 1 ) + ' ' + fName + '</div>';
+			txt += '<div id=mnu_' + fName + ' onclick=load("' + files[ i ] + '");  >' + ( i + 1 ) + ' ' + fName + '</div>';
 
 		}
 
@@ -234,7 +235,7 @@ Menu and contents in HTML.
 
 	function listAlphabetical() {
 
-//		var txt, obj, file, keys;
+		var txt, obj, file, keys;
 
 		txt = '';
 		obj = {};
@@ -251,12 +252,9 @@ Menu and contents in HTML.
 
 		for ( i = 0; i < keys.length; i++ ) {
 
-			txt += '<div id=mnu_' + keys[ i ] + ' onclick=load("' + obj[ keys[ i ] ] + '");  >' + ( i + 1 ) + ' ' + keys[ i ] + '</div>';
+			txt += '<div id=mnu_' + keys[ i ].replace( '.html', '' ) + ' onclick=load("' + obj[ keys[ i ] ] + '");  >' + ( i + 1 ) + ' ' + keys[ i ] + '</div>';
 
 		}
-
-
-
 
 		fileHeaders.innerHTML = '';
 		fileNames.innerHTML = txt;
@@ -304,8 +302,10 @@ console.log( 'fName', fName);
 
 		document.title = fName.split( '/' ).pop() + ' - GitHub API File Viewer R1';
 
+		name = fName.split( '/' ).pop().replace( '.html', '' );
+//console.log( 'name', name );
 		selected.style.color = ``;
-		selected = document.getElementById( 'mnu_' + fName.split( '/' ).pop() );
+		selected = document.getElementById( 'mnu_' + name );
 		selected.style.color = `red`;
 
 //		fileName = fName;

@@ -161,7 +161,7 @@ List user events in an informative manner.
 
 		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
 
-		getUser( name, page, contents );
+
 
 		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
 
@@ -171,45 +171,50 @@ List user events in an informative manner.
 
 		}
 
+		getAPIUserData( name );
+
 	}
 
 
-	function getUser( user, page, target ) {
+	function getAPIUserData( user, target ) {
 
-// https://developer.github.com/v3/activity/events/
+		var url, xhr, keys;
 
-		var fileName, xhr, events, event, eventHeading, dates, txt;
-//		var keys;
-		contents.innerHTML = '';
-
-		fileName = 'https://api.github.com/users/' + user;
-
-		pageHeader =
-		'<h1>' +
-			'Org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
-			'page <button onclick=proceed(-1); >prev</button> <a href=' + fileName + ' > ' + page + '</a> <button onclick=proceed(1); >next</a></button> ' +
-//			'<button onclick=window.scrollTo(0,0); >top</button>' +
-		'</h1>';
-
-		pageFooter =
-		'<h1>' +
-			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
-			'<button onclick=window.scrollTo(0,0); >top</button>' +
-		'</h1>';
+		url = 'https://api.github.com/users/' +  user;
+		menuUserInfo.innerHTML = '';
 
 		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
+		xhr.open( 'get', url, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
 		function callback() {
 
-			dates = [];
-			menuUserInfo.innerHTML = '';
-
 			response = JSON.parse( xhr.responseText );
+			keys = Object.keys( response );
 
-console.log( 'response', response );
+			for ( var i = 0; i < keys.length; i++ ) {
+
+				usersGet[ "" + keys[ i ] ]( response[ keys[ i ] ] );
+
+			}
+
+		}
+
+	}
+
+	function getAPIDataToContent( call ) {
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', call, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		contents.innerHTML = '';
+
+		function callback() {
+/*
+			response = JSON.parse( xhr.responseText );
 
 			keys = Object.keys( response );
 
@@ -217,41 +222,34 @@ console.log( 'response', response );
 
 				contents.innerHTML += keys[ i ] + ': ' + response[ keys[ i ] ] + '<br>';
 
-				usersGet[ "" + keys[ i ] ]( response[ keys[ i ] ] );
-
 			}
+*/
 
+			contents.innerText = xhr.response;
 
 		}
 
 	}
 
-
 	usersGet.login = function( item ) {
 
-//console.log( '', item  );
-
-		menuUserInfo.innerHTML += '<a href=https://api.github.com/users/' + response.login + ' > Login: </a>' + 
-			'<a href=' + response.html_url + ' > &#128279; ' + item + '</a>' + b;
+		menuUserInfo.innerHTML += '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '"); > Login </button> ' + 
+			'<a href=' + response.html_url + ' >' + item + '</a>' + b;
 
 	}
 	usersGet.id = function( item ) {
 
-//console.log( '', item  );
-
-		menuUserInfo.innerHTML += 'ID: <a href=https://api.github.com/user/' + item + ' >' + item.toLocaleString() + '</a>' + b;
+		menuUserInfo.innerHTML += '<button onclick=getAPIDataToContent("https://api.github.com/user/' + item + '"); > ID </button> ' +
+			item.toLocaleString() + b;
 
 	}
 	usersGet.avatar_url = function( item ) {
 
-//console.log( '', item  );
 		menuUserInfo.innerHTML += '<img src=' + item + ' width=100% >' + b;
 
 	}
 
 	usersGet.gravatar_id = function( item ) {
-
-//console.log( '', item  );
 
 		if ( item ) { menuUserInfo.innerHTML += 'Gravater ID: ' + item + b; }
 
@@ -259,15 +257,11 @@ console.log( 'response', response );
 
 	usersGet.url = function( item ) {
 
-//console.log( '', item  );
-
 //		menuUserInfo.innerHTML += 'url: ' + item + b;
 
 	}
 
 	usersGet.html_url = function( item ) {
-
-//console.log( 'html_url', item  );
 
 //		menuUserInfo.innerHTML += 'html url: ' + item + b;
 
@@ -293,33 +287,41 @@ console.log( 'response', response );
 
 	usersGet.starred_url = function( item ) {
 
-//console.log( '', item  );
+		menuUserInfo.innerHTML += '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/starred"); > starred </button> ' + 
 
-		menuUserInfo.innerHTML += 'starred <a href=https://github.com/stars/' + response.login + ' >starred</a>' + b;
+		' <a href=https://github.com/stars/' + response.login + ' >stars</a>' + b;
 
 	}
 
 	usersGet.subscriptions_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'subscriptions: <a href=https://api.github.com/subscriptions/' + response.login + ' >subscriptions</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/subscriptions"); > subscriptions </button> ' + 
+			//'subscriptions: <a href=https://api.github.com/users/' + response.login + '/subscriptions >subscriptions</a>'
+		b;
 
 	}
 
 	usersGet.organizations_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Orgs: <a href=https://api.github.com/orgs/' + response.login + ' >orgs</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/orgs"); > orgs </button> ' + 
 
+//		menuUserInfo.innerHTML += 'Orgs: <a href=https://api.github.com/users/' + response.login + '/orgs >orgs</a>' + b;
+		b;
 	}
 
 	usersGet.repos_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Repos: <a href=https://github.com/' + response.login + '?tab=repositories >repos</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/repos"); > repos </button> ' + 
+
+			'<a href=https://github.com/' + response.login + '?tab=repositories >' + response.public_repos + ' repos</a>' + b;
 
 	}
 
 	usersGet.events_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Events: <a href=' + response.events_url + ' >events</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/events"); > events </button> ' + 
+
+			'<a href=https://github.com/' + response.login + '?tab=activity >activity</a>' + b;
 
 	}
 
@@ -384,7 +386,7 @@ console.log( 'response', response );
 
 	usersGet.public_repos = function( item ) {
 
-		menuUserInfo.innerHTML += 'Public repos: <a href=' + response.repos_url + ' >' + item + '</a>' + b;
+//		menuUserInfo.innerHTML += 'Public repos: <a href=' + response.repos_url + ' >' + item + '</a>' + b;
 
 	}
 
@@ -403,7 +405,7 @@ console.log( 'response', response );
 
 	usersGet.following = function( item ) {
 
-		menuUserInfo.innerHTML += 'Following: <a href=' + response.following_url + ' >' + item + '</a>' + b;
+		menuUserInfo.innerHTML += 'Following: <a href=https://api.github.com/users/' + response.login + '/following >' + item + '</a>' + b;
 
 	}
 

@@ -1,16 +1,23 @@
 
-	var users = [ 
+	var peeps = [ 
 
 		'Theo-Armour', 
 		'#Three.js',
 		'MrDoob', 
 		'bhouston',
 		'gero3',
+		'Saqoosha',
 		'WestLangley', 
 		'zz85',
+		'koblin',
+		'alteredq',
+		'kig',
 		'#FGx',
 		'GeoffMcl', 
 		'pedromorgan',
+		'#Google',
+		'kenrussell',
+		'toji',
 		'#Ladybug',
 		'MostaphaRoudsari', 
 		'chriswmackey',
@@ -18,7 +25,10 @@
 		'#Xplora',
 		'PaulMasson',
 		'#???',
+		'art',
 		'alavit-d',
+		'mourner',
+		'mbostock',
 		'#OpenDesk',
 		'harrykeen18',
 		'#Abantech',
@@ -29,6 +39,7 @@
 		'quentinberder',
 		'#Autodesk',
 		'jeremytammik',
+		'KeanW',
 		'Autodesk'
 
 	];

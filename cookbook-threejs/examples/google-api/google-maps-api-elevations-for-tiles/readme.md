@@ -3,7 +3,7 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
-[Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
+[Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google Maps API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
 
 [Google Maps API Elevations for Tiles Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html#readme.md )
 ===
@@ -20,6 +20,9 @@ _Google Maps API Elevations for Tiles_
 ***
 
 ## Concept
+
+This is part of an investigation into writing very simple code that can access the [Google Maps API]( https://developers.google.com/maps/documentation/javascript/tutorial )
+
 
 ### Mission
 

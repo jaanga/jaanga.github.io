@@ -21,9 +21,13 @@ _Geocoding Service to Static_
 
 ## Concept
 
+Fron [Google Maps APIs]( https://developers.google.com/maps/documentation/geocoding/intro )
+
+> Geocoding is the process of converting addresses (like "1600 Amphitheatre Parkway, Mountain View, CA") into geographic coordinates (like latitude 37.423021 and longitude -122.083739), which you can use to place markers on a map, or position the map.
+
 ### Mission
 
-* TBD
+* Use geocoding to help you find a group of static files you can use in other apps
 
 ### Vision
 
