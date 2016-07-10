@@ -22,12 +22,19 @@
 ## Where Used
 
 * https://jaanga.github.io/cookbook-html/templates/menu-contents-browser/
+* https://jaanga.github.io/cookbook-html/templates/
 * https://jaanga.github.io/cookbook-threejs/examples/google-api/
-* http://fgx.github.io/sandbox/
+* https://fgx.github.io/sandbox/ << needs update
 
 ## Change Log
 
-### 2016-07-01 ~ 
+
+### 2016-07-10 ~ R2
+
+* Bring in updates from Google API instance
+
+
+### 2016-07-01 ~ R1
 
 * GitHub API Menu of Read Me R1 
 * Update read me

@@ -32,7 +32,7 @@ _Hamburger Menu_
 
 #### Style
 
-The style of this template is minimal, hardline, utilitarian.
+The style of this template is minimal, hardline, simple and utilitarian.
 It is designed to be used by - and to look familiar - people who code.
 
 ### Vision
@@ -85,9 +85,13 @@ value='Source code listing' >
 
 ## Users
 
-Intended for ge
+Intended for general use.
+Too many users ti quantify! ;-)
+
+
 
 ## Goals
+
 
 ## Links of Interest
 
@@ -95,6 +99,12 @@ Intended for ge
 
 
 ## Change Log
+
+### 2016-07-10 ~ R9
+
+* Looks like being a huge, useful simplification
+* Puts everything in a container and slides the coontainer. A doh! thing
+
 
 ### 2016-07-09 ~ R8
 

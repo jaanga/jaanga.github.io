@@ -327,7 +327,12 @@ List user events in an informative manner.
 
 	usersGet.received_events_url = function( item ) {
 
-		menuUserInfo.innerHTML += 'Received Events: <a href=' + response.received_events_url + ' >received events</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("' + response.received_events_url + '"); > received events </button> ' + 
+
+//		menuUserInfo.innerHTML += 'Received Events: <a href=' + response.received_events_url + ' >received events</a>' + b;
+
+		b;
+
 
 	}
 
@@ -345,31 +350,65 @@ List user events in an informative manner.
 
 	usersGet.name = function( item ) {
 
-		if ( item ) { menuUserInfo.innerHTML += 'Name: ' + item + b; }
+		if ( item ) { menuUserInfo.innerHTML += 'Name: <a href=https://www.google.com/#q=' + item.replace( / /g, '+' ) + '+github > ' + item + ' </a>' + b; }
 
 	}
 
 	usersGet.company = function( item ) {
 
-		if ( item ) { menuUserInfo.innerHTML += 'Company: ' + item + b; }
+		if ( item ) { 
+
+			if ( item.includes( 'http' ) || item.includes( '.com' )  ) {
+
+				menuUserInfo.innerHTML += 'Company: <a href=' + item + ' > ' + item + ' </a>' + b;
+
+			} else {
+
+				menuUserInfo.innerHTML += 'Company: <a href=https://www.google.com/#q=' + item.replace( / /g, '+' ) + ' > ' + item + ' </a>' + b;
+
+			}
+
+		}
 
 	}
 
 	usersGet.blog = function( item ) {
 
-		if ( item ) { menuUserInfo.innerHTML += 'Blog: ' + item + b; }
+		if ( item ) { 
+
+			if ( item.includes( 'http' ) || item.includes( '.com' )  ) {
+
+				menuUserInfo.innerHTML += 'Blog: <a href=' + item + ' > ' + item + ' </a>' + b;
+
+			} else {
+
+				menuUserInfo.innerHTML += 'Blog: ' + item + b;
+
+			}
+
+		}
 
 	}
 
 	usersGet.location = function( item ) {
 
-		if ( item ) { menuUserInfo.innerHTML += 'Location: ' + item + b; }
+		if ( item ) { 
+
+			menuUserInfo.innerHTML += 'Location: <a href=https://www.google.com/#q=' + item.replace( / /g, '+' ) + 
+				'+' + response.login + '&nfpr=1 > ' + item + ' </a>' + b;
+
+		}
 
 	}
 
 	usersGet.email = function( item ) {
 
-		if ( item ) { menuUserInfo.innerHTML += 'Email: ' + item + b; }
+		if ( item ) { 
+
+			menuUserInfo.innerHTML += 'Email: <a href=mailto:' + item + ' > ' + item + ' </a>' + b; 
+
+		}
+
 	}
 
 	usersGet.hireable = function( item ) {
@@ -393,19 +432,25 @@ List user events in an informative manner.
 	usersGet.public_gists = function( item ) {
 
 //console.log( 'response.gists_url', response.gists_url );
-		menuUserInfo.innerHTML += 'Gists:  <a href=https://api.github.com/users/' + response.login + '/gists >' + item + '</a>' + b;
+
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/gists"); > gists </button> ' + 
+			'<a href=https://gist.github.com/' + response.login + ' >' + item + ' gists </a>' + b;
 
 	}
 
 	usersGet.followers = function( item ) {
 
-		menuUserInfo.innerHTML += 'Followers: <a href=' + response.followers_url + ' >' + item + '</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("' + response.followers_url + '"); > followers </button> ' + 
+
+		 '<a href=https://github.com/' + response.login + '/followers >' + item + ' followers </a>' + b;
 
 	}
 
 	usersGet.following = function( item ) {
 
-		menuUserInfo.innerHTML += 'Following: <a href=https://api.github.com/users/' + response.login + '/following >' + item + '</a>' + b;
+		menuUserInfo.innerHTML +=  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/following"); > following </button> ' + 
+
+		'<a href=https://github.com/' + response.login + '/following >' + item + ' following</a>' + b;
 
 	}
 
@@ -417,7 +462,10 @@ List user events in an informative manner.
 
 	usersGet.updated_at = function( item ) {
 
-		menuUserInfo.innerHTML += 'Updated: ' + ( new Date( item ) ).toLocaleDateString() + b;
+console.log( 'date', item );
+		var date = new Date( item );
+		menuUserInfo.innerHTML += 'Updated: <a href=https://github.com/' + response.login + '?tab=overview&from=' +
+			item.slice( 0, 10 ) + ' > ' + date.toLocaleDateString() + ' </a>' + b;
 
 	}
 
