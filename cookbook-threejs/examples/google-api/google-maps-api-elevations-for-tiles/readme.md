@@ -79,12 +79,12 @@ value='Source code listing' >
 
 ## To Do
 
-* Input lat/lon via location hash
-* Change lat/lon update location
+* Save files to single digit accuracy
+
 * Drag map updates location
 * Update 3D Display while drawing 
 * Able to do 1000x1000 maps reliably and quickly
-* Add ability to send directly to View Elevations 3D Display script
+* Add ability to send directly to View Elevations 3D Display script in new tab
 * Save partial file and restart - much faster
 
 
@@ -116,7 +116,9 @@ But nobody knows tile number and lat/lon is familiar to all
 
 ## Users
 
-Intended for xxx
+Intended for general use
+
+
 
 
 ## Goals
@@ -129,6 +131,11 @@ Intended for xxx
 
 
 ## Change Log
+
+### 2016-07-09 ~ R10
+
+* Change lat/lon updates location
+* Permalinks: Input lat/lon, zoom, place name via location hash
 
 ### 2016-07-07 ~ R8
 

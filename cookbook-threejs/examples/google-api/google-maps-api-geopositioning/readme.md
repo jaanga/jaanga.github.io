@@ -24,6 +24,11 @@ _Google Maps API Geopositioning_
 This is part of an investigation into writing very simple code that can access the [Google Maps API]( https://developers.google.com/maps/documentation/javascript/tutorial )
 
 
+https://developers.google.com/maps/documentation/geolocation/intro
+
+The Google Maps Geolocation API returns a location and accuracy radius based on information about cell towers and WiFi nodes that the mobile client can detect. This document describes the protocol used to send this data to the server and to return a response to the client.
+
+
 ### Mission
 
 * Enter address and get lat/lon
@@ -92,7 +97,9 @@ Intended for general use
 
 ### 2016-07-09 ~ R2
 
+
 * Bring over all the latest goodies in Analemma R17
+* Add info popUp
 
 
 ### 2016-07-09 ~ R1

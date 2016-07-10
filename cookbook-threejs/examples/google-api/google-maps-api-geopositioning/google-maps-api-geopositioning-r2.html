@@ -44,7 +44,6 @@
 			'h3 { display: inline; margin: 0; }' +
 			'summary { outline: none; }' +
 
-
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -53,7 +52,9 @@
 			'.warning { color: crimson; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+//			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger { background-color: #eee; left: 325px; opacity: 1.0; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger h2 { margin: 0; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
@@ -86,9 +87,9 @@
 			'<details open>' +
 				'<summary><h3>Location</h3></summary>' +
 
-				'<p><input id=inpAddress placeholder="Default: ' + placeDefault + '" onchange=geocodeAddress(geocoder,map); style=width:100%; >' +
-				'<p>Latitude &nbsp;<input id=inpLatitude placeholder=' + defaultLatitude + ' onchange=setCenter(); size=10 ></p>' +
-				'<p>Longitude <input id=inpLongitude placeholder=' + defaultLongitude + ' onchange=setCenter(); size=10 ></p>' +
+				'<p><input id=inpAddress placeholder="Default: ' + placeDefault + '" onclick=this.select(); onchange=geocodeAddress(geocoder,map); style=width:100%; >' +
+				'<p>Latitude &nbsp;<input id=inpLatitude placeholder=' + defaultLatitude + ' onclick=this.select(); onchange=setCenter(); size=10 ></p>' +
+				'<p>Longitude <input id=inpLongitude placeholder=' + defaultLongitude + ' onclick=this.select(); onchange=setCenter(); size=10 ></p>' +
 
 				'<p>' +
 					'Map zoom <input type=range id=inpZoom max=20 min=3 step=1 value=12 oninput=setCenter(); title="1 to 20: OK" > ' +
@@ -99,7 +100,7 @@
 
 			'</details>' +
 
-			'<div id=info ></div>' +
+			'<div id=menuVicinity ></div>' +
 
 		'';
 
@@ -124,8 +125,6 @@
 		infoWindow = new google.maps.InfoWindow( { map: googleMap } );
 
 		if ( window.self === window.top && navigator.geolocation && !location.hash ) {
-
-console.log( 'not top', 23 );
 
 			navigator.geolocation.getCurrentPosition( function( position ) {
 
@@ -204,6 +203,7 @@ console.log( 'not top', 23 );
 		geocodeLatLng();
 
 		messagePlace.innerHTML = 'Now click in the input box & select a location from the drop-down list';
+
 
 	}
 
