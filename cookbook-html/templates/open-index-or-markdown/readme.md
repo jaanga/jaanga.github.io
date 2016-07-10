@@ -23,7 +23,8 @@ _Open Index or Markdown_
 
 ***
 
-[test.md]( #test.md )
+[test.md]( index.hrml#test.md ]
+
 
 
 ## Concept
@@ -31,6 +32,7 @@ _Open Index or Markdown_
 ### Mission
 
 * TBD
+
 
 ### Vision
 
@@ -70,14 +72,21 @@ value='Source code listing' >
 
 ## Issues
 
+
+
+## To Do / Wish List
+
+
+
 ## Users
 
-Intended for xxx
+Intended for general use
+
 
 ## Goals
 
-## Links of Interest
 
+## Links of Interest
 
 
 

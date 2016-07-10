@@ -23,7 +23,6 @@ _XXXXXX_
 
 ***
 
-[test.md]( #test.md )
 
 
 ## Concept
@@ -72,7 +71,7 @@ value='Source code listing' >
 
 ## Users
 
-Intended for xxx
+Intended for general use
 
 ## Goals
 

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
@@ -37,18 +37,18 @@ Menu and contents in HTML.
 //			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
 			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute;  transition: left 1s; }' +
 
-			'#hamburger { background-color: #eee; left: 325px; opacity: 1.0; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger { background-color: #eee; left: 325px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
 			'#hamburger h2 { margin: 0; }' +
 			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' +
-				'opacity: 1.0; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
-			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; }' +
+				'opacity: 0.85; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
 		'';
 
 		txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
-		contents.innerHTML = '<h1>Typical contents</h1>' + txt + txt + txt;
+		contents.innerHTML = 'contents' + txt;
 
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
@@ -61,28 +61,27 @@ Menu and contents in HTML.
 			'<h2>' +
 				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-				' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
+				' ~ <a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
-			'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
 
 			'<p>' +
-				'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-				'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
+				'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.The widgets below don\'t do anything but are here to indicate the look and feel.' + 
 			'</p>' +
+
+//			txt +
 
 			'<p>' +
 				'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
 					'<option title="this is a" >aaa aaa aaa</option>' +
-					'<option selected >bbb bbb bbb</option>' +
-					'<optGroup label="Type 2" >' +
-						'<option>cc cc cc cc</option>' +
-					'</optGroup>' +
+					'<option>bbb bbb bbb</option>' +
+					'<option>cc cc cc cc</option>' +
 				'</select>' +
 			'</p>' +
 
 			'<p>' +
-				'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
-				'<button onclick=console.log("button2"); > Button 2 </button> ' +
+				'<button onclick=saveIt(); title="Save as PNG" > Save </button> ' +
+				'<button onclick=doIt(); > Button 2 </button> ' +
 				'<button onclick=doIt(); > Button 3 </button>' +
 			'</p>' +
 
@@ -96,7 +95,7 @@ Menu and contents in HTML.
 				'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
 			'</p>' +
 
-			'<p title="Nothing here yet. ;-(">' +
+			'<p>' +
 				'<input id=inpPretty type=checkbox > Pretty colors ' +
 			'</p>' +
 
@@ -118,8 +117,7 @@ Menu and contents in HTML.
 				'<p></p>' +
 			'</details>' +
 
-			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
-			'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
+			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; title="Jaanga - your 3D happy place" ><h1> &#x2766 <h1></a></center>' +
 
 //			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
 
