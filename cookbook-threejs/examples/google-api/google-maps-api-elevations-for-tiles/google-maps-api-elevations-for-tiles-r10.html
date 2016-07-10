@@ -31,7 +31,7 @@ Display results in 3D. Display useful info.
 	var tiles = 3;
 	var samples = 30; // 512 appears to be the max for a single call
 
-	var map;
+//	var map;
 	var googleMap, googleMapCenter, geocoder, infoWindow;
 
 	var elevator;
@@ -595,10 +595,11 @@ Display results in 3D. Display useful info.
 
 		}
 
-		displayPathElevation( path, map, color );
+		displayPathElevation( path, googleMap, color );
 
-		getElevations( path, map, elevations );
+		getElevations( path, googleMap, elevations );
 
+/*
 		if ( count < samples - 1 ) {
 
 			count++;
@@ -631,7 +632,7 @@ console.log( 'complete count', count, elevations.length );
 			}
 
 		}
-
+*/
 
 
 	}
@@ -667,11 +668,11 @@ console.log( 'complete count', count, elevations.length );
 
 					for ( var i = 0; i < samples; i++ ) {
 
-						elevation = results[ i ].elevation;
+						elevation = parseFloat( results[ i ].elevation.toFixed( 1 ) );
 
 						elevations.push( elevation );
 
-						tempArr.push( elevation.toFixed( 1 ) );
+						tempArr.push( elevation );
 
 //if ( !results[ i ].resolution ) { console.log( 'res', results[ i ].resolution ) };
 
@@ -705,6 +706,39 @@ console.log( 'complete count', count, elevations.length );
 				}
 
 			}
+
+		if ( count < samples - 1 ) {
+
+			count++;
+			setTimeout( nextElevations, delay );
+
+		} else {
+
+console.log( 'complete count', count, elevations.length );
+
+//			txtArea.innerText = 'complete count: ' + ( count + 1 ) + b;
+
+			threejs.style.display = '';
+
+			threejs.innerHTML = '<iframe id=ifrThreejs src=' + urlViewElevations3D + ' ></iframe>';
+
+			ifrThreejs.onload = function() {
+
+				parameters = { 
+
+					latitude: latitude,
+					longitude: longitude,
+					zoom: zoom,
+					tiles: tiles,
+					segments: samples
+
+				};
+
+				ifrThreejs.contentWindow.processElevations( elevations.slice( 0, samples * samples ), parameters )
+
+			}
+
+		}
 
 		} );
 

@@ -77,10 +77,9 @@ value='Source code listing' >
 * Open the file with a text editor
 
 
-## To Do
+## To Do / Wish List
 
 * Save files to single digit accuracy
-
 * Drag map updates location
 * Update 3D Display while drawing 
 * Able to do 1000x1000 maps reliably and quickly
@@ -136,6 +135,7 @@ Intended for general use
 
 * Change lat/lon updates location
 * Permalinks: Input lat/lon, zoom, place name via location hash
+* Many small fixes
 
 ### 2016-07-07 ~ R8
 

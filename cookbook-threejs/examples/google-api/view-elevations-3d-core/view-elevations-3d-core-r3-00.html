@@ -114,9 +114,8 @@ Display in 3D. Add TMS overlay;
 
 			'<div id=menuInfo ></div>' +
 			'<div id=menuMap ></div>' +
-
 			'<details >' +
-				'<summary><h3>about</h3></summary>' +
+				'<summary><h3 style=display:inline; >About</h3></summary>' +
 				'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
 				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 				'<p></p>' +
@@ -180,17 +179,22 @@ Display in 3D. Add TMS overlay;
 		reader.onloadend = function( event ) {
 
 			data = reader.result;
+
+//			elevations = data.split( ',' );
 			elevations = data.split( ',' ).map( function( item ) { return parseFloat( item ); } );
 
-			fileName = files.files[ 0 ].name;
+			fileName = files.files[0].name;
  
 			getFileParameters();
+
+			initElevations();
 
 		}
 
 		reader.readAsText( files.files[ 0 ] );
 
 	}
+
 
 
 	function getElevationsFile( fName ) {
@@ -209,12 +213,26 @@ Display in 3D. Add TMS overlay;
 			response = xhr.responseText;
 			elevations = response.split( ',' ).map( function( item ) { return parseFloat( item ); } );
 
+
+/*
+			parametersArray = fileName.split( '_' );
+
+			if ( parametersArray.length > 5 ) {
+
+				parameters = {};
+				parameters.latitude = parseFloat( parametersArray[ 1 ] );
+				parameters.longitude = parseFloat( parametersArray[ 2 ] );
+				parameters.zoom =  parseFloat( parametersArray[ 3 ].slice( 1 ) );
+				parameters.tiles = parseFloat( parametersArray[ 4 ].slice( 1 ) );
+
+			}
+*/
 			getFileParameters();
+			initElevations();
 
 		}
 
 	}
-
 
 	function getFileParameters() {
 
@@ -230,11 +248,7 @@ Display in 3D. Add TMS overlay;
 
 		} else {
 
-			parameters = undefined;
-
 		}
-
-		initElevations();
 
 	}
 
@@ -252,7 +266,7 @@ Display in 3D. Add TMS overlay;
 
 			segments = Math.sqrt( elevations.length );
 
-//console.log( 'initElevations', segments, elevations.length );
+console.log( 'initElevations', segments, elevations.length );
 
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
 
@@ -266,7 +280,7 @@ Display in 3D. Add TMS overlay;
 
 //console.log( 'min', min, 'max', max, 'scale', scale  );
 
-			if ( parameters ) { setMenuInfo(); } else { menuInfo.innerHTML = ''; }
+			if ( parameters ) { setMenuInfo(); }
 
 			drawGround();
 
@@ -285,8 +299,8 @@ Display in 3D. Add TMS overlay;
 			'Elevations: ' + elevations.length + b +
 			'Segments: ' + ( segments ) + b + b +
 
-			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
-			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
+//			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
+//			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
 
 		b;
 
