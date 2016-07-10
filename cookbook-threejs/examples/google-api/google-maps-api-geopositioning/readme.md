@@ -26,7 +26,10 @@ This is part of an investigation into writing very simple code that can access t
 
 ### Mission
 
-* TBD
+* Enter address and get lat/lon
+* Enter lat/lon and get address
+* Use updated lat/lon to center the map
+* Use any zoom level
 
 ### Vision
 
@@ -55,13 +58,13 @@ This is part of an investigation into writing very simple code that can access t
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-geopositioning/google-maps-api-geopositioning-r1.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-geopositioning/google-maps-api-geopositioning-r2.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geopositioning/google-maps-api-geopositioning-r1.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geopositioning/google-maps-api-geopositioning-r2.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geopositioning/google-maps-api-geopositioning-r1.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/google-maps-api-geopositioning/google-maps-api-geopositioning-r2.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
@@ -74,6 +77,9 @@ value='Source code listing' >
 
 Intended for general use
 
+* [Analemma 3D]( https://ladybug-analysis-tools.github.io/ladybug-web/analemma-3d/ )
+
+
 
 ## Goals
 
@@ -83,6 +89,11 @@ Intended for general use
 * [Google Maps API]( https://developers.google.com/maps/documentation/javascript/tutorial )
 
 ## Change Log
+
+### 2016-07-09 ~ R2
+
+* Bring over all the latest goodies in Analemma R17
+
 
 ### 2016-07-09 ~ R1
 
