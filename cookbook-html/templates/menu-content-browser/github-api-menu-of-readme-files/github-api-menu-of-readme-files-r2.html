@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Menu of Read Me Files R2</title>
+<title>GitHub API Menu of Read Me Files R2.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Browse and view files written in Markdown format.
 Uses Github API to find directories with readme.md files.' >
@@ -18,8 +18,9 @@ Uses Github API to find directories with readme.md files.' >
 	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
-	var defaultFile = 'readme.md';
-	var defaultFolder = 'cookbook-html/templates/';
+	var searchForFile = 'readme.md';
+	var searchInFolder = 'cookbook-html/templates/';
+	var path = '../../';
 
 	var files;
 
@@ -74,9 +75,9 @@ Uses Github API to find directories with readme.md files.' >
 
 				file = response.tree[ i ].path;
 
-				if ( !file.match( defaultFolder ) ) { continue; }
+				if ( !file.match( searchInFolder ) ) { continue; }
 
-				if ( !file.match( defaultFile) ) { continue; }
+				if ( !file.match( searchForFile ) ) { continue; }
 
 				files.push( file );
 
@@ -102,10 +103,10 @@ Uses Github API to find directories with readme.md files.' >
 
 		for ( var i = 0; i < files.length; i++ ) {
 
-			file = files[ i ].replace( defaultFolder, '' );
+			file = files[ i ].replace( searchInFolder, '' );
 			txt += 
 
-				'<h3><a href=#' + file + ' >'+ file.replace( '/readme.md', '' ).replace( /-/g, ' ' ) + '<a></h3>' +
+				'<h3><a href=#' + path + file + ' >'+ file.replace( '/readme.md', '' ).replace( /-/g, ' ' ) + '<a></h3>' +
 
 			'';
 
@@ -130,7 +131,7 @@ Uses Github API to find directories with readme.md files.' >
 
 		var fileName;
 
-		fileName = location.hash ? location.hash.slice( 1 ) : defaultFile;
+		fileName = location.hash ? location.hash.slice( 1 ) : searchForFile;
 
 		getMarkdown( fileName, contents );
 

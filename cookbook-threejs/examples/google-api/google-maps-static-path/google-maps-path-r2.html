@@ -12,7 +12,10 @@
 <script>
 
 // New York example
-	source = 'https://maps.googleapis.com/maps/api/staticmap?size=512x512&path=color:0xff000066|weight:10|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397';
+	var source = 'https://maps.googleapis.com/maps/api/staticmap?size=512x512&path=color:0xff000066|weight:10|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397';
+
+	var zoom = 12;
+	var mapsAPISource = 'https://maps.googleapis.com/maps/api/staticmap?size=1024x1024&scale=1&zoom=' + zoom + '&path=color:0xff000066|weight:10|';
 
 	var flightPathFileDefault = '../request-map-elevations/elevations/LEIG-L1500-cooked-01.csv';
 	var flightPathFile;
@@ -22,47 +25,92 @@
 
 	function init() {
 
-		var css, contents;
-		var css = document.body.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
+		var css, contents, hamburger, menu;
 
-			'body { font: 12pt monospace; }' +
-//			'h2 { margin: 0; }' +
-			'h2 a { text-decoration: none; }' +
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
-			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
 
-			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'body { font: 12pt monospace; margin: 0; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
-//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+			'summary h3 { display:inline; }' +
+			'summary { outline: none; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
 
 		'';
 
-		contents = document.body.appendChild( document.createElement( 'div' ) );
-		contents.id = 'contents';
-		contents.innerHTML =
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
 
-			'<h2>' +
-				'<a href="" >' + document.title + '</a>' +
-				'<a href=index.html#readme.md > &#x24D8; </a>' +
-			'</h2>' +
+			'<div id=menu >' +
 
-			'<div id=info ></div>' +
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+				'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
+				'<details open >' +
+					'<summary><h3>file reader</h3></summary>' +
+					'<p><input type=file id=inpFile onchange=openFile(this); ></p>' +
+					'<textarea id=textArea style=height:50px;overflow:auto;width:100%; ></textarea>' +
+					'<div id=menuOpenFile ></div>' +
+				'</details>' +
 
+				'<div id=menuInfo ></div>' +
+
+				'<details open >' +
+					'<summary><h3>about</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
+
+	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<img id=image >' +
+			'</div>' +
 
 		'';
-
-
-
-
-
-			'<img id=image >' +
-
 
 		var flightPathFile = flightPathFileDefault;
+
 		requestFlightPath( flightPathFile );
 
 	}
@@ -71,10 +119,10 @@
 	function requestFlightPath( fileName ) {
 
 //		var xhr, flightpath, text, lines, txtline, f;
+		var b = '<br>';
 
 		latitudes = [];
 		longitudes = [];
-
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
@@ -83,37 +131,115 @@
 
 		function callback() {
 
-			text = xhr.responseText;
-			lines = text.split(/\r\n|\n/);
+//			text = xhr.responseText;
 
-			var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-
-			for ( var i = 1; i < lines.length; i++ ) {
-
-				txtline = lines[ i ].split( ',' );
-
-				latitudes.push( parseFloat( txtline[ 1 ] ) );
-
-				longitudes.push( parseFloat( txtline[ 0 ] ) ); 
-
-			}
-
-
-			latMax = Math.max.apply( Math, latitudes );
-			latMin = Math.min.apply( Math, latitudes );
-
-			lonMax = Math.max.apply( Math, longitudes );
-			lonMin = Math.min.apply( Math, longitudes );
-
-			info.innerHTML = 'latMin ' + latMin + ' latMax ' + latMax + '<br>' +
-				'lonMin ' + lonMin + ' lonMax ' + lonMax + '<br>';
-
-			path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
-
-//			image.src = source;
-			image.src = 'https://maps.googleapis.com/maps/api/staticmap?size=1024x1024&scale=2&zoom=13&path=color:0xff000066|weight:10|' + path;
+			parseDataGetMap( xhr.responseText ) 
 
 		}
+
+	}
+
+	function openFile( files ) {
+
+		var fileData, reader, data;
+
+		reader = new FileReader();
+		reader.onload = function( event ) {
+
+			textArea.innerHTML = reader.result;
+
+			menuOpenFile.innerHTML =
+				'name: ' + files.files[0].name + '<br>' +
+				'size: ' + files.files[0].size.toLocaleString() + ' bytes<br>' +
+				'type: ' + files.files[0].type + '<br>' +
+				'modified: ' + files.files[0].lastModifiedDate.toLocaleDateString() +
+			'';
+
+			parseDataGetMap( reader.result );
+
+//console.log( '', files );
+
+		}
+
+		reader.readAsText( files.files[0] );
+
+	}
+
+	function parseDataGetMap( data ) {
+
+		var latitudes, longitudes;
+		var lines, txtline;
+		var b = '<br>';
+
+		latitudes = [];
+		longitudes = [];
+
+		lines = data.split(/\r\n|\n/);
+
+		for ( var i = 1; i < lines.length; i++ ) {
+
+			txtline = lines[ i ].split( ',' );
+
+			latitudes.push( parseFloat( txtline[ 1 ] ) );
+
+			longitudes.push( parseFloat( txtline[ 0 ] ) ); 
+
+		}
+
+		latMin = arrayMin( latitudes );
+		latMax = arrayMax( latitudes );
+
+		lonMin = arrayMin( longitudes );
+		lonMax = arrayMax( longitudes );
+
+		menuInfo.innerHTML = 
+			'<details open >' +
+				'<summary><h3>boundaries</h3></summary>' +
+				'<p>' +
+					'latMin: ' + latMin + b +
+					'latMax: ' + latMax + b + b +
+
+					'lonMin: ' + lonMin + b +
+					'lonMax: ' + lonMax + b +
+				'</p>' +
+			'</details>' +
+		'';
+
+		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
+
+//			image.src = source;
+		image.src = mapsAPISource + path;
+
+	}
+
+
+// http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
+
+	function arrayMin( arr ) {
+
+		var len = arr.length, min = Infinity;
+
+		while ( len-- ) {
+
+			if ( arr[ len ] < min) { min = arr[ len ]; }
+
+		}
+
+		return min;
+
+	}
+
+	function arrayMax( arr ) {
+
+		var len = arr.length, max = -Infinity;
+
+		while ( len-- ) {
+
+			if (arr[len] > max) { max = arr[len]; }
+
+		}
+
+		return max;
 
 	}
 

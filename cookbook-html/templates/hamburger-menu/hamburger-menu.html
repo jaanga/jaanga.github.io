@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Menu</title>
+<title>Hamburger Menu R9</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
@@ -21,11 +21,15 @@ Menu and contents in HTML.
 
 		var css, contents, hamburger, menu;
 
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
 			'body { font: 12pt monospace; margin: 0; }' +
+
 			'a { color: crimson; text-decoration: none; }' +
+
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
@@ -35,109 +39,108 @@ Menu and contents in HTML.
 			'summary h3 { display:inline; }' +
 			'summary { outline: none; }' +
 
-			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 
-//			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
-			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute;  transition: left 1s; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
 
-			'#hamburger { background-color: #eee; left: 325px; opacity: 1.0; position: absolute; top: 20px; transition: left 1s; }' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
 			'#hamburger h2 { margin: 0; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' +
-				'opacity: 1.0; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
 
 		'';
 
-		txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
 
-		contents = document.body.appendChild( document.createElement( 'div' ) );
-		contents.id = 'contents';
-		contents.innerHTML = '<h1>Typical contents</h1>' + txt + txt + txt;
+			'<div id=menu >' +
 
-		hamburger = document.body.appendChild( document.createElement( 'div' ) );
-		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars onclick=slideMenu(); title="Click this hamburger to slide the menu" > &#9776 </div>';
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+				'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-		menu = hamburger.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
-		menu.innerHTML = 
+				'<p>' +
+					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
+				'</p>' +
 
-			'<h2>' +
-				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
-				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-				' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
-			'</h2>' +
-			'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+				'<p>' +
+					'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
+						'<option title="this is a" >aaa aaa aaa</option>' +
+						'<option selected >bbb bbb bbb</option>' +
+						'<optGroup label="Type 2" >' +
+							'<option>cc cc cc cc</option>' +
+						'</optGroup>' +
+					'</select>' +
+				'</p>' +
 
-			'<p>' +
-				'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-				'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
-			'</p>' +
+				'<p>' +
+					'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
+					'<button onclick=console.log("button2"); > Button 2 </button> ' +
+					'<button onclick=doIt(); > Button 3 </button>' +
+				'</p>' +
 
-			'<p>' +
-				'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
-					'<option title="this is a" >aaa aaa aaa</option>' +
-					'<option selected >bbb bbb bbb</option>' +
-					'<optGroup label="Type 2" >' +
-						'<option>cc cc cc cc</option>' +
-					'</optGroup>' +
-				'</select>' +
-			'</p>' +
+				'<p>' +
+					'<input type=radio name=field id=but1 />button 1 ' +
+					'<input type=radio name=field id=but2 checked />button 2 ' +
+					'<input type=radio name=field id=but3 />button 3' +
+				'</p>' +
 
-			'<p>' +
-				'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
-				'<button onclick=console.log("button2"); > Button 2 </button> ' +
-				'<button onclick=doIt(); > Button 3 </button>' +
-			'</p>' +
+				'<p>' +
+					'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
+				'</p>' +
 
-			'<p>' +
-				'<input type=radio name=field id=but1 />button 1 ' +
-				'<input type=radio name=field id=but2 checked />button 2 ' +
-				'<input type=radio name=field id=but3 />button 3' +
-			'</p>' +
+				'<p title="Nothing here yet. ;-(">' +
+					'<input id=inpPretty type=checkbox > Pretty colors ' +
+				'</p>' +
 
-			'<p>' +
-				'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
-			'</p>' +
+				'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
+					'<datalist id=numbers >' +
+					'<option value=10 >' +
+					'<option value=30 >' +
+					'<option value=50 >' +
+					'<option value=100 >' +
+					'<option value=512 >' +
+					'</datalist>' +
 
-			'<p title="Nothing here yet. ;-(">' +
-				'<input id=inpPretty type=checkbox > Pretty colors ' +
-			'</p>' +
+				'<div id=menuInfo ></div>' +
 
-			'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
-				'<datalist id=numbers >' +
-				'<option value=10 >' +
-				'<option value=30 >' +
-				'<option value=50 >' +
-				'<option value=100 >' +
-				'<option value=512 >' +
-				'</datalist>' +
+				'<details open >' +
+					'<summary><h3>About</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
 
-			'<div id=menuInfo ></div>' +
+				'<hr>' +
 
-			'<details open >' +
-				'<summary><h3>About</h3></summary>' +
-				'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
-				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-				'<p></p>' +
-			'</details>' +
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
 
-			'<hr><center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
-			'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
+	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
 
-//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' + txt + txt + txt +
+			'</div>' +
 
 		'';
 
 	}
-
-	function slideMenu() { 
-
-		hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; 
-		contents.style.left = ( contents.style.left === "0px" || contents.style.left === "25px" ) ? "375px" : "25px"; 
-
-	};
 
 </script>
 </body>

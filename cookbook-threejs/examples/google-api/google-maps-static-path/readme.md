@@ -21,9 +21,12 @@ _Google Maps API Path_
 
 ## Concept
 
+* Reeaf a flightpath CSV file and display its boundaries on a map
+
 ### Mission
 
 * TBD
+* To help you decide the size and location of maps to down load using 'Elevation Get'
 
 ### Vision
 
@@ -67,9 +70,16 @@ value='Source code listing' >
 ## Issues
 
 
+## To Do / Wish List
+
+* Add select zoom
+* Add select scale
+* Add select image size
+* Add draw polylines of many vertices 
+
 ## Users
 
-Intended for xxx
+* http://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/
 
 
 ## Goals
@@ -80,7 +90,15 @@ Intended for xxx
 
 ## Change Log
 
-### 
+
+### 2016-07-10 ~ R2
+
+* Add file reader capability
+* Add min/max for large arrays
+* Add hamburger R9
+
+
+### 2016-07-07 ~ R1 
 
 * First commit
 * Add Read Me

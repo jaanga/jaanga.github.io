@@ -11,7 +11,11 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ***
 
-### _new 'GitHub API Files Viewer' / new menu at right / changes everything_
+### _new 'GitHub API Files Viewer' / new menu at left / changes everything_
+
+
+Following now out of data:
+
 
 _The files we use to start new projects_
 

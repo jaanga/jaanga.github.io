@@ -46,6 +46,8 @@ Display results in 3D. Display useful info.
 
 	var thisDelay = 0;
 
+	var polyline;
+
 	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
 	var d2r = pi / 180;
 	var b = '<br>';
@@ -142,7 +144,9 @@ Display results in 3D. Display useful info.
 				'<summary><h3>path data</h3></summary>' +
 				'<p><input type=file id=inpFile onchange=openFile(this); ></p>' +
 				'<textarea id=textArea style=height:50px;overflow:auto;width:100%; ></textarea>' +
-				'<div id=message ></div>' +
+				'<div id=menuOpenFile ></div>' +
+				'<div id=menuPathBoundaries ></div>' +
+
 			'</details>' +
 
 			'<details open>' +
@@ -180,7 +184,7 @@ Display results in 3D. Display useful info.
 
 		selZoom.selectedIndex = zoom - 1;
 
-		for ( var i = 0; i < 8; i++ ) {
+		for ( var i = 0; i < 12; i++ ) {
 
 			selTiles[ selTiles.length ] = new Option( i + 1 );
 
@@ -746,14 +750,28 @@ console.log( 'complete count', count, elevations.length );
 		reader = new FileReader();
 		reader.onload = function( event ) {
 
-			textArea.innerHTML = reader.result;
+			polyline = {
 
-			message.innerHTML =
-				'name: ' + files.files[0].name + '<br>' +
-				'size: ' + files.files[0].size.toLocaleString() + ' bytes<br>' +
-				'type: ' + files.files[0].type + '<br>' +
-				'modified: ' + files.files[0].lastModifiedDate.toLocaleDateString() +
+				data: reader.result,
+				name: files.files[0].name,
+				size: files.files[0].size,
+				type: files.files[0].type || 'not specified',
+				modified: files.files[0].lastModifiedDate
+
+			};
+
+			textArea.innerHTML = polyline.data;
+			menuOpenFile.innerHTML =
+				'<p>' +
+				'name: ' + polyline.name + '<br>' +
+				'size: ' + polyline.size.toLocaleString() + ' bytes<br>' +
+				'type: ' + polyline.type + '<br>' +
+				'modified: ' + polyline.modified.toLocaleDateString() +
+				'</p>' +
+				'<p><button onclick=goThere(); >Go There</button> <button onclick=parseDataGetMap(polyline.data); >Draw Path</button></p>' +
 			'';
+
+			parseDataGetMap( polyline.data );
 
 console.log( '', files.files[0].lastModifiedDate );
 
@@ -763,6 +781,76 @@ console.log( '', files.files[0].lastModifiedDate );
 
 	}
 
+	function goThere() {
+
+		inpLatitude.value = latCen;
+		inpLongitude.value = lonCen;
+
+		setCenter();
+
+
+	}
+
+	function parseDataGetMap( data ) {
+
+		var lines, txtline;
+		var latitudes, longitudes, path;
+		var latMin, latMax, lonMin, lonMax;
+
+		latitudes = [];
+		longitudes = [];
+
+		lines = data.split(/\r\n|\n/);
+
+		for ( var i = 1; i < lines.length; i++ ) {
+
+			txtline = lines[ i ].split( ',' );
+
+			latitudes.push( parseFloat( txtline[ 1 ] ) );
+
+			longitudes.push( parseFloat( txtline[ 0 ] ) ); 
+
+		}
+
+		latMin = arrayMin( latitudes );
+		latMax = arrayMax( latitudes );
+
+		lonMin = arrayMin( longitudes );
+		lonMax = arrayMax( longitudes );
+
+		latCen = latMin + 0.5 * ( latMax - latMin );
+		lonCen = lonMin + 0.5 * ( lonMax - lonMin );
+
+		menuPathBoundaries.innerHTML = 
+			'<h3>path boundaries</h3></summary>' +
+			'<p>' +
+				'latMin: ' + latMin.toFixed( 4 ) + b +
+				'latMax: ' + latMax.toFixed( 4 ) + b + b +
+
+				'lonMin: ' + lonMin.toFixed( 4 ) + b +
+				'lonMax: ' + lonMax.toFixed( 4 ) + b + b +
+
+				'latCen: ' + latCen.toFixed( 4 ) + b +
+				'lonCen: ' + lonCen.toFixed( 4 ) + b +
+
+			'</p>' +
+		'';
+
+//		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
+
+		drawTitleBoundary( latMax, lonMin, latMin, lonMax, '#ff00ff' );
+
+		marker = new google.maps.Marker({
+
+			position: {lat: latCen, lng: lonCen } ,
+			map: googleMap
+
+		});
+
+//			image.src = source;
+//		image.src = mapsAPISource + path;
+
+	}
 
 	function saveFile() {
 
@@ -788,6 +876,35 @@ console.log( '', files.files[0].lastModifiedDate );
 
 	}
 
+// http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
+
+	function arrayMin( arr ) {
+
+		var len = arr.length, min = Infinity;
+
+		while ( len-- ) {
+
+			if ( arr[ len ] < min) { min = arr[ len ]; }
+
+		}
+
+		return min;
+
+	}
+
+	function arrayMax( arr ) {
+
+		var len = arr.length, max = -Infinity;
+
+		while ( len-- ) {
+
+			if (arr[len] > max) { max = arr[len]; }
+
+		}
+
+		return max;
+
+	}
 
 // Source http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
 
