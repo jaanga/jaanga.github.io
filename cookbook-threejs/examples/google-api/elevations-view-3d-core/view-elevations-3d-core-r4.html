@@ -27,7 +27,7 @@ Display in 3D. Add TMS overlay;
 //		location.hash = '../elevations/elevations_27.7111_86.7123_z12_t4_500x500_.txt';
 //		location.hash = '../elevations/elevations_37.7959_-122.4000_z12_t3_500x500_.txt';
 //		location.hash = '../elevations/elevations_47.3769_8.5417_z12_t3_50x50_.txt'; // Zurich
-		defaultFile = '../elevations/elevations_37.8270_-122.4230_z17_t3_200x200_.txt'; // Alcatraz
+		defaultFile = '../elevations/elevations_37.8270_-122.4230_z17_t3_200x200_Alcatraz.txt'; // Alcatraz
 
 	var ground;
 	var elevations;
@@ -239,7 +239,7 @@ Display in 3D. Add TMS overlay;
 			parameters.zoom = parseFloat( parametersArray[ 3 ].slice( 1 ) );
 			parameters.tiles = parseFloat( parametersArray[ 4 ].slice( 1 ) );
 			parameters.samples = parametersArray[ 5 ];
-			parameters.location = parametersArray[ 6 ];
+			parameters.location = parametersArray[ 6 ].replace( '.txt', '' );
 
 		} else {
 
@@ -251,6 +251,31 @@ Display in 3D. Add TMS overlay;
 
 	}
 
+
+	function processElevationsFileName( elevs, fName ) {
+// console.log( '', elevs, fName );
+		elevations = elevs;
+		parametersArray = fName.split( '_' );
+
+		if ( parametersArray.length > 5 ) {
+
+			parameters = {};
+			parameters.latitude = parseFloat( parametersArray[ 1 ] );
+			parameters.longitude = parseFloat( parametersArray[ 2 ] );
+			parameters.zoom = parseFloat( parametersArray[ 3 ].slice( 1 ) );
+			parameters.tiles = parseFloat( parametersArray[ 4 ].slice( 1 ) );
+			parameters.samples = parametersArray[ 5 ];
+			parameters.location = parametersArray[ 6 ].replace( '.txt', '' );
+
+		} else {
+
+			parameters = undefined;
+
+		}
+
+		initElevations();
+
+	}
 
 	function processElevations( elevs, params ) {
 
@@ -277,7 +302,7 @@ Display in 3D. Add TMS overlay;
 			outVertical.value = inpVertical.value = scale;
 			inpVertical.max = 2 * scale;
 
-//console.log( 'min', min, 'max', max, 'scale', scale  );
+console.log( 'min', min, 'max', max, 'scale', scale  );
 
 			if ( parameters ) { setMenuInfo(); } else { menuInfo.innerHTML = ''; }
 
@@ -290,7 +315,9 @@ Display in 3D. Add TMS overlay;
 
 		menuInfo.innerHTML =
 
-			( parameters.location ? parameters.location : '' ) + b + 
+			( parameters.location ? 'Location: ' + parameters.location + b : '' ) + 
+			'Samples: ' + parameters.samples + b + b +
+
 			'Latitude: ' + parameters.latitude.toFixed( 4 ) + b +
 			'Longitude: ' + parameters.longitude.toFixed( 4 ) + b + b +
 
@@ -299,8 +326,8 @@ Display in 3D. Add TMS overlay;
 			'Elevations: ' + elevations.length + b +
 			'Segments: ' + ( segments ) + b + b +
 
-			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
-			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
+//			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
+//			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
 
 		b;
 

@@ -2,14 +2,14 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Elevations Get R1</title>
+<title>Elevations Get R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Obtains elevation data via the Google Maps API Elevation service.y
 Set latitude, longitude, zoom level, number of tiles and samples. Save data to text file.
 Display results in 3D. Display useful info.
 ' >
 <meta name=keywords content='Google Maps API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-07-10' >
+<meta name=date content='2016-07-12' >
 </head>
 <body>
 <!-- add your Google Map API key to end of this source ~ yyyy?key=xxxxxxxx  -->
@@ -493,7 +493,7 @@ Display results in 3D. Display useful info.
 
 		'</details>' + b;
 
-		drawTitleBoundary( ULlat, ULlon, LRlat, LRlon, '#00ff00' );
+//		drawTitleBoundary( ULlat, ULlon, LRlat, LRlon, '#00ff00' );
 
 	}
 
@@ -543,7 +543,7 @@ Display results in 3D. Display useful info.
 
 		tilePath = new google.maps.Polygon( {
 			path: tileCoordinates,
-			fillOpacity: 0.1,
+			fillOpacity: 0.075,
 			strokeColor: color,
 			strokeOpacity: 1.0,
 			strokeWeight: 2
@@ -613,14 +613,14 @@ Display results in 3D. Display useful info.
 
 	}
 
-	function displayPathElevation( path, map, color ) {
+	function displayPathElevation( path, map, color, width ) {
 
 		new google.maps.Polyline({
 
 			path: path,
 			strokeColor: color,
 			opacity: 0.1,
-			strokeWeight: 1,
+			strokeWeight: width || 1,
 			map: map
 
 		});
@@ -838,6 +838,18 @@ console.log( '', files.files[0].lastModifiedDate );
 
 //		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
 
+		path = [];
+
+		delta = Math.floor( latitudes.length / 100 );
+
+		for ( var i = 0; i < latitudes.length; i += delta ) {
+
+			path.push( { lat: latitudes[ i ], lng: longitudes[ i ] } );
+
+		}
+
+		displayPathElevation( path, googleMap, '#ffff00', 3 );
+
 		drawTitleBoundary( latMax, lonMin, latMin, lonMax, '#ff00ff' );
 
 		marker = new google.maps.Marker({
@@ -851,6 +863,7 @@ console.log( '', files.files[0].lastModifiedDate );
 //		image.src = mapsAPISource + path;
 
 	}
+
 
 	function saveFile() {
 

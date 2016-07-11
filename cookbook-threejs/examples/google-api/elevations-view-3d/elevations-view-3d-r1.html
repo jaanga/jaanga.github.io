@@ -59,10 +59,10 @@ Menu and contents in HTML.
 
 			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
 
-			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger { background-color: #eee; left: 375px; position: absolute; top: 20px; }' +
 			'#hamburger h2 { margin: 0; }' +
 
-			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 350px; }' +
 			'#menu h2 { margin: 0; }' +
 
 		'';
@@ -81,9 +81,10 @@ Menu and contents in HTML.
 				'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
 				'<p>Elevations<br>' +
-					'<select id=selFiles onchange=getElevationsFile(this.value); size=20 style=width:280px;  ></select>' +
+					'<select id=selFiles onchange=getElevationsFile(this.value); size=20 style=width:100%;  ></select>' +
 				'</p>' +
 
+				'<p><input type=file id=inpFile onchange=openFile(this); /></p>' +
 
 				'<hr>' +
 
@@ -92,7 +93,7 @@ Menu and contents in HTML.
 
 			'</div>' +
 
-			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-375px":""; >' +
 				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
 			'</div>' +
 
@@ -148,6 +149,25 @@ Menu and contents in HTML.
 console.log( '', fileName );
 
 			frame.src = core + '../elevations/' + fileName;
+
+	}
+
+	function openFile( files ) {
+
+		var reader = new FileReader();
+		reader.onloadend = function( event ) {
+
+			data = reader.result;
+
+			elevations = data.split( ',' );
+
+			fileName = files.files[0].name;
+ 
+			frame.contentWindow.processElevationsFileName( elevations, fileName )
+
+		}
+
+		reader.readAsText( files.files[ 0 ] );
 
 	}
 

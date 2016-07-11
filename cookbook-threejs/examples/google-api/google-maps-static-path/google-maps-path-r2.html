@@ -11,13 +11,15 @@
 <body>
 <script>
 
+// https://developers.google.com/maps/documentation/static-maps/intro
+
 // New York example
 	var source = 'https://maps.googleapis.com/maps/api/staticmap?size=512x512&path=color:0xff000066|weight:10|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397';
 
 	var zoom = 12;
-	var mapsAPISource = 'https://maps.googleapis.com/maps/api/staticmap?size=1024x1024&scale=1&zoom=' + zoom + '&path=color:0xff000066|weight:10|';
+	var mapsAPISource = 'https://maps.googleapis.com/maps/api/staticmap?size=1024x1024&scale=1&zoom=' + zoom + '&path=color:0xff000066|weight:10';
 
-	var flightPathFileDefault = '../request-map-elevations/elevations/LEIG-L1500-cooked-01.csv';
+	var flightPathFileDefault = '../path-data/LEIG-L1500-cooked-01.csv';
 	var flightPathFile;
 	var flightPath;
 
@@ -118,7 +120,7 @@
 
 	function requestFlightPath( fileName ) {
 
-//		var xhr, flightpath, text, lines, txtline, f;
+		var xhr;
 		var b = '<br>';
 
 		latitudes = [];
@@ -130,8 +132,6 @@
 		xhr.send( null );
 
 		function callback() {
-
-//			text = xhr.responseText;
 
 			parseDataGetMap( xhr.responseText ) 
 
@@ -167,8 +167,8 @@
 
 	function parseDataGetMap( data ) {
 
-		var latitudes, longitudes;
-		var lines, txtline;
+//		var latitudes, longitudes;
+//		var lines, txtline;
 		var b = '<br>';
 
 		latitudes = [];
@@ -178,11 +178,10 @@
 
 		for ( var i = 1; i < lines.length; i++ ) {
 
-			txtline = lines[ i ].split( ',' );
+			txtline = lines[ i ].split( ',' ).map( parseFloat );
 
-			latitudes.push( parseFloat( txtline[ 1 ] ) );
-
-			longitudes.push( parseFloat( txtline[ 0 ] ) ); 
+			latitudes.push( txtline[ 1 ] );
+			longitudes.push( txtline[ 0 ] ); 
 
 		}
 
@@ -205,10 +204,25 @@
 			'</details>' +
 		'';
 
-		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
+//		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
 
-//			image.src = source;
-		image.src = mapsAPISource + path;
+		path = '';
+
+		delta = Math.floor( latitudes.length / 100 );
+
+		for ( var i = 0; i < latitudes.length; i += delta ) {
+
+			path += '|' + latitudes[ i ].toFixed( 4 ) + ',' + longitudes[ i ].toFixed( 4 );
+
+		}
+
+//		image.src = source;
+
+		pp =  mapsAPISource + path;
+
+console.log( 'path length ', pp.length );
+
+		image.src = pp;
 
 	}
 
