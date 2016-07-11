@@ -5,13 +5,13 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google Maps API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
 
-[XXXXX Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/google-maps-api-elevations-for-tiles/index.html#readme.md )
+[XXXXX Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/xxxxxx/index.html#readme.md )
 ===
 
 ## Full Screen: [ XXXXX ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/xxxxxx/index.html )
 
 
-<img src="XXXX" style=display:none; width=800 >
+<img src="" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/xxxxxx/index.html width=100% height=600px ></iframe>
 

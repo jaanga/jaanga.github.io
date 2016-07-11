@@ -57,8 +57,7 @@ _XXXXXX_
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/xxxxxx/xxxxxx-r1.html';
 value='Source code listing' >
 
-
-* Open this file: https://github.com/ladybug-analysis-tools/ladybug-web/blob/gh-pages/analemma-3d/analemma-3d-r14.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/blob/master/xxxxxx/xxxxxx-r1.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
@@ -67,9 +66,12 @@ value='Source code listing' >
 ## Issues
 
 
+## To Do / Wish List
+
+
 ## Users
 
-Intended for xxx
+Intended for general use
 
 
 ## Goals

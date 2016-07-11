@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Flight Path to 2D Map Texture R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+	var lat = 41.5861554761;
+	var lon = 1.6519343471;
+
+// gathered from another script:
+	var latMin = 41.5558446627;
+	var latMax = 41.603583114;
+	var lonMin = 1.6481309452;
+	var lonMax = 1.7103687843;
+
+	var zoom = 12;
+
+	var width = 512;
+	var height = 512;
+
+	var stats, renderer, scene, camera, controls;
+
+	init();
+	animate();
+
+	function init() {
+
+//		var geometry, material, mesh;
+		var css, hamburger, menu;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
+*/
+			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://fgx.github.io/sandbox/flightpath-to-2d-map-texture/#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+
+			'<div id=info ></div>' +
+
+			'<img id=image >' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera.position.set( 2000, 2000, 2000 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 10000;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+
+		var axisHelper = new THREE.AxisHelper( 1024 );
+		scene.add( axisHelper );
+
+// assets
+
+//		source = 'http://maps.googleapis.com/maps/api/staticmap?center=' + lat + ',' + lon + '&maptype=hybrid&zoom=' + zoom + '&scale=2&size=' + width + 'x' + height ;
+
+		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
+
+		source = 'https://maps.googleapis.com/maps/api/staticmap?size=512x512&scale=2&zoom=13&path=color:0xff000066|weight:10|' + path;
+
+		var loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load(
+			source,
+			function ( texture ) {
+
+				geometry = new THREE.PlaneBufferGeometry( 2048, 2048 );
+				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+				material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
+				mesh = new THREE.Mesh( geometry, material );
+				scene.add( mesh );
+
+			}
+
+		);
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
