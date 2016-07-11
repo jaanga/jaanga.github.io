@@ -192,7 +192,8 @@ Display in 3D. Add TMS overlay;
 		reader.onloadend = function( event ) {
 
 			data = reader.result;
-			elevations = data.split( ',' ).map( function( item ) { return parseFloat( item ); } );
+//			elevations = data.split( ',' ).map( function( item ) { return parseFloat( item ); } );
+			elevations = data.split( ',' ).map( parseFloat );
 
 			fileName = files.files[ 0 ].name;
  

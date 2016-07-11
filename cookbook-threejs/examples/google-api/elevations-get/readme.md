@@ -79,6 +79,7 @@ value='Source code listing' >
 
 ## To Do / Wish List
 
+* Add mouseover and click readout
 * Save files to single digit accuracy
 * Drag map updates location
 * Update 3D Display while drawing 
@@ -118,8 +119,6 @@ But nobody knows tile number and lat/lon is familiar to all
 Intended for general use
 
 
-
-
 ## Goals
 
 
@@ -130,6 +129,11 @@ Intended for general use
 
 
 ## Change Log
+
+### 2016-07-11 ~ R2
+
+* Rename to 'elevatuons get'
+* Add flight path line;
 
 ### 2016-07-09 ~ R10
 

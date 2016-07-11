@@ -88,7 +88,12 @@ Intended for general use
 
 ## Change Log
 
-### 
+### 2016-07-11 ~ R2
+
+* Display of flight path
+( Open with file reader
+
+### R1 
 
 * First commit
 * Add Read Me
