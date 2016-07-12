@@ -1,67 +1,16 @@
 
-	var usersGet = {};
-
-	function getAPIUserData( user ) {
-
-		var url, xhr, keys;
-
-		url = 'https://api.github.com/users/' +  user;
-
-		menuUserInfo.innerHTML = '';
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', url, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			response = JSON.parse( xhr.responseText );
-			keys = Object.keys( response );
-
-			for ( var i = 0; i < keys.length; i++ ) {
-
-				menuUserInfo.innerHTML += '<div>' + ( usersGet[ keys[ i ] ]( response[ keys[ i ] ] ) || '' ) + '</div)';
-
-			}
-
-		}
-
-	}
-
-	function getAPIDataToContent( call ) {
-
-		var xhr;
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', call, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		contents.innerHTML = '';
-
-		function callback() {
-
-			window.scrollTo( 0, 0 );
-			contents.innerText = xhr.response;
-
-		}
-
-	}
+	usersGet = {};
 
 	usersGet.login = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("Login"); > login </button> ' + 
+		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '"); > Login </button> ' + 
 			'<a href=' + response.html_url + ' >' + item + '</a>';
 
 	}
 
 	usersGet.id = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/user/' + item + '"); > raw </button> ' +
-			'<button onclick=sendMesssageToContents("ID"); > id </button> ' + 
-			item.toLocaleString();
+		return '<button onclick=getAPIDataToContent("https://api.github.com/user/' + item + '"); > ID </button> ' + item.toLocaleString();
 
 	}
 
@@ -109,31 +58,28 @@
 
 	usersGet.starred_url = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/starred"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("starred"); > starred </button> ' + 
-			'<a href=https://github.com/stars/' + response.login + ' >stars</a>';
+		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/starred"); > starred </button> ' + 
+			' <a href=https://github.com/stars/' + response.login + ' >stars</a>';
 
 	}
 
 	usersGet.subscriptions_url = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/subscriptions"); > raw </button> ' +
-			'<button onclick=sendMesssageToContents("Subscriptions"); > subscriptions </button> ';
+		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/subscriptions"); > subscriptions </button> ';
+			//'subscriptions: <a href=https://api.github.com/users/' + response.login + '/subscriptions >subscriptions</a>'
 
 	}
 
 	usersGet.organizations_url = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/orgs"); > raw </button> ' +
-			'<button onclick=getOrgs("' + response.login + '"); > organizations </button> ';
+		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/orgs"); > orgs </button> ';
 //		return 'Orgs: <a href=https://api.github.com/users/' + response.login + '/orgs >orgs</a>';
 
 	}
 
 	usersGet.repos_url = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/repos"); > raw </button> ' + 
-			'<button onclick=getRepos("' + response.login + '"); > repos </button> ' +
+		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/repos"); > repos </button> ' + 
 			'<a href=https://github.com/' + response.login + '?tab=repositories >' + response.public_repos + ' repos</a>';
 
 	}
@@ -141,6 +87,7 @@
 	usersGet.events_url = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/events"); > raw </button> ' + 
+
 			'<button onclick=getEvents("' + response.login + '",page,contents); > events </button> ' + 
 			'<a href=https://github.com/' + response.login + '?tab=activity >activity</a>';
 
@@ -148,8 +95,7 @@
 
 	usersGet.received_events_url = function( item ) {
 
-		return  '<button onclick=getAPIDataToContent("' + response.received_events_url + '"); > received events </button> ' +
-			'<button onclick=sendMesssageToContents("Receivedevents"); > received events </button> ';
+		return  '<button onclick=getAPIDataToContent("' + response.received_events_url + '"); > received events </button> ';
 //		return 'Received Events: <a href=' + response.received_events_url + ' >received events</a>';
 
 	}
@@ -244,24 +190,21 @@
 
 	usersGet.public_gists = function( item ) {
 
-		return  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/gists"); > raw </button> ' + 
-			'<button onclick=getGists("' + response.login + '"); > gists </button> ';
+		return  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/gists"); > gists </button> ' + 
 			'<a href=https://gist.github.com/' + response.login + ' >' + item + ' gists </a>';
 
 	}
 
 	usersGet.followers = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("' + response.followers_url + '"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("Followers"); > followers </button> ' +
+		return '<button onclick=getAPIDataToContent("' + response.followers_url + '"); > followers </button> ' + 
 			'<a href=https://github.com/' + response.login + '/followers >' + item + ' followers </a>';
 
 	}
 
 	usersGet.following = function( item ) {
 
-		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/following"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("Following"); > following </button> ' +
+		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/following"); > following </button> ' + 
 			'<a href=https://github.com/' + response.login + '/following >' + item + ' following</a>';
 
 	}

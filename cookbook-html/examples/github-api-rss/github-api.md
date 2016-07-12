@@ -3,10 +3,16 @@ layout: post
 title: Blogging Like a Boss
 ---
 
+
+
+
 yaml tables. must be first thing in the gist
 
 GitHub API
 ===
+
+Here: http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-explorer/
+
 
 ## Documentation: https://developer.github.com/v3/
 
