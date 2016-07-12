@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Users Explorer R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Use GitHub API to gather users or organization, events.
+Select user from drop-down list or by input.
+Display all ten pages of user events one-by-one or all at once.
+List user events in an informative manner.
+' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-07-03' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script src=../users.js ></script>
+<script src=user-data.js ></script>
+<script src=events.js ></script>
+<script>
+
+// https://developer.github.com/v3/
+
+	var converter, contents;
+	var hashes, name, page;
+	var count = 1;
+
+	var b = '<br>';
+
+	init();
+
+	function init() {
+
+		var css;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'html { height: 100%; }' +
+			'body { border: 0px solid red; font: 12pt monospace; height: 100%; ' +
+				'left: 0; margin: 0 auto; max-width: 1000px;  /* overflow: auto hidden; */ position: absolute; right: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
+			'img { max-width: 800px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'select { width: 200px; }' +
+
+			'div.issue { border: 1px solid #aaa; box-sizing: content-box; max-height: 600px; overflow: auto; padding: 10px; transform: scale( 0.85 ); transform-origin: top left; width: 100%; }' +
+
+			'#contents { border: 0px #ccc solid; left: 375px; max-width: 700px; position: absolute; right: 0; top: 0px; transition: left 1s; }' +
+			'#hamburger { color: crimson; cursor: pointer; font-size: 24pt; left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: 0; /* height: 98%; */ ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px;  position: absolute; /*top: -20px;*/ transition: left 1s; max-width: 300px; }' +
+			'#menu h3 { display: inline; }' +
+
+		'';
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p>' +
+				'Selected Orgs & Users:<br><select id=selUser onchange=location.hash=this.value; title="Select the GitHub user" size=15 >' +
+				'<select>' +
+			'</p>' +
+
+			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
+//			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
+
+			'<div id=menuUserInfo ></div>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:window.scrollTo(0,0); >❦</a></h1>' +
+			'</center>' +
+
+		'';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = ' &#9776 ';
+
+		hamburger.onclick = function() {
+
+			if ( menu.style.left !== '-325px' ) {
+
+				hamburger.style.left = 0;
+				menu.style.left = '-325px';
+				contents.style.left = '50px';
+
+
+			} else {
+
+				hamburger.style.left = '325px';
+				menu.style.left = 0;
+				contents.style.left = '375px';
+
+			}
+
+		};
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		for ( var i = 0; i < peeps.length; i++ ) {
+
+			user = peeps[ i ];
+			if ( user.startsWith('#') ) {
+
+			selUser.appendChild( document.createElement( 'optgroup' ) );
+			selUser.children[ i ].label = user.slice( 1 );
+
+			} else {
+
+			selUser.appendChild( document.createElement( 'option' ) );
+			selUser.children[ i ].text = user;
+
+			}
+
+		}
+
+		selUser.selectedIndex = 1;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		if ( location.hash ) { 
+
+			onHashChange(); 
+
+		} else { 
+
+			location.hash = selUser.value; 
+
+		}
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash ? location.hash.split( '#' ) : '';
+
+		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
+
+		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
+
+		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
+
+		for ( var i = 0; i < selUser.options.length; i++ ) {
+
+			if ( selUser.options[ i ].value === name ) { selUser.selectedIndex = i; }
+
+		}
+
+		getAPIUserData( name );
+
+	}
+
+
+	function getAPIUserData( user ) {
+
+		var url, xhr, keys;
+
+		url = 'https://api.github.com/users/' +  user;
+
+		menuUserInfo.innerHTML = '';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.responseText );
+			keys = Object.keys( response );
+
+			for ( var i = 0; i < keys.length; i++ ) {
+
+				menuUserInfo.innerHTML += '<div>' + ( usersGet[ keys[ i ] ]( response[ keys[ i ] ] ) || '' ) + '</div)';
+
+			}
+
+		}
+
+	}
+
+	function getAPIDataToContent( call ) {
+
+		var xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', call, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		contents.innerHTML = '';
+
+		function callback() {
+
+			window.scrollTo( 0, 0 );
+			contents.innerText = xhr.response;
+
+		}
+
+	}
+
+
+</script>
+</body>
+</html>

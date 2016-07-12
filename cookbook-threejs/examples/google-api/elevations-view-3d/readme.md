@@ -1,25 +1,25 @@
 <span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/cookbook-threejs/examples/google-api/view-elevations-3d/index.html#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/view-elevations-3d/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d/index.html#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/elevations-view-3d/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
 
-[View Elevations 3D Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/view-elevations-3d/index.html#readme.md )
+[Elevations View 3D Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d/index.html#readme.md )
 ===
 
 
-## Full Screen:[View Elevations 3D]( https://jaanga.github.io/cookbook-threejs/examples/google-api/view-elevations-3d/ )
+## Full Screen:[Elevations View 3D]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d/ )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/16543983/ab66ecf4-40a7-11e6-9618-6484df7206fc.png" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/view-elevations-3d/ width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d/ width=100% height=600px ></iframe>
 
-_View Elevations 3D_
+_Elevations View 3D_
 
 
-## See also [SF R1]( http://fgx.github.io/sandbox/view-elevations-3d/vnlk-r1.html )
+## See also [SF R1]( http://fgx.github.io/sandbox/elevations-view-3d/vnlk-r1.html )
 
 
 ## Features
