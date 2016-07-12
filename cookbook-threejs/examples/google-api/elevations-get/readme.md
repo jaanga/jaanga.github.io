@@ -5,17 +5,17 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google Maps API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
 
-[Google Maps API Elevations for Tiles Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html#readme.md )
+[Get Elevations Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html#readme.md )
 ===
 
-## Full Screen: [ Google Maps API Elevations for Tiles ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html )
+## Full Screen: [ Get Elevations ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/16543909/d572ff4a-40a4-11e6-81b8-e321f751e2a4.png" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html width=100% height=600px ></iframe>
+<iframe sandbox='allow-scripts' src=https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html width=100% height=600px ></iframe>
 
-_Google Maps API Elevations for Tiles_
+_Get Elevations_
 
 ***
 
