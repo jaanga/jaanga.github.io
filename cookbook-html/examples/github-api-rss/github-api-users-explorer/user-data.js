@@ -148,7 +148,7 @@
 
 	usersGet.received_events_url = function( item ) {
 
-		return  '<button onclick=getAPIDataToContent("' + response.received_events_url + '"); > received events </button> ' +
+		return  '<button onclick=getAPIDataToContent("' + response.received_events_url + '"); > raw </button> ' +
 			'<button onclick=sendMesssageToContents("Receivedevents"); > received events </button> ';
 //		return 'Received Events: <a href=' + response.received_events_url + ' >received events</a>';
 
