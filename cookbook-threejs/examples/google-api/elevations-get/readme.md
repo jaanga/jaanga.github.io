@@ -5,17 +5,19 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Google Maps API]( https://jaanga.github.io/cookbook-threejs/examples/google-api/ ) &raquo;
 
-[Get Elevations Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html#readme.md )
+[Elevations Get Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html#readme.md )
 ===
 
-## Full Screen: [ Get Elevations ]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html )
+## Full Screen: [Elevations Get]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/16543909/d572ff4a-40a4-11e6-81b8-e321f751e2a4.png" style=display:none; width=800 >
+<!--
+<iframe sandbox='allow-same-origin allow-scripts' src=https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html width=100% height=600px onload=this.contentWindow.googleMap.setOptions({scrollwheel:false}); ></iframe>
+-->
+<iframe sandbox='allow-same-origin allow-scripts' src=index.html width=100% height=600px onload=this.contentWindow.googleMap.setOptions({scrollwheel:false}); ></iframe>
 
-<iframe src=https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html width=100% height=600px onload=this.contentWindow.googleMap.setOptions({scrollwheel:false}); ></iframe>
-
-_Get Elevations_
+_Elevations Get_
 
 ***
 
@@ -26,11 +28,11 @@ This is part of an investigation into writing very simple code that can access t
 
 ### Mission
 
-* TBD
+* Obtain the latest most accurate 3D elevations as quickly and as easily as possible
 
 ### Vision
 
-* TBD
+* Create digital terrain models for interesting new uses
 
 
 ## Features

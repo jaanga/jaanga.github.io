@@ -7,11 +7,14 @@
 [Examples Read Me]( index.html )
 ===
 
-_Cookbook code useful in adding to bigger projects/ Places to start. Test cases._
+_Cookbook code useful in adding to bigger projects/ Places to start. Test cases. WIP_
+
 
 
 ### _new 'GitHub API Files Viewer' / new menu at right / changes everything_
 
+
+[Google API tools]( jaanga.github.io/cookbook-threejs/examples/google-api/ )
 
 ***
 
