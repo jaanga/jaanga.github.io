@@ -114,8 +114,8 @@ Display results in 3D. Display useful info.
 			'</h2>' +
 
 			'<p>Enter a location:</p>' +
-			'<p><input id=inpAddress class=controls placeholder="' + placeholder + '" onclick=this.select(); onchange=geocodeAddress(geocoder,map); title="Thank you Google!" > ' +
-				'<button onclick=geocodeAddress(geocoder, map); >geocode </button></p>' +
+			'<p><input id=inpAddress class=controls placeholder="' + placeholder + '" onclick=this.select(); onchange=geocodeAddress(geocoder,googleMap); title="Thank you Google!" > ' +
+				'<button onclick=geocodeAddress(geocoder,googleMap); >geocode </button></p>' +
 
 			'<p>Latitude : <input id=inpLatitude size=12 value=' + latitude + ' onclick=this.select(); onchange=setCenter(); ></p>' +
 			'<p>Longitude: <input id=inpLongitude size=12 value=' + longitude + ' onclick=this.select(); onchange=setCenter(); ></p>' +

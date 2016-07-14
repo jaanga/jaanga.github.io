@@ -91,7 +91,7 @@ console.log( 'non-event', event );
 
 			} else {
 */
-				target.innerHTML = pageHeader + pageContent + pageFooter;
+				contents.innerHTML = pageHeader + pageContent + pageFooter;
 				window.scrollTo( 0, 0 );
 
 //			}
