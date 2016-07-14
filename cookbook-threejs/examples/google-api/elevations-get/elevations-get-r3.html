@@ -62,7 +62,7 @@ Display results in 3D. Display useful info.
 
 			'html { height: 100%; }' +
 			'body { font: 12pt monospace; height: 100%; margin: 0; }' +
-			'h3 { margin: 0; }' +
+			'h2, h3 { margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 			'iframe { background-color: white; border: 0px; height: 100%; margin-top: 20px; width: 100%; }' +
@@ -127,8 +127,9 @@ Display results in 3D. Display useful info.
 			'<p>Map overlay: <select id=selMap onchange=initMap() size=1 />' +
 				'<option>Hybrid</option><option>Roadmap</option><option>Satellite</option><option selected >Terrain</option>' +
 			'</select>' +
-
 			'</p>' +
+
+			'<div id=menuClickDetails><h3>click details</h3></div>' +
 
 			'<hr>' +
 
@@ -137,14 +138,18 @@ Display results in 3D. Display useful info.
 				'<button onclick=saveFile(); >Save File</button>' +
 			'</p>' +
 
-			'<textarea id=txtArea ></textarea>' +
+			'<textarea id=txtArea >Elevation data appears here as it arrives. When complete a 3D model is generated and displayed.</textarea>' +
 
 			'<details open >' +
 				'<summary><h3>path data</h3></summary>' +
 				'<p><input type=file id=inpFile onchange=openFile(this); ></p>' +
-				'<textarea id=textArea style=height:50px;overflow:auto;width:100%; ></textarea>' +
+				'<textarea id=textArea style=height:50px;overflow:auto;width:100%; >' +
+					'Open a flight path data CSV file to view its path on the map. ' +
+					'If location is remote, press \'go there\' when it appears. ' +
+					'You may load multiple paths.' +
+				'</textarea>' +
 				'<div id=menuOpenFile ></div>' +
-				'<div id=menuPathBoundaries ></div>' +
+				'<div id=menuPathBoundaries ><h3>path boundaries</h3></div>' +
 
 			'</details>' +
 
@@ -276,6 +281,8 @@ Display results in 3D. Display useful info.
 			expandViewportToFitPlace( googleMap, place );
 
 		} );
+
+		googleMap.addListener( 'click', onClick ); 
 
 		getTiles();
 
@@ -557,7 +564,7 @@ Display results in 3D. Display useful info.
 			{ lat: LRlat, lng: ULlon }
 		];
 
-		tilePath = new google.maps.Polygon( {
+		tilePath = new google.maps.Polyline( {
 			path: tileCoordinates,
 			fillOpacity: 0.075,
 			strokeColor: color,
@@ -759,6 +766,34 @@ console.log( 'complete count', count, elevations.length );
 
 //
 
+	function onClick( event ) {
+
+		var latLng, lat, lon;
+
+		latLng = event.latLng;
+
+		lat = latLng.lat();
+		lon = latLng.lng();
+
+		menuClickDetails.innerHTML = 
+		'<details open>' +
+			'<summary><h3>click details</h3></summary>' +
+			'Latitude: ' + lat.toFixed( 4 ) + b +
+			'Longitude: ' + lon.toFixed( 4 ) + b + b + 
+			'Pixel X: ' + event.pixel.x + b +
+			'Pixel Y: ' + event.pixel.y + b +
+			'<p><button onclick=inpLatitude.value=' + lat + ';inpLongitude.value=' + lon + ';initMap(); >set center</p></p>' +
+		'</details>';
+
+		var marker = new google.maps.Marker({
+
+			position: {lat: lat, lng: lon } ,
+			map: googleMap 
+
+		});
+
+	}
+
 	function openFile( files ) {
 
 		var fileData, reader, data;
@@ -904,6 +939,7 @@ console.log( '', files.files[0].lastModifiedDate );
 		delete a;
 
 	}
+
 
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
 
