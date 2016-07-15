@@ -35,7 +35,7 @@ console.log( 'user', user );
 			dates = [];
 			events = JSON.parse( xhr.responseText );
 
-console.log( 'events', events );
+//console.log( 'events', events );
 
 			pageContent = '';
 
@@ -91,6 +91,7 @@ console.log( 'non-event', event );
 
 			} else {
 */
+
 				contents.innerHTML = pageHeader + pageContent + pageFooter;
 				window.scrollTo( 0, 0 );
 

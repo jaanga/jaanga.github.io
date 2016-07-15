@@ -52,7 +52,7 @@
 	usersGet.login = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("Login"); > login </button> ' + 
+			'<button class=butt2 onclick=sendMesssageToContents("Login"); > login </button> ' + 
 			'<a href=' + response.html_url + ' >' + item + '</a>';
 
 	}
@@ -60,14 +60,14 @@
 	usersGet.id = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/user/' + item + '"); > raw </button> ' +
-			'<button onclick=sendMesssageToContents("ID"); > id </button> ' + 
+			'<button class=butt2 onclick=sendMesssageToContents("ID"); > id </button> ' + 
 			item.toLocaleString();
 
 	}
 
 	usersGet.avatar_url = function( item ) {
 
-		return '<img src=' + item + ' width=100%; >';
+		return '<img src=' + item + ' width=280; >';
 
 	}
 
@@ -110,7 +110,7 @@
 	usersGet.starred_url = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/starred"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("starred"); > starred </button> ' + 
+			'<button  class=butt2 onclick=sendMesssageToContents("starred"); > starred </button> ' + 
 			'<a href=https://github.com/stars/' + response.login + ' >stars</a>';
 
 	}
@@ -118,14 +118,14 @@
 	usersGet.subscriptions_url = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/subscriptions"); > raw </button> ' +
-			'<button onclick=sendMesssageToContents("Subscriptions"); > subscriptions </button> ';
+			'<button  class=butt2 onclick=sendMesssageToContents("Subscriptions"); > subscriptions </button> ';
 
 	}
 
 	usersGet.organizations_url = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/orgs"); > raw </button> ' +
-			'<button onclick=getOrgs("' + response.login + '"); > organizations </button> ';
+			'<button  class=butt2 onclick=getOrgs("' + response.login + '"); > organizations </button> ';
 //		return 'Orgs: <a href=https://api.github.com/users/' + response.login + '/orgs >orgs</a>';
 
 	}
@@ -133,7 +133,7 @@
 	usersGet.repos_url = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/repos"); > raw </button> ' + 
-			'<button onclick=getRepos("' + response.login + '"); > repos </button> ' +
+			'<button  class=butt2 onclick=getRepos("' + response.login + '"); > repos </button> ' +
 			'<a href=https://github.com/' + response.login + '?tab=repositories >' + response.public_repos + ' repos</a>';
 
 	}
@@ -141,7 +141,7 @@
 	usersGet.events_url = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/events"); > raw </button> ' + 
-			'<button onclick=getEvents("' + response.login + '",page,contents); > events </button> ' + 
+			'<button  class=butt2 onclick=getEvents("' + response.login + '",page,contents); > events </button> ' + 
 			'<a href=https://github.com/' + response.login + '?tab=activity >activity</a>';
 
 	}
@@ -149,7 +149,7 @@
 	usersGet.received_events_url = function( item ) {
 
 		return  '<button onclick=getAPIDataToContent("' + response.received_events_url + '"); > raw </button> ' +
-			'<button onclick=sendMesssageToContents("Receivedevents"); > received events </button> ';
+			'<button  class=butt2 onclick=sendMesssageToContents("Receivedevents"); > received events </button> ';
 //		return 'Received Events: <a href=' + response.received_events_url + ' >received events</a>';
 
 	}
@@ -245,7 +245,7 @@
 	usersGet.public_gists = function( item ) {
 
 		return  '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/gists"); > raw </button> ' + 
-			'<button onclick=getGists("' + response.login + '"); > gists </button> ';
+			'<button  class=butt2 onclick=getGists("' + response.login + '"); > gists </button> ';
 			'<a href=https://gist.github.com/' + response.login + ' >' + item + ' gists </a>';
 
 	}
@@ -253,7 +253,7 @@
 	usersGet.followers = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("' + response.followers_url + '"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("Followers"); > followers </button> ' +
+			'<button  class=butt2 onclick=sendMesssageToContents("Followers"); > followers </button> ' +
 			'<a href=https://github.com/' + response.login + '/followers >' + item + ' followers </a>';
 
 	}
@@ -261,7 +261,7 @@
 	usersGet.following = function( item ) {
 
 		return '<button onclick=getAPIDataToContent("https://api.github.com/users/' + response.login + '/following"); > raw </button> ' + 
-			'<button onclick=sendMesssageToContents("Following"); > following </button> ' +
+			'<button  class=butt2 onclick=sendMesssageToContents("Following"); > following </button> ' +
 			'<a href=https://github.com/' + response.login + '/following >' + item + ' following</a>';
 
 	}

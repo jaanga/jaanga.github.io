@@ -108,13 +108,25 @@ There seem to be a variety of speed bumps
 
 Using file names to convey essential meta data. Is this a good thing?
 
+Updated 2016-07-14
+
+Example:
+
+* elevations_Paris_12_2073_1408_2076_1411_30_30_.txt
+
+Gives place, zoom level, upper left tile x, upper left tile y, lower right tile x, lower right tile y, samples for x, samples for y
+
+This format provides an industry standard accuracy to many places and yet keeps the file name fairly short
+
+
+<!--
 Example
 elevations_-31.7300_148.6392_z12_t4_500x500_.txt
 
 This gives: latitude, longitude, zoom, tiles and samples.
 Tile numbers could be given instead. This would save some calculating and might avoid an error or two.
 But nobody knows tile number and lat/lon is familiar to all
-
+-->
 
 ## Users
 
@@ -132,6 +144,10 @@ Intended for general use
 
 ## Change Log
 
+* Add click to update center
+* Add colored maekers with lat/lon tool tips in many places
+* Add user help messages 
+* Re-jig file naming system to use tiles and place names
 
 
 ### 2016-07-11 ~ R2

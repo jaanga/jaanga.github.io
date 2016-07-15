@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Users Explorer R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Use GitHub API to gather users or organization, events.
+Select user from drop-down list or by input.
+Display all ten pages of user events one-by-one or all at once.
+List user events in an informative manner.
+' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-07-14' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script src=../users.js ></script>
+<script src=user-data.js ></script>
+<script src=events.js ></script>
+<script>
+
+// https://developer.github.com/v3/
+
+	var converter;
+	var hashes, name, page;
+	var count = 1;
+
+	var b = '<br>';
+
+	init();
+
+	function init() {
+
+		var css, container, hamburger, menu;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'html, body { font: 12pt monospace; margin: 0; height: 100%; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'img { max-width: 800px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'select { width: 200px; }' +
+			'summary h3 { display:inline; }' +
+			'summary { outline: none; }' +
+
+			'div.issue { border: 1px solid #aaa; box-sizing: content-box; max-height: 600px; overflow: auto; padding: 10px; transform: scale( 0.85 ); transform-origin: top left; width: 100%; }' +
+			'.butt2 { width: 108px; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#container { left: ' + ( 0.5 * window.innerWidth - 600 ) + 'px; position: absolute; transition: left 1s; max-width: 1200px; }' +
+
+			'#contents { border-right: 1px #ccc solid; left: 375px; position: absolute; top: 0; width: 800px;  }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; height: ' + window.innerHeight + 'px; padding: 0 0 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+			'#menuUserInfo div { margin-bottom: 3px; }' +
+
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+			'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+			'<p>' +
+				'Selected Orgs & Users:<br><select id=selUser onchange=location.hash=this.value; title="Select the GitHub user" size=15 >' +
+				'<select>' +
+			'</p>' +
+
+			'<p><input placeholder="Enter a user name" onchange=initUser(this.value); ></p>' +
+//			'<p title="Be careful! Checked this can run you over your usage limit."><input type=checkbox id=chkLoadAll  > Load all user events</p>' +
+
+			'<div id=menuUserInfo ></div>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:window.scrollTo(0,0); >❦</a></h1>' +
+			'</center>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' + txt + txt + txt +
+			'</div>' +
+
+
+		'';
+
+
+		for ( var i = 0; i < peeps.length; i++ ) {
+
+			user = peeps[ i ];
+			if ( user.startsWith('#') ) {
+
+			selUser.appendChild( document.createElement( 'optgroup' ) );
+			selUser.children[ i ].label = user.slice( 1 );
+
+			} else {
+
+			selUser.appendChild( document.createElement( 'option' ) );
+			selUser.children[ i ].text = user;
+
+			}
+
+		}
+
+		selUser.selectedIndex = 1;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		if ( location.hash ) { 
+
+			onHashChange(); 
+
+		} else { 
+
+			location.hash = selUser.value; 
+
+		}
+
+	}
+
+	function onHashChange() {
+
+		hashes = location.hash ? location.hash.split( '#' ) : '';
+
+		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
+
+		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
+
+		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
+
+		for ( var i = 0; i < selUser.options.length; i++ ) {
+
+			if ( selUser.options[ i ].value === name ) { selUser.selectedIndex = i; }
+
+		}
+
+		getAPIUserData( name );
+
+		getEvents( name, page );
+
+	}
+
+
+	function sendMesssageToContents( message1 ) {
+
+
+		message = message1 || '';
+
+		contents.innerHTML = '<h2>' + message + ' feature not yet implemented</h2>' ;
+ 
+		window.scrollTo( 0, 0 );
+
+	}
+
+	function getOrgs( user ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/orgs';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			orgs = JSON.parse( xhr.responseText );
+
+//console.log( 'orgs', orgs );
+
+			txt = '<h2>' + response.login + ' Organizations</h2>';
+
+			for ( var i = 0; i < orgs.length; i++ ) {
+
+				org = orgs[ i ];
+
+				txt += '<h3><a href=https://github.com/' + org.login + ' >' + org.login + '</a></h3>' + 
+
+					'<p>' + org.description + '</p>';
+
+			}
+
+			contents.innerHTML = txt;
+
+		}
+
+	}
+
+	function getGists( user ) {
+
+		var fileName, xhr;
+
+		fileName = 'https://api.github.com/users/' + user + '/gists';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			gists = JSON.parse( xhr.responseText );
+
+			txt = '<h2>' + response.login + ' Gists</h2>';
+
+			for ( var i = 0; i < gists.length; i++ ) {
+
+				gist = gists[ i ];
+				txt += '<h3><a href=' + gist.html_url + ' >' + gist.description + '</a></h3>' + 
+					'<p>' + gist.updated_at.slice( 0, 10 ) + '</p>';
+
+			}
+
+			contents.innerHTML = txt;
+
+		}
+
+	}
+
+	function getRepos( user) {
+
+		var fileName, xhr, repos, txt;
+
+		fileName = 'https://api.github.com/users/' + user + '/repos';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			repos = JSON.parse( xhr.responseText );
+
+//console.log( 'repos', repos );
+
+			txt = '<h2>' + response.login + ' Repositories</h2>';
+
+			for ( var i = 0; i < repos.length; i++ ) {
+
+				repo = repos[ i ];
+
+				txt += '<h3><a href=' + repo.html_url + ' >' + repo.name + '</a></h3>' + 
+
+					'<p>' + repo.updated_at.slice( 0, 10 ) + ( repo.fork === true ? ' - fork - ' : ' - ' ) + repo.description + '</p>';
+
+			}
+
+			contents.innerHTML = txt;
+
+		}
+
+	}
+</script>
+</body>
+</html>

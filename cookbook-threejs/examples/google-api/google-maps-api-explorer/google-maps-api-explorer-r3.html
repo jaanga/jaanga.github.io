@@ -181,7 +181,14 @@
 
 		marker = new google.maps.Marker({
 
-			position: {lat: latitude, lng: longitude } ,
+// https://developers.google.com/maps/documentation/android-api/marker
+// https://sites.google.com/site/gmapsdevelopment/
+// https://developers.google.com/maps/documentation/android-api/marker#customize_the_marker_color
+
+			icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+			title: 'lat: ' + latitude + ', lng: ' + longitude,
+			snippet: 'snippet',
+			position: {lat: latitude, lng: longitude },
 			map: map
 
 		});
@@ -378,6 +385,8 @@ console.log( 'event', event, event.latLng.lat(), event.latLng.lng() );
 
 			var marker = new google.maps.Marker({
 
+				icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+				title: 'lat: ' + latitude + ', lng: ' + longitude,
 				position: {lat: event.latLng.lat(), lng: event.latLng.lng() } ,
 				map: map
 

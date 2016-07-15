@@ -21,7 +21,10 @@ Display results in 3D. Display useful info.
 
 	var urlViewElevations3D = '../elevations-view-3d-core/index.html';
 
+	var place = {};
 	var placeholder = 'Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal';
+	place.vicinity = placeholder;
+ 
 	var latitude = 27.6878; // 27.71110193545;
 	var longitude = 86.7314; // 86.71228385040001;
 
@@ -36,6 +39,7 @@ Display results in 3D. Display useful info.
 	var elevator;
 
 	var ULlat, ULlon, LRlat, LRlon;
+	var ULtileX, ULtileY, LRtileX, LRtileY;
 
 	var elevations = [];
 	var resolution = [];
@@ -262,10 +266,12 @@ Display results in 3D. Display useful info.
 
 		});
 
-
 		marker = new google.maps.Marker({
 
-			position: {lat: latitude, lng: longitude } ,
+			icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+			position: {lat: latitude, lng: longitude },
+			title: 'lat: ' + latitude + ', lng: ' + longitude,
+			snippet: 'snippet',
 			map: googleMap
 
 		});
@@ -316,7 +322,7 @@ Display results in 3D. Display useful info.
 
 				if ( results[ 1 ] ) {
 
-					inpAddress.value = results[1].formatted_address;
+					inpAddress.value = results[ 1 ].formatted_address;
 
 				} else {
 
@@ -359,7 +365,10 @@ Display results in 3D. Display useful info.
 
 	}
 
-	function expandViewportToFitPlace( map, place ) {
+	function expandViewportToFitPlace( map, plac ) {
+
+
+		place = plac;
 
 		if ( !place.geometry ) {
 
@@ -402,6 +411,7 @@ Display results in 3D. Display useful info.
 
 		var tileX, tileY, tileOffset;
 		var tileCoordinates, tilePath;
+		var ULlat, ULlon, LRlat, LRlon;
 
 		tileX = lon2tile( longitude, zoom );
 		tileY = lat2tile( latitude, zoom );
@@ -491,31 +501,56 @@ Display results in 3D. Display useful info.
 
 		var tileX, tileY, tileOffset;
 		var tileCoordinates, tilePath;
-		var ULlat, ULlon, LRlat, LRlon;
+
 
 		tileX = lon2tile( longitude, zoom );
 		tileY = lat2tile( latitude, zoom );
 
 		tileOffset = Math.floor( 0.5 * tiles );
 
+		ULtileX = ( tileX - tileOffset );
+		ULtileY = ( tileY - tileOffset );
+
+		LRtileX = ( tileX - tileOffset + tiles );
+		LRtileY = ( tileY - tileOffset + tiles );
+
 		ULlat = tile2lat( tileY - tileOffset, zoom );
 		ULlon = tile2lon( tileX - tileOffset, zoom );
 
-		LRlat = tile2lat( tileY + tileOffset + ( tiles % 2 ? 1 : 0 ) + 1, zoom );
-		LRlon = tile2lon( tileX + tileOffset + ( tiles % 2 ? 1 : 0 ) + 1, zoom );
+		LRlat = tile2lat( tileY + tileOffset + ( tiles % 2 ? 1 : 0 ), zoom );
+		LRlon = tile2lon( tileX + tileOffset + ( tiles % 2 ? 1 : 0 ), zoom );
 
 		menuSectionInfo.innerHTML =
 
 		'<details open >' +
 			'<summary><h3>section data</h3></summary>' +
-			'UL TileY: ' + ( tileY - tileOffset ) + ' Lat: ' + ULlat.toFixed( 4 ) + b +
-			'LR TileY: ' + ( tileY - tileOffset + tiles ) + ' Lat: ' + LRlat.toFixed( 4 ) + b +
+			'UL TileY: ' + ULtileY + ' Lat: ' + ULlat.toFixed( 4 ) + b +
+			'LR TileY: ' + LRtileY + ' Lat: ' + LRlat.toFixed( 4 ) + b +
 
-			'UL TileX: ' + ( tileX - tileOffset ) + ' Lon: ' + ULlon.toFixed( 4 ) + b +
-			'LR TileX: ' + ( tileX - tileOffset + tiles ) + ' Lon: ' + LRlon.toFixed( 4 ) + b +
+			'UL TileX: ' + ULtileX + ' Lon: ' + ULlon.toFixed( 4 ) + b +
+			'LR TileX: ' + LRtileX + ' Lon: ' + LRlon.toFixed( 4 ) + b +
 
 		'</details>' + b;
 
+		var marker = new google.maps.Marker({
+
+			icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
+			title: 'lat: ' + ULlat.toFixed( 4 ) + ', lng: ' + ULlon.toFixed( 4 ),
+			position: {lat: parseFloat( ULlat.toFixed( 4 ) ), lng: parseFloat( ULlon.toFixed( 4 ) )  },
+			map: googleMap 
+
+		});
+
+		marker = new google.maps.Marker({
+
+			icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+			title: 'lat: ' + LRlat.toFixed( 4 ) + ', lng: ' + LRlon.toFixed( 4 ),
+			position: {lat: parseFloat( LRlat.toFixed( 4 ) ), lng: parseFloat( LRlon.toFixed( 4 ) )  },
+			map: googleMap 
+
+		});
+
+		
 //		drawTitleBoundary( ULlat, ULlon, LRlat, LRlon, '#00ff00' );
 
 	}
@@ -561,12 +596,14 @@ Display results in 3D. Display useful info.
 			{ lat: ULlat, lng: ULlon },
 			{ lat: ULlat, lng: LRlon },
 			{ lat: LRlat, lng: LRlon },
-			{ lat: LRlat, lng: ULlon }
+			{ lat: LRlat, lng: ULlon },
+			{ lat: ULlat, lng: ULlon }
 		];
 
 		tilePath = new google.maps.Polyline( {
+
 			path: tileCoordinates,
-			fillOpacity: 0.075,
+//			fillOpacity: 0.075,
 			strokeColor: color,
 			strokeOpacity: 1.0,
 			strokeWeight: 2
@@ -787,6 +824,8 @@ console.log( 'complete count', count, elevations.length );
 
 		var marker = new google.maps.Marker({
 
+			icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+			title: 'lat: ' + lat + ', lng: ' + lon,
 			position: {lat: lat, lng: lon } ,
 			map: googleMap 
 
@@ -928,9 +967,24 @@ console.log( '', files.files[0].lastModifiedDate );
 
 		blob = new Blob( [ txtArea.value ] );
 
-		fileName = 'elevations_' + cenLat.toFixed(4) + '_' + cenLon.toFixed(4) +
-			'_z' + zoom + '_t' + tiles + '_' + samples + 'x' + samples + '_.txt';
+//		fileName = 'elevations_' + cenLat.toFixed(4) + '_' + cenLon.toFixed(4) +
+//			'_z' + zoom + '_t' + tiles + '_' + samples + 'x' + samples + '_.txt';
 
+		fileName = 'elevations_' + 
+			ULlat.toFixed( 5 ) + '_' +
+			ULlon.toFixed( 5 ) + '_' +
+			LRlat.toFixed( 5 ) + '_' +
+			LRlon.toFixed( 5 ) + '_' +
+			+ samples + '_' + samples + '_.txt';
+
+		fileName = 'elevations_' + 
+			( place.vicinity ? place.vicinity : 'place' ) + '_' + 
+			zoom + '_' +
+			ULtileX + '_' +
+			ULtileY + '_' +
+			LRtileX + '_' +
+			LRtileY + '_' +
+			+ samples + '_' + samples + '_.txt';
 		a = document.body.appendChild( document.createElement( 'a' ) );
 		a.href = window.URL.createObjectURL( blob );
 		a.download = fileName;

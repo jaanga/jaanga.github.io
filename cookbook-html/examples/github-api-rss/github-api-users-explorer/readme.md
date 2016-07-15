@@ -75,6 +75,16 @@ value='Source code listing' >
 ## Issues
 
 
+## To Do / Wish List
+
+* Read lists of users from gists or from list of contributors
+* Show mer details for each item
+* Add from here
+	* https://api.github.com/rate_limit
+	* https://api.github.com/meta
+	* https://api.github.com/emojis
+* Handle window.resize event
+
 ## Users
 
 Intended for xxx
@@ -85,11 +95,20 @@ Intended for xxx
 ## Links of Interest
 
 
+* https://developer.github.com/v3/
+
 
 
 ## Change Log
 
-### 
+### 2016-07-14 ~ R3
+
+* Based on new hamburger menu
+* Clean up menus
+* Update css for Orgs, repose, gists
+
+
+### 2016-07-12 ~ R1
 
 * First commit
 * Add Read Me
