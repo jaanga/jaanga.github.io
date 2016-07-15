@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!-- saved from http://devfiles.myopera.com/articles/2312/index.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Audio Timeline Triggers</title>
+</head>
+<body>
+<script>
+	document.body.style.font = '12pt monospace';
+	var splash = document.createElement( 'div' );
+	document.body.appendChild( splash );
+	splash.style.backgroundColor = '#ddd';
+	splash.style.borderRadius = '10px';
+	splash.style.boxShadow = '10px 10px 5px #888888';
+	splash.style.color = '#000';
+	splash.style.left = '10%';
+	splash.style.opacity = '0.85';
+	splash.style.padding = '15px';
+	splash.style.position = 'absolute';
+	splash.style.top = '10%';
+	splash.style.width = '300px';
+	var splashText = '<h2>Audio Timeline<\/h2><p id="status1">duration<\/p>';
+	/*
+		'<input id="play" type="button" value="Play">' +
+		'<input id="pause" type="button" value="Pause">' +
+		'<span id="duration"> span>' +
+		'<br \/>Volume:' +
+		'<input id="volume" type="range" min="0" max="10" value="5"><br \/><br \/>' ;
+	*/	
+	splash.innerHTML = splashText;
+
+	var audioElement = document.createElement('audio');
+	splash.appendChild( audioElement );
+	audioElement.setAttribute('src', 'foreverautumn.mp3');
+	audioElement.controls = 'true';	
+	
+	var updates = document.createElement( 'div' );
+	splash.appendChild( updates );
+	updates.innerHTML = 'status';
+	
+	window.requestAnimFrame = (function(){   
+		return window.requestAnimationFrame  ||    
+		window.webkitRequestAnimationFrame ||    
+		window.mozRequestAnimationFrame ||    
+		window.oRequestAnimationFrame  ||    
+		window.msRequestAnimationFrame  ||    
+		function(/* function */ callback, /* DOMElement */ element){   
+			window.setTimeout(callback, 1000 / 60);   
+		};   
+	})();  
+
+	var audio = new Audio();
+    audio.setAttribute('src', 'foreverautumn.mp3');
+	audio.preload = 'audio';
+	audio.controls = 'controls';
+
+	// Get the play button and append the audio play method to on click
+	/*
+	var play = document.getElementById('play');
+	play.addEventListener('click', function(){
+		audio.play();
+	}, false);
+
+	// Get the pause button and append the audio pause method to on click
+	var pause = document.getElementById('pause');
+	pause.addEventListener('click', function(){
+		audio.pause();
+	}, false);
+
+	// Get the HTML5 range input element and append audio volume adjustement on change
+	var volume = document.getElementById('volume');
+	volume.addEventListener('change', function(){
+		audio.volume = parseFloat(this.value / 10);
+	}, false);
+	*/
+	
+	var i = 20,
+		apps = {
+		fun1: function() {
+			updates.innerHTML='Hello world! ~ ' + new Date();
+			splash.style.left = 200 + i + 'px';
+			if (i > 80) { i = 10; }
+			i++;
+		},
+		fun2: function() {
+			updates.innerHTML='Good morning world! ~ ' + new Date();
+			if (i > 20) { i = 10; }
+			splash.style.top = 0.5 * i + '%';
+			i++;
+		},
+		fun3: function() {
+			updates.innerHTML='Howdy world! ~ ' + new Date();
+			splash.style.width = 300 + i  + 'px';
+			i++;
+			if (i > 320) { i = 300; }
+		}
+	};
+	
+	var whichApp;
+	
+	//audio.addEventListener("timeupdate", function() {
+	audioElement.addEventListener("timeupdate", function() {
+		var duration = document.getElementById('duration');
+		var s = parseInt(audioElement.currentTime % 60);
+		var m = parseInt((audioElement.currentTime / 60) % 60);
+		status1.innerHTML = m + ':' + s + 'sec ' + audioElement.currentTime + ' ' + audioElement.duration;
+		if (audioElement.currentTime < 5) {
+			whichApp = apps.fun1();
+		} else if (audioElement.currentTime < 10) {
+			whichApp = apps.fun2();
+		} else if (audioElement.currentTime < 15) {
+			whichApp = apps.fun3();
+		} else if (audioElement.currentTime < 20) {
+			whichApp = apps.fun2(); 
+		} else {
+			whichApp = apps.fun1();
+		}
+	}, false);
+	
+	function animate() {   
+       requestAnimFrame( animate );        
+       draw(whichApp);   
+    } 
+	
+</script>
+</body>
+</html>

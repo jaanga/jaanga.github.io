@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>vA3C Demo</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+</head>
+<body>
+
+<script src = http://mrdoob.github.com/three.js/examples/js/Detector.js ></script>
+<script src = http://mrdoob.github.com/three.js/build/three.min.js ></script>
+<script src = http://mrdoob.github.com/three.js/examples/js/controls/OrbitControls.js> </script>
+<script src = http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js ></script>
+
+<script>
+	if ( ! Detector.webgl ) { Detector.addGetWebGLMessage(); }
+
+	var renderer, scene, camera, controls, stats;
+	var cube, plane, colors = [];
+	var group = new THREE.Object3D();
+	var info;
+
+	init();
+	animate();
+
+	function init() {
+		var css, light, geometry, material, mesh;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { background-color: transparent; font: 600 12pt monospace; margin: 0 auto; overflow: hidden; }' +
+			'a { color: #f00; text-decoration: none;}  ' +
+			'button, input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; }' +
+			'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' +
+			'#content { position: absolute; left: 5px; top: 0; }' +
+			'#content div { margin: 5px; } ' +
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		// info.style.cssText = 'margin 0 0 0 100px: auto; position: absolute; top: 0px; width: 100% ';
+		menu.style.cssText = 'position: absolute; ';
+		menu.innerHTML = '<div id=content><h1><a href="" >' + document.title + '<a> ~ ' +
+			'<a href=# onclick=createInfo(); ><large>&#x24D8;</large></a></h1>' +
+			'<div style="border: 0px solid red;width:200px;" >' +
+				'<button onclick="va3cDemo();" >start vA3C demo</button> <br>' +
+				'<button onclick="va3cDemoRotate();" >start va3cDemoRotate</button> <br>' +
+				'<button onclick="va3cDemoZoom();" >start va3cDemoZoom</button> <br>' +
+				'<button onclick="va3cDemoPan();" >start va3cDemoPan</button> <br>' +
+			'</div>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0px; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		scene = new THREE.Scene();
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff } );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMapEnabled = true;
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -150, 150, 150 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// Lights
+		light = new THREE.AmbientLight( 0xffffff );
+		light.color.setHSL( 0.1, 0.5, 0.5 );
+		scene.add( light );
+
+		light = new THREE.PointLight( 0x888888 );
+		light.position.set( -50, 50, 50);
+		camera.add( light );
+
+ 		light = new THREE.DirectionalLight( 0xffffff, 1 );
+		light.position.set( 0, 500, 0 );
+		light.castShadow = true;
+		light.shadowMapWidth = 2048;
+		light.shadowMapHeight = 2048;
+		var d = 150;
+		light.shadowCameraLeft = -d;
+		light.shadowCameraRight = d;
+		light.shadowCameraTop = d * 1;
+		light.shadowCameraBottom = -d * 1;
+
+		light.shadowCameraNear = 100;
+		light.shadowCameraFar = 600;
+		light.shadowCameraVisible = true;
+
+		scene.add( light );
+
+// Axes
+        scene.add( new THREE.ArrowHelper( v(1, 0, 0), v(0, 0, 0), 100, 0xcc0000) );
+        scene.add( new THREE.ArrowHelper( v(0, 1, 0), v(0, 0, 0), 100, 0x00cc00) );
+        scene.add( new THREE.ArrowHelper( v(0, 0, 1), v(0, 0, 0), 100, 0x0000cc) );
+
+// Assets
+		material = new THREE.MeshPhongMaterial( {ambient: 0x888888, color: Math.random() * 0xffffff } );
+		geometry = new THREE.BoxGeometry( 100, 3, 100 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		scene.add( mesh );
+
+		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		colorful( colors, 100);
+		var texture = THREE.ImageUtils.loadTexture( "../../textures/cel-shade-64.png" );
+		for ( var i = 0; i < 100; i++) {
+
+			material = new THREE.MeshPhongMaterial( { opacity: 0.8, side: THREE.DoubleSide, transparent: true } );
+			material.color.setHSL( colors[i], 0.7, 0.5 ),
+			cube = new THREE.Mesh( geometry, material );
+			cube.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+			cube.rotation.set( Math.PI * Math.random(), Math.PI * Math.random(), Math.PI * Math.random() );
+			cube.receiveShadow = true;
+			cube.castShadow = true;
+
+			group.add( cube );
+			var bbox = new THREE.EdgesHelper( cube, 0x000000 );
+			group.add( bbox );
+
+		}
+		scene.add( group );
+	}
+
+	function animate() {
+		requestAnimationFrame( animate );
+		controls.update();
+		renderer.render( scene, camera );
+		stats.update();
+	}
+
+	function onWindowResize() {
+		windowHalfX = window.innerWidth / 2;
+		windowHalfY = window.innerHeight / 2;
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+	}
+
+	function colorful( arr, count) {
+		var delta = 1.0 / count;
+		for (var i = 0; i < count; i++ ) {
+			arr.push( i *  delta );
+		}
+		return arr;
+	}
+
+	function v(x,y,z){ return new THREE.Vector3(x,y,z); }
+
+	function createInfo() {
+		if ( info ) {
+			info.style.display = info.style.display === 'none' ? '' : 'none' ;
+		} else {
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'background-color:#ccc; left: 0; margin: auto; opacity:0.7; padding:10px; right: 0; position: absolute; ' +
+			'top: 200px; width:300px;';
+		info.innerHTML = 
+			'<div onclick=info.style.display="none"; >' +
+			document. title + '<br><br>' +
+			'<a href="https://github.com/cookbook/tree/gh-pages/" target="_blank">Source code.</a><br>' +
+			'<small>credits: <a href="http://threejs.org" target="_blank">three.js</a> - ' +
+			'<a href="http://khronos.org/webgl/" target="_blank">webgl</a> - ' +
+			'<a href="http://jaanga.github.io" target="_blank">jaanga</a><br>' +
+			'copyright &copy; 2014 jaanga authors ~ mit license</small><br><br>' +
+			'<i>Click anywhere in this message to hide...</i>' +
+		'</div>';
+		}
+	}
+
+	var count = 1;
+
+	function easeRotateDemo( number, duration, reps ) {
+
+		var start = Date.now();
+
+		function ease() {
+
+			var currentTime = Date.now();
+			var b = ( currentTime - start ) / duration;
+			var time = b < 1 ? b : 1;
+			if ( number > 0 ) { 
+				controls.rotateLeft( 0.01 - number );
+			} else {
+				controls.rotateLeft( -0.01 - number );
+			}
+
+			if ( time < 1 ) {
+				requestAnimationFrame( ease );
+			} else if ( count < reps ) {
+				number = -number;
+				count++;
+console.log( count );
+				easeRotateDemo( number, duration, reps );
+			}
+
+		}
+
+		requestAnimationFrame( ease )
+
+	}
+
+	function easePanTo( number, duration, easingFunction, callback ) {
+
+		var start = Date.now();
+
+		function ease() {
+
+			var currentTime = Date.now();
+			var b = ( currentTime - start ) / duration;
+			var time = 1 < b ? 1 : b;
+			var easedT = easingFunction( time );
+			var dis = easedT * number; 
+//console.log( dis );
+			controls.panLeft( dis );
+
+			if ( time < 1 ) {
+				requestAnimationFrame( ease );
+			} else if ( callback ) {
+				callback( -number, duration, easingFunction, false );
+			}
+
+		}
+
+		requestAnimationFrame( ease )
+
+	}
+
+	function panDemo( number, duration, reps ) {
+
+		var start = Date.now();
+
+		function ease() {
+
+			var currentTime = Date.now();
+			var b = ( currentTime - start ) / duration;
+			var time = 1 < b ? 1 : b;
+			controls.panLeft( number );
+
+			if ( time < 1 ) {
+				requestAnimationFrame( ease );
+			} else if ( count < reps) {
+				number = -number;
+				count++;
+				panDemo( number, duration, reps );
+			}
+		}
+
+		requestAnimationFrame( ease )
+
+	}
+
+	function zoomDemo( number, duration, reps ) {
+
+		var start = Date.now();
+
+		function ease() {
+
+			var currentTime = Date.now();
+			var b = ( currentTime - start ) / duration;
+			var time = 1 < b ? 1 : b;
+
+			controls.dollyIn( 1 - number );
+
+			if ( time < 1 ) {
+				requestAnimationFrame( ease );
+
+			} else if ( count < reps) {
+				number = -number;
+				count++;
+				zoomDemo( number, duration, reps );
+			}
+
+		}
+
+		requestAnimationFrame( ease )
+
+	}
+
+	var talk = new SpeechSynthesisUtterance();
+
+// Workaround for a Chrome issue (#340160 - https://code.google.com/p/chromium/issues/detail?id=340160)
+	var watch = setInterval( function() {
+		// Load all voices available
+		var voices = speechSynthesis.getVoices();
+		if ( voices.length !== 0 ) {
+			talk.voice = voices[ 2 ]; // Note: some voices don't support altering params
+			//	talk.volume = 0.5; // 0 to 1
+//			talk.rate = 5; // 0.1 to 10
+//			talk.pitch = 0.1; //0 to 2
+			talk.lang = 'en-GB';
+			clearInterval( watch );
+//			speechSynthesis.speak( talk );
+		}
+	}, 1 );
+
+	function speakText( txt, callback ) {
+		talk.text = txt;
+
+		window.speechSynthesis.speak( talk );
+//		talk.onend = callback();
+
+		talk.onend = function( event ) {
+			
+//			console.log('Finished in ' + event.elapsedTime + ' seconds.');
+			callback( event )
+		};
+
+	}
+
+	function callbackTime( event ) {
+		controls.autoRotate = false;
+		console.log('Finished in ' + event.elapsedTime + ' seconds.');
+	}
+
+	function callbackStart( event ) {
+		controls.autoRotate = false;
+		console.log('Finished in ' + event.elapsedTime + ' seconds.');
+
+		va3cDemoRotate();
+	}
+
+
+	function va3cDemo() {
+		var txt = 'Hello world! My name is Veee, ey, three, c.' + 
+			'I am here to help you communicate design intentions and issues.' +
+			'First I want to show you what you can do with me...' +
+		'';
+		controls.autoRotate = true;
+		speakText( txt, va3cDemoRotate );
+	}
+
+	function va3cDemoRotate() {
+		var txt = 'At any time - even during this demo - ' +
+			'you may press your left mouse button or hold down your finger on the touch pad and rotate the model.' +
+		'';
+
+		count = 1;
+
+		easeRotateDemo( 0.03, 3000, 2 );
+
+		speakText( txt, va3cDemoZoom );
+	}
+
+	function va3cDemoZoom() {
+		var txt = '' +
+			'you may use your mouse scroll wheel or two keys on the touch pad to zoom the model in and out.' +
+		'';
+
+		count = 1;
+
+		zoomDemo( 0.005, 800, 6);
+
+		speakText( txt, va3cDemoPan );
+	}
+
+	function va3cDemoPan() {
+		var txt = '' +
+			'And by pressing your right mouse button or three keys on the touch pad you can pan the camera' +
+		'';
+
+		count = 1;
+
+		panDemo( 2, 800, 4 );
+
+		speakText( txt, callbackTime );
+	}
+
+</script>
+</body>
+</html>

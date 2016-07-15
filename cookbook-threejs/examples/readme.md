@@ -14,7 +14,7 @@ _Cookbook code useful in adding to bigger projects/ Places to start. Test cases.
 ### _new 'GitHub API Files Viewer' / new menu at right / changes everything_
 
 
-[Google API tools]( jaanga.github.io/cookbook-threejs/examples/google-api/ )
+## [Google API tools]( http://jaanga.github.io/cookbook-threejs/examples/google-api/ )
 
 ***
 

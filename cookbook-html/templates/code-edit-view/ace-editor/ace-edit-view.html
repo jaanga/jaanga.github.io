@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>ace-edit-view.html</title>
+<meta charset=utf-8 />
+<style>
+
+	* { box-sizing:border-box; margin:0; }
+	body { font: 12pt monospace; }
+	a { text-decoration: none; }
+</style>
+</head>
+<body>
+<!-- <script src=http://ace.c9.io/build/src/ace.js ></script> -->
+<script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.min.js ></script>
+<script>
+// http://ace.c9.io/#nav=about
+
+	init();
+
+	function init() {
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=edit ></div>' +
+			'<iframe id=view ></iframe>' +
+			'<div id=menu ><button onclick=updateView(); >Update View</button></div>' +
+		'';
+
+		edit.style.cssText = 'border: 2px solid red; float: left; height: 300px; width: 50%; ';
+		view.style.cssText = 'border: 2px solid red; float: left; height: 300px; width: 50%; ';
+		menu.style.cssText = 'clear: both; padding: 20px; ';
+
+		text = '<h1>Hello, world!</h1>';
+		editor = ace.edit("edit");
+		editor.setValue( text );
+
+		updateView();
+
+	}
+
+	function updateView() {
+
+		text = editor.getValue();
+
+console.log( text );
+
+		view.srcdoc = text
+
+	}
+
+</script>
+</body>
+</html>

@@ -75,7 +75,14 @@ Intended for xxx
 
 ## Links of Interest
 
-
+* [Maple]( http://www.maplesoft.com/documentation_center/ ) ha ha ha
+* [Mathworks]( http://www.mathworks.com/help/matlab/getting-started-with-matlab.html ) ho hum
+* [Wolfram]( http://reference.wolfram.com/language/?source=nav ) whatwould you like to buy today
+* [Rust]( https://doc.rust-lang.org/ ) = line content div in middle
+* [Haskell]( https://wiki.haskell.org/Haskell )
+* [Julia]( http://docs.julialang.org/en/release-0.4/ )
+* [Swift]( https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/ ) expensive to build
+* [MDN]( https://developer.mozilla.org/en-US/docs/Web )
 
 
 ## Change Log

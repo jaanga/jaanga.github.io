@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- saved from http://devfiles.myopera.com/articles/2312/index.html -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Simple Audio Player</title>
+</head>
+<body>
+<script>
+	document.body.style.font = '12pt monospace';
+
+	var audio = new Audio();
+    audio.setAttribute('src', 'foreverautumn.mp3');
+	audio.preload = 'audio';
+
+	var splash = document.createElement( 'div' );
+	document.body.appendChild( splash );
+	splash.style.backgroundColor = '#ddd';
+	splash.style.borderRadius = '10px';
+	splash.style.boxShadow = '10px 10px 5px #888888';
+	splash.style.color = '#000';
+	splash.style.left = '10%';
+	splash.style.opacity = '0.85';
+	splash.style.padding = '15px';
+	splash.style.position = 'absolute';
+	splash.style.top = '10%';
+	splash.style.width = '300px';
+	var splashText = '<h2>Audio Timeline<\/h2><input id="play" type="button" value="Play">' +
+		'<input id="pause" type="button" value="Pause">' +
+		'<span id="duration"> span>' +
+		'<br \/>Volume:' +
+		'<input id="volume" type="range" min="0" max="10" value="5"><br \/><br \/>' ;
+	splash.innerHTML = splashText;
+
+	var updates = document.createElement( 'div' );
+	splash.appendChild( updates );
+	updates.innerHTML = 'status';
+
+    var audio = new Audio();
+    audio.setAttribute('src', 'foreverautumn.mp3');
+
+	// Get the play button and append the audio play method to on click
+	var play = document.getElementById('play');
+	play.addEventListener('click', function(){
+		audio.play();
+	}, false);
+
+	// Get the pause button and append the audio pause method to on click
+	var pause = document.getElementById('pause');
+	pause.addEventListener('click', function(){
+		audio.pause();
+	}, false);
+
+	// Get the HTML5 range input element and append audio volume adjustement on change
+	var volume = document.getElementById('volume');
+	volume.addEventListener('change', function(){
+		audio.volume = parseFloat(this.value / 10);
+	}, false);
+
+	// Duration
+	audio.addEventListener("timeupdate", function() {
+		var duration = document.getElementById('duration');
+		var s = parseInt(audio.currentTime % 60);
+		var m = parseInt((audio.currentTime / 60) % 60);
+		duration.innerHTML = m + ':' + s + 'sec ' + audio.currentTime + ' ' + audio.duration;
+		if (audio.currentTime < 5) {
+			updates.innerHTML = 'begin';
+		} else if (audio.currentTime < 10) {
+			updates.innerHTML = 'middle';
+		} else if (audio.currentTime < 15) {
+			updates.innerHTML = 'more';
+		} else if (audio.currentTime < 20) {
+			updates.innerHTML = 'later';
+		} else {
+			updates.innerHTML = 'onwards';
+		}
+	}, false);
+</script>
+</body>
+</html>
