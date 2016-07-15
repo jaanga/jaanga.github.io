@@ -40,7 +40,7 @@ List user events in an informative manner.
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
-			'html, body { font: 12pt monospace; margin: 0; height: 100%; }' +
+			'body { font: 12pt monospace; margin: 0; }' +
 
 			'a { color: crimson; text-decoration: none; }' +
 
@@ -61,15 +61,15 @@ List user events in an informative manner.
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 
-			'#container { left: ' + ( 0.5 * window.innerWidth - 600 ) + 'px; position: absolute; transition: left 1s; max-width: 1200px; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
 
-			'#contents { border-right: 1px #ccc solid; left: 375px; position: absolute; top: 0; width: 800px;  }' +
+			'#contents { border-right: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
 
 			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
 			'#hamburger h2 { margin: 0; }' +
 
-			'#menu { background-color: #eee; border: 1px #ccc solid; height: ' + window.innerHeight + 'px; padding: 0 0 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 300px; }' +
-			'#menu h2 { margin: 0; }' +
+//			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 0 0 10px; overflow-y: auto; position: fixed; width: 300px; }' +
 			'#menuUserInfo div { margin-bottom: 3px; }' +
 
 		'';
@@ -88,7 +88,7 @@ List user events in an informative manner.
 			'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
 			'<p>' +
-				'Selected Orgs & Users:<br><select id=selUser onchange=location.hash=this.value; title="Select the GitHub user" size=15 >' +
+				'Selected Orgs & Users:<br><select id=selUser onchange=location.hash=this.value+"#1"; title="Select the GitHub user" size=15 >' +
 				'<select>' +
 			'</p>' +
 
@@ -107,10 +107,7 @@ List user events in an informative manner.
 				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
 			'</div>' +
 
-			'<div id=contents >' +
-				'<h1>Typical contents</h1>' + txt + txt + txt +
-			'</div>' +
-
+			'<div id=contents ></div>' +
 
 		'';
 
@@ -118,15 +115,16 @@ List user events in an informative manner.
 		for ( var i = 0; i < peeps.length; i++ ) {
 
 			user = peeps[ i ];
+
 			if ( user.startsWith('#') ) {
 
-			selUser.appendChild( document.createElement( 'optgroup' ) );
-			selUser.children[ i ].label = user.slice( 1 );
+				selUser.appendChild( document.createElement( 'optgroup' ) );
+				selUser.children[ i ].label = user.slice( 1 );
 
 			} else {
 
-			selUser.appendChild( document.createElement( 'option' ) );
-			selUser.children[ i ].text = user;
+				selUser.appendChild( document.createElement( 'option' ) );
+				selUser.children[ i ].text = user;
 
 			}
 
@@ -134,8 +132,10 @@ List user events in an informative manner.
 
 		selUser.selectedIndex = 1;
 
+
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
+/*
 		if ( location.hash ) { 
 
 			onHashChange(); 
@@ -145,16 +145,17 @@ List user events in an informative manner.
 			location.hash = selUser.value; 
 
 		}
-
+*/
+		onHashChange();
 	}
 
 	function onHashChange() {
 
-		hashes = location.hash ? location.hash.split( '#' ) : '';
+		hashes = location.hash ? location.hash.split( '#' ) : [ '', selUser.value, 1 ];
 
-		name = hashes[ 1 ] ? hashes[ 1 ] : selUser.value;
+		name = hashes[ 1 ];
 
-		page = hashes[ 2 ] ? parseInt( hashes[ 2 ], 10 ) : 1;
+		page = parseInt( hashes[ 2 ], 10 );
 
 		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
 
@@ -181,6 +182,7 @@ List user events in an informative manner.
 		window.scrollTo( 0, 0 );
 
 	}
+
 
 	function getOrgs( user ) {
 

@@ -74,16 +74,22 @@ value='Source code listing' >
 
 ## Issues
 
+* Github issue hashes are interpreted as header 1 hashes
+
 
 ## To Do / Wish List
 
+* Order the menu in a more logical/coherent fashion
+
 * Read lists of users from gists or from list of contributors
-* Show mer details for each item
+* Show more details for each item
+* Add useful links such as current rate limit usage, emoji cheat sheet, etc
 * Add from here
 	* https://api.github.com/rate_limit
 	* https://api.github.com/meta
 	* https://api.github.com/emojis
 * Handle window.resize event
+
 
 ## Users
 

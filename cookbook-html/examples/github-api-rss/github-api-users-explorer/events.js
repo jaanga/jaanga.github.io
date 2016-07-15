@@ -107,7 +107,8 @@ console.log( 'non-event', event );
 
 		txt =
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
-			'<div>Body: <a href=' + event.payload.comment.html_url + ' >' + event.payload.comment.body + '</div>' +
+			'<div>Body: </div>' +
+			'<div class=issue ><a href=' + event.payload.comment.html_url + ' >' + converter.makeHtml( event.payload.comment.body ) + '</a></div>' +
 		'<br>';
 
 		return txt;
@@ -210,13 +211,14 @@ console.log( 'non-event', event );
 
 //console.log( 'push event', event );
 
-		txt = '';
+		commitMsg = '';
 		b = '<br>';
 		actor = event.actor.login;
 		for ( var i = 0; i < event.payload.commits.length; i++ ) {
 
 			commit = event.payload.commits[ i ];
-			txt += '<div><a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message + '</a></div>';
+			commitMsg += '<div class=issue><a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + 
+				' >' + converter.makeHtml( commit.message ) + '</a></div>';
 
 		}
 
@@ -224,7 +226,7 @@ console.log( 'non-event', event );
 			'<div>Actor: <a href=http://github.com/' + actor + ' >' + actor + '</a></div>' +
 			'<div>Message(s):</div>' + 
 //				( event.payload.commits.length ? event.payload.commits[ 0 ].message + '</a>' : '' ) + '</div>' +
-				txt +
+				commitMsg +
 			'<div>Size: ' + event.payload.size + ' - Length: ' + event.payload.commits.length + '</div>' +
 		'<br>';
 
@@ -238,7 +240,8 @@ console.log( 'non-event', event );
 			'<div>Title: <a href=' + event.payload.pull_request.html_url + ' >' + event.payload.pull_request.title + '</a></div>' +
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
-			'<div>Body: ' + event.payload.pull_request.body + '</div>' +
+			'<div>Body: </div>' +
+			'<div class=issue >' + converter.makeHtml( event.payload.pull_request.body ) + '</div>' +
 		'<br>';
 
 		return txt;
