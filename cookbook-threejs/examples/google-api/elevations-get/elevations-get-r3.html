@@ -969,21 +969,22 @@ console.log( '', files.files[0].lastModifiedDate );
 
 //		fileName = 'elevations_' + cenLat.toFixed(4) + '_' + cenLon.toFixed(4) +
 //			'_z' + zoom + '_t' + tiles + '_' + samples + 'x' + samples + '_.txt';
-
+/*
 		fileName = 'elevations_' + 
 			ULlat.toFixed( 5 ) + '_' +
 			ULlon.toFixed( 5 ) + '_' +
 			LRlat.toFixed( 5 ) + '_' +
 			LRlon.toFixed( 5 ) + '_' +
 			+ samples + '_' + samples + '_.txt';
+*/
 
 		fileName = 'elevations_' + 
 			( place.vicinity ? place.vicinity : 'place' ) + '_' + 
 			zoom + '_' +
 			ULtileX + '_' +
 			ULtileY + '_' +
-			LRtileX + '_' +
-			LRtileY + '_' +
+			tiles + '_' +
+			tiles + '_' +
 			+ samples + '_' + samples + '_.txt';
 		a = document.body.appendChild( document.createElement( 'a' ) );
 		a.href = window.URL.createObjectURL( blob );

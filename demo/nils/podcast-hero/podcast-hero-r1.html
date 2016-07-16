@@ -132,11 +132,14 @@
 
 	function showSlide() {
 
+		var slide;
+
 		if ( index < slides.length ) {
 
 			slide = slides[ index ];
 
 			sayThis( slide[ 0 ] );
+
 			slideText.innerHTML = slide[ 1 ];
 			slideText.className = slide[ 2 ];
 
