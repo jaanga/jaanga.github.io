@@ -8,7 +8,7 @@
 Display in 3D. Add TMS overlay;
 ' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-07-11' >
+<meta name=date content='2016-07-17' >
 </head>
 <body>
 <!--
@@ -24,8 +24,8 @@ Display in 3D. Add TMS overlay;
 
 
 	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_3_30_30_.txt';
-	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3032_1718_4_4_100_100_.txt';
-
+//	var defaultFile = '../elevations/test-elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_2_5_30_150_.txt';
+//	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_5_30_50_.txt';
 
 	var ground;
 	var elevations;
@@ -105,7 +105,7 @@ Display in 3D. Add TMS overlay;
 
 			'<p>Map overlay<br><select id=selMap onchange=drawMapOverlay() size=5 /></select></p>' +
 
-			'<p>Map Zoom level<br><select id=selMapZoom onchange=getFileParameters() size=1 /></select></p>' +
+			'<p>Map Zoom level<br><select id=selMapZoom onchange=getFileNameParameters() size=1 /></select></p>' +
 
 
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
@@ -113,7 +113,7 @@ Display in 3D. Add TMS overlay;
 			'<p>vertical scale: <input type=range id=inpVertical max=0.1 min=0.0001 step=0.0001 value=0.015 oninput=drawGround(); title="0 to 10: OK" style=width:280px; ><br>' +
 				'<output id=outVertical >value</output></p>' +
 
-			'<div id=menuInfo ></div>' +
+			'<div id=menuFileNameDetails ></div>' +
 			'<div id=menuMap ></div>' +
 
 			'<details >' +
@@ -208,7 +208,7 @@ Display in 3D. Add TMS overlay;
 
 			fileName = files.files[ 0 ].name;
  
-			getFileParameters();
+			getFileNameParameters();
 
 		}
 
@@ -233,14 +233,13 @@ Display in 3D. Add TMS overlay;
 			response = xhr.responseText;
 			elevations = response.split( ',' ).map( function( item ) { return parseFloat( item ); } );
 
-			initElevations();
-			getFileParameters();
+			getFileNameParameters();
 
 		}
 
 	}
 
-	function getFileParameters() {
+	function getFileNameParameters() {
 
 		var parametersArray, delta;
 
@@ -266,7 +265,7 @@ Display in 3D. Add TMS overlay;
 
 			placeMapCanvas.width = pixelsPerTile * parameters.tilesX;
 			placeMapCanvas.height = pixelsPerTile * parameters.tilesY;
-			tilesPerSideSquared = parameters.tilesX * parameters.tilesX;
+			tilesPerSideSquared = parameters.tilesX * parameters.tilesY;
 
 		} else {
 
@@ -274,9 +273,41 @@ Display in 3D. Add TMS overlay;
 
 		}
 
-		setMenuInfo();
-		drawMapOverlay();
+		setMenuFileNameDetails();
+		initElevations();
+//		drawMapOverlay();
 
+	}
+
+	function setMenuFileNameDetails() {
+
+		menuFileNameDetails.innerHTML =
+			'<details open>' +
+				'<summary><h3>file name parameters</h3></summary>' +
+			'Location:<br>' + parameters.location + b + b +
+
+			'Zoom: ' + parameters.zoom + b +
+			'SamplesX: ' + parameters.segmentsX + b +
+			'SamplesY: ' + parameters.segmentsY + b + b +
+
+			'ULtileX: ' + parameters.ULtileX + b + 
+			'ULtileY: ' + parameters.ULtileY + b + b +
+
+			'tilesX: ' + parameters.tilesX + b + 
+			'tilesY: ' + parameters.tilesY + b + b +
+
+//			'Latitude: ' + parameters.latitude.toFixed( 4 ) + b +
+//			'Longitude: ' + parameters.longitude.toFixed( 4 ) + b + b +
+
+
+//			'Tiles: ' + parameters.tiles + b +
+//			'Elevations: ' + elevations.length + b +
+
+
+//			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
+//			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
+
+		'</details>' + b;
 
 	}
 
@@ -307,18 +338,26 @@ Display in 3D. Add TMS overlay;
 
 	}
 
+
 	function processElevations( elevs, params ) {
 
 			elevations = elevs;
 			parameters = params;
 
+			setMenuFileNameDetails();
+
+			placeMapCanvas.width = pixelsPerTile * parameters.tilesX;
+			placeMapCanvas.height = pixelsPerTile * parameters.tilesY;
+			tilesPerSideSquared = parameters.tilesX * parameters.tilesY;
+
 			initElevations();
 
 	}
 
+
 	function initElevations() {
 
-			segments = Math.sqrt( elevations.length );
+//			segments = Math.sqrt( elevations.length );
 
 //console.log( 'initElevations', segments, elevations.length );
 
@@ -334,44 +373,15 @@ Display in 3D. Add TMS overlay;
 
 //console.log( 'min', min, 'max', max, 'scale', scale  );
 
-			if ( parameters ) { setMenuInfo(); } else { menuInfo.innerHTML = ''; }
+//			if ( parameters ) { setMenuInfo(); } else { menuInfo.innerHTML = ''; }
 
 			drawGround();
+			drawMapOverlay();
 
 	}
 
 
-	function setMenuInfo() {
 
-		menuInfo.innerHTML =
-
-			'Location:<br>' + parameters.location + b + b +
-
-			'Zoom: ' + parameters.zoom + b +
-			'SamplesX: ' + parameters.segmentsX + b +
-			'SamplesY: ' + parameters.segmentsY + b + b +
-
-			'ULtileX: ' + parameters.ULtileX + b + 
-			'ULtileY: ' + parameters.ULtileY + b + b +
-
-			'tilesX: ' + parameters.tilesX + b + 
-			'tilesY: ' + parameters.tilesY + b + b +
-
-
-//			'Latitude: ' + parameters.latitude.toFixed( 4 ) + b +
-//			'Longitude: ' + parameters.longitude.toFixed( 4 ) + b + b +
-
-
-//			'Tiles: ' + parameters.tiles + b +
-			'Elevations: ' + elevations.length + b +
-
-
-			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
-			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
-
-		b;
-
-	}
 
 	function drawGround() {
 
@@ -379,7 +389,7 @@ Display in 3D. Add TMS overlay;
 
 		scene.remove( ground );
 
-		geometry = new THREE.PlaneBufferGeometry( 100, 100, segments - 1, segments - 1 );
+		geometry = new THREE.PlaneBufferGeometry( 33 * parameters.tilesX, 33 * parameters.tilesY, parameters.segmentsX - 1, parameters.segmentsY - 1 );
 
 		vertices = geometry.attributes.position.array;
 
@@ -496,7 +506,9 @@ Display in 3D. Add TMS overlay;
 				img = document.createElement( 'img' );
 				img.crossOrigin = 'anonymous';
 				img.src = baseURL + fileName;
+
 console.log( '', img.src );
+
 				img.onload = function(){
 
 					placeMapContext.drawImage( img, 0, 0, 256, 256, x * pixelsPerTile, y * pixelsPerTile, pixelsPerTile, pixelsPerTile );
