@@ -27,8 +27,9 @@
 
 	function init() {
 
-		var geometry, material;
 		var css, hamburger, menu;
+		var geometry, material;
+		var gridHelper, axisHelper;
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -36,39 +37,77 @@
 			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
 			'a { color: crimson; text-decoration: none; }' +
 
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary { outline: none; }' +
+			'summary h3 { display:inline; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#hamburger { background-color: #eee; left: 325px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
-			'#hamburger h2 { margin: 0; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
-				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#container { left: 0; position: absolute; transition: left 1s; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
 
 		'';
 
-		hamburger = document.body.appendChild( document.createElement( 'div' ) );
-		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars onclick=hamburger.style.left=hamburger.style.left==="0px"?"325px":0; title="Click this hamburger to slide the menu" > &#9776 </div>';
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
 
-		menu = hamburger.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
-		menu.innerHTML =
+			'<div id=menu >' +
 
-			'<h2>' +
-				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
-				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
-				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
-			'</h2>' +
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
 
-			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-			'<div id=menuInfo ></div>' +
+				'<p>' +
+					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
+				'</p>' +
+				'<div id=menuInfo ></div>' +
+
+				'<details open >' +
+					'<summary><h3>about</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+//				'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
 
 		'';
 
 		stats = new Stats();
-		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;' ;
 		document.body.appendChild( stats.domElement );
+		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
 
 		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
@@ -81,6 +120,7 @@
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
+		controls.autoRotate = true;
 
 		scene = new THREE.Scene();
 
@@ -92,11 +132,11 @@
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
-		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper  = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -112,12 +152,14 @@
 
 		renderer.setSize( window.innerWidth, window.innerHeight );
 
+		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
+
 	}
 
 	function animate() {
 
 		requestAnimationFrame( animate );
-//		controls.update();
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 

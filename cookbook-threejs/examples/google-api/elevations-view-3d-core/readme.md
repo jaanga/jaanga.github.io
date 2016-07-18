@@ -92,7 +92,12 @@ Intended for xxx
 
 ## Change Log
 
-### 
+### 2016-07-17 ~ R5
+
+* Many updates
+* Able to read elevations with varying tile width and height
+* Ditto samples per side
+* Able to display TMS overlays of user selected zoom levels
 
 
 ### 2016-07-07 ~ R2
