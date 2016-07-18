@@ -107,6 +107,7 @@ Display in 3D. Add TMS overlay;
 
 			'<p>Map Zoom level<br><select id=selMapZoom onchange=getFileNameParameters() size=1 /></select></p>' +
 
+
 			'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
 			'<p>vertical scale: <input type=range id=inpVertical max=0.1 min=0.0001 step=0.0001 value=0.015 oninput=drawGround(); title="0 to 10: OK" style=width:280px; ><br>' +
@@ -202,7 +203,7 @@ Display in 3D. Add TMS overlay;
 		reader.onloadend = function( event ) {
 
 			data = reader.result;
-
+//			elevations = data.split( ',' ).map( function( item ) { return parseFloat( item ); } );
 			elevations = data.split( ',' ).map( parseFloat );
 
 			fileName = files.files[ 0 ].name;
@@ -274,6 +275,7 @@ Display in 3D. Add TMS overlay;
 
 		setMenuFileNameDetails();
 		initElevations();
+//		drawMapOverlay();
 
 	}
 
@@ -294,9 +296,48 @@ Display in 3D. Add TMS overlay;
 			'tilesX: ' + parameters.tilesX + b + 
 			'tilesY: ' + parameters.tilesY + b + b +
 
+//			'Latitude: ' + parameters.latitude.toFixed( 4 ) + b +
+//			'Longitude: ' + parameters.longitude.toFixed( 4 ) + b + b +
+
+
+//			'Tiles: ' + parameters.tiles + b +
+//			'Elevations: ' + elevations.length + b +
+
+
+//			'Maximum elevation: ' + max.toFixed( 1 ) + 'm' + b +
+//			'Minimum elevation: ' + min.toFixed( 1 ) + 'm' + b +
+
 		'</details>' + b;
 
 	}
+
+
+	function processElevationsFileName( elevs, fName ) {
+// console.log( '', elevs, fName );
+		elevations = elevs;
+		parametersArray = fName.split( '_' );
+
+		if ( parametersArray.length > 5 ) {
+
+			parameters = {};
+			parameters.latitude = parseFloat( parametersArray[ 1 ] );
+			parameters.longitude = parseFloat( parametersArray[ 2 ] );
+			parameters.zoom = parseFloat( parametersArray[ 3 ].slice( 1 ) );
+			parameters.tiles = parseFloat( parametersArray[ 4 ].slice( 1 ) );
+			parameters.samples = parametersArray[ 5 ];
+			parameters.location = parametersArray[ 6 ].replace( '.txt', '' );
+
+
+		} else {
+
+			parameters = undefined;
+
+		}
+
+		initElevations();
+
+	}
+
 
 	function processElevations( elevs, params ) {
 
@@ -316,6 +357,10 @@ Display in 3D. Add TMS overlay;
 
 	function initElevations() {
 
+//			segments = Math.sqrt( elevations.length );
+
+//console.log( 'initElevations', segments, elevations.length );
+
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
 
 			min = arrayMin( elevations );
@@ -328,10 +373,14 @@ Display in 3D. Add TMS overlay;
 
 //console.log( 'min', min, 'max', max, 'scale', scale  );
 
+//			if ( parameters ) { setMenuInfo(); } else { menuInfo.innerHTML = ''; }
+
 			drawGround();
 			drawMapOverlay();
 
 	}
+
+
 
 
 	function drawGround() {
@@ -350,30 +399,83 @@ Display in 3D. Add TMS overlay;
 
 		}
 
+/*
+		if ( min < 0 ) {
+
+				geometry2 = new THREE.PlaneBufferGeometry( 100, 100 );
+
+				geometry.merge( geometry2 );
+
+		}
+*/
+
+
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI  ) );
 		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertical.valueAsNumber, 1 ) );
-
+//		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertica, 1 ) );
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 		geometry.computeBoundingBox();
 		geometry.computeBoundingSphere();
 		geometry.center();
-
+//console.log( '', geometry );
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
 		ground = new THREE.Mesh( geometry, material );
 		scene.add( ground );
+
+/*
+		if ( parameters ) {
+
+//			placeMapCanvas.width = pixelsPerTile * parameters.tilesX;
+			placeMapCanvas.height = pixelsPerTile * parameters.tilesY;
+//			document.body.appendChild( placeMapCanvas );
+//			placeMapCanvas.style.cssText = 'border: 1px solid gray; left: 0; margin: 10px auto; position: absolute; right: 0; top: 0; z-index:-10;';
+			tilesPerSideSquared = parameters.tilesX * parameters.tilesX;
+
+			if ( selMap.selectedIndex < 9 ) { drawMapOverlay(); }
+
+		}
+*/
+
+		outVertical.value = inpVertical.value;
 
 	}
 
 
 	function drawMapOverlay() {
 
-		var baseURL, count;
+//		var baseURL, count;
 		var tileX, tileY, tileOffset, texture;
 
 		count = 0;
 
 		baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
+
+/*
+		tileOffset = Math.floor( 0.5 * parameters.tiles );
+
+		tileX = lon2tile( parameters.longitude, parameters.zoom );
+		tileY = lat2tile( parameters.latitude, parameters.zoom );
+
+		ULlat = tile2lat( tileY - tileOffset, parameters.zoom );
+		ULlon = tile2lon( tileX - tileOffset, parameters.zoom );
+
+		LRlat = tile2lat( tileY + tileOffset + ( parameters.tiles % 2 ? 1 : 0 ) + 1, parameters.zoom );
+		LRlon = tile2lon( tileX + tileOffset + ( parameters.tiles % 2 ? 1 : 0 ) + 1, parameters.zoom );
+
+		menuMap.innerHTML =
+
+		'<details open >' +
+			'<summary><h3>section Info</h3></summary>' +
+			'UL TileY: ' + ( tileY - tileOffset ) + ' Lat: ' + ULlat.toFixed( 4 ) + b +
+			'LR TileY: ' + ( tileY - tileOffset + parameters.tiles ) + ' Lat: ' + LRlat.toFixed( 4 ) + b +
+
+			'UL TileX: ' + ( tileX - tileOffset ) + ' Lon: ' + ULlon.toFixed( 4 ) + b +
+			'LR TileX: ' + ( tileX - tileOffset + parameters.tiles ) + ' Lon: ' + LRlon.toFixed( 4 ) + b +
+
+		'</details>' + b;
+*/
+
 
 		for ( var x = parameters.ULtileX; x < parameters.ULtileX + parameters.tilesX; x++ ) {
 
@@ -404,6 +506,8 @@ Display in 3D. Add TMS overlay;
 				img = document.createElement( 'img' );
 				img.crossOrigin = 'anonymous';
 				img.src = baseURL + fileName;
+
+//console.log( '', img.src );
 
 				img.onload = function(){
 
