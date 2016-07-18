@@ -11,7 +11,7 @@
 ## Full Screen: [Elevations Get]( https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html )
 
 
-<img src="https://cloud.githubusercontent.com/assets/547626/16543909/d572ff4a-40a4-11e6-81b8-e321f751e2a4.png" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/16904516/d98fa098-4c4c-11e6-88f0-e668d12da07c.png" style=display:none; width=800 >
 
 
 <iframe sandbox='allow-same-origin allow-scripts' src=https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-get/index.html width=100% height=600px onload=this.contentWindow.googleMap.setOptions({scrollwheel:false}); ></iframe>
@@ -110,7 +110,17 @@ There seem to be a variety of speed bumps
 
 Using file names to convey essential meta data. Is this a good thing?
 
-Updated 2016-07-14
+####
+
+Example:
+
+* elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3032_1717_5_3_50_30_.txt
+
+place, zoom, upper left tile x, upper left tile y, tiles X, tiles Y, samples X, samples Y
+
+
+
+#### Updated 2016-07-14
 
 Example:
 
@@ -118,7 +128,7 @@ Example:
 
 Gives place, zoom level, upper left tile x, upper left tile y, lower right tile x, lower right tile y, samples for x, samples for y
 
-This format provides an industry standard accuracy to many places and yet keeps the file name fairly short
+This format provides an industry standard TMS accuracy to many places and yet keeps the file name fairly short
 
 
 <!--
@@ -150,7 +160,8 @@ Intended for general use
 
 * Enable choice of tile width and height - not just squares
 * Enable sample size by tile
-* Conitnue improments to menu data display
+* Continue improvements to menu data display
+* Revise file naming to place, zoom, upper left tile X, upper left tile Y, tiles X, tiles Y, samples X, samples Y
 
 ### 2016-07-14 ~ R3
 
