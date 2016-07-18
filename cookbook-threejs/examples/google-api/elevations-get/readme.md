@@ -146,8 +146,16 @@ Intended for general use
 
 ## Change Log
 
+### 2016-07-17 ~ R4
+
+* Enable choice of tile width and height - not just squares
+* Enable sample size by tile
+* Conitnue improments to menu data display
+
+### 2016-07-14 ~ R3
+
 * Add click to update center
-* Add colored maekers with lat/lon tool tips in many places
+* Add colored markers with lat/lon tool tips in many places
 * Add user help messages 
 * Re-jig file naming system to use tiles and place names
 
