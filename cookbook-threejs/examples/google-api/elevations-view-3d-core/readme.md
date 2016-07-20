@@ -13,7 +13,7 @@
 
 <img src="" style=display:none; width=800 >
 
-<iframe src="http://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d-core/index.html#../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3032_1717_5_3_50_30_.txt" width=100% height=600px ></iframe>
+<iframe src="http://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d-core/index.html#../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt" width=100% height=600px ></iframe>
 
 _Elevations View 3D Core_
 
