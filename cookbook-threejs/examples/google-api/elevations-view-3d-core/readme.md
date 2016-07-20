@@ -24,7 +24,8 @@ _Elevations View 3D Core_
 ### Mission
 
 * Read elevation files and create 3D display
-* Get data via iframe parent or location.hash
+* Get data via iframe parent, file open dialog or location.hash
+* Work well in an iframe
 
 
 ### Vision
@@ -54,13 +55,13 @@ _Elevations View 3D Core_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d-core/view-elevations-3d-core-r5.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/cookbook-threejs/examples/google-api/elevations-view-3d-core/elevations-view-3d-core-r1.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/elevations-view-3d-core/view-elevations-3d-core-r5.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/elevations-view-3d-core/elevations-view-3d-core-r1.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/elevations-view-3d-core/view-elevations-3d-core-r5.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/elevations-view-3d-core/elevations-view-3d-core-r1.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
@@ -81,7 +82,9 @@ value='Source code listing' >
 
 ## Users
 
-Intended for xxx
+Intended for generating flightpaths
+
+* [FGx Sandbox]( http://fgx.github.io/sandbox/index.html );
 
 
 ## Goals
@@ -91,6 +94,22 @@ Intended for xxx
 
 
 ## Change Log
+
+### 2016-07-20 ~ R1
+
+* Rename to 'elevations-view-3d-core' to align with folder came
+* Code cleanup, and variable name tidy
+* Add bounding box to display 
+
+### 2016-07-19 ~ R6/R7
+
+Code - except for heights - all seems to handle most of the issues. 
+But it can use a streamline / cleanup effort
+
+* Calculates and displays in decimal degrees
+* Add 'overlay details section to menu
+* Add link to 'elevations get'
+
 
 ### 2016-07-17 ~ R5
 

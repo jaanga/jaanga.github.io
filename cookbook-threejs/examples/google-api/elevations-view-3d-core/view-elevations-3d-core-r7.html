@@ -2,13 +2,13 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>View Elevations 3D Core R6</title>
+<title>View Elevations 3D Core R7</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Read a file of elevations. Create a Three.js 3D Mesh.
 Display in 3D. Add TMS overlay;
 ' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-07-18' >
+<meta name=date content='2016-07-19' >
 </head>
 <body>
 <!--
@@ -22,23 +22,21 @@ Display in 3D. Add TMS overlay;
 
 <script>
 
+	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
 
-	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_3_30_30_.txt';
-//	var defaultFile = '../elevations/test-elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_2_5_30_150_.txt';
-//	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_5_30_50_.txt';
-
-	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/kgcn/elevations_Tusayan_12_770_1605_4_5_120_150_.txt';
+//	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vnlj/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_3_30_30_.txt';
+//	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/kgcn/elevations_Tusayan_12_770_1605_4_5_120_150_.txt';
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vhsk/elevations_Hong%20Kong_14_13381_7141_5_4_150_120_.txt';
 
-	var scaleFactor = 25;
+	var scaleFactor = 0.1;
 
 	var fileName;
 
-	var ground, groundGeometry, groundMaterial;
+	var parameters = {};
 	var elevations;
-	var parameters;
-
 	var min, max;
+
+	var ground, groundGeometry, groundMaterial;
 
 	var mapTypes = [
 
@@ -59,6 +57,7 @@ Display in 3D. Add TMS overlay;
 
 	var pixelsPerTile = 256;
 	var tilesTotal;
+	var updateCamera = true;
 
 	var b = '<br>';
 
@@ -71,7 +70,7 @@ Display in 3D. Add TMS overlay;
 
 		var css, hamburger, bars, menu;
 		var geometry, material, mesh;
-		var gridHelper, axisHelper;
+		var axisHelper;
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -88,7 +87,7 @@ Display in 3D. Add TMS overlay;
 			'summary { outline: none; }' +
 			'summary h3 { display:inline; }' +
 
-			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 
@@ -96,7 +95,7 @@ Display in 3D. Add TMS overlay;
 
 			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
 
-			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; max-height: ' + window.innerHeight + 'px; overflow: auto; padding: 0 10px; position: absolute; width: 300px; }' +
 			'#menu h2 { margin: 0; }' +
 
 		'';
@@ -115,18 +114,25 @@ Display in 3D. Add TMS overlay;
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
+				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
+
 				'<p><input type=file id=inpFile onchange=openFile(this); /></p>' +
 
-				'<p>Map overlay<br><select id=selMap onchange=drawMapOverlay() size=5 /></select></p>' +
+				'<p>Map overlay<br><select id=selMap onchange=drawMapOverlay(); size=5 /></select></p>' +
 
-				'<p>Map Zoom level<br><select id=selMapZoom onchange=getFileNameParameters() size=1 /></select></p>' +
+				'<p>Map Zoom level<br><select id=selMapZoom onchange=drawMapOverlay(); size=1 /></select></p>' +
 
 				'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
 
-				'<p>vertical scale: <input type=range id=inpVertical max=0.1 min=0.0001 step=0.0001 value=0.015 oninput=setGround();drawMapOverlay(); title="" style=width:100%; >' +
+//				'<p>vertical scale: <input type=range id=inpVertical max=0.1 min=0.0001 step=0.0001 value=0.015 oninput=setGround();drawMapOverlay(); title="" style=width:100%; >' +
+//					'<output id=outVertical >value</output></p>' +
+
+				'<p>vertical scale: <input type=range id=inpVertical max=0.01 min=0.000001 step=0.000001 value=0.015 oninput=setGround();drawMapOverlay(); title="" style=width:100%; >' +
 					'<output id=outVertical >value</output></p>' +
 
 				'<div id=menuFileNameDetails ></div>' +
+
+				'<div id=menuOverlayDetails ></div>' +
 
 				'<div id=menuElevationsDetais ></div>' +
 
@@ -183,17 +189,21 @@ Display in 3D. Add TMS overlay;
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
-		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+//		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+//		camera.position.set( 100, 100, 100 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.00001, 1000 );
+		camera.position.set( 1, 1, 1 );
+		camera.up.set( 0, 0, 1 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
+//		controls.maxDistance = 800;
 		controls.maxDistance = 800;
 
 		scene = new THREE.Scene();
 
 // helpers
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxisHelper( 180 );
 		scene.add( axisHelper );
 
 // assets
@@ -203,7 +213,7 @@ Display in 3D. Add TMS overlay;
 
 		if ( window.self === window.top && location.hash ) {
 
-			getElevationsFile( location.hash.slice( 1 ) );
+//			getElevationsFile( location.hash.slice( 1 ) );
 //			container.style.left = '325px';
 
 		} else if ( window.self === window.top ) {
@@ -213,10 +223,15 @@ Display in 3D. Add TMS overlay;
 
 		}
 
-		if ( window.self !== window.top && location.hash ) {
+		if ( window.self !== window.top ) {
 
-			getElevationsFile( location.hash.slice( 1 ) );
-//			container.style.left = '325px';
+			if ( location.hash ) {
+
+				getElevationsFile( location.hash.slice( 1 ) );
+
+			}
+
+			container.style.left = '-325px';
 
 		}
 
@@ -224,7 +239,7 @@ Display in 3D. Add TMS overlay;
 
 	function openFile( files ) {
 
-		var reader;
+		var reader, data;
 
 		reader = new FileReader();
 		reader.onloadend = function( event ) {
@@ -246,7 +261,7 @@ Display in 3D. Add TMS overlay;
 
 	function getElevationsFile( fName ) {
 
-		var xhr, responses, parametersArray;
+		var xhr, response;
 
 		fileName = fName;
 
@@ -272,27 +287,23 @@ Display in 3D. Add TMS overlay;
 
 		parametersArray = fileName.split( '_' );
 
-		delta = selMapZoom.selectedIndex;
-
 		if ( parametersArray.length > 5 ) {
 
 			parameters = {
 
 				location: parametersArray[ 1 ],
-				zoom: parseInt( parametersArray[ 2 ], 10 ) + delta,
-				ULtileX: Math.pow( 2, delta ) * parseInt( parametersArray[ 3 ], 10 ),
-				ULtileY: Math.pow( 2, delta ) * parseInt( parametersArray[ 4 ], 10 ),
-				tilesX: Math.pow( 2, delta ) * parseInt( parametersArray[ 5 ], 10 ),
-				tilesY: Math.pow( 2, delta ) * parseInt( parametersArray[ 6 ], 10 ),
+				zoom: parseInt( parametersArray[ 2 ], 10 ),
+				ULtileX: parseInt( parametersArray[ 3 ], 10 ),
+				ULtileY: parseInt( parametersArray[ 4 ], 10 ),
+				tilesX: parseInt( parametersArray[ 5 ], 10 ),
+				tilesY: parseInt( parametersArray[ 6 ], 10 ),
 				segmentsX: parseInt( parametersArray[ 7 ], 10 ),
 				segmentsY: parseInt( parametersArray[ 8 ], 10 ),
 				fileName: fileName
 
 			};
 
-			placeMapCanvas.width = pixelsPerTile * parameters.tilesX;
-			placeMapCanvas.height = pixelsPerTile * parameters.tilesY;
-			tilesTotal = parameters.tilesX * parameters.tilesY;
+
 
 		} else {
 
@@ -300,22 +311,27 @@ Display in 3D. Add TMS overlay;
 
 		}
 
+		getParametersOverlay();
+
 		setMenuFileNameDetails();
 
 		initElevations();
 
 	}
 
+
 	function setMenuFileNameDetails() {
 
 		menuFileNameDetails.innerHTML =
 
 			'<details open>' +
+
 				'<summary><h3>file name parameters</h3></summary>' +
 
 				'Location:<br>' + parameters.location + b + b +
 
-				'Zoom: ' + parameters.zoom + b +
+				'Zoom level: ' + parameters.zoom + b + b +
+
 				'Samples X: ' + parameters.segmentsX + b +
 				'Samples Y: ' + parameters.segmentsY + b + b +
 
@@ -330,6 +346,9 @@ Display in 3D. Add TMS overlay;
 
 	}
 
+
+// When in iframe and called by parrent
+
 	function processElevations( elevs, params ) {
 
 			elevations = elevs;
@@ -337,11 +356,45 @@ Display in 3D. Add TMS overlay;
 
 			setMenuFileNameDetails();
 
-			placeMapCanvas.width = pixelsPerTile * parameters.tilesX;
-			placeMapCanvas.height = pixelsPerTile * parameters.tilesY;
-			tilesTotal = parameters.tilesX * parameters.tilesY;
+			getParametersOverlay();
 
 			initElevations();
+
+	}
+
+	function getParametersOverlay() {
+
+		var delta;
+
+		delta = selMapZoom.selectedIndex;
+
+		parameters.zoomOverlay = delta + parameters.zoom;
+		parameters.ULtileXOverlay = Math.pow( 2, delta ) * parameters.ULtileX;
+		parameters.ULtileYOverlay = Math.pow( 2, delta ) * parameters.ULtileY;
+		parameters.tilesXOverlay = Math.pow( 2, delta ) * parameters.tilesX;
+		parameters.tilesYOverlay = Math.pow( 2, delta ) * parameters.tilesY;
+
+		placeMapCanvas.width = pixelsPerTile * parameters.tilesXOverlay;
+		placeMapCanvas.height = pixelsPerTile * parameters.tilesYOverlay;
+		tilesTotal = parameters.tilesXOverlay * parameters.tilesYOverlay;
+
+		menuOverlayDetails.innerHTML =
+
+			'<details open>' +
+
+				'<summary><h3>overlay detais</h3></summary>' +
+
+				'Zoom level: ' + parameters.zoomOverlay + b + b +
+
+				'UL tile X: ' + parameters.ULtileXOverlay + b +
+				'UL tile Y: ' + parameters.ULtileYOverlay + b + b +
+
+				'Tiles X: ' + parameters.tilesXOverlay + b +
+				'Tiles Y: ' + parameters.tilesYOverlay + b + b +
+
+			'</details>' +
+
+		b;
 
 	}
 
@@ -358,22 +411,45 @@ Display in 3D. Add TMS overlay;
 		inpVertical.value = scale;
 		inpVertical.max = 3 * scale;
 
+		ULlat = tile2lat( parameters.ULtileY, parameters.zoom );
+		ULlon = tile2lon( parameters.ULtileX, parameters.zoom );
+
+		LRlat = tile2lat( parameters.ULtileY + parameters.tilesY, parameters.zoom );
+		LRlon = tile2lon( parameters.ULtileX + parameters.tilesX, parameters.zoom );
+
+		deltaLat = ULlat - LRlat;
+		deltaLon = LRlon - ULlon;
+
+		deltaLatTile = deltaLat / parameters.tilesY;
+
+		cenLat = LRlat + 0.5 * ( ULlat - LRlat );
+		cenLon = ULlon + 0.5 * ( LRlon - ULlon );
+
 		setGround();
-		drawMapOverlay();
+		drawMapOverlay( true );
 
 		menuElevationsDetais.innerHTML =
 
 			'<details open>' +
+
 				'<summary><h3>elevations file details</h3></summary>' +
 
-				'Length: ' + elevations.length.toLocaleString() + b + b +
+				'Number of data points: ' + elevations.length.toLocaleString() + b + b +
 
-				'Elevation maximum: ' + Math.round( max ).toLocaleString() + b +
-				'Elevation minimum: ' + Math.round( min ).toLocaleString() + b + b +
+				'Elevation maximum: ' + Math.round( max ).toLocaleString() + 'm' + b +
+				'Elevation minimum: ' + Math.round( min ).toLocaleString() + 'm' +b + b +
 
-				'Scale: ' + scale.toFixed( 3 ) + b +
+				'Scale: ' + scale.toFixed( 6 ) + b + b +
+
+				'Delta latitude : ' + deltaLat.toFixed( 4 ) + '&deg;' + b +
+				'Delta latitude/tile : ' + deltaLatTile.toFixed( 4 ) + '&deg;' + b +
+				'Delta longitude: ' + deltaLon.toFixed( 4 ) + '&deg;' + b + b +
+
+				'Center latitude : ' + cenLat.toFixed( 4 ) + '&deg;' + b +
+				'Center longitude: ' + cenLon.toFixed( 4 ) + '&deg;' + b +
 
 			'</details>' +
+
 		b;
 
 	}
@@ -383,7 +459,9 @@ Display in 3D. Add TMS overlay;
 
 		var vertices;
 
-		groundGeometry = new THREE.PlaneBufferGeometry( 33 * parameters.tilesX, 33 * parameters.tilesY, parameters.segmentsX - 1, parameters.segmentsY - 1 );
+//		groundGeometry = new THREE.PlaneBufferGeometry( 33 * parameters.tilesX, 33 * parameters.tilesY, parameters.segmentsX - 1, parameters.segmentsY - 1 );
+
+		groundGeometry = new THREE.PlaneBufferGeometry( deltaLatTile * parameters.tilesX, deltaLatTile * parameters.tilesY, parameters.segmentsX - 1, parameters.segmentsY - 1 );
 
 		vertices = groundGeometry.attributes.position.array;
 
@@ -393,49 +471,53 @@ Display in 3D. Add TMS overlay;
 
 		}
 
-		groundGeometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI  ) );
-		groundGeometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertical.valueAsNumber, 1 ) );
+//		groundGeometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI  ) );
+//		groundGeometry.applyMatrix( new THREE.Matrix4().makeScale( 1, inpVertical.valueAsNumber, 1 ) );
+
+		groundGeometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, inpVertical.valueAsNumber ) );
 
 		groundGeometry.computeFaceNormals();
 		groundGeometry.computeVertexNormals();
 		groundGeometry.computeBoundingBox();
 		groundGeometry.computeBoundingSphere();
-		groundGeometry.center();
 
-		outVertical.value = inpVertical.valueAsNumber.toFixed( 3 );
+//		groundGeometry.center();
+
+		outVertical.value = inpVertical.valueAsNumber.toFixed( 6 );
 
 	}
 
+	function drawMapOverlay( updateCamera ) {
 
-	function drawMapOverlay() {
+		var baseURL, count;
+		var texture;
 
 		if ( selMap.selectedIndex > 8 ) { 
 
 			groundMaterial = new THREE.MeshNormalMaterial( { side: 2 } );
 
-			drawGround();
+			drawGround( updateCamera );
 
 			return; 
 
 		}
 
-		var baseURL, count;
-		var tileX, tileY, tileOffset, texture;
+		getParametersOverlay();
 
 		baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
 		count = 0;
 
-		for ( var x = parameters.ULtileX; x < parameters.ULtileX + parameters.tilesX; x++ ) {
+		for ( var x = parameters.ULtileXOverlay; x < parameters.ULtileXOverlay + parameters.tilesXOverlay; x++ ) {
 
-			for ( var y = parameters.ULtileY; y < parameters.ULtileY + parameters.tilesY; y++ ) {
+			for ( var y = parameters.ULtileYOverlay; y < parameters.ULtileYOverlay + parameters.tilesYOverlay; y++ ) {
 
 				if ( selMap.selectedIndex < 4 ) {
 
-					loadImage( x + '&y=' + y + '&z=' + parameters.zoom, x - parameters.ULtileX, y - parameters.ULtileY );
+					loadImage( x + '&y=' + y + '&z=' + parameters.zoomOverlay, x - parameters.ULtileXOverlay, y - parameters.ULtileYOverlay );
 
 				} else {
 
-					loadImage( parameters.zoom + '/' + x + '/' + y + '.png', x - parameters.ULtileX , y - parameters.ULtileY );
+					loadImage( parameters.zoom + '/' + x + '/' + y + '.png', x - parameters.ULtileXOverlay , y - parameters.ULtileYOverlay );
 
 				}
 
@@ -465,7 +547,7 @@ Display in 3D. Add TMS overlay;
 
 						groundMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
 
-						drawGround();
+						drawGround( updateCamera );
 
 					}
 
@@ -475,17 +557,22 @@ Display in 3D. Add TMS overlay;
 
 	}
 
-	function drawGround() {
+	function drawGround( updateCamera ) {
 
 		scene.remove( ground );
 
 		ground = new THREE.Mesh( groundGeometry, groundMaterial );
 
+		ground.position.set( cenLon, cenLat, 0 );
+
 		scene.add( ground );
+
+		if ( updateCamera === true ) setCamera();
 
 	}
 
-//
+
+// utilities
 
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
 
@@ -548,7 +635,15 @@ Display in 3D. Add TMS overlay;
 
 	}
 
-//
+// Three.js
+
+	function setCamera() {
+
+		controls.target.copy( ground.position );
+		camera.position.copy( ground.position ).add( new THREE.Vector3( 0, -0.3, 0.3 ) );
+
+	}
+
 
 	function onWindowResize() {
 

@@ -23,22 +23,21 @@ Display in 3D. Add TMS overlay;
 <script>
 
 
-	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_3_30_30_.txt';
-//	var defaultFile = '../elevations/test-elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_2_5_30_150_.txt';
-//	var defaultFile = '../elevations/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_5_30_50_.txt';
+	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
 
-	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/kgcn/elevations_Tusayan_12_770_1605_4_5_120_150_.txt';
+//	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vnlj/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_3_30_30_.txt';
+//	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/kgcn/elevations_Tusayan_12_770_1605_4_5_120_150_.txt';
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vhsk/elevations_Hong%20Kong_14_13381_7141_5_4_150_120_.txt';
 
 	var scaleFactor = 25;
 
 	var fileName;
 
-	var ground, groundGeometry, groundMaterial;
-	var elevations;
 	var parameters;
-
+	var elevations;
 	var min, max;
+
+	var ground, groundGeometry, groundMaterial;
 
 	var mapTypes = [
 
@@ -71,7 +70,7 @@ Display in 3D. Add TMS overlay;
 
 		var css, hamburger, bars, menu;
 		var geometry, material, mesh;
-		var gridHelper, axisHelper;
+		var axisHelper;
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -114,6 +113,8 @@ Display in 3D. Add TMS overlay;
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
 
 				'<p><input type=file id=inpFile onchange=openFile(this); /></p>' +
 
@@ -224,7 +225,7 @@ Display in 3D. Add TMS overlay;
 
 	function openFile( files ) {
 
-		var reader;
+		var reader, data;
 
 		reader = new FileReader();
 		reader.onloadend = function( event ) {
@@ -246,7 +247,7 @@ Display in 3D. Add TMS overlay;
 
 	function getElevationsFile( fName ) {
 
-		var xhr, responses, parametersArray;
+		var xhr, response;
 
 		fileName = fName;
 
@@ -311,6 +312,7 @@ Display in 3D. Add TMS overlay;
 		menuFileNameDetails.innerHTML =
 
 			'<details open>' +
+
 				'<summary><h3>file name parameters</h3></summary>' +
 
 				'Location:<br>' + parameters.location + b + b +
@@ -329,6 +331,9 @@ Display in 3D. Add TMS overlay;
 		b;
 
 	}
+
+
+// When in iframe and called by parrent
 
 	function processElevations( elevs, params ) {
 
@@ -400,7 +405,7 @@ Display in 3D. Add TMS overlay;
 		groundGeometry.computeVertexNormals();
 		groundGeometry.computeBoundingBox();
 		groundGeometry.computeBoundingSphere();
-		groundGeometry.center();
+//		groundGeometry.center();
 
 		outVertical.value = inpVertical.valueAsNumber.toFixed( 3 );
 
@@ -408,6 +413,9 @@ Display in 3D. Add TMS overlay;
 
 
 	function drawMapOverlay() {
+
+		var baseURL, count;
+		var tileX, tileY, tileOffset, texture;
 
 		if ( selMap.selectedIndex > 8 ) { 
 
@@ -418,9 +426,6 @@ Display in 3D. Add TMS overlay;
 			return; 
 
 		}
-
-		var baseURL, count;
-		var tileX, tileY, tileOffset, texture;
 
 		baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
 		count = 0;

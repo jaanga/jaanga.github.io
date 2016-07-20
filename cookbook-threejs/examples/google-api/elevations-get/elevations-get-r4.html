@@ -19,7 +19,7 @@ Display results in 3D. Display useful info.
 // https://developers.google.com/maps/documentation/javascript/tutorial
 // https://developers.google.com/maps/documentation/javascript/elevation
 
-	var urlViewElevations3D = '../elevations-view-3d-core/view-elevations-3d-core-r5.html';
+	var urlViewElevations3D = '../elevations-view-3d-core/view-elevations-3d-core-r7.html';
 
 	var place = {};
 	var placeholder = 'Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal';
@@ -250,6 +250,7 @@ Display results in 3D. Display useful info.
 			inpLongitude.value = longitude = parseFloat( hashes[ 2 ] );
 			selZoom.selectedIndex = parseInt( hashes[ 3 ] - 1, 10 ) || 12;
 			inpAddress.value = inpAddress.placeholder = hashes[ 4 ] || '';
+
 		}
 
 	}

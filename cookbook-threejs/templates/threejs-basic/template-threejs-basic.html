@@ -41,7 +41,7 @@
 
 		'';
 
-		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
 		menu.innerHTML =
 
@@ -101,13 +101,14 @@
 
 	}
 
-	function toggleBackgroundGradient( checked ) {
+	function toggleBackgroundGradient() {
 
 // 2016-07-18
 
 		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
 		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
-		image = document.body.style.backgroundImage;
+		var image = document.body.style.backgroundImage;
+
 		document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
 				pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
 
