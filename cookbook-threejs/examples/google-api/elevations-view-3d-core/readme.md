@@ -100,6 +100,7 @@ Intended for generating flightpaths
 * Rename to 'elevations-view-3d-core' to align with folder came
 * Code cleanup, and variable name tidy
 * Add bounding box to display 
+* Edit menu
 
 ### 2016-07-19 ~ R6/R7
 
