@@ -1,0 +1,342 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 />
+<title>Earth Globe Altitude R1</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+
+<script src = http://rawgit.com/mrdoob/three.js/dev/build/three.js ></script>
+<script src = http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src = http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+// Enable the script to operate within an iframe, make URLs fixed - otherwise set to relative
+
+	var heightMapSource = './heightmaps/bathymetry_bw_composite_2k.png';
+
+	var moonRadiusEquator = 1728;
+
+//	var width = 1440;
+//	var height = 720;
+
+	var width = 2048;
+	var height = 1024;
+
+	var scale = 2;
+	var scaleAdjust = 0.0009;
+	var scl = scaleAdjust * scale;
+
+	var startTime = performance.now();
+	var delayTime = 2000;
+	var autoRotateSpeed = 0.5;
+
+	var d2r = Math.PI / 180;
+
+	var css, hamburger, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh, axisHelper;
+
+	var heightMap, heightMesh, canvasHeightMap, contextHeightMap;
+	var material3D;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h3 { margin: 0; }' +
+			'#bars, #i { font-size: 24pt; text-decoration: none; }' +
+			'#bars { color: pink; } ' +
+
+			'input[type=range] { -moz-appearance: none; -webkit-appearance: none; background-color: silver; height: 20px; width: 180px; } ' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; width: 10px; } ' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; opacity: 0.5; height: 28px; width: 10px; } ' +
+		'';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.style.cssText = ' left: 220px; position: absolute; top: 0px; transition: left 1s; ';
+		hamburger.innerHTML = '<a id=bars href=JavaScript:slideHamburger(); >&#9776;</a>';
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = ' background-color: #eee; border: 1px #ccc solid; left: -220px;  max-height: ' + ( window.innerHeight - 50 ) + 'px; ' +
+			'opacity: 0.8; overflow: auto; padding: 0 10px; position: absolute; top: 0px; transition: left 1s; max-width: 200px; ';
+		menu.innerHTML = '<h3>' +
+				'<a href="" >' + document.title + '</a> ' +
+				'<a id=i href=http://jaanga.github.io/moon/voyager/gamer/ >🛈</a>' +
+			'</h3>' +
+			'<p><select id=selPlace></select></p>' +
+			'<p id=message ></p>' +
+			'<p>Vertical Scale <input type=range id=inpScale min=0 max=2 step=0.05 value=1 onchange=scale=this.value;scl=scale*scaleAdjust;updateTerrain(); /></p>' +
+			'<p><input type=checkbox id=chkPlacards onchange=togglePlacards(); checked /> Display placards</p>' +
+			'<p><input type=checkbox id=inpHelpers onchange=toggleHelpers(); checked /> Display axis</p>' +
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradientBackground(); checked /> Display gradient</p>' +
+			'<p><input type=checkbox id=chkRotate checked /> Auto Rotation</p>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 15000 );
+		camera.position.set( -3500, 3500, 3500 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.minDistance = 2500;
+		controls.maxDistance = 20000;
+		scene = new THREE.Scene();
+
+		controls.autoRotateSpeed = autoRotateSpeed;
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		renderer.domElement.addEventListener( 'mousemove', onMouseMove, false ); // or mousedown?
+
+		toggleGradientBackground();
+
+		geometry = new THREE.SphereBufferGeometry( moonRadiusEquator + 430, 50, 25 );
+
+		material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+
+		canvasHeightMap = document.createElement( 'canvas' );
+//		document.body.appendChild( canvasHeightMap );
+//		canvasHeightMap.style.cssText = 'margin: 20px; position: absolute; top: 0;';
+		canvasHeightMap.width = width;
+		canvasHeightMap.height = height;
+		contextHeightMap = canvasHeightMap.getContext( '2d' );
+
+/*
+		loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+
+		loader.load('bathymetry_bw_composite_2k.png', updateMaterial );
+*/
+
+		imageLoader = new THREE.ImageLoader();
+		imageLoader.crossOrigin = 'anonymous';
+		imageLoader.load( heightMapSource, updateTerrain );
+
+		toggleHelpers();
+
+		addLights( 2200 )
+		addShadows();
+
+	}
+
+	function updateMaterial( texture ) {
+
+		texture.needsUpdate = true;
+		heightMesh.material = new THREE.MeshBasicMaterial( { map: texture } );
+
+	}
+
+	function updateTerrain( heightMap ) {
+
+		contextHeightMap.drawImage( heightMap, 0, 0, heightMap.width, heightMap.height, 0, 0, width, height );
+
+		map = contextHeightMap.getImageData( 0, 0, width, height ).data;
+
+		geometry = new THREE.SphereBufferGeometry( moonRadiusEquator, width - 1, height - 1 );
+
+		vertices = geometry.attributes.position.array;
+
+		colors = [];
+		var color = new THREE.Color();
+
+		for ( var i = 0, j = 0; i < vertices.length; i += 3, j += 4 ) {
+
+			var s = 1 + scl * map[ j ];
+			vertices[ i ] *= s;
+			vertices[ i + 1 ] *= s;
+			vertices[ i + 2 ] *= s;
+
+			color.setHSL( ( 0.8 * ( 255 - map[ j ] ) / 255 ), 1.0, 0.5 );
+
+			colors[ i ] = color.r;
+			colors[ i + 1 ] = color.g;
+			colors[ i + 2 ] = color.b;
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		geometry.addAttribute( 'color', new THREE.BufferAttribute( new Float32Array( colors ), 3 ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( Math.PI ) );
+
+		material = new THREE.MeshPhongMaterial( { color: 0xcccccc, emissive: 0x000000, specular: 0x111111, shininess: 5, vertexColors: THREE.VertexColors } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true
+		mesh.receiveShadow = true;
+
+		scene.add( mesh );
+
+	}
+
+
+	function toggleHelpers() {
+
+		if ( inpHelpers.checked === true ) {
+
+			axis = new THREE.AxisHelper( 10000 );
+			scene.add( axis );
+
+		} else {
+
+			scene.remove( axis );
+
+		}
+
+	}
+
+	function toggleGradientBackground() {
+
+		if ( chkGradient.checked ) {
+
+			document.body.style.cssText += ' height: ' + window.innerHeight + 'px; ';
+
+			var col1 = Math.random().toString(16).slice(2, 8);
+			var col2 = Math.random().toString(16).slice(2, 8);
+			var col3 = Math.random().toString(16).slice(2, 8);
+			var x = ( Math.random() * window.innerWidth ).toFixed(0);
+			var y = ( Math.random() * window.innerHeight ).toFixed(0);
+
+			document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
+
+	}
+
+	function slideHamburger() {
+
+		hamburger.style.left = hamburger.style.left === '220px' ? 0 : '220px';
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function onMouseMove() {
+
+		startTime = chkRotate.checked ? performance.now() : 1000000 ;
+		controls.autoRotate = false;
+
+	}
+
+	function addLights( size ) {
+
+// 2016-02-07
+
+		var size = size ? size : 100;
+		var lightAmbient, lightDirectional, lightPoint;
+
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -size, size, size );
+
+		var d = size;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
+
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 4 * size;
+
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+	function addShadows() {
+
+// 2016-01-29
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+//				child.material.needsUpdate = true;
+
+			}
+
+		} );
+
+	}
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function animate( timestamp ) {
+
+		if ( timestamp - startTime > delayTime && chkRotate.checked ) {
+
+			controls.autoRotate = true;
+
+		} else {
+
+			controls.autoRotate = false;
+
+		}
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+		requestAnimationFrame( animate );
+
+	}
+
+</script>
+</body>
+</html>

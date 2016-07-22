@@ -1,0 +1,221 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Geocoding Service to Static R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='
+'>
+<meta name=keywords content='Google Maps API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-05-01' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js?libraries=places ></script>
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
+
+	var contents, map;
+	var geocoder;
+
+	var zoom = 12;
+	var scale = 2;
+	var canvasSize = 2048;
+	var tileSize = 512;
+	var tiles = canvasSize / tileSize;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
+//			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#contents { height: 100%; text-align: center; }' +
+
+			'#contents { height: ' + canvasSize + 'px;; width: ' + canvasSize + 'px; }' +
+//			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+//		contents = document.createElement( 'div' );
+		contents.id = 'contents';
+		contents.innerHTML = '<h1>Stuff</h1>';
+
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas.width = canvas.height = scale * canvasSize;
+		canvas.style.cssText = 'border: 1px solid gray; ';
+		context = canvas.getContext( '2d' );
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p><input id=inpAddress class=controls placeholder="San Francisco CA" onchange=geocodeAddress(geocoder,map); > <button onclick=geocodeAddress(geocoder, map); >geocode </button></p>' +
+
+			'<p><button onclick=setMarkers(); >Set Markers </button></p>' +
+			'<div id=info ></div>' +
+
+		'';
+
+		map = new google.maps.Map( contents, {
+
+			zoom: zoom,
+			scale: scale,
+			center: { lat: 37.796, lng: -122.398 },
+			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
+
+		});
+
+		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
+
+		geocoder = new google.maps.Geocoder();
+
+		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
+		origin_autocomplete.bindTo( 'bounds', map );
+
+		origin_autocomplete.addListener('place_changed', function() {
+
+			place = origin_autocomplete.getPlace();
+
+			if ( !place.geometry ) {
+
+				info.innerHTML = 'Autocomplete\'s returned place contains no geometry';
+
+//				return;
+
+			}
+
+			expandViewportToFitPlace( map, place );
+
+		} );
+
+	}
+
+
+	function geocodeAddress( geocoder, resultsMap ) {
+
+		var address = inpAddress.value;
+
+		geocoder.geocode( { 'address': address }, function( results, status ) {
+
+			if ( status === google.maps.GeocoderStatus.OK ) {
+
+				resultsMap.setCenter( results[ 0 ].geometry.location );
+
+			} else {
+
+				info.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+
+			}
+
+		});
+
+	}
+
+	function expandViewportToFitPlace( map, place ) {
+
+//		if ( place.geometry && place.geometry.viewport ) {
+
+//			map.fitBounds( place.geometry.viewport );
+//			zoom = map.getZoom( zoom );
+
+//		} else {
+
+			map.setCenter( place.geometry.location );
+//			zoom = 17;
+			map.setZoom( zoom );
+
+//		}
+
+		var marker = new google.maps.Marker( { map: map, position: map.getCenter() } );
+
+	}
+
+
+	function setMarkers() {
+
+		offset = canvasSize / 2 - tileSize / 2;
+
+		for ( var x = 0; x < tiles; x++ ) {
+
+			for ( var y = 0; y < tiles; y++ ) {
+
+				point = markerAtOffset( x * tileSize - offset, y * tileSize - offset );
+
+console.log( 'pt', x, y, point.lat(), point.lng() );
+
+				img = document.createElement( 'img' );
+				img.attributes.x = x * scale * tileSize;
+				img.attributes.y = y * scale * tileSize;
+				img.onload = function( event ) { 
+
+					context.drawImage( event.path[ 0 ], scale * canvasSize - scale * tileSize - event.path[ 0 ].attributes.x, event.path[ 0 ].attributes.y ); 
+
+console.log( 'xy', event.path[ 0 ].attributes.y, offset - event.path[ 0 ].attributes.x ,  event.path[ 0 ]  );
+
+				};
+
+				img.src = 'http://maps.googleapis.com/maps/api/staticmap?center=' + point.lat() + ',' + point.lng() + 
+					'&maptype=roadmap&zoom=' + zoom + '&scale=2&size=' + tileSize + 'x' + tileSize ;
+
+			}
+
+		}
+
+	}
+
+	function markerAtOffset( offsetx, offsety ) {
+
+// offset can be negative
+// offsetx and offsety are both optional
+
+		var center = map.getCenter();
+		var scale = Math.pow( 2, map.getZoom() );
+
+		var worldCoordinateCenter = map.getProjection().fromLatLngToPoint( center );
+		var pixelOffset = new google.maps.Point(( offsetx / scale ) || 0,( offsety / scale ) || 0 );
+
+		var worldCoordinateNewCenter = new google.maps.Point(
+
+			worldCoordinateCenter.x - pixelOffset.x,
+			worldCoordinateCenter.y + pixelOffset.y
+
+		);
+
+		var newPoint = map.getProjection().fromPointToLatLng( worldCoordinateNewCenter );
+		var marker = new google.maps.Marker( { map: map, position: newPoint } );
+
+		return newPoint;
+
+	}
+
+</script>
+</body>
+</html>

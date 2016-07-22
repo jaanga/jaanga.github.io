@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>objects images</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+	var host = 'http://tile.openstreetmap.org/';
+	var zoom = 2;
+	var tps = Math.pow( 2, zoom );
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>objects images</h1>' +
+		'<div id=msg></div>';
+
+	var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+	canvas.style.cssText = 'border: 1px black solid; '
+	canvas.width = canvas.height = tps * 256;
+	context = canvas.getContext( '2d' );
+
+	var drawCanvasImage = function( image, count, ii, jj ) {
+		return function() {
+console.log( image, count, ii, jj  );
+			context.drawImage( image, ii * 256, jj * 256, 256, 256 );
+		}
+	}
+
+	images = {};
+	image = function( source, count, i, j ) {
+		this.img = document.createElement( 'img' );
+		this.img.onload = drawCanvasImage( this.img, count, i, j );
+		this.img.src = source;
+	};
+
+	init();
+
+	function init() {
+		var str; count = 0;
+		for (var i = 0; i < tps; i++) {
+			for (var j = 0; j < tps; j++) {
+				str = zoom + '/' + i + '/' + j;
+				images[ str ] = new image( host + str + '.png', count, i, j );
+				count++;
+			}
+		} 
+	}
+
+	console.log( images  );
+</script>
+</body>
+</html>

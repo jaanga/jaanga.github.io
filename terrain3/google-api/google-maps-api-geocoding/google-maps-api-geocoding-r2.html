@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Geocoding Service R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='
+'>
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-04-29' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js?libraries=places ></script>
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
+
+	var contents, map;
+	var geocoder;
+
+	var zoom = 15;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
+//			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#contents { height: 100%; text-align: center; }' +
+
+			'#contents { height: 1024px;; width: 1024px; }' +
+//			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = '<h1>Stuff</h1>';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p><input id=inpAddress class=controls placeholder="San Francisco CA" onchange=geocodeAddress(geocoder,map); > <button onclick=geocodeAddress(geocoder, map); >geocode </button></p>' +
+
+//			'<p><input id="origin-input" class="controls" type="textbox" placeholder="Enter an origin location"></p>' +
+			'<div id=info ></div>' +
+
+		'';
+
+//		inpAddress.id = 'inpAddress';
+
+		map = new google.maps.Map( contents, {
+
+			zoom: zoom,
+			center: { lat: 37.796, lng: -122.398 },
+			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
+
+		});
+
+		geocoder = new google.maps.Geocoder();
+
+		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
+		origin_autocomplete.bindTo( 'bounds', map );
+
+		origin_autocomplete.addListener('place_changed', function() {
+
+			var place = origin_autocomplete.getPlace();
+
+			if ( !place.geometry ) {
+
+				info.innerHTML = 'Autocomplete\'s returned place contains no geometry';
+
+//				return;
+
+			}
+
+			expandViewportToFitPlace(map, place);
+
+		} );
+
+	}
+
+
+	function geocodeAddress( geocoder, resultsMap ) {
+
+		var address = inpAddress.value;
+
+		geocoder.geocode( { 'address': address }, function( results, status ) {
+
+			if ( status === google.maps.GeocoderStatus.OK ) {
+
+				resultsMap.setCenter( results[ 0 ].geometry.location );
+				resultsMap.setZoom( zoom );
+
+				var marker = new google.maps.Marker( { map: resultsMap, position: results[ 0 ].geometry.location } );
+
+			} else {
+
+				info.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+
+			}
+
+		});
+
+	}
+
+	function expandViewportToFitPlace(map, place) {
+
+		if ( place.geometry && place.geometry.viewport ) {
+
+			map.fitBounds( place.geometry.viewport );
+
+		} else {
+
+			map.setCenter( place.geometry.location );
+			map.setZoom( 17 );
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta charset=utf-8 >
+<title>Google Maps API KML Layers R2</title>
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js ></script>
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/examples/layer-kml
+
+	var kmlLeig = 'http://jaanga.github.io/cookbook-threejs/examples/google-api/data-kml/LEIG-L1500-01.kml';
+	var kmlSnowMountainActual = 'http://jaanga.github.io/cookbook-threejs/examples/google-api/data-kml/Snow_Mountain_Actual.kml';
+	var kmlSnowMountainWilderness = 'http://jaanga.github.io/cookbook-threejs/examples/google-api/data-kml/Snow_Mountain_Wilderness.kml';
+
+
+
+	var map;
+
+	initMap();
+
+	function initMap() {
+
+		var css;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'html, body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+//			'#contents { height: 100%; }' +
+			'#contents { height: 1024px; width: 1024px; position: absolute; right: 0; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 425px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -425px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 400px; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = '<h1>Stuff</h1>';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p><a href=# onclick=updateMap(kmlLeig); >LEIG</a></p>' +
+			'<p><a href=# onclick=updateMap(kmlSnowMountainActual); >Snow Mountain Actual</a></p>' +
+			'<p><a href=# onclick=updateMap(kmlSnowMountainWilderness); >Sbow Mountain Wilderness</a></p>' +
+			'<p><a href=# onclick=getParams(); >get params</a></p>' +
+			'<p><button onclick=offsetCenter(map.getCenter(),100,100); >offset</button></p>' +
+			'<div id=info ></div>' +
+			'<p id=msg1 ></p>' +
+			'<p id=msg2 ></p>' +
+
+		'';
+		map = new google.maps.Map( contents );
+
+		map.addListener('click', getParams );
+
+		updateMap( kmlLeig );
+
+	}
+
+	function updateMap( url ) {
+
+		layer = new google.maps.KmlLayer({
+
+			url: url,
+			map: map
+
+		});
+
+
+	}
+
+	function getParams() {
+
+console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
+
+		latMin =  map.getBounds().getSouthWest().lat();
+		latMax =  map.getBounds().getNorthEast().lat();
+		lonMin = map.getBounds().getSouthWest().lng();
+		lonMax = map.getBounds().getNorthEast().lng();
+
+		latDelta = ( latMax - latMin );
+		lonDelta = ( lonMax - lonMin );
+
+		latDegreesPerPixel = latDelta / 512;
+		lonDegreesPerPixel = lonDelta / 512;
+
+		latPixelsPerDegree = 512 / latDelta;
+		lonPixelsPerDegree = 512 / lonDelta;
+
+
+		msg2.innerHTML += '<h3>params</h3>lat min:' + latMin.toFixed( 3 ) + ' max:' + latMax.toFixed( 3 ) + '<br>' +
+			'lon min:' + lonMin.toFixed( 3 ) + ' max:' + lonMax.toFixed( 3 ) + '<br>' +
+
+			' latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) +
+
+			'<br>DegreesPerPixel - lat: ' + latDegreesPerPixel.toFixed( 6 ) + ' lon: ' + lonDegreesPerPixel.toFixed( 6 ) +
+			'<br>PixelsPerDegree - lat: ' + latPixelsPerDegree.toFixed( 6 ) + ' lon: ' + lonPixelsPerDegree.toFixed( 6 ) +
+
+		''; 
+
+
+		msg1.innerHTML = 
+
+			'center:' + map.getCenter().toUrlValue() + '<br>' +
+			'point:' + map.getProjection().fromLatLngToPoint( map.getCenter() ) + '<br>' +
+
+		'';
+
+console.log( 'fromLatLngToPoint', fromLatLngToPoint( map.getCenter(), map) );
+
+	}
+
+	function fromLatLngToPoint(latLng, map) {
+
+		var topRight = map.getProjection().fromLatLngToPoint(map.getBounds().getNorthEast());
+		var bottomLeft = map.getProjection().fromLatLngToPoint(map.getBounds().getSouthWest());
+		var scale = Math.pow(2, map.getZoom());
+		var worldPoint = map.getProjection().fromLatLngToPoint(latLng);
+		return new google.maps.Point((worldPoint.x - bottomLeft.x) * scale, (worldPoint.y - topRight.y) * scale);
+
+	}
+
+// http://krasimirtsonev.com/blog/article/google-maps-api-v3-convert-latlng-object-to-actual-pixels-point-object
+
+//How to offset the center point in Google maps api V3
+
+	function offsetCenter( latlng, offsetx, offsety ) {
+
+// latlng is the apparent centre-point
+// offsetx is the distance you want that point to move to the right, in pixels
+// offsety is the distance you want that point to move upwards, in pixels
+// offset can be negative
+// offsetx and offsety are both optional
+
+		var scale = Math.pow( 2, map.getZoom() );
+/*
+		var nw = new google.maps.LatLng(
+
+			map.getBounds().getNorthEast().lat(),
+			map.getBounds().getSouthWest().lng()
+
+		);
+*/
+
+		var worldCoordinateCenter = map.getProjection().fromLatLngToPoint( latlng );
+		var pixelOffset = new google.maps.Point(( offsetx / scale ) || 0,( offsety / scale ) || 0 );
+
+		var worldCoordinateNewCenter = new google.maps.Point(
+
+			worldCoordinateCenter.x - pixelOffset.x,
+			worldCoordinateCenter.y + pixelOffset.y
+
+		);
+
+		var newCenter = map.getProjection().fromPointToLatLng( worldCoordinateNewCenter );
+
+		map.setCenter( newCenter );
+
+	}
+
+/*
+	google.maps.event.addListener( marker, 'click', function() {
+
+		map.setZoom(8);
+		map.setCenter( marker.getPosition() );
+
+	});
+*/
+
+</script>
+</body>
+</html>

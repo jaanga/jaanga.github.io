@@ -1,0 +1,235 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 />
+<title>Earth Globe Gamer R1</title>
+<meta charset=utf-8 />
+<meta name=viewport content='width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0' />
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src = http://rawgit.com/mrdoob/three.js/dev/build/three.js ></script>
+<script src = http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src = http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+console.time( 'timer 0' );
+
+// Enable the script to operate within an iframe, make URLs fixed - otherwise set to relative
+
+	var heightMapSource = '../bitmaps/bathymetry_bw_composite_2k.png';
+
+	var earthRadiusEquator = 6371;
+
+	var width = 2048;
+	var height = 1024;
+
+//	var width = 1024;
+//	var height = 512;
+
+	var scale = 2;
+	var scaleAdjust = 0.0009;
+	var scl = scaleAdjust * scale;
+
+
+	var autoRotateSpeed = 0.5;
+
+	var d2r = Math.PI / 180;
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	var css, hamburger, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh, axisHelper;
+
+	var heightMap, heightMesh, canvasHeightMap, contextHeightMap;
+	var material3D;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h3 { margin: 0; }' +
+			'#bars, #i { font-size: 24pt; text-decoration: none; }' +
+			'#bars { color: pink; } ' +
+
+			'input[type=range] { -moz-appearance: none; -webkit-appearance: none; background-color: silver; height: 20px; width: 180px; } ' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; width: 10px; } ' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; opacity: 0.5; height: 28px; width: 10px; } ' +
+		'';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.style.cssText = ' left: 220px; position: absolute; top: 0px; transition: left 1s; ';
+		hamburger.innerHTML = '<a id=bars href=JavaScript:slideHamburger(); >&#9776;</a>';
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = ' background-color: #eee; border: 1px #ccc solid; left: -220px;  max-height: ' + ( window.innerHeight - 50 ) + 'px; ' +
+			'opacity: 0.8; overflow: auto; padding: 0 10px; position: absolute; top: 0px; transition: left 1s; max-width: 200px; ';
+		menu.innerHTML = '<h3>' +
+				'<a href="" >' + document.title + '</a> ' +
+				'<a id=i href=http://jaanga.github.io/moon/voyager/gamer/ >🛈</a>' +
+			'</h3>' +
+			'<p><select id=selPlace></select></p>' +
+			'<p id=message ></p>' +
+			'<p>Vertical Scale <input type=range id=inpScale min=0 max=2 step=0.05 value=1 onchange=scale=this.valueAsNumber;scl=scale*scaleAdjust;updateTerrain(heightMap); /></p>' +
+
+			'<p><input type=checkbox id=inpHelpers onchange=toggleHelpers(); checked /> Display axis</p>' +
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradientBackground(); checked /> Display gradient</p>' +
+			'<p><input type=checkbox id=chkRotate checked /> Auto Rotation</p>' +
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 30000 );
+		camera.position.set( -15000, 15000, 15000 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.minDistance = 2500;
+		controls.maxDistance = 30000;
+		scene = new THREE.Scene();
+
+		controls.autoRotateSpeed = autoRotateSpeed;
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+
+
+		canvasHeightMap = document.createElement( 'canvas' );
+//		document.body.appendChild( canvasHeightMap );
+//		canvasHeightMap.style.cssText = 'margin: 20px; position: absolute; top: 0;';
+		canvasHeightMap.width = width;
+		canvasHeightMap.height = height;
+		contextHeightMap = canvasHeightMap.getContext( '2d' );
+
+		imageLoader = new THREE.ImageLoader();
+		imageLoader.crossOrigin = 'anonymous';
+		imageLoader.load( heightMapSource, updateTerrain );
+
+		geometry = new THREE.SphereBufferGeometry( earthRadiusEquator + 1500, 50, 25 );
+		material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+		toggleGradientBackground();
+		toggleHelpers();
+
+	}
+
+	function updateTerrain( map ) {
+
+console.log( '', scale, scl );
+
+		scene.remove( heightMesh );
+
+		heightMap = map ? map : heightMap ;
+
+		contextHeightMap.drawImage( heightMap, 0, 0, width, height, 0, 0, width, height );
+
+		map = contextHeightMap.getImageData( 0, 0, width, height ).data;
+
+		geometry = new THREE.SphereBufferGeometry( earthRadiusEquator, width - 1, height - 1 );
+
+		vertices = geometry.attributes.position.array;
+
+		for ( var i = 0, j = 0; i < vertices.length; i += 3, j += 4 ) {
+
+			var s = 1 + scl * map[ j ];
+			vertices[ i ] *= s;
+			vertices[ i + 1 ] *= s;
+			vertices[ i + 2 ] *= s;
+
+		}
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( Math.PI ) );
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+		heightMesh = new THREE.Mesh( geometry, material );
+
+		scene.add( heightMesh );
+
+console.timeEnd( 'timer 0' );
+
+	}
+
+
+	function toggleHelpers() {
+
+		if ( inpHelpers.checked === true ) {
+
+			axis = new THREE.AxisHelper( 10000 );
+			scene.add( axis );
+
+		} else {
+
+			scene.remove( axis );
+
+		}
+
+	}
+
+	function toggleGradientBackground() {
+
+		if ( chkGradient.checked ) {
+
+			document.body.style.height = window.innerHeight + 'px;';
+
+			var col1 = Math.random().toString( 16 ).slice( 2, 8 );
+			var col2 = Math.random().toString( 16 ).slice( 2, 8 );
+			var col3 = Math.random().toString( 16 ).slice( 2, 8 );
+			var x = ( Math.random() * window.innerWidth ).toFixed();
+			var y = ( Math.random() * window.innerHeight ).toFixed();
+
+			document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + x + 'px ' + y + 'px, #' + col1 + ' 0%, #' + col2 + ' 50%, #' + col3 + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
+
+	}
+
+	function slideHamburger() {
+
+		hamburger.style.left = hamburger.style.left === '220px' ? 0 : '220px';
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+
+
+	function animate() {
+
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+		requestAnimationFrame( animate );
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Google API Geocoding Service R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='
+'>
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-04' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js?libraries=places ></script>
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
+
+	var latitude = 37.796;
+	var longitude = -122.398;
+
+	var contents;
+	var map;
+	var geocoder;
+
+	var zoom = 15;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'html { height: 100%; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
+//			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+
+			'#bars { background-color: #eee; color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#contents { height: 100%; width: 100%; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = '<h1>map here</h1>';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a> ~ ' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
+				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p>Enter a location</p>' +
+			'<p><input id=inpAddress class=controls placeholder="San Francisco CA" onchange=geocodeAddress(geocoder,map); title="Thank you Google!" > ' +
+				'<button onclick=geocodeAddress(geocoder, map); >geocode </button></p>' +
+
+			'<div id=menuMessage ></div>' +
+
+		'';
+
+		initMap();
+
+	}
+
+	function initMap() {
+
+		var origin_autocomplete, place;
+
+		map = new google.maps.Map( contents, {
+
+			zoom: zoom,
+			center: { lat: latitude, lng: longitude },
+			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
+
+		});
+
+		geocoder = new google.maps.Geocoder();
+
+		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
+		origin_autocomplete.bindTo( 'bounds', map );
+
+		origin_autocomplete.addListener( 'place_changed', function() {
+
+			place = origin_autocomplete.getPlace();
+
+			expandViewportToFitPlace( map, place );
+
+		} );
+
+	}
+
+	function geocodeAddress( geocoder, resultsMap ) {
+
+		var address;
+
+		address = inpAddress.value;
+
+		geocoder.geocode( { 'address': address }, function( results, status ) {
+
+			if ( status === google.maps.GeocoderStatus.OK ) {
+
+				resultsMap.setCenter( results[ 0 ].geometry.location );
+				resultsMap.setZoom( zoom );
+
+				var marker = new google.maps.Marker( { map: resultsMap, position: results[ 0 ].geometry.location } );
+
+			} else {
+
+				menuMessage.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+
+			}
+
+		});
+
+	}
+
+	function expandViewportToFitPlace( map, place ) {
+
+		if ( !place.geometry ) {
+
+			menuMessage.innerHTML = 'Autocomplete\'s returned place contains no geometry';
+
+			return;
+
+		} else {
+
+			if ( place.geometry.viewport ) {
+
+				map.fitBounds( place.geometry.viewport );
+
+			} else {
+
+				map.setCenter( place.geometry.location );
+				map.setZoom( 17 );
+
+			}
+
+			menuMessage.innerHTML = 
+				'<p>Latitude: ' + place.geometry.location.lat() + '</p>' +
+				'<p>Longitude: ' + place.geometry.location.lng() + '</p>' +
+				( place.vicinity ? '<p>Vicinity:<br>' + place.vicinity + '</p>' : '' ) +
+				'<p>Address:<br>' + place.adr_address + '</p>' +
+			'';
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

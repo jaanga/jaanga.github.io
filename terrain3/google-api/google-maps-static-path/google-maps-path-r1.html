@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Google Maps API Path R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<script>
+
+	source = 'https://maps.googleapis.com/maps/api/staticmap?size=512x512&path=color:0xff000066|weight:10|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397';
+
+	var flightPathFileDefault = '../path-data/LEIG-L1500-cooked-01.csv';
+	var flightPathFile;
+	var flightPath;
+
+	init();
+
+	function init() {
+
+		var css, contents;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; }' +
+//			'h2 { margin: 0; }' +
+			'h2 a { text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<div id=info ></div>' +
+
+			'<img id=image >' +
+
+
+		'';
+
+		var flightPathFile = flightPathFileDefault;
+		requestFlightPath( flightPathFile );
+
+	}
+
+
+	function requestFlightPath( fileName ) {
+
+//		var xhr, flightpath, text, lines, txtline, f;
+
+		latitudes = [];
+		longitudes = [];
+
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			text = xhr.responseText;
+			lines = text.split(/\r\n|\n/);
+
+			var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+			for ( var i = 1; i < lines.length; i++ ) {
+
+				txtline = lines[ i ].split( ',' );
+
+				latitudes.push( parseFloat( txtline[ 1 ] ) );
+
+				longitudes.push( parseFloat( txtline[ 0 ] ) ); 
+
+			}
+
+
+			latMax = Math.max.apply( Math, latitudes );
+			latMin = Math.min.apply( Math, latitudes );
+
+			lonMax = Math.max.apply( Math, longitudes );
+			lonMin = Math.min.apply( Math, longitudes );
+
+			info.innerHTML = 'latMin ' + latMin + ' latMax ' + latMax + '<br>' +
+				'lonMin ' + lonMin + ' lonMax ' + lonMax + '<br>';
+
+			path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
+
+			image.src = 'https://maps.googleapis.com/maps/api/staticmap?size=1024x1024&scale=2&zoom=13&path=color:0xff000066|weight:10|' + path;
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

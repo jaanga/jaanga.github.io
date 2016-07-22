@@ -16,7 +16,7 @@
 * Uses GitHub API
 * Finds all files in a specified folder with file name 'readme.md'
 * Creates a web page with all the file names in a menu
-* Click the file name lobks to view the contents if the read me in HTML
+* Click the file names in the menu to view the contents of the read me in HTML
 
 
 ## Where Used
@@ -27,6 +27,10 @@
 * https://fgx.github.io/sandbox/ << needs update
 
 ## Change Log
+
+### 2016-07-21 ~ R3
+
+* Showdown 1.4.2
 
 
 ### 2016-07-10 ~ R2

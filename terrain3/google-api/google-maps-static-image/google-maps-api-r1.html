@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Google Maps API Image R1</title>
+<meta charset=utf-8>
+</head>
+<body>
+<script>
+
+// https://developers.google.com/maps/documentation/static-maps/intro#URL_Parameters
+
+// this file: C:\Users\Theo\Dropbox\Public\code-cookbook\0-cookbook-general\canvas\google-maps-api\google-maps-api-r1.html
+
+//	var image;
+
+//	var lat = 37.796; //Santa Cruz
+//	var lon = -122.398;
+
+//	var lat = 37.5; //Santa Cruz
+//	var lon = -122.5;
+//	var zoom = 16;
+
+	var lat = 41.5861554761;
+	var lon = 1.6519343471;
+
+	var zoom = 12;
+
+	var width = 1024
+	var height = 1024;
+
+	init()
+
+	function init() {
+
+		var css, contents, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'body { font: 12pt monospace; margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+//			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute;  transition: left 1s; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; opacity: 0.85; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; ' +
+				'opacity: 0.85; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+
+
+		var info = document.createElement( 'div' );
+		document.body.appendChild( info );
+			info.innerHTML = 
+
+			'<h2>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
+				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+			'</h2>' +
+
+
+//'<a href="" ><h1>' + document.title + '</h1></a>' +
+
+			'<p><input type=range id=inpLat min=37 max=38 step=0.01 value=37 onmousemove=lat=parseFloat(inpLat.value);updateMap(); ></p>' +
+
+			'<img id=image >' + 
+
+		'';
+//		image.id = 'image';
+
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		context = canvas.getContext("2d");
+
+//		image = document.createElement( 'img' );
+
+//		document.body.appendChild( image );
+//		image.style.cssText = 'border: 1px red solid; position: absolute; top: 0; right: 0px; z-index: -10; ';
+/*
+		image.onload = function() {
+
+//			canvas.width = image.width;
+//			canvas.height = image.height;
+//			context.drawImage( image, 0, 0 );
+
+
+		};
+*/
+
+
+		updateMap();
+
+	}
+
+	function updateMap() {
+
+		image.src = 'http://maps.googleapis.com/maps/api/staticmap?center=' + lat + ',' + lon + '&maptype=hybrid&zoom=' + zoom + '&scale=2&size=' + width + 'x' + height ;
+
+	}
+
+</script>
+</body>
+</html>

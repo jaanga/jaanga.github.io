@@ -1,0 +1,255 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Google Maps API Geopositioning R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='
+
+' >
+<meta name=keywords content='Google Maps API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-09' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js?libraries=places ></script>
+<script>
+
+// https://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
+// https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+
+	var latitude;
+	var longitude;
+
+	var placeDefault = 'Sydney, Australia';
+	var defaultLatitude = -33.8675;
+	var defaultLongitude = 151.207;
+
+	var googleMap, googleMapCenter, geocoder, infoWindow;
+	var zoom = 14;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'html { height: 100%; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; }' +
+//			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+			'h3 { display: inline; margin: 0; }' +
+			'summary { outline: none; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; top: 10px; width: 120px; }' +
+			'.warning { color: crimson; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+//			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger { background-color: #eee; left: 325px; opacity: 1.0; position: absolute; top: 20px; transition: left 1s; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#mapDiv { height: 100%; text-align: center; }' +
+
+		'';
+
+		mapDiv = document.body.appendChild( document.createElement( 'div' ) );
+		mapDiv.id = 'mapDiv';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >&#9776;</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		pop1 = document.body.appendChild( document.createElement( 'div' ) );
+		pop1.id = 'pop1';
+		pop1.innerHTML = '<div class=popUp ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>';
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+				'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+				' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<details open>' +
+				'<summary><h3>Location</h3></summary>' +
+
+				'<p><input id=inpAddress placeholder="Default: ' + placeDefault + '" onclick=this.select(); onchange=geocodeAddress(geocoder,map); style=width:100%; >' +
+				'<p>Latitude &nbsp;<input id=inpLatitude placeholder=' + defaultLatitude + ' onclick=this.select(); onchange=setCenter(); size=10 ></p>' +
+				'<p>Longitude <input id=inpLongitude placeholder=' + defaultLongitude + ' onclick=this.select(); onchange=setCenter(); size=10 ></p>' +
+
+				'<p>' +
+					'Map zoom <input type=range id=inpZoom max=20 min=3 step=1 value=12 oninput=setCenter(); title="1 to 20: OK" > ' +
+						'<output id=outZoom >' + zoom + '</output>' +
+				'</p>' +
+
+				'<p id=messagePlace class=warning ></p>' +
+
+			'</details>' +
+
+			'<div id=menuVicinity ></div>' +
+
+		'';
+
+		pop1.style.display = 'none';
+
+		initPositioning();
+
+	}
+
+
+	function initPositioning() {
+
+		googleMap = new google.maps.Map( mapDiv, {
+
+			center: { lat: defaultLatitude, lng: defaultLongitude },
+			zoom: zoom,
+			mapTypeControlOptions: { position: google.maps.ControlPosition.TOP_RIGHT }
+
+		});
+
+		geocoder = new google.maps.Geocoder;
+		infoWindow = new google.maps.InfoWindow( { map: googleMap } );
+
+		if ( window.self === window.top && navigator.geolocation && !location.hash ) {
+
+			navigator.geolocation.getCurrentPosition( function( position ) {
+
+				googleMapCenter = {
+
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+
+				};
+
+				infoWindow.setPosition( googleMapCenter );
+				infoWindow.setContent( 'Location found<br>latitude: ' + position.coords.latitude.toFixed( 3 ) + '<br>' +
+				'longitude: ' + position.coords.longitude.toFixed( 3 ) );
+
+				latitude = inpLatitude.value = position.coords.latitude;
+				longitude = inpLongitude.value = position.coords.longitude;
+
+				googleMap.setCenter( googleMapCenter );
+
+				geocodeLatLng();
+
+			}, function() {
+
+				handleGeoocationError( true, infoWindow, googleMap.getCenter() );
+
+			});
+
+		} else {
+
+			handleGeoocationError( false, infoWindow, googleMap.getCenter() );
+
+		}
+
+		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
+		origin_autocomplete.bindTo( 'bounds', googleMap );
+
+		origin_autocomplete.addListener('place_changed', function() {
+
+			var place;
+
+			place = origin_autocomplete.getPlace();
+
+			if ( place.geometry ) {
+
+				googleMapCenter = place.geometry.location;
+				googleMap.setCenter( googleMapCenter );
+
+				latitude = inpLatitude.value = googleMapCenter.lat();
+				longitude = inpLongitude.value = googleMapCenter.lng();
+
+				messagePlace.innerHTML = '';
+
+			} else {
+
+				messagePlace.innerHTML = 'You must select one of the locations on the drop-down list';
+
+			}
+
+		} );
+
+	}
+
+
+// Location
+
+	function setCenter() {
+
+		googleMapCenter = { lat: parseFloat( inpLatitude.value ), lng: parseFloat( inpLongitude.value ) };
+
+		googleMap.setCenter( googleMapCenter );
+
+		outZoom.value = zoom = inpZoom.valueAsNumber
+
+		googleMap.setZoom( zoom );
+
+		geocodeLatLng();
+
+		messagePlace.innerHTML = 'Now click in the input box & select a location from the drop-down list';
+
+
+	}
+
+	function geocodeLatLng() {
+
+		geocoder.geocode( { 'location': googleMapCenter }, function( results, status ) {
+
+			if ( status === google.maps.GeocoderStatus.OK ) {
+
+				if ( results[ 1 ] ) {
+
+					inpAddress.value = results[1].formatted_address;
+
+				} else {
+
+					messagePlace.innerHTML = 'No results found';
+
+				}
+
+			} else {
+
+				messagePlace.innerHTML = 'Geocoder failed due to: ' + status;
+
+			}
+
+		});
+
+	}
+
+	function handleGeoocationError( browserHasGeolocation, infoWindow, position ) {
+
+		var message;
+
+		infoWindow.setPosition( position );
+
+		message = browserHasGeolocation ? 'The geolocation service is blocked, not enabled or failed to complete. Map set to default location and time.' : 'Error: Your browser doesn\'t allow geolocation.' ;
+		message = window.self === window.top ? message : 'Default location';
+  
+		infoWindow.setContent( message );
+		messagePlace.innerHTML = message;
+
+		latitude = inpLatitude.value = position.lat();
+		longitude = inpLongitude.value = position.lng();
+
+	}
+
+</script>
+</body>
+</html>

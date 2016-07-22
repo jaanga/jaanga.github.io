@@ -1,0 +1,262 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Google Maps API Path R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Read flight path CSV file and display boundary on Google Map' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-07-10' >
+</head>
+<body>
+<script>
+
+// https://developers.google.com/maps/documentation/static-maps/intro
+
+// New York example
+	var source = 'https://maps.googleapis.com/maps/api/staticmap?size=512x512&path=color:0xff000066|weight:10|40.737102,-73.990318|40.749825,-73.987963|40.752946,-73.987384|40.755823,-73.986397';
+
+	var zoom = 12;
+	var mapsAPISource = 'https://maps.googleapis.com/maps/api/staticmap?size=1024x1024&scale=1&zoom=' + zoom + '&path=color:0xff000066|weight:10';
+
+	var flightPathFileDefault = '../path-data/LEIG-L1500-cooked-01.csv';
+	var flightPathFile;
+	var flightPath;
+
+	init();
+
+	function init() {
+
+		var css, contents, hamburger, menu;
+
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'body { font: 12pt monospace; margin: 0; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary h3 { display:inline; }' +
+			'summary { outline: none; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+				'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<details open >' +
+					'<summary><h3>file reader</h3></summary>' +
+					'<p><input type=file id=inpFile onchange=openFile(this); ></p>' +
+					'<textarea id=textArea style=height:50px;overflow:auto;width:100%; ></textarea>' +
+					'<div id=menuOpenFile ></div>' +
+				'</details>' +
+
+				'<div id=menuInfo ></div>' +
+
+				'<details open >' +
+					'<summary><h3>about</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
+
+	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<img id=image >' +
+			'</div>' +
+
+		'';
+
+		var flightPathFile = flightPathFileDefault;
+
+		requestFlightPath( flightPathFile );
+
+	}
+
+
+	function requestFlightPath( fileName ) {
+
+		var xhr;
+		var b = '<br>';
+
+		latitudes = [];
+		longitudes = [];
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			parseDataGetMap( xhr.responseText ) 
+
+		}
+
+	}
+
+	function openFile( files ) {
+
+		var fileData, reader, data;
+
+		reader = new FileReader();
+		reader.onload = function( event ) {
+
+			textArea.innerHTML = reader.result;
+
+			menuOpenFile.innerHTML =
+				'name: ' + files.files[0].name + '<br>' +
+				'size: ' + files.files[0].size.toLocaleString() + ' bytes<br>' +
+				'type: ' + files.files[0].type + '<br>' +
+				'modified: ' + files.files[0].lastModifiedDate.toLocaleDateString() +
+			'';
+
+			parseDataGetMap( reader.result );
+
+//console.log( '', files );
+
+		}
+
+		reader.readAsText( files.files[0] );
+
+	}
+
+	function parseDataGetMap( data ) {
+
+//		var latitudes, longitudes;
+//		var lines, txtline;
+		var b = '<br>';
+
+		latitudes = [];
+		longitudes = [];
+
+		lines = data.split(/\r\n|\n/);
+
+		for ( var i = 1; i < lines.length; i++ ) {
+
+			txtline = lines[ i ].split( ',' ).map( parseFloat );
+
+			latitudes.push( txtline[ 1 ] );
+			longitudes.push( txtline[ 0 ] ); 
+
+		}
+
+		latMin = arrayMin( latitudes );
+		latMax = arrayMax( latitudes );
+
+		lonMin = arrayMin( longitudes );
+		lonMax = arrayMax( longitudes );
+
+		menuInfo.innerHTML = 
+			'<details open >' +
+				'<summary><h3>boundaries</h3></summary>' +
+				'<p>' +
+					'latMin: ' + latMin + b +
+					'latMax: ' + latMax + b + b +
+
+					'lonMin: ' + lonMin + b +
+					'lonMax: ' + lonMax + b +
+				'</p>' +
+			'</details>' +
+		'';
+
+//		path = latMin + ',' + lonMin + '|' + latMax + ',' + lonMin + '|' + latMax + ',' + lonMax + '|' + latMin + ',' + lonMax + '|' + latMin + ',' + lonMin;
+
+		path = '';
+
+		delta = Math.floor( latitudes.length / 100 );
+
+		for ( var i = 0; i < latitudes.length; i += delta ) {
+
+			path += '|' + latitudes[ i ].toFixed( 4 ) + ',' + longitudes[ i ].toFixed( 4 );
+
+		}
+
+//		image.src = source;
+
+		pp =  mapsAPISource + path;
+
+console.log( 'path length ', pp.length );
+
+		image.src = pp;
+
+	}
+
+
+// http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
+
+	function arrayMin( arr ) {
+
+		var len = arr.length, min = Infinity;
+
+		while ( len-- ) {
+
+			if ( arr[ len ] < min) { min = arr[ len ]; }
+
+		}
+
+		return min;
+
+	}
+
+	function arrayMax( arr ) {
+
+		var len = arr.length, max = -Infinity;
+
+		while ( len-- ) {
+
+			if (arr[len] > max) { max = arr[len]; }
+
+		}
+
+		return max;
+
+	}
+
+</script>
+</body>
+</html>

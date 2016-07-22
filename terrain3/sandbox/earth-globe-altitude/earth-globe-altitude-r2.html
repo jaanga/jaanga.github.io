@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Earth Globe Alitude R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-07-18' >
+</head>
+<body>
+<!--
+<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+console.time( 'timer 0' );
+
+	var pi = Math.PI, pi2 = 2 * Math.PI, pi05 = 0.5 * Math.PI, pi_05 = -0.5 * Math.PI;
+	var d2r = pi / 180;
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+
+	var sourceFolder = '../bitmaps/';
+	var heightMapSource = '../bitmaps/bathymetry_bw_composite_2k.png';
+
+	overlays = [
+
+		[ 'bathymetry_bw_composite_2k.png', 'height map' ],
+		[ 'Elevation.jpg', 'Elevation' ],
+		[ 'GLOBALeb3colshade.jpg', 'Global eb3 color shade' ],
+		[ 'world.topo.bathy.200408.3x5400x2700.jpg', 'World Topo Bathy' ],
+		[ '2_no_clouds_4k.jpg','no clouds'],
+		[ 'world-map.jpg','world-map']
+
+	];
+
+	var earthRadiusEquator = 6371;
+
+	var width = 2048;
+	var height = 1024;
+
+	var scale = 2;
+	var scaleAdjust = 0.0009;
+	var scl = scaleAdjust * scale;
+
+	var startTime = performance.now();
+	var delayTime = 2000;
+	var autoRotateSpeed = 0.5;
+	var materialOverlay;
+
+	var heightMap, heightMesh, seaLevel, canvasHeightMap, contextHeightMap;
+
+	var stats, renderer, scene, camera, controls, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css, hamburger, menu;
+		var geometry, material;
+		var gridHelper, axisHelper;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary { outline: none; }' +
+			'summary h3 { display:inline; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#container { left: 0; position: absolute; transition: left 1s; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<p>' +
+					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
+				'</p>' +
+				'<div id=menuInfo ></div>' +
+
+			'<p>Overlay: <select id=selOverlay onchange=selectOverlay(); ></select>' +
+			'<p>Vertical Scale <input type=range id=inpScale min=0 max=3 step=0.05 value=2 onchange=selectScale(this.valueAsNumber); /></p>' +
+			'<p><input type=checkbox id=inpHelpers onchange=axis.visible=!axis.visible; checked /> Display axis</p>' +
+			'<p><input type=checkbox id=chkGradient onchange=toggleGradientBackground(); checked /> Display gradient</p>' +
+			'<p><input type=checkbox id=chkRotate checked /> Auto Rotation</p>' +
+			'<p id=info ></p>' +
+
+				'<details >' +
+					'<summary><h3>about</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+		'';
+
+		for (var i = 0; i < overlays.length; i++) {
+				selOverlay.appendChild( document.createElement( 'option' ) );
+				selOverlay.children[ i ].text = overlays[i][1];
+
+		}
+		selOverlay.selectedIndex = 1;
+
+// three.js
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;' ;
+		document.body.appendChild( stats.domElement );
+		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 40000 );
+		camera.position.set( -15000, 15000, 15000 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.minDistance = 2500;
+		controls.maxDistance = 30000;
+//		controls.autoRotate = true;
+
+		scene = new THREE.Scene();
+
+// helpers
+		axisHelper = new THREE.AxisHelper( 10000 );
+		scene.add( axisHelper );
+
+// assets
+
+		var size = 13000;
+		var lightAmbient, lightDirectional, lightPoint;
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -size, size, size );
+		scene.add( lightDirectional );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+		controls.autoRotateSpeed = autoRotateSpeed;
+
+		window.addEventListener( 'resize', onWindowResize, false );
+//		renderer.domElement.addEventListener( 'mousemove', onMouseMove, false ); // or mousedown?
+
+/// assets
+
+		var axis = new THREE.AxisHelper( 10000 );
+
+		geometry = new THREE.SphereBufferGeometry( earthRadiusEquator + 1500, 50, 25 );
+		material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
+		seaLevel = new THREE.Mesh( geometry, material );
+		scene.add( seaLevel );
+
+		canvasHeightMap = document.createElement( 'canvas' );
+//		document.body.appendChild( canvasHeightMap );
+//		canvasHeightMap.style.cssText = 'margin: 20px; position: absolute; top: 0;';
+		canvasHeightMap.width = width;
+		canvasHeightMap.height = height;
+		contextHeightMap = canvasHeightMap.getContext( '2d' );
+
+		selectOverlay();
+
+		imageLoader = new THREE.ImageLoader();
+		imageLoader.crossOrigin = 'anonymous';
+		imageLoader.load( heightMapSource, updateTerrain );
+
+	}
+
+
+	function selectScale( scale ) {
+
+		scene.remove( seaLevel );
+
+		scale = scale ? scale : 2;
+
+		scl = scale * scaleAdjust;
+
+		var geometry = new THREE.SphereBufferGeometry( ( 1 + scl * 128 ) * earthRadiusEquator, 50, 25 );
+
+		var material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
+
+		seaLevel = new THREE.Mesh( geometry, material );
+		scene.add( seaLevel );
+
+		updateTerrain();
+		selectOverlay();
+
+	}
+
+	function selectOverlay() {
+
+		var loader = new THREE.TextureLoader();
+		loader.crossOrigin = 'anonymous';
+		loader.load( sourceFolder + overlays[ selOverlay.selectedIndex ][0], updateTexture );
+
+	}
+
+	function updateTexture( texture ) {
+
+		texture.needsUpdate = true;
+		materialOverlay = new THREE.MeshPhongMaterial( { color: 0xcccccc, emissive: 0x000000, map: texture, specular: 0x111111 } );
+		if ( heightMesh ){ heightMesh.material = materialOverlay; }
+
+	}
+
+	function updateTerrain( mesh ) {
+
+		scene.remove( heightMesh );
+
+		heightMap = mesh ? mesh : heightMap ;
+
+		contextHeightMap.drawImage( heightMap, 0, 0, width, height, 0, 0, width, height );
+
+		var map = contextHeightMap.getImageData( 0, 0, width, height ).data;
+
+		var geometry = new THREE.SphereBufferGeometry( earthRadiusEquator, width - 1, height - 1 );
+
+		var vertices = geometry.attributes.position.array;
+
+		for ( var i = 0, j = 0; i < vertices.length; i += 3, j += 4 ) {
+
+			var s = 1 + scl * map[ j ];
+			vertices[ i ] *= s;
+			vertices[ i + 1 ] *= s;
+			vertices[ i + 2 ] *= s;
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		heightMesh = new THREE.Mesh( geometry, materialOverlay );
+
+		scene.add( heightMesh );
+
+console.timeEnd( 'timer 0' );
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

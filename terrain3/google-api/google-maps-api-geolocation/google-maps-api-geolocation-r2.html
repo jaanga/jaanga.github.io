@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>google-maps-api-geolocation-r2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='
+
+' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-04-29' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js></script>
+<script>
+
+// http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
+// https://developers.google.com/maps/documentation/javascript/examples/map-geolocation
+
+	var contents, map, infoWindow;
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu, contents;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'html { height: 100%; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; }' +
+//			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#contents { height: 100%; text-align: center; }' +
+//			'#contents { border: 1px #ccc solid; left: 400px; position: absolute; }' +
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = '<h1>Stuff</h1>';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<div id=info ></div>' +
+
+		'';
+
+		map = new google.maps.Map( contents, {
+
+			center: { lat: -34.397, lng: 150.644 },
+			zoom: 12
+
+		});
+
+		infoWindow = new google.maps.InfoWindow({map: map});
+
+// Try HTML5 geolocation.
+
+		if ( navigator.geolocation ) {
+
+			navigator.geolocation.getCurrentPosition( function( position ) {
+
+				var pos = {
+
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+
+				};
+
+				infoWindow.setPosition( pos );
+				infoWindow.setContent('Location found.');
+
+				map.setCenter(pos);
+
+			}, function() {
+
+				handleLocationError( true, infoWindow, map.getCenter());
+
+			});
+
+		} else {
+
+// Browser doesn't support Geolocation
+
+			handleLocationError( false, infoWindow, map.getCenter() );
+
+		}
+
+	}
+
+
+	function handleLocationError( browserHasGeolocation, infoWindow, pos ) {
+
+		infoWindow.setPosition( pos );
+
+		infoWindow.setContent( browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
+
+	}
+
+</script>
+</body>
+</html>

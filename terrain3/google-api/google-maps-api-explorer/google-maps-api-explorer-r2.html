@@ -1,0 +1,452 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Google Maps API Explorer R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Maps API
+' >
+<meta name=keywords content='Google Maps API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-02' >
+</head>
+<body>
+<script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyC9cIAxOhYYPQJEdFRcrtQQ6MTrNUpaPWk ></script>
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/tutorial
+// https://developers.google.com/maps/documentation/javascript/elevation
+
+	var startTime = Date.now();
+
+// Igualada Spain
+//	var latitude = 41.5861554761;
+//	var longitude = 1.6519343471;
+
+//	var latitude = -34.3981;
+//	var longitude = 150.644;
+
+	var latitude = 37.79679;
+	var longitude = -122.39812;
+
+// VNLK
+//	var latitude = 27.71110193545;
+//	var longitude = 86.71228385040001;
+
+// YGIL / Gilgandra
+//	var latitude = -31.7276314069;
+//	var longitude = 148.63915118805;
+
+	var zoom = 14;
+	var TILE_SIZE = 256;
+	var map;
+
+	var width = window.innerWidth; //1024;
+	var height = window.innerHeight; // 1024;
+
+	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+	var d2r = pi / 180;
+	var b = '<br>';
+
+	init();
+
+	function init() {
+
+		var css, hamburger, menu, contents;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; padding: 0; }' +
+			'h2, h3 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary h3 { display:inline; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+			'#contents { position: absolute; right: 0; }' +
+//			'#contents { border: 1px #ccc solid; height: 100%; left: 0px; position: absolute; width: 100%; }' +
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML = '<h1>Contents</h1>';
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >&#9776;</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<div><small><i>click on map to see position details updated</i></small></div>' +
+
+			'<p>Latitude : <input id=inpLatitude size=12 value=' + latitude + ' onchange=initMap(); ></p>' +
+			'<p>Longitude: <input id=inpLongitude size=12 value=' + longitude + ' onchange=initMap(); ></p>' +
+
+			'<p>Zoom: <select id=selZoom onchange=initMap(); title="Select the zoom" size=1 >23</select></p>' +
+
+			'<p><button onclick=getParams(); >get parameters</button></p>' +
+
+			'<div id=menuTileInfo ></div>' +
+			'<div id=menuParameters></div>' +
+			'<div id=menuClick></div>' +
+			'<div id=menuImage ></div>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a></h1>' +
+			'</center>' +
+
+		'';
+
+		for ( var i = 0; i < 25; i++ ) {
+
+			selZoom[ selZoom.length ] = new Option( i + 1, i + 1 );
+
+		}
+
+		selZoom.selectedIndex = zoom - 1;
+
+		contents.style.width = width + 'px';
+		contents.style.height = height + 'px';
+		contents.style.textAlign = 'right';
+
+		initMap();
+
+		google.maps.event.addDomListener( window, 'load', getParams );
+
+	}
+
+
+	function initMap() {
+
+		latitude = parseFloat( inpLatitude.value );
+		longitude = parseFloat( inpLongitude.value );
+
+		zoom = selZoom.selectedIndex + 1;
+
+		map = new google.maps.Map( contents, {
+
+			zoom: zoom,
+			center: { lat: latitude, lng: longitude },
+//			mapTypeId: google.maps.MapTypeId.TERRAIN,
+
+//			mapTypeId: 'hybrid',
+//			mapTypeId: 'roadmap',
+//			mapTypeId: 'satellite',
+			mapTypeId: 'terrain',
+
+//			mapTypeControl: true,
+			mapTypeControlOptions: {
+				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+				position: google.maps.ControlPosition.TOP_RIGHT
+//				position: 'TOP_RIGHT' // not
+			},
+
+/*,
+			zoomControl: true,
+			zoomControlOptions: {
+				position: google.maps.ControlPosition.LEFT_CENTER
+			},
+			scaleControl: true,
+			streetViewControl: true,
+			streetViewControlOptions: {
+				position: google.maps.ControlPosition.LEFT_TOP
+			},
+*/
+
+			fullscreenControl: true
+
+		});
+
+		var marker = new google.maps.Marker({
+
+			position: {lat: latitude, lng: longitude } ,
+			map: map
+
+		});
+
+		addFlightPath();
+
+// https://developers.google.com/maps/documentation/javascript/events#EventsOverview
+
+		map.addListener( 'click', onClick ); 
+//		map.addListener( 'mousemove', onClick );
+		map.addListener( 'zoom_changed', onZoomChanged );
+		map.addListener( 'center_changed', onCenterChanged );
+
+		getTile();
+	}
+
+	function getTile() {
+
+		tileX = lon2tile( longitude, zoom );
+		tileY = lat2tile( latitude, zoom );
+
+		ULlat = tile2lat( tileY, zoom );
+		ULlon = tile2lon( tileX, zoom );
+
+		LRlat = tile2lat( tileY + 1, zoom );
+		LRlon = tile2lon( tileX + 1, zoom );
+
+// https://en.wikipedia.org/wiki/Earth_radius#Polar_radius
+
+		equatoriaCircumferenceLocal = pi2 * 6378137 * Math.cos( latitude * d2r );
+		meridionalCircumference = pi2 * 6356752.3;
+
+		menuTileInfo.innerHTML = 
+		'<details open>' +
+			'<summary><h3>tile info</h3></summary>' +
+
+			'latitude : ' + latitude + b +
+			'longitude: ' + longitude + b +
+			'zoom: ' + map.zoom + b + b +
+			'tile X: ' + tileX + b +
+			'tile Y: ' + tileY + b + b +
+
+			'UL lat: ' + ULlat + b +
+			'UL lon: ' + ULlon + b + 
+			'LR lat: ' + LRlat + b +
+			'LR lon: ' + LRlon + b + b +
+
+			'&Del;lat:' + ( ULlat - LRlat ).toFixed( 3 ) + b +
+			'&Del;lon:' + ( ULlon - LRlon ).toFixed( 3 ) + b + b +
+
+			'Meters/tile' + b +
+			'Latitude: ' + ( meridionalCircumference / Math.pow( 2, zoom ) ).toFixed( 1 ) + b +
+			'Longitude: ' + ( equatoriaCircumferenceLocal / Math.pow( 2, zoom ) ).toFixed( 1 ) + b + b +
+
+			'Meters/degree' + b +
+			'Latitude: ' + ( meridionalCircumference / 360 ).toFixed( 1 ) + b +
+			'Longitude: ' + ( equatoriaCircumferenceLocal  / 360 ).toFixed( 1 ) + b +
+
+		'</details>' + b;
+
+		source = 'http://c.tile.opencyclemap.org/cycle/' + zoom + '/' + tileX + '/' + tileY + '.png'
+
+		menuImage.innerHTML =
+		'<details>' +
+			'<summary><h3>tile</h3></summary>' +
+			'<img src=' + source + ' >' + b +
+			'<a href=' + source + ' >' + source.slice( 7 ) + '</a>' +
+		'</details>' +
+		'';
+
+// path
+
+		var tileCoordinates = [
+			{ lat: ULlat, lng: ULlon },
+			{ lat: ULlat, lng: LRlon },
+			{ lat: LRlat, lng: LRlon },
+			{ lat: LRlat, lng: ULlon }
+		];
+
+		var tilePath = new google.maps.Polygon( {
+			path: tileCoordinates,
+			geodesic: true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+		} );
+
+		tilePath.setMap( map );
+
+	}
+
+	function getParams() {
+
+//console.log( 'map', map, '\nNE', map.getBounds().getNorthEast().lat() );
+
+		SWlat =  map.getBounds().getSouthWest().lat();
+		NElat =  map.getBounds().getNorthEast().lat();
+		SWlon = map.getBounds().getSouthWest().lng();
+		NElon = map.getBounds().getNorthEast().lng();
+
+		latDelta = ( NElat - SWlat );
+		lonDelta = ( NElon - SWlon );
+
+		latDegreesPerPixel = latDelta / 512;
+		lonDegreesPerPixel = lonDelta / 512;
+
+		latPixelsPerDegree = 512 / latDelta;
+		lonPixelsPerDegree = 512 / lonDelta;
+
+		menuParameters.innerHTML = 
+		'<details open>' +
+			'<summary><h3>map bounds parameters</h3></summary>' +
+			'NE lat:' + NElat.toFixed( 3 ) + b +
+			'NE lon:' + NElon.toFixed( 3 ) + b +
+			'SW lat:' + SWlat.toFixed( 3 ) + b +
+			'SW lon:' + SWlon.toFixed( 3 ) + b + b +
+
+			'latDelta: ' + latDelta.toFixed( 6 ) + b +
+			'lonDelta: ' + lonDelta.toFixed( 6 ) + b + b +
+
+			'Degrees/Pixel' + b +
+			'latitude: ' + latDegreesPerPixel.toFixed( 6 ) + b +
+			'longitude: ' + lonDegreesPerPixel.toFixed( 6 ) + b + b +
+
+			'Pixels/Degree' + b +
+			'latitude: ' + latPixelsPerDegree.toFixed( 1 ) + b +
+			'longitude: ' + lonPixelsPerDegree.toFixed( 1 ) + b +
+		'</details>' + b; 
+
+	}
+
+	function onCenterChanged( event ) {
+
+			latLng = map.center;
+
+			latitude = latLng.lat();
+			longitude = latLng.lng();
+
+//console.log( 'map', map, latitude, longitude );
+
+	}
+
+	function onZoomChanged( event ) {
+
+		getTile();
+
+	}
+
+	function onClick( event ) {
+
+console.log( 'event', event, event.latLng.lat() );
+
+			var scale = 1 << zoom;
+
+			latLng = event.latLng;
+
+			latitude = latLng.lat();
+			longitude = latLng.lng();
+
+			var worldCoordinate = project( latLng );
+
+			var pixelCoordinate = new google.maps.Point(
+
+				Math.floor( worldCoordinate.x * scale ),
+				Math.floor( worldCoordinate.y * scale )
+
+			);
+
+			var tileCoordinate = new google.maps.Point(
+
+				Math.floor( worldCoordinate.x * scale / TILE_SIZE ),
+				Math.floor( worldCoordinate.y * scale / TILE_SIZE )
+
+			);
+
+			menuClick.innerHTML = 
+			'<details>' +
+				'<summary><h3>extra click data</h3></summary>' +
+				'World Coordinate: ' + worldCoordinate + b +
+				'Pixel Coordinate: ' + pixelCoordinate + b +
+				'Tile Coordinate: ' + tileCoordinate + b +
+			'</details>';
+
+			var marker = new google.maps.Marker({
+
+				position: {lat: event.latLng.lat(), lng: event.latLng.lng() } ,
+				map: map
+
+			});
+
+			getTile();
+
+	}
+
+// https://developers.google.com/maps/documentation/javascript/maptypes#PixelCoordinates
+
+// The mapping between latitude, longitude and pixels is defined by the web
+// mercator projection.
+
+	function project( latLng ) {
+
+		var siny = Math.sin( latLng.lat() * Math.PI / 180 );
+
+// Truncating to 0.9999 effectively limits latitude to 89.189. This is
+// about a third of a tile past the edge of the world tile.
+
+		siny = Math.min( Math.max( siny, -0.9999 ), 0.9999 );
+
+		return new google.maps.Point(
+
+			TILE_SIZE * ( 0.5 + latLng.lng() / 360 ),
+			TILE_SIZE * ( 0.5 - Math.log( ( 1 + siny ) / ( 1 - siny ) ) / ( 4 * Math.PI ) )
+
+		);
+
+	}
+
+//
+
+	function addFlightPath() {
+
+		var flightPlanCoordinates = [
+			{ lat: 37.772, lng: -122.214 },
+			{ lat: 21.291, lng: -157.821 },
+			{ lat: -18.142, lng: 178.431 },
+			{ lat: -27.467, lng: 153.027 }
+		];
+
+		var flightPath = new google.maps.Polyline( {
+			path: flightPlanCoordinates,
+			geodesic: true,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 2
+		} );
+
+		flightPath.setMap( map );
+
+	}
+
+
+// Source http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
+
+	function lon2tile( lon, zoom ) {
+
+		return Math.floor( ( lon + 180 ) / 360 * Math.pow( 2, zoom ) );
+
+	}
+
+	function lat2tile( lat, zoom ) {
+
+		var pi = Math.PI;
+		return Math.floor(( 1 - Math.log( Math.tan( lat * pi / 180) + 1 / Math.cos( lat * pi / 180)) / pi )/2 * Math.pow(2, zoom) );
+
+	}
+
+	function tile2lon( x, zoom ) {
+
+		return ( x / Math.pow( 2, zoom ) * 360 - 180 );
+
+	}
+
+	function tile2lat( y, zoom ) {
+
+		var pi = Math.PI;
+		var n = pi - 2 * pi * y / Math.pow( 2, zoom );
+		return 180 / pi * Math.atan( 0.5 * ( Math.exp( n ) - Math.exp( -n ) ));
+
+	}
+
+</script>
+</body>
+</html>
