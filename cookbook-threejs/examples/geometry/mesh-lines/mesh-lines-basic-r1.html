@@ -22,6 +22,8 @@
 
 // https://github.com/spite/THREE.MeshLine
 
+	var meshLine;
+
 	var colors = [
 		0xed6a5a,
 		0xf4f1bb,
@@ -55,7 +57,7 @@
 			body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			a {text-decoration: none; }
 			h2 { margin: 0 }
-			button{ background-color: #eee; border: 2px #eee solid; color: #888; }
+			button{ background-color: #ccc; border: 2px #eee solid; color: #888; }
 
 		`;
 
@@ -68,6 +70,10 @@
 				<a href="" >${ document.title }</a>
 				 <a href=http://jaanga.github.io/ >🛈</a>
 			</h2>
+
+			<p><button onclick=demo(); >demo</button></p>
+
+			<p><button onclick=spiral(); >spiral</button></p>
 			<div id=info ></div>
 
 		`;
@@ -110,9 +116,42 @@
 // assets
 
 
+	}
+
+	function demo() {
+
+
 		var geometry = new THREE.Geometry();
 
-		for( var j = 0; j < 5000 * Math.PI; j += 2 * Math.PI / 100 ) {
+		scene.remove( meshLine );
+
+		for( var j = 0; j < Math.PI; j += 2 * Math.PI / 100 ) {
+
+			var v = new THREE.Vector3( 25 * Math.cos( j ), 25 * Math.sin( j ), 0 );
+
+			geometry.vertices.push( v );
+		}
+
+		var line = new THREE.MeshLine();
+		line.setGeometry( geometry );
+
+		var material = new THREE.MeshLineMaterial( { color: new THREE.Color( colors[ Math.floor( Math.random() * 15 ) ] ), lineWidth: 8 });
+
+		meshLine = new THREE.Mesh( line.geometry, material ); // this syntax could definitely be improved!
+		scene.add( meshLine );
+
+
+
+
+	}
+
+	function spiral() {
+
+		var geometry = new THREE.Geometry();
+
+		scene.remove( meshLine );
+
+		for ( var j = 0; j < 5000 * Math.PI; j += 2 * Math.PI / 100 ) {
 
 			var v = new THREE.Vector3( 25 * Math.cos( j ) + 5 * Math.random(), 2 * j, 30 * Math.sin( j ) + 5 * Math.random() );
 			geometry.vertices.push( v );
@@ -120,7 +159,7 @@
 		}
 
 		var line = new THREE.MeshLine();
-		line.setGeometry( geometry, function( p ) { return 2 + Math.sin( 50 * p ); } );
+		line.setGeometry( geometry, function( p ) { return 2 + Math.sin( 1 * p ); } );
 
 		var resolution = new THREE.Vector2( window.innerWidth, window.innerHeight );
 
@@ -138,12 +177,11 @@
 
 		});
 
-		var mesh = new THREE.Mesh( line.geometry, material ); // this syntax could definitely be improved!
+		meshLine = new THREE.Mesh( line.geometry, material ); // this syntax could definitely be improved!
 
-		scene.add( mesh );
+		scene.add( meshLine );
 
 	}
-
 
 	function onWindowResize() {
 

@@ -23,7 +23,7 @@ _Open Index or Markdown_
 
 ***
 
-[test.md]( index.hrml#test.md ]
+[test.md]( index.html#test.md ]
 
 
 

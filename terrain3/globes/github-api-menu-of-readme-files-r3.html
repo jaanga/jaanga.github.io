@@ -19,8 +19,8 @@ Uses Github API to find directories with readme.md files.' >
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 	var searchForFile = 'readme.md';
-	var searchInFolder = 'terrain3/';
-	var path = './';
+	var searchInFolder = 'cookbook-html/templates/';
+	var path = '../../';
 
 	var files;
 
@@ -59,7 +59,7 @@ Uses Github API to find directories with readme.md files.' >
 
 	function requestAPIContents() {
 
-//		var xhr, response, file;
+		var xhr, response, file;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', urlAPIContents, true );

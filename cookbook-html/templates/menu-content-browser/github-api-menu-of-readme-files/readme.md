@@ -21,10 +21,18 @@
 
 ## Where Used
 
+* https://Art.github.io/globes/
 * https://jaanga.github.io/cookbook-html/templates/menu-contents-browser/
 * https://jaanga.github.io/cookbook-html/templates/
 * https://jaanga.github.io/cookbook-threejs/examples/google-api/
 * https://fgx.github.io/sandbox/ << needs update
+
+
+## Wish list
+
+* Read Me template
+* Brings in gallery view of files found
+
 
 ## Change Log
 

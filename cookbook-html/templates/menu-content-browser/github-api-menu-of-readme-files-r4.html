@@ -2,12 +2,12 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Menu of Read Me Files R3</title>
-<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<title>GitHub API Menu of Read Me Files R4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Browse and view files written in Markdown format.
 Uses Github API to find directories with readme.md files.' >
 <meta name=keywords content='Jaanga,GitHub API,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-07-21' >
+<meta name=date content='2016-07-23' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
@@ -18,8 +18,20 @@ Uses Github API to find directories with readme.md files.' >
 	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
+	var dirs = location.href.split( '/' );
+
+	home = 'jaanga.github.io';
+	index = dirs.indexOf( home ) + 1;
+
+	folders = dirs.slice( index, dirs.length - 1 ).join( '/' ) + '/' ;
+
+console.log( 'folder', folders );
+
 	var searchForFile = 'readme.md';
-	var searchInFolder = 'terrain3/';
+
+//	var searchInFolder = 'cookbook-html/templates/';
+	var searchInFolder = folders;
+
 	var path = './';
 
 	var files;
@@ -59,7 +71,7 @@ Uses Github API to find directories with readme.md files.' >
 
 	function requestAPIContents() {
 
-//		var xhr, response, file;
+		var xhr, response, file;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', urlAPIContents, true );
