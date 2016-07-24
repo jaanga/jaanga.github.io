@@ -18,7 +18,7 @@ Uses Github API to find directories with readme.md files.' >
 	var org = 'Jaanga';
 	var tagLine ='your 3D happy place';
 	var logo = '&#x2766';
-	var title = org + ' Terrain 3'
+	var title = 'Earth Globes';
 
 
 	var home = org + '.github.io';
@@ -30,7 +30,9 @@ Uses Github API to find directories with readme.md files.' >
 
 	var index = dirs.indexOf( home.toLowerCase() ) + 1;
 
-	folders = dirs.slice( index, dirs.length - 1 ).join( '/' ) + '/' ;
+	var foldersArray = dirs.slice( index, dirs.length - 1 )
+
+	var folders = foldersArray.join( '/' ) + '/' ;
 
 //console.log( 'folder', folders );
 
@@ -99,8 +101,6 @@ Uses Github API to find directories with readme.md files.' >
 
 				if ( file.match( 'archive' ) ) { continue; }
 
-				if ( file.split( '/' ).length > 3 ) { continue; }
-
 				if ( file.match( searchInFolder + searchForFile ) ) { continue; }
 
 				files.push( file );
@@ -120,8 +120,10 @@ Uses Github API to find directories with readme.md files.' >
 		var txt =  
 
 			'<h2>' +
-				'<a href=http://' + org + '.github.io title="' + org + ' - ' + tagLine + '" >' + logo + '</a><br>' +
-				'<a href="" title="Click here to refresh this page" >' + title + '</a>' +
+				'<a href=http://' + org + '.github.io title="' + org + ' - ' + tagLine + '" >' + logo + '</a> &raquo; ' +
+				'<a href=../index.html title="" >' + foldersArray.shift() + '</a> &raquo; <br>' +
+
+				'<a href="" title="Click here to refresh this page" >' + foldersArray.shift() + '</a>' +
 //				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>';
 

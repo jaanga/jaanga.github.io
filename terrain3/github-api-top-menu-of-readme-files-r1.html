@@ -18,7 +18,7 @@ Uses Github API to find directories with readme.md files.' >
 	var org = 'Jaanga';
 	var tagLine ='your 3D happy place';
 	var logo = '&#x2766';
-	var title = org + ' Terrain3 Earth Globes';
+	var title = org + ' Terrain 3'
 
 
 	var home = org + '.github.io';
@@ -99,6 +99,8 @@ Uses Github API to find directories with readme.md files.' >
 
 				if ( file.match( 'archive' ) ) { continue; }
 
+				if ( file.split( '/' ).length > 3 ) { continue; }
+
 				if ( file.match( searchInFolder + searchForFile ) ) { continue; }
 
 				files.push( file );
@@ -128,7 +130,7 @@ Uses Github API to find directories with readme.md files.' >
 			file = files[ i ].replace( searchInFolder, '' );
 			txt += 
 
-				'<h3><a href=#' + path + file + ' >'+ file.replace( '/readme.md', '' ).replace( /-/g, ' ' ) + '<a></h3>' +
+				'<h3><a href=' + path + file.replace( '/readme.md', '/index.html' ) + ' >'+ file.replace( '/readme.md', '' ).replace( /-/g, ' ' ) + '<a></h3>' +
 
 			'';
 
