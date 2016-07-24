@@ -97,6 +97,9 @@ Uses Github API to find directories with readme.md files.' >
 
 				if ( !file.match( searchForFile ) ) { continue; }
 
+// just one sub-folder deep
+//				if ( file.split( '/' ).length > 3 ) { continue; }
+
 				if ( file.match( 'archive' ) ) { continue; }
 
 				if ( file.match( searchInFolder + searchForFile ) ) { continue; }

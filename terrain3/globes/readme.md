@@ -11,15 +11,18 @@
 
 ## Concept
 
-*
+* Good looking, well detailed globes
+* Fast loading
+* Very reusable, embeddable
+
 
 ### Mission
 
-*
+* 
 
 ### Vision
 
-* 
+* A new type of 3D gazetteer
 
 ## Features
 
@@ -33,7 +36,7 @@
 ## Change Log
 
 
-###
+### 2016-07-23
 
 * First commit
 * Update read me

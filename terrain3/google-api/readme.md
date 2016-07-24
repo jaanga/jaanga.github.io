@@ -1,12 +1,11 @@
 <span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/cookbook-threejs/examples/google-api/index.html#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/google-api/'; 
+( https://jaanga.github.io/terrain3/google-api/index.html#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/google-api/'; 
 value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaangas.github.io/cookbook-threejs/ ) &raquo;
-[Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo;
+[Jaanga]( https://jaanga.github.io ) &raquo; [Terrain3]( http://jaanga.github.io/terrain3/ ) &raquo;
 
-[Google Maps API Read Me]( https://jaanga.github.io/cookbook-threejs/examples/google-api/index.html#readme.md )
+[Google Maps API Read Me]( https://jaanga.github.io/terrain3/google-api/index.html#readme.md )
 ===
 
 
@@ -45,6 +44,11 @@ value='You are now in GitHub web page view - Click this button to view Read Me f
 
 
 ## Change Log
+
+
+### 2016-07-23
+
+* more menu code updates
 
 ### 2016-07-06
 
