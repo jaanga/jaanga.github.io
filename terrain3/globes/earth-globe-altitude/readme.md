@@ -3,7 +3,7 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/globes/earth-globe-altitude/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [Terrain 3]( http://jaanga.github.io/terrain3/  ) &raquo;
-[Examples]( https://jaanga.github.io/terrain3/globes/ ) &raquo;
+[Globes]( https://jaanga.github.io/terrain3/globes/ ) &raquo;
 
 [Earth Globe Altitude Read Me]( https://jaanga.github.io/terrain3/globes/earth-globe-altitude/index.html#readme.md )
 ===
