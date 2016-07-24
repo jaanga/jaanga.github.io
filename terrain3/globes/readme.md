@@ -6,7 +6,7 @@
 [Jaanga]( http://jaanga.github.io ) » [Terrain 3]( http://jaanga.github.io/terrain3/  ) »
 
 
-[Earth Globes Read Me]( index.html#readme.md )
+[Earth Globes Read Me]( https://jaanga.github.io/terrain3/globes/index.html#readme.md )
 ===
 
 ## Concept
