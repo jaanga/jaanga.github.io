@@ -142,11 +142,11 @@ https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 ## Miscellaneous
 
 * https://developer.github.com/v3/misc/
-
-https://api.github.com/emojis
-https://api.github.com/gitignore/templates
-https://api.github.com/licenses
-https://api.github.com/meta
+* https://api.github.com/emojis
+* http://www.webpagefx.com/tools/emoji-cheat-sheet/
+* https://api.github.com/gitignore/templates
+* https://api.github.com/licenses
+* https://api.github.com/meta
 
 
 ### Rate Limits

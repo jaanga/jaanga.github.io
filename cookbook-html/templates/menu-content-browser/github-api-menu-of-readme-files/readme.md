@@ -32,7 +32,7 @@
 
 ## Wish list
 
-
+* Version that goes only one sub-folder level deep
 * Brings in gallery view of files found
 
 
