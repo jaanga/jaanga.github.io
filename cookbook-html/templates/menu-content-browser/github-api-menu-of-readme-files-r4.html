@@ -15,26 +15,27 @@ Uses Github API to find directories with readme.md files.' >
 
 // http://jaanga.github.io/cookbook-html/templates/menu-content-browser/github-api-menu-of-readme-files/
 
+	var home = 'jaanga.github.io';
+
 	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
-	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+	var searchForFile = 'readme.md';
 
 	var dirs = location.href.split( '/' );
 
-	home = 'jaanga.github.io';
-	index = dirs.indexOf( home ) + 1;
+	var index = dirs.indexOf( home ) + 1;
 
 	folders = dirs.slice( index, dirs.length - 1 ).join( '/' ) + '/' ;
 
 console.log( 'folder', folders );
 
-	var searchForFile = 'readme.md';
-
-//	var searchInFolder = 'cookbook-html/templates/';
 	var searchInFolder = folders;
 
-	var path = './';
+	var path = ''; // './';
 
 	var files;
+
+	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 	init();
 
@@ -90,6 +91,8 @@ console.log( 'folder', folders );
 				if ( !file.match( searchInFolder ) ) { continue; }
 
 				if ( !file.match( searchForFile ) ) { continue; }
+
+				if ( file.match( searchInFolder + searchForFile ) ) { continue; }
 
 				files.push( file );
 
