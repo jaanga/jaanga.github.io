@@ -9,16 +9,25 @@
 [Earth Globes Read Me]( https://jaanga.github.io/terrain3/globes/index.html#readme.md )
 ===
 
+<img src="" style=display:none; width=800 >
+
+<iframe src=https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html width=640px height=490px ></iframe>
+
+_Earth Globe Displacement Map_
+
+
 ## Concept
+
+The earth is covered in oceans and mountains, some places are bumpy and others are smooth.
+We need to be able to see and feel this lumpiness
+
+### Mission
 
 * Good looking, well detailed globes
 * Fast loading
 * Very reusable, embeddable
+* Simple code that gets you going fast
 
-
-### Mission
-
-* 
 
 ### Vision
 
@@ -26,15 +35,21 @@
 
 ## Features
 
-*
+* Three quite different coding examples
+	* Two based on scaling vertices
+	* One based on the Three.js displacement shader
 
 ## Wish list
 
-*
+* Show some demos here
 
 
 ## Change Log
 
+### 2016-07-24
+
+* Update menu system
+* Add to this read me
 
 ### 2016-07-23
 

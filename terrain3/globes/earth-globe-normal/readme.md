@@ -1,9 +1,10 @@
 ﻿<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
 ( https://jaanga.github.io/terrain3/globes/earth-globe-normal/#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/Art/Art.github.io/blob/master/terrain3/globes/earth-globe-normal/readme.md'; 
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/terrain3/globes/earth-globe-normal/readme.md'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
-[jaanga.github.io]( https://jaanga.github.io ) &raquo; [globes]( https://jaanga.github.io/globes/ ) &raquo; 
+[jaanga.github.io]( https://jaanga.github.io ) &raquo; [terrain3]( https://jaanga.github.io/terrain3/ ) &raquo; 
+[globes]( https://jaanga.github.io/terrain3/globes ) &raquo; 
 
 [Earth Globe Normal Read Me]( https://jaanga.github.io/terrain3/globes/earth-globe-normal/index.html#readme.md )
 ===

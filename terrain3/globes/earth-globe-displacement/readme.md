@@ -1,18 +1,19 @@
 <span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]
-( https://art.github.io/globes/earth-globe-displacement/index.html#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/art/art.github.io/tree/master/globes/earth-globe-displacement/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+( https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/globes/earth-globe-displacement/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-[art.github.io]( https://art.github.io ) &raquo; [globes]( https://art.github.io/globes/ ) &raquo;
+[jaanga.github.io]( https://jaanga.github.io ) &raquo; [terrain3]( https://jaanga.github.io/terrain3/ ) &raquo;
+[globes]( https://jaanga.github.io/terrain3/globes/ ) &raquo;
 
-[Earth Globe Displacement Map Read Me]( https://art.github.io/globes/earth-globe-displacement/index.html#readme.md )
+[Earth Globe Displacement Map Read Me]( https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html#readme.md )
 ===
 
-## Full Screen: [ Earth Globe Displacement Map ]( https://art.github.io/globes/earth-globe-displacement/index.html )
+## Full Screen: [ Earth Globe Displacement Map ]( https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html )
 
 
 <img src="" style=display:none; width=800 >
 
-<iframe src=https://art.github.io/globes/earth-globe-displacement/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html width=100% height=600px ></iframe>
 
 _Earth Globe Displacement Map_
 
@@ -53,13 +54,13 @@ Wow! This script came as a surprise.
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://art.github.io/globes/earth-globe-displacement/earth-globe-displacement-r1.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/terrain3/globes/earth-globe-displacement/earth-globe-displacement-r1.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/art/art.github.io/tree/master/globes/earth-globe-displacement/earth-globe-displacement-r1.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/terrain3/jaanga.github.io/tree/master/globes/earth-globe-displacement/earth-globe-displacement-r1.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/art/art.github.io/tree/master/globes/earth-globe-displacement/earth-globe-displacement-r1.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/globes/earth-globe-displacement/earth-globe-displacement-r1.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
@@ -95,6 +96,6 @@ Intended for xxx
 
 ***
 
-<center title='art.github.io ~ your 3D sunny place' >
+<center title='jaanga.github.io ~ your 3D sunny place' >
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
 </center>
