@@ -26,11 +26,14 @@ based on: Elevations View 3D Core R2
 console.time( 'timer0' );
 
 //	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
+	var defaultFile = '../elevations-data-02/elevations_Igualada_12_2066_1525_3_3_300_300_.txt';
 
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vnlk/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
-	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/kgcn/elevations_Tusayan_12_770_1605_4_5_120_150_.txt';
+//	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/kgcn/elevations_Tusayan_12_770_1605_4_5_120_150_.txt';
+//	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/leig/elevations_Igualada_12_2065_1525_3_3_60_60_.txt';
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vhsk/elevations_Hong%20Kong_14_13381_7141_5_4_150_120_.txt';
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/ygil/elevations_Gilgandra_12_3738_2427_3_3_150_150_.txt'; // why need to zoom out to see?
+
 
 	var scaleFactor = 0.1;
 	var cameraPosition = 0.3; // need position that adjust by algorithm - allowing for zoom level etc
@@ -199,7 +202,7 @@ console.time( 'timer0' );
 		camera.up.set( 0, 0, 1 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+		controls.maxDistance = 5;
 
 		scene = new THREE.Scene();
 
@@ -212,14 +215,13 @@ console.time( 'timer0' );
 
 // assets
 
-		geometry = new THREE.PlaneBufferGeometry( 400, 400 );
+		geometry = new THREE.PlaneBufferGeometry( 40, 40 );
 //		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -1.5707 ) );
 //		material = new THREE.MeshBasicMaterial( { color: 0x223322, specular: 0x222222, shininess: 0.5, side: 2 } );
 		material = new THREE.MeshBasicMaterial( { color: 0x223322, side: 2 } );
 
 		plain = new THREE.Mesh( geometry, material );
-		plain.position.y = -20;
-		scene.add( plain );
+//		scene.add( plain );
 
 
 
@@ -573,6 +575,7 @@ console.log( 'parameters', parameters );
 		ground = new THREE.Mesh( groundGeometry, groundMaterial );
 
 		ground.position.set( cenLon, cenLat, 0 );
+		plain.position.set( cenLon, cenLat, 0 );
 
 		scene.add( ground );
 

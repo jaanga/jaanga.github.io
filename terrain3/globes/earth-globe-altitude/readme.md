@@ -13,7 +13,7 @@
 
 <img src="" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/terrain3/globes/earth-globe-altitude/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/terrain3/globes/earth-globe-altitude/index.html width=640px height=480px ></iframe>
 
 _Earth Globe Altitude_
 

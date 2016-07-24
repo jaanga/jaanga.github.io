@@ -15,7 +15,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <img src="https://cloud.githubusercontent.com/assets/547626/17075409/3f8494d2-5047-11e6-8cfb-b709a8600951.png" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/terrain3/globes/earth-globe-normal/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/terrain3/globes/earth-globe-normal/index.html width=640px height=480px ></iframe>
 
 
 _Earth Globe Normal_
