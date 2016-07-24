@@ -2,13 +2,13 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Menu R9.1</title>
+<title>Hamburger Menu R9.2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
 ' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-07-10' >
+<meta name=date content='2016-07-24' >
 </head>
 <body>
 <script>
@@ -141,6 +141,12 @@ Menu and contents in HTML.
 			'</div>' +
 
 		'';
+
+		if ( window.self !== window.top ) {
+
+			container.style.left = '-325px';
+
+		}
 
 	}
 
