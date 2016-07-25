@@ -3,7 +3,7 @@
 ( http://jaanga.github.io/xxxxxx/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/xxxxxx/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) »
+[Jaanga]( http://jaanga.github.io ) » [XXXXX]( http://jaanga.github.io/xxxxxx/  ) »
 
 
 [XXXXX Read Me]( index.html#readme.md )
@@ -19,7 +19,7 @@
 
 ### Vision
 
-* 
+*
 
 ## Features
 
@@ -28,7 +28,6 @@
 ## Wish list
 
 *
-
 
 ## Change Log
 
