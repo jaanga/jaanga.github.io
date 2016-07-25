@@ -146,7 +146,7 @@ Menu and contents in HTML.
 
 	function getElevationsFile ( fileName ) {
 
-console.log( '', fileName );
+//console.log( '', fileName );
 
 			frame.src = core + '../elevations/' + fileName;
 
@@ -155,6 +155,7 @@ console.log( '', fileName );
 	function openFile( files ) {
 
 		var reader = new FileReader();
+
 		reader.onloadend = function( event ) {
 
 			data = reader.result;

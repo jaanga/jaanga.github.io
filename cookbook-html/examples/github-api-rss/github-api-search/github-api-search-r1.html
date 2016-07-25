@@ -2,109 +2,223 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Search R1</title>
+<title>gh-api search</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
 ' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-06-10' >
+<meta name=date content='2016-07-24' >
 </head>
 <body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 <script>
 
-//  http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
+//  http://jaanga.github.io/cookbook-html/templates/hamburger-menu/
+
+	var queries = [
+
+		'q=webgl&sort=stars&order=desc',
+		'q=3d&sort=stars&order=desc',
+		'q=three.js&sort=stars&order=desc',
+		'q=sagemath&sort=stars&order=desc'
+
+	];
+
+	var b = '<br>';
 
 	init();
 
 	function init() {
 
-		var css, hamburger, menu, contents;
+		var css, container, contents, hamburger, menu;
+
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
-			'body { font: 12pt monospace; margin: 0; }' +
+			'body { font: 12pt monospace;  margin: 0; overflow: auto; }' +
+
 			'a { color: crimson; text-decoration: none; }' +
-			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #555; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
+			'summary h3 { display:inline; }' +
+			'summary { outline: none; }' +
+
+			'.popUp { background-color: white; left: 400px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#contents { border: 1px #ccc solid; left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
-			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
-				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
+			'#container { height: ' + window.innerHeight + 'px; left: 0; overflow: auto;  position: absolute; transition: left 1s; width: 100%;}' +
+
+			'#contents { border: 0px #ccc solid; font-family: sans-serif; left: 475px; max-width: 800px; position: absolute; }' +
+
+			'#menuContents h3 { margin: 0; display: inline; }' +
+			'#menuContents p { margin: 0; }' +
+
+			'#hamburger { background-color: #eee; left: 425px; position: fixed; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; height: ' + window.innerHeight + 'px; overflow: auto; padding: 0 10px; ' +
+				'position: fixed; width: 400px; }' +
+			'#menu h2 { margin: 0; }' +
+
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<p>' +
+					'<select id=selQuery size=5 style=width:100%; ></select>' +
+				'</p>' +
+
+				'<p>' +
+					'<button onclick=getSearchRepo(); > getSearchRepo </button> ' +
+
+					'<button onclick=getReadMe(); > getReadMe </button>' +
+
+				'</p>' +
+
+
+				'<p id=menuContents ></p>' +
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-425px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>contents</h1>' +
+			'</div>' +
 
 		'';
 
-		contents = document.body.appendChild( document.createElement( 'div' ) );
-		contents.id = 'contents';
-		contents.innerHTML = 'contents';
+		for ( var i = 0; i < queries.length; i++ ) {
 
-		hamburger = document.body.appendChild( document.createElement( 'div' ) );
-		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars > &#9776 </div>';
-		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+			selQuery[ selQuery.length ] = new Option( queries[ i ] );
 
-		menu = hamburger.appendChild( document.createElement( 'div' ) );
-		menu.id = 'menu';
-		menu.innerHTML = 
+		}
 
-			'<h2>' +
-				'<a href="" >' + document.title + '</a>' +
-				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
-			'</h2>' +
+		selQuery.selectedIndex = 0;
 
-			'<p>' +
-				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
-			'</p>' +
-
-			'<p>' +
-				'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
-					'<option title="this is a" >aaa aaa aaa</option>' +
-					'<option>bbb bbb bbb</option>' +
-					'<option>cc cc cc cc</option>' +
-				'<select>' +
-			'</p>' +
-
-			'<p>' +
-				'<button onclick=saveIt(); title="Save as PNG" > Save </button> ' +
-				'<button onclick=doIt(); > Button 2 </button> ' +
-				'<button onclick=doIt(); > Button 3 </button>' +
-			'</p>' +
-
-			'<p>' +
-				'<input type=radio name=field id=but1 />button 1 ' +
-				'<input type=radio name=field id=but2 checked />button 2 ' +
-				'<input type=radio name=field id=but3 />button 3' +
-			'</p>' +
-
-			'<p>' +
-				'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
-			'</p>' +
-
-			'<p>' +
-				'<input id=inpPretty type=checkbox > Pretty colors ' +
-			'</p>' +
-
-			'<details>' +
-				'<summary><h3 style=display:inline; >Summary</h3></summary>' +
-				'<p> - by Refsnes Data. All Rights Reserved.</p>' +
-				'<p>All content and graphics on this web site are the property of the company Refsnes Data.</p>' +
-			'</details>' +
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
 
-			'<div id=info ></div>' +
+	}
 
-			'<center title="dingbat" >' +
-			'<h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a></h1>' +
-			'</center>' +
 
-		'';
+	function getSearchRepo() {
+
+		var fileName, xhr, repos, txt;
+
+		url = 'https://api.github.com/search/repositories?' + queries[ selQuery.selectedIndex ];
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.responseText );
+
+console.log( 'response', response.items[ 0 ] );
+
+			txt = '<h4>Query: ' + url.slice( 43 ) + '</h4>';
+
+			for ( var i = 0; i < response.items.length; i++ ) {
+
+				rep = response.items[ i ];
+
+				txt += ( i + 1 ) +'. <button onclick=getReadMe(' + i + ',"README.md"); >readme</button> <h3><a href=' + rep.html_url + ' target="_blank" >' + rep.name + '</a></h3> ~ ' + 
+					rep.score.toFixed() + ' ~ ' + rep.updated_at.slice( 0, 10 ) + ' ~ stars: ' + rep.watchers.toLocaleString() + ' ~ forks: ' + rep.forks.toLocaleString() + ' ~ language: ' + rep.language + b + 
+
+					rep.full_name + ': ' + rep.description + b + b;
+
+				''
+
+			}
+
+			menuContents.innerHTML = txt;
+
+		}
+
+
+
+	}
+
+	function getReadMe( i, file ) {
+
+		rep = response.items[ i ];
+
+		url2 = 'https://rawgit.com/' + rep.full_name + '/master/' + file;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url2, true );
+
+		xhr.onload = callback;
+
+		xhr.send( null );
+
+		function callback() {
+
+			if ( xhr.responseText.slice( 0, 3 ) === '404' ) {
+
+console.log( 'oops', 23  );
+getreadme( i );
+
+			}
+			contents.innerHTML = converter.makeHtml( xhr.responseText );
+
+		}
+
+	}
+
+
+	function getreadme( i ) {
+
+		rep = response.items[ i ];
+
+		url2 = 'https://rawgit.com/' + rep.full_name + '/master/readme.md';
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url2, true );
+
+		xhr.onload = callback;
+
+		xhr.send( null );
+
+		function callback() {
+
+			contents.innerHTML = converter.makeHtml( xhr.responseText );
+
+		}
 
 	}
 

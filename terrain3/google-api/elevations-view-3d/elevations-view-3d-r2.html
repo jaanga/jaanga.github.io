@@ -2,18 +2,30 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Menu Iframe R1</title>
+<title>Elevations View R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
 ' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-07-11' >
+<meta name=date content='2016-07-24' >
 </head>
 <body>
 <script>
 
 //  http://jaanga.github.io/cookbook-html/templates/hamburger-menu-iframe/
+
+	var searchInFolder = 'elevations-data-02/';
+
+	var core = '../elevations-view-3d-core/index.html#';
+
+	var urlAPITreeContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+
+	var urlBase = 'https://jaanga.github.io/terrain3/google-api/elevations-data-02/';
+	var urlBase = '../elevations-data-02/';
+
+	var fileName;
+	var defaultFileIndex = 1;
 
 	init();
 
@@ -26,7 +38,7 @@ Menu and contents in HTML.
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
 
-			'html, body { font: 12pt monospace; height: 100%; margin: 0; }' +
+			'html, body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; }' +
 
 			'a { color: crimson; text-decoration: none; }' +
 
@@ -70,49 +82,11 @@ Menu and contents in HTML.
 				'</h2>' +
 				'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-				'<p>' +
-					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-					'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
+				'<p>Elevations<br>' +
+					'<select id=selFiles onchange=getElevationsFile(this.value); size=20 style=width:100%;  ></select>' +
 				'</p>' +
 
-				'<p>' +
-					'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
-						'<option title="this is a" >aaa aaa aaa</option>' +
-						'<option selected >bbb bbb bbb</option>' +
-						'<optGroup label="Type 2" >' +
-							'<option>cc cc cc cc</option>' +
-						'</optGroup>' +
-					'</select>' +
-				'</p>' +
-
-				'<p>' +
-					'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
-					'<button onclick=console.log("button2"); > Button 2 </button> ' +
-					'<button onclick=doIt(); > Button 3 </button>' +
-				'</p>' +
-
-				'<p>' +
-					'<input type=radio name=field id=but1 />button 1 ' +
-					'<input type=radio name=field id=but2 checked />button 2 ' +
-					'<input type=radio name=field id=but3 />button 3' +
-				'</p>' +
-
-				'<p>' +
-					'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
-				'</p>' +
-
-				'<p title="Nothing here yet. ;-(">' +
-					'<input id=inpPretty type=checkbox > Pretty colors ' +
-				'</p>' +
-
-				'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
-					'<datalist id=numbers >' +
-					'<option value=10 >' +
-					'<option value=30 >' +
-					'<option value=50 >' +
-					'<option value=100 >' +
-					'<option value=512 >' +
-					'</datalist>' +
+				'<p><input type=file id=inpFile onchange=openFile(this); /></p>' +
 
 				'<div id=menuInfo ></div>' +
 
@@ -128,23 +102,83 @@ Menu and contents in HTML.
 				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
 				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
 
-	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
-
 			'</div>' +
 
 			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
 				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
 			'</div>' +
 
-			'<div id=contents >' +
-				'<h1>Typical contents</h1>' + txt + txt + txt +
-			'</div>' +
-
 		'';
 
 		frame = document.body.appendChild( document.createElement( 'iframe' ) );
 		frame.id = 'frame';
-		frame.src = 'http://jaanga.github.io/cookbook-threejs/templates/threejs-basic/template-threejs-basic.html';
+//		frame.src = core + '#' + defaultFile;
+
+		getAPITreeContents();
+
+	}
+
+	function getAPITreeContents() {
+
+		var xhr, response, files, file, element;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', urlAPITreeContents, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.response );
+			files = [];
+
+			for ( var i = 0; i < response.tree.length; i++ ) {
+
+				file = response.tree[ i ].path;
+
+				if ( file.indexOf( searchInFolder ) === -1 || file.slice( -4 ) !== '.txt' ) { continue; }
+
+				file = file.slice( file.lastIndexOf( '\/' ) + 1 );
+				files.push( file );
+
+				selFiles[ selFiles.length ] = new Option( file, file);
+
+			}
+
+			selFiles.selectedIndex = defaultFileIndex;
+
+			getElevationsFile();
+
+		}
+
+	}
+
+	function getElevationsFile () {
+
+			fileName = location.hash ? location.hash.slice( 1 ) : selFiles.value;
+
+			frame.src = core + urlBase + fileName;
+
+	}
+
+	function openFile( files ) {
+
+		var reader, data, elevations, fileName;
+
+		reader = new FileReader();
+		reader.onloadend = function( event ) {
+
+			data = reader.result;
+
+			elevations = data.split( ',' );
+
+			fileName = files.files[0].name;
+ 
+			frame.contentWindow.processElevationsFileName( elevations, fileName )
+
+		}
+
+		reader.readAsText( files.files[ 0 ] );
 
 	}
 

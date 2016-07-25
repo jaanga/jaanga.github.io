@@ -107,6 +107,21 @@ console.log( 'parameters', parameters );
 	}
 
 
+	function processElevationsFileNames( elevs, fName ) {
+
+			elevations = elevs;
+			parameters = getParametersFileName( fName );
+
+console.log( 'parameters', parameters );
+
+			setMenuDetailsFileName();
+
+			getParametersOverlay();
+
+			initElevations();
+
+	}
+
 // utilities to help while gathering data
 
 	function setMenuDetailsSettings() {

@@ -278,7 +278,7 @@ https://api.github.com/users/jaanga/events?login=redheli
 
 
 
-## API Search
+## Search ~ API
 
 * https://developer.github.com/v3/search/
 * http://stackoverflow.com/questions/24132790/how-to-search-for-code-in-github-with-github-api
@@ -291,7 +291,7 @@ https://api.github.com/search/code?q=3D+extension:stl << not
 https://api.github.com/search/code?q=MIT%32License%32path:project.clj
 
 
-### Filles
+### Files
 
 https://api.github.com/search/code?q=addClass+repo:jquery/jquery+filename:classes.js
 
