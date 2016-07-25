@@ -42,6 +42,10 @@
 
 ## Change Log
 
+### 2016-07-25
+
+* Add sidebar menu
+
 ### 2016-06-10
 
 * Update Read Me

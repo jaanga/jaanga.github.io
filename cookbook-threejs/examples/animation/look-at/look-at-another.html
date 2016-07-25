@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title></title>
+<meta charset='utf-8'>
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<!--
+<script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
+-->
+<script src="../../../three.js/build/three.min.js"></script>
+<script src="../../../three.js/examples/js/controls/TrackballControls.js"></script>
+<script src="../../../three.js/examples/js/libs/stats.min.js"></script>
+<script src="../../../three.js/examples/js/Detector.js"></script>
+
+<script>
+var container, camera, scene, renderer, nearMesh, farMesh;
+var mouseX, mouseY = 0;
+
+init();
+animate();
+
+function init() {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = 300;
+    scene.add( camera );
+    
+    var material = new THREE.MeshBasicMaterial({
+        color: 0xff0000
+    });
+    var geometry = new THREE.CubeGeometry(10, 10, 10);
+    nearMesh = new THREE.Mesh(geometry, material);
+    nearMesh.position.x=0;
+    nearMesh.position.y=0;
+    nearMesh.position.z=0;
+    scene.add(nearMesh);
+
+    canvas = document.createElement("canvas");
+    canvas.width = 200;
+    canvas.height = 200;
+    context = canvas.getContext("2d");
+    context.textAlign = "center";
+    context.textBaseline = 'bottom';
+    context.font = "bolder 32px arial";
+    context.fillStyle = "black";
+    context.fillText("A flat plane", 100, 200);
+
+    material = new THREE.MeshBasicMaterial({map: new THREE.Texture(canvas), transparent: true});
+    material.map.needsUpdate = true;
+    
+    //material = new THREE.MeshBasicMaterial({color: 0x0000ff, wireframe: true}); // testing...
+    
+    farMesh = new THREE.Mesh(new THREE.PlaneGeometry(64, 64), material);
+    farMesh.position.x = 0;
+    farMesh.position.y = 50;
+    farMesh.position.z = -100;
+
+    // 1)  If this line is omitted, farMesh is created facing up in the y direction and can't be seen.
+    farMesh.rotation = new THREE.Vector3(Math.PI/2, 0, 0);
+   // farMesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( Math.PI / 2 ) ); // CHANGED
+    
+    scene.add(farMesh);
+    
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    container.appendChild(renderer.domElement);
+
+    container.onmousemove = onDocumentMouseMove;
+}
+
+function onDocumentMouseMove(event) {
+    mouseX = (event.clientX - window.innerWidth / 2) * 0.05;
+    mouseY = -(event.clientY - window.innerHeight / 2) * 0.05;
+
+    // 2)  When this line is called, farMesh points to nearMesh, but along its flat surface rather than the flat surface pointing directly to nearMesh
+    farMesh.lookAt(nearMesh.position);
+   
+    // 3)  When I try to rotate it back so that's the mesh is perpendicular to the xz plane, it no longer looks at the nearMesh
+    //farMesh.rotation = new THREE.Vector3(Math.PI/2, 0, 0); // CHANGED
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    render();
+}
+
+function render() {
+    farMesh.position.x = (mouseX - camera.position.x) * 10;
+    farMesh.position.y = (mouseY - camera.position.y) * 10;
+
+    renderer.render(scene, camera);
+}
+</script>
+</body>
+</html>

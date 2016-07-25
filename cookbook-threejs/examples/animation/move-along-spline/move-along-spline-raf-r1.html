@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>move-along-splne-raf-r1.html</title>
+<meta charset=utf-8>
+</head>
+<body>
+<script src = http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src = http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
+<script src = http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	var duration = 8000;
+	var box, spline;
+	var startTime;
+
+	var renderer, controls, scene, camera;
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden;' ;
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'left: 20px; position: absolute; ';
+		info.innerHTML = '<h1>' +
+			'<a href="" >' + document.title + '</a>' +
+//			'<a href=https://github.com/ style=text-decoration:none; >&#x24D8;</a>' +
+			'</h1>' +
+			'<div id=msg></div>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff } );
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		document.body.appendChild(renderer.domElement);
+
+		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
+		camera.position.set( 100, 300, 600);
+
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
+		scene = new THREE.Scene();
+
+// axes
+		scene.add( new THREE.ArrowHelper( v(1, 0, 0), v(0, 0, 0), 30, 0xcc0000) );
+		scene.add( new THREE.ArrowHelper( v(0, 1, 0), v(0, 0, 0), 30, 0x00cc00) );
+		scene.add( new THREE.ArrowHelper( v(0, 0, 1), v(0, 0, 0), 30, 0x0000cc) );
+
+		var numPoints = 50;
+
+		spline = new THREE.ClosedSplineCurve3([
+			v( -100, 20,  200),
+			v(  100, 80,  200),
+			v(  200, 20,  100),
+			v(  200, 80, -100),
+			v(  100, 20, -200),
+			v( -100, 80, -200),
+			v( -200, 20, -100),
+			v( -200, 80,  100),
+		]);
+
+		splinePoints = spline.getPoints( numPoints );
+ 
+		var geometry = new THREE.Geometry();
+		for ( var i = 0; i < splinePoints.length; i++ ) {
+			geometry.vertices.push( splinePoints[i] );
+		}
+
+		var material = new THREE.LineBasicMaterial({ color: 0xff00ff });
+		var line = new THREE.Line(geometry, material);
+		scene.add( line );
+
+		geometry = new THREE.BoxGeometry( 50, 5, 10 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 ) ); // to look tilted
+		material = new THREE.MeshNormalMaterial();
+		box = new THREE.Mesh( geometry, material );
+		scene.add( box );
+
+		pt = v( 0, 0, 0 );
+		startTime = 0;
+
+		requestAnimationFrame( animate );
+	}
+
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function moveBox( timestamp ) {
+
+		var p = ( timestamp - startTime ) / duration;
+		if ( p > 1 ) {
+			startTime = timestamp;
+			p = 1;
+		}
+		var prevPt = pt; 
+		pt = spline.getPointAt( p );
+		box.position.set( pt.x, pt.y, pt.z );
+		box.lookAt( prevPt );
+
+		msg.innerHTML = p.toFixed(2) + ' ' + timestamp.toFixed(0)  + ' ' + startTime.toFixed( 0 ) + ' ' + duration + 
+			' ' ;
+
+	}
+
+	function animate( timestamp ) {
+
+		moveBox( timestamp );
+		controls.update();
+		renderer.render( scene, camera );
+		requestAnimationFrame( animate );
+
+	}
+
+</script>
+</body>
+</html>

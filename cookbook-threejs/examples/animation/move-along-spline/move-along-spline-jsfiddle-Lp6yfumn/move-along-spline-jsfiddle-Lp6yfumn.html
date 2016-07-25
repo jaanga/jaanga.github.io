@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>move-along-spline-jsfiddle-Lp6yfumn</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script src="http://threejs.org/build/three.min.js"></script>
+<script src="http://threejs.org/examples/js/controls/TrackballControls.js"></script>
+<script>
+// http://stackoverflow.com/questions/18400667/three-js-object-following-a-spline-path-rotation-tanget-issues-constant-sp
+// http://jsfiddle.net/qGPTT/3/
+// http://jsfiddle.net/theo/Lp6yfumn/
+
+	var renderer, controls, scene, camera, box, spline, counter = 0;
+
+	var tangent = new THREE.Vector3();
+	var axis = new THREE.Vector3();
+	var up = new THREE.Vector3( 0, 1, 0 );
+
+	init();
+
+	function init() {
+		document.body.style.cssText = ' font: bold 12pt monospace; margin: 0; overflow: hidden; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'left: 20px; position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg ></div>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		document.body.appendChild(renderer.domElement);
+
+		camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
+		camera.position.set(0, 0, 600);
+		camera.lookAt(new THREE.Vector3(0, 100, 0));
+
+		scene = new THREE.Scene();
+		controls = new THREE.TrackballControls(camera, renderer.domElement);
+
+		var numPoints = 50;
+
+		spline = new THREE.SplineCurve3([
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(0, 200, 0),
+		new THREE.Vector3(150, 150, 0),
+		new THREE.Vector3(150, 50, 0),
+		new THREE.Vector3(250, 100, 0),
+		new THREE.Vector3(250, 300, 0)]);
+
+		var material = new THREE.LineBasicMaterial({
+			color: 0xff00f0,
+		});
+
+		var geometry = new THREE.Geometry();
+		var splinePoints = spline.getPoints(numPoints);
+
+		for (var i = 0; i < splinePoints.length; i++) {
+			geometry.vertices.push(splinePoints[i]);
+		}
+
+		var line = new THREE.Line( geometry, material );
+		scene.add( line );
+
+		geometry = new THREE.BoxGeometry(5, 40, 4);
+		material = new THREE.MeshBasicMaterial({
+			color: 0xff0000
+		});
+
+		box = new THREE.Mesh(geometry, material);
+		scene.add(box);
+
+		animate();
+
+		setInterval(moveBox, 100);
+	}
+
+	function moveBox() {
+
+		if (counter <= 1) {
+
+			var pt = spline.getPointAt(counter);
+			
+			box.position.set( pt.x, pt.y, pt.z );
+
+			tangent = spline.getTangentAt(counter).normalize();
+
+			axis.crossVectors( up, tangent).normalize();
+
+			var radians = Math.acos(up.dot(tangent));
+
+			box.quaternion.setFromAxisAngle(axis, radians);
+
+			counter += 0.005
+
+		} else {
+
+			counter = 0;
+
+		}
+	}
+
+	function animate() {
+		requestAnimationFrame(animate);
+		controls.update();
+		renderer.render(scene, camera);
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+<script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js"></script>
+<script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
+<!--
+<script src="../../three.js/build/three.min.js"></script>
+<script src="../../three.js/examples/js/controls/TrackballControls.js"></script>
+<script src="../../three.js/examples/js/libs/stats.min.js"></script>
+<script src="../../three.js/examples/js/Detector.js"></script>
+-->
+</head>
+<body>
+<script>
+	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+    var scene, camera, stats, renderer;
+    var geometry, material, mesh, target;
+
+	var info;
+	
+    init();
+	animate();
+
+    function init() {
+		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
+        renderer = new THREE.WebGLRenderer( {antialias: true } );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );	
+		
+        scene = new THREE.Scene();
+		scene.position.set(0, 0, 0)
+
+        camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+        camera.position.set(0, 0, 200);
+		controls = new THREE.TrackballControls( camera );
+		controls.dynamicDampingFactor = 0.2;
+        scene.add( camera );
+		
+		stats = new Stats();
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.top = '0px';
+		stats.domElement.style.zIndex = 100;
+		document.body.appendChild( stats.domElement );			
+		
+		
+	var css = document.createElement('style')
+	css.innerHTML = 'body {background-color: transparent; font: 600 12pt monospace; margin: 0; overflow: hidden; text-align: center; }' +
+		'a { color: #f00; text-decoration: none;}  ' +
+		'input[type=range] { -webkit-appearance: none; background-color: silver; height:20px; opacity: 0.5; width: 80px;}' +
+		'input[type="range"]::-webkit-slider-thumb {-webkit-appearance: none; background-color: #666; opacity: 0.5; width: 10px; height: 26px; }' ;
+	document.body.appendChild( css );
+	
+		// material = new THREE.MeshNormalMaterial( { wireframe: true } );
+
+		var geometry = new THREE.CubeGeometry( 10, 10, 10 );
+        var material = new THREE.MeshNormalMaterial( { shading: THREE.SmoothShading } );
+
+		for ( var i = 0; i < 1000; i ++ ) {
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.x = Math.random() * 400 - 200;
+			mesh.position.y = Math.random() * 400 - 200;
+			mesh.position.z = Math.random() * 400 - 200;
+			// mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 4 + 2;
+
+			scene.add( mesh );
+		}
+		
+		target = new THREE.Mesh( new THREE.SphereGeometry( 10, 20, 20 ), material );
+		scene.add( target );	
+		
+		var info = document.createElement( 'div' );
+		document.body.appendChild( info );
+		info.style.cssText = 'top: 0px; color: ; padding: 5px; position: absolute; width: 100%';
+		info.innerHTML = '<p>look at<br>' +
+		'x:<input type="range" id="spin" min="-50" max="50" onchange="mesh.position.x=this.value;" step="5" value="' + target.position.x + '" ><br>' +
+		'y:<input type="range" id="spin" min="0" max="50" onchange="mesh.position.y=this.value;" step="5" value="' + target.position.y + '" ><br>' +
+		'z:<input type="range" id="spin" min="-50" max="50" onchange="mesh.position.z=this.value;" step="5" value="' + target.position.z + '" >' +
+		'</p>';  
+    }
+	
+    function animate() {
+        requestAnimationFrame( animate );
+        render();
+		stats.update();
+    }
+
+    function render() {		
+		controls.update(  );
+		// camera.lookAt( scene.position );
+        renderer.render( scene, camera );
+		
+		for ( var i = 0, l = scene.children.length; i < l; i ++ ) {
+			scene.children[ i ].lookAt( target.position );
+			// scene.children[ i ].lookAt( camera.position );
+		}
+    }
+	
+</script>
+</body>
+</html>
