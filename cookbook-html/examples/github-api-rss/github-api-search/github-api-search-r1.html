@@ -21,8 +21,11 @@ Menu and contents in HTML.
 		'q=webgl&sort=stars&order=desc',
 		'q=3d&sort=stars&order=desc',
 		'q=three.js&sort=stars&order=desc',
-		'q=sagemath&sort=stars&order=desc'
-
+		'q=sagemath&sort=stars&order=desc',
+		'q=extension:stl&sort=stars&order=desc',
+		'q=language:js+created:2016-06-25',
+		'q=@jeresig+language:javascript',
+		'q=followers:%3E20'
 	];
 
 	var b = '<br>';
@@ -86,7 +89,7 @@ Menu and contents in HTML.
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
 				'<p>' +
-					'<select id=selQuery size=5 style=width:100%; ></select>' +
+					'<select id=selQuery size=15 style=width:100%; ></select>' +
 				'</p>' +
 
 				'<p>' +
@@ -146,7 +149,7 @@ Menu and contents in HTML.
 
 console.log( 'response', response.items[ 0 ] );
 
-			txt = '<h4>Query: ' + url.slice( 43 ) + '</h4>';
+			txt = '<h4>Query: ' + url.slice( 43 ) + '</h4> total count: ' + response.total_count.toLocaleString() + b;
 
 			for ( var i = 0; i < response.items.length; i++ ) {
 
@@ -188,10 +191,10 @@ console.log( 'response', response.items[ 0 ] );
 
 			if ( xhr.responseText.slice( 0, 3 ) === '404' ) {
 
-console.log( 'oops', 23  );
-getreadme( i );
+				getreadme( i );
 
 			}
+
 			contents.innerHTML = converter.makeHtml( xhr.responseText );
 
 		}
