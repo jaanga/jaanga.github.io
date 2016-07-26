@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>github-api-menu-of-folder-names.html</title>
+<title>Menu HTML Jaanga R2</title>
 <meta name=viewport co=ntent='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Browse and view files written in Markdown format.
 Uses Github API to find directories with readme.md files.' >
@@ -18,36 +18,33 @@ Uses Github API to find directories with readme.md files.' >
 	var org = 'jaanga';
 	var tagLine ='your 3D happy place';
 	var logo = '&#x2766';
-//	var title = org + ' Terrain 3'
+	var response;
 
 	var home = org + '.github.io';
 	var urlAPIContents = 'https://api.github.com/repos/' + org + '/' + org + '.github.io/git/trees/master?recursive=1';
 
-	var index = location.href.indexOf( '.io/' );
+	var indexHome = location.href.indexOf( '.io/' ) + 4;
 
-	var baseURL = location.href.slice( 0, index + 4 );
+	var baseURL = location.href.slice( 0, indexHome);
 
-console.log( '',baseURL );
+//console.log( 'baseURL',baseURL );
 
-	var searchForFile = 'readme.md';
-
-	var dirs = location.href.slice( index + 4 ).split( '/' );
+	var dirs = location.href.slice( indexHome ).split( '/' );
 
 	var fileName = dirs.pop();
 
-console.log( 'fileName', fileName );
+//console.log( 'fileName', fileName );
 
 	index = dirs.indexOf( home.toLowerCase() ) + 1;
 
-	var foldersArray = dirs;
+	var foldersArray = [ dirs[ 0 ] ];
 
-	var folders = foldersArray.join( '/' ) + '/' ;
+	var folders = dirs[ 0 ];
 
-console.log( 'folders', folders );
+//console.log( 'folder', folders );
 
+	var searchForFile = baseURL + folders + '/readme.md';
 	var searchInFolder = folders;
-
-	var path = '';
 
 	var files;
 
@@ -83,19 +80,31 @@ console.log( 'folders', folders );
 
 				'<a href=http://' + org + '.github.io title="' + org + ' - ' + tagLine + '" >' + logo + '</a> ' +
 
-//				'<a href="" title="Click here to refresh this page" >' + folders.replace( /\//g, '/  ' ) + '</a>' +
-
 //				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
+
 			'</h2>' +
 
-			'<span id=menuInfo ></span>' +
+			'<span id=menuBreadCrumbs ></span>' +
+
+			'<span id=menuContents ></span>' +
+
+			'<p id=menuFooter ></p>' +
+
+			'<details >' +
+				'<summary><h3 style=display:inline; >About</h3></summary>' +
+				'<p>Copyright &copy; 2016 ' + org + ' authors. <a href=https://' + org + '.github.io/license.md >MIT license</a>.</p>' +
+//				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+				'<p></p>' +
+			'</details>' +
+
+			'<hr><center><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; title="' + org + ' - ' + tagLine + '" ><h1>' + logo + '<h1></a></center>' +
 
 		'';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-//		window.addEventListener ( 'hashchange', hashChange, false );
+		window.addEventListener ( 'hashchange', hashChange, false );
 
 		requestAPIContents();
 
@@ -114,19 +123,20 @@ console.log( 'folders', folders );
 		for ( var i = 0; i < foldersArray.length - 1; i++ ) {
 
 			dir += foldersArray[ i ] + '/';
-			txt += '<a href=' + baseURL + dir + 'index.html >' + foldersArray[ i ] + '</a> &raquo ';
+//			txt += '<a href=' + baseURL + dir + 'index.html >' + foldersArray[ i ] + '</a> &raquo ';
+			txt += '<a href=JavaScript:getFiles("' + dir + '"); >' + foldersArray[ i ] + '</a> &raquo ';
 
 		}
 
 		txt += '<h3><a href=# >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
 
-		menuInfo.innerHTML = txt;
+		menuBreadCrumbs.innerHTML = txt;
 
 	}
 
 	function requestAPIContents() {
 
-//		var xhr, response, file;
+		var xhr, file;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', urlAPIContents, true );
@@ -136,65 +146,60 @@ console.log( 'folders', folders );
 		function callback() {
 
 			response = JSON.parse( xhr.response );
-			files = [];
 
-			for ( var i = 0; i < response.tree.length; i++ ) {
-
-				file = response.tree[ i ].path;
-
-				if ( !file.match( searchInFolder ) ) { continue; }
-
-//				if ( !file.match( searchForFile ) ) { continue; }
-
-				if ( file.match( 'archive' ) ) { continue; }
-
-				if ( file.split( '/' ).length > foldersArray.length + 1 ) { continue; }
-
-				if ( file.match( 'index.html' ) || file.match( 'readme.md' ) || ( file.match( fileName )) ) { continue; }
-
-				files.push( file );
-
-			}
-
-//console.log( 'files', files );
-
-			createTableOfContents();
+			getFiles( searchInFolder )
 
 		}
 
 	}
 
-	function createTableOfContents() {
+	function getFiles( folder ) {
 
-		var txt =  '';
+		files = [];
 
-		for ( var i = 0; i < files.length; i++ ) {
 
-			file = files[ i ].replace( searchInFolder, '' );
+		for ( var i = 0; i < response.tree.length; i++ ) {
 
-			txt += 
+			file = response.tree[ i ].path;
 
-//				'<h3><a href=' + file.replace( '/readme.md', '/index.html' ) + ' >' + file.replace( '/readme.md', '' ).replace( /-/g, ' ' ) + '<a></h3>' +
+			if ( !file.match( folder ) ) { continue; }
 
-				'<p><a href=JavaScript:getHTML("' + file + '"); >' + file + '</a></p>' +
-			'';
+			if ( file === folder ) { continue; }
+
+			if ( file.match( 'archive' ) ) { continue; }
+
+			if ( file.split( '/' ).length > foldersArray.length + 1 ) { continue; }
+
+//			if ( file.match( 'index.html' ) || file.match( 'readme.md' ) || ( file.match( fileName )) ) { continue; }
+
+			files.push( file );
+
+console.log( 'folder', folder );
 
 		}
 
-		menu.innerHTML += txt + 
+//console.log( 'files', files );
 
-			'<p id=menuInfo ></p>' +
+		createTableOfContents();
 
-			'<details >' +
-				'<summary><h3 style=display:inline; >About</h3></summary>' +
-				'<p>Copyright &copy; 2016 ' + org + ' authors. <a href=https://' + org + '.github.io/license.md >MIT license</a>.</p>' +
-//				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-				'<p></p>' +
-			'</details>' +
+		setBreadCrumbs();
 
-			'<hr><center><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; title="' + org + ' - ' + tagLine + '" ><h1>' + logo + '<h1></a></center>' +
+	}
 
-		'';
+	function createTableOfContents( ) {
+
+		var txt =  '';
+		string = foldersArray.join( '/' ) + '/';
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ];
+
+			txt += '<p><a href=JavaScript:getItem("' + baseURL + file + '"); >' + file.replace( string, '' ) + '</a></p>';
+
+		}
+
+		menuContents.innerHTML = txt;
 
 	}
 
@@ -208,12 +213,28 @@ console.log( 'folders', folders );
 
 	}
 
-	function getHTML( fileName, target ) {
+	function getItem( item ) {
 
-		contents.innerHTML = '<iframe src=' + fileName + ' ></iframe>';
-		contents.style.overflow = 'hidden';
+console.log( 'item', item );
+
+		if ( item.endsWith( '.md' ) ) {
+
+			getMarkdown( item, contents );
+
+		} else if ( item.endsWith( '.html' ) ) {
+
+			contents.innerHTML = '<iframe src=' + item + ' ></iframe>';
+//			contents.style.overflow = 'hidden';
+
+		} else {
+
+			foldersArray.push( item.split( '/' ).pop() );
+
+			getFiles( foldersArray.join( '/' ) );
+
+		}
+
 	}
-
 
 	function getMarkdown( fileName, target ) {
 
@@ -227,6 +248,7 @@ console.log( 'folders', folders );
 			target.style.overflow = 'auto';
 
 		};
+
 		xhr.send( null );
 
 	}

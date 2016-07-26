@@ -10,10 +10,11 @@
 
 ## Full Screen: [ XXXXXX ]( https://jaanga.github.io/cookbook-threejs/templates/xxxxxx/index.html )
 
-
+<!--
 <img src="XXXX" style=display:none; width=800 >
 
 <iframe src=https://jaanga.github.io/cookbook-threejs/templates/xxxxxx/index.html width=100% height=600px ></iframe>
+-->
 
 _XXXXXX_
 
@@ -50,10 +51,10 @@ _XXXXXX_
 
 
 ## Things you can do by editing the code
-
+<!--
 <iframe src='https://jaanga.github.io/cookbook-html/templates/libraries/ace-editor/ace-view-r1.html#
 	https://jaanga.github.io/cookbook-threejs/templates/xxxxxx/xxxxxx-r1.html' width=100% height=600 ></iframe>
-
+-->
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates/xxxxxx/xxxxxx-r1.html';
 value='Source code listing' >
 
