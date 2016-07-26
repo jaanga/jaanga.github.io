@@ -10,15 +10,6 @@
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/vhsk/elevations_Hong%20Kong_14_13381_7141_5_4_150_120_.txt';
 //	var defaultFile = 'http://fgx.github.io/sandbox/flightpaths/ygil/elevations_Gilgandra_12_3738_2427_3_3_150_150_.txt'; // why need to zoom out to see?
 
-
-	var scaleFactor = 0.1;
-
-	var parameters;
-	var elevations;
-	var min, max; // keep in ground object?
-
-	var ground, groundGeometry, groundMaterial, groundBoxHelper;
-
 	var mapTypes = [
 
 		['Google Maps','https://mt1.google.com/vt/x='],
@@ -34,14 +25,17 @@
 
 	];
 
-	var placeMapCanvas, placeMapContext;
+	var map = {};
 
-	var pixelsPerTile = 256;
-	var tilesTotal;
+	var cameraPosition = 0.3; // need position that adjust by algorithm - allowing for zoom level etc
 	var updateCamera = true;
+
+	map.pixelsPerTile = 256;
+	map.verticalscale = 0.1;
 
 	var b = '<br>';
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
 
 // gather the data
 
@@ -56,7 +50,7 @@
 
 			data = reader.result;
 
-			elevations = data.split( ',' ).map( parseFloat );
+			map.elevations = data.split( ',' ).map( parseFloat );
 
 			fileName = files.files[ 0 ].name;
 
@@ -67,6 +61,7 @@
 		reader.readAsText( files.files[ 0 ] );
 
 	}
+
 
 	function getFileElevations( fileName ) {
 
@@ -84,7 +79,7 @@
 		function callback() {
 
 			response = xhr.responseText;
-			elevations = response.split( ',' ).map( function( item ) { return parseFloat( item ); } );
+			map.elevations = response.split( ',' ).map( function( item ) { return parseFloat( item ); } );
 
 			getParametersFileName( fileName );
 
@@ -92,13 +87,18 @@
 
 	}
 
+
 // When in iframe and called by parent
+
 	function processElevations( elevs, params ) {
 
-			elevations = elevs;
-			parameters = params;
-console.log( 'parameters', parameters );
+			map.elevations = elevs;
+			map.parameters = params;
+console.log( 'map.parameters', map.parameters );
+
 			setMenuDetailsFileName();
+
+			setMenuDetailsSettings();
 
 			getParametersOverlay();
 
@@ -106,13 +106,15 @@ console.log( 'parameters', parameters );
 
 	}
 
+
+// when in iframe and called by viewer or app without access to data
 
 	function processElevationsFileNames( elevs, fName ) {
 
-			elevations = elevs;
-			parameters = getParametersFileName( fName );
+			map.elevations = elevs;
+			map.parameters = getParametersFileName( fName );
 
-console.log( 'parameters', parameters );
+console.log( 'map.parameters', map.parameters );
 
 			setMenuDetailsFileName();
 
@@ -121,6 +123,7 @@ console.log( 'parameters', parameters );
 			initElevations();
 
 	}
+
 
 // utilities to help while gathering data
 
@@ -141,10 +144,10 @@ console.log( 'parameters', parameters );
 				'<p>Map zoom level<br><select id=selMapZoom onchange=drawMapOverlay(); size=1 /></select></p>' +
 
 				'<p>Vertical scale: <output id=outVertical >value</output>' +
-					'<input type=range id=inpVertical max=0.01 min=0.000001 step=0.000001 value=0.015 oninput=setGroundGeometry();drawMapOverlay(); title="" style=width:100%; >' +
+					'<input type=range id=inpVertical max=0.01 min=0.000001 step=0.000001 value=0.015 oninput=setMapGeometry();drawMapOverlay(); title="" style=width:100%; >' +
 				'</p>' +
 
-				'<p><input type=checkbox onchange=ground.material.wireframe=!ground.material.wireframe; > Wireframe</p>' +
+				'<p><input type=checkbox onchange=map.material.wireframe=!map.material.wireframe; > Wireframe</p>' +
 
 			'</details>' +
 
@@ -177,7 +180,7 @@ console.log( 'parameters', parameters );
 
 		parametersArray = fileName.split( '_' );
 
-		parameters = {
+		map.parameters = {
 
 			location: parametersArray[ 1 ],
 			zoom: parseInt( parametersArray[ 2 ], 10 ),
@@ -191,12 +194,6 @@ console.log( 'parameters', parameters );
 
 		};
 
-//		} else {
-
-//			parameters = undefined;
-
-//		}
-
 		getParametersOverlay();
 
 		setMenuDetailsFileName();
@@ -204,6 +201,7 @@ console.log( 'parameters', parameters );
 		initElevations();
 
 	}
+
 
 	function setMenuDetailsFileName() {
 
@@ -213,18 +211,18 @@ console.log( 'parameters', parameters );
 
 				'<summary><h3>file name parameters</h3></summary>' +
 
-				'Location:<br>' + parameters.location + b + b +
+				'Location:<br>' + map.parameters.location + b + b +
 
-				'Zoom level: ' + parameters.zoom + b + b +
+				'Zoom level: ' + map.parameters.zoom + b + b +
 
-				'Samples X: ' + parameters.segmentsX + b +
-				'Samples Y: ' + parameters.segmentsY + b + b +
+				'Samples X: ' + map.parameters.segmentsX + b +
+				'Samples Y: ' + map.parameters.segmentsY + b + b +
 
-				'UL tile X: ' + parameters.ULtileX + b +
-				'UL tile Y: ' + parameters.ULtileY + b + b +
+				'UL tile X: ' + map.parameters.ULtileX + b +
+				'UL tile Y: ' + map.parameters.ULtileY + b + b +
 
-				'Tiles X: ' + parameters.tilesX + b +
-				'Tiles Y: ' + parameters.tilesY + b + b +
+				'Tiles X: ' + map.parameters.tilesX + b +
+				'Tiles Y: ' + map.parameters.tilesY + b + b +
 
 			'</details>' +
 		b;
@@ -238,20 +236,20 @@ console.log( 'parameters', parameters );
 
 		var delta;
 
-		delta = selMapZoom.selectedIndex;
+		delta = selMapZoom ? selMapZoom.selectedIndex : 1;
 
-		parameters.zoomOverlay = delta + parameters.zoom;
-		parameters.ULtileXOverlay = Math.pow( 2, delta ) * parameters.ULtileX;
-		parameters.ULtileYOverlay = Math.pow( 2, delta ) * parameters.ULtileY;
-		parameters.tilesXOverlay = Math.pow( 2, delta ) * parameters.tilesX;
-		parameters.tilesYOverlay = Math.pow( 2, delta ) * parameters.tilesY;
+		map.parameters.zoomOverlay = delta + map.parameters.zoom;
+		map.parameters.ULtileXOverlay = Math.pow( 2, delta ) * map.parameters.ULtileX;
+		map.parameters.ULtileYOverlay = Math.pow( 2, delta ) * map.parameters.ULtileY;
+		map.parameters.tilesXOverlay = Math.pow( 2, delta ) * map.parameters.tilesX;
+		map.parameters.tilesYOverlay = Math.pow( 2, delta ) * map.parameters.tilesY;
 
-		placeMapCanvas = document.createElement( 'canvas' );
-		placeMapContext = placeMapCanvas.getContext( '2d' );
+		map.canvas = document.createElement( 'canvas' );
+		map.context = map.canvas.getContext( '2d' );
 
-		placeMapCanvas.width = pixelsPerTile * parameters.tilesXOverlay;
-		placeMapCanvas.height = pixelsPerTile * parameters.tilesYOverlay;
-		tilesTotal = parameters.tilesXOverlay * parameters.tilesYOverlay;
+		map.canvas.width = map.pixelsPerTile * map.parameters.tilesXOverlay;
+		map.canvas.height = map.pixelsPerTile * map.parameters.tilesYOverlay;
+
 
 		menuDetailsOverlay.innerHTML =
 
@@ -259,13 +257,13 @@ console.log( 'parameters', parameters );
 
 				'<summary><h3>overlay details</h3></summary>' +
 
-				'Zoom level: ' + parameters.zoomOverlay + b + b +
+				'Zoom level: ' + map.parameters.zoomOverlay + b + b +
 
-				'UL tile X: ' + parameters.ULtileXOverlay + b +
-				'UL tile Y: ' + parameters.ULtileYOverlay + b + b +
+				'UL tile X: ' + map.parameters.ULtileXOverlay + b +
+				'UL tile Y: ' + map.parameters.ULtileYOverlay + b + b +
 
-				'Tiles X: ' + parameters.tilesXOverlay + b +
-				'Tiles Y: ' + parameters.tilesYOverlay + b + b +
+				'Tiles X: ' + map.parameters.tilesXOverlay + b +
+				'Tiles Y: ' + map.parameters.tilesYOverlay + b + b +
 
 			'</details>' +
 
@@ -277,29 +275,30 @@ console.log( 'parameters', parameters );
 
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
 
-		min = arrayMin( elevations );
-		max = arrayMax( elevations );
+		map.mesh = new THREE.Object3D();
+		map.min = arrayMin( map.elevations );
+		map.max = arrayMax( map.elevations );
 
-		scale = scaleFactor / ( max - min );
+		scale = map.verticalscale / ( map.max - map.min );
 
 		inpVertical.value = scale;
 		inpVertical.max = 3 * scale;
 
-		ULlat = tile2lat( parameters.ULtileY, parameters.zoom );
-		ULlon = tile2lon( parameters.ULtileX, parameters.zoom );
+		ULlat = tile2lat( map.parameters.ULtileY, map.parameters.zoom );
+		ULlon = tile2lon( map.parameters.ULtileX, map.parameters.zoom );
 
-		LRlat = tile2lat( parameters.ULtileY + parameters.tilesY, parameters.zoom );
-		LRlon = tile2lon( parameters.ULtileX + parameters.tilesX, parameters.zoom );
+		LRlat = tile2lat( map.parameters.ULtileY + map.parameters.tilesY, map.parameters.zoom );
+		LRlon = tile2lon( map.parameters.ULtileX + map.parameters.tilesX, map.parameters.zoom );
 
 		deltaLat = ULlat - LRlat;
 		deltaLon = LRlon - ULlon;
 
-		deltaLatTile = deltaLat / parameters.tilesY;
+		deltaLatTile = deltaLat / map.parameters.tilesY;
 
 		cenLat = LRlat + 0.5 * ( ULlat - LRlat );
 		cenLon = ULlon + 0.5 * ( LRlon - ULlon );
 
-		setGroundGeometry();
+		setMapGeometry();
 		drawMapOverlay( true );
 
 		menuDetailsElevations.innerHTML =
@@ -308,10 +307,10 @@ console.log( 'parameters', parameters );
 
 				'<summary><h3>elevations file details</h3></summary>' +
 
-				'Number of data points: ' + elevations.length.toLocaleString() + b + b +
+				'Number of data points: ' + map.elevations.length.toLocaleString() + b + b +
 
-				'Elevation maximum: ' + Math.round( max ).toLocaleString() + 'm' + b +
-				'Elevation minimum: ' + Math.round( min ).toLocaleString() + 'm' +b + b +
+				'Elevation maximum: ' + Math.round( map.max ).toLocaleString() + 'm' + b +
+				'Elevation minimum: ' + Math.round( map.min ).toLocaleString() + 'm' +b + b +
 
 				'Scale: ' + scale.toFixed( 6 ) + b + b +
 
@@ -328,27 +327,27 @@ console.log( 'parameters', parameters );
 
 	}
 
-	function setGroundGeometry() {
+	function setMapGeometry() {
 
 		var vertices;
 
-		groundGeometry = new THREE.PlaneBufferGeometry( deltaLatTile * parameters.tilesX, deltaLatTile * parameters.tilesY, parameters.segmentsX - 1, parameters.segmentsY - 1 );
+		map.geometry = new THREE.PlaneBufferGeometry( deltaLatTile * map.parameters.tilesX, deltaLatTile * map.parameters.tilesY, map.parameters.segmentsX - 1, map.parameters.segmentsY - 1 );
 
-		vertices = groundGeometry.attributes.position.array;
+		vertices = map.geometry.attributes.position.array;
 
 		for ( var i = 2, j = 0; i < vertices.length; i += 3, j++ ) {
 
-			vertices[ i ] = elevations[ j ];
+			vertices[ i ] = map.elevations[ j ];
 
 		}
 
-		groundGeometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, inpVertical.valueAsNumber ) );
+		map.geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, inpVertical.valueAsNumber ) );
 
-		groundGeometry.computeFaceNormals();
-		groundGeometry.computeVertexNormals();
-//		groundGeometry.computeBoundingBox();
-//		groundGeometry.computeBoundingSphere();
-//		groundGeometry.center();
+		map.geometry.computeFaceNormals();
+		map.geometry.computeVertexNormals();
+//		map.geometry.computeBoundingBox();
+//		map.geometry.computeBoundingSphere();
+//		map.geometry.center();
 
 		outVertical.value = inpVertical.valueAsNumber.toFixed( 6 );
 
@@ -364,9 +363,9 @@ console.log( 'parameters', parameters );
 
 		if ( selMap.selectedIndex > 8 ) { 
 
-			groundMaterial = new THREE.MeshNormalMaterial( { side: 2 } );
+			map.material = new THREE.MeshNormalMaterial( { side: 2 } );
 
-			drawGround( updateCamera );
+			drawMap( updateCamera );
 
 			return; 
 
@@ -377,17 +376,17 @@ console.log( 'parameters', parameters );
 		baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
 		count = 0;
 
-		for ( var x = parameters.ULtileXOverlay; x < parameters.ULtileXOverlay + parameters.tilesXOverlay; x++ ) {
+		for ( var x = map.parameters.ULtileXOverlay; x < map.parameters.ULtileXOverlay + map.parameters.tilesXOverlay; x++ ) {
 
-			for ( var y = parameters.ULtileYOverlay; y < parameters.ULtileYOverlay + parameters.tilesYOverlay; y++ ) {
+			for ( var y = map.parameters.ULtileYOverlay; y < map.parameters.ULtileYOverlay + map.parameters.tilesYOverlay; y++ ) {
 
 				if ( selMap.selectedIndex < 4 ) {
 
-					loadImage( x + '&y=' + y + '&z=' + parameters.zoomOverlay, x - parameters.ULtileXOverlay, y - parameters.ULtileYOverlay );
+					loadImage( x + '&y=' + y + '&z=' + map.parameters.zoomOverlay, x - map.parameters.ULtileXOverlay, y - map.parameters.ULtileYOverlay );
 
 				} else {
 
-					loadImage( parameters.zoom + '/' + x + '/' + y + '.png', x - parameters.ULtileXOverlay , y - parameters.ULtileYOverlay );
+					loadImage( map.parameters.zoom + '/' + x + '/' + y + '.png', x - map.parameters.ULtileXOverlay , y - map.parameters.ULtileYOverlay );
 
 				}
 
@@ -395,9 +394,12 @@ console.log( 'parameters', parameters );
 
 		}
 
-		texture = new THREE.Texture( placeMapCanvas );
+		texture = new THREE.Texture( map.canvas );
 		texture.minFilter = texture.magFilter = THREE.NearestFilter;
 		texture.needsUpdate = true;
+
+		var tilesTotal = map.parameters.tilesXOverlay * map.parameters.tilesYOverlay;
+
 
 			function loadImage( fName, x, y ) {
 
@@ -409,15 +411,15 @@ console.log( 'parameters', parameters );
 
 				img.onload = function(){
 
-					placeMapContext.drawImage( img, 0, 0, 256, 256, x * pixelsPerTile, y * pixelsPerTile, pixelsPerTile, pixelsPerTile );
+					map.context.drawImage( img, 0, 0, 256, 256, x * map.pixelsPerTile, y * map.pixelsPerTile, map.pixelsPerTile, map.pixelsPerTile );
 
 					count++;
 
 					if ( count === tilesTotal ) {
 
-						groundMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
+						map.material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
 
-						drawGround( updateCamera );
+						drawMap( updateCamera );
 
 					}
 
@@ -427,16 +429,16 @@ console.log( 'parameters', parameters );
 
 	}
 
-	function drawGround( updateCamera ) {
+	function drawMap( updateCamera ) {
 
-		scene.remove( ground );
-		ground = new THREE.Mesh( groundGeometry, groundMaterial );
-		ground.position.set( cenLon, cenLat, 0 );
-		scene.add( ground );
+		scene.remove( map.mesh );
+		map.mesh = new THREE.Mesh( map.geometry, map.material );
+		map.mesh.position.set( cenLon, cenLat, 0 );
+		scene.add( map.mesh );
 
-		scene.remove( groundBoxHelper );
-		groundBoxHelper = new THREE.BoxHelper( ground, 0xff0000 );
-		scene.add( groundBoxHelper );
+		scene.remove( map.boxHelper );
+		map.boxHelper = new THREE.BoxHelper( map.mesh, 0xff0000 );
+		scene.add( map.boxHelper );
 
 		geometry = new THREE.PlaneBufferGeometry( 1, 1 );
 //		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -1.5707 ) );
@@ -446,7 +448,6 @@ console.log( 'parameters', parameters );
 		plain = new THREE.Mesh( geometry, material );
 		plain.position.set( cenLon, cenLat, 0 );
 		scene.add( plain );
-
 
 		if ( updateCamera === true ) setCamera();
 
@@ -522,7 +523,7 @@ console.timeEnd( 'timer0' );
 
 	function setCamera() {
 
-		controls.target.copy( ground.position );
-		camera.position.copy( ground.position ).add( v( 0, -cameraPosition, cameraPosition ) );
+		controls.target.copy( map.mesh.position );
+		camera.position.copy( map.mesh.position ).add( v( 0, -cameraPosition, cameraPosition ) );
 
 	}

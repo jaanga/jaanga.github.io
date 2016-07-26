@@ -158,6 +158,11 @@ Intended for general use
 
 ## Change Log
 
+### 2016-07-26 ~ 
+
+Becoming a large and unweildy script. ;-(
+
+
 ### 2016-07-21 ~ R4.1
 
 * Add more samples per tile choices
