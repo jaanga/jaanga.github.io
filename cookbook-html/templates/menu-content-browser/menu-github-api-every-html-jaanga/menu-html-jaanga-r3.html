@@ -172,7 +172,7 @@ Uses Github API to find directories with readme.md files.' >
 
 			files.push( file );
 
-console.log( 'folder:', folder, 'file:', file );
+//console.log( 'folder:', folder, 'file:', file );
 
 		}
 
@@ -198,7 +198,7 @@ console.log( 'folder:', folder, 'file:', file );
 
 // console.log( 'file', file, string );
 
-			txt += '<p><a href=JavaScript:getItem("' + i + '"); >' + file.replace( string, '' ) + '</a></p>';
+			txt += '<p><a href=JavaScript:getItem(' + i + '); >' + file.replace( string, '' ) + '</a></p>';
 
 		}
 
@@ -218,10 +218,8 @@ console.log( 'folder:', folder, 'file:', file );
 
 	function getItem( index ) {
 
-// console.log( 'item', item );
-
 		item = files[ index ];
-
+//console.log( 'item', item );
 		if ( item.endsWith( '.md' ) ) {
 
 			getMarkdown( baseURL + item, contents );
