@@ -158,9 +158,15 @@ Intended for general use
 
 ## Change Log
 
-### 2016-07-26 ~ 
+### 2016-07-26 ~ R5
 
 Becoming a large and unweildy script. ;-(
+
+* Mostly objectified
+* Improve saving
+* Update menus
+	* Add explanatory text
+	* More details tags
 
 
 ### 2016-07-21 ~ R4.1
