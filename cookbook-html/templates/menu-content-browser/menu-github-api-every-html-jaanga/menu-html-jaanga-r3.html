@@ -108,7 +108,7 @@ Uses Github API to find directories with readme.md files.' >
 
 		requestAPIContents();
 
-		setBreadCrumbs();
+//		setBreadCrumbs();
 
 //		hashChange();
 
@@ -152,7 +152,11 @@ Uses Github API to find directories with readme.md files.' >
 
 	function getFiles( index ) {
 
-		folder = foldersArray.slice( 0, index ).join( '/' );
+		foldersArray = foldersArray.slice( 0, index + 1)
+
+		folder = foldersArray.join( '/' );
+
+console.log( 'folder:', folder );
 
 		files = [];
 
@@ -172,7 +176,7 @@ Uses Github API to find directories with readme.md files.' >
 
 			files.push( file );
 
-//console.log( 'folder:', folder, 'file:', file );
+//console.log( 'folder:', folder, '\nfile:', file );
 
 		}
 
@@ -181,8 +185,6 @@ Uses Github API to find directories with readme.md files.' >
 		setBreadCrumbs();
 
 		createTableOfContents();
-
-
 
 	}
 
@@ -233,7 +235,7 @@ Uses Github API to find directories with readme.md files.' >
 
 			foldersArray = item.split( '/' );
 
-			getFiles( foldersArray.length - 1 );
+			getFiles( foldersArray.length );
 
 		}
 
