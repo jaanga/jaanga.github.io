@@ -83,7 +83,8 @@ value='Source code listing' >
 
 ## To Do / Wish List
 
-
+* Add ability to enter Google API key
+* Add input tag to edit place name
 * Add better height scaling system
 * Drag map updates location
 * Update 3D Display while drawing 
@@ -94,8 +95,9 @@ value='Source code listing' >
 
 ## Issues
 
+* Cannot see error messages such as rate limite exceeded
 
-
+<!--
 ### Rate limits
 The Google Maps API has strict rate limits for downloading elevations.
 Figuring out how stay stay under the rate limits and yet be as fast as possible is an amusing challenge.
@@ -105,12 +107,15 @@ There seem to be a variety of speed bumps
 * No more than 1000 elevations in under a second
 * No more than ?? elevations in under a minute?
 * No more than ?? elevations in under x minutes>
- 
-### File Names
+ -->
 
-Using file names to convey essential meta data. Is this a good thing?
+## File Names
 
-####
+Uswsfile names to convey essential meta data. Is this a good thing?
+
+
+<!--
+###
 
 Example:
 
@@ -119,8 +124,8 @@ Example:
 place, zoom, upper left tile x, upper left tile y, tiles X, tiles Y, samples X, samples Y
 
 
-
 #### Updated 2016-07-14
+-->
 
 Example:
 

@@ -94,7 +94,8 @@
 
 			map.elevations = elevs;
 			map.parameters = params;
-console.log( 'map.parameters', map.parameters );
+
+//console.log( 'map.parameters', map.parameters );
 
 			setMenuDetailsFileName();
 
@@ -114,7 +115,7 @@ console.log( 'map.parameters', map.parameters );
 			map.elevations = elevs;
 			map.parameters = getParametersFileName( fName );
 
-console.log( 'map.parameters', map.parameters );
+// console.log( 'map.parameters', map.parameters );
 
 			setMenuDetailsFileName();
 
