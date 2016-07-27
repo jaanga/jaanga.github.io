@@ -1051,7 +1051,7 @@ console.log( '', files.files[0].lastModifiedDate );
 
 		if ( !elevations ) { alert( 'nothing to save' ); return; }
 
-		txtArea.value = elevations;
+		elevs = elevations.join( ',' );
 
 //		txt = '';
 
@@ -1063,7 +1063,7 @@ console.log( '', files.files[0].lastModifiedDate );
 
 //		txtArea.value = txt;
 
-		blob = new Blob( [ txtArea.value ] );
+		blob = new Blob( [ elevs ] );
 
 //		fileName = 'elevations_' + cenLat.toFixed(4) + '_' + cenLon.toFixed(4) +
 //			'_z' + zoom + '_t' + tiles + '_' + samples + 'x' + samples + '_.txt';

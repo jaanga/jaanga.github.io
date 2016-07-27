@@ -144,7 +144,7 @@ Uses Github API to find directories with readme.md files.' >
 
 			response = JSON.parse( xhr.response );
 
-			getFiles( 0 )
+			getFiles( 1 )
 
 		}
 
@@ -152,7 +152,7 @@ Uses Github API to find directories with readme.md files.' >
 
 	function getFiles( index ) {
 
-		folder = foldersArray[ index ];
+		folder = foldersArray.slice( 0, index ).join( '/' );
 
 		files = [];
 
@@ -172,28 +172,33 @@ Uses Github API to find directories with readme.md files.' >
 
 			files.push( file );
 
-console.log( 'folder', folder );
+console.log( 'folder:', folder, 'file:', file );
 
 		}
 
 //console.log( 'files', files );
 
+		setBreadCrumbs();
+
 		createTableOfContents();
 
-		setBreadCrumbs();
+
 
 	}
 
 	function createTableOfContents( ) {
 
 		var txt =  '';
+
 		string = foldersArray.join( '/' ) + '/';
 
 		for ( var i = 0; i < files.length; i++ ) {
 
 			file = files[ i ];
 
-			txt += '<p><a href=JavaScript:getItem("' + baseURL + file + '"); >' + file.replace( string, '' ) + '</a></p>';
+// console.log( 'file', file, string );
+
+			txt += '<p><a href=JavaScript:getItem("' + i + '"); >' + file.replace( string, '' ) + '</a></p>';
 
 		}
 
@@ -211,24 +216,26 @@ console.log( 'folder', folder );
 
 	}
 
-	function getItem( item ) {
+	function getItem( index ) {
 
-console.log( 'item', item );
+// console.log( 'item', item );
+
+		item = files[ index ];
 
 		if ( item.endsWith( '.md' ) ) {
 
-			getMarkdown( item, contents );
+			getMarkdown( baseURL + item, contents );
 
 		} else if ( item.endsWith( '.html' ) ) {
 
-			contents.innerHTML = '<iframe src=' + item + ' ></iframe>';
+			contents.innerHTML = '<iframe src=' + baseURL + item + ' ></iframe>';
 //			contents.style.overflow = 'hidden';
 
 		} else {
 
-			foldersArray.push( item.split( '/' ).pop() );
+			foldersArray = item.split( '/' );
 
-			getFiles( foldersArray.join( '/' ) );
+			getFiles( foldersArray.length - 1 );
 
 		}
 
