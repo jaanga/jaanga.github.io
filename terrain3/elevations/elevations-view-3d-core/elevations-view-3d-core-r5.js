@@ -31,8 +31,7 @@
 
 	var map = {};
 
-	var cameraPosition = 0.3; // need position that adjust by algorithm - allowing for zoom level etc
-	var updateCamera = true;
+	map.updateCamera = true; // is this needed?
 
 	map.pixelsPerTile = 256;
 	map.verticalscale = 0.1;
@@ -59,6 +58,8 @@
 			fileName = files.files[ 0 ].name;
 
 			getParametersFileName( fileName );
+
+//			setBackground();
 
 		};
 
@@ -87,6 +88,8 @@
 
 			getParametersFileName( fileName );
 
+//			setBackground();
+
 		}
 
 	}
@@ -109,6 +112,8 @@
 
 			initElevations();
 
+//			setBackground();
+
 	}
 
 
@@ -126,6 +131,8 @@
 			getParametersOverlay();
 
 			initElevations();
+
+//			setBackground();
 
 	}
 
@@ -157,6 +164,8 @@
 		setMenuDetailsFileName();
 
 		initElevations();
+
+//		setBackground();
 
 	}
 
@@ -234,6 +243,24 @@
 
 	}
 
+	function setBackground() {
+
+		menuBackgroundSettings.innerHTML =
+
+			'<details open >' +
+
+				'<summary><h3>background settings</h3></summary>' +
+
+				'<p>Fog scale: <output id=outFog >value</output>' +
+					'<input type=range id=inpFog max=0.01 min=0.000001 step=0.000001 value=0.015 oninput=setMapGeometry();drawMapOverlay(); title="" style=width:100%; >' +
+				'</p>' +
+
+
+			'</details>' +
+
+		'';
+
+	}
 
 
 // start second stage of processing
@@ -259,7 +286,7 @@
 
 		menuDetailsOverlay.innerHTML =
 
-			'<details open>' +
+			'<details>' +
 
 				'<summary><h3>overlay details</h3></summary>' +
 
@@ -332,6 +359,7 @@
 		b;
 
 	}
+
 
 	function setMapGeometry() {
 
@@ -425,7 +453,7 @@
 
 						map.material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
 
-						drawMap( updateCamera );
+						drawMap( map.updateCamera );
 
 					}
 
@@ -451,11 +479,14 @@
 //		material = new THREE.MeshBasicMaterial( { color: 0x223322, specular: 0x222222, shininess: 0.5, side: 2 } );
 		material = new THREE.MeshBasicMaterial( { color: 0x223322, side: 2 } );
 
-		plain = new THREE.Mesh( geometry, material );
-		plain.position.set( cenLon, cenLat, 0 );
-		scene.add( plain );
+		scene.remove( map.plain );
+		map.plain = new THREE.Mesh( geometry, material );
+		map.plain.position.set( cenLon, cenLat, 0 ); // sea level
+		scene.add( map.plain );
 
-		if ( updateCamera === true ) setCamera();
+//		if ( updateCamera === true ) 
+
+		setCamera();
 
 console.timeEnd( 'timer0' );
 
@@ -529,7 +560,11 @@ console.timeEnd( 'timer0' );
 
 	function setCamera() {
 
-		controls.target.copy( map.mesh.position );
-		camera.position.copy( map.mesh.position ).add( v( 0, -cameraPosition, cameraPosition ) );
+		map.radius = map.boxHelper.geometry.boundingSphere.radius;
+
+		cameraPosition = 1.2 * map.radius;
+
+		controls.target.copy( map.boxHelper.geometry.boundingSphere.center );
+		camera.position.copy( map.boxHelper.geometry.boundingSphere.center ).add( v( 0, -cameraPosition, cameraPosition ) );
 
 	}

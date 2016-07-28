@@ -161,6 +161,11 @@ Intended for general use
 
 ## Change Log
 
+### 2016-07-28 ~ R6
+
+* Add Google maps API key menu entry and setter
+
+
 ### 2016-07-26 ~ R5
 
 Becoming a large and unweildy script. ;-(

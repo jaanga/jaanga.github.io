@@ -18,6 +18,7 @@ Display results in 3D. Display useful info.
 
 // https://developers.google.com/maps/documentation/javascript/tutorial
 // https://developers.google.com/maps/documentation/javascript/elevation
+// https://developers.google.com/maps/documentation/elevation/start
 
 	var urlViewElevations3D = '../elevations-view-3d-core/elevations-view-3d-core-r4.html';
 
@@ -127,6 +128,13 @@ Display results in 3D. Display useful info.
 				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
 
+			'<details>' +
+				'<p><summary><h3>api key</p></summary></p>' +
+				'<small>If small request, no need for API key</small>' +
+				'<p>api key: <input id=inpAPI onclick=this.select(); title="Obtain API key from Google Maps" ></p>' +
+				'<p><button onclick=setAPIkey(); >Set API key</button></p>' +
+			'</details>' +
+
 			'<details open>' +
 				'<summary><h3>place</p></summary>' +
 				'<p>Enter a location to go there:</p>' +
@@ -135,7 +143,6 @@ Display results in 3D. Display useful info.
 
 				'<p id=menuPlaceMessage ></p>' +
 
-//				'<p>Latitude : <input id=inpLatitude size=12 value=' + place.latitude + ' onclick=this.select(); onchange=setCenter(); ></p>' +
 //				'<p>Longitude: <input id=inpLongitude size=12 value=' + place.longitude + ' onclick=this.select(); onchange=setCenter(); ></p>' +
 
 				'<p>Latitude : <input id=inpLatitude size=12 value=' + place.latitude + ' onclick=this.select(); onchange=updateLocation(inpLatitude.value,inpLongitude.value); ></p>' +
@@ -261,7 +268,7 @@ Display results in 3D. Display useful info.
 			[ 100, 'takes about ?? seconds' ],
 			[ 128, 'takes about ?? seconds' ],
 			[ 150, 'takes about ?? seconds' ], 
-			[ 170, 'takes about ?? seconds' ], 
+			[ 170, 'takes about 2,500 seconds' ], 
 			[ 200, 'takes 5 to 6 minutes' ], [ 250, 'takes 8 to 9 minutes' ], [ 500, 'takes about an hour' ] ];
 
 		for ( var i = 0; i < samps.length; i++ ) {
@@ -293,6 +300,12 @@ Display results in 3D. Display useful info.
 
 	}
 
+	function setAPIkey() {
+
+		script = document.body.appendChild( document.createElement('script') );
+		script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&key=' + inpAPI.value;
+
+	}
 
 	function initMap() {
 

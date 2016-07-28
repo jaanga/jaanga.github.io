@@ -69,12 +69,11 @@ value='Source code listing' >
 
 ## To Do / Wish List
 
-* Add Auto-rotate & toggle
-* Add sea level indicator
+* Info about metres per side of map
+* Accurate elevation measurement
 * Link to escape iframe
 * More overlays?
-* Select tile overlay zoom level to control quality of overlay
- 
+
 
 
 ## Issues
@@ -94,6 +93,18 @@ Intended for generating flightpaths
 
 
 ## Change Log
+
+
+### 2016-07-28 ~ R5
+
+* Many changes
+* All objectified and in .js file.
+* Zoom to radius on mesh
+* Update camara and target to center of mesh
+* Add sea level indicator - plain mesh at sea level
+* Select tile overlay zoom level to control quality of overlay
+ 
+* Add Google to about
 
 ### 2016-07-20 ~ R1
 
