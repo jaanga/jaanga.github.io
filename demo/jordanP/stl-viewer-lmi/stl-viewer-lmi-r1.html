@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Mesh Y at Cursor R1</title>
+<title>STL Viewer LMI R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-07-19' >
+<meta name=date content='' >
 </head>
 <body>
 <!--
@@ -17,14 +17,30 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js ></script>
 
 <script>
 
-	var objects = [];
+
+//https://dl.dropboxusercontent.com/u/4732486/DataSamples/Shoe_singleScan.stl
+
+	var baseURL = 'https://dl.dropboxusercontent.com/u/4732486/DataSamples/';
+
+	var options = [
+
+		'Shoe_singleScan.stl', 
+		'StandardTarget_singleScan.stl',
+		'Throttle_singleScan.stl'
+
+	];
 
 	var raycaster;
 	var mouse;
 	var particle, particleMaterial;
+
+	var loader;
+
+	var meshSTL, bbh, geometry;
 
 	var b = '<br>';
 	var stats, renderer, scene, camera, controls, mesh;
@@ -61,6 +77,8 @@
 
 			'#container { left: 0; position: absolute; transition: left 1s; }' +
 
+			'#divDrag { border: 3px dashed black; box-sizing: border-box; margin-bottom: 30px; padding: 20px 10px; width: 100%; }' +
+
 			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
 
 			'#menu { background-color: #eee; border: 1px #ccc solid; max-height: ' + window.innerHeight + 'px; overflow: auto; padding: 0 10px; position: absolute; width: 300px; }' +
@@ -75,19 +93,48 @@
 			'<div id=menu >' +
 
 				'<h2>' +
-					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a>' + b +
 					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
 					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-				'<p>' +
-//					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-//					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
-				'</p>' +
+				'<div id=menuOptions ></div>' +
 
-				'<div id=menuClickData ></div>' +
+
+				'<div id=divDrag >' +
+					'Drag and drop files here or ' +
+					'<p><input type=file onchange=loadFileSTLByContent(this); /></p>' +
+				'</div>' +
+
+				'<details open>' +
+					'<summary><h3>material</h3></summary>' +
+					'<p>' +
+						'<input type=radio onchange=setColor(); name=color id=but1 checked />Color by normal ' + b +
+						'<input type=radio onchange=setColor(); name=color id=but2 />Color by height ' +
+					'</p>' +
+				'</details>' +
+
+				'<details open>' +
+					'<summary><h3>file load</h3></summary>' +
+					'<div id=menuFileLoad ></div>' +
+				'</details>' +
+
+				'<details open>' +
+					'<summary><h3>file data</h3></summary>' +
+					'<div id=menuFileData ></div>' +
+				'</details>' +
+
+				'<details open>' +
+					'<summary><h3>file info</h3></summary>' +
+					'<div id=menuFileInfo ></div>' +
+				'</details>' +
+
+				'<details open>' +
+					'<summary><h3>click data</h3></summary>' +
+					'<div id=menuClickData ></div>' +
+				'</details>' +
 
 				'<details>' +
 					'<summary><h3>about</h3></summary>' +
@@ -134,14 +181,29 @@
 
 // helpers
 
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -51, 0 );
+		scene.add( mesh );
+
 		gridHelper  = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
+		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
 
 		axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
+
+		divDrag.addEventListener( "dragover", function( e ){ e.preventDefault(); }, true );
+		divDrag.addEventListener( 'drop', drop, false );
+
+		addOptions();
+
+		hashes = location.hash.split ( '#' );
+
+//
 
 		particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
 		particle = new THREE.Sprite( particleMaterial );
@@ -155,40 +217,262 @@
 		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // for mobile
 
-		drawWavyPlane();
+//
+		loader = new THREE.STLLoader();
+
+		if ( hashes.length > 1 ) {
+
+			fileName = hashes[ 1 ];
+
+			loadFileSTLByURL( fileName )
+
+		}
 
 	}
 
-	function drawWavyPlane() {
+	function addOptions() {
 
-		geometry = new THREE.PlaneBufferGeometry( 100, 100, 99, 99 );
-		vertices = geometry.attributes.position.array;
+		menuOptions.innerHTML =
 
-		index = 2;
+			'<details open >' +
+				'<summary><h3>open file</h3></summary>' +
+				'<p>' +
+				'Select a file:<br>' +
+				'<select id=selOption ondblclick=loadFileSTLByURL(selOption.value); title="Select the a file" size=5 style=width:100%; >' +
+				'<select>' +
+				'</p>' +
+				'<p><button onclick=loadFileSTLByURL(selOption.value); >Load selected file</button></p>' +
+			'</details>' +
 
-		for ( var i = 0; i < 100; i++ ) {
+		'';
 
-			for ( var j = 0; j < 100; j++ ) {
+		for ( var i = 0; i < options.length; i++ ) {
 
-				vertices[ index ] = 10 * Math.sin( i / 10 ) * Math.cos( j / 10 );
-				index += 3;
+			option = options[ i ];
+
+			if ( option.startsWith( '#' ) ) {
+
+				selOption.appendChild( document.createElement( 'optgroup' ) );
+				selOption.children[ i ].label = option.slice( 1 );
+
+			} else {
+
+				selOption.appendChild( document.createElement( 'option' ) );
+				selOption.children[ i ].text = option;
 
 			}
 
 		}
 
-		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		selOption.selectedIndex = 1;
+
+	}
+
+	function drop( event ) {
+
+		event.preventDefault();
+
+		fileName = event.dataTransfer.getData( 'URL' );
+
+		if ( fileName ) {
+
+			loadFileSTLByURL( fileName );
+
+		} else {
+
+			loadFileSTLByContent( event.dataTransfer );
+
+		}
+
+	}
+
+	function loadFileSTLByURL( fileName ) {
+
+// http:///jaanga.github.io/cookbook-threejs/viewers/viewer-stl/latest/#http://va3c.github.io/viewer/samples/NPP_16.stl
+
+		loader.load( baseURL + fileName, onload, onProgress, onError );
+
+		menuFileLoad.innerHTML = '';
+		menuFileData.innerHTML = '';
+		menuFileInfo.innerHTML = '';
+		menuClickData.innerHTML = '';
+
+		function onload( geo ) {
+
+			geometry = geo;
+			addMesh( geometry );
+
+		}
+
+		function onProgress( xhr ) {
+
+// console.log( '', xhr );
+			var percentComplete, message;
+
+			if ( xhr.total ) {
+
+				percentComplete = xhr.loaded / xhr.total * 100;
+
+				menuFileLoad.innerHTML =
+
+					fileName + ': ' + b +
+					percentComplete.toFixed() + '% or ' +
+					xhr.loaded.toLocaleString() + ' bytes of ' + xhr.total.toLocaleString() + ' downloaded in ' + b +
+					( xhr.timeStamp / 1000 ).toFixed() + ' seconds';
+
+				'';
+
+			} else {
+
+				menuFileLoad.innerHTML = fileName + ': ' + xhr.loaded + ' bytes loaded in ' +
+				( xhr.timeStamp / 1000 ).toFixed() + ' seconds';
+
+			}
+
+		}
+
+		function onError ( xhr ) {
+
+			var message;
+
+			menuFileLoad.innerHTML =
+
+				'<p>An error happened:</p>' +
+				'<p>' + xhr.target.responseURL + '</p>' +
+				'<p>' + xhr.target.statusText + '</p>' +
+
+			'';
+
+			setMessageToTarget( message, parent.coreFileInfo );
+
+		}
+
+	}
+
+
+	function loadFileSTLByContent( fileObject ) {
+
+		var file = fileObject.files[ 0 ];
+		var reader = new FileReader();
+
+		reader.onload = function ( event ) {
+
+			geometry = loader.parse( reader.result );
+
+			addMesh();
+
+			menuFileData.innerHTML =
+
+				'<p>' +
+					'name: ' + file.name + b +
+					'size: ' + file.size.toLocaleString() + b +
+					( file.type ? ( 'type: ' + file.type + b ) : '' ) +
+					'modified: ' + file.lastModifiedDate +
+				'</p>';
+
+		};
+
+		if ( reader.readAsBinaryString !== undefined ) {
+
+			reader.readAsBinaryString( file );
+
+		} else {
+
+			reader.readAsArrayBuffer( file );
+
+		}
+
+	}
+
+	function addMesh() {
+
+//		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
 
-		geometry.attributes.position.needsUpdate = true
+		if ( but1.checked ) {
 
-		material = new THREE.MeshNormalMaterial( { side: 2 });
-		mesh = new THREE.Mesh( geometry, material );
-//		mesh.scale.set( 100, 10, 100 );
-		scene.add( mesh );
+			material = new THREE.MeshNormalMaterial( { side: 2 } );
 
-		objects.push( mesh );
+		} else {
+
+			material = new THREE.MeshBasicMaterial( { color: 0xcccccc, vertexColors: THREE.VertexColors } );
+			var colors = [];
+			var color = new THREE.Color();
+			var arr = geometry.attributes.position.array;
+
+			for ( var i = 0; i < arr.length; i += 3 ) {
+
+				var ht = arr[ 1 + i ];
+
+				color.setHSL( ( ht / 50 + 1 ) / 2, 1.0, 0.5 );
+
+				colors[ i ] = color.r;
+				colors[ i + 1 ] = color.g;
+				colors[ i + 2 ] = color.b;
+
+			}
+
+			geometry.addAttribute( 'color', new THREE.BufferAttribute( new Float32Array( colors ), 3 ) );
+
+		}
+
+		scene.remove( meshSTL, bbh );
+		meshSTL = new THREE.Mesh( geometry, material );
+
+		bbh = new THREE.BoundingBoxHelper( meshSTL );
+		bbh.update();
+
+		scene.add( meshSTL, bbh );
+
+		menuFileInfo.innerHTML =
+		'<p>' +
+			'vertices: ' + geometry.attributes.position.count.toLocaleString() +
+		'</p>';
+
+	}
+
+	function setColor() {
+
+		if ( !meshSTL ) { return; }
+
+		if ( but1.checked ) {
+
+			meshSTL.material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+		} else {
+
+			material = new THREE.MeshBasicMaterial( { color: 0xcccccc, vertexColors: THREE.VertexColors, side: 2 } );
+
+			var colors = [];
+			var color = new THREE.Color();
+			var arr = geometry.attributes.position.array;
+
+			for ( var i = 0; i < arr.length; i += 3 ) {
+
+				var ht = arr[ 1 + i ];
+
+				color.setHSL( ( ht / 50 + 1 ) / 2, 1.0, 0.5 );
+
+				colors[ i ] = color.r;
+				colors[ i + 1 ] = color.g;
+				colors[ i + 2 ] = color.b;
+
+			}
+
+			geometry.addAttribute( 'color', new THREE.BufferAttribute( new Float32Array( colors ), 3 ) );
+			scene.remove( meshSTL, bbh );
+			meshSTL = new THREE.Mesh( geometry, material );
+
+			bbh = new THREE.BoundingBoxHelper( meshSTL );
+			bbh.update();
+
+			scene.add( meshSTL, bbh );
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
 
 	}
 
@@ -212,7 +496,7 @@
 
 		raycaster.setFromCamera( mouse, camera );
 
-		var intersects = raycaster.intersectObjects( [ mesh ] );
+		var intersects = raycaster.intersectObjects( [ meshSTL ] );
 
 		if ( intersects.length > 0 ) {
 
@@ -230,8 +514,7 @@ console.log( 'interescts[0]', intersect );
 				'x: ' + intersect.point.x.toFixed() + b +
 				'y: ' + intersect.point.y.toFixed() + b +
 				'z: ' + intersect.point.z.toFixed() + b +
-			'</p>' +
-			b;
+			'</p>';
 
 		} else {
 
