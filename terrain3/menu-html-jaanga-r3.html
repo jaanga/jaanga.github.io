@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Menu HTML Jaanga R2</title>
+<title>Menu HTML Jaanga R3</title>
 <meta name=viewport co=ntent='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Browse and view files written in Markdown format.
 Uses Github API to find directories with readme.md files.' >
@@ -172,7 +172,7 @@ console.log( 'folder:', folder );
 
 			if ( file.split( '/' ).length > foldersArray.length + 1 ) { continue; }
 
-//			if ( file.match( 'index.html' ) || file.match( 'readme.md' ) || ( file.match( fileName )) ) { continue; }
+			if ( file.match( 'index.html' ) || file.endsWith( '.htm' ) || ( file.match( fileName )) ) { continue; }
 
 			files.push( file );
 
@@ -226,7 +226,7 @@ console.log( 'folder:', folder );
 
 			getMarkdown( baseURL + item, contents );
 
-		} else if ( item.endsWith( '.html' ) ) {
+		} else if ( item.endsWith( '.html' ) || item.endsWith( '.js' ) ) {
 
 			contents.innerHTML = '<iframe src=' + baseURL + item + ' ></iframe>';
 //			contents.style.overflow = 'hidden';

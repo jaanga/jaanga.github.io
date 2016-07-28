@@ -18,6 +18,20 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 _STL Viewer LMI_
 
+## Features
+
+* Open an STL file
+	* By URL
+	* By file dialog
+	* By drag and drop
+	* By location.hash
+* Select material
+	* Color by normals
+	* Color by height
+* Click anywhere on the mesh to obtain XYZ at point
+* View data regarding file size, number of vertices, last modified, etc
+
+
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
