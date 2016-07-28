@@ -110,7 +110,6 @@ console.time( 'timer0' );
 
 		'';
 
-
 // three.js
 
 		stats = new Stats();
@@ -166,15 +165,11 @@ console.time( 'timer0' );
 
 				getFileElevations( location.hash.slice( 1 ) );
 
-			} else {
-
-				getFileElevations();
-
 			}
 
-			container.style.left = '-325px'; 
-
 		}
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
 	}
 
