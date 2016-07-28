@@ -2,7 +2,9 @@
 
 
 //	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
-	var defaultFile = '../elevations-data-02/elevations_Igualada_12_2066_1525_3_3_300_300_.txt';
+//	var defaultFile = 'https://jaanga.github.io/terran3/elevations/elevations_Yosemite Valley, CA, United States_13_1373_3166_3_3_450_450_.txt';
+	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations-data-02/elevations_yosemite_11_343_790_3_3_180_180_.txt';
+
 
 	var defaultFiles = [
 
@@ -35,7 +37,7 @@
 	var updateCamera = true;
 
 	map.pixelsPerTile = 256;
-	map.verticalscale = 0.1;
+	map.verticalscale = 0.05;
 
 	var b = '<br>';
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
@@ -71,7 +73,7 @@
 
 		var xhr, response;
 
-		fileName = fileName || defaultFiles[ Math.floor( Math.random() *  defaultFiles.length ) ];
+		fileName = fileName || defaultFile;
 
 		setMenuDetailsSettings();
 
@@ -140,16 +142,16 @@
 
 				'<summary><h3>display settings</h3></summary>' +
 
-				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
+//				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
 
-				'<p><input type=file id=inpFile onchange=openFile(this); /></p>' +
+//				'<p><input type=file id=inpFile onchange=openFile(this); /></p>' +
 
 				'<p>Map overlay<br><select id=selMap onchange=drawMapOverlay(); size=5 /></select></p>' +
 
 				'<p>Map zoom level<br><select id=selMapZoom onchange=drawMapOverlay(); size=1 /></select></p>' +
 
 				'<p>Vertical scale: <output id=outVertical >value</output>' +
-					'<input type=range id=inpVertical max=0.01 min=0.000001 step=0.000001 value=0.015 oninput=setMapGeometry();drawMapOverlay(); title="" style=width:100%; >' +
+					'<input type=range id=inpVertical max=0.01 min=0.000001 step=0.000001 value=0.005 oninput=setMapGeometry();drawMapOverlay(); title="" style=width:100%; >' +
 				'</p>' +
 
 				'<p><input type=checkbox onchange=map.material.wireframe=!map.material.wireframe; > Wireframe</p>' +
@@ -174,7 +176,7 @@
 
 		}
 
-		selMapZoom.selectedIndex = 1;
+		selMapZoom.selectedIndex = 2;
 
 	}
 

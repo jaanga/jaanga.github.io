@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Elevations View 3D Core R4</title>
+<title>Kevin's Half  Dome Viewer R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Read a file of elevations. Create a Three.js 3D Mesh.
 Display in 3D. Add TMS overlay;
@@ -84,14 +84,17 @@ console.time( 'timer0' );
 
 				'<div id=menuDetailsFlightPath ></div>' +
 
-				'<div id=menuDetailsFileName ></div>' +
+				'<div id=menuDetailsFileName style=display:none; ></div>' +
 
-				'<div id=menuDetailsOverlay ></div>' +
+				'<div id=menuDetailsOverlay style=display:none;></div>' +
 
-				'<div id=menuDetailsElevations ></div>' +
+				'<div id=menuDetailsElevations style=display:none; ></div>' +
+
+				'<p><input type=checkbox onchange=controls.autoRotate=!controls.autoRotate; > Auto-Rotate</p>' +
 
 				'<details >' +
 					'<summary><h3>about</h3></summary>' +
+					'<p>Happy birthday, Kevin!</p>' +
 					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
 					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 					'<p></p>' +
@@ -171,6 +174,8 @@ console.time( 'timer0' );
 			container.style.left = '-325px'; 
 
 		}
+
+		controls.autoRotate = true;
 
 	}
 
