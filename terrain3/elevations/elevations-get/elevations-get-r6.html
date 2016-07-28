@@ -123,7 +123,7 @@ Display results in 3D. Display useful info.
 		menu.innerHTML =
 
 			'<h2>' +
-				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a>' + b +
+				'<a href=https://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a>' + b +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 			'</h2>' +
@@ -343,7 +343,7 @@ Display results in 3D. Display useful info.
 
 		marker = new google.maps.Marker({
 
-			icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+			icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png',
 			position: {lat: place.latitude, lng: place.longitude },
 			title: 'lat: ' + place.latitude + ', lng: ' + place.longitude,
 			snippet: 'snippet',
@@ -627,7 +627,7 @@ Display results in 3D. Display useful info.
 
 		var marker = new google.maps.Marker({
 
-			icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
+			icon: 'https://maps.google.com/mapfiles/ms/icons/orange-dot.png',
 			title: 'lat: ' + ULlat.toFixed( 4 ) + ', lng: ' + ULlon.toFixed( 4 ),
 			position: {lat: parseFloat( ULlat.toFixed( 4 ) ), lng: parseFloat( ULlon.toFixed( 4 ) )  },
 			map: googleMap 
@@ -636,7 +636,7 @@ Display results in 3D. Display useful info.
 
 		marker = new google.maps.Marker({
 
-			icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
+			icon: 'https://maps.google.com/mapfiles/ms/icons/purple-dot.png',
 			title: 'lat: ' + LRlat.toFixed( 4 ) + ', lng: ' + LRlon.toFixed( 4 ),
 			position: {lat: parseFloat( LRlat.toFixed( 4 ) ), lng: parseFloat( LRlon.toFixed( 4 ) )  },
 			map: googleMap 
@@ -827,10 +827,10 @@ Display results in 3D. Display useful info.
 			} else {
 
 				txtElevations.innerText = 'Elevation service failed due to: ' + status;
-
+console.log( 'count', count, 'status', status, 'delay', delay );
 				if ( status === 'OVER_QUERY_LIMIT' ) {
 
-//console.log( 'count', count, 'status', status, 'delay', delay );
+
 
 					--count;
 
@@ -969,7 +969,7 @@ console.log( 'complete count', count, elevations.length );
 
 		var marker = new google.maps.Marker({
 
-			icon: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+			icon: 'https://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
 			title: 'lat: ' + lat + ', lng: ' + lon,
 			position: {lat: lat, lng: lon } ,
 			map: googleMap 

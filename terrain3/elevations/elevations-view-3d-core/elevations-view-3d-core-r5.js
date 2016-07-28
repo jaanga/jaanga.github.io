@@ -88,8 +88,6 @@
 
 			getParametersFileName( fileName );
 
-//			setBackground();
-
 		}
 
 	}
@@ -119,12 +117,11 @@
 
 // when in iframe and called by viewer or app without access to data
 
-	function processElevationsFileNames( elevs, fName ) {
+	function processElevationsFileName( elevs, fName ) {
 
 			map.elevations = elevs;
-			map.parameters = getParametersFileName( fName );
 
-// console.log( 'map.parameters', map.parameters );
+			getParametersFileName( fName );
 
 			setMenuDetailsFileName();
 
@@ -132,7 +129,7 @@
 
 			initElevations();
 
-//			setBackground();
+			
 
 	}
 
@@ -164,8 +161,6 @@
 		setMenuDetailsFileName();
 
 		initElevations();
-
-//		setBackground();
 
 	}
 
@@ -243,24 +238,6 @@
 
 	}
 
-	function setBackground() {
-
-		menuBackgroundSettings.innerHTML =
-
-			'<details open >' +
-
-				'<summary><h3>background settings</h3></summary>' +
-
-				'<p>Fog scale: <output id=outFog >value</output>' +
-					'<input type=range id=inpFog max=0.01 min=0.000001 step=0.000001 value=0.015 oninput=setMapGeometry();drawMapOverlay(); title="" style=width:100%; >' +
-				'</p>' +
-
-
-			'</details>' +
-
-		'';
-
-	}
 
 
 // start second stage of processing
@@ -303,6 +280,7 @@
 		b;
 
 	}
+
 
 	function initElevations() {
 
@@ -358,6 +336,14 @@
 
 		b;
 
+		if ( window.self !== window.top ) { 
+
+			parent.ifr = parent.frame.contentWindow; 
+			parent.outVertical.value = parent.inpVertical.value = inpVertical.value;
+			parent.inpVertical.max = inpVertical.max;
+
+		}
+
 	}
 
 
@@ -379,6 +365,7 @@
 
 		map.geometry.computeFaceNormals();
 		map.geometry.computeVertexNormals();
+
 //		map.geometry.computeBoundingBox();
 //		map.geometry.computeBoundingSphere();
 //		map.geometry.center();
@@ -562,9 +549,13 @@ console.timeEnd( 'timer0' );
 
 		map.radius = map.boxHelper.geometry.boundingSphere.radius;
 
-		cameraPosition = 1.2 * map.radius;
+		var cameraPosition = 1.2 * map.radius;
 
 		controls.target.copy( map.boxHelper.geometry.boundingSphere.center );
+		controls.maxDistance = 3 * map.radius;
+
 		camera.position.copy( map.boxHelper.geometry.boundingSphere.center ).add( v( 0, -cameraPosition, cameraPosition ) );
+
+		scene.fog.far = 5 * map.radius;
 
 	}
