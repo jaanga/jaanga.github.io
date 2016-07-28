@@ -2,8 +2,8 @@
 
 
 //	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
-//	var defaultFile = 'https://jaanga.github.io/terran3/elevations/elevations_Yosemite Valley, CA, United States_13_1373_3166_3_3_450_450_.txt';
-	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations-data-02/elevations_yosemite_11_343_790_3_3_180_180_.txt';
+	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations_Yosemite Valley, CA, United States_13_1373_3166_3_3_450_450_.txt';
+//	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations-data-02/elevations_yosemite_11_343_790_3_3_180_180_.txt';
 
 
 	var defaultFiles = [
