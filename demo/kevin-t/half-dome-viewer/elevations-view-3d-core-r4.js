@@ -2,7 +2,10 @@
 
 
 //	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
-	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations_Yosemite Valley, CA, United States_13_1373_3166_3_3_450_450_.txt';
+
+	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations-data-02/elevations_half-dome_13_1373_3165_4_4_512_512_.txt';
+
+//	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations-data-02/elevations_Yosemite Valley, CA, United States_13_1373_3166_3_3_450_450_.txt';
 //	var defaultFile = 'https://jaanga.github.io/terrain3/elevations/elevations-data-02/elevations_yosemite_11_343_790_3_3_180_180_.txt';
 
 
@@ -33,11 +36,11 @@
 
 	var map = {};
 
-	var cameraPosition = 0.3; // need position that adjust by algorithm - allowing for zoom level etc
+	var cameraPosition = 0.1; // need position that adjust by algorithm - allowing for zoom level etc
 	var updateCamera = true;
 
 	map.pixelsPerTile = 256;
-	map.verticalscale = 0.05;
+	map.verticalscale = 0.025;
 
 	var b = '<br>';
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
