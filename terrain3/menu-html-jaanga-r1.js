@@ -5,7 +5,13 @@
 	var response;
 
 	var home = org + '.github.io';
+
+	var homePages = 'https://' + home + '/';
+
+	var homeSource = 'https://github.com/jaanga/jaanga.github.io/tree/master/';
+
 	var urlAPIContents = 'https://api.github.com/repos/' + org + '/' + org + '.github.io/git/trees/master?recursive=1';
+	var item;
 
 	var indexHome = location.href.indexOf( '.io/' ) + 4;
 
@@ -44,7 +50,7 @@
 		css.innerHTML =
 
 			'html, body { font: 12pt monospace; height: 100%; margin: 0; }' +
-			'h2 { display: inline; }' +
+			'h2, h3 { display: inline; }' +
 			'h2 a { color: crimson; }' +
 			'a { text-decoration: none; }' +
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
@@ -62,7 +68,7 @@
 
 			'<h2>' +
 
-				'<a href=http://' + org + '.github.io title="' + org + ' - ' + tagLine + '" >' + logo + '</a> ' +
+				'<a href=http://' + org + '.github.io title="' + org + ' - ' + tagLine + '" >' + logo + ' ' + org + '</a> &raquo; ' +
 
 //				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
 
@@ -72,18 +78,20 @@
 
 			'<span id=menuContents ></span>' +
 
-			'<p id=menuFooter ></p>' +
+			'<div id=menuDetailsPageActions ></div>' +
 
-			'<details >' +
-				'<summary><h3 style=display:inline; >About</h3></summary>' +
-				'<p>Copyright &copy; 2016 ' + org + ' authors. <a href=https://' + org + '.github.io/license.md >MIT license</a>.</p>' +
-//				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-				'<p></p>' +
-			'</details>' +
+			'<div id=menuDetailsAbout ></div>' +
 
-			'<hr><center><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; title="' + org + ' - ' + tagLine + '" ><h1>' + logo + '<h1></a></center>' +
+			'<hr>' +
+
+			'<center><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; title="' + org + ' - ' + tagLine + '" >' +
+				'<h1>' + logo + '<h1></a></center>' +
 
 		'';
+
+		setMenuDetailsPageActions();
+
+		setDetailsAbout();
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
@@ -92,9 +100,43 @@
 
 		requestAPIContents();
 
-//		setBreadCrumbs();
+	}
 
-//		hashChange();
+	function setMenuDetailsPageActions() {
+
+		menuDetailsPageActions.innerHTML =
+
+			'<details open>' +
+				'<summary><h3>page actions</h3></summary>' +
+				'<p><a href=JavaScript:window.location.href=homeSource+item; >Open page in GitHub</a></p>' +
+//				'<p>Edit page in GitHub</p>' +
+//				'<p>Search page in GitHub</p>' +
+				'<p><a href=JavaScript:window.location.href=homePages+item; target="_blank" >Open page in new tab</a></p>' +
+				'<p><s><input type=checkbox > View all files</s></p>' +
+			'</details>' +
+
+		'';
+
+	}
+
+	function sendToGH() {
+
+		window.location.href = homeSource + item; 
+
+	}
+
+	function setDetailsAbout() {
+
+		menuDetailsAbout.innerHTML =
+
+			'<details >' +
+				'<summary><h3>about</h3></summary>' +
+				'<p>Copyright &copy; 2016 ' + org + ' authors. <a href=https://' + org + '.github.io/license.md >MIT license</a>.</p>' +
+//				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+				'<p></p>' +
+			'</details>' +
+
+		'';
 
 	}
 
@@ -178,20 +220,21 @@
 
 		for ( var i = 0; i < files.length; i++ ) {
 
-//			file = files[ i ];
-//			txt += '<p><a href=JavaScript:getItem(' + i + '); >' + file.replace( string, '' ) + '</a></p>';
-
 			file = files[ i ].split( '/' ).pop() ;
-
-			txt += '<p><a href=JavaScript:getItem(' + i + '); >' + file + '</a></p>';
 
 // console.log( 'file', file, string );
 
 			if ( file.endsWith( '.md' ) ) {  
 
-console.log( 'fffile',  file );
+				getMarkdown( './' + foldersArray.slice( 1 ).join( '/' ) + '/' + file  , contents );
 
-getMarkdown( './' + foldersArray.slice( 1 ).join( '/' ) + '/' + file  , contents ); }
+				item = files[ i ];
+
+			} else {
+
+				txt += '<p><a href=JavaScript:getItem(' + i + '); > ' + file + '</a></p>';
+
+			}
 
 		}
 

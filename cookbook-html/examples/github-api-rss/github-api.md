@@ -1,10 +1,7 @@
 ﻿---
 layout: post
-title: Blogging Like a Boss
+title: GitHub API Cheat Sheet
 ---
-
-
-
 
 yaml tables. must be first thing in the gist
 
@@ -297,12 +294,17 @@ https://api.github.com/search/code?q=addClass+repo:jquery/jquery+filename:classe
 
 https://api.github.com/search/code?q=repo:mrdoob/three.js+filename:CameraHelper.js
 
+
+
+
 ### Issues
 
 
 https://api.github.com/search/issues?q=windows+label:bug+language:python+state:open&sort=created&order=asc
 
 https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc << ignores the repo
+https://api.github.com/search/issues?q=repo:jaanga/jaanga.github.io
+
 
 https://api.github.com/search/issues?q=@paulmasson+repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
 
@@ -316,6 +318,9 @@ js or JavaScript: both OK
 
 
 https://api.github.com/search/issues?q=created:2016-06-25&sort=comments&order=desc
+
+
+
 
 ### Repos
 
@@ -335,6 +340,10 @@ https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&or
 
 https://api.github.com/search/repositories?q=@jeresig-language:javascript << not
 
+
+
+
+
 ### Users
 
 From https://gist.github.com/jasonrudolph/6065289
@@ -343,6 +352,8 @@ From https://gist.github.com/jasonrudolph/6065289
 https://api.github.com/search/users?q=followers:0
 https://api.github.com/search/users?q=followers:>20
 https://api.github.com/search/users?q=followers:%3E20
+
+
 
 
 
