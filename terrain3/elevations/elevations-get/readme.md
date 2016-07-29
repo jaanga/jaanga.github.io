@@ -93,9 +93,14 @@ value='Source code listing' >
 * Save partial file and restart - much faster
 
 
+## Interesting sites
+
+* French Polynesia
+
 ## Issues
 
-* Cannot see error messages such as rate limite exceeded
+* Cleanup samples x and y vaariables
+* Cannot see error messages such as rate limit exceeded
 
 <!--
 ### Rate limits
@@ -161,10 +166,17 @@ Intended for general use
 
 ## Change Log
 
+
+### 2016-07-29 ~ R7
+
+* Streamline menu
+* Cleanup and streamline center tile data
+* Add scale indicator to map
+
 ### 2016-07-28 ~ R6
 
 * Add Google maps API key menu entry and setter
-
+* Many changes
 
 ### 2016-07-26 ~ R5
 

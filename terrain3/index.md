@@ -11,6 +11,9 @@ menu-html-jaanga-r1.js read me
 
 ## To Do
 
+* Add pop-ups?
+* Add view all files
+* View file details from SHA
 * Open page in new tab does what it says
 * Build files object
 	* Tracks files sizes

@@ -2,12 +2,12 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Google Maps API Explorer R3</title>
+<title>Google Maps API Explorer R3.1 </title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Maps API
 ' >
 <meta name=keywords content='Google Maps API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-07-02' >
+<meta name=date content='2016-07-29' >
 </head>
 <body>
 <script src=https://maps.googleapis.com/maps/api/js?key=AIzaSyC9cIAxOhYYPQJEdFRcrtQQ6MTrNUpaPWk ></script>
@@ -148,6 +148,7 @@
 		map = new google.maps.Map( contents, {
 
 			zoom: zoom,
+
 			center: { lat: latitude, lng: longitude },
 //			mapTypeId: google.maps.MapTypeId.TERRAIN,
 
@@ -163,21 +164,14 @@
 //				position: 'TOP_RIGHT' // not
 			},
 
-/*,
 			zoomControl: true,
-			zoomControlOptions: {
-				position: google.maps.ControlPosition.LEFT_CENTER
-			},
+			zoomControlOptions: { position: google.maps.ControlPosition.LEFT_CENTER },
 			scaleControl: true,
 			streetViewControl: true,
-			streetViewControlOptions: {
-				position: google.maps.ControlPosition.LEFT_TOP
-			},
-*/
-
+			streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_TOP }, 
 			fullscreenControl: true
 
-		});
+		} );
 
 		marker = new google.maps.Marker({
 
