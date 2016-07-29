@@ -140,7 +140,7 @@
 
 		folder = foldersArray.join( '/' );
 
-console.log( 'folder:', folder );
+// console.log( 'folder:', folder );
 
 		files = [];
 
@@ -148,15 +148,13 @@ console.log( 'folder:', folder );
 
 			file = response.tree[ i ].path;
 
-			if ( !file.match( folder ) ) { continue; }
-
-			if ( file === folder ) { continue; }
-
-			if ( file.match( 'archive' ) ) { continue; }
+			if ( !file.match( folder ) || file === folder ) { continue; }
 
 			if ( file.split( '/' ).length > foldersArray.length + 1 ) { continue; }
 
-			if ( file.match( 'index.html' ) || file.endsWith( '.htm' ) || ( file.match( fileName )) ) { continue; }
+			if ( file.match( 'archive' ) ) { continue; }
+
+			if ( file.match( 'index.html' ) || file.endsWith( '.htm' )  ) { continue; }
 
 			files.push( file );
 
@@ -180,11 +178,20 @@ console.log( 'folder:', folder );
 
 		for ( var i = 0; i < files.length; i++ ) {
 
-			file = files[ i ];
+//			file = files[ i ];
+//			txt += '<p><a href=JavaScript:getItem(' + i + '); >' + file.replace( string, '' ) + '</a></p>';
+
+			file = files[ i ].split( '/' ).pop() ;
+
+			txt += '<p><a href=JavaScript:getItem(' + i + '); >' + file + '</a></p>';
 
 // console.log( 'file', file, string );
 
-			txt += '<p><a href=JavaScript:getItem(' + i + '); >' + file.replace( string, '' ) + '</a></p>';
+			if ( file.endsWith( '.md' ) ) {  
+
+console.log( 'fffile',  file );
+
+getMarkdown( './' + foldersArray.slice( 1 ).join( '/' ) + '/' + file  , contents ); }
 
 		}
 
@@ -205,7 +212,9 @@ console.log( 'folder:', folder );
 	function getItem( index ) {
 
 		item = files[ index ];
+
 //console.log( 'item', item );
+
 		if ( item.endsWith( '.md' ) ) {
 
 			getMarkdown( baseURL + item, contents );
@@ -225,12 +234,12 @@ console.log( 'folder:', folder );
 
 	}
 
-	function getMarkdown( fileName, target ) {
+	function getMarkdown( fName, target ) {
 
 		var xhr;
 
 		xhr = new XMLHttpRequest();
-		xhr.open( 'GET', fileName, true );
+		xhr.open( 'GET', fName, true );
 		xhr.onload = function() {
 
 			target.innerHTML = converter.makeHtml( xhr.responseText );

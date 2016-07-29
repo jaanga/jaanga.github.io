@@ -69,13 +69,13 @@ This is part of an investigation into writing very simple code that can access t
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://jaanga.github.io/terrain3/elevations/elevations-get/elevations-get-r5.html' width=800px height=600 ></iframe>
+	https://jaanga.github.io/terrain3/elevations/elevations-get/elevations-get-r6.html' width=800px height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/elevations/elevations-get/elevations-get-r5.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/elevations/elevations-get/elevations-get-r6.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/elevations/elevations-get/elevations-get-r5.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/elevations/elevations-get/elevations-get-r6.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
