@@ -53,6 +53,7 @@ Display results in 3D. Display useful info.
 	var resolution = [];
 
 	var count = 0;
+	var delay = 50;
 	var delay = 4000;
 
 	var thisDelay = 0;
@@ -862,7 +863,7 @@ Display results in 3D. Display useful info.
 
 				txtElevations.innerText = 'Elevation service failed due to: ' + status;
 
-console.log( 'count', count, 'status', status, 'delay', delay );
+console.log( 'count', count, 'index', index, 'status', status, 'delay', delay );
 
 				if ( status === 'OVER_QUERY_LIMIT' ) {
 
@@ -875,6 +876,23 @@ console.log( 'count', count, 'status', status, 'delay', delay );
 			if ( count < samplesY - 1 ) {
 
 				count++;
+
+				index = samplesX * count;
+
+				if ( samplesX < 31 ) { delay = 5; 
+				} else if ( samplesX < 61 ) { delay = 330;
+				} else if ( samplesX < 91 ) { delay = 700;
+				} else if ( samplesX < 121 ) { delay = 1000;
+				} else if ( samplesX < 151 ) { delay = 1500;
+				} else { delay = 2000; }
+
+/*				if ( samplesX < 31 ) { delay = 5; 
+				} else if ( samplesX < 61 ) { delay = 330;
+				} else if ( samplesX < 121 ) { delay = 1000;
+				} else { delay = 2000; }
+*/
+
+
 				setTimeout( nextElevations, delay );
 
 			} else {
@@ -1060,15 +1078,15 @@ console.log( '', ff );
 
 
 
-					origin = parametersArray[ 1 ],
-					zoom = parseInt( parametersArray[ 2 ], 10 ),
-					ULtileX = parseInt( parametersArray[ 3 ], 10 ),
-					ULtileY = parseInt( parametersArray[ 4 ], 10 ),
-					tilesX = parseInt( parametersArray[ 5 ], 10 ),
-					tilesY = parseInt( parametersArray[ 6 ], 10 ),
-					samplesX = parseInt( parametersArray[ 7 ], 10 ),
-					samplesY = parseInt( parametersArray[ 8 ], 10 ),
-					fileName = files.files[0].name
+				origin = parametersArray[ 1 ],
+				zoom = parseInt( parametersArray[ 2 ], 10 ),
+				ULtileX = parseInt( parametersArray[ 3 ], 10 ),
+				ULtileY = parseInt( parametersArray[ 4 ], 10 ),
+				tilesX = parseInt( parametersArray[ 5 ], 10 ),
+				tilesY = parseInt( parametersArray[ 6 ], 10 ),
+				samplesX = parseInt( parametersArray[ 7 ], 10 ),
+				samplesY = parseInt( parametersArray[ 8 ], 10 ),
+				fileName = files.files[0].name
 
 
 				data = reader.result;
@@ -1087,7 +1105,7 @@ console.log( '', ff );
 
 
 				resolutions = [];
-				count = row + 1;
+				count = row;
 
 				nextElevations();
 

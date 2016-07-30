@@ -172,6 +172,8 @@ Intended for general use
 * Streamline menu
 * Cleanup and streamline center tile data
 * Add scale indicator to map
+* Add open saved file of partial elevations
+
 
 ### 2016-07-28 ~ R6
 
