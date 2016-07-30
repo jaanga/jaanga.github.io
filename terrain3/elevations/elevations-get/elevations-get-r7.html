@@ -884,7 +884,8 @@ console.log( 'count', count, 'index', index, 'status', status, 'delay', delay );
 				} else if ( samplesX < 91 ) { delay = 700;
 				} else if ( samplesX < 121 ) { delay = 1000;
 				} else if ( samplesX < 151 ) { delay = 1500;
-				} else { delay = 2000; }
+				} else if ( samplesX < 181 ) { delay = 2000;
+				} else { delay = 4000; }
 
 /*				if ( samplesX < 31 ) { delay = 5; 
 				} else if ( samplesX < 61 ) { delay = 330;
@@ -1225,7 +1226,7 @@ console.log( '', ff );
 		fileName = 'elevations_' +
 //			( place.vicinity ? place.vicinity : 'place' ) + '_' +
 
-			origin + '_' +
+			( origin ? origin : 'xxx' ) + '_'  +
 			zoom + '_' +
 			ULtileX + '_' +
 			ULtileY + '_' +
