@@ -169,7 +169,7 @@
 
 		menuDetailsFileName.innerHTML =
 
-			'<details open>' +
+			'<details id=detailsFileName open>' +
 
 				'<summary><h3>file name parameters</h3></summary>' +
 
@@ -187,6 +187,7 @@
 				'Tiles Y: ' + map.parameters.tilesY + b + b +
 
 			'</details>' +
+
 		b;
 
 	}
@@ -336,7 +337,7 @@
 
 		b;
 
-		if ( window.self !== window.top && parent.frame ) { 
+		if ( window.self !== window.top ) { 
 
 			parent.ifr = parent.frame.contentWindow; 
 			parent.outVertical.value = parent.inpVertical.value = inpVertical.value;
@@ -468,7 +469,7 @@
 		map.boxHelper = new THREE.BoxHelper( map.mesh, 0xff0000 );
 		scene.add( map.boxHelper );
 
-		geometry = new THREE.PlaneBufferGeometry( 1, 1 );
+		geometry = new THREE.PlaneBufferGeometry( 0.5, 0.5 );
 //		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -1.5707 ) );
 //		material = new THREE.MeshBasicMaterial( { color: 0x223322, specular: 0x222222, shininess: 0.5, side: 2 } );
 		material = new THREE.MeshBasicMaterial( { color: 0x223322, side: 2 } );
@@ -564,5 +565,7 @@ console.timeEnd( 'timer0' );
 		camera.position.copy( map.boxHelper.geometry.boundingSphere.center ).add( v( 0, -cameraPosition, cameraPosition ) );
 
 		scene.fog.far = 5 * map.radius;
+
+		okDaddy();
 
 	}

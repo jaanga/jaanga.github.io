@@ -96,10 +96,14 @@ value='Source code listing' >
 ## Interesting sites
 
 * French Polynesia
+* Island Fernando de Noronha, brazil
+* http://forums.simviation.com/
 
 ## Issues
 
-* Cleanup samples x and y vaariables
+* When you load elevations, there must be a way to go there
+	* Otherwise wrong elecations requested
+* Cleanup samples x and y variables
 * Cannot see error messages such as rate limit exceeded
 
 <!--
