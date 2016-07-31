@@ -2,7 +2,7 @@
 
 
 //	var defaultFile = '../elevations-data-02/elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_150_200_.txt';
-	var defaultFile = 'elevations_Tenzing-Hillary Airport, Lukla, Eastern Region, Nepal_12_3033_1718_3_4_510_680_.txt';
+	var defaultFile = '../elevations-data-02/elevations_Igualada_12_2066_1525_3_3_300_300_.txt';
 
 	var defaultFiles = [
 
@@ -220,25 +220,17 @@
 
 		var xhr, response;
 
-
-		fileName = fName || defaultFile; // ( urlBase + selFiles.value );
-
-
+		fileName = fName || selFiles.value;
 //debugger;
 		xhr = new XMLHttpRequest();
-		xhr.open( 'GET', fileName, true );
+		xhr.open( 'GET', urlBase + fileName, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
 		function callback() {
 
 			response = xhr.responseText;
-			elevations = response.split( ',' )
-			item = elevations.shift();
-			map.elevationsFileParameters = JSON.parse( item );
-			map.elevations = elevations.map( function( item ) { return parseFloat( item ); } );
-
-console.log( 'params', map.elevationsFileParameters, fileName );
+			map.elevations = response.split( ',' ).map( function( item ) { return parseFloat( item ); } );
 
 			getParametersFileName( fileName );
 
@@ -685,29 +677,6 @@ console.timeEnd( 'timer0' );
 		controls.maxDistance = 3 * map.radius;
 
 		camera.position.copy( map.boxHelper.geometry.boundingSphere.center ).add( v( 0, -cameraPosition, cameraPosition ) );
-
-/*
-		for ( thing in map.elevationsFileParameters ) {
-
-console.log( 'thing', thing );
-tt = thing;
-
-			this[ thing ] =  map.elevationsFileParameters[ thing ];
-
-
-
-		}
-*/
-
-tt = "scene.fog.far";
-
-var values = window;
-var name = tt.valueOf().split('.');
-
-for ( var i=0; i < name.length; i++) { values = values[ name[ i ] ] };
-
-
-console.log( 'values ', values );
 
 	}
 

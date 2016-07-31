@@ -151,15 +151,14 @@ console.time( 'timer0' );
 
 // assets
 
-//		location.hash = '../elevations-data-02/elevations_Igualada_12_2066_1525_3_3_300_300_.txt';
-
+		location.hash = defaultFile;
 
 		initUI();
 
 /*
-		if ( window.self == window.top ) { 
+		if ( window.self === window.top ) { 
 
-			if ( location.hash ) {
+			if ( location.hash.length > 1 ) {
 
 				getFileElevations( location.hash.slice( 1 ) );
 
