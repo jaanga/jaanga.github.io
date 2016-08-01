@@ -244,11 +244,18 @@
 
 				updateSettings();
 
-				 response.replace( itemsString, '' );
+				response = response.replace( itemsString, '' )
+
+				elevations = response.split( ',' ).slice( 1 );
+
+			} else {
+
+				map.items = '';
+
+				elevations = response.split( ',' );
 
 			}
 
-			elevations = response.slice( 1 ).split( ',' );
 
 			map.elevations = elevations.map( function( item ) { return parseFloat( item ); } );
 
