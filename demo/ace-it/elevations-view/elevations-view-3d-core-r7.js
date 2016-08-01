@@ -32,11 +32,9 @@
 	var urlAPITreeContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 
 //	var urlBase = 'https://jaanga.github.io/terrain3/google-api/elevations-data-02/';
-	var urlBase = '../elevations-data/';
+	var urlBase = '../elevations-data-02/';
 
-	var searchInFolder = 'ace-it/elevations-data/';
-
-	var core = '../elevations-view-3d-core/index.html#';
+	var searchInFolder = 'elevations-data-02/';
 
 	var map = {};
 

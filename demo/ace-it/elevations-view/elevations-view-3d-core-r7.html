@@ -24,6 +24,10 @@ Display in 3D. Add TMS overlay;
 
 console.time( 'timer0' );
 
+	var urlBase = '../elevations-data/';
+
+	var searchInFolder = 'ace-it/elevations-data/';
+
 	var stats, renderer, scene, camera, controls;
 
 	init();
@@ -77,7 +81,7 @@ console.time( 'timer0' );
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
+//				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
 
 				'<div id=menuDetailsAPIKey ></div>' +
 
