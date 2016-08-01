@@ -27,8 +27,9 @@ Menu and contents in HTML.
 		'q=@jeresig+language:javascript',
 		'q=followers:>20',
 		"q=created:>2016-06-25&sort=stars&order=desc",
-		'q=repo:jaanga/jaanga.github.io'
-
+		'q=repo:jaanga/jaanga.github.io',
+		'q=type:user',
+		'q=type:org',
 
 	];
 
@@ -98,11 +99,15 @@ Menu and contents in HTML.
 
 				'<p>' +
 					'<button onclick=getSearch("repositories"); > getSearch Repo </button> ' +
-
-					'<button onclick=getSearch("issues"); > getSearch Issues </button>' +
-
 				'</p>' +
 
+				'<p>' +
+					'<button onclick=getSearch("issues"); > getSearch Issues </button>' +
+				'</p>' +
+
+				'<p>' +
+					'<button onclick=getSearch("users"); > getSearch Users </button>' +
+				'</p>' +
 
 				'<p id=menuContents ></p>' +
 				'<hr>' +
@@ -161,7 +166,7 @@ console.log( 'response', response.items[ 0 ] );
 
 				txt += ( i + 1 ) +'. <button onclick=getReadMe(' + i + ',"README.md"); >readme</button> <h3><a href=' + rep.html_url + ' target="_blank" >' + rep.name + '</a></h3> ~ ' + 
 					rep.score.toFixed() + ' ~ ' + 
-					rep.updated_at.slice( 0, 10 ) + 
+					( rep.updated_at ? rep.updated_at.slice( 0, 10 ) : '' ) + 
 					( rep.watchers ? ' ~ stars: ' + rep.watchers.toLocaleString() : '' ) + 
 					( rep.forks ? ' ~ forks: ' + rep.forks.toLocaleString() : '' ) + 
 					' ~ language: ' + rep.language + b + 

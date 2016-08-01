@@ -15,6 +15,9 @@ Menu and contents in HTML.
 
 //  http://jaanga.github.io/cookbook-html/templates/hamburger-menu/
 
+// http://stackoverflow.com/questions/5613834/convert-string-to-variable-name-in-javascript
+
+
 	var thing = {
 
 		thing1: [ 23, 37, 57 ],
@@ -25,7 +28,11 @@ Menu and contents in HTML.
 
 	}
 
-	thingWanted = thing.thing2.b;
+	thingWanted = 'thing.thing2.b' ;
+
+	var b = '<br>';
+
+
 
 	init();
 
@@ -151,17 +158,75 @@ Menu and contents in HTML.
 			'</div>' +
 
 			'<div id=contents >' +
-				'<h1>Typical contents</h1>' +
+				'<h1>contents</h1>' + 
+
+				'<p id=info ></p>' +
+
+				'<p id=infoWindow ></p>' +
 			'</div>' +
 
 		'';
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
-		findIt()
+//		findIt();
+
+//		findIt2()
+
+		evalIt();
+
+		windowIt();
 
 	}
 
+	function windowIt() {
+
+
+		values = window;
+//		name = 'aa.bb.cc'.split('.');
+		names = thingWanted.split( '.' );
+
+console.log( 'names', names );
+
+		for ( var i = 0; i < names.length; i++ ) {
+
+console.log( 'values', i, names[ i ], values );
+
+			values = values[ names[ i ] ];
+
+		}
+
+		infoWindow.innerHTML = 
+
+			'names = ' + names + b +
+
+			thingWanted + ' = ' + values + b +
+
+		'';
+
+	}
+
+	function findIt2() {
+
+		d = window['document']
+		b = d['body'];
+		b['bgColor'] = '#0000ff';
+
+	}
+
+	function evalIt() {
+
+		info.innerHTML = 
+
+			'thing.thing2.c = ' + eval( thing.thing2.c ) + b +
+
+			thingWanted + ' = ' + eval( thingWanted ) + b +
+
+			'thing.thing4 = ' + eval( 'thing.thing4 = "abc" ' );
+
+		''
+
+	}
 
 	function findIt() {
 

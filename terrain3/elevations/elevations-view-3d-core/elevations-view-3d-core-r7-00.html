@@ -2,13 +2,13 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Elevations View 3D Core R7.1</title>
+<title>Elevations View 3D Core R7</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Read a file of elevations. Create a Three.js 3D Mesh.
 Display in 3D. Add TMS overlay;
 ' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-07-31' >
+<meta name=date content='2016-07-30' >
 </head>
 <body>
 <!--
@@ -151,9 +151,33 @@ console.time( 'timer0' );
 
 // assets
 
-//		location.hash = defaultFile;
+		location.hash = defaultFile;
 
 		initUI();
+
+/*
+		if ( window.self === window.top ) { 
+
+			if ( location.hash.length > 1 ) {
+
+				getFileElevations( location.hash.slice( 1 ) );
+
+			} else {
+
+				getFileElevations();
+
+			}
+
+		} else {
+
+			if ( location.hash ) {
+
+				getFileElevations( location.hash.slice( 1 ) );
+
+			}
+
+		}
+*/
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 

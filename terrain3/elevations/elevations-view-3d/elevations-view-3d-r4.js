@@ -16,7 +16,9 @@
 
 	var searchInFolder = 'elevations-data-02/';
 
-	var core = '../elevations-view-3d-core/index.html#';
+	var core = '../elevations-view-3d-core/elevations-view-3d-core-r7.html#';
+//	var core = '../elevations-view-3d-core/index.html#';
+
 
 	var urlAPITreeContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
 

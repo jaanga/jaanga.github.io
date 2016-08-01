@@ -43,7 +43,7 @@
 	map.updateCamera = true; // is this needed?
 
 	map.pixelsPerTile = 256;
-	map.verticalScale = 0.1;
+	map.verticalscale = 0.1;
 
 	var b = '<br>';
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
@@ -61,12 +61,9 @@
 
 		setMenuDetailsTerrain();
 
-// default action here
-
-		getGitHubAPITreeContents();
+		getGitHubAPITreeContents( getFileElevations );
 
 		toggleFog();
-
 
 	}
 
@@ -93,7 +90,7 @@
 			'<summary><h3>Select file to view</h3></summary>' +
 			'<small>Select or open a file to view in 3D</small>' +
 			'<p>' + //Elevations:<br>' +
-				'<select id=selFiles onchange=file=urlBase+this.value;getFileElevations(file); size=12 style=width:100%;  ></select>' +
+				'<select id=selFiles onchange=getFileElevations(this.value); size=12 style=width:100%;  ></select>' +
 			'</p>' +
 			'<p><input type=file id=inpFile onchange=openFileReader(this); /></p>' +
 
@@ -218,14 +215,16 @@
 
 	}
 
-// the default
-
+// 
 	function getFileElevations( fName ) {
 
 		var xhr, response;
 
-		fileName = fName;
 
+		fileName = fName || defaultFile; // ( urlBase + selFiles.value );
+
+
+//debugger;
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', fileName, true );
 		xhr.onload = callback;
@@ -234,23 +233,12 @@
 		function callback() {
 
 			response = xhr.responseText;
-
-			if ( response.match( '{' ) ) {
-
-				values = window;
-				itemsString = response.slice( 0, response.indexOf( '}' ) + 1 )
-
-				map.items = JSON.parse( itemsString );
-
-				updateSettings();
-
-				 response.replace( itemsString, '' );
-
-			}
-
-			elevations = response.slice( 1 ).split( ',' );
-
+			elevations = response.split( ',' )
+			item = elevations.shift();
+			map.elevationsFileParameters = JSON.parse( item );
 			map.elevations = elevations.map( function( item ) { return parseFloat( item ); } );
+
+console.log( 'params', map.elevationsFileParameters, fileName );
 
 			getParametersFileName( fileName );
 
@@ -260,8 +248,6 @@
 
 	}
 
-
-
 // When in iframe and called by parent
 
 	function processElevations( elevs, params ) {
@@ -269,7 +255,17 @@
 			map.elevations = elevs;
 			map.parameters = params;
 
+//console.log( 'map.parameters', map.parameters );
+
+			setMenuDetailsFileName();
+
+			setMenuDetailsSettings();
+
+			getParametersOverlay();
+
 			initElevations();
+
+//			setBackground();
 
 	}
 
@@ -280,6 +276,10 @@
 			map.elevations = elevs;
 
 			getParametersFileName( fName );
+
+			setMenuDetailsFileName();
+
+			getParametersOverlay();
 
 			initElevations();
 
@@ -346,7 +346,7 @@
 		map.min = arrayMin( map.elevations );
 		map.max = arrayMax( map.elevations );
 
-		scale = map.verticalScale / ( map.max - map.min );
+		scale = map.verticalscale / ( map.max - map.min );
 
 		inpVertical.value = scale;
 		inpVertical.max = 3 * scale;
@@ -534,7 +534,7 @@
 
 // GitHub API
 
-	function getGitHubAPITreeContents() {
+	function getGitHubAPITreeContents( callback2 ) {
 
 		var xhr, response, files, file, element;
 
@@ -563,15 +563,7 @@
 
 			selFiles.selectedIndex = Math.floor( Math.random() * selFiles.length );
 
-
-			if ( map.elevations === undefined ) {
-
-//				file = defaultFile;
-				ffile = urlBase + selFiles.value;
-
-				getFileElevations( ffile );
-
-			}
+			callback2();
 
 		}
 
@@ -682,6 +674,7 @@ console.timeEnd( 'timer0' );
 	}
 
 
+
 	function setCamera() {
 
 		map.radius = map.boxHelper.geometry.boundingSphere.radius;
@@ -693,39 +686,30 @@ console.timeEnd( 'timer0' );
 
 		camera.position.copy( map.boxHelper.geometry.boundingSphere.center ).add( v( 0, -cameraPosition, cameraPosition ) );
 
-		updateSettings();
+/*
+		for ( thing in map.elevationsFileParameters ) {
 
-	}
+console.log( 'thing', thing );
+tt = thing;
 
+			this[ thing ] =  map.elevationsFileParameters[ thing ];
 
-	function updateSettings() {
-
-		if ( !map.items ) { return; }
-
-		keys = Object.keys( map.items ); 
-
-		for ( var i = 0; i < keys.length; i++ ) {
-
-			items = keys[ i ].split( '.' );
-
-			values = window;
-
-			for ( j = 0; j < items.length - 1; j++ ) {
-
-				values = values[ items[ j ] ];
-
-			}
-
-//console.log( 'params ', j, values[ items[ j ] ], keys[ i ] );
-
-			values[ items[ j ] ] = map.items[ keys[ i ] ];
 
 
 		}
+*/
 
+tt = "scene.fog.far";
+
+var values = window;
+var name = tt.valueOf().split('.');
+
+for ( var i=0; i < name.length; i++) { values = values[ name[ i ] ] };
+
+
+console.log( 'values ', values );
 
 	}
-
 
 	function toggleFog() {
 
