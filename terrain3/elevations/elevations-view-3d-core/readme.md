@@ -99,6 +99,10 @@ Intended for generating flightpaths
 * Many changes
 * Reads data embedded in elevations file
 	* Converts text to variables
+* Menus streamlined and cleaned up
+* Continue work on logical var and procedure names
+
+
 
 ### 2016-07-28 ~ R5
 

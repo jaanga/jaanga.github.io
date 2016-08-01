@@ -43,8 +43,8 @@
 	map.updateCamera = true; // is this needed?
 
 	map.pixelsPerTile = 256;
-	map.verticalScale = 0.1;
-	map.plainOpacity = 1;
+	map.verticalScaleDefault = 0.1;
+	map.plainOpacityDefault = 1;
 
 	var b = '<br>';
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
@@ -93,7 +93,7 @@
 		'<details open >' +
 			'<summary><h3>Select file to view</h3></summary>' +
 			'<small>Select or open a file to view in 3D</small>' +
-			'<p>' + //Elevations:<br>' +
+			'<p>' +
 				'<select id=selFiles onchange=file=urlBase+this.value;getFileElevations(file); size=12 style=width:100%;  ></select>' +
 			'</p>' +
 			'<p><input type=file id=inpFile onchange=openFileReader(this); /></p>' +
@@ -198,7 +198,8 @@
 
 		var reader, data, fileName;
 
-//		setMenuDetailsSettings();
+		map.verticalScale = map.verticalScaleDefault;
+		map.plainOpacity = map.plainOpacityDefault;
 
 		reader = new FileReader();
 		reader.onloadend = function( event ) {
@@ -225,10 +226,10 @@
 
 		var xhr, response;
 
-		fileName = fName;
+//		fileName = fName;
 
 		xhr = new XMLHttpRequest();
-		xhr.open( 'GET', fileName, true );
+		xhr.open( 'GET', fName, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
@@ -260,7 +261,7 @@
 
 			map.elevations = elevations.map( function( item ) { return parseFloat( item ); } );
 
-			getParametersFileName( fileName );
+			getParametersFileName( fName );
 
 			initElevations();
 
@@ -349,6 +350,8 @@
 	function initElevations() {
 
 // http://stackoverflow.com/questions/1669190/javascript-min-max-array-values
+
+
 
 		map.mesh = new THREE.Object3D();
 		map.min = arrayMin( map.elevations );
@@ -654,7 +657,7 @@
 
 	function updateTerrain() {
 
-
+		scene.remove( map.mesh );
 		setMapGeometry();
 		drawMapOverlay();
 
@@ -670,12 +673,12 @@
 		scene.remove( map.boxHelper );
 		map.boxHelper = new THREE.BoxHelper( map.mesh, 0xff0000 );
 		scene.add( map.boxHelper );
-		map.boxHelper.visible = false;
+//		map.boxHelper.visible = false;
 
 		geometry = new THREE.PlaneBufferGeometry( 1, 1 );
 //		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -1.5707 ) );
 //		material = new THREE.MeshBasicMaterial( { color: 0x223322, specular: 0x222222, shininess: 0.5, side: 2 } );
-		material = new THREE.MeshBasicMaterial( { color: 0x223322, opacity: map.plainOpacity, side: 2, transparent: true } );
+		material = new THREE.MeshBasicMaterial( { color: 0x223322, alphaMap: map.plainOpacity, side: 2 } );
 
 		scene.remove( map.plain );
 		map.plain = new THREE.Mesh( geometry, material );
@@ -702,7 +705,7 @@ console.timeEnd( 'timer0' );
 
 		camera.position.copy( map.boxHelper.geometry.boundingSphere.center ).add( v( 0, -cameraPosition, cameraPosition ) );
 
-		updateSettings();
+//		updateSettings();
 
 	}
 
