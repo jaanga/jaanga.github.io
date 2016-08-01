@@ -83,11 +83,9 @@ console.time( 'timer0' );
 
 //				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
 
-				'<div id=menuDetailsAPIKey ></div>' +
+				'<div id=menuDetailsAPIKey style=display:none; ></div>' +
 
 				'<div id=menuDetailsSelectFile ></div>' +
-
-//				'<div id=menuDetailsSettings ></div>' +
 
 				'<div id=menuDetailsOverlay ></div>' +
 
@@ -98,7 +96,6 @@ console.time( 'timer0' );
 				'<div id=menuBackgroundSettings ></div>' +
 
 				'<div id=menuDetailsOverlay2 ></div>' +
-
 
 				'<details >' +
 					'<summary><h3>about</h3></summary>' +
@@ -121,13 +118,12 @@ console.time( 'timer0' );
 
 		'';
 
-// three.js
 
+// three.js
 		stats = new Stats();
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;' ;
 		document.body.appendChild( stats.domElement );
 		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
-
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 		renderer.setClearColor( backgroundColor );
@@ -152,7 +148,6 @@ console.time( 'timer0' );
 
 
 // helpers
-
 		axisHelper = new THREE.AxisHelper( 180 );
 		axisHelper.name = 'axisHelper';
 		scene.add( axisHelper );
