@@ -94,6 +94,11 @@ Intended for generating flightpaths
 
 ## Change Log
 
+### 2016-07-31 ~ R7
+
+* Many changes
+* Reads data embedded in elevations file
+	* Converts text to variables
 
 ### 2016-07-28 ~ R5
 

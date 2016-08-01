@@ -44,6 +44,7 @@
 
 	map.pixelsPerTile = 256;
 	map.verticalScale = 0.1;
+	map.plainOpacity = 1;
 
 	var b = '<br>';
 	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
@@ -669,11 +670,12 @@
 		scene.remove( map.boxHelper );
 		map.boxHelper = new THREE.BoxHelper( map.mesh, 0xff0000 );
 		scene.add( map.boxHelper );
+		map.boxHelper.visible = false;
 
 		geometry = new THREE.PlaneBufferGeometry( 1, 1 );
 //		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -1.5707 ) );
 //		material = new THREE.MeshBasicMaterial( { color: 0x223322, specular: 0x222222, shininess: 0.5, side: 2 } );
-		material = new THREE.MeshBasicMaterial( { color: 0x223322, side: 2 } );
+		material = new THREE.MeshBasicMaterial( { color: 0x223322, opacity: map.plainOpacity, side: 2, transparent: true } );
 
 		scene.remove( map.plain );
 		map.plain = new THREE.Mesh( geometry, material );
@@ -726,7 +728,6 @@ console.timeEnd( 'timer0' );
 //console.log( 'params ', j, values[ items[ j ] ], keys[ i ] );
 
 			values[ items[ j ] ] = map.items[ keys[ i ] ];
-
 
 		}
 
