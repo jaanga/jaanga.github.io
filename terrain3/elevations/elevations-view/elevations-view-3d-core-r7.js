@@ -521,7 +521,7 @@
 
 						map.material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
 
-						drawMap( map.updateCamera );
+						drawMap( updateCamera );
 
 					}
 
@@ -590,9 +590,7 @@ console.log( 'delta', delta );
 		map.plain.position.set( cenLon, cenLat, 0 ); // sea level
 		scene.add( map.plain );
 
-//		if ( updateCamera === true ) 
-
-		setCamera();
+		if ( updateCamera === true ) { setCamera(); }
 
 console.timeEnd( 'timer0' );
 

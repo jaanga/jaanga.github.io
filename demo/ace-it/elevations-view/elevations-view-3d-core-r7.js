@@ -36,6 +36,8 @@
 
 	var searchInFolder = 'elevations-data-02/';
 
+	var core = '../elevations-view-3d-core/index.html#';
+
 	var map = {};
 
 	map.updateCamera = true; // is this needed?
@@ -131,7 +133,7 @@
 
 				'<p>Map overlay<br><select id=selMap onchange=drawMapOverlay(); size=5 /></select></p>' +
 
-				'<p>Map zoom level<br><select id=selMapZoom onchange=drawMapOverlay(); size=1 /></select></p>' +
+				'<p>Map overlay zoom level<br><select id=selMapZoom onchange=drawMapOverlay(); size=1 /></select></p>' +
 
 				'<details>' +
 
@@ -154,10 +156,10 @@
 
 		selMap.selectedIndex = 2;
 
-		for ( var i = 12; i < 16; i++ ) {
+		for ( var i = 0; i < 4; i++ ) {
 
 			selMapZoom.appendChild( document.createElement( 'option' ) );
-			selMapZoom.children[ i - 12 ].text = i;
+			selMapZoom.children[ i ].text = i;
 
 		}
 
@@ -175,6 +177,9 @@
 
 				'<p>Vertical scale: <output id=outVertical >value</output>' +
 					'<input type=range id=inpVertical max=0.0002 min=0.000001 step=0.000001 value=0.0001 oninput=updateTerrain() title="" style=width:100%; >' +
+//					'<input type=range id=inpVertical max=0.0002 min=0.000001 step=0.000001 value=0.0001 oninput=initElevations() title="" style=width:100%; >' +
+
+
 				'</p>' +
 
 				'<p>' +
@@ -249,7 +254,6 @@
 				elevations = response.split( ',' );
 
 			}
-
 
 			map.elevations = elevations.map( function( item ) { return parseFloat( item ); } );
 
@@ -358,6 +362,7 @@
 			'Tiles Y: ' + map.parameters.tilesY + b +
 
 		b;
+
 
 	}
 
@@ -472,7 +477,6 @@
 
 		baseURL = mapTypes[ selMap.selectedIndex ][ 1 ];
 
-
 		for ( var x = map.parameters.ULtileXOverlay; x < map.parameters.ULtileXOverlay + map.parameters.tilesXOverlay; x++ ) {
 
 			for ( var y = map.parameters.ULtileYOverlay; y < map.parameters.ULtileYOverlay + map.parameters.tilesYOverlay; y++ ) {
@@ -517,7 +521,7 @@
 
 						map.material = new THREE.MeshBasicMaterial( { color: 0xffffff, map: texture, side: 2 } );
 
-						drawMap( map.updateCamera );
+						drawMap( updateCamera );
 
 					}
 
@@ -531,8 +535,10 @@
 
 		var delta;
 
-		delta = selMapZoom ? selMapZoom.selectedIndex : 1;
+//		selMapZoom.selectedIndex = map.parameters.zoom ;
 
+		delta = selMapZoom ? selMapZoom.selectedIndex: 1;
+console.log( 'delta', delta );
 		map.parameters.zoomOverlay = delta + map.parameters.zoom;
 		map.parameters.ULtileXOverlay = Math.pow( 2, delta ) * map.parameters.ULtileX;
 		map.parameters.ULtileYOverlay = Math.pow( 2, delta ) * map.parameters.ULtileY;
@@ -584,9 +590,7 @@
 		map.plain.position.set( cenLon, cenLat, 0 ); // sea level
 		scene.add( map.plain );
 
-//		if ( updateCamera === true ) 
-
-		setCamera();
+		if ( updateCamera === true ) { setCamera(); }
 
 console.timeEnd( 'timer0' );
 
@@ -622,7 +626,14 @@ console.timeEnd( 'timer0' );
 
 	function updateTerrain() {
 
+		scene = new THREE.Scene();
+
+		toggleFog();
+
+		updateSettings();
+
 		initMapGeometry();
+
 		drawMapOverlay();
 
 	}
