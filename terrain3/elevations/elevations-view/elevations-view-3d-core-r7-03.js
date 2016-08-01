@@ -678,7 +678,7 @@
 		geometry = new THREE.PlaneBufferGeometry( 1, 1 );
 //		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -1.5707 ) );
 //		material = new THREE.MeshBasicMaterial( { color: 0x223322, specular: 0x222222, shininess: 0.5, side: 2 } );
-		material = new THREE.MeshBasicMaterial( { color: 0x223322, alphaMap: map.plainOpacity, side: 2 } );
+		material = new THREE.MeshBasicMaterial( { color: 0x223322, side: 2 } );
 
 		scene.remove( map.plain );
 		map.plain = new THREE.Mesh( geometry, material );
