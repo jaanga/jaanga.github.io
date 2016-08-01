@@ -124,7 +124,6 @@ console.time( 'timer0' );
 		document.body.appendChild( stats.domElement );
 		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
 
-		window.addEventListener( 'resize', onWindowResize, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 		renderer.setClearColor( backgroundColor );
@@ -140,8 +139,12 @@ console.time( 'timer0' );
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 1;
 
+		controls.autoRotate = true;
+
 		scene = new THREE.Scene();
 
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
 
 
 // helpers
