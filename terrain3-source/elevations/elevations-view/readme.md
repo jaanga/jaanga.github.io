@@ -3,7 +3,7 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/terrain3/elevations/elevations-view/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
-[terrain3]( https://jaanga.github.io/terrain3/ ) &raquo; [Google API]( https://jaanga.github.io/terrain3/elevations/ ) &raquo;
+[terrain3]( https://jaanga.github.io/terrain3/ ) &raquo; [elevations]( https://jaanga.github.io/terrain3/elevations/ ) &raquo;
 
 [Elevations View 3D Core Read Me]( https://jaanga.github.io/terrain3/elevations/elevations-view/index.html#readme.md )
 ===
@@ -69,6 +69,10 @@ value='Source code listing' >
 
 ## To Do / Wish List
 
+* Add pokemons?
+* Add placards
+
+
 * Info about metres per side of map
 * Accurate elevation measurement
 * Link to escape iframe
@@ -93,6 +97,18 @@ Intended for generating flightpaths
 
 
 ## Change Log
+
+
+### 2016-08-01 ~ R7.2
+
+* Looking good
+* New scene with each load helps a lot
+* Metadata added to all files
+* Folder renamed to 'elevations view'
+* Continued with variable and proceddure renaming
+	* Begining to feel organized
+* Cleaned up overlaying and zooming
+
 
 ### 2016-07-31 ~ R7
 

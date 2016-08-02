@@ -279,6 +279,10 @@ https://api.github.com/users/jaanga/events?login=redheli
 
 * https://developer.github.com/v3/search/
 * http://stackoverflow.com/questions/24132790/how-to-search-for-code-in-github-with-github-api
+* https://www.quora.com/How-many-users-does-GitHub-have
+
+
+https://api.github.com/search/users?q=followers:0
 
 
 ### Code
@@ -348,6 +352,8 @@ https://api.github.com/search/repositories?q=@jeresig-language:javascript << not
 
 From https://gist.github.com/jasonrudolph/6065289
 
+
+https://api.github.com/search/users?q=
 
 https://api.github.com/search/users?q=followers:0
 https://api.github.com/search/users?q=followers:>20
