@@ -1,0 +1,220 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Files in Repo Folder R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-08-02' >
+</head>
+<body>
+<script>
+// https://developer.github.com/v3/git/trees/
+
+
+//	var urlAPIContents = 'https://api.github.com/repos/sagemath/documentation/git/trees/gh-pages?recursive=1';
+//	var urlBase = 'http://sagemath.github.io/documentation/';
+
+//	var urlAPIContents = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+//	var urlBase = 'http://jaanga.github.io/';
+
+//	var urlAPIContents = 'https://api.github.com/repos/fgx/fgx.github.io/git/trees/master?recursive=1';
+//	var urlAPITreeContents = 'https://api.github.com/repos/fgx/fgx.github.io/git/trees/82968813a499e36ef22c08eaf17f920cb609af17'
+//	var urlBase = 'http://fgx.github.io/';
+
+
+/*
+	var user = 'jaanga';
+	var repo = 'jaanga.github.io';
+	var branch = 'master';
+	var folder = 'cookbook-threejs\/examples\/';
+
+	var tree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+
+	var urlBase = 'http://' + user + '.github.io/';
+*/
+
+	var user = 'jaanga';
+	var repo = 'terrain3';
+	var branch = 'gh-pages';
+	var folder = 'elevations';
+
+	var tree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+
+	var urlBase = 'http://' + user + '.github.io/' + repo + '/' + folder + '/';
+
+	var files;
+
+	init();
+
+	function init() {
+
+		var css, contents;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'select { width: 300px; }' +
+			'#contents { left: 0; margin: 0 auto; max-width: 800px; position: absolute; right: 0; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/cookbook-html/examples/#readme.md > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<div id=menuBreadCrumbs ></div>' +
+
+			'<p>' +
+				'<select id=selFiles onchange=doSelect(this); size=25 ></select>' +
+			'</p>' +
+
+			'<p id=message ></p>' +
+
+
+
+
+			'<div id=menuFolderIndices ></div>' +
+
+			'<hr>' +
+
+			'<div id=items ></div>' +
+
+			'<center title="dingbat" >' +
+			'<h1><a href=javascript:menu.scrollTop=0; > ❦ </h1>' +
+			'</center>' +
+		'';
+
+		getGitHubAPITreeContents( folder )
+
+	}
+
+	function getGitHubAPITreeContents( folder ) {
+
+		var xhr;
+		var response, files, file, path, pathArray;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', tree, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.response );
+			files = [];
+
+			for ( var i = 0; i < response.tree.length; i++ ) {
+
+				path = response.tree[ i ].path;
+
+				pathArray =  path.split( '/' );
+
+				file = pathArray.pop();
+
+				if ( pathArray.length > 3 ) { continue; }
+
+				if ( !path.match( folder ) || file !== 'index.html' ) { continue; }
+
+				files.push( path );
+
+				selFiles[ selFiles.length ] = new Option( pathArray[ 1 ] );
+
+			}
+
+			selFiles.selectedIndex = 1;
+
+// console.log( 'files', files );
+
+			message.innerHTML = 'Files count: ' + files.length;
+
+			createTableOfContents( folder, files );
+
+			createFolderNameTableOfContents( folder, files );
+
+		}
+
+
+	}
+
+
+	function createTableOfContents( folder, files ) {
+
+		var txt, headers, file,
+
+		txt =  '';
+
+		headers = [];
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ].split( '/' );
+
+			fileName = file.pop();
+			file = file.join( '/' ).replace( folder + '/', '' );
+
+			if ( headers.indexOf( file ) === -1 ) {
+
+				txt += '<h2>' + file + '</h2>';
+				headers.push( file );
+
+			}
+
+			txt += '<h3>' + ( i + 1 ) + ' <a href=' + urlBase + files[ i ] + ' >' + fileName + '</a></h3>';
+
+		}
+
+		items.innerHTML = txt + '';
+
+	}
+
+
+
+	function createFolderNameTableOfContents( folder, files ) {
+
+		var txt, file,
+
+		txt =  '';
+
+		for ( var i = 0; i < files.length; i++ ) {
+
+			file = files[ i ].split( '/' ).slice( 1, -1 );
+
+			txt += '<h3><a href=' + urlBase + file + ' >' + file + '</a></h3>';
+
+		}
+
+		menuFolderIndices.innerHTML = txt + '';
+
+		setBreadCrumbs( folder.split( '/' ) );
+
+	}
+
+
+	function setBreadCrumbs( foldersArray ) {
+
+		txt = '';
+
+		for ( var i = 0; i < foldersArray.length - 1; i++ ) {
+
+			txt += '<a href=JavaScript:getFiles(' + i + '); >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo ';
+
+		}
+
+		txt += '<h3><a href=# >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
+
+		menuBreadCrumbs.innerHTML = txt;
+
+	}
+
+
+</script>
+</body>
+</html>
