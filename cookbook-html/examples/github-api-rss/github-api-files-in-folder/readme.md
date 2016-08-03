@@ -1,5 +1,7 @@
-menu-html-jaanga-r1.js read me
+github-api-files-in-folder read me
 ===
+
+## [github-api-files-in-folder]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/ )
 
 ## Features
 
