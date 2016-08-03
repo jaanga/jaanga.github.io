@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API Files in Repo Folder R2</title>
+<title>GitHub API Files in Repo Folder R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -38,13 +38,13 @@
 	var user = 'jaanga';
 	var repo = 'terrain3';
 	var branch = 'gh-pages';
-	var folder = 'elevations';
+	var folder = '';
 
 	var tree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
 
-	var urlBase = 'http://' + user + '.github.io/' + repo + '/' + folder + '/';
+	var urlBase = 'http://' + user + '.github.io/' + repo + '/' + folder;
 
-	var files;
+	var filesAll, filesSelected;
 
 	init();
 
@@ -69,14 +69,22 @@
 				'<a href=http://jaanga.github.io/cookbook-html/examples/#readme.md > &#x24D8; </a>' +
 			'</h2>' +
 
+
+			'<p>' +
+				'<button onclick=getFilesFromFolder("") >terrains</button> ' +
+				'<button onclick=getFilesFromFolder("elevations/"); >elevations</button> ' +
+				'<button onclick=getFilesFromFolder("globes/"); >globes</button> ' +
+				'<button onclick=getFilesFromFolder("google-api/"); >google-api</button> ' +
+				'<button onclick=getFilesFromFolder("google-api/path-viewers/"); >google-api/path-viewers</button> ' +
+			'</p>' +
+
 			'<div id=menuBreadCrumbs ></div>' +
 
 			'<p>' +
-				'<select id=selFiles onchange=doSelect(this); size=25 ></select>' +
+//				'<select id=selFiles size=25 ></select>' +
 			'</p>' +
 
 			'<p id=message ></p>' +
-
 
 			'<div id=menuFolderIndices ></div>' +
 
@@ -93,10 +101,11 @@
 
 	}
 
+
 	function getGitHubAPITreeContents( folder ) {
 
 		var xhr;
-		var response, files, file, path, pathArray;
+		var response;
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'GET', tree, true );
@@ -106,106 +115,108 @@
 		function callback() {
 
 			response = JSON.parse( xhr.response );
-			files = [];
+			filesAll = [];
 
 			for ( var i = 0; i < response.tree.length; i++ ) {
 
-				path = response.tree[ i ].path;
-
-				pathArray =  path.split( '/' );
-
-				file = pathArray.pop();
-
-				if ( pathArray.length > 3 ) { continue; }
-
-				if ( !path.match( folder ) || file !== 'index.html' ) { continue; }
-
-				files.push( path );
-
-				selFiles[ selFiles.length ] = new Option( pathArray[ 1 ] );
+				filesAll.push( response.tree[ i ].path )
 
 			}
 
-			selFiles.selectedIndex = 1;
-
-// console.log( 'files', files );
-
-			message.innerHTML = 'Files count: ' + files.length;
-
-			createTableOfContents( folder, files );
-
-			createFolderNameTableOfContents( folder, files );
+			getFilesFromFolder ( folder );
 
 		}
-
 
 	}
 
 
-	function createTableOfContents( folder, files ) {
+	function getFilesFromFolder( folder ) {
 
-		var txt, headers, file,
+		filesSelected = [];
 
-		txt =  '';
+		if ( folder === '' ) {
 
-		headers = [];
+			for ( var i = 0; i < filesAll.length; i++ ) {
 
-		for ( var i = 0; i < files.length; i++ ) {
+				path = filesAll[ i ];
 
-			file = files[ i ].split( '/' );
+				pathArray = path.split( '/' );
 
-			fileName = file.pop();
-			file = file.join( '/' ).replace( folder + '/', '' );
+				if ( path.match( 'archive' ) ) { continue; }
 
-			if ( headers.indexOf( file ) === -1 ) {
+				if ( pathArray.length > 2 || path.match( '.git' ) ) { continue; }
 
-				txt += '<h2>' + file + '</h2>';
-				headers.push( file );
+				fileName = pathArray.pop();
+
+				if ( fileName !== 'readme.md' ) { continue; }
+
+//console.log( '', path );
+
+				filesSelected.push( path ); 
 
 			}
 
-			txt += '<h3>' + ( i + 1 ) + ' <a href=' + urlBase + files[ i ] + ' >' + fileName + '</a></h3>';
+		} else {
+
+			for ( var i = 0; i < filesAll.length; i++ ) {
+
+				file = filesAll[ i ];
+
+				if ( !file.startsWith( folder ) ) { continue; }
+				if ( file.match( 'archive' ) ) { continue; }
+
+				pathArray = file.split( '/' );
+				fileName = pathArray.pop();
+
+				if ( fileName !== 'readme.md' ) { continue; }
+
+				filesSelected.push( file ); 
+
+			}
 
 		}
 
-		items.innerHTML = txt + '';
+		message.innerHTML = 'Files all count: ' + filesAll.length;
+
+		createFolderNameTableOfContents( folder );
 
 	}
 
 
-
-	function createFolderNameTableOfContents( folder, files ) {
+	function createFolderNameTableOfContents( folder ) {
 
 		var txt, file,
 
-		txt =  '';
+		txt =  'files:';
 
-		for ( var i = 0; i < files.length; i++ ) {
+		for ( var i = 0; i < filesSelected.length; i++ ) {
 
-			file = files[ i ].split( '/' ).slice( 1, -1 );
+			file = filesSelected[ i ];
 
-			txt += '<h3><a href=' + urlBase + file + ' >' + file + '</a></h3>';
+			txt += '<p><a href=JavaScript:getFilesFromFolder("' + file + '"); > ' + file.replace( folder, '' ).replace( '/readme.md', '') + '</a></p>';
 
 		}
 
 		menuFolderIndices.innerHTML = txt + '';
 
-		setBreadCrumbs( folder.split( '/' ) );
+		setBreadCrumbs( folder );
 
 	}
 
 
-	function setBreadCrumbs( foldersArray ) {
+	function setBreadCrumbs( folder ) {
 
-		txt = '';
+		txt = '<h2><a href=' + urlBase + ' >' + user + '</a> &raquo; <a href=JavaScript:getFilesFromFolder(""); >' + repo + '</a> &raquo; ';
+
+		foldersArray = folder.split( '/' );
 
 		for ( var i = 0; i < foldersArray.length - 1; i++ ) {
 
-			txt += '<a href=JavaScript:getFiles(' + i + '); >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo ';
+			txt += '<a href=JavaScript:getFilesFromFolder("' + foldersArray[ i ] + '"); >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo ';
 
 		}
 
-		txt += '<h3><a href=# >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
+		txt += '</h2><h3><a href=# >' + foldersArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
 
 		menuBreadCrumbs.innerHTML = txt;
 
