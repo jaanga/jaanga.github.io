@@ -61,8 +61,8 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 ## Issues
 
-* Breadcrumbs and files menu display not clear
-
+* Breadcrumbs and files menu display/style still not totallyy clear
+* Errors reporting when certain scripts in readme iframes
 
 ## Change log
 
