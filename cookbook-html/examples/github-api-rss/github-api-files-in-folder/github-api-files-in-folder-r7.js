@@ -1,4 +1,4 @@
-
+// copyright &copy 2016 Jaanga authors. MIT license.
 
 	var user = 'jaanga';
 	var tagLine ='your 3D happy place';
@@ -85,27 +85,8 @@
 
 		getGitHubAPITreeContents( folder );
 
-//		setMenuTestHash();
-
 	}
 
-
-	function setMenuTestHash() {
-
-		menuTestHash.innerHTML =
-
-			'<hr>' +
-
-			'<button onclick=location.hash="elevations"; >elevations</button>' + b + b +
-			'- <button onclick=location.hash="elevations/elevations-get"; >elevations get</button>' + b + b +
-			'- <button onclick=location.hash="elevations/elevations-view"; >elevations view</button>' + b + b +
-			'<button onclick=location.hash="globes"; >globes</button>' + b + b +
-			'<button onclick=location.hash="google-api"; >google api</button>' + b + b +
-			'- <button onclick=location.hash="google-api/path-viewers"; >google api / path viewers</button>' + b +
-
-		'';
-
-	}
 
 	function setMenuDetailsPageActions() {
 
@@ -133,14 +114,13 @@
 
 		menuDetailsAbout.innerHTML =
 
-			'<details >' +
+			'<details>' +
 
 				'<summary><h3>about</h3></summary>' +
-				'<p><a href=http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/#readme.md >' + document.title + '</a></p>' +
-				'<p>Copyright &copy; 2016 ' + user + ' authors. <a href=https://' + user + '.github.io/license.md >MIT license</a>.</p>' +
 
-//				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-//				'<p></p>' +
+				'<p>This menu/cms created with:' + b +
+					'<a href=http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/#readme.md >' + document.title + '</a></p>' +
+				'<p>Copyright &copy; 2016 ' + user + ' authors. <a href=https://' + user + '.github.io/license.md >MIT license</a>.</p>' +
 
 			'</details>' +
 

@@ -68,6 +68,10 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 ### 2016-08-04 R6
 
+* Add link to here in sbout menu
+* Change style of contents div
+* Tweak breadcrumbs
+* Add folder icon
 * Add to these notes
 * Update base HTML file metadata
 * Many changes
