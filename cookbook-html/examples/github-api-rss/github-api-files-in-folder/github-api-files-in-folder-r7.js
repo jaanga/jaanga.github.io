@@ -11,7 +11,6 @@
 	var folder = 'cookbook-html/examples/github-api-rss/';
 */
 
-
 	var repo = 'terrain3';
 	var branch = 'gh-pages';
 	var folder = '';
@@ -47,7 +46,8 @@
 			'summary { outline: none; }' +
 
 			'#menu { box-sizing: border-box; background-color: #ccc; height: 100%; padding: 0 0 0 10px; overflow: auto; position: fixed; width: 300px; }' +
-			'#contents { border: 0px red solid; height: 100%; left: 350px; overflow: hidden; position: absolute; top: 0; width: ' + ( window.innerWidth - 370 ) + 'px; }' +
+//			'#contents { border: 0px red solid; height: 100%; left: 350px; overflow: hidden; position: absolute; top: 0; width: ' + ( window.innerWidth - 370 ) + 'px; }' +
+			'#contents { border: 0px red solid; left: 350px; position: absolute; top: 0; max-width: 800px; }' +
 
 		'';
 
@@ -74,14 +74,14 @@
 
 		'';
 
-		setMenuDetailsPageActions();
-
-		setMenuDetailsAbout();
-
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		setMenuDetailsPageActions();
+
+		setMenuDetailsAbout();
 
 		getGitHubAPITreeContents( folder );
 
@@ -136,6 +136,7 @@
 			'<details >' +
 
 				'<summary><h3>about</h3></summary>' +
+				'<p><a href=http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/#readme.md >' + document.title + '</a></p>' +
 				'<p>Copyright &copy; 2016 ' + user + ' authors. <a href=https://' + user + '.github.io/license.md >MIT license</a>.</p>' +
 
 //				'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
@@ -211,7 +212,7 @@
 
 		var toc, file, fName, ffolder,
 
-		toc = '<hr>' + '<p>files:</p>';
+		toc = '<hr>' + '<p>folders and files:</p>';
 
 		for ( var i = 0; i < filesSelected.length; i++ ) {
 
@@ -229,7 +230,7 @@
 				ffolder.pop();
 				fName = ffolder.slice( - 1 )[0].replace( /-/g, ' ' );
 
-				toc += '<h3><a href=#' + ffolder.join( '/' ) + ' > ' + fName + '</a></h3>';
+				toc += '<h3>&#x1f4c1; <a href=#' + ffolder.join( '/' ) + ' > ' + fName + '</a></h3>';
 
 			}
 
@@ -252,9 +253,9 @@
 
 		'<h2>' +
 
-			'<a href=http://' + user + '.github.io title="' + user + ' - ' + tagLine + '" >' + logo + ' ' + user + '</a> &raquo; ' +
+			'<a href=http://' + user + '.github.io title="' + user + ' - ' + tagLine + '" >' + logo + ' ' + user + '</a>&raquo; ' +
 
-			'<a href=# >' + repo + ' </a> &raquo; </h2>' +
+			'<a href=# >' + repo + '</a>&raquo; </h2>' +
 
 		'';
 
@@ -262,7 +263,7 @@
 
 			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
 
-			breadCrumbs += '<h3><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h3>';
+			breadCrumbs += '<h3><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a>&raquo </h3>';
 
 		}
 
@@ -282,6 +283,9 @@
 		getFilesFromFolder( dir );
 
 	}
+
+
+// combine with getGitHubAPITreeContents
 
 	function getMarkdown( fName, target ) {
 
