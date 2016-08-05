@@ -12,7 +12,7 @@ github-api-files-in-folder read me
 
 ## Concept
 
-GitHub repositories may contain  hundreds of script files and spporting pages of content
+GitHub repositories may contain hundreds of script files and spporting pages of content
 
 GitHub enables inspection and hosting via its GitHub pages feature
 
@@ -61,13 +61,15 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 ## Issues
 
-* Breadcrumbs and files menu display/style still not totallyy clear
-* Errors reporting when certain scripts in readme iframes
+* 2016-08-04 ~ Add better menu display handling if nu subfolders 
+* 2016-08-04 ~ Breadcrumbs and files menu display/style still not totallyy clear
+* 2016-08-03 ~ Errors reporting when certain scripts in readme iframes
 
 ## Change log
 
 ### 2016-08-04 R6
 
+* Add limited ability to display file with name supplied by location.hash
 * Add link to here in sbout menu
 * Change style of contents div
 * Tweak breadcrumbs

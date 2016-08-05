@@ -40,7 +40,7 @@
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
 			'h2 a { color: crimson; }' +
-			'iframe { border: 1px solid red; height: 100%; overflow: hidden; width: 100%; }' +
+//			'iframe { border: 1px solid red; height: 100%; overflow: hidden; width: 100%; }' +
 
 			'summary h2, summary h3, #menuBreadCrumbs h3 { display: inline; }' +
 			'summary { outline: none; }' +
@@ -192,7 +192,7 @@
 
 		var toc, file, fName, ffolder,
 
-		toc = '<hr>' + '<p>folders and files:</p>';
+		toc = '<hr>' + '<p>subFolders:</p>';
 
 		for ( var i = 0; i < filesSelected.length; i++ ) {
 
@@ -256,11 +256,23 @@
 
 	function onHashChange() {
 
-		dir = location.hash ? location.hash.slice( 1 ) : folder;
+		var item;
 
-		setBreadCrumbs( dir );
+		item = location.hash ? location.hash.slice( 1 ) : folder;
 
-		getFilesFromFolder( dir );
+		if ( item.endsWith( '.md' ) === true ) {
+
+			getMarkdown( item, contents );
+
+			setBreadCrumbs( folder )
+
+		} else {
+
+			setBreadCrumbs( item );
+
+			getFilesFromFolder( item );
+
+		}
 
 	}
 
