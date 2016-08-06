@@ -1,6 +1,8 @@
 // 2015-11-03
 // <script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
 
+	var material
+
 	function drawThings() {
 
 		material = material === undefined ? new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true } ) : material;
@@ -14,7 +16,7 @@
 		ground.castShadow = ground.receiveShadow = true;
 		scene.add( ground );
 
-		helper = new THREE.BoxHelper( mesh );
+		helper = new THREE.BoxHelper( ground );
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
@@ -92,7 +94,7 @@
 		script.src='http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js';
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/female02/Female02_slim.js', function ( geometry ) { // scale 0.5 y 5
+		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/Female02_slim.js', function ( geometry ) { // scale 0.5 y 5
 
 			female = new THREE.Mesh( geometry, material );
 			female.position.set( 30, 10, -20 );
@@ -103,7 +105,7 @@
 		} );
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/Suzanne.js', function ( geometry ) { // scale 20 y 35
+		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/Suzanne.js', function ( geometry ) { // scale 20 y 35
 
 			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
 			geometry.computeFaceNormals();
@@ -121,8 +123,8 @@
 
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/WaltHeadLo.js', function ( geometry ) { //  scale 0.6 y 35
-//		loader.load( 'http://mrdoob.github.io/three.js/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
+		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/WaltHeadLo.js', function ( geometry ) { //  scale 0.6 y 35
+//		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
 
 			geometry.computeFaceNormals();
 			geometry.computeVertexNormals();
