@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Controls Switch R1</title>
+<title>Controls Switch R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -24,7 +24,6 @@
 	var css, info, stats, renderer, scene, camera, controls, cam1, cam2, con1, con2;
 	var geometry, material, mesh;
 
-
 	var clock = new THREE.Clock();
 
 	init();
@@ -34,6 +33,14 @@
 
 		css = document.head.appendChild( document.createElement('style') );
 		css.innerHTML ='body { font: 400 12pt monospace; margin: 0; overflow: hidden; }' ;
+
+		//info = document.body.appendChild( document.createElement( 'div' ) );
+		//info.style.cssText = 'margin: 20px; position: absolute; ';
+		//info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		//	'<p><button onclick=setControlsFirstPerson(); >First Person Controls</button> ' +
+		//		'<button onclick=setControlsOrbit(); >Orbit Controls</button></p>' +
+		//	'<div id=msg ></div>' +
+		//'';
 
         info = document.body.appendChild( document.createElement( 'div' ) );
 		info.style.cssText = 'margin: 20px; position: absolute; ';
@@ -90,34 +97,21 @@
 
 		con2 = new THREE.OrbitControls( cam2 );
 
-    }
+	}
 
 
 	function setControlsFirstPerson() {
 
-		position = camera.position.clone();
 		camera = cam1;
-		camera.position.copy( position );;
-
-		target = controls.target.clone()
-        controls = con1;
-		controls.target.copy( target );
+		controls = con1;
 
 	}
 
 
 	function setControlsOrbit() {
+
 		camera = cam2;
 		controls = con2;
-
-		position = camera.position.clone();
-		camera = cam2;
-		camera.position.copy( position );;
-
-		target = controls.target.clone()
-        controls = con2;
-		controls.target.copy( target );
-
 
 	}
 

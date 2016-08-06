@@ -45,7 +45,7 @@
 			'summary h2, summary h3, #menuBreadCrumbs h3 { display: inline; }' +
 			'summary { outline: none; }' +
 
-			'#menu { box-sizing: border-box; background-color: #ccc; height: 100%; padding: 0 0 0 10px; overflow: auto; position: fixed; width: 300px; }' +
+			'#menu { box-sizing: border-box; background-color: #ccc; height: 100%; padding: 0 0 0 10px; overflow: auto; position: absolute; width: 300px; }' +
 //			'#contents { border: 0px red solid; height: 100%; left: 350px; overflow: hidden; position: absolute; top: 0; width: ' + ( window.innerWidth - 370 ) + 'px; }' +
 			'#contents { border: 0px red solid; left: 350px; position: absolute; top: 0; max-width: 800px; }' +
 
@@ -100,7 +100,7 @@
 
 				'<p><a href=JavaScript:location.href=urlSource+location.hash.slice(1); >View source on GitHub</a></p>' +
 				'<p><a href=JavaScript:window.open(urlGHPages+location.hash.slice(1),"_blank"); >Open page in new tab</a></p>' +
-				'<p><s><input type=checkbox > View all files in folder</s></p>' +
+//				'<p><s><input type=checkbox > View all files in folder</s></p>' +
 
 				'<p id=menuActionMessages ></p>' +
 
@@ -118,7 +118,7 @@
 
 				'<summary><h3>about</h3></summary>' +
 
-				'<p>This menu/cms created with:' + b +
+				'<p>This menu/<a href=https://en.wikipedia.org/wiki/Content_management_system >cms</a> is created on-the-fly by:' + b + b +
 					'<a href=http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/#readme.md >' + document.title + '</a></p>' +
 				'<p>Copyright &copy; 2016 ' + user + ' authors. <a href=https://' + user + '.github.io/license.md >MIT license</a>.</p>' +
 
