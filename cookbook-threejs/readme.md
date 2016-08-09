@@ -8,7 +8,7 @@
 
 
 
-<video controls="" autoplay="" name="media"><source src="file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/cookbook-threejs/video.webm" type="video/webm"></video>
+<video controls="" autoplay="" name="media"><source src="video.webm" type="video/webm"></video>
 
 ## Projects
 
