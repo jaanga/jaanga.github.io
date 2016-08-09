@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Mouse Down Exploring R2</title>
+<title>Mouse Down Exploring R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-08-07' >
 </head>
 <body>
 <!--
@@ -26,6 +26,10 @@
 	var raycaster = new THREE.Raycaster();
 	var objects = [];
 	var intersects = [];
+
+	var b = '<br>';
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
 	init();
 	animate();
 
@@ -77,9 +81,6 @@
 		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
 		document.body.appendChild( stats.domElement );
 
-
-
-
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
 //		renderer.setPixelRatio( window.devicePixelRatio );
@@ -88,7 +89,7 @@
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
 		camera.position.set( 100, 100, 100 );
-
+		camera.lookAt( v( 0, 0, 0 ) );
 
 
 		scene = new THREE.Scene();
@@ -100,7 +101,7 @@
 //		renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.maxDistance = 800;
+//		controls.maxDistance = 800;
 
 
 // helpers
@@ -140,13 +141,14 @@
 		mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
-info.innerHTML = mouse.x + ' - ' + mouse.y;
+		info.innerHTML = 
 
-		if ( intersects.length > 0 ) {
-console.log( '', mouse.x );
-			camera.position.x += 3 * mouse.x;
-			camera.position.z += 3 * mouse.y;
-		}
+			'Mouse X: ' + mouse.x.toFixed(2) + b + 
+			'Mouse Y: ' + mouse.y.toFixed(2) +
+
+		b;
+
+
 
 	}
 
@@ -154,26 +156,18 @@ console.log( '', mouse.x );
 
 		event.preventDefault();
 
-		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+		controls.enabled = false;
 
-		raycaster.setFromCamera( mouse, camera );
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
-		intersects = raycaster.intersectObjects( objects );
-
-		if ( intersects.length > 0 ) {
-
-console.log( '', mouse.x, mouse.y );
-
-			intersects[ 0 ].object.material.color.setHex( Math.random() * 0xffffff );
-
-		}
 	}
 
 	function onDocumentMouseUp( event ) {
 
-//		event.preventDefault();
+		event.preventDefault();
 		controls.enabled = true;
+
+		renderer.domElement.removeEventListener( 'mousemove', onDocumentMouseMove, false );
 
 	}
 

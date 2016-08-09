@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Controls Switch R4</title>
+<title>Get Altitude R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-08-07' >
 </head>
 <body>
 <!--
@@ -16,73 +16,16 @@
 -->
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-
-<script src=first-person-controls-theo.js ></script>
+<script src=get-altitude-r1.js ></script>
 <script>
 
-	var camera, controls, camera1, controls1, camera2, controls2;
-	var material;
-
-	var clock = new THREE.Clock();
-
-	function setMenuDetailsControllers() {
-
-
-		menuDetailsControllers.innerHTML =
-			'<p><button onclick=setControlsFirstPerson(); >First Person Controls</button> ' +
-				'<button onclick=setControlsOrbit(); >Orbit Controls</button></p>' +
-			'<div id=msg ></div>';
 
 
 
-	}
 
-    function setupControls() {
-
-		camera1 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera1.position.set( -150, 20, 0 );
-
-		controls1 = new THREE.FirstPersonControls( camera1 );
-		controls1.lookSpeed = 0.05;
-		controls1.movementSpeed = 50;
-
-//		cam2 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-//		cam2.position.set( 100, 100, 100 );
-
-//		con2 = new THREE.OrbitControls( cam2 );
-
-		camera2 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera2.position.set( 100, 100, 100 );
-
-		controls2 = new THREE.OrbitControls( camera2, renderer.domElement );
-		controls2.maxDistance = 800;
-		controls2.autoRotate = true;
-
-	}
-
-
-	function setControlsFirstPerson() {
-
-		camera = camera1;
-		controls = controls1;
-
-	}
-
-
-	function setControlsOrbit() {
-
-		camera = camera2;
-		controls = controls2;
-
-	}
-
-</script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/draw-things/draw-things-r1.js ></script>
-<script>
-
-	var stats, renderer, scene, mesh;
+	var b = '<br>';
+	var stats, renderer, scene, camera, controls, mesh;
 
 	init();
 	animate();
@@ -138,11 +81,11 @@
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
 				'<p>' +
-					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
+//					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+//					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
 				'</p>' +
 
-				'<div id=menuDetailsControllers ></div>' +
+				'<div id=menuDetailsAltitude ></div>' +
 
 				'<details>' +
 					'<summary><h3>about</h3></summary>' +
@@ -155,8 +98,6 @@
 
 				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
 				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
-
-//				'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
 
 			'</div>' +
 
@@ -185,17 +126,11 @@
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
-		controls.autoRotate = true;
+//		controls.autoRotate = true;
 
 		scene = new THREE.Scene();
 
 // helpers
-
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
 
 		gridHelper  = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -10, 0 );
@@ -206,11 +141,43 @@
 
 // assets
 
-		drawThings();
 
-		setMenuDetailsControllers();
-		setupControls();
-		setControlsOrbit();
+		drawWavyPlane();
+
+		initGetAltitude();
+
+	}
+
+	function drawWavyPlane() {
+
+		geometry = new THREE.PlaneBufferGeometry( 100, 100, 99, 99 );
+		vertices = geometry.attributes.position.array;
+
+		index = 2;
+
+		for ( var i = 0; i < 100; i++ ) {
+
+			for ( var j = 0; j < 100; j++ ) {
+
+				vertices[ index ] = 10 * Math.sin( i / 10 ) * Math.cos( j / 10 );
+				index += 3;
+
+			}
+
+		}
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		geometry.attributes.position.needsUpdate = true
+
+		material = new THREE.MeshNormalMaterial( { side: 2 });
+		mesh = new THREE.Mesh( geometry, material );
+//		mesh.scale.set( 100, 10, 100 );
+		scene.add( mesh );
+
+		objects.push( mesh );
 
 	}
 
@@ -229,7 +196,7 @@
 	function animate() {
 
 		requestAnimationFrame( animate );
-		controls.update( clock.getDelta() );
+		controls.update();
 		stats.update();
 		renderer.render( scene, camera );
 
