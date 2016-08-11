@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+<head>
+<title>Animated GIF Generator</title>
+<meta charset="utf-8">
+<style>
+body { background-color: #ffffff; }
+</style>
+</head>
+<body>
+
+<button onClick=generateGIF(); >Generate GIF</button>
+powered by <a href="https://github.com/deanm/omggif">omggif</a><br />
+<progress id="progress" value="0" max="1"></progress><br />
+
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/deanm/omggif/master/omggif.js ></script>
+<script>
+
+// https://github.com/deanm/omggif
+// http://stackoverflow.com/questions/25328622/render-a-three-js-scene-to-an-animated-gif-file-with-custom-intervals
+
+			var progress = document.getElementById( 'progress' );
+			var generating = false;
+
+			var camera, scene, renderer;
+			var geometry, material, group, mesh;
+
+			var time = 0;
+
+			init();
+			animate();
+
+			function init() {
+
+				camera = new THREE.PerspectiveCamera( 50, 500 / 500, 650, 1000 );
+				camera.position.z = 800;
+
+				scene = new THREE.Scene();
+
+				geometry = new THREE.CubeGeometry( 1, 1, 1 );
+				material = new THREE.MeshBasicMaterial( { color: 0x000000, wireframe: true } );
+
+				group = new THREE.Object3D();
+				scene.add( group );
+
+				var colors = [ 0x31393C, 0x3A685B, 0x51AD8D, 0xCFC4A5, 0xCE6643 ];
+
+				for ( var i = 0; i < 20; i ++ ) {
+
+					material = new THREE.MeshBasicMaterial( { color: colors[ i % colors.length ], side: THREE.DoubleSide } );
+
+					mesh = new THREE.Mesh( geometry, material );
+					// mesh.rotation.x = ( i / 200 ) * 360 * ( Math.PI / 180 );
+					// mesh.rotation.y = ( i / 200 ) * 360 * ( Math.PI / 180 );
+					mesh.scale.x = i * 20 + 1;
+					mesh.scale.y = i * 20 + 1;
+					mesh.scale.z = i * 20 + 1;
+					group.add( mesh );
+
+				}
+
+				renderer = new THREE.WebGLRenderer( { antialias: false } );
+//				renderer.setClearColorHex( 0xffffff, 1 );
+				renderer.setSize( 500, 500 );
+				document.body.appendChild( renderer.domElement );
+
+			}
+
+			function animate() {
+
+				if ( generating === false ) {
+
+					requestAnimationFrame( animate );
+
+				}
+
+				time = ( time + 0.002 ) % 1;
+
+				render( time );
+
+			}
+
+			function render( float ) {
+
+				group.rotation.x = float * 360 * ( Math.PI / 180 );
+				group.rotation.y = - float * 360 * ( Math.PI / 180 );
+
+				renderer.render( scene, camera );
+
+			}
+
+			function generateGIF() {
+
+				generating = true;
+
+				var current = 0;
+				var total = 100;
+
+				var canvas = document.createElement( 'canvas' );
+				canvas.width = renderer.domElement.width;
+				canvas.height = renderer.domElement.height;
+
+				var context = canvas.getContext( '2d' );
+
+				var buffer = new Uint8Array( canvas.width * canvas.height * total * 5 );
+				var gif = new GifWriter( buffer, canvas.width, canvas.height, { loop: 0 } );
+
+				var pixels = new Uint8Array( canvas.width * canvas.height );
+
+				var addFrame = function () {
+
+					render( current / total );
+
+					context.drawImage( renderer.domElement, 0, 0 );
+
+					var data = context.getImageData( 0, 0, canvas.width, canvas.height ).data;
+
+					var palette = [];
+
+					for ( var j = 0, k = 0, jl = data.length; j < jl; j += 4, k ++ ) {
+
+						var r = Math.floor( data[ j + 0 ] * 0.1 ) * 10;
+						var g = Math.floor( data[ j + 1 ] * 0.1 ) * 10;
+						var b = Math.floor( data[ j + 2 ] * 0.1 ) * 10;
+						var color = r << 16 | g << 8 | b << 0;
+
+						var index = palette.indexOf( color );
+
+						if ( index === -1 ) {
+
+							pixels[ k ] = palette.length;
+							palette.push( color );
+
+						} else {
+
+							pixels[ k ] = index;
+
+						}
+
+					}
+
+					// force palette to be power of 2
+
+					var powof2 = 1;
+					while ( powof2 < palette.length ) powof2 <<= 1;
+					palette.length = powof2;
+
+					gif.addFrame( 0, 0, canvas.width, canvas.height, pixels, { palette: new Uint32Array( palette ), delay: 5 } );
+
+					current ++;
+
+					if ( current < total ) {
+
+						setTimeout( addFrame, 0 );
+
+					} else {
+
+						setTimeout( finish, 0 );
+
+					}
+
+					progress.value = current / total;
+
+				}
+
+				var finish = function () {
+
+					// return buffer.slice( 0, gif.end() );
+
+					var string = '';
+
+					for ( var i = 0, l = gif.end(); i < l; i ++ ) {
+
+						string += String.fromCharCode( buffer[ i ] )
+
+					}
+
+					var image = document.createElement( 'img' );
+					image.src = 'data:image/gif;base64,' + btoa( string );
+					document.body.appendChild( image );
+
+					generating = false;
+					animate();
+
+				}
+
+				addFrame();
+
+			}
+
+</script>
+</body>
+</html>
+
