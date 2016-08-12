@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Orgs Events R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Markdown reader template file' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-08-11' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+<script>
+
+	var org = 'jaanga';
+	var repo = 'terrain3';
+	var orgIssues = 'https://api.github.com/repos/' + org + '/' + repo + '/issues?labels=Status%20Update';
+	var converter, contents;
+
+	init();
+
+	function init() {
+
+		var css, fileName;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; max-width: 900px; }' +
+			'h1 a { text-decoration: none; }' +
+			'img { max-width: 600px; }' +
+			'div.issue { border: 1px solid #aaa; box-sizing: border-box; padding: 10px;  }' +
+
+			'#contents { left: 0; margin: 0 auto; max-width: 600px; overflow: auto; position: absolute; right: 0; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		readme = document.body.appendChild( document.createElement( 'div' ) );
+		readme.id = 'readme';
+
+		fileName = location.hash ? location.hash.slice( 1 ) : orgIssues;
+
+		getStatusUpdates( fileName, contents );
+
+		fName = 'readme.md';
+
+		getReadMe( fName );
+
+	}
+
+	function getStatusUpdates( fileName, target ) {
+
+//		var xhr, dates, issues, issue;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			issues = JSON.parse( xhr.responseText );
+
+			txt = '<h1><a href="">' + org + ' ' + repo +' recent status updates</a> <a href=index.html#readme.md> &#x24D8; </a></h1>';
+
+			for ( var i = 0; i < issues.length; i++ ) {
+
+				issue = issues[ i ];
+
+				txt += '<h2>' + issue.title + '</h2>' +
+					'<div class=issue >' + converter.makeHtml( issue.body ) + '</div>';
+
+			}
+
+			contents.innerHTML = txt;
+
+console.log( '', issues );
+
+		}
+
+	}
+
+
+	function getReadMe( fileName ) {
+
+		var xhr, fileName, text, lines;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous'; 
+		xhr.open( 'GET', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			text = xhr.responseText;
+//			lines = text.split(/\r\n|\n/);
+//			lines = text.split( '\n' ).map( function( line ) { return line.split( ',' ); } );
+
+//			console.log( text );
+//			console.log( lines.length );
+
+			readme.innerHTML = '<div class=issue >' + converter.makeHtml( text ) + '</div>';
+
+		}
+
+	}
+
+
+
+</script>
+</body>
+</html>

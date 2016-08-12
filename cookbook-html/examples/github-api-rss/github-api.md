@@ -101,11 +101,16 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 
 
 ## Issues
+* https://developer.github.com/v3/issues/
+
+***
 
 
-https://api.github.com/repos/jaanga/jaanga.github.io/issues
-
-https://api.github.com/repos/jaanga/jaanga.github.io/issues?state=closed
+* https://api.github.com/repos/jaanga/jaanga.github.io/issues
+* https://api.github.com/repos/jaanga/terrain3/issues
+* https://api.github.com/repos/jaanga/terrain3/issues?labels=Status%20Update
+* https://api.github.com/repos/fgx/fgx.github.io/issues?labels=Status%20Update
+* https://api.github.com/repos/jaanga/jaanga.github.io/issues?state=closed
 
 
 https://api.github.com/repos/jaanga/jaanga.github.io/trees << none

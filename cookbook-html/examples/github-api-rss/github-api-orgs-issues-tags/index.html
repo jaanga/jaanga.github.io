@@ -1,20 +1,22 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Open HTML or Markdown</title>
+<title>Open Index or Markdown</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content=' File wrangler. Open HTML or Markdown files including location.hash ' >
-<meta name=keywords content='Markdown,AJAX,JavaScript,HTML,CSS,GitHub,FOSS' >
-<meta name=date content='2016-06-03' >
+<meta name=description content='File wrangler. Default index.html file. Opens HTML or Markdown files. Passes location.hash.' >
+<meta name=keywords content='ShowDown,Markdown,AJAX,JavaScript,HTML,CSS,GitHub,FOSS' >
+<meta name=date content='2016-07-21' >
 </head>
 <body>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 <script>
 
-// original: http://jaanga.github.io/cookbook-html/templates/open-index-or-markdown/index.html
+// https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/open-index-or-markdown
 
-	var defaultFile = 'github-api-orgs-events-r3.html';
+	var defaultFile = 'index.html';
+	location.hash = 'readme.md';
+
 	var contents;
 
 	init();

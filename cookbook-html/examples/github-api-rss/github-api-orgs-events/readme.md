@@ -6,7 +6,7 @@
 [Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
 
 
-github-api-orgs-events-r1
+github-api-orgs-events-r3
 ===
 
-[github-api-orgs-events-r1]( github-api-orgs-events-r1.html )
+[github-api-orgs-events-r3]( github-api-orgs-events-r3.html )
