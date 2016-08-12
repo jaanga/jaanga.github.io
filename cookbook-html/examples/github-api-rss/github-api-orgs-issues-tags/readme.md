@@ -2,7 +2,7 @@
 ( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-orgs-issues-tags/index.html#readme.md "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/github-api-orgs-issues-tags/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaangas.github.io/cookbook-html/  ) &raquo;
+[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( https://jaangas.github.io/cookbook-html/  ) &raquo;
 [Examples]( https://jaanga.github.io/cookbook-html/examples/ ) &raquo; [GitHub API]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/ ) &raquo;
 
 [GitHub API Orgs Issues Tags Read Me]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-orgs-issues-tags/index.html#readme.md )

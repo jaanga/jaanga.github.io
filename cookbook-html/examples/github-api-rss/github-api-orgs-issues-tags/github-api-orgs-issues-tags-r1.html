@@ -9,7 +9,7 @@
 <meta name=date content='2016-08-11' >
 </head>
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 <script>
 
 	var org = 'jaanga';
@@ -28,20 +28,22 @@
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-			'body { font: 12pt monospace; max-width: 900px; }' +
+			'body { font: 12pt monospace; }' +
 			'h1 a { text-decoration: none; }' +
 			'img { max-width: 600px; }' +
 			'div.issue { border: 1px solid #aaa; box-sizing: border-box; padding: 10px;  }' +
 
-			'#contents { left: 0; margin: 0 auto; max-width: 600px; overflow: auto; position: absolute; right: 0; }' +
-
+//			'#contents { left: 0; margin: 0 auto; max-width: 600px; overflow: auto; position: absolute; right: 0; }' +
+			'#contents { float: left; max-width: 40%; }' +
+			'#readme { float: left; max-width: 40%; }' +
 		'';
+
+		readme = document.body.appendChild( document.createElement( 'div' ) );
+		readme.id = 'readme';
 
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-		readme = document.body.appendChild( document.createElement( 'div' ) );
-		readme.id = 'readme';
 
 		fileName = location.hash ? location.hash.slice( 1 ) : orgIssues;
 
