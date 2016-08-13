@@ -58,12 +58,16 @@ fun look at issues
 ## Commits
 
 https://api.github.com/repos/jaanga/jaanga.github.io/commits
+https://api.github.com/repos/jaanga/terrain3/commits
+
 https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=readme.md
 
 
 ## Events
 
 https://api.github.com/repos/jaanga/jaanga.github.io/events
+https://api.github.com/repos/jaanga/terrain3/events
+
 
 https://api.github.com/repos/jaanga/jaanga.github.io/events?path=cookbook-html/examples << not
 https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << not
@@ -209,7 +213,7 @@ https://github.com/mrdoob?tab=repositories
 
 https://developer.github.com/v3/git/trees/
 https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
-
+https://api.github.com/repos/jaanga/terrain/git/trees/gh-pages?recursive=1
 
 
 ### Commits

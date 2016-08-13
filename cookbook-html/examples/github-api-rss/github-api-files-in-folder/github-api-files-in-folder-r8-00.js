@@ -11,7 +11,6 @@
 	var folder = 'cookbook-html/examples/github-api-rss/';
 */
 
-	var org = 'jaanga';
 	var repo = 'terrain3';
 	var branch = 'gh-pages';
 	var folder = '';
@@ -19,7 +18,6 @@
 	var urlGitHubTree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
 	var urlGHPages = 'https://' + user + '.github.io/' + repo + '/';
 	var urlSource = 'https://github.com/' + user + '/' + repo + '/tree/' + branch + '/';
-	var urlIssues = 'https://api.github.com/repos/' + org + '/' + repo + '/issues?labels=Status%20Update';
 
 	var filesAll, filesSelected;
 
@@ -35,19 +33,21 @@
 		css = document.body.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
 
-			'body { font: 12pt monospace; margin: 0; }' +
+			'html, body { font: 12pt monospace; height: 100%; margin: 0; }' +
+
 			'a { text-decoration: none; }' +
+
 			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
 			'h2 a { color: crimson; }' +
-			'img { max-width: 100%; }' +
-			'iframe { width: 100%; }' +
+//			'iframe { border: 1px solid red; height: 100%; overflow: hidden; width: 100%; }' +
+
 			'summary h2, summary h3, #menuBreadCrumbs h3 { display: inline; }' +
 			'summary { outline: none; }' +
 
-			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 0 0 10px; position: absolute; max-width: 20%; }' +
-			'#contents { border: 0px red solid; left: 22%; position: absolute; top: 0; max-width: 55%; }' +
-			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 20%; padding: 0 20px; }' +
+			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 0 0 10px; position: absolute; width: 300px; }' +
+//			'#contents { border: 0px red solid; height: 100%; left: 350px; overflow: hidden; position: absolute; top: 0; width: ' + ( window.innerWidth - 370 ) + 'px; }' +
+			'#contents { border: 0px red solid; left: 350px; position: absolute; top: 0; max-width: 800px; }' +
 
 		'';
 
@@ -77,31 +77,27 @@
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-
-		updates = document.body.appendChild( document.createElement( 'div' ) );
-		updates.id = 'updates';
-
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
 		setMenuDetailsPageActions();
 
 		setMenuDetailsAbout();
 
-		requestFile( urlGitHubTree, function callbackGH( xhr ) {
+		requestFile( urlGitHubTree, callbackGH )
 
-			var tree;
+		function callbackGH( xhr ) {
 
 			response = JSON.parse( xhr.target.response );
 
 			tree = response.tree;
 
-			itemsAll = tree.map( function( item ) { return item.path; } );
+			filesAll = tree.map( function( item ) { return item.path; } );
 
 			onHashChange();
 
-			setMenuMessageTreeStats( tree );
+			setMenuMessageTreeStats();
 
-		} );
+		}
 
 	}
 
@@ -120,6 +116,7 @@
 
 				'<p><a href=JavaScript:location.href=urlSource+location.hash.slice(1); >View source on GitHub</a></p>' +
 				'<p><a href=JavaScript:window.open(urlGHPages+location.hash.slice(1),"_blank"); >Open page in new tab</a></p>' +
+//				'<p><s><input type=checkbox > View all files in folder</s></p>' +
 
 				'<p id=menuActionMessages ></p>' +
 
@@ -147,9 +144,9 @@
 
 	}
 
-	function setMenuMessageTreeStats( tree ) {
+	function setMenuMessageTreeStats() {
 
-		var dirs, files, filesSize, item;
+		var dirs, files, folsSize, obj;
 
 		dirs = 0;
 		files = 0;
@@ -157,12 +154,12 @@
 
 		for ( var i = 0; i < tree.length; i++ ) {
 
-			item = tree[ i ];
+			obj = tree[ i ];
 
-			if ( item.type === 'blob' ) {
+			if ( obj.type === 'blob' ) {
 
 				files++;
-				filesSize += item.size;
+				filesSize += obj.size;
 
 			} else {
 
@@ -172,21 +169,18 @@
 
 		}
 
-		menuActionMessages.innerHTML =
+		menuActionMessages.innerHTML = 
 
 			'<h3>repository statistics</h3>' +
-			'Items in repo: ' + itemsAll.length.toLocaleString() + b +
-			'&bull; Folders &nbsp;  &nbsp: ' + dirs.toLocaleString() + b +
-			'&bull; Files  &nbsp  &nbsp  &nbsp: ' + files.toLocaleString() + b + b +
+			'Objects in repo: ' + filesAll.length.toLocaleString() + b +
+			'&bull; Folders: ' + dirs.toLocaleString() + b +
+			'&bull; Files: ' + files.toLocaleString() + b +
 
-			'Size of files: ' + filesSize.toLocaleString() + ' bytes' +
-
+			'Size of files: ' + filesSize.toLocaleString() +
 		b;
 
 	}
 
-
-//
 
 	function onHashChange() {
 
@@ -196,14 +190,9 @@
 
 		if ( item.endsWith( '.md' ) === true ) {
 
+			getMarkdown( item, contents );
+
 			setBreadCrumbs( folder );
-
-			requestFile( urlGHPages + item, function callbackMD( xhr ) {
-
-				contents.innerHTML = converter.makeHtml( xhr.target.responseText );
-				contents.style.overflow = 'auto';
-
-			} );
 
 		} else {
 
@@ -211,42 +200,9 @@
 
 			getFilesFromFolder( item );
 
-			requestFile( urlGHPages + item + '/readme.md', function callbackMD( xhr ) {
-
-				contents.innerHTML = converter.makeHtml( xhr.target.responseText );
-				contents.style.overflow = 'auto';
-
-			} );
-
-		}
-
-
-		if ( folder === '' ) {
-
-			requestFile( urlIssues, function ( xhr ) {
-
-				issues = JSON.parse( xhr.target.responseText );
-
-				txt = '<h1><a href="" >' + repo + ' status updates</a> <a href=index.html#readme.md > &#x24D8; </a></h1>';
-
-				for ( var i = 0; i < issues.length; i++ ) {
-
-					issue = issues[ i ];
-
-					txt += '<h2>' + issue.title + '</h2>' +
-						'<div class=issue >' + converter.makeHtml( issue.body ) + '</div>';
-
-				}
-
-				updates.innerHTML = txt;
-
-			} );
-
-
 		}
 
 	}
-
 
 	function setBreadCrumbs( dir ) {
 
@@ -280,29 +236,38 @@
 
 	function getFilesFromFolder( dir ) {
 
-		var file, fileArray;
+//		var file, fileArray;
 
-		dirsSelected = [];
+		filesSelected = [];
 
 		dirArray = dir.split( '/' );
 
-		dirLen = dir === '' ? 0 : dirArray.length;
+//console.log( 'dirArray', dirArray );
 
-		for ( var i = 0; i < itemsAll.length; i++ ) {
+		for ( var i = 0; i < filesAll.length; i++ ) {
 
-			item = itemsAll[ i ];
+			file = filesAll[ i ];
+			fileArray = file.split( '/' );
 
-			if ( !item.match( 'readme.md' ) ) { continue; }
+			if ( !file.match( 'readme.md' ) ) { continue; }
 
-			if ( !item.startsWith( dir ) ) { continue; }
+			if ( file.match( 'archive' ) ) { continue; }
 
-			if ( item.match( 'archive' ) ) { continue; }
+//			if ( dir === '' ) {
 
-			itemArray = item.split( '/' );
+//				if ( fileArray.length > 2 ) { continue; }
 
-			if ( itemArray.length - dirLen !== 2 ) { continue; }
+//			} else {
 
-			dirsSelected.push( item.replace( '/readme.md', '' ) );
+//				if ( !file.startsWith( dir ) ) { continue; }
+
+				if ( fileArray.length - dirArray.length > 2 ) { continue; }
+
+//console.log( 'fileArray', fileArray );
+
+//			}
+
+			filesSelected.push( file );
 
 		}
 
@@ -313,22 +278,88 @@
 
 	function createFolderNameTableOfContents( dir ) {
 
-		var toc, fName, folder;
+		var toc, file, fName, ffolder;
 
-		toc = '';
+		toc = '<hr><p>subFolders:</p>';
 
-		for ( var i = 0; i < dirsSelected.length; i++ ) {
+		for ( var i = 0; i < filesSelected.length; i++ ) {
 
-			folder = dirsSelected[ i ];
+			file = filesSelected[ i ];
 
-			fName = folder.split( '/' ).pop();
-			fName = fName.replace( /-/g, ' ' );
+			if ( dir && dir.slice( -1 ) !== '/' ) { dir += '/'; }
 
-			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + fName + '</a></h3>';
+			if ( file === dir + 'readme.md' ) {
+
+				requestFile( urlGHPages + file, callbackMD );
+
+				function callbackMD( xhr ) {
+
+					contents.innerHTML = converter.makeHtml( xhr.target.responseText );
+					contents.style.overflow = 'auto';
+
+				}
+
+			} else {
+
+				ffolder = file.split( '/' );
+				ffolder.pop();
+				fName = ffolder.slice( - 1 )[0].replace( /-/g, ' ' );
+
+				toc += '<h3>&#x1f4c1; <a href=#' + ffolder.join( '/' ) + ' > ' + fName + '</a></h3>';
+
+			}
 
 		}
 
 		menuFolderIndices.innerHTML = toc;
+
+	}
+
+
+// combine with getGitHubAPITreeContents
+
+	function getGitHubAPITreeContents() {
+
+		var xhr;
+//		var response;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', urlGitHubTree, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.response );
+
+			tree = response.tree;
+
+			filesAll = tree.map( function( item ) { return item.path; } );
+
+			onHashChange();
+
+			setMenuMessageTreeStats();
+
+		}
+
+	}
+
+	function getMarkdown( fName, target ) {
+
+		var xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', fName, true );
+		xhr.onload = function() {
+
+			target.innerHTML = converter.makeHtml( xhr.responseText );
+			target.style.overflow = 'auto';
+
+		};
+
+		xhr.send( null );
 
 	}
 
