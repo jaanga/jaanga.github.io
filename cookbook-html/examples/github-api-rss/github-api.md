@@ -105,6 +105,7 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 
 
 ## Issues
+
 * https://developer.github.com/v3/issues/
 
 ***
@@ -174,7 +175,7 @@ https://api.github.com/orgs/jaanga
 
 ### Commits
 
-https://api.github.com/repos/jaanga/jaanga.github.io/commits
+* https://api.github.com/repos/jaanga/jaanga.github.io/commits
 
 
 
@@ -198,18 +199,23 @@ https://api.github.com/repos/jaanga/jaanga.github.io/pages/
 * https://developer.github.com/v3/repos/contents/
 
 
-http://stackoverflow.com/questions/15831313/is-it-possible-to-get-commits-history-for-one-file-in-github-api
-
-http://api.github.com/repos/:owner/:repo/commits?path=PATH_TO_FILE
+* http://stackoverflow.com/questions/15831313/is-it-possible-to-get-commits-history-for-one-file-in-github-api
+* http://api.github.com/repos/:owner/:repo/commits?path=PATH_TO_FILE
 
 e.g.
 
 https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
 
-https://api.github.com/repos/jaanga/jaanga.github.io << lists all calls
+### start here
 
-https://api.github.com/repos/mrdoob/three.js
+
+* https://api.github.com/repos/jaanga/jaanga.github.io << lists all calls
+* https://api.github.com/repos/jaanga/terrain3
+* https://api.github.com/repos/mrdoob/three.js
+
 https://github.com/mrdoob?tab=repositories
+
+### Tree
 
 https://developer.github.com/v3/git/trees/
 https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1

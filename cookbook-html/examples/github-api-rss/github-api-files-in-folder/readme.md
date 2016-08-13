@@ -36,10 +36,12 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 ## Features
 
+
 * Request details of all files in a gh-pages branch of a GitHub repository.
 * Create a file explorer with menu. 
 * Enable browsing and viewing of selected files.
 * Menu has breadcrumbs and other usefulul links. 
+* Lists tagged issues in rght side menu
 * Short, easy code
 	* About 300 lines of mostly air
 * Single dependemcy on ShowDown - a MarkDown interpreter
@@ -48,6 +50,9 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 ## To Do
 
+* 2016-08-13 ~ recent events in left column
+* 2016-08-13 ~ right menu issue title as link to ussue
+* 2016-08-13 ~ stas as separate - reusable  - details
 * Recognizes file names in location.hash
 * Add pop-ups?
 * Add view all files
@@ -66,6 +71,13 @@ Provide a simple client-side content management system for files in a gh-pages b
 * 2016-08-03 ~ Errors reporting when certain scripts in readme iframes
 
 ## Change log
+
+### 2016-08-12 R8
+
+* Add right side menu
+* Creates table of contents with the links you actually want
+* Code cleanup
+
 
 ### 2016-08-04 R6
 
