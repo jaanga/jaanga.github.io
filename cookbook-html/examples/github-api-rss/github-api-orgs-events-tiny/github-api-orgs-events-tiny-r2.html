@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Orgs Events Tiny R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Markdown reader template file' >
+<meta name=keywords content='AJAX,JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='2016-04-03' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+<script>
+
+//	var user = 'https://api.github.com/orgs/fgx/events';
+
+	var org = 'jaanga';
+
+
+//	var urlEvents = 'https://api.github.com/orgs/' + org + '/events';
+
+	var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
+
+//	var urlEvents = 'https://api.github.com/orgs/sagemath/events';
+
+
+	var eventSet = {};
+
+	var b = '<br>';
+	var converter, contents;
+
+	init();
+
+	function init() {
+
+		var css, fileName;
+
+		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; max-width: 900px; }' +
+			'h1 a { text-decoration: none; }' +
+			'h4 { margin: 0; padding: 0; }' +
+			'img { max-width: 860px; }' +
+			'div.issue { border: 1px solid #aaa; box-sizing: border-box; padding: 10px; transform: scale( 0.85 );  }' +
+
+			'#contents { font-size: 10pt; left: 0; margin: 0 auto; max-width: 800px; overflow: auto; position: absolute; right: 0; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+
+		requestGitHubAPIEvents();
+
+	}
+
+	function requestGitHubAPIEvents() {
+
+		var xhr;
+		var events, event, txt, dates;
+		var eventSet = {};
+
+//		var urlEvents = 'https://api.github.com/orgs/jaanga/events';
+		var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
+//		var urlEvents = 'https://api.github.com/orgs/sagemath/events';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', urlEvents, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			events = JSON.parse( xhr.responseText );
+
+			txt = '<h1><a href="">' + org + ' Recent Events</a> <a href=index.html#readme.md> &#x24D8; </a></h1>';
+
+			dates = [];
+
+			for ( var i = 0; i < events.length; i++ ) {
+
+				event = events[ i ];
+
+				if ( dates.indexOf( event.created_at.slice( 0, 10 ) ) === -1 ) {
+
+					dates.push( event.created_at.slice( 0, 10 ) )
+
+					txt += '<h4>' + event.created_at.slice( 0, 10 ) + '</h4>';
+
+				}
+
+				actor = ' <a href=' + event.actor.url + ' > ' + event.actor.login + '</a> ';
+
+				if ( eventSet[ 'on' + event.type ] !== undefined ) {
+
+					txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + actor + eventSet[ 'on' + event.type ]( event ) + b
+
+//console.log( '', eventSet[ 'on' + event.type ]( event ) );
+
+				} else {
+
+console.log( 'non-event', event );
+
+				}
+
+			}
+
+			contents.innerHTML = txt;
+
+		}
+
+		eventSet.onCommitCommentEvent = function( event ) { return 'commit comment <a href=' + event.payload.comment.html_url + ' >' + event.payload.comment.body + '</a>'; }
+
+		eventSet.onCreateEvent = function( event ) { return 'create ' + event.payload.master_branch; }
+
+		eventSet.onDeleteEvent = function( event ) { return 'delete ' + event.payload.ref_type; }
+
+		eventSet.onForkEvent = function( event ) { return 'fork';}
+
+		eventSet.onGollumEvent = function( event ) { return 'wiki edited'; }
+
+		eventSet.onIssuesEvent = function( event ) { return 'issue <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a>'; }
+
+		eventSet.onIssueCommentEvent = function( event ) { return 'issue comment <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '<a>'; }
+
+		eventSet.onMemberEvent = function( event ) { return 'member ' + event.payload.action; }
+
+		eventSet.onPushEvent = function( event ) {
+
+			commit = event.payload.commits[ 0 ];
+			return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message + '</a>';
+
+		}
+
+		eventSet.onPullRequestEvent = function( event ) { return 'pull request ' + event.payload.pull_request.body; }
+
+		eventSet.onPullRequestReviewCommentEvent = function( event ) { return 'pull comment ' + event.payload.comment.body; }
+
+		eventSet.onReleaseEvent = function( event ) { return 'release ' + event.payload.release.name ; }
+
+		eventSet.onWatchEvent = function( event ) {	return 'watch ' + event.payload.action ; }
+
+	}
+
+</script>
+</body>
+</html>
