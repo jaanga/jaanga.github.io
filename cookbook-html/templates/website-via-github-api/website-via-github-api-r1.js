@@ -84,7 +84,6 @@
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-
 		updates = document.body.appendChild( document.createElement( 'div' ) );
 		updates.id = 'updates';
 
@@ -111,6 +110,25 @@
 			onHashChange();
 
 			setMenuDetailsRepositoryStatistics( tree );
+
+		} );
+
+		requestFile( urlIssues, function ( xhr ) {
+
+			issues = JSON.parse( xhr.target.responseText );
+
+			txt = '<h1><a href="" >' + repo + ' status updates</a> <a href=index.html#readme.md > &#x24D8; </a></h1>';
+
+			for ( var i = 0; i < issues.length; i++ ) {
+
+				issue = issues[ i ];
+
+				txt += '<h2><a href=' + issue.html_url + ' >' + issue.title + '</a></h2>' +
+					'<div class=issue >' + converter.makeHtml( issue.body ) + '</div>';
+
+			}
+
+			updates.innerHTML = txt;
 
 		} );
 
@@ -203,8 +221,17 @@
 				'<summary><h3>about</h3></summary>' +
 
 				'<p>This menu/<a href=https://en.wikipedia.org/wiki/Content_management_system >cms</a> is created on-the-fly by:' + b + b +
-					'<a href=http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/#readme.md >' + document.title + '</a></p>' +
-				'<p>Copyright &copy; 2016 ' + user + ' authors. <a href=https://' + user + '.github.io/license.md >MIT license</a>.</p>' +
+					'<a href=http://jaanga.github.io/cookbook-html/templates/website-via-github-api/#readme.md >webSite via GitHub API</a></p>' +
+
+				'<p>' +
+					'Copyright &copy; 2016 <a href=https://github.com/orgs/jaanga/people target="_blank">Jaanga authors</a>.' + b +
+					'<jaanga.github.io/license.md >MIT license</a>' +
+				'</p>' +
+
+				'<p>Thank you <a href=https://developers.google.com/maps/documentation/javascript/elevation > Google Maps </a> and ' +
+					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
+
+				'<p>Click the \'i in a circle\' info icon for more <a href=index.html#readme.md >help</a></p>' +
 
 			'</details>' +
 
@@ -248,24 +275,7 @@
 
 		if ( folder === '' ) {
 
-			requestFile( urlIssues, function ( xhr ) {
 
-				issues = JSON.parse( xhr.target.responseText );
-
-				txt = '<h1><a href="" >' + repo + ' status updates</a> <a href=index.html#readme.md > &#x24D8; </a></h1>';
-
-				for ( var i = 0; i < issues.length; i++ ) {
-
-					issue = issues[ i ];
-
-					txt += '<h2>' + issue.title + '</h2>' +
-						'<div class=issue >' + converter.makeHtml( issue.body ) + '</div>';
-
-				}
-
-				updates.innerHTML = txt;
-
-			} );
 
 
 		}
