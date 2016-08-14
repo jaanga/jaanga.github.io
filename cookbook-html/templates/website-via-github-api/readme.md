@@ -1,18 +1,18 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/github-api-files-in-folder/'; 
+( https://jaanga.github.io/cookbook-html/templates/website-via-github-api/#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/website-via-github-api/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 
-github-api-files-in-folder read me
+[WebSite via GitHubAPI Read Me]( https://jaanga.github.io/cookbook-html/templates/website-via-github-api/website-via-github-api-r1.html#readme.md )
 ===
 
-## [github-api-files-in-folder]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-in-folder/ )
+## [github-api-files-in-folder]( https://jaanga.github.io/cookbook-html/templates/website-via-github-api/ )
 
 
 ## Concept
 
-GitHub repositories may contain hundreds of script files and spporting pages of content
+GitHub repositories may contain hundreds of script files and supporting pages of content
 
 GitHub enables inspection and hosting via its GitHub pages feature
 
@@ -40,11 +40,11 @@ Provide a simple client-side content management system for files in a gh-pages b
 * Request details of all files in a gh-pages branch of a GitHub repository.
 * Create a file explorer with menu. 
 * Enable browsing and viewing of selected files.
-* Menu has breadcrumbs and other usefulul links. 
-* Lists tagged issues in rght side menu
+* Menu has breadcrumbs and other useful links. 
+* Lists tagged issues in right side menu
 * Short, easy code
 	* About 300 lines of mostly air
-* Single dependemcy on ShowDown - a MarkDown interpreter
+* Single dependency on ShowDown - a MarkDown interpreter
 
 
 
@@ -52,7 +52,7 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 * 2016-08-13 ~ recent events in left column
 * 2016-08-13 ~ right menu issue title as link to ussue
-* 2016-08-13 ~ stas as separate - reusable  - details
+* 2016-08-13 ~ stats as separate - reusable  - details
 * Recognizes file names in location.hash
 * Add pop-ups?
 * Add view all files
@@ -67,7 +67,7 @@ Provide a simple client-side content management system for files in a gh-pages b
 ## Issues
 
 * 2016-08-04 ~ Add better menu display handling if nu subfolders 
-* 2016-08-04 ~ Breadcrumbs and files menu display/style still not totallyy clear
+* 2016-08-04 ~ Breadcrumbs and files menu display/style still not totally clear
 * 2016-08-03 ~ Errors reporting when certain scripts in readme iframes
 
 ## Change log
@@ -82,7 +82,7 @@ Provide a simple client-side content management system for files in a gh-pages b
 ### 2016-08-04 R6
 
 * Add limited ability to display file with name supplied by location.hash
-* Add link to here in sbout menu
+* Add link to here in about menu
 * Change style of contents div
 * Tweak breadcrumbs
 * Add folder icon
