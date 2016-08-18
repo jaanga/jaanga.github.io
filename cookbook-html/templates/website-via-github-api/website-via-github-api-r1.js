@@ -29,7 +29,7 @@
 	var b = '<br>';
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
-	init();
+//	init();
 
 	function init() {
 
@@ -231,13 +231,14 @@
 				'<p>Thank you <a href=https://developers.google.com/maps/documentation/javascript/elevation > Google Maps </a> and ' +
 					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
 
-				'<p>Click the \'i in a circle\' info icon for more <a href=index.html#readme.md >help</a></p>' +
+//				'<p>Click the \'i in a circle\' info icon for more <a href=index.html#readme.md >help</a></p>' +
 
 			'</details>' +
 
 		'';
 
 	}
+
 //
 
 	function onHashChange() {
@@ -293,7 +294,7 @@
 
 		'<h2>' +
 
-			'<a href=http://' + user + '.github.io title="' + user + ' - ' + tagLine + '" >' + logo + ' ' + user + '</a>&raquo; ' +
+			'<a href=http://' + user + '.github.io title="' + user + ' - ' + tagLine + '" >' + logo + ' ' + user + '</a> &raquo; ' +
 			'<a href=# >' + repo + '</a> &raquo; ' +
 
 		'</h2>';

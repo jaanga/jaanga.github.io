@@ -27,11 +27,16 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 
 ### Mission
 
-Provide a simple client-side content management system for files in a gh-pages branch of a GitHub repository
+* Provide a simple client-side content management system for files in a gh-pages branch of a GitHub repository
+* Written for non programmers, non-designers - who want to code
+* Write once. Read many
+* It's easier to recover from no abstraction than the wrong abstraction
+
+ 
 
 ### Vision 
 
-* TBD
+* Your coding is your marketing
 
 
 ## Features
@@ -50,10 +55,11 @@ Provide a simple client-side content management system for files in a gh-pages b
 
 ## To Do
 
-* 2016-08-13 ~ recent events in left column
-* 2016-08-13 ~ right menu issue title as link to ussue
-* 2016-08-13 ~ stats as separate - reusable  - details
-* Recognizes file names in location.hash
+* 2016-08-16 ~ Setup ladybug as a project?
+* 2016-08-16 ~ Custom center panel
+	* repos as 'pinterest' blocks
+	* Three most recent repos highlighted
+	* Show the code
 * Add pop-ups?
 * Add view all files
 * View file details from SHA
@@ -71,6 +77,14 @@ Provide a simple client-side content management system for files in a gh-pages b
 * 2016-08-03 ~ Errors reporting when certain scripts in readme iframes
 
 ## Change log
+
+### 2016-08-16 ~ Website via GitHub API R1
+
+* 2016-08-13 ~ recent events in left column
+* 2016-08-13 ~ right menu issue title as link to issue
+* 2016-08-13 ~ stats as separate - reusable  - details
+* Recognizes file names in location.hash
+
 
 ### 2016-08-12 R8
 

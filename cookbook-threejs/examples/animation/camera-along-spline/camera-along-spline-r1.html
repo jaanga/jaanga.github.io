@@ -26,8 +26,6 @@
 	var vertices;
 	var segments;
 
-
-
 	var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	var stats, renderer, scene, camera, controls, mesh;
 
@@ -153,9 +151,9 @@
 
 		drawNicePath();
 
-//		setMenuDetailsCameraActions();
+		setMenuDetailsCameraActions();
 
-//		cameraWorld();
+		cameraWorld();
 
 		geometry = new THREE.BoxGeometry( 10, 10, 10 );
 		material = new THREE.MeshNormalMaterial();

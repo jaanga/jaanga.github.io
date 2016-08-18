@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Three.js Basic</title>
+<title>Camera Along Spline R3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-08-05' >
 </head>
 <body>
 <!--
@@ -18,14 +18,22 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
+<script src=camera-along-spline-r3.js ></script>
 <script>
 
 	var stats, renderer, scene, camera, controls, mesh;
 
 	init();
-	animate();
+//	animate();
 
 	function init() {
+
+
+		segments = 10;
+		points = 100;
+		cameraPoints = 1000;
+		zoomScale = 1;
+
 
 		var css, hamburger, menu;
 		var geometry, material;
@@ -41,7 +49,7 @@
 
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
-			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
 
@@ -75,10 +83,9 @@
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-				'<p>' +
-					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
-				'</p>' +
+				'<p><input type=checkbox onchange=controls.autoRotate=!controls.autoRotate checked > rotation</p>'  +
+
+				'<p id=menuDetailsCameraActions ></p>' +
 
 				'<div id=menuInfo ></div>' +
 
@@ -93,8 +100,6 @@
 
 				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
 				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
-
-//				'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
 
 			'</div>' +
 
@@ -120,7 +125,7 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+		camera.position.set( 200, 200, 200 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
@@ -130,14 +135,15 @@
 
 // helpers
 
+		position = new THREE.Vector3( 200 * Math.random() - 100, 0, 200 * Math.random() - 100 );
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
+		mesh.position.set( position.x, -31, position.z );
 		scene.add( mesh );
 
 		gridHelper  = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -10, 0 );
+		gridHelper.position.set( position.x, -30, position.z );
 		scene.add( gridHelper );
 
 		axisHelper = new THREE.AxisHelper( 50 );
@@ -145,6 +151,30 @@
 
 // assets
 
+		line = getNicePath();
+		line.geometry.applyMatrix( new THREE.Matrix4().makeTranslation( position.x, 0, position.z ) );
+
+		scene.add( line );
+		curve = new THREE.CatmullRomCurve3( line.geometry.vertices );
+
+		line.geometry.computeBoundingSphere();
+		center = line.geometry.boundingSphere.center;
+
+
+		actor = new THREE.Object3D();
+
+		geometry = new THREE.BoxGeometry( 10 * zoomScale, 10 * zoomScale, 10 * zoomScale );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+
+		actor.add( mesh );
+		actor.mesh = mesh;
+		scene.add( actor );
+
+
+		setMenuDetailsCameraActions();
+
+		cameraWorld();
 
 	}
 
@@ -153,13 +183,17 @@
 //console.log( 'key', event.keyCode );
 
 //		controls.enableKeys = false;
+
 		event.preventDefault();
 
 		switch( event.keyCode ) {
+
 			case 32: controls.autoRotate = !controls.autoRotate;  break; // space bar
+
 		}
 
 	}
+
 
 	function onWindowResize() {
 
@@ -172,12 +206,16 @@
 
 	}
 
+
 	function animate() {
 
-		requestAnimationFrame( animate );
-		controls.update();
 		stats.update();
+
+		controls.update();
+
 		renderer.render( scene, camera );
+
+		requestAnimationFrame( animate );
 
 	}
 
