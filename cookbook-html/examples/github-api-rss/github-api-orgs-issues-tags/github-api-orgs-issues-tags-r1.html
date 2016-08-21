@@ -11,12 +11,23 @@
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 <script>
+/*
 
 	var org = 'jaanga';
 	var repo = 'terrain3';
+	var title = 'status updates';
 
 	var urlIssues = 'https://api.github.com/repos/' + org + '/' + repo + '/issues?labels=Status%20Update';
 	var urlReadMe = 'https://jaanga.github.io/terrain3/readme.md';
+*/
+
+	var org = 'mrdoob';
+	var repo = 'three.js';
+	var title = 'issues';
+
+	var urlIssues = 'https://api.github.com/repos/mrdoob/three.js/issues';
+	var urlReadMe = 'http://rawgit.com/mrdoob/three.js/dev/README.md';
+
 
 	var converter, updates;
 
@@ -57,6 +68,14 @@
 
 		} );
 
+		getIssues();
+
+	}
+
+
+	function getIssues(){
+
+		var issues, txt;
 
 		fileName = location.hash ? location.hash.slice( 1 ) : urlIssues;
 
@@ -64,7 +83,7 @@
 
 			issues = JSON.parse( xhr.target.responseText );
 
-			txt = '<h1><a href="" >' + repo + ' status updates</a> <a href=index.html#readme.md > &#x24D8; </a></h1>';
+			txt = '<h1><a href="" >' + repo + ' ' + title + '</a> <a href=index.html#readme.md > &#x24D8; </a></h1>';
 
 			for ( var i = 0; i < issues.length; i++ ) {
 
