@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title></title>
+<meta charset='utf-8'>
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var range = document.body.appendChild( document.createElement( 'input' ) );
+	range.type = 'range';
+	range.title = 'Range' ;
+	range.min = -50;
+	range.max = 50;
+	range.step = 5
+	range.value = 25;
+	range.onchange = doIt;
+	range.style.cssText = '-webkit-appearance: none; background-color: silver; height: 12px; opacity: 0.5; ';
+	
+//	var thing = document.getElementsByName('-webkit-slider-thumb');
+//  console.log(thing);
+
+
+	function doIt( event ) {
+		rangeDiv.innerHTML = event.srcElement.value + ' - ' + new Date() + '<br>';
+		console.log( event );
+	}
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+	var info = document.createElement( 'div' );
+	document.body.appendChild( info );
+	info.innerHTML = '<h1>Range</h1>' +
+		'<div id="rangeDiv"></div>' +
+	'';
+
+</script>
+</body>
+</html>
+

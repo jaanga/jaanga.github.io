@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>div-draggable-inside-scrollable.html</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+// http://jsfiddle.net/wfbY8/737/
+
+// http://javascript.info/tutorial/mouse-events
+
+	var offX;
+	var offY;
+
+	init();
+
+	function init() {
+
+		var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 400 12pt monospace; }' +
+			'h1 {margin: 0; }' +
+
+			'#msg { border: 2px red solid; max-width: 800px;  }' +
+			'#closer { position: absolute; right: 5px; top: 5px; }' +
+			'.movable { overflow: scroll; margin: 20px; padding: 30px 20px; position: absolute; resize: both; }' +
+		'';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+
+			'<div id=msg class=movable >' + txt + '</div>';
+
+	}
+
+	msg.onmousedown = function() {
+
+		var self = this
+
+		document.onmousemove = function( e ) {
+//			e = e || event
+//			fixPageXY(e)  
+			// put ball center under mouse pointer. 25 is half of width/height
+
+			self.style.left = e.pageX - 25 + 'px'; 
+			self.style.top = e.pageY - 25 + 'px'; 
+
+		}
+
+		this.onmouseup = function() {
+
+			document.onmousemove = null;
+
+		}
+
+	}
+
+//document.getElementById('ball').ondragstart = function() { return false }
+
+</script>
+</body>
+</html>

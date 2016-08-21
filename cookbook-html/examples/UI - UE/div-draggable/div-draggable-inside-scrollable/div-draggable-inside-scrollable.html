@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>div-draggable-inside-scrollable.html</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+// http://jsfiddle.net/wfbY8/737/
+
+
+	var offX;
+	var offY;
+
+	init();
+
+	function init() {
+
+		var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 400 12pt monospace; }' +
+			'h1 {margin: 0; }' +
+
+			'#msg { border: 2px red solid; max-width: 800px;  }' +
+			'#closer { position: absolute; right: 5px; top: 5px; }' +
+			'.movable { overflow: scroll; margin: 20px; padding: 30px 20px; position: absolute; resize: both; }' +
+		'';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+
+			'<div id=msg class=movable >' + txt + '</div>';
+
+		document.getElementById( 'msg' ).addEventListener( 'mousedown', mouseDown, false );
+		window.addEventListener( 'mouseup', mouseUp, false );
+
+	}
+
+	function mouseUp() {
+
+		window.removeEventListener( 'mousemove', divMove, true );
+
+	}
+
+	function mouseDown( e ){
+
+
+		offY = e.clientY-parseInt( msg.offsetTop );
+		offX= e.clientX-parseInt( msg.offsetLeft );
+		window.addEventListener( 'mousemove', divMove, true );
+
+	}
+
+	function divMove( e ){
+
+//		msg.style.position = 'absolute';
+		msg.style.top = ( e.clientY - offY ) + 'px';
+		msg.style.left = ( e.clientX - offX ) + 'px';
+	}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>onmouseover show-hide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script type='text/javascript'>
+	document.body.style.font = 'bold 12pt monospace';
+	document.body.style.maxWidth = '600px';
+	document.body.style.textAlign = 'center';
+	document.body.style.margin = '10px auto';
+
+	var container = document.createElement( 'div' );
+	document.body.appendChild( container );
+	var txt = '<p style="text-align: left">lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit,' +
+	' sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' +
+	' ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut ' + 
+	' aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse,' +
+	' quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+	for (var i = 0; i < 5; i++) { txt +=txt; }
+	container.innerHTML = '<h1>Title</h1><a href="#" onmouseover="showHide();">About</a>' + txt;
+
+	var splash = document.createElement( 'div' );
+	document.body.appendChild( splash );
+	splash.style.backgroundColor = '#ddd';
+	splash.style.borderRadius = '10px';
+	splash.style.boxShadow = '10px 10px 5px #888888';
+	splash.style.color = '#000';
+	splash.style.left = '25%';
+	splash.style.opacity = '0.85';	
+	splash.style.padding = '20px';
+	splash.style.position = 'absolute';
+	splash.style.top = '10%';
+	splash.style.width = '300px';
+	splash.innerHTML = '<h1>title</h1><p>abcde ~ howdy ~ 12345</p>';
+	
+	document.addEventListener( 'click', onDocumentMouseClick, false ); // or mousedown?	
+
+	function onDocumentMouseClick( event ) {
+		splash.style.display = 'none';
+	}
+	
+	function showHide() {
+		splash.style.display = 'block';
+	}
+	
+</script>
+
+</body>
+</html>

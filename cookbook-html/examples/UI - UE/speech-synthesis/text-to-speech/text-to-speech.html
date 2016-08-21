@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Text to Speech</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+
+<script>
+
+// http://updates.html5rocks.com/2014/01/Web-apps-that-talk---Introduction-to-the-Speech-Synthesis-API
+// http://www.broken-links.com/tests/webspeech/synthesis.php
+
+var voicesAvailable;
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+
+	'<input type="text" id=message value="Hello World! Can you hear me, now?"><br><br>' +
+
+	'<p><select id=items ></select></p>' +
+
+	'<label for="pitch">Pitch</label>' +
+	'<input type="range" max="2" min="0" step="1" value="1" id="pitch"><br>' +
+	
+	'<label for="rate">Rate</label>' +
+	'<input type="range" max="3.5" min="0.5" step="0.5" value="1" id="rate"><br>' +
+
+	'<label for="volume">Volume</label>' +
+	'<input type="range" max="1" min="0" step="0.1" value="1" id="volume"><br>' +
+
+
+	'<br>' +
+
+	'<button onclick=sayIt() >Say it</button>';
+	
+	items.onchange = function() { 
+		msg.voice = voicesAvailable[ items.selectedIndex ]; 
+		msg.lang = voicesAvailable[items.selectedIndex ].lang
+	};
+
+/*
+var msg = new SpeechSynthesisUtterance('Hello World');
+    window.speechSynthesis.speak(msg);
+*/
+	var msg = new SpeechSynthesisUtterance();
+	var voices;
+// Workaround for a Chrome issue (#340160 - https://code.google.com/p/chromium/issues/detail?id=340160)
+
+	var watch = setInterval(function() {
+		// Load all voices available
+		voicesAvailable = speechSynthesis.getVoices();
+		if (voicesAvailable.length !== 0) {
+			for ( var i = 0; i < voicesAvailable.length; i++ ) {
+				items.innerHTML += '<option value="' + voicesAvailable[i].lang + '"' +
+				'data-voice-uri="' + voicesAvailable[i].voiceURI + '">' +
+				voicesAvailable[i].name +
+				( voicesAvailable[i].default ? ' (default)' : '') + '</option>';
+			}
+			  
+			console.log( voicesAvailable );	
+			msg.voice = voicesAvailable[ items.selectedIndex ]; // Note: some voices don't support altering params
+			msg.voiceURI = msg.voice.voiceURI; 'Google UK English Female';
+
+			//	msg.volume = 0.5; // 0 to 1
+			//	msg.rate = 0.1; // 0.1 to 10
+			msg.pitch = 1; //0 to 2
+
+			msg.lang = 'en-GB';
+			msg.text = message.value; //'Hello World. Can you hear me now?'; 
+
+
+			clearInterval(watch);
+		}
+	}, 1);
+
+	msg.onend = function(e) {
+	  console.log('Finished in ' + event.elapsedTime + ' seconds.');
+ 
+	};
+
+
+
+	function sayIt() {
+		speechSynthesis.speak( msg );
+	}
+	
+
+
+</script>
+</body>
+</html>

@@ -1,8 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Basic HTML Template</title>
+<title>New Window Update Dom R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -10,6 +10,10 @@
 </head>
 <body>
 <script>
+// http://www.w3schools.com/jsref/met_win_open.asp
+// http://stackoverflow.com/questions/3030859/detecting-the-onload-event-of-a-window-opened-with-window-open
+
+	var newWindow;
 
 	init();
 
@@ -44,34 +48,53 @@
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 
-			'<p>' + txt + '</p>' +
+			'<p><button onclick=getNewWindow(); value="it do" >do it</button></p>' +
 
-			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
-
-			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
-
-			'<p>' +
-				'Overlay: <select id=selList title="Select the 2D overlay" >' +
-					'<option>aaa aaa aaa</option>' +
-					'<option>bbb bbb</option>' +
-					'<option>cc cc cc cc</option>' +
-				'<select>' +
-			'</p>' +
-
-
-			'<p>' +
-				'<input type=radio name=field id=but1 />button 1' +
-				'<input type=radio name=field id=but2 checked />button 2' +
-				'<input type=radio name=field id=but3 />button 3' +
-			'</p>' +
-
-			'<p><button onclick=doIt(); value="it do" >do it</button></p>' +
-
+			'<p><button onclick=onLoad(); value="it do" >update pop up</button></p>' +
 			'<div id=info ></div>' +
 
 		'';
 
 	}
+
+	function getNewWindow() {
+
+
+//		newWindow = window.open( 'popup-r1.html','_blank','left=1000,height=400,width=500,top=200');
+		newWindow = window.open( 'popup-r1.html','_blank', 'centerscreen' );
+
+/*
+		newWindow.window.b = 23;
+		newWindow.document.write( 
+			'<p id=data >This is "newWindow". I am 500px wide and 500px tall!</p>' +
+			'<p>b = ' + newWindow.window.b + '</p>' +
+			''
+		);
+*/
+
+// works
+		newWindow.addEventListener(  'load', onLoad, false);
+
+// not work
+//		newWindow.onload = 'onLoad();';
+
+		if ( window.focus ) { newWindow.focus() }
+
+	}
+
+	function onLoad() {
+
+console.log( '', 23 );
+
+		if ( window.focus ) { newWindow.focus() }
+
+		newWindow.moveTo( 500, 100 );
+		var div = newWindow.document.body.appendChild( newWindow.document.createElement( 'div' ) );
+
+		div.innerHTML = '<p>Hello, world!</p>';
+
+
+	};
 
 </script>
 </body>

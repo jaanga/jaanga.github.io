@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>notifications-sandbox-r1.html</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+
+		'<button onclick="notifyMe()">Notify me!</button>' +
+		'<div id=msg1 ></div>' +
+
+	'';
+
+	function notifyMe() {
+// Let's check if the browser supports notifications
+		if ( !( "Notification" in window )) {
+
+			alert( "This browser does not support desktop notification");
+
+// Let's check whether notification permissions have already been granted
+		} else if ( window.Notification && Notification.permission !== "denied") {
+
+console.log( Notification );
+// If it's okay let's create a notification
+		var notification = new Notification( "Hi there! 111",{ body: 'jjjj' } );
+window.navigator.vibrate(500);
+console.log( 'snot', notification );
+
+	  } else if (Notification.permission !== 'denied') {
+
+// Otherwise, we need to ask the user for permission
+console.log( 'pp', permission );
+		Notification.requestPermission( function (permission) {
+
+
+// If the user accepts, let's create a notification
+			if ( permission === "granted") {
+				var notification = new Notification("Hi there! 333",{ body: 'ooooooooooooo' });
+			}
+		});
+	  }
+
+// At last, if the user has denied notifications, and you 
+// want to be respectful there is no need to bother them any more.
+
+	}
+
+</script>
+</body>
+</html>

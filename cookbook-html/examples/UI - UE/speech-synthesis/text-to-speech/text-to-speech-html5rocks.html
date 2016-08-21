@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Howdy</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg ></div>';
+
+//Declare the speech object & set attributes
+var utterance = new window.SpeechSynthesisUtterance();
+utterance.lang = 'ja-JP'; //translates on the fly - soooo awesome (japanese is the funniest)
+utterance.volume = 0.2;
+utterance.rate = 1.0;
+utterance.pitch = 0.4;
+utterance.voice = 'Hysterical'; // this seems to do nothing
+utterance.text = "Facebook news feeds are full of garbage";
+
+//Speak the phrase
+window.speechSynthesis.speak(utterance);
+
+window.speechSynthesis.onvoiceschanged = function () {
+  var speechSynthesisVoices = speechSynthesis.getVoices();
+  var accents = _(speechSynthesisVoices).pluck('lang');
+  var voices = _(speechSynthesisVoices).pluck('voiceURI');
+  var names = _(speechSynthesisVoices).pluck('name');
+  console.log('names', names);
+  console.log('accents', _.uniq(accents));
+  console.log('voices', voices);
+};
+
+</script>
+</body>
+</html>

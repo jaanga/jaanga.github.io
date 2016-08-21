@@ -1,0 +1,249 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<html>
+<head>
+<title> Dynamic Table </title>
+<style type="text/css">
+#DragColumn_0
+{
+     position:relative;
+     z-index:5;
+}
+
+#ContentColumn_1
+{
+     border: 1px solid #006699;
+     position:absolute;
+     overflow:hidden;
+     z-index:10
+}
+
+#DragColumn_1
+{
+     position:absolute;
+     cursor:e-resize;
+     z-index:11;
+}
+
+#ContentColumn_2
+{
+     border: 1px solid #006699;
+     position:absolute;
+     overflow:hidden;
+     z-index:10
+}
+
+#DragColumn_2
+{
+     position:absolute;
+     cursor:e-resize;
+     z-index:11;
+}
+
+#ContentColumn_3
+{
+     border: 1px solid #006699;
+     position:absolute;
+     overflow:hidden;
+     z-index:10
+}
+
+#DragColumn_3
+{
+     position:absolute;     
+     cursor:e-resize;
+     z-index:11;
+}
+</style>
+
+<script type="text/javascript">
+
+
+// http://codingsolutions.blogspot.com/2006/03/using-javascript-to-create-draggable.html
+
+
+window.onload = function()
+{
+     PageSetup();
+}
+
+
+// global constants
+var ZERO_AMOUNT = 0;
+var ONE_MILLISECOND = 1;
+var SIX_MILLISECONDS = 6;
+
+// global variables
+var _xMousePosition = 0;
+var _yMousePosition = 0;
+var _mouseButtonDown = false;
+
+
+// event handlers
+function MouseMoveHandler(event) {
+     var e = event || window.event;
+     _xMousePosition = e.clientX + document.body.scrollLeft;
+     _yMousePosition = e.clientY + document.body.scrollTop;
+}
+
+function MouseDownHandler(event) {
+     var e = event || window.event;     
+     var elementID = e.srcElement ? e.srcElement.id : e.target.id;
+     var columnIndexValue = elementID.slice(elementID.length-1, elementID.length);
+     _mouseButtonDown=true;
+     ChangeColumnWidth(columnIndexValue);
+}     
+
+function MouseUpHandler(event){
+     var e = event || window.event;
+     _mouseButtonDown = false;
+     var cursorResetFunctionCall = 'document.body.style.cursor = ""';
+     window.setTimeout(cursorResetFunctionCall, SIX_MILLISECONDS);
+}
+
+function PageSetup()
+{
+     document.onmousemove = MouseMoveHandler;
+     document.onmouseup = MouseUpHandler;
+     
+     var drag0 = document.getElementById("DragColumn_0");
+     var drag1 = document.getElementById("DragColumn_1");
+     var drag2 = document.getElementById("DragColumn_2");
+     var drag3 = document.getElementById("DragColumn_3");
+     var column1 = document.getElementById("ContentColumn_1");
+     var column2 = document.getElementById("ContentColumn_2");
+     var column3 = document.getElementById("ContentColumn_3");
+     var colWidth1 = _columnWidthSettings[1];
+     var colWidth2 = _columnWidthSettings[2];
+     var colWidth3 = _columnWidthSettings[3];
+     
+     drag0.style.left = TABLE_LEFT + "px";
+     drag0.style.top = TABLE_TOP + "px";
+     drag0.style.height = TABLE_HEIGHT + "px";
+
+     column1.style.left = TABLE_LEFT + "px";
+     column1.style.width = colWidth1 + "px";
+     column1.style.top = TABLE_TOP + "px";
+     column1.style.height = TABLE_HEIGHT + "px";
+
+     drag1.style.left = (TABLE_LEFT + colWidth1) + "px";
+     drag1.style.width = DRAG_WIDTH + "px";
+     drag1.style.top = TABLE_TOP + "px";
+     drag1.style.height = TABLE_HEIGHT + "px";
+     drag1.onmousedown=MouseDownHandler;
+     
+     column2.style.left = (TABLE_LEFT + colWidth1 + DRAG_WIDTH) + "px";
+     column2.style.width = colWidth2 + "px";
+     column2.style.top = TABLE_TOP + "px";
+     column2.style.height = TABLE_HEIGHT + "px";
+
+     drag2.style.left = (TABLE_LEFT + colWidth1 + DRAG_WIDTH + colWidth2) + "px";
+     drag2.style.width = DRAG_WIDTH + "px";
+     drag2.style.top = TABLE_TOP + "px";
+     drag2.style.height = TABLE_HEIGHT + "px";
+     drag2.onmousedown=MouseDownHandler;
+
+     column3.style.left = (TABLE_LEFT + colWidth1 + DRAG_WIDTH + colWidth2 + DRAG_WIDTH) + "px";
+     column3.style.width = colWidth3 + "px";
+     column3.style.top = TABLE_TOP + "px";
+     column3.style.height = TABLE_HEIGHT + "px";
+
+     drag3.style.left = (TABLE_LEFT + colWidth1 + DRAG_WIDTH + colWidth2 + DRAG_WIDTH + colWidth3) + "px";
+     drag3.style.width = DRAG_WIDTH + "px";
+     drag3.style.top = TABLE_TOP + "px";
+     drag3.style.height = TABLE_HEIGHT + "px";
+     drag3.onmousedown=MouseDownHandler;
+}
+
+
+
+function ChangeColumnWidth(columnIndexValue){
+//alert("You reached to the top of the ChangeColumnWidth method!");
+var columnIndex = parseInt(columnIndexValue);
+
+if(columnIndex >= 0){
+     document.body.style.cursor = "e-resize";
+      
+     var previousDragColumn = document.getElementById("DragColumn_" + (columnIndex-1));
+     var currentDragColumn = document.getElementById("DragColumn_" + columnIndex);
+     var currentContentColumn = document.getElementById("ContentColumn_" + columnIndex);
+     
+     var leftString = previousDragColumn.style["left"] ? previousDragColumn.style["left"]:previousDragColumn.currentStyle["left"];
+
+     var previousDragLeftColumnPosition = parseInt(leftString.slice(0,leftString.length-2));
+     var previousDragRightColumnPosition;
+     if(columnIndex > 1)
+     {
+          previousDragRightColumnPosition = previousDragLeftColumnPosition + DRAG_WIDTH;
+     }
+     else
+     {
+          previousDragRightColumnPosition = previousDragLeftColumnPosition;
+     }
+     
+     var distanceFromMouseToPreviousColumn = _xMousePosition - (previousDragRightColumnPosition);
+     var dragColumnLeftPosition = 0;
+     
+     if(distanceFromMouseToPreviousColumn < MINIMUM_ALLOWED_WIDTH)
+     {
+      _columnWidthSettings[columnIndex] = MINIMUM_ALLOWED_WIDTH;
+      dragColumnLeftPosition = previousDragLeftColumnPosition + MINIMUM_ALLOWED_WIDTH;
+     }
+     else
+     {
+      _columnWidthSettings[columnIndex] = distanceFromMouseToPreviousColumn;
+      dragColumnLeftPosition = _xMousePosition;
+     }
+
+     currentContentColumn.style.width = (_columnWidthSettings[columnIndex]) + "px";
+     currentDragColumn.style.left = dragColumnLeftPosition + "px";
+     currentDragColumn.style.width = DRAG_WIDTH + "px";
+
+     
+     for(iteration=(columnIndex+1); iteration<_columnWidthSettings.length; iteration++)
+     {
+          var nextDragColumn = document.getElementById("DragColumn_" + iteration);
+          var nextContentColumn = document.getElementById("ContentColumn_" + iteration);
+          
+          nextContentColumn.style.left = (dragColumnLeftPosition + DRAG_WIDTH) + "px";
+          nextContentColumn.style.width = _columnWidthSettings[iteration] + "px";
+          nextDragColumn.style.left = (dragColumnLeftPosition + DRAG_WIDTH + _columnWidthSettings[iteration]) + "px";
+          nextDragColumn.style.width = DRAG_WIDTH + "px";
+          
+          dragColumnLeftPosition += DRAG_WIDTH + _columnWidthSettings[iteration];
+     }
+     
+}
+
+var recursiveFunctionCall = "ChangeColumnWidth('"+columnIndex+"')";
+
+if(_mouseButtonDown)
+{
+     window.setTimeout(recursiveFunctionCall, ONE_MILLISECOND);
+}
+}
+
+
+// CUSTOMIZABLE LAYOUT SETTINGS - FEEL FREE TO MODIFY THESE.
+var MINIMUM_ALLOWED_WIDTH = 30;
+var MINIMUM_ALLOWED_HEIGHT = 30;
+var TABLE_LEFT = 25;
+var TABLE_TOP = 25;
+var TABLE_HEIGHT = 500;
+var DRAG_WIDTH = 10;
+var _columnWidthSettings = new Array(0,200,300,200);
+</script>
+</head>
+
+
+<body>
+
+<div id="DragColumn_0"></div>
+<div id="ContentColumn_1"></div>
+<div id="DragColumn_1"></div>
+<div id="ContentColumn_2"></div>
+<div id="DragColumn_2"></div>
+<div id="ContentColumn_3"></div>
+<div id="DragColumn_3"></div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Multiple Movable Resizable Divs</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML = 'body { font: 400 12pt monospace; }' +
+		'h1 {margin: 0; }' +
+		'#closer { position: absolute; right: 5px; top: 5px; }' +
+		'#movable { overflow: scroll; margin: 20px; padding: 30px 20px; position: absolute; resize: both; }' +
+	'';
+
+//	var info = document.body.appendChild( document.createElement( 'div' ) );
+//	info.innerHTML = '<h1>Multiple Movable Resizable Divs</h1>';
+
+	var movableDiv1 = document.body.appendChild( document.createElement( 'div' ) );
+	movableDiv1.style.cssText = 'background-color: red; height: 150px; left: 400px; top: 200px; width: 250px; z-index: 20;';
+	movableDiv1.id = 'movable';
+	movableDiv1.addEventListener( 'mousedown', mouseMove, false );
+	movableDiv1.innerHTML = 
+		'<div id=closer onclick=movableDiv1.style.display="none"; >[x]</div>' +
+		'<h1>move me 1</h1>' +
+		'<div style=margin:20px; >' +
+		'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?' +
+	'</div>';
+
+	var movableDiv2 = document.body.appendChild( document.createElement( 'div' ) );
+	movableDiv2.style.cssText = 'background-color: yellow; height: 150px; left: ' + (window.innerWidth - 350) + 'px; top: 100px; width: 250px; ';
+	movableDiv2.id = 'movable';
+	movableDiv2.addEventListener( 'mousedown', mouseMove, false );
+	movableDiv2.innerHTML = 
+		'<div id=closer onclick=movableDiv2.style.display="none"; >[x]</div>' +
+		'<h1>move me 2</h1>' +
+		'<div>' +
+		'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?' +
+	'</div>';
+
+	var offsetX;
+	var offsetY;
+
+	window.addEventListener('mouseup', mouseUp, false);
+
+	function mouseUp() {
+		window.removeEventListener('mousemove', divMove, true);
+	}
+
+	function mouseMove( event ){
+		if ( event.target.id === 'movable' ) {
+			offsetX = event.clientX - event.target.offsetLeft;
+			offsetY = event.clientY - event.target.offsetTop;
+			window.addEventListener('mousemove', divMove, true);
+		}
+	}
+
+	function divMove( event ){
+		event.target.style.left = ( event.clientX - offsetX ) + 'px';
+		event.target.style.top = ( event.clientY - offsetY ) + 'px';
+	}
+
+</script>
+</body>
+</html>

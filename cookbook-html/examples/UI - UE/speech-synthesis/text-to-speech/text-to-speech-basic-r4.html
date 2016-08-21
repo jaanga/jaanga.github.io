@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>text-to-speech-basic-r4.html</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+// http://stackoverflow.com/questions/22812303/why-is-my-speech-synthesis-api-voice-changing-when-function-run-more-than-1-time
+
+
+// http://stackoverflow.com/questions/21513706/getting-the-list-of-voices-in-speechsynthesis-of-chrome-web-speech-api
+
+	var utterance, voices;
+	var count = 0;
+
+	SILVIA = 1;
+	SOLE = 2;
+	EMELIA = 0;
+	RAMON = 10;
+	WALTER = 2;
+
+	lines = [
+		[ SILVIA, 'Today was slow, eh Ramon?' ],
+		[ SOLE, 'That it was. That Balmart is taking your business, you know.' ],
+		[ EMELIA, 'Sole, you fool, it’s Walmart. Ramon, listen, the young kids don’t come here no more, business is slow.'],
+		[ RAMON, 'I know, tias, I know. But there still some customers. The families needing cereal on Sunday morning, the kids hungry, late at night after a party, couples who need condoms , cousins visiting who forgot toothbrushes... People still need us. And slow days are okay. I’m old. We’re old. Slow is good.' ],
+		[ SILVIA, 'People forget, you know, they forget what we can do for them.' ],
+		[ SOLE, 'The services we can do for them.' ],
+		[ EMELIA, 'The young ones, they don’t know.']
+	];
+
+	init();
+
+	function init() {
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg ></div>' +
+		'<button onclick=window.speechSynthesis.cancel();>Cancel / Mute</button>'
+	'';
+
+/*
+		utterance = new window.SpeechSynthesisUtterance();
+		speechSynthesis.paused = true
+		speechSynthesis.onvoiceschanged = function () {
+			voices = speechSynthesis.getVoices();
+			utterance.default = false;
+			
+console.log('voices', speechSynthesis.pending, voices.length );
+
+			if ( voices.length !== 0) { sayIt(); }
+
+		};
+*/
+
+		var talk = new SpeechSynthesisUtterance();
+
+	// Workaround for a Chrome issue (#340160 - https://code.google.com/p/chromium/issues/detail?id=340160)
+		var watch = setInterval( function() {
+			// Load all voices available
+			voices = speechSynthesis.getVoices();
+			if ( voices.length !== 0 ) {
+	/*
+				talk.voice = voices[ 5 ]; // Note: some voices don't support altering params
+
+				talk.volume = 0.5; // 0 to 1
+				talk.rate = 0.1; // 0.1 to 10
+				talk.pitch = 1; //0 to 2
+				talk.lang = 'en-GB';
+				talk.text = text1; //'Hello World. Can you hear me now?'; 
+	*/
+
+				clearInterval( watch );
+	sayIt();
+
+	//			speechSynthesis.speak( talk );
+			}
+		}, 1 );
+
+	}
+
+	function sayIt() {
+console.log( count );
+
+		window.speechSynthesis.cancel(); 
+		utterance = new window.SpeechSynthesisUtterance();
+		utterance.voice = voices[ lines[ count ][ 0 ] ];
+		utterance.text = lines[ count ][ 1 ];
+		utterance.volume = 0.5; // 0 to 1
+		utterance.rate = 0.1; // 0.1 to 10
+		utterance.pitch = 1; //0 to 2
+//		utterance.lang = 'en-GB';
+
+		window.speechSynthesis.speak( utterance );
+
+console.log('voices', speechSynthesis.pending );
+
+		utterance.onend = function( e ) {
+console.log('Finished in ' + event.elapsedTime + ' seconds.');
+			count++;
+
+			if ( count < lines.length ) {
+
+				sayIt();
+
+			}
+		};
+
+
+	}
+
+
+/*
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<button onclick="sayIt(\'Polly, want a cracker?\');" >Say more</button>' +
+			'<div id=msg ></div>';
+
+		var speech = new SpeechSynthesisUtterance('testing test 123 12');
+        var voices = window.speechSynthesis.getVoices();
+        speech.default = false;
+        speech.voice = voices.filter(function(voice) { return voice.name == 'Google UK English Male'; } )[1];
+        speech.lang = 'en-GB'; //Also added as for some reason android devices used for testing loaded spanish language 
+        window.speechSynthesis.speak(speech);
+
+
+
+console.log( voices );
+	}
+
+
+*/
+
+</script>
+</body>
+</html>

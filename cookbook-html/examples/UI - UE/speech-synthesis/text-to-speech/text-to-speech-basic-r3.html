@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>text-to-speech-basic-r3.html</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<button onclick="sayIt(\'Polly, want a cracker?\');" >Say more</button>' +
+			'<div id=msg ></div>';
+
+		utterance = new SpeechSynthesisUtterance( 'Hello, world! Testing Testing one two three.' );
+		speechSynthesis.speak( utterance );
+
+	}
+
+	function sayIt( text ) {
+
+			window.speechSynthesis.cancel();
+			utterance.text = text;
+			speechSynthesis.speak( utterance );
+
+	}
+
+</script>
+</body>
+</html>

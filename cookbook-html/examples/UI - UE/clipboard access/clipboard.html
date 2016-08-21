@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title></title>
+<meta charset=utf-8>
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script>
+// not...
+
+document.body.style.cssText = ' font: normal  12pt monospace; ';
+var info = document.body.appendChild( document.createElement( 'div' ) );
+info.innerHTML = '<h1>Howdy</h1>';
+
+copyToClipboard('abc text 123');
+
+function copyToClipboard(text)
+{
+    if (window.clipboardData) // Internet Explorer
+    {  
+        window.clipboardData.setData("Text", text);
+    }
+    else
+    {  
+        unsafeWindow.netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");  
+        const clipboardHelper = Components.classes["@mozilla.org/widget/clipboardhelper;1"].getService(Components.interfaces.nsIClipboardHelper);  
+        clipboardHelper.copyString(text);
+    }
+}
+
+</script>
+</body>
+</html>

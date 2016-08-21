@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Text to Speech R2</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var text1 = 'text one two three'; // 'Conceptualizing random endpoints in an access matrix, provides reach extensions enterprise-wide. Respective divisions historically insignificant, upscale trend lines in a management inventory, analysis-survivability format.';
+
+	var text2 = 'Document-centric projections unfetter traditional auditing practices rivaling central process management. Advanced functionality, easy administration, proclaim the hallmarks of unprecedented opportunity.';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<button onclick=sayMore(text2); >say more</button>' +
+		'<div id=txt >' + text1 +'</div>' +
+	'';
+
+	var talk = new SpeechSynthesisUtterance();
+
+// Workaround for a Chrome issue (#340160 - https://code.google.com/p/chromium/issues/detail?id=340160)
+	var watch = setInterval( function() {
+		// Load all voices available
+		var voices = speechSynthesis.getVoices();
+		if ( voices.length !== 0 ) {
+			talk.voice = voices[ 5 ]; // Note: some voices don't support altering params
+
+			talk.volume = 0.5; // 0 to 1
+			talk.rate = 0.1; // 0.1 to 10
+			talk.pitch = 1; //0 to 2
+			talk.lang = 'en-GB';
+			talk.text = text1; //'Hello World. Can you hear me now?'; 
+			clearInterval( watch );
+
+			speechSynthesis.speak( talk );
+		}
+	}, 1 );
+
+	talk.onend = function(e) {
+		console.log('Finished in ' + event.elapsedTime + ' seconds.');
+	};
+
+	function sayMore( txt ) {
+		talk.text = txt;
+		window.speechSynthesis.speak( talk );
+	}
+
+</script>
+</body>
+</html>

@@ -186,6 +186,10 @@ https://api.github.com/repos/jaanga/jaanga.github.io/readme
 
 https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
 
+### Issues
+
+https://api.github.com/orgs/ladybug-analysis-tools/issues
+
 
 ### Pages
 

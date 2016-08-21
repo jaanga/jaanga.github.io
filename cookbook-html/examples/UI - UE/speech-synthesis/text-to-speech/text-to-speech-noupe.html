@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Howdy</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<div id=msg ></div>';
+
+
+	var worte = new SpeechSynthesisUtterance("Let us talk faster and in a higher voice.");
+	var stimmen = window.speechSynthesis.getVoices();
+	worte.voice = stimmen[3];
+	worte.pitch = 4;
+	worte.rate = 10;
+	window.speechSynthesis.speak(worte);
+
+</script>
+<?xml version="1.0"?>
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.w3.org/2001/10/synthesis
+                   http://www.w3.org/TR/speech-synthesis/synthesis.xsd"
+         xml:lang="en-US">
+  <voice gender="female"> 
+    Any female voice here.
+    <voice age="6"> 
+      A female child voice here.
+      <p xml:lang="ja"> 
+        <!-- A female child voice in Japanese. -->
+      </p>
+    </voice>
+  </voice>
+</speak>
+</body>
+</html>

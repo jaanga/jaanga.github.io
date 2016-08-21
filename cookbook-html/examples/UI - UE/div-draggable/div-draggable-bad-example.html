@@ -1,0 +1,55 @@
+<head>
+<style type="text/css"> 
+
+.real_monkey { 
+background: #FF0000; /* red background */
+width: 200px;
+height: 200px;
+position: absolute; /* we want to set an absolute position so the div can be moved in reference to the screen */
+top: 50px; /* this sets the positioning of the element in reference to the top left of your window. it will space it 50 pixels from the top */ 
+left: 50px; /* this will set the position of the element 50 pixels to right of the top left of your window. */
+z-index: 5; /* this will position it above anything with a lower z-index, sort of like layers. So you could layer these divs using z-index and have them stack on each other. */ 
+}
+
+</style> 
+<script language="javascript">
+// http://www.diffusedreality.com/content.html
+//Draggable Div by surren @ http://www.diffusedreality.com 
+var x;
+var y;
+var element;
+var being_dragged = false;
+function mouser(event){
+if(event.offsetX || event.offsetY) {
+x=event.offsetX;
+y=event.offsetY;
+}
+else {
+x=event.pageX;
+y=event.pageY;
+}
+document.getElementById('X').innerHTML = x +'px';
+document.getElementById('Y').innerHTML = y +'px';
+document.getElementById('X-coord').innerHTML = x +'px';
+document.getElementById('Y-coord').innerHTML = y +'px';
+if(being_dragged == true) {
+document.getElementById(element).style.left = x +'px';
+document.getElementById(element).style.top = y +'px';
+}
+}
+function mouse_down(ele_name) {
+being_dragged = true;
+element = ele_name;
+document.getElementById(element).style.cursor = 'move';
+}
+function mouse_up() {
+being_dragged = false;
+document.getElementById(element).style.top = y +'px';
+document.getElementById(element).style.left = x +'px';
+document.getElementById(element).style.cursor = 'auto';
+}
+</script>
+</head>
+<body class="main" onMouseMove="mouser(event);">
+<div id="dragger" class="real_monkey" onMouseDown="mouse_down('dragger')" onMouseUp="mouse_up()">Monkey!</div>
+</body>

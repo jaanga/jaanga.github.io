@@ -15,14 +15,12 @@
 //	var user = 'https://api.github.com/orgs/fgx/events';
 
 	var org = 'jaanga';
+	var org = 'sagemath';
+	var org = 'ladybug-analysis-tools';
 
+	var urlEvents = 'https://api.github.com/orgs/' + org + '/events';
 
-//	var urlEvents = 'https://api.github.com/orgs/' + org + '/events';
-
-	var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
-
-//	var urlEvents = 'https://api.github.com/orgs/sagemath/events';
-
+//	var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
 
 	var eventSet = {};
 
@@ -61,12 +59,8 @@
 	function requestGitHubAPIEvents() {
 
 		var xhr;
-		var events, event, txt, dates;
+//		var events, event, txt, dates;
 		var eventSet = {};
-
-//		var urlEvents = 'https://api.github.com/orgs/jaanga/events';
-		var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
-//		var urlEvents = 'https://api.github.com/orgs/sagemath/events';
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', urlEvents, true );
@@ -95,9 +89,11 @@
 
 				actor = ' <a href=' + event.actor.url + ' > ' + event.actor.login + '</a> ';
 
+				repo = ' <a href=' + event.repo.url + ' > ' + event.repo.name.replace ( org, '' ) + '</a> ';
+
 				if ( eventSet[ 'on' + event.type ] !== undefined ) {
 
-					txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + actor + eventSet[ 'on' + event.type ]( event ) + b
+					txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + actor + ' ' + repo + ' ' + eventSet[ 'on' + event.type ]( event ) + b
 
 //console.log( '', eventSet[ 'on' + event.type ]( event ) );
 

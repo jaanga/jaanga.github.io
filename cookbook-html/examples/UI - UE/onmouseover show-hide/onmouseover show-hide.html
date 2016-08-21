@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>onmouseover show-hide</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script type='text/javascript'>
+	document.body.style.cssText = 'font: bold 12pt monospace; max-width: 600px; text-align: center; margin: 10px auto; ';
+
+	var container = document.body.appendChild( document.createElement( 'div' ) );
+
+	var txt = '<p style="text-align: left">lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit,' +
+	' sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' +
+	' ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut ' +
+	' aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse,' +
+	' quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+	for ( var i = 0; i < 5; i++ ) { txt +=txt; }
+
+	container.innerHTML = '<h1>Title</h1><a href=# onmouseover=showHide(); >Show Hide</a>' +
+		'<h2 onmouseover=show(); onmouseout=hide(); >Mouse Over & Out</h2>' +
+		txt;
+
+
+	var splash = document.body.appendChild( document.createElement( 'div' ) );
+	splash.style.cssText = 'background-color: #ddd; border-radius: 10px; box-shadow: 0px 10px 5px #888888; color: #000;' +
+		'disply: none; left: 25%; opacity: 0.85; padding: 20px; position: absolute; top: 10%; width: 300px; '
+
+	splash.innerHTML = '<h1>title</h1><p>abcde ~ howdy ~ 12345</p>';
+
+	document.addEventListener( 'click', onDocumentMouseClick, false ); // or mousedown?
+
+	function onDocumentMouseClick( event ) {
+		splash.style.display = 'none';
+	}
+
+	function showHide() {
+		splash.style.display = splash.style.display === 'none' ? '' : 'none' ;
+	}
+
+	function show() {
+		splash.style.display = '' ;
+	}
+
+	function hide() {
+		splash.style.display = 'none' ;
+	}
+</script>
+</body>
+</html>

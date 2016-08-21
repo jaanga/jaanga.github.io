@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title></title>
+<meta charset='utf-8'>
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var select = document.body.appendChild( document.createElement( 'select' ) );
+	select.title = 'Select' ;
+	select.onchange = doIt;
+
+	function doIt( event ) {
+		info.innerHTML += event.srcElement.selectedIndex + ' - ' + new Date() + '<br>';
+		console.log( event );
+	}
+
+	for (var option, i = 0; i < 10; i++) {
+		option = select.appendChild( document.createElement( 'option' ) );
+		option.innerText = i + ' ' + Math.random() * 1000000000;
+		if (i == 5) { option.selected = true ; }
+	}
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+	var info = document.createElement( 'div' );
+	document.body.appendChild( info );
+	info.innerHTML = '<h1>Howdy</h1>';
+
+</script>
+</body>
+</html>
+

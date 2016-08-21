@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Text to Speech</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+	var talk1 = 'Hello, World! and others';
+//	var talk1 = 'Conceptualizing random endpoints in a access matrix provides reach extensions enterprise wide. Respective divisions historically insignificant, upscale trend lines in a management inventory analysis survivability format.';
+
+	var start;
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		if ('speechSynthesis' in window) {
+	console.log( 'You\'re good to go!' )
+		} else {
+	console.log( 'Ah man, speech synthesis isn\'t supported.' );
+		}
+
+		
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' + 
+			'<button onclick=sayIt(); >sayIt</button> ' +
+			'<button onclick=window.speechSynthesis.pause(); >pause</button> ' +
+			'<button onclick=window.speechSynthesis.resume(); >resume</button> ' +
+			'<button onclick=pause3(); >pause 3 seconds</button> ' +
+			'<div id=txt >' + talk1 +'</div>'
+
+		'';
+
+
+	}
+
+	function pause3() {
+		window.speechSynthesis.pause();
+		setTimeout( function(){ 
+			window.speechSynthesis.resume();
+		}, 3000);
+	}
+
+
+	function sayIt() {
+		start = new Date();
+
+		var talk = new SpeechSynthesisUtterance( talk1 );
+/*
+		talk.addEventListener("start", function() {
+		  document.title = "Now listen …";
+		}, false);
+		 
+		talk.addEventListener("end", function() {
+		  document.title = "… that was it.";
+		}, false);
+*/
+
+// http://stackoverflow.com/questions/23483990/speechsynthesis-api-onend-callback-not-working
+
+var  t;
+talk.onstart = function (event) {
+    t = event.timeStamp;
+    console.log(t);
+};
+
+/*
+talk.onend = function (event) {
+    t = event.timeStamp-t;
+    console.log(event.timeStamp);
+    console.log((t/1000) +' seconds');
+};
+*/
+
+		talk.onend = function( event ) { 
+    t = event.timeStamp-t;
+    console.log(event.timeStamp);
+    console.log((t/1000) +' seconds');
+			console.log('Finished in ' + ( new Date() - start ) + ' seconds.', event ); 
+
+		};
+		window.speechSynthesis.speak( talk );
+
+	}
+
+</script>
+</body>
+</html>

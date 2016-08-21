@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Multiple Movable Resizable Divs</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?<p>';
+
+	var offsetX;
+	var offsetY;
+
+	init();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: 400 12pt monospace; overflow: hidden;}' +
+			'div div a h1 { background-color: #ccc; border: 1px solid #888; padding: 3px; }' +
+//			'a.titl {text-decoration: none; }' +
+			'.movable { background-color: #aaa; border: 1px solid #444; cursor: move; padding: 10px; text-align: right;}' +
+			'div div a { background-color: #ccc; color: #444; text-decoration: none; }' +
+		'';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'position: absolute; ';
+		info.innerHTML = '<a href="" ><h1>Multiple Movable Resizable Divs</h1></a>' +
+			'<a href=JavaScript:goTo(mm23); >Go To MM 2 3</a>' +
+		'';
+
+		var movableDiv1 = document.body.appendChild( document.createElement( 'div' ) );
+		movableDiv1.style.cssText = 'background-color: pink;  left: 400px;  ' +
+			'position: absolute; resize: vertical; top: 200px; width: 250px; ';
+		movableDiv1.addEventListener( 'mousedown', mouseDown, false );
+		movableDiv1.innerHTML = 
+			'<div class=movable >' +
+				'<a href=JavaScript:toggleContent(content1,collapse1); >[-]</a> ' +
+				'<a id=collapse1 href=JavaScript:collapseContent(content1); >&#9776;</a>' +
+			'</div>' +
+			'<div id=content1 >' +
+				'<a class=titl href=JavaScript:toggleContent(mm11) ><h1>move me 1 1</h1></a>' +
+				'<div id=mm11 >' +
+					txt + txt +
+				'</div>' +
+				'<a class=titl href=JavaScript:toggleContent(mm12) ><h1>move me 1 2</h1></a>' +
+				'<div id=mm12 >' +
+					txt + txt +
+				'</div>' +
+			'</div>' +
+		'';
+		content1.style.cssText = ' height: ' + ( 0.25 * window.innerHeight ) + 'px; margin-bottom: 10px; overflow: auto; padding: 10px;';
+
+		var movableDiv2 = document.body.appendChild( document.createElement( 'div' ) );
+		movableDiv2.style.cssText = 'background-color: yellow; left: ' + (window.innerWidth - 350) + 'px; ' +
+			'position: absolute; resize: vertical; top: 100px; width: 250px; ';
+		movableDiv2.addEventListener( 'mousedown', mouseDown, false );
+		movableDiv2.innerHTML = 
+			'<div class=movable >' +
+				'<a href=JavaScript:toggleContent(content2,collapse2); >[-]</a> ' +
+				'<a id=collapse2 href=JavaScript:collapseContent(content2); >&#9776;</a>' +
+			'</div>' +
+			'<div id=content2 >' +
+				'<a class=titl ref=JavaScript:toggleContent(mm21) ><h1>move me 2 1</h1></a>' +
+				'<div id=mm21 >' +
+					txt + txt +
+				'</div>' +
+				'<a class=titl href=JavaScript:toggleContent(mm22) ><h1>move me 2 2</h1></a>' +
+				'<div id=mm22 >' +
+					txt + txt +
+				'</div>' +
+				'<a class=titl href=JavaScript:toggleContent(mm23) ><h1>move me 2 3</h1></a>' +
+				'<div id=mm23 >' +
+					txt + txt +
+				'</div>' +
+			'</div>' +
+		'';
+		content2.style.cssText = ' height: ' + ( 0.25 * window.innerHeight ) + 'px; margin-bottom: 10px; overflow: auto; padding: 10px; ';
+
+		window.addEventListener('mouseup', mouseUp, false);
+
+	}
+
+	function mouseUp() {
+
+		window.removeEventListener( 'mousemove', divMove, true );
+
+	}
+
+	function mouseDown( event ){
+
+		if ( event.target.className === 'movable' ) {
+
+			offsetX = event.clientX - event.target.parentNode.offsetLeft;
+			offsetY = event.clientY - event.target.parentNode.offsetTop;
+
+			window.addEventListener('mousemove', divMove, true);
+
+		}
+
+	}
+
+	function divMove( event ){
+
+		if ( !event.target.parentNode.style ) { return; }
+
+		event.target.parentNode.style.left = ( event.clientX - offsetX ) + 'px';
+		event.target.parentNode.style.top = ( event.clientY - offsetY ) + 'px';
+
+	}
+
+	function toggleContent( content, content2 ) {
+
+		content.style.display = content.style.display === 'none' ? '' : 'none';
+
+		if ( content2 ) {
+
+			content2.style.display = content2.style.display === 'none' ? '' : 'none';
+			content.parentNode.style.width = content.parentNode.style.width === '250px' ? '50px' : '250px' ; 
+
+		}
+
+	}
+
+	function collapseContent( content ) {
+
+		for (var i = 0; i < content.children.length; i++) {
+
+			if ( content.children[ i ].tagName !== 'A' ) {
+
+				content.children[ i ].style.display = 'none';
+
+			}
+
+		}
+	}
+
+	function goTo( tab ) {
+
+		tab.previousElementSibling.scrollIntoView();
+
+	}
+
+</script>
+</body>
+</html>

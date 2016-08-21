@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title></title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<div style="height:500px;width:500;background-color:green;">
+    <div id="dxy" style="width:100px; background-color:red">test</div>
+</div>
+<script>
+
+window.onload = addListeners();
+document.body.style.cssText = ' font: bold 12pt monospace; ';
+var info = document.body.appendChild( document.createElement( 'div' ) );
+info.innerHTML = '<h1>Howdy</h1>';
+
+
+var offX;
+var offY;
+
+
+function addListeners(){
+    document.getElementById('dxy').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mouseup', mouseUp, false);
+
+}
+
+function mouseUp()
+{
+    window.removeEventListener('mousemove', divMove, true);
+}
+
+function mouseDown(e){
+  var div = document.getElementById('dxy');
+  offY= e.clientY-parseInt(div.offsetTop);
+  offX= e.clientX-parseInt(div.offsetLeft);
+ window.addEventListener('mousemove', divMove, true);
+}
+
+function divMove(e){
+    var div = document.getElementById('dxy');
+  div.style.position = 'absolute';
+  div.style.top = (e.clientY-offY) + 'px';
+  div.style.left = (e.clientX-offX) + 'px';
+}
+</script>
+</body>
+</html>

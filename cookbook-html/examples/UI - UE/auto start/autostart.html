@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>auto start</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script type='text/javascript'>
+	var init = function() {
+	demo = document.createElement( 'div' );
+	document.body.appendChild( demo );
+	demo.style.backgroundColor = '#ddd';
+	demo.style.borderRadius = '10px';
+	demo.style.boxShadow = '10px 10px 5px #888888';
+	demo.style.color = '#000';
+	demo.style.right = '300px';
+	demo.style.opacity = '0.85';
+	demo.style.padding = '0 15px 15px 15px';
+	demo.style.position = 'absolute';
+	demo.style.font = 'bold 16pt monospace';
+	demo.style.textAlign = 'left';
+	demo.style.top = '48px';
+	demo.style.width = '300px';
+	demo.innerHTML = '<h3 style="text-align:right;"><a href="#" title="Click to close" onClick="demo.style.display = \'none\'" style="color:#888;text-decoration:none;">[X]<\/a><br>TEST<\/h3>';
+}();
+
+</script>
+</body>
+</html>

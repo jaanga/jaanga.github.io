@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<title></title>
+<meta charset='utf-8'>
+<meta name='author' content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML = 
+		'body { font: bold 12pt monospace; }' +
+		'h1 { margin: 0; height: 40px; min-width: 200px; padding: 0px; }' +
+		'div.menu { background-color: #ddd; cursor: pointer; padding: 0 0 0 10px; position: absolute; top: 0; } ' +
+		'div.sidebar { background-color: #eee;  padding: 0 10px 0 10px; position: absolute; top: 40px;;} ' +
+	'';
+	
+	var menu1 = document.body.appendChild(document.createElement( 'div' ) );
+	menu1.className = 'menu';
+	menu1.style.cssText =  'left: 20px;  ' ;
+	menu1.innerHTML = '<h1 onclick="toggleBar( sidebar1 )" >Menu 1</h1>';
+
+	var sidebar1 = document.body.appendChild(document.createElement( 'div' ) );
+	sidebar1.className = 'sidebar';
+	sidebar1.style.cssText = ' display: none; left: 20px; width: 250px; ' ;
+	sidebar1.innerHTML = '<p>Document-centric projections unfetter traditional auditing practices rivaling central process management. Advanced functionality, easy administration, proclaim the hallmarks of unprecedented opportunity.</p>';
+
+	var menu2 = document.body.appendChild(document.createElement( 'div' ) );
+	menu2.className = 'menu';
+	menu2.style.cssText = 'left: 320px; ' ;
+	menu2.innerHTML = '<h1 onclick="toggleBar( sidebar2 )" >Menu 2</h1>';
+
+	var sidebar2 = document.body.appendChild(document.createElement( 'div' ) );
+	sidebar2.className = 'sidebar';
+	sidebar2.style.cssText = 'display: none; left: 320px; width: 500px;' ;
+	sidebar2.innerHTML = '<p>Iteration system wide engenders economies of scale, cross-media technology, presentation action items and life cycle replication.</p>';
+
+
+	var menu3 = document.body.appendChild(document.createElement( 'div' ) );
+	menu3.className = 'menu';
+	menu3.style.cssText = 'right: 20px; ' ;
+	menu3.innerHTML = '<h1 onclick="toggleBar( sidebar3 )" >Menu 3</h1>';
+
+	var sidebar3 = document.body.appendChild(document.createElement( 'div' ) );
+	sidebar3.className = 'sidebar';
+	sidebar3.style.cssText = 'display: none; right: 20px; width: 390px;' ;
+	sidebar3.innerHTML = '<p>Enterprise engenderment accelerates initiative platforms, reducing staffing components, integration of technical accessibility, resulting in bottom line pluralisms, benefit-wise. Incidental re-sizing staff requirements through attrition can be accelerated by paradigm shifts and focusing on core suitability and cross-training.</p>';
+
+	var menu4 = document.body.appendChild(document.createElement( 'div' ) );
+	menu4.className = 'menu';
+	menu4.style.cssText = 'right: 450px; ' ;
+	menu4.innerHTML = '<h1 onclick="toggleBar( sidebar4 )" >Menu 3</h1>';
+
+	var sidebar4 = document.body.appendChild(document.createElement( 'div' ) );
+	sidebar4.className = 'sidebar';
+	sidebar4.style.cssText = 'display: none; right: 450px; width: 400px;' ;
+	sidebar4.innerHTML = '<p>Conceptualizing random endpoints in a access matrix provides reach extensions enterprise wide. Respective divisions historically insignificant, upscale trend lines in a management inventory analysis survivability format.</p>';
+
+	function toggleBar( sidebar ) {
+		if ( sidebar.style.display === '' ) { sidebar.style.display = 'none'; } else { sidebar.style.display = ''; }
+	}
+</script>
+</body>
+</html>
