@@ -6,10 +6,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
 
 
-[STL Viewer LMI Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
+[Armour / Ferté  Viewer Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
 ===
 
-## Full Screen: [ STL Viewer LMI ]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html )
+## Full Screen: [ Armour / Ferté  Viewer LMI ]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html )
 
 
 <img src="" style=display:none; width=800 >
@@ -24,7 +24,7 @@ _STL Viewer LMI_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	.jshttps://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-3d-core-r7/' width=100% height=600 ></iframe>
+	https://jaanga.github.io/demo/ace-it/elevations-view/index.html' width=100% height=600 ></iframe>
 
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/ace-it/elevations-view/elevations-view-3d-core-r7.js';
 value='Source code listing' >

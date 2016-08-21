@@ -2,13 +2,13 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Armour / Ferté Elevations Viewer 3D R1</title>
+<title>Elevations View R1.1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Read a file of elevations. Create a Three.js 3D Mesh.
 Display in 3D. Add TMS overlay;
 ' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2016-08-01' >
+<meta name=date content='2016-08-18' >
 </head>
 <body>
 <!--
@@ -19,14 +19,9 @@ Display in 3D. Add TMS overlay;
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-<script src=elevations-view-3d-core-r7.js ></script>
+<script src=https://jaanga.github.io/terrain3/elevations/elevations-view/elevations-view-r1.js ></script>
+
 <script>
-
-console.time( 'timer0' );
-
-	var urlBase = '../elevations-data/';
-
-	var searchInFolder = 'ace-it/elevations-data/';
 
 	var stats, renderer, scene, camera, controls;
 
@@ -81,9 +76,11 @@ console.time( 'timer0' );
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-//				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
+				'<p><a href="../elevations-get/index.html" >Elevations Get</a></p>' +
 
-				'<div id=menuDetailsAPIKey style=display:none; ></div>' +
+// make into a js function.
+
+				'<div id=menuPlugins ></div>' +
 
 				'<div id=menuDetailsSelectFile ></div>' +
 
@@ -91,24 +88,14 @@ console.time( 'timer0' );
 
 				'<div id=menuDetailsTerrain ></div>' +
 
-				'<div id=menuDetailsElevations ></div>' +
-
-				'<div id=menuBackgroundSettings ></div>' +
-
-				'<div id=menuDetailsOverlay2 ></div>' +
-
-				'<details >' +
-					'<summary><h3>about</h3></summary>' +
-					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
-					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-					'<p>\'We stand on the shoulders of giants.\' In this case the giant is ' +
-						'<a href="https://developers.google.com/maps/documentation/javascript/" target="_blank">Google Maps JavaScript API</a></p>' +
-				'</details>' +
+				'<div id=menuDetailsAbout ></div>' +
 
 				'<hr>' +
 
-				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
-				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+				'<center>' +
+					'<a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+					'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+				'</center>' +
 
 			'</div>' +
 
@@ -146,6 +133,7 @@ console.time( 'timer0' );
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
 
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
 // helpers
 		axisHelper = new THREE.AxisHelper( 180 );
@@ -154,11 +142,9 @@ console.time( 'timer0' );
 
 // assets
 
-//		location.hash = defaultFile;
+		location.hash = 'cat=elevations-data-family+friends/';
 
-		initMenu();
-
-		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+		initMapViewMenu();
 
 	}
 
