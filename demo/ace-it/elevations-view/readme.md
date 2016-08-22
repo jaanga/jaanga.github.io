@@ -9,7 +9,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [Armour / Ferté Viewer Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
 ===
 
-## Full Screen: [ Armour / Ferté Elevations Viewer ]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html )
+## Full Screen: [ Armour / Ferté Elevations Viewer ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html )
 
 
 <img src="" style=display:none; width=800 >
@@ -19,6 +19,22 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _Armour / Ferté Elevations Viewer. Displays a random item from the current library of maps_
 
 
+Rotate: press and move one finger or left button
+Zoom: two finger pinch or scroll wheel
+Pan: press and move two fingers or right button
+
+## [Happy Valley, Hong Kong]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/happy-valley-hong-kong_15_26776_14303_3_3_150_150_.txt )
+
+
+## [Mill Valley ]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/mill-valley-ca_16_10456_25299_3_3_300_300_.txt )
+
+
+## [Ressons-le-long distant]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_11_1040_698_3_3_510_510_.txt )
+
+
+## [Ressons-le-long close]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_14_8334_5598_3_3_300_300_.txt )
+
+## [San Luis Obispo]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/san-luis-obispo-ca_12_672_1617_4_3_400_300_.txt )
 
 
 ## [Tania's House overlooking the Chattahoochee River]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/sandy-springs-ga_14_4348_6547_3_3_510_510_.txt )
