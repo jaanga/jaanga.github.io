@@ -4,10 +4,9 @@
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
+[ace-it]( https://jaanga.github.io/demo/ace-it/ ) »
 
-
-[Armour / Ferté Elevations Viewer ]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html )
- Viewer Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
+[Armour / Ferté Viewer Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
 ===
 
 ## Full Screen: [ Armour / Ferté Elevations Viewer ]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html )
@@ -17,7 +16,19 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <iframe src=https://jaanga.github.io/demo/ace-it/elevations-view/index.html width=100% height=600px ></iframe>
 
-_Armour / Ferté Elevations Viewer _
+_Armour / Ferté Elevations Viewer. Displays a random item from the current library of maps_
+
+
+
+
+## [Tania's House overlooking the Chattahoochee River]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/sandy-springs-ga_14_4348_6547_3_3_510_510_.txt )
+
+Look for the rapids on the [Chattahoochee River]( https://en.wikipedia.org/wiki/Chattahoochee_River ). Golf course is on one side. Tania's house is on the other side. 
+Then look for the highest house with a light-colored blob - that's Tania's pool. 
+
+The house certainly has the most significant or prominent location in the area.
+
+
 
 ## Features
 
