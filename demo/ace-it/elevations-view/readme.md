@@ -6,35 +6,67 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
 [ace-it]( https://jaanga.github.io/demo/ace-it/ ) »
 
-[Armour / Ferté Viewer Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
+[Elevations View ACE-IT Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
 ===
 
-## Full Screen: [ Armour / Ferté Elevations Viewer ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html )
+## Full Screen: [ Elevations View ACE-IT ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html )
 
 
 <img src="" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/demo/ace-it/elevations-view/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html width=100% height=600px ></iframe>
 
-_Armour / Ferté Elevations Viewer. Displays a random item from the current library of maps_
+_Elevations View ACE-IT. Displaying a random item from the current library of maps_
 
 
-Rotate: press and move one finger or left button
-Zoom: two finger pinch or scroll wheel
-Pan: press and move two fingers or right button
+### What you can do:
+* Rotate: press and move one finger or left button
+* Zoom: two finger pinch or scroll wheel
+* Pan: press and move two fingers or right button
+
+### Coming soon
+
+* Markers or placards to indicate the locations of places
+
 
 ## [Happy Valley, Hong Kong]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/happy-valley-hong-kong_15_26776_14303_3_3_150_150_.txt )
+
+Stubbs Villa on Shiu Fai Terrace in Happy Valley. Look for the racecourse, then the cemetery. Just above are three white blocks with a swimming pool. 
+
+Bonny View House on Wong Nai Chung Road
+
+The buildings are fun to look at. They seem to go in all directions -defying gravity
 
 
 ## [Mill Valley ]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/mill-valley-ca_16_10456_25299_3_3_300_300_.txt )
 
+Eight Laurel Street. Mill Valley CA
 
-## [Ressons-le-long distant]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_11_1040_698_3_3_510_510_.txt )
+
+The trees - even though they are 2D - look very 3D
 
 
-## [Ressons-le-long close]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_14_8334_5598_3_3_300_300_.txt )
+## [Ressons-le-long - distant view ]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_11_1040_698_3_3_510_510_.txt )
+
+The hillsides are for growing trees
+The plains are for growing food in bulk.
+The river valleys are for housing and small crop farming.
+larger low flat areas and fill tops are forests 
+
+## [Ressons-le-long - close view]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_14_8334_5598_3_3_300_300_.txt )
+
+La Ferme de la Montage. Ressons-le-long.
+
+This structure - dating from the 12th century - is located at the top of the least steep are of the entire hillside. 
+This allows for a much easier climb for people and beasts.
+It's also lavel enogh to grow crops instead of planting trees.
+The gives the structure a good view of any enemies approaching from the valley
+
+
 
 ## [San Luis Obispo]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/san-luis-obispo-ca_12_672_1617_4_3_400_300_.txt )
+
+CalPoly, the rock at Morro Bay, Route 101 slicing through the hills. Much to look at
 
 
 ## [Tania's House overlooking the Chattahoochee River]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/sandy-springs-ga_14_4348_6547_3_3_510_510_.txt )
@@ -44,6 +76,12 @@ Then look for the highest house with a light-colored blob - that's Tania's pool.
 
 The house certainly has the most significant or prominent location in the area.
 
+## [Allison's house in Santa Barbara - distant view]()
+
+
+## [Allison's house in Santa Barbara - close view]() 
+
+2224 Gibraltar Road & ???? Mountain Drive.
 
 
 ## Features
