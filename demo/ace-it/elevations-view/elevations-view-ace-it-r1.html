@@ -24,8 +24,10 @@ Display in 3D. Add TMS overlay;
 <script src=https://jaanga.github.io/terrain3/elevations/elevations-view/elevations-view-r2.js ></script>
 <script>
 
+	var searchInFolder = 'elevations-data-family+friends/';
+	var urlBase = 'https://jaanga.github.io/terrain3/elevations/' + searchInFolder;
 
-	location.hash = 'cat=elevations-data-family+friends/';
+//	location.hash = 'cat=elevations-data-family+friends/';
 
 	var stats, renderer, scene, camera, controls;
 

@@ -38,7 +38,7 @@ Bonny View House on Wong Nai Chung Road. On the oter side of the race course. To
 The buildings on the hill sides are fun to look at. They seem to go in all directions - defying gravity
 
 
-## [Mill Valley ]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/mill-valley-ca_16_10456_25299_3_3_300_300_.txt )
+## [Mill Valley ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/mill-valley-ca_16_10456_25299_3_3_300_300_.txt )
 
 Eight Laurel Street. Mill Valley CA
 
@@ -46,14 +46,14 @@ Eight Laurel Street. Mill Valley CA
 The trees - even though they are 2D - look very 3D
 
 
-## [Ressons-le-long - distant view ]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_11_1040_698_3_3_510_510_.txt )
+## [Ressons-le-long - distant view ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_11_1040_698_3_3_510_510_.txt )
 
 The hillsides are for growing trees
 The plains are for growing food in bulk.
 The river valleys are for housing and small crop farming.
 larger low flat areas and fill tops are forests 
 
-## [Ressons-le-long - close view]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_14_8334_5598_3_3_300_300_.txt )
+## [Ressons-le-long - close view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/ressons-le-long-france_14_8334_5598_3_3_300_300_.txt )
 
 La Ferme de la Montage. Ressons-le-long.
 
@@ -64,7 +64,7 @@ The gives the structure a good view of any enemies approaching from the valley
 
 
 
-## [San Luis Obispo]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/san-luis-obispo-ca_12_672_1617_4_3_400_300_.txt )
+## [San Luis Obispo]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/san-luis-obispo-ca_12_672_1617_4_3_400_300_.txt )
 
 CalPoly, the rock at Morro Bay, Route 101 slicing through the hills. Much to look at
 
@@ -79,7 +79,7 @@ The house certainly has the most significant or prominent location in the area.
 ## [Allison's house in Santa Barbara - distant view]()
 
 
-## [Allison's house in Santa Barbara - close view]() 
+## [Allison's house in Santa Barbara - close view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://2224-gibraltar-road-santa-barbara-ca_17_21958_52157_3_3_510_510_.txt) 
 
 2224 Gibraltar Road & ???? Mountain Drive.
 
