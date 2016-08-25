@@ -79,7 +79,7 @@ The house certainly has the most significant or prominent location in the area.
 ## [Allison's house in Santa Barbara - distant view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://santa-barbara-ca_14_2744_6518_3_3_510_510_.txt )
 
 
-## [Allison's house in Santa Barbara - close view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://2224-gibraltar-road-santa-barbara-ca_17_21958_52157_3_3_510_510_.txt) 
+## [Allison's house in Santa Barbara - close view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://2224-gibraltar-road-santa-barbara-ca_17_21958_52157_3_3_510_510_.txt ) 
 
 2224 Gibraltar Road & ???? Mountain Drive.
 
