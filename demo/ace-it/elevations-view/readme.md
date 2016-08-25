@@ -3,7 +3,7 @@
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/ace-it/elevations-view/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
-[Jaanga]( http://jaanga.github.io ) » [Demo]( http://jaanga.github.io/demo/  ) »
+[jaanga]( http://jaanga.github.io ) » [demo]( http://jaanga.github.io/demo/  ) »
 [ace-it]( https://jaanga.github.io/demo/ace-it/ ) »
 
 [Elevations View ACE-IT Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
@@ -29,13 +29,13 @@ _Elevations View ACE-IT. Displaying a random item from the current library of ma
 * Markers or placards to indicate the locations of places
 
 
-## [Happy Valley, Hong Kong]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/happy-valley-hong-kong_15_26776_14303_3_3_150_150_.txt )
+## [Happy Valley, Hong Kong]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/happy-valley-hong-kong_16_53552_28606_4_4_512_512_.txt )
 
-Stubbs Villa on Shiu Fai Terrace in Happy Valley. Look for the racecourse, then the cemetery. Just above are three white blocks with a swimming pool. 
+Stubbs Villa on Shiu Fai Terrace in Happy Valley. Look for the racecourse, then the cemetery. Just above are three white blocks with a swimming pool. That was us.
 
-Bonny View House on Wong Nai Chung Road
+Bonny View House on Wong Nai Chung Road. On the oter side of the race course. Too small to spot.
 
-The buildings are fun to look at. They seem to go in all directions -defying gravity
+The buildings on the hill sides are fun to look at. They seem to go in all directions - defying gravity
 
 
 ## [Mill Valley ]( file:///C:/Users/Theo/Dropbox/Public/git-repos/jaanga.github.io/demo/ace-it/elevations-view/elevations-view-r2.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/mill-valley-ca_16_10456_25299_3_3_300_300_.txt )

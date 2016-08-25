@@ -1,8 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>xml reader</title>
+<title>reader tcx r1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
@@ -11,6 +11,27 @@ Menu and contents in HTML.
 <meta name=date content='2016-04-29' >
 </head>
 <body>
+<textarea id=header style=display:none; >
+
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Paths</name>
+    <Placemark>
+      <LineString>
+        <altitudeMode>absolute</altitudeMode>
+        <coordinates>
+
+</textarea>
+<textarea id=footer style=display:none; >
+
+        </coordinates>
+      </LineString>
+    </Placemark>
+  </Document>
+</kml>
+
+</textarea>
 <script>
 
 //  http://jaanga.github.io/cookbook-html/examples/hamburger-menu/hamburger-child.html
@@ -21,12 +42,11 @@ Menu and contents in HTML.
 
 //	var xmlFile = 'http://crossorigin.me/http://www.w3schools.com/xml/cd_catalog.xml';
 
-	var xmlFile = 'http://crossorigin.me/http://wpcom-themes.svn.automattic.com/demo/theme-unit-test-data.xml';
-
-	var xmlFile = 'https://www.w3.org/TR/grddl-primer/hl7-sample.xml';
-	var xmlFile = 'http://crossorigin.me/http://www.w3schools.com/xml/plant_catalog.xml';
-	var xmlFile = 'http://crossorigin.me/http://www.w3schools.com/xml/plant_catalog.xml';
-	var xmlFile = 'http://crossorigin.me/https://crossorigin.me/http://github.com/ladybug-analysis-tools/ladybug-web/commits/gh-pages.atom';
+//	var xmlFile = 'http://crossorigin.me/http://wpcom-themes.svn.automattic.com/demo/theme-unit-test-data.xml';
+//	var xmlFile = 'https://www.w3.org/TR/grddl-primer/hl7-sample.xml';
+//	var xmlFile = 'http://crossorigin.me/http://www.w3schools.com/xml/plant_catalog.xml';
+//	var xmlFile = 'http://crossorigin.me/http://www.w3schools.com/xml/plant_catalog.xml';
+//	var xmlFile = 'http://crossorigin.me/https://crossorigin.me/http://github.com/ladybug-analysis-tools/ladybug-web/commits/gh-pages.atom';
 
 	init();
 
@@ -45,6 +65,8 @@ Menu and contents in HTML.
 			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
 			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'h3 {display: inline; }' +
 
 			'title { color: crimson; }' +
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
@@ -90,11 +112,8 @@ Menu and contents in HTML.
 				'<div id=menuOpenFile ></div>' +
 			'</details>' +
 
-
-
 			'<div id=info ></div>' +
 		'';
-
 
 //		requestXML( xmlFile );
 
@@ -107,11 +126,31 @@ Menu and contents in HTML.
 		reader = new FileReader();
 		reader.onload = function( event ) {
 
-			textArea.innerHTML = reader.result;
+//			textArea.innerHTML = reader.result;
 
 			xmlParse = ( new window.DOMParser() ).parseFromString( reader.result, "text/xml");
 
-console.log( 'xmlDoc', xmlParse );
+			tps = xmlParse.getElementsByTagName( 'Trackpoint' );
+
+			txt = '';
+
+			for ( var i = 0; i < tps.length; i++ ) {
+
+				tp = tps[ i ];
+				txt += 
+
+					tp.getElementsByTagName( 'LongitudeDegrees' )[0].firstChild.nodeValue + ',' +
+					tp.getElementsByTagName( 'LatitudeDegrees' )[0].firstChild.nodeValue + ',' +
+					tp.getElementsByTagName( 'AltitudeMeters' )[0].firstChild.nodeValue + '\n' +
+
+				'';
+
+			}
+
+			taDoc.value = header.value + txt + footer.value;
+
+//			lat = t99.getElementsByTagName( 'LatitudeDegrees' )[0].firstChild.nodeValue;
+//console.log( 'xmlDoc', ll, t99, lat );
 
 			menuOpenFile.innerHTML =
 				'name: ' + files.files[0].name + '<br>' +
@@ -120,13 +159,17 @@ console.log( 'xmlDoc', xmlParse );
 				'modified: ' + files.files[0].lastModifiedDate.toLocaleDateString() +
 			'';
 
-console.log( '', files );
+//console.log( '', files );
 
 		}
 
 		reader.readAsText( files.files[0] );
 
 	}
+
+
+
+
 
 	function requestXML( fileName ) {
 

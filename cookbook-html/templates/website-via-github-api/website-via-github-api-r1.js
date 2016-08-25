@@ -29,7 +29,7 @@
 	var b = '<br>';
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
-//	init();
+	init();
 
 	function init() {
 
