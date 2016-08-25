@@ -59,9 +59,8 @@ La Ferme de la Montage. Ressons-le-long.
 
 This structure - dating from the 12th century - is located at the top of the least steep are of the entire hillside. 
 This allows for a much easier climb for people and beasts.
-It's also lavel enogh to grow crops instead of planting trees.
+It's also level enough to grow crops instead of planting trees.
 The gives the structure a good view of any enemies approaching from the valley
-
 
 
 ## [San Luis Obispo]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/san-luis-obispo-ca_12_672_1617_4_3_512_384_.txt )
@@ -76,18 +75,25 @@ Then look for the highest house with a light-colored blob - that's Tania's pool.
 
 The house certainly has the most significant or prominent location in the area.
 
-## [Allison's house in Santa Barbara - distant view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://santa-barbara-ca_14_2744_6518_3_3_510_510_.txt )
+
+## [Allison's house in Santa Barbara - distant view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/santa-barbara-ca_14_2744_6518_3_3_510_510_.txt )
+
+Allison's house is hard to spot. Switch to 'Google Maps Hybrid' view and you can see the street names.
+
+The geology is lots of fun to look at.
 
 
-## [Allison's house in Santa Barbara - close view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://2224-gibraltar-road-santa-barbara-ca_17_21958_52157_3_3_510_510_.txt ) 
+## [Allison's house in Santa Barbara - close view]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-family+friends/2224-gibraltar-road-santa-barbara-ca_17_21958_52157_3_3_510_510_.txt ) 
 
-2224 Gibraltar Road & ???? Mountain Drive.
-
-
-## Features
+2224 Gibraltar Road & ???? Mountain Drive. Both houses in one view.
 
 
 
+## Change log
+
+### 2016-08-24
+
+* Ready to send
 
 ### 2016-07-28 ~ R1
 
