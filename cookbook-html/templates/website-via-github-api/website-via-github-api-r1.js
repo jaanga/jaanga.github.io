@@ -7,6 +7,7 @@
 	var urlEvents = 'https://api.github.com/orgs/jaanga/events';
 //	var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
 //	var urlEvents = 'https://api.github.com/orgs/sagemath/events';
+
 /*
 	var repo = 'jaanga.github.io';
 	var branch = 'master';
@@ -264,7 +265,7 @@
 
 			getFilesFromFolder( item );
 
-			requestFile( urlGHPages + item + 'README.md', function callbackMD( xhr ) {
+			requestFile( urlGHPages + item + '/readme.md', function callbackMD( xhr ) {
 
 				contents.innerHTML = converter.makeHtml( xhr.target.responseText );
 				contents.style.overflow = 'auto';
@@ -283,7 +284,7 @@
 
 	function setBreadCrumbs( dir ) {
 
-		var breadCrumbs, dirArray;
+//		var breadCrumbs, dirArray;
 
 		dirArray = dir.split( '/' );
 
@@ -300,11 +301,11 @@
 
 			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
 
-			breadCrumbs += '<h3><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a>&raquo </h3>';
+			breadCrumbs += '<h3><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h3>';
 
 		}
 
-		breadCrumbs += '<h4><a href=#' + dir + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a></h4>';
+		breadCrumbs += '<h3><a href=#' + dir + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
 
 		menuBreadCrumbs.innerHTML = breadCrumbs;
 
@@ -384,7 +385,7 @@
 	function requestGitHubAPIEvents() {
 
 		var xhr;
-		var events, event, txt, dates;
+		var events, event, txt, dates, actor, repo;
 		var eventSet = {};
 
 		xhr = new XMLHttpRequest();
