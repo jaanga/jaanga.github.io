@@ -46,7 +46,7 @@
 			'h2 a { color: crimson; }' +
 			'img { max-width: 100%; }' +
 			'iframe { width: 100%; }' +
-			'summary h2, summary h3, #menuBreadCrumbs h3 { display: inline; }' +
+			'summary h2, summary h3 { display: inline; }' +
 			'summary { outline: none; }' +
 
 			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 0 0 10px; position: absolute; max-width: 20%; }' +
@@ -314,13 +314,13 @@
 
 	function getFilesFromFolder( dir ) {
 
-		var file, fileArray;
+		var item, itemArray;
 
 		dirsSelected = [];
 
-		dirArray = dir.split( '/' );
+		var dirArray = dir.split( '/' );
 
-		dirLen = dir === '' ? 0 : dirArray.length;
+		var dirLen = dir === '' ? 0 : dirArray.length;
 
 		for ( var i = 0; i < itemsAll.length; i++ ) {
 
@@ -378,7 +378,6 @@
 		xhr.send( null );
 
 	}
-
 
 
 
