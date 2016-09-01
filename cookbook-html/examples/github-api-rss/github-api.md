@@ -161,7 +161,11 @@ https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 https://api.github.com/rate_limit
 
 
+
+
 ## Orgs
+
+https://api.github.com/orgs/
 
 https://api.github.com/orgs/ladybug-analysis-tools <<
 https://api.github.com/orgs/ladybug-analysis-tools/repos
@@ -170,30 +174,15 @@ https://api.github.com/orgs/ladybug-analysis-tools/events <<
 https://api.github.com/orgs/jaanga
 * lists number of repos
 
-
-
-
-### Commits
-
-* https://api.github.com/repos/jaanga/jaanga.github.io/commits
-
-
-
-### Contents
-
-https://api.github.com/repos/jaanga/jaanga.github.io/readme
-
-
-https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
-
 ### Issues
 
 https://api.github.com/orgs/ladybug-analysis-tools/issues
 
 
-### Pages
+## Organizations
 
-https://api.github.com/repos/jaanga/jaanga.github.io/pages/
+https://api.github.com/organizations?since=20000000
+https://api.github.com/organizations?q=followers:%3E20
 
 
 
@@ -212,6 +201,8 @@ https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
 
 ### start here
 
+* https://api.github.com/repositories?since=364
+* http://api.github.com/repos/ < nothing
 
 * https://api.github.com/repos/jaanga/jaanga.github.io << lists all calls
 * https://api.github.com/repos/jaanga/terrain3
@@ -219,11 +210,15 @@ https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
 
 https://github.com/mrdoob?tab=repositories
 
+
+
+
 ### Tree
 
-https://developer.github.com/v3/git/trees/
-https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
-https://api.github.com/repos/jaanga/terrain/git/trees/gh-pages?recursive=1
+* https://developer.github.com/v3/git/trees/
+
+* https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
+* https://api.github.com/repos/jaanga/terrain/git/trees/gh-pages?recursive=1
 
 
 ### Commits
@@ -232,6 +227,7 @@ https://api.github.com/repos/jaanga/jaanga.github.io/commits
 
 https://api.github.com/repos/izuzak/pmrpc/commits?path=examples
 https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/examples
+
 
 
 ### Contents
@@ -247,6 +243,13 @@ https://api.github.com/repos/mrdoob/three.js/contents/examples
 ### Issues
 
 https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+
+
+### Pages
+
+https://api.github.com/repos/jaanga/jaanga.github.io
+
+
 
 ### Statistics
 
@@ -278,12 +281,16 @@ https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 https://api.github.com/users
 * all users starting with is:1
 
+https://api.github.com/users?since=20000000
+
+https://api.github.com/search/users?q=type:org
+https://api.github.com/search/users?q=type:org&order=asc  < not
+
+
 https://api.github.com/users/theo-armour
 * lists repo count. gists, etc
 
-
 https://api.github.com/users/theo-armour/events
-
 
 https://api.github.com/users/jaanga/events?path=cookbook-html/examples
  
@@ -301,8 +308,6 @@ https://api.github.com/users/jaanga/events?login=redheli
 * https://www.quora.com/How-many-users-does-GitHub-have
 
 
-https://api.github.com/search/users?q=followers:0
-
 
 ### Code
 
@@ -310,8 +315,6 @@ https://api.github.com/search/code?q=3D+extension:stl << not
 
 https://api.github.com/search/code?q=MIT%32License%32path:project.clj
 
-
-### Files
 
 https://api.github.com/search/code?q=addClass+repo:jquery/jquery+filename:classes.js
 
@@ -328,17 +331,12 @@ https://api.github.com/search/issues?q=windows+label:bug+language:python+state:o
 https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc << ignores the repo
 https://api.github.com/search/issues?q=repo:jaanga/jaanga.github.io
 
-
 https://api.github.com/search/issues?q=@paulmasson+repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
-
-
 
 https://api.github.com/search/issues?q=language:js+created:2016-06-25
 
 
-
 js or JavaScript: both OK
-
 
 https://api.github.com/search/issues?q=created:2016-06-25&sort=comments&order=desc
 
@@ -347,45 +345,73 @@ https://api.github.com/search/issues?q=created:2016-06-25&sort=comments&order=de
 
 ### Repos
 
+sort stars, forks update
+
+* https://api.github.com/search/repositories?q=stars:%3E20000
+	* Access to the most popular repos on GitGub
+
 https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
 
 https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
 
-https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=created&order=asc
+https://api.github.com/search/repositories?q=forks:%3E9000&sort=forks&order=asc < OK
+https://api.github.com/search/repositories?q=commits:%3E1000 < bogus
+
+
+
+
+
+https://api.github.com/search/repositories?q=forks:%3E2000+type:org&sort=forks&order=desc < not
+https://api.github.com/search/repositories?q=type:org&sort=forks&order=asc < not good
+https://api.github.com/search/repositories?q=collaborators:%3E20&sort=stars&order=asc < not good
+
+
+
+
+From https://gist.github.com/jasonrudolph/6065289
+https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc  
+
+
+https://api.github.com/search/repositories?q=type:org
+https://api.github.com/search/repositories?q=followers:%3E1000
 
 
 https://api.github.com/search/repositories?q=jaanga
 https://api.github.com/search/repositories?q=user:jaanga
 
 
-From https://gist.github.com/jasonrudolph/6065289
-https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc  
-
 https://api.github.com/search/repositories?q=@jeresig-language:javascript << not
 
-
+https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=created&order=asc
 
 
 
 ### Users
+https://www.quora.com/How-many-users-does-GitHub-have
+
+
 
 From https://gist.github.com/jasonrudolph/6065289
 
+https://api.github.com/search/users?q=followers:%3E1000
+
 
 https://api.github.com/search/users?q=
-
 https://api.github.com/search/users?q=followers:0
 https://api.github.com/search/users?q=followers:>20
-https://api.github.com/search/users?q=followers:%3E20
+https://api.github.com/search/users?q=followers:%3E2000&sort=created&order=desc
 
+https://api.github.com/search/users?q=type:org+created:%3E2016-08-28&sort=stars&order=asc
+
+https://api.github.com/search/users?q=stars:%3E20+type:org < not
+
+https://api.github.com/search/users?q=type:org&sort=created&order=desc < no sorting
 
 
 
 
 
 ### Regular GitHub Search
-
-
 
 https://github.com/search?q=NASA-3D&extension:stl&type=Code&s=indexed
 https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
@@ -408,7 +434,6 @@ https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/readme << per fi
 
 https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/pages/builds
 
-
 https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/contributors
 https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/commit_activity
 https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/code_frequency
@@ -417,9 +442,7 @@ https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/punch_card
 
 https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats
 
-
 https://api.github.com/repos/ladybug-analysis-tools/stats
-
 
 https://api.github.com/users/ladybug-analysis-tools/received_events
 https://api.github.com/users/ladybug-analysis-tools/repos

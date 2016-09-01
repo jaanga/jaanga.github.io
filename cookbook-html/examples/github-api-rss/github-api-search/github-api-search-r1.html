@@ -30,6 +30,7 @@ Menu and contents in HTML.
 		'q=repo:jaanga/jaanga.github.io',
 		'q=type:user',
 		'q=type:org',
+		'q=type:org+followers:>20',
 
 	];
 
@@ -106,6 +107,9 @@ Menu and contents in HTML.
 				'</p>' +
 
 				'<p>' +
+					'<button onclick=getOrganizations("organizations"); > get Organizations </button>' +
+				'</p>' +
+				'<p>' +
 					'<button onclick=getSearch("users"); > getSearch Users </button>' +
 				'</p>' +
 
@@ -140,6 +144,48 @@ Menu and contents in HTML.
 
 	}
 
+
+	function getOrganizations() {
+
+		var fileName, xhr, repos, txt;
+
+		url = 'https://api.github.com/organizations' + '?' + queries[ selQuery.selectedIndex ];
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.responseText );
+
+console.log( 'response', response.items[ 0 ] );
+
+			txt = '<h4>Query: ' + url.slice( 43 ) + '</h4> total count: ' + response.total_count.toLocaleString() + b;
+
+			for ( var i = 0; i < response.items.length; i++ ) {
+
+				rep = response.items[ i ];
+
+				txt += ( i + 1 ) +'. <button onclick=getReadMe(' + i + ',"README.md"); >readme</button> <h3><a href=' + rep.html_url + ' target="_blank" >' + rep.name + '</a></h3> ~ ' + 
+					rep.score.toFixed() + ' ~ ' + 
+					( rep.updated_at ? rep.updated_at.slice( 0, 10 ) : '' ) + 
+					( rep.watchers ? ' ~ stars: ' + rep.watchers.toLocaleString() : '' ) + 
+					( rep.forks ? ' ~ forks: ' + rep.forks.toLocaleString() : '' ) + 
+					' ~ language: ' + rep.language + b + 
+
+					rep.full_name + ': ' + rep.description + b + b;
+
+				''
+
+			}
+
+			menuContents.innerHTML = txt;
+
+		}
+
+	}
 
 	function getSearch( type ) {
 

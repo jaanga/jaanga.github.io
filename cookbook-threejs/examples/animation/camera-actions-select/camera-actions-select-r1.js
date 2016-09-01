@@ -1,31 +1,36 @@
 
-	var segments = 20;
-	var points = 200;
+
+// http://jaanga.github.io/cookbook-threejs/examples/animation/camera-actions-select/
+
+
 	var cameraPoints = 2000;
 	var zoomScale = 1;
 
 	var actor;
 	var curve;
-	var target;
 
-	var center;
 	var index = 0;
 	var motion = true;
 
 	var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	var origin = v( 0, 0, 0 );
+	var center = origin;
+	var target = origin;
+	var sin = Math.sin;
+	var cos = Math.cos;
+
 
 // prevent default animate
 	function animate() {}
 
 
-	function setMenuDetailsCameraActions() {
+	function getMenuDetailsCameraActions() {
 
-		menuDetailsCameraActions.innerHTML =
+		var menuDetailsCameraActions =
 
 			'<details open>' +
 
-				'<summary><h3>camera actions</h3></summary>' +
+				'<summary><h3>Camera actions</h3></summary>' +
 
 				'<p><input type=checkbox onclick=motion=!motion checked > motion</p>' +
 
@@ -51,47 +56,16 @@
 
 			'</details>';
 
-		target = origin;
-
-		animatePlus();
+		return menuDetailsCameraActions;
 
 	}
 
-
-
-
-	function getNicePath() {
-
-		var vertices, spline;
-		var geometry, material, line;
-
-		vertices = [];
-
-		for ( var i = 0; i < 2 * segments * Math.PI; i++ ) {
-
-			vertices.push( v( Math.sin( i * 7 / segments ) * 30, Math.cos( i * 3 / segments  ) * 30, Math.sin( i * 2 / segments  ) * 30 ) );
-
-		}
-
-		spline = new THREE.CatmullRomCurve3( vertices );
-		spline.closed = true;
-
-		geometry = new THREE.Geometry();
-		geometry.vertices = spline.getPoints( points );
-
-		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-
-		line = new THREE.Line( geometry, material );
-
-		return line;
-
-	}
 
 
 	function cameraChase() {
 
 		actor.add( camera );
-		camera.position.set( 80 * zoomScale, 80 * zoomScale, 80 * zoomScale );
+		camera.position.set( 50 * zoomScale, 50 * zoomScale, 50 * zoomScale );
 		target = origin;
 
 	}
@@ -100,8 +74,9 @@
 	function cameraInside() {
 
 		actor.mesh.add( camera );
-		camera.position.set( 50 * zoomScale, 30 * zoomScale, 0 * zoomScale );
+		camera.position.set( 40 * zoomScale, 0 * zoomScale, 0 * zoomScale );
 		target = origin;
+		controls.autoRotate = false;
 
 	}
 
@@ -124,6 +99,55 @@
 	}
 
 
+// just in case 
+
+	function getActor() {
+
+		actor = new THREE.Object3D();
+
+		geometry = new THREE.TorusKnotGeometry( 5 * zoomScale, 1 * zoomScale, 80 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+
+		actor.add( mesh );
+		actor.mesh = mesh;
+		scene.add( actor );
+
+	}
+
+
+	function getNicePath( scale ) {
+
+		var segments = 20;
+		var points = 100;
+		var vertices, spline;
+		var geometry, material, line;
+
+		scale = scale || 30;
+		vertices = [];
+
+		for ( var i = 0; i < 2 * segments * Math.PI; i++ ) {
+
+			vertices.push( v( scale * sin( i * 7 / segments ), scale * cos( i * 3 / segments  ), scale * sin( i * 2 / segments  ) ) );
+
+		}
+
+		spline = new THREE.CatmullRomCurve3( vertices );
+		spline.closed = true;
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = spline.getPoints( points );
+
+		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+
+		line = new THREE.Line( geometry, material );
+
+		return line;
+
+	}
+
+//
+
 	function animatePlus() {
 
 		var point, pointAhead;
@@ -140,7 +164,11 @@
 
 		index += 1 / cameraPoints;
 
-		point = Math.abs( Math.sin( index ) );
+//		index = Math.abs( sin( index ) );
+
+		index = index > 1 ? 0 : index;
+
+		point = index;
 
 		actor.position.copy( curve.getPoint( point ) );
 		actor.mesh.rotation.setFromVector3( curve.getTangent( point ) );

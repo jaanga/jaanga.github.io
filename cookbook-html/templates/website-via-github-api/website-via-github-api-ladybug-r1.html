@@ -14,7 +14,7 @@ Menu has breadcrumbs and other useful links.
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
-<script src=website-via-github-api-r1.js ></script>
+<script src=website-via-github-api-r2.js ></script>
 <script>
 
 
@@ -34,9 +34,10 @@ Menu has breadcrumbs and other useful links.
 */
 
 	var org = 'ladybug-analysis-tools';
-	var repo = 'ladybug-analysis-tools.github.io';
-	var branch = 'master';
+	var repo = 'ladybug-web';
+	var branch = 'gh-pages';
 	var folder = '';
+	var defaultFile = '/readme.md';
 
 	var urlGitHubTree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
 	var urlGHPages = 'https://' + user + '.github.io/' + repo + '/';
@@ -46,7 +47,45 @@ Menu has breadcrumbs and other useful links.
 
 	init();
 
-// https://developer.github.com/v3/git/trees/
+	function init() {
+
+		var menu;
+
+		getCSS();
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			getMenuBreadCrumbs( folder ) +
+
+			'<div id=menuFolderNameTableOfContents ></div>' +
+
+			getMenuDetailsPageActions() +
+
+			getMenuDetailsRepositoryStatistics() +
+
+			getMenuRepositoryEvents() +
+
+			getMenuDetailsAbout() +
+
+			getMenuFooter() +
+
+		b;
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		getContents();
+
+		divUpdates = document.body.appendChild( document.createElement( 'div' ) );
+		divUpdates.id = 'divUpdates';
+
+		getUpdates();
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+	}
 
 </script>
 </body>

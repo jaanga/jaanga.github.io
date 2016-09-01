@@ -15,7 +15,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <img src="" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/documents/xxxxxx/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/documents/xxxxxx/index.html width=100% height=600px onload=this.contentWindow.controls.enableZoom=false; ></iframe>
 
 
 _XXXXXX_

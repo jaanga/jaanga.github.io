@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Menu Left Select Popular R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Obtains elevation data via the Google Maps API Elevation service..
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-08-30' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+
+<script src=../../core/three-columns/three-columns-r1.js ></script>
+<script src=../../core/menu-left-select-popular/menu-left-select-popular-r2.js ></script>
+
+<script src=user-data.js ></script>
+<script>
+
+	init();
+
+	function init() {
+
+		var menu;
+
+		getCSS();
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			getMenuDetailsHeader() +
+
+			getMenuDetailsPopularOptions() +
+
+			'<div id=menuFolderNameTableOfContents ></div>' +
+
+			'<div id=menuUserInfo ></div>' +
+
+//			getMenuDetailsPageActions() +
+
+//			getMenuDetailsRepositoryStatistics() +
+
+//			getMenuRepositoryEvents() +
+
+			getMenuDetailsAbout() +
+
+			getMenuFooter() +
+
+		b;
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+contents.innerHTML = 'lllllll';
+//		getContents();
+
+		divUpdates = document.body.appendChild( document.createElement( 'div' ) );
+		divUpdates.id = 'divUpdates';
+
+divUpdates.innerHTML = 'lllllll';
+//		getUpdates();
+
+//		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		getPopularItems();
+
+	}
+
+</script>
+</body>
+</html>

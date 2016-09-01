@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Core R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Obtains elevation data via the Google Maps API Elevation service..
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-08-28' >
+</head>
+<body>
+<script src=../../core/core/github-api-core-r1.js ></script>
+<script>
+
+// switch to content slider?
+
+
+	init();
+
+	function init() {
+
+		var mapDiv, hamburger, menu, contents;
+
+		setCSS();
+
+		mapDiv = document.body.appendChild( document.createElement( 'div' ) );
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>';
+
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			getMenuDetailsHeader() +
+
+			'<p>' +
+				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?' +
+			'</p>' +
+
+			getMenuDetailsAbout() +
+
+			getMenuFooter() +
+
+		b;
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+	}
+
+</script>
+</body>
+</html>

@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Three.js Basic</title>
+<title>Get Altitude R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-08-07' >
 </head>
 <body>
 <!--
@@ -17,9 +17,10 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-
+<script src=get-altitude-r2.js ></script>
 <script>
 
+	var b = '<br>';
 	var stats, renderer, scene, camera, controls, mesh;
 
 	init();
@@ -75,19 +76,14 @@
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-
-				'<p><button onclick=getIt(); >get it</button></p>' +
-
 				'<p>' +
-					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
+//					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+//					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
 				'</p>' +
 
-				'<p title="Press spacebar or click in window to stop." >' +
-						'<input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate checked > rotation ' +
-				'</p>'  +
+//				'<div id=menuDetailsAltitude ></div>' +
 
-				'<div id=menuInfo ></div>' +
+				getMenuDetailsAltitude() +
 
 				'<details>' +
 					'<summary><h3>about</h3></summary>' +
@@ -100,8 +96,6 @@
 
 				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
 				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
-
-//				'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
 
 			'</div>' +
 
@@ -116,6 +110,8 @@
 		document.body.appendChild( stats.domElement );
 		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
 
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
@@ -128,21 +124,11 @@
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
-		controls.autoRotate = true;
+//		controls.autoRotate = true;
 
 		scene = new THREE.Scene();
 
-		window.addEventListener( 'resize', onWindowResize, false );
-		window.addEventListener( 'keyup', onKeyUp, false );
-		renderer.domElement.addEventListener( 'click', function() {  controls.autoRotate = !controls.autoRotate; chkRotate.checked = controls.autoRotate; }, false );
-
 // helpers
-
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
 
 		gridHelper  = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -10, 0 );
@@ -154,20 +140,43 @@
 // assets
 
 
+		drawWavyPlane();
+
+		initGetAltitude();
+
 	}
 
-	function onKeyUp ( event ) {
+	function drawWavyPlane() {
 
-//console.log( 'key', event.keyCode );
+		geometry = new THREE.PlaneBufferGeometry( 100, 100, 99, 99 );
+		vertices = geometry.attributes.position.array;
 
-//		controls.enableKeys = false;
-		event.preventDefault();
+		index = 2;
 
-		switch( event.keyCode ) {
-			case 32: controls.autoRotate = !controls.autoRotate; chkRotate.checked = controls.autoRotate; break; // space bar
+		for ( var i = 0; i < 100; i++ ) {
+
+			for ( var j = 0; j < 100; j++ ) {
+
+				vertices[ index ] = 10 * Math.sin( i / 10 ) * Math.cos( j / 10 );
+				index += 3;
+
+			}
+
 		}
 
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		geometry.attributes.position.needsUpdate = true
+
+		material = new THREE.MeshNormalMaterial( { side: 2 });
+		mesh = new THREE.Mesh( geometry, material );
+//		mesh.scale.set( 100, 10, 100 );
+		scene.add( mesh );
+
 	}
+
 
 	function onWindowResize() {
 
