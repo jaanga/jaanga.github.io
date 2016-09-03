@@ -1,90 +1,101 @@
-// copyright &copy 2016 jaanga authors 
+// Copyright &copy; 2016 Jaanga authors
 
 
-	defaults = {}; // in alphabetical order
-
-
-// shortcuts
-
+	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 	var b = '<br>';
+	var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
-	function getCSS() {
+
+
+	function initThreeColumnsCore() {
+
+		var menu;
+
+		getCSSCore();
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			getMenuDetailsHeaderCore() +
+
+			txt +
+
+//			'<div id=menuFolderNameTableOfContents ></div>' +
+
+//			getMenuDetailsPageActions() +
+
+//			getMenuDetailsRepositoryStatistics() +
+
+//			getMenuRepositoryEvents() +
+
+			getMenuDetailsAboutCore() +
+
+			getMenuFooterCore() +
+
+		b;
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+contents.innerHTML = '<h1>contents</h1>' + txt;
+
+//		getContents();
+
+		updates = document.body.appendChild( document.createElement( 'div' ) );
+		updates.id = 'updates';
+
+updates.innerHTML = '<h1>updates</h1>' + txt;
+
+//		getUpdates();
+
+//		window.addEventListener ( 'hashchange', onHashChange, false );
+
+	}
+
+
+
+	function getCSSCore() {
 
 		var css;
 
-		css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML =  // in alphabetical order
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
 
-			'html { height: 100%; }' +
-			'body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
-			'h2, h3 { margin: 0; }' +
-			'a { color: crimson; text-decoration: none; }' +
-			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'body { font: 12pt monospace; margin: 0; }' +
 
-			'iframe { background-color: white; border: 0px; height: 100%; margin-top: 0px; width: 100%; }' +
-			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
-			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
-			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
-
-			'p { margin: 0 0 5px 0; }' +
-			'summary h3, summary h4 { display:inline; }' +
-			'summary { outline: none; }' +
-
-			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
-
-			'#bars { background-color: #eee; color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
-			'#mapDiv { height: 100%; text-align: center; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
-				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
-
-		'';
-
-	}
-
-	function setCSSView() {
-
-		var cssView;
-
-		cssView = document.body.appendChild( document.createElement('style') );
-		cssView.innerHTML =
-
-			'body { font: 12pt monospace; margin: 0; overflow: hidden; padding: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
-			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
-			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
-			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'h2, h1 { margin: 0 }' +
 
+			'img { margin: 10px; max-width: 90%; }' +
+			'iframe { width: 100%; }' +
+
+			'select { min-width: 200px; }' +
+			'summary h2, summary h3 { display: inline; }' +
 			'summary { outline: none; }' +
-			'summary h3, summary h4 { display:inline; }' +
 
+			'.butt2 { width: 108px; }' +
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
-			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#contents { border: 0px red solid; left: 22%; position: absolute; top: 0; max-width: 55%; }' +
 
-			'#container { left: 0; position: absolute; transition: left 1s; }' +
+			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 5px 0 10px; position: absolute; max-width: 20%; }' +
+			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 0 0 10px; overflow-y: auto; position: fixed; width: 300px; }' +
 
-			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 20%; padding: 0 20px; }' +
 
-			'#menu { background-color: #eee; border: 1px #ccc solid; max-height: ' + window.innerHeight + 'px; overflow: auto; padding: 0 10px; position: absolute; width: 300px; }' +
-			'#menu h2 { margin: 0; }' +
 
-		'';
+			'#repositoryEvents h4 { margin: 0; }' +
+			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +
 
-	}
-
-	function getPlaceDefaults() {
-
+		b;
 
 	}
 
-
-// menus
-
-	function getMenuDetailsHeader() {
+	function getMenuDetailsHeaderCore() {
 
 		var menuDetailsHeader = 
 
@@ -106,11 +117,11 @@
 	}
 
 
-	function getMenuDetailsAbout() {
+	function getMenuDetailsAboutCore() {
 
 		var menuDetailsAbout =
 
-			'<details>' +
+			'<details id=detailsAbout >' +
 
 				'<summary><h3>About</h3></summary>' +
 
@@ -119,8 +130,8 @@
 					'<jaanga.github.io/license.md >MIT license</a>' +
 				'</p>' +
 
-				'<p>Thank you <a href=https://developers.google.com/maps/documentation/javascript/elevation > Google Maps </a> and ' +
-					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
+				'<p>Thank you <a href=https://developer.github.com/v3/ > GitHub API </a> ' +
+//					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
 
 				'<p>Click the \'i in a circle\' info icon for more <a href=index.html#readme.md >help</a></p>' +
 
@@ -133,7 +144,7 @@
 	}
 
 
-	function getMenuFooter() {
+	function getMenuFooterCore() {
 
 		var footer = 
 
@@ -143,12 +154,36 @@
 				'<a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a>' +
 			'</center>' +
 
-			'<div class=popUp id=pop2 style=display:none;bottom:10px; >' +
+			'<div class=popUp id=pop2 style=display:none; >' +
 				'Jaanga - your 3D happy place.<br>Click here to return to the top of the page' +
 			'</div>' +
 
 		b;
 
 		return footer;
+
+	}
+
+
+
+	function onHashChange() {
+
+		hashes = location.hash ? location.hash.split( '#' ) : [ '', selUser.value, 1 ];
+
+		name = hashes[ 1 ];
+
+		page = parseInt( hashes[ 2 ], 10 );
+
+		document.title = name + ' - page ' + page + ' - GitHub API Users Events ';
+
+		for ( var i = 0; i < selUser.options.length; i++ ) {
+
+			if ( selUser.options[ i ].value === name ) { selUser.selectedIndex = i; }
+
+		}
+
+		getAPIUserData( name );
+
+		getEvents( name, page );
 
 	}
