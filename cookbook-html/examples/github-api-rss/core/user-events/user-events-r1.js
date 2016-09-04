@@ -12,7 +12,7 @@
 		var eventSet = {};
 		var target = updates;
 
-		var urlEvents = 'https://api.github.com/users/' + user + '/events';
+		var urlEvents = 'https://api.github.com/users/' + user + '/events'  + ( token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', urlEvents, true );

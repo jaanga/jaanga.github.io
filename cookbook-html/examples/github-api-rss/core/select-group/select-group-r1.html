@@ -2,20 +2,22 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API User Explorer R1</title>
+<title>GitHub API User Explorer R4</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Obtains elevation data via the Google Maps API Elevation service..
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-08-30' >
+<meta name=date content='2016-09-03' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 
 <script src=../../core/core/github-api-core-r2.js ></script>
-<script src=../../core/select-popular/select-popular-r3.js ></script>
+<script src=../../core/select-group/select-group-r1.js ></script>
 <script src=../../core/user-data/user-data-r1.js ></script>
 <script src=../../core/user-events/user-events-r1.js ></script>
+<script src=../../core/user-events-big/user-events-big-r1.js ></script>
+<script src=../../users.js ></script>
 <script>
 
 	initThreeColumnsCore();
@@ -24,11 +26,9 @@
 
 		getMenuDetailsHeaderCore() +
 
+		getMenuDetailsSelectGroup() +
+
 		getMenuDetailsSelectPopular() +
-
-		'<div id=menuFolderNameTableOfContents ></div>' +
-
-		'<div id=menuUserInfo ></div>' +
 
 		getMenuDetailsAboutCore() +
 
@@ -36,7 +36,7 @@
 
 	b;
 
-	getPopularItems();
+	setGroupDetails();
 
 </script>
 </body>

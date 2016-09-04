@@ -5,7 +5,7 @@
 
 		var url, xhr, keys;
 
-		url = 'https://api.github.com/users/' +  user;
+		url = 'https://api.github.com/users/' +  user + ( token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', url, true );
@@ -15,6 +15,17 @@
 		function callback() {
 
 			response = JSON.parse( xhr.responseText );
+
+//console.log( 'msdddd ', response.message  );
+
+			if ( response.message ) {
+
+				menuUserInfo.innerHTML = response.message;
+
+				return;
+
+			}
+
 			keys = Object.keys( response );
 
 			txt = '';
@@ -344,7 +355,7 @@
 
 		var fileName, xhr;
 
-		fileName = 'https://api.github.com/users/' + user + '/gists';
+		fileName = 'https://api.github.com/users/' + user + '/gists' + '?sort=updated&order=desc&per_page=100';
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
@@ -375,7 +386,7 @@
 
 		var fileName, xhr, repos, txt;
 
-		fileName = 'https://api.github.com/users/' + user + '/repos';
+		fileName = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100' + ( token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
@@ -386,7 +397,15 @@
 
 			repos = JSON.parse( xhr.responseText );
 
-console.log( 'repos', repos );
+//console.log( 'repos', repos );
+
+			if ( response.message ) {
+
+				contents.innerHTML = response.message;
+
+				return;
+
+			}
 
 			txt = '<h1>' + response.login + ' Repositories</h1>';
 
@@ -398,7 +417,7 @@ console.log( 'repos', repos );
 
 					'<h3>' +
 
-						'<a href=' + repo.html_url + ' >' + repo.name + '</a>' +
+						( i + 1 ) + ' <a href=' + repo.html_url + ' >' + repo.name + '</a>' +
 						( repo.fork === true ? ' ~ fork ~ ' : ' ~ ' ) +
 						'forks: ' + repo.forks.toLocaleString() + ' ~ ' +
 						'stars: ' + repo.watchers.toLocaleString() + ' ~ ' +

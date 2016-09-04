@@ -1,11 +1,13 @@
 // Copyright &copy; 2016 Jaanga authors
 
+// Documentation: https://developer.github.com/v3/
 
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 	var b = '<br>';
 	var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
-
+	var page;
+	var token;
 
 	function initThreeColumnsCore() {
 
@@ -21,14 +23,6 @@
 
 			txt +
 
-//			'<div id=menuFolderNameTableOfContents ></div>' +
-
-//			getMenuDetailsPageActions() +
-
-//			getMenuDetailsRepositoryStatistics() +
-
-//			getMenuRepositoryEvents() +
-
 			getMenuDetailsAboutCore() +
 
 			getMenuFooterCore() +
@@ -38,16 +32,13 @@
 		contents = document.body.appendChild( document.createElement( 'div' ) );
 		contents.id = 'contents';
 
-contents.innerHTML = '<h1>contents</h1>' + txt;
+		contents.innerHTML = '<h1>contents</h1>';
 
-//		getContents();
 
 		updates = document.body.appendChild( document.createElement( 'div' ) );
 		updates.id = 'updates';
 
-updates.innerHTML = '<h1>updates</h1>' + txt;
-
-//		getUpdates();
+		updates.innerHTML = '<h1>updates</h1>';
 
 //		window.addEventListener ( 'hashchange', onHashChange, false );
 
@@ -70,11 +61,10 @@ updates.innerHTML = '<h1>updates</h1>' + txt;
 
 			'h2, h1 { margin: 0 }' +
 
-			'img { margin: 10px; max-width: 90%; }' +
 			'iframe { width: 100%; }' +
 
-			'select { min-width: 200px; }' +
-			'summary h2, summary h3 { display: inline; }' +
+			'select { width: 100%; }' +
+			'summary h2, summary h3, summary h4 { display: inline; }' +
 			'summary { outline: none; }' +
 
 			'.butt2 { width: 108px; }' +
@@ -82,14 +72,19 @@ updates.innerHTML = '<h1>updates</h1>' + txt;
 
 			'#contents { border: 0px red solid; left: 22%; position: absolute; top: 0; max-width: 55%; }' +
 
-			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 5px 0 10px; position: absolute; max-width: 20%; }' +
-			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 0 0 10px; overflow-y: auto; position: fixed; width: 300px; }' +
+			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 10px 0 10px; position: absolute; max-width: 20%; }' +
+			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 0 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 300px; }' +
+			'#menu img { max-width: 200px; }' +
 
 			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 20%; padding: 0 20px; }' +
 
-
 			'#repositoryEvents h4 { margin: 0; }' +
 			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +
+
+
+			'#divSplash { background-color: #ccc; border: 2px solid #888; height: 80%; width: 500px;' +
+				'overflow: hidden; left: 350px; position: absolute; resize: none; top: 100px; }' +
+			'#splashHeader { text-align: right; }' +
 
 		b;
 

@@ -13,10 +13,10 @@
 				'<summary><h3>Select a GitHub user</h3></summary>' +
 
 				'<p>' +
-					'<select id=selUser onchange=getOrgDetails(this); title="Select the option" size=15 style=width:100%; >' +
+					'<select id=selUser onchange=getUserDetails(this); title="Select the option" size=15 style=width:100%; >' +
 					'</select>' +
 				'</p>' +
-
+// add enter a name
 				'<p id=stats ></p>' +
 
 				'<p id=stuff ></p>' +
@@ -68,23 +68,23 @@
 
 			selUser.selectedIndex = Math.floor( selUser.length * Math.random() );
 
-			getOrgDetails( selUser );
+			getUserDetails( selUser );
 
 		}
 
 	}
 
-	function getOrgDetails( org ) {
+	function getUserDetails( user ) {
 
-//console.log( 'org', org );
-// https://api.github.com/orgs/ladybug-analysis-tools/repos
+//console.log( 'user', user );
+// https://api.github.com/users/ladybug-analysis-tools/repos
 
-		location.hash = org.value;
+		location.hash = user.value;
 
-		getAPIUserData( org.value );
+		getAPIUserData( user.value );
 
-		getRepos( org.value );
+		getRepos( user.value );
 
-		requestGitHubAPIEvents( org.value )
+//		requestGitHubAPIEvents( user.value )
 
 	}

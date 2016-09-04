@@ -290,7 +290,7 @@ https://api.github.com/search/users?q=type:org&order=asc  < not
 https://api.github.com/users/theo-armour
 * lists repo count. gists, etc
 
-https://api.github.com/users/theo-armour/events
+https://api.github.com/users/theo-armour/events?type=issueEvent
 
 https://api.github.com/users/jaanga/events?path=cookbook-html/examples
  

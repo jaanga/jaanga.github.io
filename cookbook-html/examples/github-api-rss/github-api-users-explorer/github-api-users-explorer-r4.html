@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API User Explorer R4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Obtains elevation data via the Google Maps API Elevation service..
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-03' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+
+<script src=../core/core/github-api-core-r2.js ></script>
+<script src=../core/select-group/select-group-r1.js ></script>
+<script src=../core/user-data/user-data-r1.js ></script>
+<script src=../core/user-events/user-events-r1.js ></script>
+<script src=../core/user-events-big/user-events-big-r1.js ></script>
+<script src=../users.js ></script>
+<script>
+
+	var org = 'theo-armour';
+	var repo = 'terrain3';
+	var title = 'status updates';
+
+	var urlIssues = 'https://api.github.com/repos/' + user + '/' + repo + '/issues?labels=Status%20Update';
+	var urlReadMe = 'https://jaanga.github.io/terrain3/readme.md';
+
+
+	initThreeColumnsCore();
+
+	menu.innerHTML =
+
+		getMenuDetailsHeaderCore() +
+
+		getMenuDetailsSelectGroup() +
+
+		getMenuDetailsSelectPopular() +
+
+		getMenuDetailsAboutCore() +
+
+		getMenuFooterCore() +
+
+	b;
+
+//	setGroupDetails();
+
+	selUser.innerHTML = peepsTheo;
+
+	selUser.selectedIndex = 0;
+
+	getUserDetails( selUser );
+
+//	setSpash()
+
+	function setSpash () {
+
+
+
+		divSplash = document.body.appendChild( document.createElement( 'div' ) );
+		divSplash.id = 'divSplash';
+
+		divSplash.innerHTML =
+
+			'<div id=splashHeader >' +
+
+				'<button onclick=divSplash.style.display=divSplash.style.display===""?"none":""; > [X] </button>' +
+
+
+			'</div>' +
+
+			'<div id=splashBody >' + txt + '</div>' +
+
+		'';
+
+		getIssues()
+	}
+
+
+	function getIssues(){
+
+//		var issues, txt;
+
+		fileName = location.hash ? location.hash.slice( 1 ) : urlIssues;
+
+		requestFile( fileName, function ( xhr ) {
+
+			issues = JSON.parse( xhr.target.responseText );
+
+			txt = '<h1><a href="" >' + repo + ' ' + title + '</a> <a href=index.html#readme.md > &#x24D8; </a></h1>';
+
+			for ( var i = 0; i < issues.length; i++ ) {
+
+				issue = issues[ i ];
+
+				txt += '<h2>' + issue.title + '</h2>' +
+					'<div class=issue >' + converter.makeHtml( issue.body ) + '</div>';
+
+			}
+
+			splashBody.innerHTML = txt;
+
+		} );
+
+	}
+
+	function requestFile( fileName, callback ) {
+
+		var xhr, text, lines;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous'; 
+		xhr.open( 'GET', urlIssues, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+</script>
+</body>
+</html>
