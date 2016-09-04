@@ -60,7 +60,7 @@ _GitHub API Users Explorer_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/github-api-users-explorer/github-api-users-explorer-4.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-explorer/github-api-users-explorer-r4.html#socketio' width=100% height=600 ></iframe>
 
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/github-api-users-explorer/github-api-users-explorer-r4.html';
 value='Source code listing' >
