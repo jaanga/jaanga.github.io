@@ -399,15 +399,15 @@
 
 //console.log( 'repos', repos );
 
-			if ( response.message ) {
+			if ( repos.message ) {
 
-				contents.innerHTML = response.message;
+				contents.innerHTML = repos.message;
 
 				return;
 
 			}
 
-			txt = '<h1>' + response.login + ' Repositories</h1>';
+			txt = '<h1>' + user + ' Repositories</h1>';
 
 			for ( var i = 0; i < repos.length; i++ ) {
 
