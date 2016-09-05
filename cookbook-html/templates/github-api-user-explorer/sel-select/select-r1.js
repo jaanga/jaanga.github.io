@@ -96,27 +96,23 @@
 
 		if ( selGroup.value === 'listTheo' ) {
 
-
-
 			selUser.innerHTML = USR.peepsTheo;
 
 			selUser.selectedIndex = 1;
 
-//			SEL.getUserDetails( selUser.value );
+			SEL.getUserDetails( selUser.value );
 
 		} else if ( location.hash.length ) {
 
-//			SEL.getSearchItems();
+			SEL.getSearchItems();
 
 			SEL.getUserDetails( location.hash.slice( 1 ) );
 
 		} else {
 
-//			SEL.getSearchItems();
+			SEL.getSearchItems();
 
 		}
-
-			SEL.getSearchItems();
 
 	};
 
