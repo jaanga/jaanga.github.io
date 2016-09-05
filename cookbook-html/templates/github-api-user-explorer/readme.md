@@ -44,7 +44,7 @@ And none of that stops you or us from investigating even more ways of explring G
 
 And, of course, GitHuB supplies a quite amazing tool for finding stuff on GitHub
 
-The GitHub developers API provides fast, frea and easy access to millions of GitHub projects.
+The GitHub developers API provides fast, free and easy access to millions of GitHub projects.
 
    
 
@@ -52,7 +52,9 @@ The GitHub developers API provides fast, frea and easy access to millions of Git
 
 ### Mission
 
-* TBD
+* Make the pages and the data come to you
+	* None of that endless go there and come back, go there and come back scenes
+* Provide as many stats as possible really quickly and easily readable
 
 ### Vision
 
@@ -60,7 +62,9 @@ The GitHub developers API provides fast, frea and easy access to millions of Git
 
 ## Features
 
-* TBD
+* No servers needed. All action generated client-side
+* Entry-level, pure JavaScript. 
+	* Single dependency of on the ShowDown Markdown interpreter
 * Click three bars( 'hamburger' ) icon to slide menu in or out
 * Direct link to this read me file
 * Click on title to reload 
