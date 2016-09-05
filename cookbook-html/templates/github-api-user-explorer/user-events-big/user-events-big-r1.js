@@ -1,29 +1,37 @@
+// Copyright &copy; 2016 Jaanga authors. MIT License.
 
+// Documentation: https://developer.github.com/v3/
+
+// needs big clean up
 
 	var eventSet = {};
+
+	var page = 0;
+
 
 	function getEvents( user, page, target ) {
 
 
 console.log( 'user', user );
+
 // https://developer.github.com/v3/activity/events/
 
 		var fileName, xhr, events, event, eventHeading, dates, txt;
 
 		page = page || 0;
 
-		fileName = 'https://api.github.com/users/' + user + '/events?page=' + page;
+		fileName = 'https://api.github.com/users/' + user + '/events?sort=comments&order=desc&per_page=100&page=' + page + '&' + ( SEL.token || '' );
 
 		pageHeader =
 		'<h1>' +
 			'Org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
-			'page <button onclick=proceed(-1); >prev</button> <a href=' + fileName + ' > ' + page + '</a> <button onclick=proceed(1); >next</a></button> ' +
+//			'page <button onclick=proceed(-1); >prev</button> <a href=' + fileName + ' > ' + page + '</a> <button onclick=proceed(1); >next</a></button> ' +
 //			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';
 
 		pageFooter =
 		'<h1>' +
-			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
+//			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';
 
@@ -110,7 +118,7 @@ console.log( 'non-event', event );
 		txt =
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Body: </div>' +
-			'<div class=issue ><a href=' + event.payload.comment.html_url + ' >' + converter.makeHtml( event.payload.comment.body ) + '</a></div>' +
+			'<div class=issue ><a href=' + event.payload.comment.html_url + ' >' + COR.converter.makeHtml( event.payload.comment.body ) + '</a></div>' +
 		'<br>';
 
 		return txt;
@@ -174,7 +182,7 @@ console.log( 'non-event', event );
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Labels: ' + ( event.payload.issue.labels.length ? event.payload.issue.labels[ 0 ].name  : '' ) + '</div>' +
 				( event.payload.action === 'opened' ?
-					'<div>Action: opened</div><div class=issue >' + converter.makeHtml( event.payload.issue.body ) + '</div>'
+					'<div>Action: opened</div><div class=issue >' + COR.converter.makeHtml( event.payload.issue.body ) + '</div>'
 					:
 					'<div>Action: closed</div>'
 				) +
@@ -191,7 +199,7 @@ console.log( 'non-event', event );
 			'<div>Title: <a href=' + event.payload.issue.html_url + ' >' + event.payload.issue.title + '</a></div>' +
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 				( event.payload.issue.labels.length ? '<div>Labels: ' + event.payload.issue.labels[ 0 ].name  + '</div>' : '' ) +
-			'<div class=issue >' + converter.makeHtml( event.payload.comment.body ) + '</div>' ;
+			'<div class=issue >' + COR.converter.makeHtml( event.payload.comment.body ) + '</div>' ;
 		'<br>';
 
 		return txt;
@@ -220,7 +228,7 @@ console.log( 'non-event', event );
 
 			commit = event.payload.commits[ i ];
 			commitMsg += '<div class=issue><a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + 
-				' >' + converter.makeHtml( commit.message ) + '</a></div>';
+				' >' + COR.converter.makeHtml( commit.message ) + '</a></div>';
 
 		}
 
@@ -243,7 +251,7 @@ console.log( 'non-event', event );
 			'<div>Actor: <a href=http://github.com/' + event.actor.login + ' >' + event.actor.login + '</a></div>' +
 			'<div>Action: ' + event.payload.action + '</div>' +
 			'<div>Body: </div>' +
-			'<div class=issue >' + converter.makeHtml( event.payload.pull_request.body ) + '</div>' +
+			'<div class=issue >' + COR.converter.makeHtml( event.payload.pull_request.body ) + '</div>' +
 		'<br>';
 
 		return txt;

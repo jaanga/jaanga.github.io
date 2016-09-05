@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API User Explorer R4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,Theo Armour,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-04' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+
+<script src=../github-api-user-explorer/cor-core/core-r1.js ></script>
+<script src=../github-api-user-explorer/sel-select/select-r1.js ></script>
+<script src=../github-api-user-explorer/dat-data/data-r1.js ></script>
+<script src=../github-api-user-explorer/evt-events/events-r1.js ></script>
+<script src=../github-api-user-explorer/user-events-big/user-events-big-r1.js ></script>
+<script src=../github-api-user-explorer/usr-users/users-r1.js ></script>
+<script>
+
+	COR.initThreeColumns();
+
+	COR.menu.innerHTML =
+
+		COR.getMenuDetailsHeader() +
+
+		SEL.getMenuDetailsSelectGroup() +
+
+		SEL.getMenuDetailsSelectUser() +
+
+		DAT.getMenuDetailsUserData() +
+
+		COR.getMenuDetailsAbout() +
+
+		COR.getMenuFooter() +
+
+	b;
+
+	SEL.token = 'access_token=' + '60d97f554ccad127fcf4f4535a81364b83da3247';
+
+	SEL.setUserDetails();
+
+</script>
+</body>
+</html>

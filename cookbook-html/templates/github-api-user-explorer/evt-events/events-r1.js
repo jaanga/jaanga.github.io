@@ -1,18 +1,19 @@
+// Copyright &copy; 2016 Jaanga authors. MIT License.
+
+// Documentation: https://developer.github.com/v3/
 
 
-	var user = 'jaanga';
-	var user = 'sagemath';
-	var user = 'ladybug-analysis-tools';
+	var EVT = {};
 
-
-	function requestGitHubAPIEvents( user) {
+	EVT.requestUserEvents = function( user ) {
 
 		var xhr;
-//		var events, event, txt, dates;
+		var events, event, txt, dates, actor, repo, commit;
 		var eventSet = {};
-		var target = updates;
 
-		var urlEvents = 'https://api.github.com/users/' + user + '/events'  + ( token || '' );
+		EVT.target = updates;
+
+		var urlEvents = 'https://api.github.com/users/' + user + '/events?' + ( SEL.token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', urlEvents, true );
@@ -23,7 +24,7 @@
 
 			events = JSON.parse( xhr.responseText );
 
-			txt = '<h1><a href="">' + user + ' Recent Events</a> <a href=index.html#readme.md> &#x24D8; </a></h1>';
+			txt = '<h2>' + user + b +'recent events</h2>';
 
 			dates = [];
 
@@ -35,17 +36,27 @@
 
 					dates.push( event.created_at.slice( 0, 10 ) )
 
-					txt += '<h4>' + event.created_at.slice( 0, 10 ) + '</h4>';
+					txt += '<h4 style=margin-bottom:0; >' + event.created_at.slice( 0, 10 ) + '</h4>';
 
 				}
 
-				actor = ' <a href=' + event.actor.url + ' > ' + event.actor.login + '</a> ';
+				if ( user.toLowerCase() !== event.actor.login  ) {
 
-				repo = ' <a href=' + event.repo.url + ' > ' + event.repo.name.replace ( user, '' ) + '</a> ';
+					actor = ' <a href=' + event.actor.url + ' > ' + event.actor.login + '</a> ';
+
+				} else { 
+
+					actor = '' ;
+
+				}
+
+				repo = ' <a href=' + event.repo.url + ' > ' + event.repo.name.replace ( user, '' ) + '</a> ' + b;
 
 				if ( eventSet[ 'on' + event.type ] !== undefined ) {
 
-					txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + actor + ' ' + repo + ' ' + eventSet[ 'on' + event.type ]( event ) + b
+					txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + actor + ' ' + repo + ' ' + 
+
+						'<small>' + eventSet[ 'on' + event.type ]( event ) + '</small>' + b
 
 //console.log( '', eventSet[ 'on' + event.type ]( event ) );
 
@@ -57,7 +68,7 @@ console.log( 'non-event', event );
 
 			}
 
-			target.innerHTML = txt;
+			EVT.target.innerHTML = txt;
 
 		}
 
@@ -80,14 +91,19 @@ console.log( 'non-event', event );
 
 		eventSet.onPushEvent = function( event ) {
 
-			commit = event.payload.commits[ 0 ];
-			return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message.slice( 0, 100 ) + '...' + '</a>';
+			commit = event.payload.commits[ 0 ] ;
+
+			if ( commit ) {
+
+				return 'push <a href=https://github.com/' + event.repo.name + '/commit/' + commit.sha + ' >' + commit.message.slice( 0, 100 ) + '...' + '</a>';
+
+			}
 
 		}
 
 		eventSet.onPullRequestEvent = function( event ) { return 'pull request ' + event.payload.pull_request.body.slice( 0, 100 ) + '...' ; }
 
-		eventSet.onPullRequestReviewCommentEvent = function( event ) { return 'pull comment ' + event.payload.comment.body; }
+		eventSet.onPullRequestReviewCommentEvent = function( event ) { return 'pull comment ' + event.payload.comment.body.slice( 0, 100 ); }
 
 		eventSet.onReleaseEvent = function( event ) { return 'release ' + event.payload.release.name ; }
 
