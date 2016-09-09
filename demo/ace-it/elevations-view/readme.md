@@ -9,12 +9,12 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [Elevations View ACE-IT Read Me]( https://jaanga.github.io/demo/ace-it/elevations-view/index.html#readme.md )
 ===
 
-## Full Screen: [ Elevations View ACE-IT ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html )
+## Full Screen: [ Elevations View ACE-IT ]( https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r2.html )
 
 
 <img src="" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r1.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/demo/ace-it/elevations-view/elevations-view-ace-it-r2.html width=100% height=600px ></iframe>
 
 _Elevations View ACE-IT. Displaying a random item from the current library of maps_
 

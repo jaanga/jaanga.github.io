@@ -9,7 +9,7 @@
 
 		urls = [];
 
-		fileName = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100'; // &' + ( SEL.token || '' );
+		fileName = 'http://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100'; // &' + ( SEL.token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
@@ -54,7 +54,7 @@
 
 					'<p>' + repo.updated_at.slice( 0, 10 ) + ' ~ ' + repo.description + '</p>' +
 
-//					'<iframe src="https://rawgit.com/' + user + '/' + repo.name + '/gh-pages/index.html" ><iframe>' +
+					'<iframe src="http://rawgit.com/' + user + '/' + repo.name + '/gh-pages/index.html" ></iframe>' +
 
 					'';
 
@@ -62,28 +62,26 @@
 
 			contents.innerHTML = txt;
 
+/*
 console.log( 'urls', urls );
 
-		var fileName;
+			var fileName;
 
-		for ( var i = 0; i < repos.length; i++ ) {
+			for ( var i = 0; i < repos.length; i++ ) {
 
-			requestFile( 'https://rawgit.com/' + user + '/' + repos[ i ].name + '/gh-pages/readme.md' );
+//				requestFile( 'https://rawgit.com/' + user + '/' + repos[ i ].name + '/gh-pages/readme.md' );
 
-		}
-
+			}
+*/
 
 		}
 
 	}
 
 
-
-
-
 	function requestFile( fileName ) {
 
-//		var fileName, text, lines;
+		var xhr, fileName, text, lines;
 
 		xhr = new XMLHttpRequest();
 		xhr.crossOrigin = 'anonymous'; 
