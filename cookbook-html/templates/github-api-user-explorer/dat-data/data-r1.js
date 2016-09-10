@@ -5,6 +5,7 @@
 	var DAT = {};
 
 	DAT.get = {};
+	DAT.currentTopic = 'repos';
 
 
 	DAT.getMenuDetailsUserData = function() {
@@ -159,7 +160,7 @@
 	DAT.get.events_url = function( item ) {
 
 		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/events"); > raw </button> ' +
-			'<button  class=butt2 onclick=getEvents("' + DAT.userData.login + '",page,contents); > events </button> ' +
+			'<button  class=butt2 onclick=DAT.getEvents("' + DAT.userData.login + '",page,contents); > events </button> ' +
 			'<a href=https://github.com/' + DAT.userData.login + '?tab=activity >activity</a>';
 
 	};
@@ -461,6 +462,8 @@
 
 		fileName = 'https://api.github.com/users/' + user + '/orgs?' + ( SEL.token || '' );
 
+		DAT.currentTopic = 'orgs';
+
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
 		xhr.onload = callback;
@@ -496,6 +499,8 @@
 
 		fileName = 'https://api.github.com/users/' + user + '/gists' + '?sort=updated&order=desc&per_page=100&' + ( SEL.token || '' );
 
+		DAT.currentTopic = 'gists';
+
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
 		xhr.onload = callback;
@@ -527,6 +532,7 @@
 
 		fileName = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100&' + ( SEL.token || '' );
 
+		SEL
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
 		xhr.onload = callback;

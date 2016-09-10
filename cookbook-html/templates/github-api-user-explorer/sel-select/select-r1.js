@@ -2,7 +2,7 @@
 
 // Documentation: https://developer.github.com/v3/
 
-	var SEL = {};
+	var SEL = SEL || {};
 
 
 // init menus
@@ -93,7 +93,6 @@
 	SEL.setUserDetails = function() {
 
 
-
 		if ( selGroup.value === 'listTheo' ) {
 
 			selUser.innerHTML = USR.peepsTheo;
@@ -168,7 +167,25 @@
 
 		DAT.getUserData( user );
 
-		DAT.getRepos( user );
+		switch( DAT.currentTopic ) {
+
+			case 'repos':
+				DAT.getRepos( user ) 
+				break;
+			case 'gists':
+				DAT.getGists ( user )
+				break;
+			case 'events':
+				DAT.getEvents ( user, 0, contents )
+				break;
+
+
+			default:
+				DAT.getRepos( user ) 
+
+		}
+
+//		DAT.getRepos( user );
 
 		EVT.requestUserEvents( user )
 

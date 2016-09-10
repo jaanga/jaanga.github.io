@@ -9,7 +9,7 @@
 	var page = 0;
 
 
-	function getEvents( user, page, target ) {
+	DAT.getEvents = function( user, page, target ) {
 
 
 console.log( 'user', user );
@@ -17,6 +17,8 @@ console.log( 'user', user );
 // https://developer.github.com/v3/activity/events/
 
 		var fileName, xhr, events, event, eventHeading, dates, txt;
+
+		DAT.currentTopic = 'events';
 
 		page = page || 0;
 

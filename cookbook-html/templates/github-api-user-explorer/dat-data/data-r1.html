@@ -12,29 +12,31 @@
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 
-<script src=../../core/core/github-api-core-r2.js ></script>
-<script src=../../core/user-data/user-data-r1.js ></script>
+<script src=../cor-core/core-r1.js ></script>
+<script src=../dat-data/data-r1.js ></script>
 <script>
 
 	var user = 'torvalds';
 
-	initThreeColumnsCore();
+	COR.initThreeColumns();
 
-	menu.innerHTML =
+	COR.menu.innerHTML =
 
-		getMenuDetailsHeaderCore() +
+		COR.getMenuDetailsHeader() +
 
-		'<div id=menuFolderNameTableOfContents ></div>' +
+//		SEL.getMenuDetailsSelectGroup() +
 
-		'<div id=menuUserInfo ></div>' +
+//		SEL.getMenuDetailsSelectUser() +
 
-		getMenuDetailsAboutCore() +
+		DAT.getMenuDetailsUserData() +
 
-		getMenuFooterCore() +
+		COR.getMenuDetailsAbout() +
+
+		COR.getMenuFooter() +
 
 	b;
 
-	getAPIUserData( user );
+	DAT.getUserData( user );
 
 </script>
 </body>
