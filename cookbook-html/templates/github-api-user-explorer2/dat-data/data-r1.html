@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>User Data R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Obtains elevation data via the Google Maps API Elevation service..
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-08-30' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+
+<script src=../cor-core/core-r1.js ></script>
+<script src=../dat-data/data-r1.js ></script>
+<script>
+
+	var user = 'torvalds';
+
+	COR.initThreeColumns();
+
+	COR.menu.innerHTML =
+
+		COR.getMenuDetailsHeader() +
+
+//		SEL.getMenuDetailsSelectGroup() +
+
+//		SEL.getMenuDetailsSelectUser() +
+
+		DAT.getMenuDetailsUserData() +
+
+		COR.getMenuDetailsAbout() +
+
+		COR.getMenuFooter() +
+
+	b;
+
+	DAT.getUserData( user );
+
+</script>
+</body>
+</html>

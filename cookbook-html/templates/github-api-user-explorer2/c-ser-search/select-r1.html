@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Select Group R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,Theo Armour,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-04' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+
+<script src=../a-cor-core/core-r1.js ></script>
+<script src=../sel-select/select-r1.js ></script>
+<script src=../dat-data/data-r1.js ></script>
+<script src=../evt-events/events-r1.js ></script>
+<script src=../user-events-big/user-events-big-r1.js ></script>
+<script src=../usr-users/users-r1.js ></script>
+<script>
+
+	COR.initThreeColumns();
+
+	COR.menu.innerHTML =
+
+		COR.getMenuDetailsHeader() +
+
+		SEL.getMenuDetailsSelectGroup() +
+
+		SEL.getMenuDetailsSelectUser() +
+
+		DAT.getMenuDetailsUserData() +
+
+		COR.getMenuDetailsAbout() +
+
+		COR.getMenuFooter() +
+
+	b;
+
+	selGroup.value = 'listTheo';
+
+	SEL.setUserDetails();
+
+</script>
+</body>
+</html>

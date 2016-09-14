@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Get Files R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-13' >
+</head>
+<body>
+<script src=../a-cor-core/core-r1.js ></script>
+<script src=../d-get-get-files/get-files-r1.js ></script>
+<script>
+
+	init();
+
+	function init() {
+
+		COR.taglineHeader = 'A hard core howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			COR.getMenuDetailsTemplate() +
+
+
+
+//			COR.getMenuDetailsObjectProperties() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		if ( window.self !== window.top ) { hamburger.style.left = '0px'; }
+
+		detailsTemplate.setAttribute('open', 'open');
+
+//		GET.getGitHubAPITreeContents();
+
+		GET.getHTMLFilesinFolder() 
+
+	}
+
+
+</script>
+</body>
+</html>

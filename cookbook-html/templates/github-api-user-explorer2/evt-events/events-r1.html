@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Events R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='List user events
+' >
+<meta name=keywords content='CMS,JavaScript,GitHub Developer API,GitHub,FOSS' >
+<meta name=date content='2016-09-04' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
+<script src=../../github-api-user-explorer/cor-core/core-r1.js ></script>
+<script src=../../github-api-user-explorer/sel-select/select-r1.js ></script>
+<script src=../../github-api-user-explorer/evt-events/events-r1.js ></script>
+<script>
+
+	var user = 'jaanga';
+	var user = 'sagemath';
+	var user = 'ladybug-analysis-tools';
+	var user = 'torvalds';
+	var user = 'theo-armour';
+//	var user = 'sagemath';
+
+	COR.initThreeColumns();
+
+	EVT.requestUserEvents( user );
+
+</script>
+</body>
+</html>
