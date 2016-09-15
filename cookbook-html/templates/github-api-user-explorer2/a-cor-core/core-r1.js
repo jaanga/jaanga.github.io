@@ -259,3 +259,16 @@
 		return '<table>' + txt + '</table>';
 
 	}
+
+
+	COR.requestFile = function( url, callback ) {
+
+		var xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}

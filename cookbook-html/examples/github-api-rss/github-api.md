@@ -55,6 +55,7 @@ fun look at issues
 * https://github.com/jaanga/timeline
 
 
+
 ## Commits
 
 https://api.github.com/repos/jaanga/jaanga.github.io/commits
@@ -80,6 +81,19 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 * https://developer.github.com/v3/gists/
 * https://gist.githubusercontent.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330
 
+
+### Links of Interest
+
+* https://gist.github.com/
+* https://gist.github.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330#file-gist-tips-and-bookmarks-md
+
+### Typical
+
+* https://gist.github.com/search?q=user:theo-armour
+* https://api.github.com/users/theo-armour/gists
+* https://api.github.com/gists/bb9527c8cff89a417b09eaeb6c8ae330
+
+
 ### Raw
 
 
@@ -88,17 +102,6 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 
 
 
-
-### Links of Interest
-
-* https://gist.github.com/
-* https://gist.github.com/theo-armour/bb9527c8cff89a417b09eaeb6c8ae330#file-gist-tips-and-bookmarks-md
-
-***
-
-* https://gist.github.com/search?q=user:theo-armour
-* https://api.github.com/users/theo-armour/gists
-* https://api.github.com/gists/bb9527c8cff89a417b09eaeb6c8ae330
 
 
 
@@ -174,6 +177,7 @@ https://api.github.com/orgs/ladybug-analysis-tools/events <<
 https://api.github.com/orgs/jaanga
 * lists number of repos
 
+
 ### Issues
 
 https://api.github.com/orgs/ladybug-analysis-tools/issues
@@ -198,6 +202,7 @@ https://api.github.com/organizations?q=followers:%3E20
 e.g.
 
 https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
+
 
 ### start here
 
@@ -233,7 +238,6 @@ https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/
 ### Contents
 
 https://api.github.com/repos/jaanga/jaanga.github.io/readme
-
 
 https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
 
@@ -275,26 +279,34 @@ https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 
 ## Users
 
+
 * https://developer.github.com/v3/users/
 
 
 https://api.github.com/users
-* all users starting with is:1
+* all users starting with id: 1
 
 https://api.github.com/users?since=20000000
 
-https://api.github.com/search/users?q=type:org
-https://api.github.com/search/users?q=type:org&order=asc  < not
 
 
 https://api.github.com/users/theo-armour
 * lists repo count. gists, etc
 
-https://api.github.com/users/theo-armour/events?type=issueEvent
+### Events
 
-https://api.github.com/users/jaanga/events?path=cookbook-html/examples
+http://stackoverflow.com/questions/18733424/how-can-i-get-a-list-of-all-github-pushevents-for-a-user
+* No way to filter
+
+https://api.github.com/users/theo-armour/events?per_page=100
+
+* pre-sorted by date and time. Most recent first
+
+https://api.github.com/users/theo-armour/events?type="WatchEvent"
+
+https://api.github.com/users/jaanga/events?path=cookbook-html/examples < not
  
-https://api.github.com/users/jaanga/events?login=redheli
+https://api.github.com/users/jaanga/events?login=redheli < not
 
 
 
@@ -335,6 +347,7 @@ https://api.github.com/search/issues?q=@paulmasson+repo:jaanga/jaanga.github.io+
 
 https://api.github.com/search/issues?q=language:js+created:2016-06-25
 
+https://api.github.com/search/issues?q=user:theo-armour
 
 js or JavaScript: both OK
 
@@ -366,8 +379,6 @@ https://api.github.com/search/repositories?q=type:org&sort=forks&order=asc < not
 https://api.github.com/search/repositories?q=collaborators:%3E20&sort=stars&order=asc < not good
 
 
-
-
 From https://gist.github.com/jasonrudolph/6065289
 https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc  
 
@@ -390,11 +401,12 @@ https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=c
 https://www.quora.com/How-many-users-does-GitHub-have
 
 
-
 From https://gist.github.com/jasonrudolph/6065289
 
 https://api.github.com/search/users?q=followers:%3E1000
 
+https://api.github.com/search/users?q=type:org
+https://api.github.com/search/users?q=type:org&order=asc  < not
 
 https://api.github.com/search/users?q=
 https://api.github.com/search/users?q=followers:0

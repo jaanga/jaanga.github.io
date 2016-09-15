@@ -7,7 +7,6 @@
 
 	GET.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/git/trees/gh-pages?recursive=1';
 
-
 //	GET.defaultFile = '../../elevations/elevations-data-04/san-francisco_10_163_394_3_3_450_450_.json';
 	GET.defaultFile; // if no default, select a random file
 
@@ -55,12 +54,12 @@ console.log( '', xhr  );
 
 		}
 
-		GET.doNextThing( files );
+		GET.onLoadTreeContent( files );
 
 
 	}
 
-	GET.doNextThing = function( files ) {
+	GET.onLoadTreeContent = function( files ) {
 
 		console.log( '', files );
 
@@ -74,7 +73,7 @@ console.log( '', xhr  );
 		GET.extension = '.html';
 		GET.urlBase = 'https://jaanga.github.io/terrain3/';
 
-			GET.doNextThing = function( files ) {
+			GET.onLoadTreeContent = function( files ) {
 
 				txt = '<h1>' + GET.searchInFolder + '</h1>' +
 
@@ -93,10 +92,6 @@ console.log( '', xhr  );
 
 
 		GET.getGitHubAPITreeContents();
-
-
-
-
 
 	}
 

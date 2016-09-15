@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Issues User Small R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='List user events
+' >
+<meta name=keywords content='CMS,JavaScript,GitHub Developer API,GitHub,FOSS' >
+<meta name=date content='2016-09-04' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../a-cor-core/core-r1.js ></script>
+<script src=../b-api-api-key/api-key-r1.js ></script>
+<script src=../i-ius-issues-user-small/issues-user-small-r1.js ></script>
+<script>
+
+
+	var user = 'jaanga';
+	var user = 'sagemath';
+	var user = 'ladybug-analysis-tools';
+	var user = 'torvalds';
+	var user = 'theo-armour';
+//	var user = 'sagemath';
+
+	init();
+
+	function init() {
+
+		COR.taglineHeader = 'A hard core howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			API.getMenuDetailsAPIKey() +
+
+			IUS.getMenuDetailsRepositoryEvents() +
+
+			COR.getMenuDetailsTemplate() +
+
+//			COR.getMenuDetailsObjectProperties() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		detailsTemplate.setAttribute('open', 'open');
+
+		IUS.user = user;
+//		IUS.target = EUSrepositoryEvents;
+
+		IUS.getGitHubAPIUserIssues();
+
+	}
+</script>
+</body>
+</html>
