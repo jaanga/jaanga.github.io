@@ -1,7 +1,7 @@
 <span style=display:none; >
 [You are now in a GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/demo/taniab/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/taniab/'; 
+( https://jaanga.github.io/demo/tania-b/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/tania-b/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [Demo]( https://jaanga.github.io/demo/  ) &raquo;
@@ -45,3 +45,12 @@ Naxos Resort Beach Hotel, Naxos island, St George Beach, Naxos Island
 ## [Mikonos detail]( https://jaanga.github.io/terrain3/elevations-core3/elevations-view-tgif-r1.html#file=https://jaanga.github.io/terrain3/elevations/elevations-data-tgif/mikonos-detail_14_9343_6350_3_3_60_60_.json )
 
 Hotel Adonis, Mykonos island, 84600 Mykonos, Greece
+
+
+## Notes
+
+* Use the 'Google Maps' option in Overlay Settings to see a street map
+* Choices from Open Street Map down do not work for now
+	* The links are in to show that the script is open and not just based on Google data
+
+
