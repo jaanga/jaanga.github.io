@@ -52,7 +52,7 @@
 
 ## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [pm]( http://jaanga.github.io/demo/pm/ )  [rb]( http://jaanga.github.io/demo/rb/shower-the-monkey/shower-the-monkey-r1.html ) [ms]( http://jaanga.github.io/demo/ms/ )
 
-## [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineP]( http://jaanga.github.io/demo/konstantine-p/ )
+## [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineP]( http://jaanga.github.io/demo/konstantine-t/ )
  
 ## [Moving Manuals]( http://jaanga.github.io/moving-manuals/ ) ~ [not Kallax]( http://jaanga.github.io/moving-manuals/kallax-nxn/ )
 
