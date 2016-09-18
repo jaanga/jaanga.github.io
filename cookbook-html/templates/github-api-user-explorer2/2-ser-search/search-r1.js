@@ -76,8 +76,6 @@
 
 			selUser.innerHTML = USR.peepsTheo;
 
-			selUser.selectedIndex = 1;
-
 			SER.getUserDetails( selUser.value );
 
 		} else if ( location.hash.length ) {
@@ -91,8 +89,6 @@
 			SER.getSearchItems();
 
 		}
-
-
 
 	};
 
