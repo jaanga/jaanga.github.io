@@ -11,7 +11,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ===
 
 
-## full screen [GitHub API User Explorer]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/ )
+## full screen [GitHub API User Explorer2]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/ )
 
 
 <img src="" style=display:none; width=800 >
@@ -55,7 +55,7 @@ The GitHub developers API provides fast, free and easy access to millions of Git
 * Make the GitHub web pages and the data come to you
 	* None of that endless go there and come back, go there and come back scenes
 * Provide as many stats as possible really quickly and easily readable
-* Show the readme file wherever possible
+* Show the readme files wherever possible
 
 
 ### Vision
@@ -66,7 +66,7 @@ The GitHub developers API provides fast, free and easy access to millions of Git
 
 * No servers needed. All action generated client-side
 * Entry-level, pure JavaScript. 
-	* Single dependency of on the ShowDown Markdown interpreter
+	* Single dependency on the ShowDown Markdown interpreter
 * Click three bars( 'hamburger' ) icon to slide menu in or out
 * Direct link to this read me file
 * Click on title to reload 
@@ -128,6 +128,11 @@ Web sites that help you explore GitHub
 * https://github-ranking.com/
 * https://gist.github.com/paulmillr/2657075/
 * http://githut.info/
+
+
+## Users
+
+* [theo-armour.github.io](  https://theo-armour.github.io )
 
 
 ## Change Log
