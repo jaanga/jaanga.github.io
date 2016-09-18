@@ -6,7 +6,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Jaanga]( https://jaanga.github.io ) » [Demo]( https://jaanga.github.io/demo/  ) »
 
-[konstantineP Read Me]( ./index.html )
+[konstantineT Read Me]( ./index.html )
 ===
 
 Things that I have worked on that have point cloud aspects:
