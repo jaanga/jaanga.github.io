@@ -11,7 +11,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ===
 
 
-## full screen [GitHub API User Explorer]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/ )
+## full screen [GitHub API User Explorer]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/ )
 
 
 <img src="" style=display:none; width=800 >
@@ -50,13 +50,13 @@ The GitHub developers API provides fast, free and easy access to millions of Git
 
    
 
-
-
 ### Mission
 
-* Make the pages and the data come to you
+* Make the GitHub web pages and the data come to you
 	* None of that endless go there and come back, go there and come back scenes
 * Provide as many stats as possible really quickly and easily readable
+* Show the readme file wherever possible
+
 
 ### Vision
 
@@ -101,11 +101,19 @@ value='Source code listing' >
 * 2016-09-17 ~ return tot top of page wen new user is loaded
 
 
-## Goals
+##  To Do List / Goals
+
+* Add API key entry
+* Add number of stars to each repo
+* Add number of hits remaining before you go over usage limits
+* Add iframes to Orgs
+* Add iframes t repos
+* Add iframes to gists
+
 
 ## Links of Interest
 
-Web sites thatt help you explore GitHub
+Web sites that help you explore GitHub
 
 * https://github.com/trending
 * https://github.com/trending/javascript
@@ -124,7 +132,7 @@ Web sites thatt help you explore GitHub
 
 ### 2016-09-17 ~ Explorer2 R1
 
-* Mahor update
+* Major update
 
 
 ### 
