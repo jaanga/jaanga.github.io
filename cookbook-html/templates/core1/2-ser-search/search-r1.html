@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Search R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,Theo Armour,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-13' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../0-cor-core/core-r1.js ></script>
+<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../2-ser-search/search-r1.js ></script>
+<script src=../usr-users/users-r1.js ></script>
+<script>
+
+	init();
+
+	function init() {
+
+		COR.taglineHeader = 'A searching howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			API.getMenuDetailsAPIKey() +
+
+			SER.getMenuDetailsSelectGroup() +
+
+			SER.getMenuDetailsSelectUser() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+//		selGroup.value = 'listTheo';
+
+		SER.setUserDetails();
+
+	}
+
+
+</script>
+</body>
+</html>
