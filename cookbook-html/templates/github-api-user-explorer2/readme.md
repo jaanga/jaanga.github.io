@@ -103,10 +103,12 @@ value='Source code listing' >
 
 ##  To Do List / Goals
 
+* Add GitHub-like CSS
+* Add GitHub no connection note
 * Add API key entry
 * Add number of stars to each repo
 * Add number of hits remaining before you go over usage limits
-* Add iframes to Orgs
+* Add iframes to orgs
 * Add iframes t repos
 * Add iframes to gists
 
