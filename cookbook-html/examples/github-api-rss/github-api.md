@@ -165,6 +165,7 @@ https://api.github.com/rate_limit
 
 
 
+***
 
 ## Orgs
 
@@ -259,6 +260,7 @@ https://api.github.com/repos/jaanga/jaanga.github.io
 
 https://api.github.com/repos/jaanga/jaanga.github.io/stats/contributors
 
+https://api.github.com/repos/jaanga/stats < not
 
 https://api.github.com/repos/jaanga/jaanga.github.io/stats/commit_activity
 
@@ -276,6 +278,7 @@ https://api.github.com/repos/theo-armour/theo-armour.github.io/stats/code_freque
 https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 
 
+***
 
 ## Users
 
@@ -287,7 +290,6 @@ https://api.github.com/users
 * all users starting with id: 1
 
 https://api.github.com/users?since=20000000
-
 
 
 https://api.github.com/users/theo-armour
@@ -363,14 +365,13 @@ sort stars, forks update
 * https://api.github.com/search/repositories?q=stars:%3E20000
 	* Access to the most popular repos on GitGub
 
+
 https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
 
 https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
 
 https://api.github.com/search/repositories?q=forks:%3E9000&sort=forks&order=asc < OK
 https://api.github.com/search/repositories?q=commits:%3E1000 < bogus
-
-
 
 
 

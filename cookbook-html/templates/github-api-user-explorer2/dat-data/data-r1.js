@@ -40,7 +40,7 @@
 
 		var url, xhr, keys, txt;
 
-		url = 'https://api.github.com/users/' +  user + '?' + ( SEL.token || '' );
+		url = 'https://api.github.com/users/' +  user + '?' + ( API.token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', url, true );
@@ -160,7 +160,7 @@
 	DAT.get.events_url = function( item ) {
 
 		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/events"); > raw </button> ' +
-			'<button  class=butt2 onclick=DAT.getEvents("' + DAT.userData.login + '",page,contents); > events </button> ' +
+			'<button  class=butt2 onclick=DAT.getEvents("' + DAT.userData.login + '",0,contents); > events </button> ' +
 			'<a href=https://github.com/' + DAT.userData.login + '?tab=activity >activity</a>';
 
 	};
@@ -266,8 +266,12 @@
 		if ( DAT.userData.type === "Organization" ) { return; }
 
 		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/orgs"); > raw </button> ' +
+
 			'<button  class=butt2 onclick=DAT.getOrgs("' + DAT.userData.login + '"); > organizations </button> ' +
+
 			'<a href=https://github.com/' + DAT.userData.login + '?tab=organizations > orgs </a>';
+
+
 //		return 'Orgs: <a href=https://api.github.com/users/' + DAT.userData.login + '/orgs >orgs</a>';
 
 	};
@@ -390,7 +394,7 @@
 
 		var xhr;
 
-		urlToken = url + '?' + ( SEL.token || '' );
+		urlToken = url + '?' + ( API.token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', urlToken, true );
@@ -412,7 +416,7 @@
 
 		var xhr, obj, keys, txt;
 
-		urlToken = url + '?' + ( SEL.token || '' );
+		urlToken = url + '?' + ( API.token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', urlToken, true );
@@ -460,7 +464,7 @@
 
 		var fileName, xhr, response, orgs, txt;
 
-		fileName = 'https://api.github.com/users/' + user + '/orgs?' + ( SEL.token || '' );
+		fileName = 'https://api.github.com/users/' + user + '/orgs?' + ( API.token || '' );
 
 		DAT.currentTopic = 'orgs';
 
@@ -475,15 +479,33 @@
 
 //console.log( 'orgs', orgs );
 
-			txt = '<h2>' + DAT.userData.login + ' Organizations</h2>';
+			if ( orgs.message ) { // there's been an error...
+
+				contents.innerHTML = orgs.message;
+
+				return;
+
+			}
+
+
+			txt = '<h2>' + user + ' organizations</h2>';
 
 			for ( var i = 0; i < orgs.length; i++ ) {
 
 				org = orgs[ i ];
 
-				txt += '<h3><a href=https://github.com/' + org.login + ' >' + org.login + '</a></h3>' +
+console.log( 'org', org );
+
+				txt += 
+
+					'<h3>' +
+
+						( i + 1 ) + ' ' + org.login.link( 'https://github.com/' + org.login ) +
+
+					'</h3>' +
 
 					'<p>' + org.description + '</p>';
+
 
 			}
 
@@ -493,11 +515,15 @@
 
 	}
 
+
+
+
+
 	DAT.getGists = function( user ) {
 
 		var fileName, xhr, gists, txt;
 
-		fileName = 'https://api.github.com/users/' + user + '/gists' + '?sort=updated&order=desc&per_page=100&' + ( SEL.token || '' );
+		fileName = 'https://api.github.com/users/' + user + '/gists' + '?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
 
 		DAT.currentTopic = 'gists';
 
@@ -530,9 +556,10 @@
 
 		var fileName, xhr, repos, txt;
 
-		fileName = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100&' + ( SEL.token || '' );
+		fileName = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
 
-		SEL
+		DAT.currentTopic = 'repos';
+
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', fileName, true );
 		xhr.onload = callback;

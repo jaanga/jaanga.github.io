@@ -29,7 +29,7 @@
 
 			'</details>' +
 
-		b;
+		'';
 
 		return menuDetailsSelectGroup;
 
@@ -141,41 +141,44 @@
 
 	SER.getUserDetails = function( user ) {
 
-//console.log( 'user', user );
-
 		location.hash = user;
 
-if (window.console) { console.log( 'user', user ); }
+		if ( DAT.getUserData ) {
 
+			DAT.getUserData( user );
 
+			switch( DAT.currentTopic ) {
 
-/*
-		DAT.getUserData( user );
+				case 'events':
+					DAT.getEvents ( user, 0, contents )
+					break;
+				case 'gists':
+					DAT.getGists ( user )
+					break;
+				case 'orgs':
+					DAT.getOrgs( user ) 
+					break;
+				case 'repos':
+					DAT.getRepos( user ) 
+					break;
+				case 'stats':
+//					EUS.buildStatsReport( user )
+					break;
+				default:
+					DAT.getRepos( user ) 
 
-		switch( DAT.currentTopic ) {
-
-			case 'repos':
-				DAT.getRepos( user ) 
-				break;
-			case 'gists':
-				DAT.getGists ( user )
-				break;
-			case 'events':
-				DAT.getEvents ( user, 0, contents )
-				break;
-
-
-			default:
-				DAT.getRepos( user ) 
-
-		}
+			}
 
 //		DAT.getRepos( user );
 
-		EVT.requestUserEvents( user )
-*/
+		}
+
+		if ( EUS.requestGitHubAPIUserEvents ) {
+
+			EUS.target = updates;
+			EUS.requestGitHubAPIUserEvents( user);
+
+		}
 
 	}
-
-
 

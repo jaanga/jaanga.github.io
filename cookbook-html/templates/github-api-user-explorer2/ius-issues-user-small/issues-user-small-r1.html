@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Events User Small R1</title>
+<title>Issues User Small R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='List user events
 ' >
@@ -10,9 +10,10 @@
 <meta name=date content='2016-09-04' >
 </head>
 <body>
-<script src=../a-cor-core/core-r1.js ></script>
-<script src=../b-api-api-key/api-key-r1.js ></script>
-<script src=../e-eus-events-user-small/events-user-small-r1.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../0-cor-core/core-r1.js ></script>
+<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../ius-issues-user-small/issues-user-small-r1.js ></script>
 <script>
 
 
@@ -22,7 +23,6 @@
 	var user = 'torvalds';
 	var user = 'theo-armour';
 //	var user = 'sagemath';
-
 
 	init();
 
@@ -38,7 +38,7 @@
 
 			API.getMenuDetailsAPIKey() +
 
-			EUS.getMenuDetailsRepositoryEvents( user ) +
+			IUS.getMenuDetailsRepositoryEvents() +
 
 			COR.getMenuDetailsTemplate() +
 
@@ -52,10 +52,10 @@
 
 		detailsTemplate.setAttribute('open', 'open');
 
-		EUS.user = user;
-//		EUS.target = EUSrepositoryEvents;
+		IUS.user = user;
+//		IUS.target = EUSrepositoryEvents;
 
-		EUS.requestGitHubAPIUserEvents();
+		IUS.getGitHubAPIUserIssues();
 
 	}
 </script>

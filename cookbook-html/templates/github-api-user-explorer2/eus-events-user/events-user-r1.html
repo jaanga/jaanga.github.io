@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Events User R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='List user events
+' >
+<meta name=keywords content='CMS,JavaScript,GitHub Developer API,GitHub,FOSS' >
+<meta name=date content='2016-09-17' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../0-cor-core/core-r1.js ></script>
+<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../eus-events-user/events-user-r1.js ></script>
+<script>
+
+	var user = 'jaanga';
+//	var user = 'sagemath';
+//	var user = 'mrdoob';
+//	var user = 'ladybug-analysis-tools';
+//	var user = 'torvalds';
+//	var user = 'paulmasson';
+//	var user = 'theo-armour';
+
+	DAT.currentTopic = 'stats';
+
+	init();
+
+	function init() {
+
+		COR.taglineHeader = 'A eventful howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			API.getMenuDetailsAPIKey() +
+
+			EUS.getMenuDetailsUserEvents() +
+
+			COR.getMenuDetailsTemplate() +
+
+//			COR.getMenuDetailsObjectProperties() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		detailsTemplate.setAttribute('open', 'open');
+
+//		EUS.target = EUSrepositoryEvents;
+
+		EUS.requestGitHubAPIUserEvents( user );
+
+	}
+</script>
+</body>
+</html>

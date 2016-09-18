@@ -22,7 +22,7 @@ console.log( 'user', user );
 
 		page = page || 0;
 
-		fileName = 'https://api.github.com/users/' + user + '/events?sort=comments&order=desc&per_page=100&page=' + page + '&' + ( SEL.token || '' );
+		fileName = 'https://api.github.com/users/' + user + '/events?sort=comments&order=desc&per_page=100&page=' + page + '&' + ( API.token || '' );
 
 		pageHeader =
 		'<h1>' +

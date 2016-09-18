@@ -10,9 +10,10 @@
 <meta name=date content='2016-09-13' >
 </head>
 <body>
-<script src=../a-cor-core/core-r1.js ></script>
-<script src=../c-ser-search/search-r1.js ></script>
-
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../0-cor-core/core-r1.js ></script>
+<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../2-ser-search/search-r1.js ></script>
 <script src=../usr-users/users-r1.js ></script>
 <script>
 
@@ -28,6 +29,8 @@
 
 			COR.getMenuDetailsHeader() +
 
+			API.getMenuDetailsAPIKey() +
+
 			SER.getMenuDetailsSelectGroup() +
 
 			SER.getMenuDetailsSelectUser() +
@@ -38,9 +41,12 @@
 
 		b;
 
-		selGroup.value = 'listTheo';
+//		selGroup.value = 'listTheo';
+
+		SER.setUserDetails();
 
 	}
+
 
 </script>
 </body>

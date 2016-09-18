@@ -1,13 +1,13 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/github-api-user-explorer/'; 
+( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/github-api-user-explorer2/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook HTML]( https://jaanga.github.io/cookbook-html/  ) &raquo;
 [Templates]( https://jaanga.github.io/cookbook-html/templates/ ) &raquo;
 
 
-[GitHub API User Explorer Read Me]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/index.html#readme.md )
+[GitHub API User Explorer Read Me]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/index.html#readme.md )
 ===
 
 
@@ -16,9 +16,9 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <img src="" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/index.html width=100% height=600px onload=this.contentWindow.controls.enableZoom=false; ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/index.html width=100% height=600px ></iframe>
 
-_GitHub API User Explorer_
+_GitHub API User Explorer2_
 
 ***
 
@@ -26,23 +26,25 @@ _GitHub API User Explorer_
 
 ## Concept
 
-GitHub has millions of project. Finding projects that interest you is not easy. Finding projects with code you can use is not easy.
+GitHub has millions of project. With so many projects, finding projects that interest you is not easy. Finding projects with code you can use is not easy.
 
 And then when you are notified about a GitHub user of interest, it's not that easy to explore their work.
 
-There may be many repositories. There may be a lot of material that looks interesting but has not been updated in years
+There may be many repositories. There may be a lot of material that looks interesting but has not been updated in years.
 
 Then there is the other side of the coin:
 
-How can you make your work more visible to the world?
+How can you make your own work more visible to the world?
 
-How can visitors to you GitHb projects become informed in a speedy, fun manner about all the things you are doing.
+How can visitors to your GitHb projects become informed in a speedy, fun manner about all the things you are doing.
 
-Certainly the GitHub Explore is a good place to start. And there are a number of really interesting curation efforts.
+Certainly the [Explore GitHub]( https://github.com/explore ) page is a good place to start. 
 
-And none of that stops you or us from investigating even more ways of explring GitHub
+And there are a number of really interesting curation efforts.
 
-And, of course, GitHuB supplies a quite amazing tool for finding stuff on GitHub
+And none of that stops you or us from investigating even more ways of exploring GitHub.
+
+And, of course, GitHuB supplies a quite amazing tool for finding stuff on GitHub.
 
 The GitHub developers API provides fast, free and easy access to millions of GitHub projects.
 
@@ -82,7 +84,7 @@ The GitHub developers API provides fast, free and easy access to millions of Git
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	http://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/github-api-user-explorer-r1.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/github-api-user-explorer-r1.html' width=100% height=600 ></iframe>
 
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/github-api-user-explorer/github-api-user-explorer-r1.html';
 value='Source code listing' >
@@ -96,18 +98,34 @@ value='Source code listing' >
 
 ## Issues
 
-## Users
+* 2016-09-17 ~ return tot top of page wen new user is loaded
 
-Intended for general use
 
 ## Goals
 
 ## Links of Interest
 
+Web sites thatt help you explore GitHub
 
+* https://github.com/trending
+* https://github.com/trending/javascript
+* https://www.reddit.com/r/github/
+* https://www.reddit.com/r/coolgithubprojects
+* https://github.com/leereilly/games
+* http://www.gitlogs.com/
+* http://ghv.artzub.com/
+* http://github-awards.com/
+* https://github-ranking.com/
+* https://gist.github.com/paulmillr/2657075/
+* http://githut.info/
 
 
 ## Change Log
+
+### 2016-09-17 ~ Explorer2 R1
+
+* Mahor update
+
 
 ### 
 

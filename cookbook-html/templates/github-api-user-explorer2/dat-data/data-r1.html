@@ -10,33 +10,68 @@
 <meta name=date content='2016-08-30' >
 </head>
 <body>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
-
-<script src=../cor-core/core-r1.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../0-cor-core/core-r1.js ></script>
+<script src=../1-api-api-key/api-key-r1.js ></script>
 <script src=../dat-data/data-r1.js ></script>
 <script>
 
 	var user = 'torvalds';
+	var user = 'jaanga';
+	var user = 'sagemath';
+//	var user = 'mrdoob';
+//	var user = 'ladybug-analysis-tools';
+//	var user = 'torvalds';
+//	var user = 'paulmasson';
+	var user = 'theo-armour';
 
-	COR.initThreeColumns();
+	init();
 
-	COR.menu.innerHTML =
+	function init() {
 
-		COR.getMenuDetailsHeader() +
+		COR.initThreeColumns();
 
-//		SEL.getMenuDetailsSelectGroup() +
+		COR.menu.innerHTML =
 
-//		SEL.getMenuDetailsSelectUser() +
+			COR.getMenuDetailsHeader() +
 
-		DAT.getMenuDetailsUserData() +
+	//		SER.getMenuDetailsSelectGroup() +
 
-		COR.getMenuDetailsAbout() +
+	//		SER.getMenuDetailsSelectUser() +
 
-		COR.getMenuFooter() +
+			DAT.getMenuDetailsUserData() +
 
-	b;
+			COR.getMenuDetailsAbout() +
 
-	DAT.getUserData( user );
+			COR.getMenuFooter() +
+
+		b;
+
+
+		DAT.currentTopic = 'orgs';
+
+		DAT.getUserData( user );
+
+		switch( DAT.currentTopic ) {
+
+			case 'events':
+				DAT.getEvents ( user, 0, contents )
+				break;
+			case 'gists':
+				DAT.getGists ( user )
+				break;
+			case 'orgs':
+				DAT.getOrgs( user ) 
+				break;
+			case 'repos':
+				DAT.getRepos( user ) 
+				break;
+			default:
+				DAT.getRepos( user ) 
+
+		}
+
+	}
 
 </script>
 </body>

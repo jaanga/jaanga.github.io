@@ -2,17 +2,21 @@
 
 	var b = '<br>';
 
-
+	var API = API || {};
 	var COR = {};
-	var SEL = SEL || {};
-	SEL.token = '';
+	var SER = SER || {};
+	var DAT = DAT || {};
+	var EUS = EUS || {};
+
+	API.token = '';
 
 
 	COR.taglineHeader = 
 
 		'<p><small>' +
-			'Rotate|Zoom|Pan => 1|2|3 finger/button' + b +
-			'Rotation => spacebar' +
+
+			'Search for various types of GitHub users' + b +
+			'See what GitHub users are doing' + b +
 		'</small></p>';
 
 
@@ -20,9 +24,9 @@
 //					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
 
 
-
 //	COR.txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 	COR.txt = '<p>GitHub API responses will appear here.</p>';
+	COR.converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 
 	COR.initThreeColumns = function() {
@@ -32,9 +36,7 @@
 		COR.menu = document.body.appendChild( document.createElement( 'div' ) );
 		COR.menu.id = 'menu';
 
-
-
-// in HTML
+// use this in your HTML file
 
 		COR.menu.innerHTML =
 
@@ -77,8 +79,9 @@
 
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
-			'h1, h2, h3 { margin: 0; }' +
+			'#menu h1, #menu h2, #menu h3 { margin: 0; }' +
 
+			'img { max-width: 100%; }' +
 			'iframe { width: 100%; }' +
 
 			'select { width: 100%; }' +
@@ -120,7 +123,7 @@
 			'<h2>' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 //				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
-				'<a href=../../../index.html#sandbox/elevations-view-oakland-gran-fondo onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'<a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 
 			'</h2>' +
 

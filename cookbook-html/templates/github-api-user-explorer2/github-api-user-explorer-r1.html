@@ -2,22 +2,23 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>GitHub API User Explorer R1</title>
+<title>GitHub API User Explorer2 R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='
 ' >
 <meta name=keywords content='Jaanga,Theo Armour,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-04' >
+<meta name=date content='2016-09-16' >
 </head>
 <body>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.2/showdown.min.js ></script>
 
-<script src=cor-core/core-r1.js ></script>
-<script src=sel-select/select-r1.js ></script>
-<script src=dat-data/data-r1.js ></script>
-<script src=evt-events/events-r1.js ></script>
-<script src=user-events-big/user-events-big-r1.js ></script>
-<script src=usr-users/users-r1.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=./0-cor-core/core-r1.js ></script>
+<script src=./1-api-api-key/api-key-r1.js ></script>
+<script src=./2-ser-search/search-r1.js ></script>
+<script src=./dat-data/data-r1.js ></script>
+<script src=./user-events-big/user-events-big-r1.js ></script>
+<script src=./eus-events-user/events-user-r1.js ></script>
+<script src=./usr-users/users-r1.js ></script>
 <!--
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/cor-core/core-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer/sel-select/select-r1.js ></script>
@@ -28,15 +29,21 @@
 -->
 <script>
 
-	COR.initThreeColumns();
+	DAT.currentTopic = 'stats';
 
-	COR.menu.innerHTML =
+	init();
+
+	function init() {
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
 
 		COR.getMenuDetailsHeader() +
 
-		SEL.getMenuDetailsSelectGroup() +
+		SER.getMenuDetailsSelectGroup() +
 
-		SEL.getMenuDetailsSelectUser() +
+		SER.getMenuDetailsSelectUser() +
 
 		DAT.getMenuDetailsUserData() +
 
@@ -44,11 +51,15 @@
 
 		COR.getMenuFooter() +
 
-	b;
+		b;
 
-//	selGroup.value = 'listTheo';
+	//	selGroup.value = 'listTheo';
 
-	SEL.setUserDetails();
+
+
+		SER.setUserDetails();
+
+	}
 
 </script>
 </body>

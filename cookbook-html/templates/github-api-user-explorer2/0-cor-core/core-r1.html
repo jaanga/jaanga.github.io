@@ -2,16 +2,16 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Files R1</title>
+<title>Core R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-13' >
+<meta name=date content='2016-09-16' >
 </head>
 <body>
-<script src=../a-cor-core/core-r1.js ></script>
-<script src=../d-get-get-files/get-files-r1.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../0-cor-core/core-r1.js ></script>
 <script>
 
 	init();
@@ -28,8 +28,6 @@
 
 			COR.getMenuDetailsTemplate() +
 
-
-
 //			COR.getMenuDetailsObjectProperties() +
 
 			COR.getMenuDetailsAbout() +
@@ -41,10 +39,6 @@
 		if ( window.self !== window.top ) { hamburger.style.left = '0px'; }
 
 		detailsTemplate.setAttribute('open', 'open');
-
-//		GET.getGitHubAPITreeContents();
-
-		GET.getHTMLFilesinFolder();
 
 	}
 
