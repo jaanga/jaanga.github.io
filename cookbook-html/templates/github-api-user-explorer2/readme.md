@@ -26,7 +26,9 @@ _GitHub API User Explorer2_
 
 ## Concept
 
-GitHub has millions of project. With so many projects, finding projects that interest you is not easy. Finding projects with code you can use is not easy.
+GitHub has millions of project. With so many projects, finding projects that interest you is not easy. 
+
+Finding projects with code you can use is not easy.
 
 And then when you are notified about a GitHub user of interest, it's not that easy to explore their work.
 
@@ -48,7 +50,9 @@ And, of course, GitHuB supplies a quite amazing tool for finding stuff on GitHub
 
 The GitHub developers API provides fast, free and easy access to millions of GitHub projects.
 
-   
+Therefore the idea is to build tols to help you snoop around GitHub and finds the things that are of particular interest to you.   
+
+
 
 ### Mission
 
@@ -84,13 +88,13 @@ The GitHub developers API provides fast, free and easy access to millions of Git
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/github-api-user-explorer-r1.html' width=100% height=600 ></iframe>
+	https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/github-api-user-explorer2-r1.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/github-api-user-explorer/github-api-user-explorer-r1.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-html/templates/github-api-user-explorer2/github-api-user-explorer2-r1.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/github-api-user-explorer/github-api-user-explorer-r1.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-html/templates/github-api-user-explorer2/github-api-user-explorer2-r1.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
@@ -98,18 +102,14 @@ value='Source code listing' >
 
 ## Issues
 
-* 2016-09-17 ~ return tot top of page wen new user is loaded
-
 
 ##  To Do List / Goals
 
-* Add GitHub-like CSS
+
 * Add GitHub no connection note
 * Add API key entry
-* Add number of stars to each repo
-* Add number of hits remaining before you go over usage limits
+* Add number of stars to each repo < add to rate limit
 * Add iframes to orgs
-* Add iframes t repos
 * Add iframes to gists
 
 
@@ -136,6 +136,16 @@ Web sites that help you explore GitHub
 
 
 ## Change Log
+
+### 2016-09-20
+
+* 2016-09-17 ~ return to top of page when new user is loaded < 2016-09-20 fixed
+* Enter search query
+* View rate limits
+	* Add number of hits remaining before you go over usage limits
+* Repo read me in monospace font
+	* Add GitHub-like CSS < partial fix
+* Right menu scrolls independently
 
 ### 2016-09-17 ~ Explorer2 R1
 

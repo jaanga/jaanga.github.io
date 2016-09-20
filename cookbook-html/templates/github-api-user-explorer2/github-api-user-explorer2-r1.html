@@ -65,6 +65,9 @@
 
 	}
 
+// get called by SER.setUserDetails...
+
+
 	SER.getUserDetails = function( user ) {
 
 		location.hash = user;
@@ -99,12 +102,15 @@
 
 		}
 
+
 		if ( EUS.requestGitHubAPIUserEvents ) {
 
 			EUS.target = updates;
 			EUS.requestGitHubAPIUserEvents( user);
 
 		}
+
+		window.scrollTo(0,0);
 
 	}
 
