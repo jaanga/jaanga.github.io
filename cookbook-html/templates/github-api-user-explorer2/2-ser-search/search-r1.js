@@ -13,7 +13,7 @@
 
 			'<details id=detailsSelectGroup >' +
 
-				'<summary><h3>Select groups of users</h3></summary>' +
+				'<summary><h3>Search groups of users</h3></summary>' +
 
 				'<p>' +
 					'<select id=selGroup onchange=SER.setUserDetails(this); title="Select the group of users" size=15 >' +
@@ -24,6 +24,8 @@
 				'</p>' +
 
 // add input your own query
+
+				'<p>Query: <input id=SERinpQuery placeholder="Enter a search query" onchange=SER.getSearchItems(this.value); style=width:100%; ></p>' +
 
 				'<p><i>Returns first 100 items found. This limit might be removed.</i></p>' +
 
@@ -80,25 +82,27 @@
 
 		} else if ( location.hash.length ) {
 
-			SER.getSearchItems();
+			SER.getSearchItems( selGroup.value );
 
 			SER.getUserDetails( location.hash.slice( 1 ) );
 
 		} else {
 
-			SER.getSearchItems();
+			SER.getSearchItems( selGroup.value );
 
 		}
+
+		SERinpQuery.value = selGroup.value;
 
 	};
 
 
 
-	SER.getSearchItems = function() {
+	SER.getSearchItems = function( query ) {
 
 		var url, xhr, response, txt;
 
-		url = 'https://api.github.com/search/repositories?q=' + selGroup.value + '&sort=comments&order=desc&per_page=100&' + ( SER.token || '' );
+		url = 'https://api.github.com/search/repositories?q=' + query + '&sort=comments&order=desc&per_page=100&' + ( SER.token || '' );
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', url, true );

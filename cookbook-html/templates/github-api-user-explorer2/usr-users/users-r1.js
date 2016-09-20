@@ -63,7 +63,7 @@
 	USR.groupOptions =
 
 		'<option value="listTheo" >Theo\'s list of favs</option>' +
-		'<option selected value="stars:%3E20000" >Users with repos & stars > 35,000</option>' +
+		'<option selected value="stars:%3E20000" >Users with repos & stars > 20,000</option>' +
 		'<option value="three+stars:%3E300" >Users with word \'three\' & stars > 300</option>' +
 		'<option value="3D+stars:%3E1000" >Users with word \'3D\' & stars > 1000</option>' +
 		'<option value="stl+stars:%3E50" >Users with word \'stl\' & stars > 50</option>' +

@@ -11,7 +11,7 @@
 <body>
 
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
-<!--
+
 <script src=./0-cor-core/core-r1.js ></script>
 <script src=./1-api-api-key/api-key-r1.js ></script>
 <script src=./2-ser-search/search-r1.js ></script>
@@ -19,7 +19,7 @@
 <script src=./user-events-big/user-events-big-r1.js ></script>
 <script src=./eus-events-user/events-user-r1.js ></script>
 <script src=./usr-users/users-r1.js ></script>
--->
+<!--
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/0-cor-core/core-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/1-api-api-key/api-key-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/2-ser-search/search-r1.js ></script>
@@ -27,7 +27,7 @@
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/user-events-big/user-events-big-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/eus-events-user/events-user-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/usr-users/users-r1.js ></script>
-
+-->
 <script>
 
 	DAT.currentTopic = 'stats';
@@ -48,6 +48,8 @@
 
 		DAT.getMenuDetailsUserData() +
 
+		API.getMenuDetailsAPIRates() +
+
 		COR.getMenuDetailsAbout() +
 
 		COR.getMenuFooter() +
@@ -57,6 +59,52 @@
 //		selGroup.value = 'listTheo';
 
 		SER.setUserDetails();
+
+
+		API.getRateLimits();
+
+	}
+
+	SER.getUserDetails = function( user ) {
+
+		location.hash = user;
+
+		if ( DAT.getUserData ) {
+
+			DAT.getUserData( user );
+
+			switch( DAT.currentTopic ) {
+
+				case 'events':
+					DAT.getEvents ( user, 0, contents )
+					break;
+				case 'gists':
+					DAT.getGists ( user )
+					break;
+				case 'orgs':
+					DAT.getOrgs( user ) 
+					break;
+				case 'repos':
+					DAT.getRepos( user ) 
+					break;
+				case 'stats':
+//					EUS.buildStatsReport( user )
+					break;
+				default:
+					DAT.getRepos( user ) 
+
+			}
+
+//		DAT.getRepos( user );
+
+		}
+
+		if ( EUS.requestGitHubAPIUserEvents ) {
+
+			EUS.target = updates;
+			EUS.requestGitHubAPIUserEvents( user);
+
+		}
 
 	}
 

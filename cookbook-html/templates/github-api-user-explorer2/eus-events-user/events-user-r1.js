@@ -13,7 +13,6 @@
 	EUS.repos = [];
 
 
-
 	EUS.getMenuDetailsUserEvents = function() {
 
 		EUS.target = updates;
@@ -54,9 +53,6 @@
 			EUS.dates = [];
 			EUS.repos = [];
 			EUS.user = user;
-
-
-
 
 			txt = '<h2>' + user + ' recent events</h2>' +
 				'<button onclick=DAT.currentTopic="stats";window.location.reload() >show activity statistics</button>' + b;
@@ -144,11 +140,13 @@
 
 			name = EUS.repos[ repoKeys[ i ] ].name;
 
-			txt += '<h2 style=margin:0; >User/repo: ' + name.link( 'https://github.com/' + name ) + '</h2>';
+			txt += '<h2  style=margin-bottom:0;>User/repo: ' + name.link( 'https://github.com/' + name ) + '</h2>';
 
 			repo = EUS.repos[ repoKeys[ i ] ];
 
 			txt += '<iframe id=' + name + ' width=100% height=300 ></iframe>';
+
+//			txt += '<div id=' + name + ' style=width:100%;height:300px;oveflow:hidden; ></div>';
 
 			EUS.getReadMe( name )
 
@@ -205,18 +203,23 @@
 
 		function callback() {
 
-if ( xhr.repo === 'neovim/doc') { console.log( '',  xhr ); }
+//if ( xhr.repo === 'neovim/doc') { console.log( '',  xhr ); }
+
+			st = '<style>body { font: 10pt monospace; }</style>';
 
 			if ( xhr.status != 404 ) {
 
-				text = COR.converter.makeHtml( xhr.responseText );
+				text = st + COR.converter.makeHtml( xhr.responseText );
 
 			} else {
 
 				text = 'Not found: ' + repo + branch + fileName;
+
 			}
 
 			item = document.getElementById( xhr.repo );
+//			item.contentDocument.body.style.font = '12pt monospace'; // margin: 0;';
+
 			item.srcdoc = text;
 
 		}
@@ -270,7 +273,7 @@ if ( xhr.repo === 'neovim/doc') { console.log( '',  xhr ); }
 
 					'<small>' + event.payload.issue.title.link( event.payload.issue.html_url ) + '</small>' + b +
 
-					'<div class=issue >' + COR.converter.makeHtml( body ) + '</div>' +
+					'<div class=issue  s>' + COR.converter.makeHtml( body ) + '</div>' +
 
 				'';
 

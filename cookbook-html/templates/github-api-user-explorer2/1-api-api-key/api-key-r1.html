@@ -31,6 +31,8 @@
 
 			COR.getMenuDetailsTemplate() +
 
+			API.getMenuDetailsAPIRates() +
+
 //			COR.getMenuDetailsObjectProperties() +
 
 			COR.getMenuDetailsAbout() +
@@ -40,6 +42,8 @@
 		b;
 
 		detailsTemplate.setAttribute('open', 'open');
+
+		API.getRateLimits();
 
 	}
 
