@@ -126,10 +126,9 @@
 
 		txt = 
 
-			'<h1>' + 
-				user + b +
-				'Statistics of ' + EUS.events.length + ' most recent events' +
-			'</h1>' +
+			'<h1>' + user + '</h1>' +
+				'<h2>Statistics of ' + EUS.events.length + ' most recent events' +
+			'</h2>' +
 			'Time period covers ' + EUS.dates.slice( -1 )  + ' to ' + EUS.dates[ 0 ] + ' with ' + EUS.dates.length + ' day(s) of activity' + b + 
 
 		b;
