@@ -1,18 +1,22 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Files R1</title>
+<title>webSite via GitHub API2 R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='
+<meta name=description content='Request details of all files in a GitHub repository.
+Creates a file explorer with menu. 
+Enables browsing and viewing of selected files.
+Menu has breadcrumbs and other useful links. 
 ' >
-<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-13' >
+<meta name=keywords content='CMS,JavaScript,GitHub Developer API,GitHub,FOSS,STEM' >
+<meta name=date content='2016-08-26' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
-<script src=../0-cor-core/core-r1.js ></script>
-<script src=../get-files/get-files-r1.js ></script>
+
+<script src=../core1/0-cor-core/core-r1.js ></script>
+<script src=../core1/get-files/get-files-r1.js ></script>
 <script>
 
 	GET.user = 'jaanga';
@@ -21,7 +25,7 @@
 	GET.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/git/trees/gh-pages?recursive=1';
 
 //	GET.defaultFile = '../../elevations/elevations-data-04/san-francisco_10_163_394_3_3_450_450_.json';
-	GET.defaultFile	= 'readme.md'; // if no default, select a random file
+	GET.defaultFile = 'readme.md'; // if no default, select a random file
 
 //	GET.searchInFolder = 'elevations-data-04/';
 //	GET.extension = '.json';
@@ -33,6 +37,7 @@
 	GET.urlBase = 'https://jaanga.github.io/terrain3' + GET.searchInFolder;
 
 	GET.urlIssues = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/issues';
+
 
 	init();
 
@@ -65,7 +70,6 @@
 		GET.getUpdates();
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
-
 
 	}
 

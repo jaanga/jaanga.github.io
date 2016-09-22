@@ -1,4 +1,4 @@
-// Copyright &copy; 2016 Jaanga authors
+// Copyright &copy; 2016 Jaanga authors. MIT License
 
 	var b = '<br>';
 
@@ -7,9 +7,12 @@
 	var SER = SER || {};
 	var DAT = DAT || {};
 	var EUS = EUS || {};
+	var GET = GET || {};
 
 	API.token = '';
 
+	var tagLine ='your 3D happy place';
+	var logo = '&#x2766';
 
 	COR.taglineHeader = 
 
@@ -26,6 +29,7 @@
 
 //	COR.txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 	COR.txt = '<p>GitHub API responses will appear here.</p>';
+
 	COR.converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
 
@@ -53,12 +57,12 @@
 
 		COR.contents = document.body.appendChild( document.createElement( 'div' ) );
 		COR.contents.id = 'contents';
-		COR.contents.innerHTML = '<h1>contents</h1><div id=divContents >' + COR.txt + '</div>';
+		COR.contents.innerHTML = '<h1>contents</h1><div id=CORdivContents >' + COR.txt + '</div>';
 
 
 		COR.updates = document.body.appendChild( document.createElement( 'div' ) );
 		COR.updates.id = 'updates';
-		COR.updates.innerHTML = '<h1>updates</h1><div id=divUpdates >' + COR.txt + '</div>';
+		COR.updates.innerHTML = '<h1>updates</h1><div id=CORdivUpdates >' + COR.txt + '</div>';
 
 //		detailsTemplate.setAttribute('open', 'open');
 
@@ -88,8 +92,10 @@
 			'summary h2, summary h3, summary h4 { display: inline; }' +
 			'summary { outline: none; }' +
 
+
 			'.butt2 { width: 108px; }' +
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'.GETupdate { border: 1px solid #aaa; height: 300px; overflow: auto }' +
 
 			'#contents { border: 0px red solid; left: 25%; position: absolute; top: 0; max-width: 50%; }' +
 
@@ -97,7 +103,8 @@
 			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 20%; }' +
 			'#menu img { max-width: 200px; }' +
 
-			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 25%; padding: 0 20px; }' +
+//			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 25%; padding: 0 20px; }' +
+			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 25%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
 
 			'#repositoryEvents h4 { margin: 0; }' +
 			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +
@@ -107,6 +114,36 @@
 			'#splashHeader { text-align: right; }' +
 
 		b;
+
+	};
+
+
+	COR.getMenuBreadCrumbs = function( dir ) {
+
+		var breadCrumbs, dirArray;
+
+		dirArray = dir.split( '/' );
+
+		breadCrumbs =
+
+		'<h2>' +
+
+			'<a href=http://' + GET.user + '.github.io title="' + GET.user + ' - ' + tagLine + '" >' + logo + ' ' + GET.user + '</a> &raquo; ' +
+			'<a href=# >' + GET.repo + '</a> &raquo; ' +
+
+		'</h2>';
+
+		for ( var i = 0; i < dirArray.length - 1; i++ ) {
+
+			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
+
+			breadCrumbs += '<h3><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h3>';
+
+		}
+
+		breadCrumbs += '<h3><a href=#' + dir + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
+
+		return breadCrumbs;
 
 	};
 
