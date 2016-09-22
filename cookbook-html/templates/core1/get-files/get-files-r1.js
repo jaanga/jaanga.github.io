@@ -210,9 +210,9 @@
 
 	GET.getFilesFromFolder = function( dir ) {
 
-console.log( 'dir', dir );
+//console.log( 'dir', dir );
 
-//		var dirArray, dirLen, item, itemArray;
+		var dirArray, dirLen, item, itemArray;
 		GET.dirsSelected = [];
 
 		dirArray = dir === '/' ? [] : dir.split( '/' );
@@ -228,7 +228,7 @@ console.log( 'dir', dir );
 
 			itemArray = item.split( '/' );
 
- console.log( 'itemPath', item, itemArray.length, dirLen + 2 );
+//console.log( 'itemPath', item, itemArray.length, dirLen + 2 );
 
 			if ( itemArray.length !== dirLen ) { continue; }
 
