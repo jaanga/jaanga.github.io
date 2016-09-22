@@ -117,35 +117,43 @@
 
 	};
 
+	COR.getMenuBreadCrumbs = function() {
 
-	COR.getMenuBreadCrumbs = function( dir ) {
+		return '<div id=CORdivBreadCrumbs >bc</div>';
 
-		var breadCrumbs, dirArray;
+	}
+
+	COR.setMenuBreadCrumbs = function( dir ) {
+
+console.log( 'dir', dir );
+
+		var CORbreadCrumbs, dirArray;
 
 		dirArray = dir.split( '/' );
 
-		breadCrumbs =
+		CORbreadCrumbs =
 
-		'<h2>' +
+		'<h3>' +
 
 			'<a href=http://' + GET.user + '.github.io title="' + GET.user + ' - ' + tagLine + '" >' + logo + ' ' + GET.user + '</a> &raquo; ' +
 			'<a href=# >' + GET.repo + '</a> &raquo; ' +
 
-		'</h2>';
+		'</h3>';
 
 		for ( var i = 0; i < dirArray.length - 1; i++ ) {
 
 			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
 
-			breadCrumbs += '<h3><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h3>';
+			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
 
 		}
 
-		breadCrumbs += '<h3><a href=#' + dir + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a></h3>';
+		CORbreadCrumbs += '<h2><a href=#' + dir + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a></h2>';
 
-		return breadCrumbs;
+		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs;
 
 	};
+
 
 
 

@@ -38,6 +38,8 @@ Menu has breadcrumbs and other useful links.
 
 	GET.urlIssues = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/issues';
 
+	GET.urlSource = 'https://github.com/' + GET.user + '/' + GET.repo + '/tree/' + GET.branch + '/';
+	GET.urlEvents = 'https://api.github.com/users/' + GET.user + '/events';
 
 	init();
 
@@ -50,6 +52,8 @@ Menu has breadcrumbs and other useful links.
 		COR.menu.innerHTML =
 
 			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs( GET.searchInFolder ) +
 
 			GET.getMenuDetailsTableOfContents() +
 

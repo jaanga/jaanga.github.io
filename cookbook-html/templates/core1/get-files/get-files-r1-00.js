@@ -215,7 +215,11 @@ console.log( 'dir', dir );
 //		var dirArray, dirLen, item, itemArray;
 		GET.dirsSelected = [];
 
-		dirArray = dir === '/' ? [] : dir.split( '/' );
+		dirArray = dir !== '/' ? dir.split( '/' ) : [  ];
+
+//		dirArray = dir.split( '/' );
+
+//		dirLen = dir === '' ? 1 : dirArray.length ;
 
 		dirLen = dirArray.length + 2;
 
@@ -230,7 +234,7 @@ console.log( 'dir', dir );
 
  console.log( 'itemPath', item, itemArray.length, dirLen + 2 );
 
-			if ( itemArray.length !== dirLen ) { continue; }
+			if ( itemArray.length !== dirLen /* || dirLen >= itemArray.length */ ) { continue; }
 
 			GET.dirsSelected.push( item.replace( '/readme.md', '' ) );
 

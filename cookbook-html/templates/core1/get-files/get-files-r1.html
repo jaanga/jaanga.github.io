@@ -17,6 +17,7 @@
 
 	GET.user = 'jaanga';
 	GET.repo = 'terrain3';
+	GET.branch = 'gh-pages';
 
 	GET.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/git/trees/gh-pages?recursive=1';
 
@@ -29,10 +30,15 @@
 	GET.searchInFolder = '/';
 	GET.extension = '.md';
 
+	GET.urlGHPages = 'https://' + GET.user + '.github.io/' + GET.repo + '/';
+
 //	GET.urlBase = '../../../../elevations/' + GET.searchInFolder;
-	GET.urlBase = 'https://jaanga.github.io/terrain3' + GET.searchInFolder;
+	GET.urlBase = 'https://github.com/' + GET.user + '/' + GET.repo + GET.searchInFolder;
 
 	GET.urlIssues = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/issues';
+
+	GET.urlSource = 'https://github.com/' + GET.user + '/' + GET.repo + '/tree/' + GET.branch + '/';
+	GET.urlEvents = 'https://api.github.com/users/' + GET.user + '/events';
 
 	init();
 
@@ -45,6 +51,8 @@
 		COR.menu.innerHTML =
 
 			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs() +
 
 			GET.getMenuDetailsTableOfContents() +
 
@@ -66,9 +74,7 @@
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
-
 	}
-
 
 </script>
 </body>
