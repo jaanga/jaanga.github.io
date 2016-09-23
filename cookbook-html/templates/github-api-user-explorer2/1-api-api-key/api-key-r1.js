@@ -69,7 +69,7 @@
 
 		response = JSON.parse( xhr.target.responseText );
 
-//console.log( 'res', response );
+console.log( 'res', response );
 
 		reset = new Date( response.resources.core.reset ).toLocaleTimeString();
 		APIlimits.innerHTML =

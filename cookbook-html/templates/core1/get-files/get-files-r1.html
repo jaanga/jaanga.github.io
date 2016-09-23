@@ -15,42 +15,41 @@
 <script src=../get-files/get-files-r1.js ></script>
 <script>
 
-	GET.user = 'jaanga';
-	GET.repo = 'terrain3';
-	GET.branch = 'gh-pages';
+	var DEF = DEF || {};
 
-	GET.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/git/trees/gh-pages?recursive=1';
+	DEF.user = 'jaanga';
+	DEF.repo = 'terrain3';
+	DEF.branch = 'gh-pages';
 
-//	GET.defaultFile = '../../elevations/elevations-data-04/san-francisco_10_163_394_3_3_450_450_.json';
-	GET.defaultFile	= 'readme.md'; // if no default, select a random file
+	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/gh-pages?recursive=1';
 
-//	GET.searchInFolder = 'elevations-data-04/';
-//	GET.extension = '.json';
+	DEF.defaultFile	= 'readme.md'; // if no default, select a random file
 
-	GET.searchInFolder = '/';
-	GET.extension = '.md';
+//	DEF.searchInFolder = 'elevations-data-04/';
+	DEF.searchInFolder = '/';
 
-	GET.urlGHPages = 'https://' + GET.user + '.github.io/' + GET.repo + '/';
+//	DEF.extension = '.md';
+//	DEF.extension = '.json';
 
-//	GET.urlBase = '../../../../elevations/' + GET.searchInFolder;
-	GET.urlBase = 'https://github.com/' + GET.user + '/' + GET.repo + GET.searchInFolder;
+	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
 
-	GET.urlIssues = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/issues';
+	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
 
-	GET.urlSource = 'https://github.com/' + GET.user + '/' + GET.repo + '/tree/' + GET.branch + '/';
-	GET.urlEvents = 'https://api.github.com/users/' + GET.user + '/events';
+	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
+	DEF.urlEvents = 'https://api.github.com/users/' + DEF.user + '/events';
+	DEF.urlIssues = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/issues';
 
 	init();
 
 	function init() {
 
-		COR.taglineHeader = 'A hard core howdy!' + b;
+//		COR.taglineHeader = 'A hard core howdy!' + b;
 
 		COR.initThreeColumns();
 
 		COR.menu.innerHTML =
 
-			COR.getMenuDetailsHeader() +
+//			COR.getMenuDetailsHeader() +
 
 			COR.getMenuBreadCrumbs() +
 
@@ -68,11 +67,58 @@
 
 		b;
 
-		GET.getContents();
-
-		GET.getUpdates();
-
 		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		GET.getGitHubRepoTreeContents(); // calls onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		var item;
+
+		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
+
+		if ( item.endsWith( '.md' ) === true ) {
+
+			COR.setMenuBreadCrumbs( DEF.searchInFolder );
+
+			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
+
+				if ( xhr.target.status !== 404 ) {
+
+					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+				}
+
+				COR.contents.style.overflow = 'auto';
+
+			} );
+
+		} else {
+
+// console.log( 'item', item );
+
+			COR.setMenuBreadCrumbs( item );
+
+			GET.getFilesFromFolder( item );
+
+			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
+
+				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+				COR.contents.style.overflow = 'auto';
+
+			} );
+
+			if ( !GETrepoStats.innerHTML ) { 
+
+				GET.setMenuDetailsRepositoryStatistics(); 
+				GET.getUpdates();
+
+			}
+
+		}
 
 	}
 

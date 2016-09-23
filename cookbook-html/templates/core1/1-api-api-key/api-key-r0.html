@@ -12,7 +12,7 @@
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 <script src=../0-cor-core/core-r1.js ></script>
-<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../1-api-api-key/api-key-r0.js ></script>
 <script>
 
 	init();
@@ -31,8 +31,6 @@
 
 			COR.getMenuDetailsTemplate() +
 
-			API.getMenuDetailsAPIRates() +
-
 //			COR.getMenuDetailsObjectProperties() +
 
 			COR.getMenuDetailsAbout() +
@@ -42,8 +40,6 @@
 		b;
 
 		detailsTemplate.setAttribute('open', 'open');
-
-		API.getRateLimits();
 
 	}
 

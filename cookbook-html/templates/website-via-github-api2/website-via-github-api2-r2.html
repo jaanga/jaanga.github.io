@@ -16,9 +16,127 @@ Menu has breadcrumbs and other useful links.
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 
 <script src=../core1/0-cor-core/core-r1.js ></script>
+<script src=../core1/1-api-api-key/api-key-r1.js ></script>
 <script src=../core1/get-files/get-files-r1.js ></script>
+
 <script>
 
+
+	var DEF = DEF || {};
+
+	DEF.user = 'jaanga';
+	DEF.repo = 'terrain3';
+	DEF.branch = 'gh-pages';
+
+	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/gh-pages?recursive=1';
+
+	DEF.defaultFile	= 'readme.md'; // if no default, select a random file
+
+//	DEF.searchInFolder = 'elevations-data-04/';
+	DEF.searchInFolder = '/';
+
+//	DEF.extension = '.md';
+//	DEF.extension = '.json';
+
+	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
+
+	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
+
+	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
+	DEF.urlEvents = 'https://api.github.com/users/' + DEF.user + '/events';
+	DEF.urlIssues = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/issues';
+
+	init();
+
+	function init() {
+
+//		COR.taglineHeader = 'A hard core howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+//			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs() +
+
+			GET.getMenuDetailsTableOfContents() +
+
+			GET.getMenuDetailsPageActions() +
+
+			GET.getMenuRepositoryEvents() +
+
+			GET.getMenuDetailsRepositoryStatistics() +
+
+			API.getMenuDetailsAPIKey() +
+
+			API.getMenuDetailsAPIRates() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		GET.getGitHubRepoTreeContents(); // calls onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		var item;
+
+		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
+
+		if ( item.endsWith( '.md' ) === true ) {
+
+			COR.setMenuBreadCrumbs( DEF.searchInFolder );
+
+			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
+
+				if ( xhr.target.status !== 404 ) {
+
+					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+				}
+
+				COR.contents.style.overflow = 'auto';
+
+			} );
+
+		} else {
+
+// console.log( 'item', item );
+
+			COR.setMenuBreadCrumbs( item );
+
+			GET.getFilesFromFolder( item );
+
+			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
+
+				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+				COR.contents.style.overflow = 'auto';
+
+			} );
+
+			API.getRateLimits();
+
+			if ( !GETrepoStats.innerHTML ) { 
+
+				GET.setMenuDetailsRepositoryStatistics(); 
+				GET.getUpdates();
+
+			}
+
+		}
+
+	}
+
+
+/*
 	GET.user = 'jaanga';
 	GET.repo = 'terrain3';
 
@@ -76,6 +194,7 @@ Menu has breadcrumbs and other useful links.
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
 	}
+*/
 
 
 </script>

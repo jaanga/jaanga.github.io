@@ -82,7 +82,7 @@
 
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
-			'#menu h1, #menu h3 { margin: 0; }' +
+			'#menu h1, #menu h2, #menu h3 { margin: 0; }' +
 
 			'img { max-width: 100%; }' +
 			'iframe { width: 100%; }' +
@@ -128,39 +128,30 @@
 
 	COR.setMenuBreadCrumbs = function( dir ) {
 
-//console.log( 'dir', dir );
+console.log( 'dir', dir );
 
 		var CORbreadCrumbs, dirArray;
 
-		dirArray = dir === '/' ? [] : dir.split( '/' );
+		dirArray = dir.split( '/' );
 
-		if ( dirArray.length > 0 ) {
+		CORbreadCrumbs =
 
-			CORbreadCrumbs =
+		'<h3>' +
 
-			'<h3>' +
-				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + tagLine + '" >' + logo + ' ' + DEF.user + '</a> &raquo; ' +
-				'<a href=# >' + DEF.repo + '</a> &raquo; ' +
-			'</h3>';
+			'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + tagLine + '" >' + logo + ' ' + DEF.user + '</a> &raquo; ' +
+			'<a href=# >' + GET.repo + '</a> &raquo; ' +
 
-		} else {
+		'</h3>';
 
-			CORbreadCrumbs =
-
-			'<h3>' +
-				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + tagLine + '" >' + logo + ' ' + DEF.user + '</a> &raquo; ' +
-			'</h3>' +
-			'<h2><a href=# >' + DEF.repo + '</a> &raquo; </h2>';
-
-		}
-
-		for ( var i = 0; i < dirArray.length; i++ ) {
+		for ( var i = 0; i < dirArray.length - 1; i++ ) {
 
 			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
 
 			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
 
 		}
+
+		CORbreadCrumbs += '<h2><a href=#' + dir + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a></h2>';
 
 		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs;
 

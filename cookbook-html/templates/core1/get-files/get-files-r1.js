@@ -1,28 +1,32 @@
 // 
 
 	var GET = GET || {};
+
 /*
+
+// Put these in the HTML file
+
 	GET.user = 'jaanga';
 	GET.repo = 'terrain3';
 	GET.branch = 'gh-pages';
 
-
 	GET.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/git/trees/gh-pages?recursive=1';
 
-//	GET.defaultFile = '../../elevations/elevations-data-04/san-francisco_10_163_394_3_3_450_450_.json';
-	GET.defaultFile; // if no default, select a random file
+	GET.defaultFile	= 'readme.md'; // if no default, select a random file
 
-	GET.searchInFolder = 'elevations-data-04/';
-	GET.extension = '.json';
+//	GET.searchInFolder = 'elevations-data-04/';
+	GET.searchInFolder = '/';
 
+//	GET.extension = '.md';
+//	GET.extension = '.json';
 
+	GET.urlGHPages = 'https://' + GET.user + '.github.io/' + GET.repo + '/';
 
-//	GET.urlBase = '../../../../elevations/' + GET.searchInFolder;
-	GET.urlBase = 'https://jaanga.github.io/terrain3/' + GET.searchInFolder;
-
+	GET.urlBase = 'https://github.com/' + GET.user + '/' + GET.repo + GET.searchInFolder;
 
 	GET.urlSource = 'https://github.com/' + GET.user + '/' + GET.repo + '/tree/' + GET.branch + '/';
 	GET.urlEvents = 'https://api.github.com/users/' + GET.user + '/events';
+	GET.urlIssues = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/issues';
 
 */
 
@@ -67,7 +71,6 @@
 	}
 
 
-
 	GET.getHTMLFilesInFolder = function() {
 
 		GET.searchInFolder = 'elevations-core3';
@@ -76,9 +79,12 @@
 
 			GET.onLoadTreeContent = function( files ) {
 
-				txt = '<h1>' + GET.searchInFolder + '</h1>' +
+				txt = 
+
+				'<h1>' + GET.searchInFolder + '</h1>' +
 
 				'<input type=button onclick=window.location.href="https://github.com/jaanga/terrain3/tree/gh-pages/' + GET.searchInFolder + '/"; value="Got to GitHub" />' + b +
+
 			'';
 
 				for ( var i = 0; i < files.length; i++ ) {
@@ -184,28 +190,31 @@
 	};
 
 
-// 
-	GET.getContents = function() {
 
-		COR.requestFile( GET.urlGITHubAPITreeContents, function callbackGH( xhr ) {
+
+// called by init
+
+	GET.getGitHubRepoTreeContents = function() {
+
+		COR.requestFile( DEF.urlGITHubAPITreeContents, function callbackGH( xhr ) {
 
 			var response, tree;
 
 			response = JSON.parse( xhr.target.response );
 
-			tree = response.tree;
+			GET.tree = response.tree;
 
-			GET.itemsAll = tree.map( function( item ) { return item.path; } );
+			GET.itemsAll = GET.tree.map( function( item ) { return item.path; } );
 
 			onHashChange();
-
-			GET.setMenuDetailsRepositoryStatistics( tree );
 
 //			GET.getFilesFromFolder( '' );
 
 		} );
 
 	}
+
+// called by onHashChange
 
 
 	GET.getFilesFromFolder = function( dir ) {
@@ -241,9 +250,32 @@
 	};
 
 
+	GET.createFolderNameTableOfContents = function() {
+
+		var toc, fName, folder;
+
+		toc = '';
+
+		for ( var i = 0; i < GET.dirsSelected.length; i++ ) {
+
+			folder = GET.dirsSelected[ i ];
+
+			fName = folder.split( '/' ).pop();
+			fName = fName.replace( /-/g, ' ' );
+
+			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + fName + '</a></h3>';
+
+		}
+
+		GETtoc.innerHTML = toc;
+
+	}
 
 
-	GET.setMenuDetailsRepositoryStatistics = function( tree ) {
+
+// called by onHashChange
+
+	GET.setMenuDetailsRepositoryStatistics = function() {
 
 		var dirs, files, filesSize, item;
 
@@ -251,9 +283,9 @@
 		files = 0;
 		filesSize = 0;
 
-		for ( var i = 0; i < tree.length; i++ ) {
+		for ( var i = 0; i < GET.tree.length; i++ ) {
 
-			item = tree[ i ];
+			item = GET.tree[ i ];
 
 			if ( item.type === 'blob' ) {
 
@@ -280,28 +312,9 @@
 	}
 
 
-	GET.createFolderNameTableOfContents = function() {
-
-		var toc, fName, folder;
-
-		toc = '';
-
-		for ( var i = 0; i < GET.dirsSelected.length; i++ ) {
-
-			folder = GET.dirsSelected[ i ];
-
-			fName = folder.split( '/' ).pop();
-			fName = fName.replace( /-/g, ' ' );
-
-			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + fName + '</a></h3>';
-
-		}
-
-		GETtoc.innerHTML = toc;
-
-	}
 
 
+// called by onHashChange
 
 	GET.requestGitHubAPIEvents = function() {
 
@@ -310,7 +323,7 @@
 		var eventSet = {};
 
 		xhr = new XMLHttpRequest();
-		xhr.open( 'get', GET.urlEvents, true );
+		xhr.open( 'get', DEF.urlEvents, true );
 		xhr.onload = callback;
 		xhr.send( null );
 
@@ -389,17 +402,19 @@ console.log( 'non-event', event );
 	}
 
 
+// called by onHashChange
+
 	GET.getUpdates = function() {
 
 		var updates, update, txt;
 
-		COR.requestFile( GET.urlIssues, callback );
+		COR.requestFile( DEF.urlIssues, callback );
 
 		function callback( xhr ) {
 
 			updates = JSON.parse( xhr.target.responseText );
 
-			txt = '<h2>' + GET.repo + ' status updates</h2>';
+			txt = '<h2>' + DEF.repo + ' status updates</h2>';
 
 			for ( var i = 0; i < updates.length; i++ ) {
 
@@ -429,43 +444,3 @@ console.log( 'non-event', event );
 	};
 
 
-	function onHashChange() {
-
-		var item;
-
-		item = location.hash ? location.hash.slice( 1 ) : GET.searchInFolder;
-
-		if ( item.endsWith( '.md' ) === true ) {
-
-			COR.setMenuBreadCrumbs( GET.searchInFolder );
-
-			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
-
-				if ( xhr.target.status !== 404 ) {
-
-					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
-
-				}
-
-				COR.contents.style.overflow = 'auto';
-
-			} );
-
-		} else {
-
-console.log( 'item', item );
-
-			COR.setMenuBreadCrumbs( item );
-
-			GET.getFilesFromFolder( item );
-
-			COR.requestFile( GET.urlGHPages + item + '/' + GET.defaultFile, function callbackMD( xhr ) {
-
-				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
-				COR.contents.style.overflow = 'auto';
-
-			} );
-
-		}
-
-	}
