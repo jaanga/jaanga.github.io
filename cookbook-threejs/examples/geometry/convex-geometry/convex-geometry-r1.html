@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Three.js Basic</title>
+<title>Convex Geometry R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -18,10 +18,17 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/geometries/ConvexGeometry.js ></script>
 <script>
 
 	var stats, renderer, scene, camera, controls, mesh;
+	var group;
 	var gridHelper, axisHelper;
+
+	var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	var ran = Math.random;
+	var b = '<br>';
+
 	init();
 	animate();
 
@@ -29,7 +36,6 @@
 
 		var css, hamburger, menu;
 		var geometry, material;
-
 
 		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
@@ -70,21 +76,27 @@
 				'<h2>' +
 					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
 					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+					' ~ <a href=../../index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
+				'<p><button onclick=drawTetrahedron(); >Tetrahedron</button></p>' +
+				'<p><button onclick=drawEightPoints(); >Eight Points</button></p>' +
+				'<p><button onclick=drawEightPointsRoughly(); >Eight Points Roughly</button></p>' +
+				'<p><button onclick=drawDodecahedron(); >Dodecahedron</button></p>' +
+				'<p><button onclick=draw28RandomPoints(); >draw 28 Random Points</button></p>' +
 
-				'<p><button onclick=getIt(); >get it</button></p>' +
+
 
 				'<p>' +
-					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
+					'Three.js Convex Geometry:' + b +
+					'Draws a mesh that encompasses all the given points.' + b +
+					'But does not cover areas of concavity.' +
 				'</p>' +
 
 
-				'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+//				'<p><input type=checkbox onchange=group.material.wireframe=!group.material.wireframe; > Wireframe</p>' +
 				'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
 				'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
 				'<p title="Press spacebar or click in window to stop." >' +
@@ -123,7 +135,7 @@
 
 		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
-//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
@@ -133,8 +145,14 @@
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
 		controls.autoRotate = true;
+		controls.maxPolarAngle = Math.PI / 2;
 
 		scene = new THREE.Scene();
+
+		scene.add( new THREE.AmbientLight( 0x222222 ) );
+
+		var light = new THREE.PointLight( 0xffffff, 1 );
+		camera.add( light );
 
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'keyup', onKeyUp, false );
@@ -157,6 +175,94 @@
 
 // assets
 
+
+	}
+
+
+	function drawTetrahedron() {
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = [ v( 0, 0, 0 ),  v( 0, 50, 0 ), v( 50, 0, 0 ), v( 0, 0, 50 )  ];
+
+		updateObject( geometry )
+ 
+	}
+
+	function drawEightPoints() {
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = [ v( 0, 0, 0 ),  v( 50, 0, 0 ), v( 50, 0, 50 ), v( 0, 0, 50 ), 
+
+			v( 0, 50, 0 ),  v( 50, 50, 0 ), v( 50, 50, 50 ), v( 0, 50, 50 ), 
+		];
+
+		updateObject( geometry )
+ 
+	}
+
+	function drawEightPointsRoughly() {
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = [ v( 0, 0 + 20 * ran(), 0 ),  v( 50 + 20 * ran(), 0, 0 ), v( 50 + 20 * ran(), 0, 50 + 20 * ran() ), v( 0, 0, 50 + 20 * ran() ), 
+
+			v( 0, 50 + 20 * ran(), 0 ),  v( 50 + 20 * ran(), 50, 0 ), v( 50 + 20 * ran(), 50, 50 + 20 * ran() ), v( 0, 50, 50 + 20 * ran() ), 
+		];
+
+		updateObject( geometry )
+ 
+	}
+
+	function draw28RandomPoints() {
+
+		geometry = new THREE.Geometry();
+
+		for ( var i = 0; i < 28; i++ ) {
+
+			geometry.vertices.push( v( 100 * ran() - 50, 100 * ran(), 100 * ran() - 50 ) );
+
+		}
+
+		updateObject( geometry )
+ 
+	}
+
+
+
+	function drawDodecahedron() {
+
+		var pointsGeometry = new THREE.DodecahedronGeometry( 50 );
+
+		updateObject( pointsGeometry )
+ 
+	}
+
+	function updateObject( pointsGeometry ) {
+
+		scene.remove( group );
+
+		group = new THREE.Group();
+		scene.add( group );
+
+		var meshGeometry = new THREE.ConvexGeometry( pointsGeometry.vertices );
+
+		var meshMaterial = new THREE.MeshNormalMaterial( {
+//			color: 0xffffff,
+			opacity: 0.85,
+			transparent: true
+		} );
+
+		var mesh = new THREE.Mesh( meshGeometry, meshMaterial );
+		mesh.material.side = THREE.BackSide; // back faces
+		mesh.renderOrder = 0;
+		group.add( mesh );
+
+		mesh = new THREE.Mesh( meshGeometry, meshMaterial.clone() );
+		mesh.material.side = THREE.FrontSide; // front faces
+		mesh.renderOrder = 1;
+		group.add( mesh );
+
+
+//		scene.add( group )
 
 	}
 
