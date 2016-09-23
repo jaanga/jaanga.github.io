@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Read Me Getter R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
+Menu and contents in HTML.
+' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-24' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script>
+
+//  http://jaanga.github.io/cookbook-html/templates/hamburger-menu/
+
+	var DEF = DEF || {};
+
+	DEF.user = 'Jaanga';
+	DEF.tagline = 'your 3D happy place';
+	DEF.baseURL = 'https://' + DEF.user + '.github.io/';
+	DEF.repo = 'terrain3';
+	DEF.folder = 'elevations-core3';
+	DEF.title = 'Elevations Core3';
+	DEF.branch = 'gh-pages';
+
+	var SCR = [
+		{ fileName: 'elevations-view-r6.html', title: 'Elevations View', txt: 'Basic 3D map data viewer' },
+		{ fileName: 'elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
+		{ fileName: 'elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
+		{ fileName: 'elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
+		{ fileName: '0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' },
+		{ fileName: 'oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28', txt: 'A bicycle race course' },
+
+	];
+
+//	var b = '</br>';
+	var n = '\n';
+
+	var header = 
+
+		'<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]' +
+		'( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html "View file as a web page." ) </span>' + n +
+		'<input type=button onclick=window.location.href="' + DEF.baseURL + DEF.repo + '/tree/' + DEF.branch + '/' +
+			DEF.folder + '"; value="You are now in GitHub web page view - Click this button to view Read Me file as source code" >' + n + n +
+
+		'[' + DEF.user + ']( ' + DEF.baseURL + ' ) &raquo; [' + DEF.repo + ']( ' + + DEF.baseURL + '/' + DEF.repo + ' )' + n + n +
+
+		'[ '+ DEF.title + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
+		'===' + n +
+		n +
+		'<img src="" style=display:none; width=100% >' + n +
+		'<iframe src=' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html width=100% height=600px onload=this.contentWindow.controls.enableZoom=false; ></iframe>' + n +
+		'_' + DEF.title + '_' + n +
+		'***' + n +
+	n;
+
+
+	var fullScreen = fullScreeChoices();
+
+
+
+	var footer =
+			'***' + n +
+			n +
+			'<center title="' + DEF.user + ' ~ your 3D happy place" >' + n +
+			'# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>' +
+			'</center>' + n +
+
+	n;
+
+	var COR = {};
+
+	COR.requestFile = function( url, callback ) {
+
+		var xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+		var lorem = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+	init();
+
+	function init() {
+
+		var css, container, contents, hamburger, menu;
+
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'body { font: 12pt monospace; margin: 0; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary h3 { display: inline; }' +
+			'summary { outline: none; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<p>' +
+					'<button onclick=saveFile(); title="Save as PNG" > Save Read Me to file</button> ' +
+//					'<button onclick=console.log("button2"); > Button 2 </button> ' +
+//					'<button onclick=doIt(); > Button 3 </button>' +
+				'</p>' +
+
+				'<div id=menuInfo ></div>' +
+
+				'<details >' +
+					'<summary><h3>about</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' + txt + txt + txt +
+			'</div>' +
+
+		'';
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+		COR.requestFile( 'readme-body.md', callback );
+
+	}
+
+
+	function callback( xhr ) {
+
+// console.log( '', xhr  );
+
+		COR.body = xhr.target.responseText;
+
+		getContents();
+
+	}
+
+	function getContents() {
+
+		var txt = 
+
+			header +
+
+			fullScreeChoices() +
+
+			COR.body + lorem +
+
+			footer +
+
+		'';
+
+		contents.innerHTML = converter.makeHtml( txt );
+
+	}
+
+	function fullScreeChoices() {
+
+		txt = '';
+
+		for ( var i = 0; i < SCR.length; i++ ) {
+
+			item = SCR[ i ];
+			txt += '## Full Screen: [' + item.title + ']( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/' + item.fileName + ' )' + n +
+				item.txt + n +
+			'';
+		}
+
+		return txt;
+
+	}
+	function saveFile() {
+
+		var blob = new Blob( [ header ] );
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = 'readme.md';
+		a.click();
+//		delete a;
+		a = null;
+
+	}
+
+</script>
+</body>
+</html>
