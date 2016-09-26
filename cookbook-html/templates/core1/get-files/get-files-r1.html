@@ -17,29 +17,11 @@
 <script>
 
 /*
-	var DEF = DEF || {};
+	DEF.repo = 'jaanga.github.io';
+	DEF.searchInFolder = 'demo/';
+	DEF.branch = 'master';
 
-	DEF.user = 'jaanga';
-	DEF.repo = 'terrain3';
-	DEF.branch = 'gh-pages';
-
-	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/gh-pages?recursive=1';
-
-	DEF.defaultFile	= 'readme.md'; // if no default, select a random file
-
-//	DEF.searchInFolder = 'elevations-data-04/';
-	DEF.searchInFolder = '/';
-
-//	DEF.extension = '.md';
-//	DEF.extension = '.json';
-
-	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
-
-	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
-
-	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
-	DEF.urlEvents = 'https://api.github.com/users/' + DEF.user + '/events';
-	DEF.urlIssues = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/issues';
+	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
 */
 
 	init();
@@ -103,7 +85,7 @@
 
 		} else {
 
-// console.log( 'item', item );
+//console.log( 'item', item );
 
 			COR.setMenuBreadCrumbs( item );
 

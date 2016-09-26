@@ -2,34 +2,6 @@
 
 	var GET = GET || {};
 
-/*
-
-// Put these in the HTML file
-
-	GET.user = 'jaanga';
-	GET.repo = 'terrain3';
-	GET.branch = 'gh-pages';
-
-	GET.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/git/trees/gh-pages?recursive=1';
-
-	GET.defaultFile	= 'readme.md'; // if no default, select a random file
-
-//	GET.searchInFolder = 'elevations-data-04/';
-	GET.searchInFolder = '/';
-
-//	GET.extension = '.md';
-//	GET.extension = '.json';
-
-	GET.urlGHPages = 'https://' + GET.user + '.github.io/' + GET.repo + '/';
-
-	GET.urlBase = 'https://github.com/' + GET.user + '/' + GET.repo + GET.searchInFolder;
-
-	GET.urlSource = 'https://github.com/' + GET.user + '/' + GET.repo + '/tree/' + GET.branch + '/';
-	GET.urlEvents = 'https://api.github.com/users/' + GET.user + '/events';
-	GET.urlIssues = 'https://api.github.com/repos/' + GET.user + '/' + GET.repo + '/issues';
-
-*/
-
 // simple version - see also below
 
 	GET.onLoadGitHubTreeContents = function( xhr ) {
@@ -220,10 +192,12 @@
 
 	GET.getFilesFromFolder = function( dir ) {
 
-//console.log( 'dir', dir );
+console.log( 'dir', dir );
 
-		var dirArray, dirLen, item, itemArray;
+//		var dirArray, dirLen, item, itemArray;
+
 		GET.dirsSelected = [];
+		GET.filesSelected = [];
 
 		dirArray = dir === '/' ? [] : dir.split( '/' );
 
@@ -234,15 +208,36 @@
 			item = GET.itemsAll[ i ];
 
 			if ( !item.includes( dir ) ) { continue; }
+
 			if ( !item.includes( 'readme.md' ) ) { continue; }
 
 			itemArray = item.split( '/' );
 
-//console.log( 'itemPath', item, itemArray.length, dirLen + 2 );
 
 			if ( itemArray.length !== dirLen ) { continue; }
 
 			GET.dirsSelected.push( item.replace( '/readme.md', '' ) );
+
+
+
+		}
+
+		for ( var i = 0; i < GET.itemsAll.length; i++ ) {
+
+			item = GET.itemsAll[ i ];
+
+			if ( !item.includes( dir ) ) { continue; }
+
+			if ( !item.includes( '.html' ) ) { continue; }
+
+			if ( item.includes( 'archive' ) ) { continue; }
+			if ( item.includes( 'index.html' ) ) { continue; }
+
+			itemArray = item.split( '/' );
+
+			if ( itemArray.length !== dirLen - 1 ) { continue; }
+
+			GET.filesSelected.push( item );
 
 		}
 
@@ -268,7 +263,22 @@
 
 		}
 
+
+		for ( var i = 0; i < GET.filesSelected.length; i++ ) {
+
+			file = GET.filesSelected[ i ];
+
+			fileName = file.split( '/' ).pop();
+			fileName = fileName.replace( /-/g, ' ' );
+
+			toc += '<h3><a href=#' + file + ' > ' + fileName + '</a></h3>';
+
+		}
+
 // need to add files to tree here
+
+
+
 
 		GETtoc.innerHTML = toc;
 

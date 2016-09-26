@@ -46,7 +46,7 @@
 	DEF.repo = 'terrain3';
 
 
-	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/gh-pages?recursive=1';
+	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
 
 
 //	DEF.searchInFolder = 'elevations-data-04/';
