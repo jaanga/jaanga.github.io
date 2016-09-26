@@ -10,7 +10,7 @@
 
 			'[' + DEF.user + ']( ' + DEF.baseURL + ' ) &raquo; [' + DEF.repo + ']( ' + + DEF.baseURL + '/' + DEF.repo + ' )' + n + n +
 
-			'[ '+ DEF.title + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
+			'[ '+ DEF.searchInFolder.replace( /[-\/]/g, ' ' ) + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
 			'===' + n +
 			n +
 
