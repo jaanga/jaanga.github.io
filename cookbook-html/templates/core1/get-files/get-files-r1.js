@@ -49,6 +49,7 @@
 			file = response.tree[ i ].path;
 
 			if ( !file.includes( GET.searchInFolder ) ) { continue; }
+			if ( file.includes( 'archive' ) ) { continue; }
 			if ( !file.includes( GET.extension ) ) { continue; }
 
 //			file = file.split( '\/' ).pop();
@@ -214,8 +215,8 @@
 
 	}
 
-// called by onHashChange
 
+// called by onHashChange
 
 	GET.getFilesFromFolder = function( dir ) {
 
@@ -252,7 +253,7 @@
 
 	GET.createFolderNameTableOfContents = function() {
 
-		var toc, fName, folder;
+		var toc, folderName, folder;
 
 		toc = '';
 
@@ -260,12 +261,14 @@
 
 			folder = GET.dirsSelected[ i ];
 
-			fName = folder.split( '/' ).pop();
-			fName = fName.replace( /-/g, ' ' );
+			folderName = folder.split( '/' ).pop();
+			folderName = folderName.replace( /-/g, ' ' );
 
-			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + fName + '</a></h3>';
+			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + folderName + '</a></h3>';
 
 		}
+
+// need to add files to tree here
 
 		GETtoc.innerHTML = toc;
 

@@ -16,6 +16,7 @@
 <script src=../../core1/get-files/get-files-r1.js ></script>
 <script>
 
+/*
 	var DEF = DEF || {};
 
 	DEF.user = 'jaanga';
@@ -39,6 +40,7 @@
 	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
 	DEF.urlEvents = 'https://api.github.com/users/' + DEF.user + '/events';
 	DEF.urlIssues = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/issues';
+*/
 
 	init();
 
@@ -85,6 +87,7 @@
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
 
+/*
 			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
 
 				if ( xhr.target.status !== 404 ) {
@@ -96,6 +99,7 @@
 				COR.contents.style.overflow = 'auto';
 
 			} );
+*/
 
 		} else {
 
@@ -105,12 +109,14 @@
 
 			GET.getFilesFromFolder( item );
 
+/*
 			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
 
 				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
 				COR.contents.style.overflow = 'auto';
 
 			} );
+*/
 
 			if ( !GETrepoStats.innerHTML ) { 
 

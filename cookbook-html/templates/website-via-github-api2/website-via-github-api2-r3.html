@@ -31,20 +31,17 @@ Menu has breadcrumbs and other useful links.
 
 <script>
 
-
-//	DEF.urlGHPages = '../../../terrain3/';
-//	DEF.searchInFolder = '/';
-//	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
-//	DEF.title = 'Terrain3';
-
 	IFR.sites = [
 
-		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-r6.html', title: 'Elevations View', txt: 'Basic 3D map data viewer' },
-		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
+		{ fileName: 'https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html', title: 'Earth Globe Displacement', txt: '' },
+		{ fileName: 'https://cynthiaarmour.github.io/oakland-gran-fondo-2016/code/oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28 2016', txt: '' },
 		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
-		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
-		{ fileName: DEF.readmeURL + 'elevations-core3/0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' },
-		{ fileName: DEF.readmeURL + 'elevations-core3/oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28', txt: 'A bicycle race course' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-core3-r1.html', title: 'Elevations Core3', txt: 'Basic 3D map data viewer' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
+//		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' }
+
+//		[ fileName: '', txt: '' ],
 
 	];
 
@@ -55,8 +52,6 @@ Menu has breadcrumbs and other useful links.
 		COR.initThreeColumns();
 
 		COR.menu.innerHTML =
-
-//			COR.getMenuDetailsHeader() +
 
 			COR.getMenuBreadCrumbs() +
 
@@ -90,8 +85,6 @@ Menu has breadcrumbs and other useful links.
 		var item;
 
 		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
-
-// console.log( 'item', item );
 
 		if ( item.endsWith( '.md' ) === true ) {
 
@@ -145,7 +138,6 @@ Menu has breadcrumbs and other useful links.
 		}
 
 	}
-
 
 </script>
 </body>
