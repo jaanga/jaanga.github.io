@@ -65,6 +65,7 @@
 
 
 	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
+	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
 	DEF.urlReadMeFile = DEF.urlGHPages + '#readme.md';
 
 	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
