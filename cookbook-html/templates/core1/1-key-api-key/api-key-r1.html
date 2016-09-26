@@ -2,24 +2,25 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>API Key R1</title>
+<title>GitHub API Key R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='GitHub API
+<meta name=description content='Jaanga Templates Core1 GitHub API Key. Get and set
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
 <meta name=date content='2016-09-16' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
 <script src=../0-cor-core/core-r1.js ></script>
-<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../1-key-api-key/api-key-r1.js ></script>
 <script>
 
 	init();
 
 	function init() {
 
-		COR.taglineHeader = 'An API howdy!' + b;
+		COR.taglineHeader = 'An API Key howdy!' + b;
 
 		COR.initThreeColumns();
 
@@ -27,11 +28,11 @@
 
 			COR.getMenuDetailsHeader() +
 
-			API.getMenuDetailsAPIKey() +
+			KEY.getMenuDetailsAPIKey() +
 
 			COR.getMenuDetailsTemplate() +
 
-			API.getMenuDetailsAPIRates() +
+			KEY.getMenuDetailsAPIRates() +
 
 //			COR.getMenuDetailsObjectProperties() +
 
@@ -43,7 +44,7 @@
 
 		detailsTemplate.setAttribute('open', 'open');
 
-		API.getRateLimits();
+		KEY.getRateLimits();
 
 	}
 

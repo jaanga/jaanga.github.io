@@ -11,10 +11,11 @@
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
-<script src=../0-cor-core/core-r1.js ></script>
-<script src=../1-api-api-key/api-key-r1.js ></script>
-<script src=../2-ser-search/search-r1.js ></script>
-<script src=../usr-users/users-r1.js ></script>
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r1.js ></script>
+<script src=../../core1/1-key-api-key/api-key-r1.js ></script>
+<script src=../../core1/2-ser-search/search-r1.js ></script>
+<script src=../../core1/usr-users/users-r1.js ></script>
 <script>
 
 	init();
@@ -29,7 +30,7 @@
 
 			COR.getMenuDetailsHeader() +
 
-			API.getMenuDetailsAPIKey() +
+			KEY.getMenuDetailsAPIKey() +
 
 			SER.getMenuDetailsSelectGroup() +
 

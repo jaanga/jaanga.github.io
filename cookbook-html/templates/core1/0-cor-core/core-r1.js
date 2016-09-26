@@ -1,9 +1,12 @@
 // Copyright &copy; 2016 Jaanga authors. MIT License
 
-	var b = '<br>';
 
+// also in DEF
+
+	var COR = COR || {};
+	var DEF = DEF || {};
 	var API = API || {};
-	var COR = {};
+
 	var SER = SER || {};
 	var DAT = DAT || {};
 	var EUS = EUS || {};
@@ -31,6 +34,7 @@
 
 	COR.converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
+// end also in DEF
 
 	COR.initThreeColumns = function() {
 
@@ -82,27 +86,24 @@
 
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 
-			'#menu h1, #menu h3 { margin: 0; }' +
-
-			'img { max-width: 100%; }' +
-			'iframe { width: 100%; }' +
+//			'img { max-width: 100%; }' +
+//			'iframe { width: 100%; }' +
 
 			'select { width: 100%; }' +
 			'summary h2, summary h3, summary h4 { display: inline; }' +
 			'summary { outline: none; }' +
 
-
-			'.butt2 { width: 108px; }' +
+//			'.butt2 { width: 108px; }' +
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 			'.GETupdate { border: 1px solid #aaa; height: 300px; overflow: auto }' +
 
-			'#contents { border: 0px red solid; left: 25%; position: absolute; top: 0; max-width: 50%; }' +
+			'#contents { border: 0px red solid; left: 25%; position: absolute; top: 0; max-width: 40%; }' +
+			'#contents h1, #contents p { margin: 0 0 12px 0 }' +
 
-//			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 10px 0 10px; position: absolute; max-width: 20%; }' +
 			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 20%; }' +
+			'#menu h2, #menu h3 { margin: 0 0 10px 0; }' +
 			'#menu img { max-width: 200px; }' +
 
-//			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 25%; padding: 0 20px; }' +
 			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 25%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
 
 			'#repositoryEvents h4 { margin: 0; }' +
@@ -120,7 +121,7 @@
 
 	COR.getMenuBreadCrumbs = function() {
 
-		return '<div id=CORdivBreadCrumbs >bc</div>';
+		return '<div id=CORdivBreadCrumbs ></div>';
 
 	}
 
@@ -138,9 +139,9 @@
 
 			CORbreadCrumbs =
 
-			'<h3>' +
-				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + tagLine + '" >' + logo + ' ' + DEF.user + '</a> &raquo; ' +
-				'<a href=# >' + DEF.repo + '</a> &raquo; ' +
+			'<h3 class=>' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
+				'<a href="" >' + DEF.repo + '</a> &raquo; ' +
 			'</h3>';
 
 		} else {
@@ -148,7 +149,7 @@
 			CORbreadCrumbs =
 
 			'<h3>' +
-				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + tagLine + '" >' + logo + ' ' + DEF.user + '</a> &raquo; ' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
 			'</h3>' +
 			'<h2><a href=# >' + DEF.repo + '</a> &raquo; </h2>';
 
@@ -174,17 +175,17 @@
 		var menuDetailsHeader =
 
 			'<h3>' +
-				'<a href=http://jaanga.github.io/ title="Jaanga - your 3D happy place" > &#x2766 </a> &raquo; ' +
-				'<a href=http://jaanga.github.io/templates/ title="your happy mappy place" > Templates </a> &raquo; ' + 
+				'<a href=http://' + DEF.user + '/github.io/ title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + '</a> &raquo; ' +
+				'<a href=http://' + DEF.user + '.github.io/templates/ title="your happy mappy place" > Templates </a> &raquo; ' + 
 			'</h3>' +
 			'<h2>' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
-//				'<a href=index.html#readme.md title="Click here for help and information" > &#x24D8; </a>' +
-				'<a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+//				'<a href=' + DEF.urlReadMeFile + ' title="Click here for help and information" > &#x24D8; </a>' +
+				'<a href=' + DEF.urlReadMeFile + ' onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > ' + DEF.logoInfoIcon + ' </a>' +
 
 			'</h2>' +
 
-			COR.taglineHeader +
+			DEF.menuHeaderTagline +
 
 			'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
@@ -205,7 +206,7 @@
 
 				'<p>' +
 					'Copyright &copy; 2016 <a href=https://github.com/orgs/jaanga/people target="_blank">Jaanga authors</a>.' + b +
-					'<jaanga.github.io/license.md >MIT license</a>' +
+					'<a href=jaanga.github.io/license.md >MIT license</a>' +
 				'</p>' +
 
 				'<p>Thank you <a href=https://developer.github.com/v3/ > GitHub API </a> ' +

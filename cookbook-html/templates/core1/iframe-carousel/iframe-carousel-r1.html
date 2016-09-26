@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Iframe Carousel R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Jaanga Templates Core1 Core R1
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-22' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r1.js ></script>
+<script src=../../core1/iframe-carousel/iframe-carousel-r1.js ></script>
+<script>
+
+
+	IFR.sites = [
+
+		{ fileName: 'http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2.html', 
+			title: 'wikihouse' },
+		{ fileName: 'http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html', 
+			title: 'opendesk' },
+		{ fileName: 'http://jaanga.github.io/cookbook/rubiks-cube/rubiks-cube-r2-theo.html', title: 'rubiks' },
+		{ fileName: 'http://fgx.github.io/fgx-aircraft-overview/latest/', title: 'fgx' },
+
+	];
+
+	init();
+
+	function init() {
+
+		COR.taglineHeader = 'A hard core howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			COR.getMenuDetailsTemplate() +
+
+//			COR.getMenuDetailsObjectProperties() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		detailsTemplate.setAttribute('open', 'open');
+
+
+		COR.requestFile( 'readme.md', function callbackMD( xhr ) {
+
+			COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+		} );
+
+	}
+
+</script>
+</body>
+</html>

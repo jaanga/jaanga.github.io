@@ -2,20 +2,22 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Files R1</title>
+<title>Read Me Getter R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='
+<meta name=description content='Jaanga Templates Core1 Core R1
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-13' >
+<meta name=date content='2016-09-22' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 <script src=../../core1/0-def-defaults/defaults-r1.js ></script>
 <script src=../../core1/0-cor-core/core-r1.js ></script>
-<script src=../../core1/get-files/get-files-r1.js ></script>
+<script src=../../core1/iframe-carousel/iframe-carousel-r1.js ></script>
+<script src=../../core1/readme-getter/readme-getter-r1.js ></script>
 <script>
 
+/*
 	var DEF = DEF || {};
 
 	DEF.user = 'jaanga';
@@ -27,7 +29,8 @@
 	DEF.defaultFile	= 'readme.md'; // if no default, select a random file
 
 //	DEF.searchInFolder = 'elevations-data-04/';
-	DEF.searchInFolder = '/';
+//	DEF.searchInFolder = '/';
+	DEF.searchInFolder = 'elevations-core3/';
 
 //	DEF.extension = '.md';
 //	DEF.extension = '.json';
@@ -40,27 +43,52 @@
 	DEF.urlEvents = 'https://api.github.com/users/' + DEF.user + '/events';
 	DEF.urlIssues = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/issues';
 
+
+	DEF.tagline = 'your 3D happy place';
+// _Interact with maps in 3D_
+	DEF.baseURL = 'https://' + DEF.user + '.github.io/';
+
+	DEF.folder = 'elevations-core3';
+	DEF.title = 'Elevations Core3';
+
+	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
+
+
+*/
+
+	DEF.urlGHPages = '../../../../terrain3/';
+	DEF.searchInFolder = 'elevations-core3/';
+	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
+
+
+	IFR.sites = [
+
+		{ fileName: DEF.readmeURL + 'elevations-view-r6.html', title: 'Elevations View', txt: 'Basic 3D map data viewer' },
+		{ fileName: DEF.readmeURL + 'elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
+		{ fileName: DEF.readmeURL + 'elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
+		{ fileName: DEF.readmeURL + 'elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
+		{ fileName: DEF.readmeURL + '0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' },
+		{ fileName: DEF.readmeURL + 'oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28', txt: 'A bicycle race course' },
+
+	];
+
 	init();
 
 	function init() {
 
-//		COR.taglineHeader = 'A hard core howdy!' + b;
+		DEF.menuHeaderTagline = 'An on the get go hello!' + b;
 
 		COR.initThreeColumns();
 
 		COR.menu.innerHTML =
 
-//			COR.getMenuDetailsHeader() +
+			COR.getMenuDetailsHeader() +
 
 			COR.getMenuBreadCrumbs() +
 
-			GET.getMenuDetailsTableOfContents() +
+			COR.getMenuDetailsTemplate() +
 
-			GET.getMenuDetailsPageActions() +
-
-			GET.getMenuRepositoryEvents() +
-
-			GET.getMenuDetailsRepositoryStatistics() +
+//			COR.getMenuDetailsObjectProperties() +
 
 			COR.getMenuDetailsAbout() +
 
@@ -68,9 +96,11 @@
 
 		b;
 
+		detailsTemplate.setAttribute('open', 'open');
+
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
-		GET.getGitHubRepoTreeContents(); // calls onHashChange();
+		onHashChange();
 
 	}
 
@@ -81,7 +111,7 @@
 
 		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
 
-		if ( item.endsWith( '.md' ) === true ) {
+		if ( item.match( 'readme.md' ) === true ) {
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
 
@@ -99,25 +129,21 @@
 
 		} else {
 
-// console.log( 'item', item );
+//console.log( 'item', item );
 
 			COR.setMenuBreadCrumbs( item );
 
-			GET.getFilesFromFolder( item );
-
+/*
 			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
 
 				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
-				COR.contents.style.overflow = 'auto';
+//				COR.contents.style.overflow = 'auto';
 
 			} );
+*/
 
-			if ( !GETrepoStats.innerHTML ) { 
 
-				GET.setMenuDetailsRepositoryStatistics(); 
-				GET.getUpdates();
-
-			}
+			COR.requestFile( DEF.urlGHPages + 'readme-body.md', RED.callback );
 
 		}
 

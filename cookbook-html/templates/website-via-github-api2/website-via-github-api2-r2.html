@@ -122,7 +122,7 @@ Menu has breadcrumbs and other useful links.
 			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
 
 				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
-				COR.contents.style.overflow = 'auto';
+//				COR.contents.style.overflow = 'auto';
 
 			} );
 

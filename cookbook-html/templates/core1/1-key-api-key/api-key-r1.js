@@ -1,8 +1,8 @@
 
-	var API = API || {};
+	var KEY = KEY || {};
 
 
-	API.getMenuDetailsAPIKey = function() {
+	KEY.getMenuDetailsAPIKey = function() {
 
 		var menuDetailsAPIKey =
 
@@ -13,7 +13,7 @@
 				'<small>If small request, no need for API key</small>' +
 
 				'<p>api key: <input id=APIinpKey onclick=this.select(); title="Obtain API key" ></p>' +
-				'<p><button onclick=API.onEventAPIKeyUpdate(); >Set API key</button></p>' +
+				'<p><button onclick=KEY.onEventAPIKeyUpdate(); >Set API key</button></p>' +
 
 			'</details>' + 
 
@@ -23,7 +23,7 @@
 
 	}
 
-	API.getMenuDetailsAPIRates = function() {
+	KEY.getMenuDetailsAPIRates = function() {
 
 		var menuDetailsAPIRates =
 
@@ -44,7 +44,7 @@
 
 // see also C:\Users\Theo\Dropbox\Public\git-repos\jaanga.github.io\terrain3\google-maps-api3\b-clk-click\click-r1.js
 
-	API.onEventAPIKeyUpdate = function() {
+	KEY.onEventAPIKeyUpdate = function() {
 
 		if ( location.hash.includes( 'token=') ) {
 
@@ -52,18 +52,18 @@
 
 		}
 
-		API.token = 'access_token=' + APIinpKey.value;
+		KEY.token = 'access_token=' + APIinpKey.value;
 
 
 	};
 
-	API.getRateLimits = function() {
+	KEY.getRateLimits = function() {
 
-		COR.requestFile( 'https://api.github.com/rate_limit', API.onRateLimitsCallback );
+		COR.requestFile( 'https://api.github.com/rate_limit', KEY.onRateLimitsCallback );
 
 	};
 
-	API.onRateLimitsCallback = function( xhr ) {
+	KEY.onRateLimitsCallback = function( xhr ) {
 
 //console.log( 'xhr', xhr );
 

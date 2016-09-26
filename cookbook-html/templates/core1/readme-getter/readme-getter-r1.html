@@ -12,6 +12,7 @@ Menu and contents in HTML.
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../core1/iframe-carousel/iframe-carousel-r1.js ></script>
 <script>
 
 //  http://jaanga.github.io/cookbook-html/templates/hamburger-menu/
@@ -20,29 +21,34 @@ Menu and contents in HTML.
 
 	DEF.user = 'Jaanga';
 	DEF.tagline = 'your 3D happy place';
+// _Interact with maps in 3D_
 	DEF.baseURL = 'https://' + DEF.user + '.github.io/';
 	DEF.repo = 'terrain3';
 	DEF.folder = 'elevations-core3';
 	DEF.title = 'Elevations Core3';
 	DEF.branch = 'gh-pages';
 
-	var SCR = [
-		{ fileName: 'elevations-view-r6.html', title: 'Elevations View', txt: 'Basic 3D map data viewer' },
-		{ fileName: 'elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
-		{ fileName: 'elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
-		{ fileName: 'elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
-		{ fileName: '0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' },
-		{ fileName: 'oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28', txt: 'A bicycle race course' },
+	var baseURL = DEF.baseURL + DEF.repo + '/' + DEF.folder + '/';
+	var baseURL = '../../../terrain3/' + DEF.folder + '/';
+
+	IFR.sites = [
+
+		{ fileName: baseURL + 'elevations-view-r6.html', title: 'Elevations View', txt: 'Basic 3D map data viewer' },
+		{ fileName: baseURL + 'elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
+		{ fileName: baseURL + 'elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
+		{ fileName: baseURL + 'elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
+		{ fileName: baseURL + '0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' },
+		{ fileName: baseURL + 'oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28', txt: 'A bicycle race course' },
 
 	];
 
-//	var b = '</br>';
+	var b = '</br>';
 	var n = '\n';
 
 	var header = 
 
 		'<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]' +
-		'( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html "View file as a web page." ) </span>' + n +
+		'( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html "View file as a web page." ) </span>' +
 		'<input type=button onclick=window.location.href="' + DEF.baseURL + DEF.repo + '/tree/' + DEF.branch + '/' +
 			DEF.folder + '"; value="You are now in GitHub web page view - Click this button to view Read Me file as source code" >' + n + n +
 
@@ -51,9 +57,10 @@ Menu and contents in HTML.
 		'[ '+ DEF.title + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
 		'===' + n +
 		n +
+
 		'<img src="" style=display:none; width=100% >' + n +
-		'<iframe src=' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html width=100% height=600px onload=this.contentWindow.controls.enableZoom=false; ></iframe>' + n +
-		'_' + DEF.title + '_' + n +
+		'<iframe id=ifr srcdoc="<div id=divIfr ></div>"; onload=parent.IFR.onLoad(); width=100% height=560px frameBorder=0 ></iframe>' +
+		'<div id=ifrTitle ></div>' + n +
 		'***' + n +
 	n;
 
@@ -80,7 +87,7 @@ Menu and contents in HTML.
 
 	}
 
-		var lorem = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+	var lorem = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 	var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
@@ -89,7 +96,6 @@ Menu and contents in HTML.
 	function init() {
 
 		var css, container, contents, hamburger, menu;
-
 
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML = 
@@ -113,7 +119,9 @@ Menu and contents in HTML.
 
 			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
 
-			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+			'#contents { border: 1px #ccc solid; left: 375px; margin: 0; max-width: 800px; position: absolute; }' +
+			'#contents p { margin: 0 0 15px 0;; }' +
+			'#contents h1, #contents h2 { margin: 0; }' +
 
 			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
 			'#hamburger h2 { margin: 0; }' +
@@ -166,14 +174,14 @@ Menu and contents in HTML.
 			'</div>' +
 
 			'<div id=contents >' +
-				'<h1>Typical contents</h1>' + txt + txt + txt +
+//				'<h1>Typical contents</h1>' + txt + txt + txt +
 			'</div>' +
 
 		'';
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
-		COR.requestFile( 'readme-body.md', callback );
+		COR.requestFile( baseURL + 'readme-body.md', callback );
 
 	}
 
@@ -182,7 +190,7 @@ Menu and contents in HTML.
 
 // console.log( '', xhr  );
 
-		COR.body = xhr.target.responseText;
+		COR.readMeBody = xhr.target.responseText;
 
 		getContents();
 
@@ -194,9 +202,9 @@ Menu and contents in HTML.
 
 			header +
 
-			fullScreeChoices() +
+			fullScreeChoices() + 
 
-			COR.body + lorem +
+			COR.readMeBody +
 
 			footer +
 
@@ -208,19 +216,21 @@ Menu and contents in HTML.
 
 	function fullScreeChoices() {
 
-		txt = '';
+		txt = n + '_Scripts in this group include the following:_' + n;
 
-		for ( var i = 0; i < SCR.length; i++ ) {
+		for ( var i = 0; i < IFR.sites.length; i++ ) {
 
-			item = SCR[ i ];
-			txt += '## Full Screen: [' + item.title + ']( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/' + item.fileName + ' )' + n +
+			item = IFR.sites[ i ];
+			txt += '## Full Screen: [' + item.title + ']( ' + item.fileName + ' )' + n +
 				item.txt + n +
 			'';
 		}
 
-		return txt;
+		return txt + '***' + n;
 
 	}
+
+
 	function saveFile() {
 
 		var blob = new Blob( [ header ] );
