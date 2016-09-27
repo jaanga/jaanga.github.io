@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>webSite via GitHub API2 R2</title>
+<title>webSite via GitHub API2 R4</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Request details of all files in a GitHub repository.
 Creates a file explorer with menu. 
@@ -18,7 +18,7 @@ Menu has breadcrumbs and other useful links.
 <script src=../core1/0-def-defaults/defaults-r1.js ></script>
 <script src=../core1/0-cor-core/core-r1.js ></script>
 <script src=../core1/1-key-api-key/api-key-r1.js ></script>
-<script src=../core1/tre-tree/get-tree-r1.js ></script>
+<script src=../core1/tre-tree/get-tree-r2.js ></script>
 <script src=../core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
 <script src=../core1/red-readme-getter/readme-getter-r2.js ></script>
 <!--
@@ -57,13 +57,13 @@ Menu has breadcrumbs and other useful links.
 
 			COR.getMenuBreadCrumbs() +
 
-			GET.getMenuDetailsTableOfContents() +
+			TRE.getMenuDetailsTableOfContents() +
 
-			GET.getMenuDetailsPageActions() +
+			TRE.getMenuDetailsPageActions() +
 
-			GET.getMenuRepositoryEvents() +
+			TRE.getMenuRepositoryEvents() +
 
-			GET.getMenuDetailsRepositoryStatistics() +
+			TRE.getMenuDetailsRepositoryStatistics() +
 
 			KEY.getMenuDetailsAPIKey() +
 
@@ -77,7 +77,7 @@ Menu has breadcrumbs and other useful links.
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
-		GET.getGitHubRepoTreeContents(); // calls onHashChange();
+		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
 
 	}
 
@@ -94,7 +94,7 @@ Menu has breadcrumbs and other useful links.
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
 
-			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
+			COR.requestFile( TRE.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
 
 				if ( xhr.target.status !== 404 ) {
 
@@ -118,7 +118,7 @@ Menu has breadcrumbs and other useful links.
 
 			COR.setMenuBreadCrumbs( item );
 
-			GET.getFilesFromFolder( item );
+			TRE.getFilesFromFolder( item );
 
 			if ( DEF.carousels.includes( item ) === true ) {
 
@@ -140,10 +140,10 @@ Menu has breadcrumbs and other useful links.
 
 			KEY.getRateLimits();
 
-			if ( !GETrepoStats.innerHTML ) { 
+			if ( !TRErepoStats.innerHTML ) { 
 
-				GET.setMenuDetailsRepositoryStatistics(); 
-				GET.getUpdates();
+				TRE.setMenuDetailsRepositoryStatistics(); 
+				TRE.getUpdates();
 
 			}
 

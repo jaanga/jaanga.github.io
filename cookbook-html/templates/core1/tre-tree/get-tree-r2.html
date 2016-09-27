@@ -35,9 +35,9 @@
 
 			TRE.getMenuDetailsPageActions() +
 
-//			TRE.getMenuRepositoryEvents() +
+			TRE.getMenuRepositoryEvents() +
 
-//			TRE.getMenuDetailsRepositoryStatistics() +
+			TRE.getMenuDetailsRepositoryStatistics() +
 
 			COR.getMenuDetailsAbout() +
 
@@ -46,6 +46,10 @@
 		b;
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		detailsRepositoryEvents.setAttribute('open', 'open');
+
+		detailsRepositoryStatistics.setAttribute('open', 'open');
 
 		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
 
@@ -76,6 +80,7 @@
 
 		}
 
+		TRE.setMenuDetailsRepositoryStatistics();
 
 		COR.contents.innerHTML = 
 

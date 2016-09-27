@@ -11,7 +11,7 @@
 
 		var menuDetailsTableOfContents =
 
-			'<details open >' +
+			'<details id=detailsTableOfContents open >' +
 
 				'<summary><h3>Table of Contents</h3></summary>' +
 
@@ -30,13 +30,13 @@
 
 		var menuDetailsPageActions =
 
-			'<details open>' +
+			'<details id=detailsPageActions open>' +
 
 				'<summary><h3>Page Actions</h3></summary>' +
 
 				'<div>' +
-				'<a href=JavaScript:location.href=TRE.urlSource+location.hash.slice(1); >View source on GitHub</a>' + b +
-				'<a href=JavaScript:window.open(TRE.urlBase+location.hash.slice(1),"_blank"); >Open page in new tab</a>' +
+				'<a href=JavaScript:location.href=DEF.urlSource+location.hash.slice(1); >View source on GitHub</a>' + b +
+				'<a href=JavaScript:window.open(DEF.urlGHPages+location.hash.slice(1),"_blank"); >Open page in new tab</a>' +
 				'</div>' + b +
 
 			'</details>' +
@@ -52,7 +52,7 @@
 
 		var menuDetailsRepositoryEvents =
 
-			'<details open>' +
+			'<details id=detailsRepositoryEvents >' +
 
 				'<summary><h3>Repository Events</h3></summary>' +
 
@@ -74,7 +74,7 @@
 
 		var menuDetailsRepositoryStatistics =
 
-			'<details open>' +
+			'<details id=detailsRepositoryStatistics >' +
 
 				'<summary><h3>Repository Statistics</h3></summary>' +
 
