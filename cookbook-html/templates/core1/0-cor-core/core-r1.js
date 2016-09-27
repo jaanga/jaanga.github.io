@@ -131,7 +131,7 @@
 
 //console.log( 'dir', dir );
 
-		var CORbreadCrumbs, dirArray;
+		var CORbreadCrumbs, dirArray, dirString;
 
 		dirArray = dir === '/' ? [] : dir.split( '/' );
 
@@ -151,7 +151,7 @@
 			'<h3>' +
 				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
 			'</h3>' +
-			'<h2><a href=# >' + DEF.repo + '</a> &raquo; </h2>';
+			'<h2><a href="" >' + DEF.repo + '</a> &raquo; </h2>';
 
 		}
 
@@ -159,9 +159,13 @@
 
 			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
 
+			if ( dirString.endsWith( '.md' ) || dirString.endsWith( '.html' ) ) { continue; }
+
 			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
 
 		}
+
+		COR.title = dirArray.length ? dirArray.pop().replace( /-/g, ' ' ) : DEF.repo;
 
 		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs;
 

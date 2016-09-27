@@ -1,87 +1,13 @@
 // 
 
-	var GET = GET || {};
-
-// simple version - see also below
-
-	GET.onLoadGitHubTreeContents = function( xhr ) {
-
-//console.log( 'xhr', xhr  );
-
-		var response, files, file;
-
-		response = JSON.parse( xhr.target.response );
-
-		GET.extension = GET.extension || '.json';
-
-		files = [];
-
-		for ( var i = 0; i < response.tree.length; i++ ) {
-
-			file = response.tree[ i ].path;
-
-			if ( !file.includes( GET.searchInFolder ) ) { continue; }
-			if ( file.includes( 'archive' ) ) { continue; }
-			if ( !file.includes( GET.extension ) ) { continue; }
-
-//			file = file.split( '\/' ).pop();
-
-			files.push( file );
-
-		}
-
-		GET.onLoadTreeContent( files );
-
-
-	}
+	var TRE = TRE || {};
 
 
 
-	GET.onLoadTreeContent = function( files ) {
-
-		console.log( '', files );
-
-	}
+// MENUS Full version
 
 
-	GET.getHTMLFilesInFolder = function() {
-
-		GET.searchInFolder = 'elevations-core3';
-		GET.extension = '.html';
-		GET.urlBase = 'https://jaanga.github.io/terrain3/';
-
-			GET.onLoadTreeContent = function( files ) {
-
-				txt = 
-
-				'<h1>' + GET.searchInFolder + '</h1>' +
-
-				'<input type=button onclick=window.location.href="https://github.com/jaanga/terrain3/tree/gh-pages/' + GET.searchInFolder + '/"; value="Got to GitHub" />' + b +
-
-			'';
-
-				for ( var i = 0; i < files.length; i++ ) {
-
-					if ( files[ i ].split( '/' ).length === 2 ) { txt += files[ i ].link( GET.urlBase + files[ i ] )  + b; }
-
-				}
-
-				contents.innerHTML = txt;
-
-			}
-
-
-		GET.getGitHubAPITreeContents();
-
-	}
-
-
-
-
-// Full version
-
-
-	GET.getMenuDetailsTableOfContents = function() {
+	TRE.getMenuDetailsTableOfContents = function() {
 
 		var menuDetailsTableOfContents =
 
@@ -89,7 +15,7 @@
 
 				'<summary><h3>Table of Contents</h3></summary>' +
 
-				'<div id=GETtoc ></div>' + b +
+				'<div id=TREtoc ></div>' + b +
 
 			'</details>' +
 
@@ -100,7 +26,7 @@
 	};
 
 
-	GET.getMenuDetailsPageActions = function() {
+	TRE.getMenuDetailsPageActions = function() {
 
 		var menuDetailsPageActions =
 
@@ -109,8 +35,8 @@
 				'<summary><h3>Page Actions</h3></summary>' +
 
 				'<div>' +
-				'<a href=JavaScript:location.href=GET.urlSource+location.hash.slice(1); >View source on GitHub</a>' + b +
-				'<a href=JavaScript:window.open(GET.urlBase+location.hash.slice(1),"_blank"); >Open page in new tab</a>' +
+				'<a href=JavaScript:location.href=TRE.urlSource+location.hash.slice(1); >View source on GitHub</a>' + b +
+				'<a href=JavaScript:window.open(TRE.urlBase+location.hash.slice(1),"_blank"); >Open page in new tab</a>' +
 				'</div>' + b +
 
 			'</details>' +
@@ -122,7 +48,7 @@
 	};
 
 
-	GET.getMenuRepositoryEvents = function() {
+	TRE.getMenuRepositoryEvents = function() {
 
 		var menuDetailsRepositoryEvents =
 
@@ -136,7 +62,7 @@
 
 		'';
 
-		GET.requestGitHubAPIEvents();
+		TRE.requestGitHubAPIEvents();
 
 		return menuDetailsRepositoryEvents;
 
@@ -144,7 +70,7 @@
 
 
 
-	GET.getMenuDetailsRepositoryStatistics = function() {
+	TRE.getMenuDetailsRepositoryStatistics = function() {
 
 		var menuDetailsRepositoryStatistics =
 
@@ -152,7 +78,7 @@
 
 				'<summary><h3>Repository Statistics</h3></summary>' +
 
-				'<div id=GETrepoStats ></div>' + b +
+				'<div id=TRErepoStats ></div>' + b +
 
 			'</details>' +
 
@@ -167,7 +93,8 @@
 
 // called by init
 
-	GET.getGitHubRepoTreeContents = function() {
+
+	TRE.getGitHubRepoTreeContents = function() {
 
 		COR.requestFile( DEF.urlGITHubAPITreeContents, function callbackGH( xhr ) {
 
@@ -175,13 +102,13 @@
 
 			response = JSON.parse( xhr.target.response );
 
-			GET.tree = response.tree;
+			TRE.tree = response.tree;
 
-			GET.itemsAll = GET.tree.map( function( item ) { return item.path; } );
+			TRE.itemsAll = TRE.tree.map( function( item ) { return item.path; } );
 
 			onHashChange();
 
-//			GET.getFilesFromFolder( '' );
+//			TRE.getFilesFromFolder( '' );
 
 		} );
 
@@ -190,20 +117,20 @@
 
 // called by onHashChange
 
-	GET.getFilesFromFolder = function( dir ) {
+	TRE.getFilesFromFolder = function( dir ) {
 
 		var dirArray, dirLen, item, itemArray;
 
-		GET.dirsSelected = [];
-		GET.filesSelected = [];
+		TRE.dirsSelected = [];
+		TRE.filesSelected = [];
 
 		dirArray = dir === '/' ? [] : dir.split( '/' );
 
 		dirLen = dirArray.length + 2;
 
-		for ( var i = 0; i < GET.itemsAll.length; i++ ) {
+		for ( var i = 0; i < TRE.itemsAll.length; i++ ) {
 
-			item = GET.itemsAll[ i ];
+			item = TRE.itemsAll[ i ];
 
 			if ( !item.includes( dir ) ) { continue; }
 
@@ -211,16 +138,15 @@
 
 			itemArray = item.split( '/' );
 
-
 			if ( itemArray.length !== dirLen ) { continue; }
 
-			GET.dirsSelected.push( item.replace( '/readme.md', '' ) );
+			TRE.dirsSelected.push( item.replace( '/readme.md', '' ) );
 
 		}
 
-		for ( var i = 0; i < GET.itemsAll.length; i++ ) {
+		for ( var i = 0; i < TRE.itemsAll.length; i++ ) {
 
-			item = GET.itemsAll[ i ];
+			item = TRE.itemsAll[ i ];
 
 			if ( !item.includes( dir ) ) { continue; }
 
@@ -234,50 +160,46 @@
 
 			if ( itemArray.length !== dirLen - 1 ) { continue; }
 
-			GET.filesSelected.push( item );
+			TRE.filesSelected.push( item );
 
 		}
 
-		GET.createFolderNameTableOfContents();
+		TRE.createFolderNameTableOfContents();
 
 	};
 
 
-	GET.createFolderNameTableOfContents = function() {
+	TRE.createFolderNameTableOfContents = function() {
 
-		var toc, folderName, folder;
+//		var toc, folderName, folder;
 
 		toc = '';
 
-		for ( var i = 0; i < GET.dirsSelected.length; i++ ) {
+		for ( var i = 0; i < TRE.dirsSelected.length; i++ ) {
 
-			folder = GET.dirsSelected[ i ];
+			TRE.folder = TRE.dirsSelected[ i ];
 
-			folderName = folder.split( '/' ).pop();
-			folderName = folderName.replace( /-/g, ' ' );
+			TRE.folderName = TRE.folder.split( '/' ).pop();
+			TRE.folderName = TRE.folderName.replace( /-/g, ' ' );
 
-			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + folderName + '</a></h3>';
-
-		}
-
-
-		for ( var i = 0; i < GET.filesSelected.length; i++ ) {
-
-			file = GET.filesSelected[ i ];
-
-			fileName = file.split( '/' ).pop();
-			fileName = fileName.replace( /-/g, ' ' );
-
-			toc += '<h3><a href=#' + file + ' > ' + fileName + '</a></h3>';
+			toc += '<h3>&#x1f4c1; <a href=#' + TRE.folder + ' > ' + TRE.folderName + '</a></h3>';
 
 		}
 
-// need to add files to tree here
 
+		for ( var i = 0; i < TRE.filesSelected.length; i++ ) {
 
+			TRE.file = TRE.filesSelected[ i ];
+			item = TRE.file.split( '/' )
 
+			TRE.fileName = item.pop();
+			TRE.fileName = TRE.fileName.replace( /-/g, ' ' );
 
-		GETtoc.innerHTML = toc;
+			toc += '<h3><a href=#' + TRE.file + ' > ' + TRE.fileName + '</a></h3>';
+
+		}
+
+		TREtoc.innerHTML = toc;
 
 	}
 
@@ -285,7 +207,7 @@
 
 // called by onHashChange
 
-	GET.setMenuDetailsRepositoryStatistics = function() {
+	TRE.setMenuDetailsRepositoryStatistics = function() {
 
 		var dirs, files, filesSize, item;
 
@@ -293,9 +215,9 @@
 		files = 0;
 		filesSize = 0;
 
-		for ( var i = 0; i < GET.tree.length; i++ ) {
+		for ( var i = 0; i < TRE.tree.length; i++ ) {
 
-			item = GET.tree[ i ];
+			item = TRE.tree[ i ];
 
 			if ( item.type === 'blob' ) {
 
@@ -310,9 +232,9 @@
 
 		}
 
-		GETrepoStats.innerHTML =
+		TRErepoStats.innerHTML =
 
-			'Items in repo: ' + GET.itemsAll.length.toLocaleString() + b +
+			'Items in repo: ' + TRE.itemsAll.length.toLocaleString() + b +
 			'&bull; Folders &nbsp;  &nbsp: ' + dirs.toLocaleString() + b +
 			'&bull; Files &nbsp  &nbsp  &nbsp: ' + files.toLocaleString() + b +
 			'Size of files: ' + filesSize.toLocaleString() + ' bytes' +
@@ -326,7 +248,7 @@
 
 // called by onHashChange
 
-	GET.requestGitHubAPIEvents = function() {
+	TRE.requestGitHubAPIEvents = function() {
 
 		var xhr;
 		var events, event, txt, dates, actor, repo;
@@ -359,7 +281,7 @@
 
 				actor = ' <a href=' + event.actor.url + ' > ' + event.actor.login + '</a> ';
 
-				repo = ' <a href=' + event.repo.url + ' > ' + event.repo.name.replace ( GET.user, '' ) + '</a> ';
+				repo = ' <a href=' + event.repo.url + ' > ' + event.repo.name.replace ( TRE.user, '' ) + '</a> ';
 
 				if ( eventSet[ 'on' + event.type ] !== undefined ) {
 
@@ -414,7 +336,7 @@ console.log( 'non-event', event );
 
 // called by onHashChange
 
-	GET.getUpdates = function() {
+	TRE.getUpdates = function() {
 
 		var updates, update, txt;
 
@@ -431,7 +353,7 @@ console.log( 'non-event', event );
 				update = updates[ i ];
 
 				txt += '<h2><a href=' + update.html_url + ' >' + update.title + '</a></h2>' +
-					'<div class=GETupdate >' + COR.converter.makeHtml( update.body ) + '</div>';
+					'<div class=TREupdate >' + COR.converter.makeHtml( update.body ) + '</div>';
 
 			}
 
@@ -452,5 +374,4 @@ console.log( 'non-event', event );
 		}
 
 	};
-
 

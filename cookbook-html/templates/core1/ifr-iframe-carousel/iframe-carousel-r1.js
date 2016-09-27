@@ -36,12 +36,15 @@
 			button.onclick = function(){
 
 // move out of loop
+
 				icw.IFRifr.src = IFR.sites[ this.id ].fileName;
 				clearInterval( IFR.timer );
 
 			};
 
 		}
+
+		clearInterval( IFR.timer );
 
 		displayNext();
 
@@ -54,37 +57,52 @@
 				if (! IFR.sites[ IFR.index ].fileName ) { return; }
 
 				icw.IFRifr.src = IFR.sites[ IFR.index ].fileName;
-			
+
 				icw.IFRifr.onload = function() {
 
 					var metas;
 
-					metas = icw.IFRifr.contentDocument.getElementsByTagName('meta');
-
 					title = IFR.sites[ IFR.index ] ? IFR.sites[ IFR.index ].title : '';
+
 					ifrTitle.innerHTML = '<i>' + title + '</i>' + b;
 
-					for ( var i = 0, m; i < metas.length; i++ ) {
+					if ( location.protocol.slice( 0, 4 ) === ifr.contentWindow.IFRifr.src.slice( 0, 4 )  ) {
 
-						m = metas[ i ];
+						metas = icw.IFRifr.contentDocument.getElementsByTagName('meta');
 
-						switch( m.name ) {
+						for ( var i = 0, m; i < metas.length; i++ ) {
 
-							case 'description':
-								ifrTitle.innerHTML += 'Description: ' + m.content + b; break;
-							case 'keywords':
-								ifrTitle.innerHTML += 'Keywords: ' + m.content + b; break;
-							case 'date':
-								ifrTitle.innerHTML += 'Update: ' + m.content + b; break;
-							default:
-								break;
+							m = metas[ i ];
+
+							switch( m.name ) {
+
+								case 'description':
+									ifrTitle.innerHTML += 'Description: ' + m.content + b; break;
+								case 'keywords':
+									ifrTitle.innerHTML += 'Keywords: ' + m.content + b; break;
+								case 'date':
+									ifrTitle.innerHTML += 'Update: ' + m.content + b; break;
+								default:
+									break;
+
+							}
 
 						}
+
+						if( icw.IFRifr.contentWindow.THR ) {
+
+							icw.IFRifr.contentWindow.THR.controls.enableZoom=false;
+
+						}
+
+					} else {
+
+
 					}
 
-					icw.IFRifr.contentWindow.THR.controls.enableZoom=false;
-
 				};
+
+				console.clear();
 
 				IFR.index ++;
 

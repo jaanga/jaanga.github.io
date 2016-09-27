@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Genrate Animated GIF R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-13' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=https://rawgit.com/deanm/omggif/master/omggif.js ></script>
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r1.js ></script>
+<script src=../../core1/tre-tree/get-tree-r2.js ></script>
+<script src=../../core1/gag-generate-animated-gif/gag-generate-animated-gif-r1.js ></script>
+<script>
+
+
+	init();
+
+	function init() {
+
+//		COR.taglineHeader = 'A hard core howdy!' + b;
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+//			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs() +
+
+			TRE.getMenuDetailsTableOfContents() +
+
+			GAG.getMenuDetailsGenerateAnimatedGIF() +
+
+			TRE.getMenuDetailsPageActions() +
+
+//			TRE.getMenuRepositoryEvents() +
+
+//			TRE.getMenuDetailsRepositoryStatistics() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		var item;
+
+		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
+
+		if ( item.endsWith( '.md' ) === true ) {
+
+			COR.setMenuBreadCrumbs( DEF.searchInFolder );
+
+		} else if ( item.endsWith( '.html' ) === true ) {
+
+			COR.setMenuBreadCrumbs( item );
+
+		} else {
+
+//console.log( 'item', item );
+
+			COR.setMenuBreadCrumbs( item );
+
+			TRE.getFilesFromFolder( item );
+
+		}
+
+		COR.contents.innerHTML = 
+
+			'<h1>' + COR.title + '</h1>' +
+
+			'File: ' + item + b + b +
+
+			'<iframe id=ifr src=../../../../terrain3/' + item + ' onload=doIt(); width=' + GAG.width + ' height=' + GAG.height + ' ></iframe>' +
+
+		b;
+
+	}
+
+
+
+	function doIt( xhr ) {
+
+		icw = ifr.contentWindow.THR ? ifr.contentWindow.THR : ifr.contentWindow;
+
+		icw.generating = false;
+		icw.time = 0;
+
+		icw.pos = icw.camera.position;
+		icw.radius = icw.pos.distanceTo( new ifr.contentWindow.THREE.Vector3( 0, icw.pos.y, 0 ) );
+
+console.log( 'pos', icw.pos, icw.radius );
+
+		icw.animate = GAG.animate;
+
+		icw.render = GAG.render; 
+
+		icw.animate();
+
+	}
+
+
+</script>
+</body>
+</html>

@@ -2,83 +2,9 @@
 
 	var GET = GET || {};
 
-// simple version - see also below
-
-	GET.onLoadGitHubTreeContents = function( xhr ) {
-
-//console.log( 'xhr', xhr  );
-
-		var response, files, file;
-
-		response = JSON.parse( xhr.target.response );
-
-		GET.extension = GET.extension || '.json';
-
-		files = [];
-
-		for ( var i = 0; i < response.tree.length; i++ ) {
-
-			file = response.tree[ i ].path;
-
-			if ( !file.includes( GET.searchInFolder ) ) { continue; }
-			if ( file.includes( 'archive' ) ) { continue; }
-			if ( !file.includes( GET.extension ) ) { continue; }
-
-//			file = file.split( '\/' ).pop();
-
-			files.push( file );
-
-		}
-
-		GET.onLoadTreeContent( files );
 
 
-	}
-
-
-
-	GET.onLoadTreeContent = function( files ) {
-
-		console.log( '', files );
-
-	}
-
-
-	GET.getHTMLFilesInFolder = function() {
-
-		GET.searchInFolder = 'elevations-core3';
-		GET.extension = '.html';
-		GET.urlBase = 'https://jaanga.github.io/terrain3/';
-
-			GET.onLoadTreeContent = function( files ) {
-
-				txt = 
-
-				'<h1>' + GET.searchInFolder + '</h1>' +
-
-				'<input type=button onclick=window.location.href="https://github.com/jaanga/terrain3/tree/gh-pages/' + GET.searchInFolder + '/"; value="Got to GitHub" />' + b +
-
-			'';
-
-				for ( var i = 0; i < files.length; i++ ) {
-
-					if ( files[ i ].split( '/' ).length === 2 ) { txt += files[ i ].link( GET.urlBase + files[ i ] )  + b; }
-
-				}
-
-				contents.innerHTML = txt;
-
-			}
-
-
-		GET.getGitHubAPITreeContents();
-
-	}
-
-
-
-
-// Full version
+// MENUS Full version
 
 
 	GET.getMenuDetailsTableOfContents = function() {
@@ -167,6 +93,7 @@
 
 // called by init
 
+
 	GET.getGitHubRepoTreeContents = function() {
 
 		COR.requestFile( DEF.urlGITHubAPITreeContents, function callbackGH( xhr ) {
@@ -211,7 +138,6 @@
 
 			itemArray = item.split( '/' );
 
-
 			if ( itemArray.length !== dirLen ) { continue; }
 
 			GET.dirsSelected.push( item.replace( '/readme.md', '' ) );
@@ -245,37 +171,33 @@
 
 	GET.createFolderNameTableOfContents = function() {
 
-		var toc, folderName, folder;
+//		var toc, folderName, folder;
 
 		toc = '';
 
 		for ( var i = 0; i < GET.dirsSelected.length; i++ ) {
 
-			folder = GET.dirsSelected[ i ];
+			GET.folder = GET.dirsSelected[ i ];
 
-			folderName = folder.split( '/' ).pop();
-			folderName = folderName.replace( /-/g, ' ' );
+			GET.folderName = GET.folder.split( '/' ).pop();
+			GET.folderName = GET.folderName.replace( /-/g, ' ' );
 
-			toc += '<h3>&#x1f4c1; <a href=#' + folder + ' > ' + folderName + '</a></h3>';
+			toc += '<h3>&#x1f4c1; <a href=#' + GET.folder + ' > ' + GET.folderName + '</a></h3>';
 
 		}
 
 
 		for ( var i = 0; i < GET.filesSelected.length; i++ ) {
 
-			file = GET.filesSelected[ i ];
+			GET.file = GET.filesSelected[ i ];
+			item = GET.file.split( '/' )
 
-			fileName = file.split( '/' ).pop();
-			fileName = fileName.replace( /-/g, ' ' );
+			GET.fileName = item.pop();
+			GET.fileName = GET.fileName.replace( /-/g, ' ' );
 
-			toc += '<h3><a href=#' + file + ' > ' + fileName + '</a></h3>';
+			toc += '<h3><a href=#' + GET.file + ' > ' + GET.fileName + '</a></h3>';
 
 		}
-
-// need to add files to tree here
-
-
-
 
 		GETtoc.innerHTML = toc;
 
@@ -452,5 +374,84 @@ console.log( 'non-event', event );
 		}
 
 	};
+
+
+
+
+
+// simple version
+
+
+
+	GET.onLoadGitHubTreeContents = function( xhr ) {
+
+//console.log( 'xhr', xhr  );
+
+		var response, files, file;
+
+		response = JSON.parse( xhr.target.response );
+
+		GET.extension = GET.extension || '.json';
+
+		files = [];
+
+		for ( var i = 0; i < response.tree.length; i++ ) {
+
+			file = response.tree[ i ].path;
+
+			if ( !file.includes( GET.searchInFolder ) ) { continue; }
+			if ( file.includes( 'archive' ) ) { continue; }
+			if ( !file.includes( GET.extension ) ) { continue; }
+
+//			file = file.split( '\/' ).pop();
+
+			files.push( file );
+
+		}
+
+		GET.onLoadTreeContent( files );
+
+
+	}
+
+
+
+	GET.onLoadTreeContent = function( files ) {
+
+		console.log( '', files );
+
+	}
+
+
+	GET.getHTMLFilesInFolder = function() {
+
+		GET.searchInFolder = 'elevations-core3';
+		GET.extension = '.html';
+		GET.urlBase = 'https://jaanga.github.io/terrain3/';
+
+			GET.onLoadTreeContent = function( files ) {
+
+				txt = 
+
+				'<h1>' + GET.searchInFolder + '</h1>' +
+
+				'<input type=button onclick=window.location.href="https://github.com/jaanga/terrain3/tree/gh-pages/' + GET.searchInFolder + '/"; value="Got to GitHub" />' + b +
+
+			'';
+
+				for ( var i = 0; i < files.length; i++ ) {
+
+					if ( files[ i ].split( '/' ).length === 2 ) { txt += files[ i ].link( GET.urlBase + files[ i ] )  + b; }
+
+				}
+
+				contents.innerHTML = txt;
+
+			}
+
+
+		GET.getGitHubAPITreeContents();
+
+	}
 
 

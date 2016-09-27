@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Files R1</title>
+<title>Get Tree R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='
 ' >
@@ -13,16 +13,9 @@
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 <script src=../../core1/0-def-defaults/defaults-r1.js ></script>
 <script src=../../core1/0-cor-core/core-r1.js ></script>
-<script src=../../core1/get-files/get-files-r1.js ></script>
+<script src=../../core1/tre-tree/get-tree-r2.js ></script>
 <script>
 
-/*
-	DEF.repo = 'jaanga.github.io';
-	DEF.searchInFolder = 'demo/';
-	DEF.branch = 'master';
-
-	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
-*/
 
 	init();
 
@@ -38,13 +31,13 @@
 
 			COR.getMenuBreadCrumbs() +
 
-			GET.getMenuDetailsTableOfContents() +
+			TRE.getMenuDetailsTableOfContents() +
 
-			GET.getMenuDetailsPageActions() +
+			TRE.getMenuDetailsPageActions() +
 
-			GET.getMenuRepositoryEvents() +
+//			TRE.getMenuRepositoryEvents() +
 
-			GET.getMenuDetailsRepositoryStatistics() +
+//			TRE.getMenuDetailsRepositoryStatistics() +
 
 			COR.getMenuDetailsAbout() +
 
@@ -54,7 +47,7 @@
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
 
-		GET.getGitHubRepoTreeContents(); // calls onHashChange();
+		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
 
 	}
 
@@ -69,19 +62,9 @@
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
 
-/*
-			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
+		} else if ( item.endsWith( '.html' ) === true ) {
 
-				if ( xhr.target.status !== 404 ) {
-
-					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
-
-				}
-
-				COR.contents.style.overflow = 'auto';
-
-			} );
-*/
+			COR.setMenuBreadCrumbs( item );
 
 		} else {
 
@@ -89,25 +72,20 @@
 
 			COR.setMenuBreadCrumbs( item );
 
-			GET.getFilesFromFolder( item );
-
-/*
-			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
-
-				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
-				COR.contents.style.overflow = 'auto';
-
-			} );
-
-*/
-			if ( !GETrepoStats.innerHTML ) { 
-
-				GET.setMenuDetailsRepositoryStatistics(); 
-				GET.getUpdates();
-
-			}
+			TRE.getFilesFromFolder( item );
 
 		}
+
+
+		COR.contents.innerHTML = 
+
+			'<h1>' + COR.title + '</h1>' +
+
+			'File: ' + item + b + b +
+
+			'<iframe src="' + DEF.urlGHPages + item + '" width=800 height=500 ></iframe>' +
+
+		b;
 
 	}
 

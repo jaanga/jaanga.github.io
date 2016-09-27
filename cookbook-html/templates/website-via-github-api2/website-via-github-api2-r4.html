@@ -1,0 +1,156 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>webSite via GitHub API2 R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Request details of all files in a GitHub repository.
+Creates a file explorer with menu. 
+Enables browsing and viewing of selected files.
+Menu has breadcrumbs and other useful links. 
+' >
+<meta name=keywords content='CMS,JavaScript,GitHub Developer API,GitHub,FOSS,STEM' >
+<meta name=date content='2016-08-26' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+
+<script src=../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../core1/0-cor-core/core-r1.js ></script>
+<script src=../core1/1-key-api-key/api-key-r1.js ></script>
+<script src=../core1/tre-tree/get-tree-r1.js ></script>
+<script src=../core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
+<script src=../core1/red-readme-getter/readme-getter-r2.js ></script>
+<!--
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/0-def-defaults/defaults-r1.js ></script>
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/0-cor-core/core-r1.js ></script>
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/1-key-api-key/api-key-r1.js ></script>
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/tre-tree/get-tree-r1.js ></script>
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/red-readme-getter/readme-getter-r2.js ></script>
+-->
+<script>
+
+	DEF.readmeURL = '../../../terrain3' + DEF.searchInFolder;
+
+	IFR.sites = [
+
+		{ fileName: DEF.readmeURL + 'globes/earth-globe-displacement/index.html', title: 'Earth Globe Displacement', txt: '' },
+		{ fileName: 'https://cynthiaarmour.github.io/oakland-gran-fondo-2016/code/oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28 2016', txt: '' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-core3-r1.html', title: 'Elevations Core3', txt: 'Basic 3D map data viewer' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
+//		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/0-elevations-view-generate-gif/elevations-view-generate-gif-r1.html', title: 'Generate Animated GIF', txt: 'Generate animated GIF files' }
+
+//		[ fileName: '', txt: '' ],
+
+	];
+
+	init();
+
+	function init() {
+
+		COR.initThreeColumns();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuBreadCrumbs() +
+
+			GET.getMenuDetailsTableOfContents() +
+
+			GET.getMenuDetailsPageActions() +
+
+			GET.getMenuRepositoryEvents() +
+
+			GET.getMenuDetailsRepositoryStatistics() +
+
+			KEY.getMenuDetailsAPIKey() +
+
+			KEY.getMenuDetailsAPIRates() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		GET.getGitHubRepoTreeContents(); // calls onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		var item;
+
+		clearInterval( IFR.timer );
+
+		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
+
+		if ( item.endsWith( '.md' ) === true ) {
+
+			COR.setMenuBreadCrumbs( DEF.searchInFolder );
+
+			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
+
+				if ( xhr.target.status !== 404 ) {
+
+					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+				}
+
+			} );
+
+
+		} else if ( item.endsWith( '.html' ) === true ) {
+
+
+
+			COR.setMenuBreadCrumbs( item );
+
+			COR.contents.innerHTML = RED.setReadMe( item );
+
+
+		} else {
+
+			COR.setMenuBreadCrumbs( item );
+
+			GET.getFilesFromFolder( item );
+
+			if ( DEF.carousels.includes( item ) === true ) {
+
+				if ( item === '/' ) { DEF.includeFullScreenChoices = false; } else { DEF.includeFullScreenChoices = true; }
+
+				DEF.includeFullScreenChoices = item === '/' ? false : true;
+
+				COR.requestFile( DEF.readmeURL + '/' + item + '/readme-body.md', RED.callback );
+
+			} else {
+
+				COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
+
+					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+				} );
+
+			}
+
+			KEY.getRateLimits();
+
+			if ( !GETrepoStats.innerHTML ) { 
+
+				GET.setMenuDetailsRepositoryStatistics(); 
+				GET.getUpdates();
+
+			}
+
+		}
+
+	}
+
+</script>
+</body>
+</html>
