@@ -3,15 +3,16 @@
 
 	RED.getHeader = function() {
 
-		return '<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]' +
-			'( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html "View file as a web page." ) </span>' +
-			'<input type=button onclick=window.location.href="' + DEF.baseURL + DEF.repo + '/tree/' + DEF.branch + '/' +
-				DEF.folder + '"; value="You are now in GitHub web page view - Click this button to view Read Me file as source code" >' + n + n +
+//		return '<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]' +
+//			'( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/index.html "View file as a web page." ) </span>' +
+//			'<input type=button onclick=window.location.href="https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/' +
+//				DEF.folder + '"; value="You are now in GitHub web page view - Click this button to view Read Me file as source code" >' + n + n +
 
-			'[' + DEF.user + ']( ' + DEF.baseURL + ' ) &raquo; [' + DEF.repo + ']( ' + + DEF.baseURL + '/' + DEF.repo + ' )' + n + n +
+//			'[' + DEF.user + ']( ' + DEF.baseURL + ' ) &raquo; [' + DEF.repo + ']( ' + + DEF.baseURL + '/' + DEF.repo + ' )' + n + n +
 
 //			'[ '+ DEF.searchInFolder.replace( /[-\/]/g, ' ' ) + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
-			'[ '+ COR.title + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
+
+			return '[ '+ COR.title + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
 
 			'===' + n +
 			n +

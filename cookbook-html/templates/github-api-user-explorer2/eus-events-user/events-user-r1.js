@@ -202,7 +202,7 @@
 
 		function callback() {
 
-//if ( xhr.repo === 'neovim/doc') { console.log( '',  xhr ); }
+//	if ( xhr.repo === 'neovim/doc') { console.log( '',  xhr ); }
 
 			st = '<style>body { font: 10pt monospace; }</style>';
 

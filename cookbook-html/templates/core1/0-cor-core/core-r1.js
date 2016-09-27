@@ -98,7 +98,7 @@
 			'.GETupdate { border: 1px solid #aaa; height: 300px; overflow: auto }' +
 
 			'#contents { border: 0px red solid; left: 25%; position: absolute; top: 0; max-width: 40%; }' +
-			'#contents h1, #contents p { margin: 0 0 12px 0 }' +
+			'#contents p { margin: 0 0 12px 0 }' +
 
 			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 20%; }' +
 			'#menu h2, #menu h3 { margin: 0 0 10px 0; }' +
