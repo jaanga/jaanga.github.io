@@ -275,7 +275,7 @@
 
 // console.log( 'repo', folder );
 
-		item.src = 'http://' + folder;
+		item.src = '//' + folder;
 
 	}
 
