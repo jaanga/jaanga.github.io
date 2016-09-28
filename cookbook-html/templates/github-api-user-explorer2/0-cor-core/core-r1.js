@@ -10,6 +10,7 @@
 
 	API.token = '';
 
+// move to DEF file
 
 	COR.taglineHeader = 
 
@@ -88,6 +89,7 @@
 			'summary h2, summary h3, summary h4 { display: inline; }' +
 			'summary { outline: none; }' +
 
+			'.issue { background-color: #fff; border: 1px solid; }' +
 			'.butt2 { width: 108px; }' +
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
@@ -243,6 +245,8 @@
 
 // utils
 
+
+// make more generic
 	COR.getObjectProperties = function( obj ) {
 
 		var keys, txt;

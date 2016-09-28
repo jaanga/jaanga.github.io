@@ -11,6 +11,45 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ***
 
+
+## Self-Marketing FOSS
+
+
+* Hosted on free static hosts such as GitHub or GitLab pages
+* Entry-level code with few if any dependencies
+* Simple CMS tools that are extensible
+
+### Everything 3D
+
+* Eat your own dog food
+
+
+### GitHub API User Explorer
+
+* Your home page enables people to see what you are doing quickly and easily
+* You can see what other like you are doing
+* You can stay up to date and track updates really easily
+
+### Web Site via GitHub API 
+
+* Display all folder and files of a repo in a directory-style tree
+* If a folder has an associated Read Me in Markdown format then display its contents as HTML
+* Display repo stats
+* Provide links to source code
+* Highlight recent updates
+* Allow active users t enter their GitHub API key
+* Show users where they currently stand on usage limits
+* View and act on the current contents
+
+
+### NameSpace Scripts
+
+* An investigation into ways to simplify the process of developing code in the 500 to 5,000 line range
+* Naming conventions to help you locate the creation of all the variable in the app
+* Menus built on the fly at run-time
+* Simple HTML files to test and enhance all scripts 
+
+
 ### _new 'GitHub API Files Viewer' / new menu at left / changes everything_
 
 

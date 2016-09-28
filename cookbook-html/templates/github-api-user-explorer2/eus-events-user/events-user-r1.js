@@ -7,12 +7,14 @@
 // https://jaanga.github.io/terrain3/elevations-core3/elevations-view-r6.html 
 
 	var EUS = EUS || {};
+
 	EUS.eventTypes = [ "CommitCommentEvent","CreateEvent","DeleteEvent","DeploymentEvent","DeploymentStatusEvent","DownloadEvent","FollowEvent","ForkEvent","ForkApplyEvent","GistEvent","GollumEvent","IssueCommentEvent","IssuesEvent","MemberEvent","MembershipEvent","PageBuildEvent","PublicEvent","PullRequestEvent","PullRequestReviewCommentEvent","PushEvent","ReleaseEvent","RepositoryEvent","StatusEvent","TeamAddEvent","WatchEvent" ];
 	EUS.type = {};
 	EUS.dates = [];
 	EUS.repos = [];
 
 
+// may not be in use
 	EUS.getMenuDetailsUserEvents = function() {
 
 		EUS.target = updates;
@@ -23,9 +25,9 @@
 
 				'<summary id=EUSsummaryUserEvents ><h3>recent events</h3></summary>' +
 
-				'<div id=EUSUserEvents ></div>' +
+				'<div id=EUSUserEvents ></div>' + b +
 
-			'</details>' + b +
+			'</details>' +
 
 		'';
 
@@ -34,6 +36,9 @@
 	}
 
 
+// Used by right menu
+// events-user-r1.html
+// github-api-user-explorer2-r1.html
 
 	EUS.requestGitHubAPIUserEvents = function( user ) {
 
@@ -119,10 +124,13 @@
 	}
 
 
+// Used by center contents
+// events-user-r1.html
+// github-api-user-explorer2-r1.html
 
 	EUS.buildStatsReport = function( user ) {
 
-		var txt, keys;
+		var txt, keys, repo;
 
 		txt = 
 
@@ -137,17 +145,15 @@
 
 		for ( var i = 0; i < repoKeys.length; i++ ) {
 
-			name = EUS.repos[ repoKeys[ i ] ].name;
+			repoName = EUS.repos[ repoKeys[ i ] ].name;
 
-			txt += '<h2  style=margin-bottom:0;>User/repo: ' + name.link( 'https://github.com/' + name ) + '</h2>';
+			txt += '<h2 style=margin-bottom:0; >User/repo: ' + repoName.link( 'https://github.com/' + repoName ) + '</h2>';
 
 			repo = EUS.repos[ repoKeys[ i ] ];
 
-			txt += '<iframe id=' + name + ' width=100% height=300 ></iframe>';
+			txt += '<iframe id=' + repoName + ' height=300 ></iframe>';
 
-//			txt += '<div id=' + name + ' style=width:100%;height:300px;oveflow:hidden; ></div>';
-
-			EUS.getReadMe( name )
+//			EUS.getIframeContents( repoName );
 
 			for ( var j = 0; j < EUS.eventTypes.length; j++ ) {
 
@@ -161,27 +167,36 @@
 
 		}
 
+
+		for ( var i = 0; i < repoKeys.length; i++ ) {
+
+			repoName = EUS.repos[ repoKeys[ i ] ].name;
+
+			EUS.getIframeContents( repoName );
+
+		}
+
 		contents.innerHTML = txt;
 
 	}
 
 
 
-	EUS.getReadMe = function( repo ) {
+	EUS.getIframeContents= function( repo ) {
 
-		var xhr, user, suffix;
+		var xhr, user, style;
 
-		var user = repo.split( '/' )[ 0 ];
+		user = repo.split( '/' ).shift();
 
 		switch( user ) {
 
 			case 'theo-armour':
 			case 'jaanga':
 			case 'cynthiaarmour':
-			case 'Abantech':
+//			case 'Abantech':
 			case 'fgx':
 				branch = repo.includes( '.github.io' ) ? '/master/' : '/gh-pages/';
-				fileName = 'readme.md';
+				fileName = '';
 				break;
 
 			default:
@@ -191,6 +206,17 @@
 				break;
 
 		}
+
+
+		EUS.getReadMe( repo, branch, fileName );
+
+	}
+
+
+
+	EUS.getReadMe = function( repo, branch, fileName) {
+
+		var urlReadMe, xhr;
 
 		urlReadMe = 'https://rawgit.com/' + repo + branch + fileName;
 
@@ -202,29 +228,61 @@
 
 		function callback() {
 
-//	if ( xhr.repo === 'neovim/doc') { console.log( '',  xhr ); }
+			var text, css, item;
 
-			st = '<style>body { font: 10pt monospace; }</style>';
+			css = '<style>body { font: 10pt monospace; }</style>\n';
 
 			if ( xhr.status != 404 ) {
 
-				text = st + COR.converter.makeHtml( xhr.responseText );
+				text = COR.converter.makeHtml( xhr.responseText );
 
 			} else {
 
-				text = 'Not found: ' + repo + branch + fileName;
+				text = 'File not found: ' + xhr.repo + branch + fileName;
 
 			}
 
 			item = document.getElementById( xhr.repo );
-//			item.contentDocument.body.style.font = '12pt monospace'; // margin: 0;';
 
-			item.srcdoc = text;
+
+			user = xhr.repo.split( '/' ).shift();
+
+			if ( fileName === '' ) {
+
+				EUS.getIndexHTML( xhr.repo );
+
+			} else {
+
+				item.srcdoc = css + COR.converter.makeHtml( text );
+
+			}
 
 		}
 
 	}
 
+
+
+	EUS.getIndexHTML = function( repo ) {
+
+		user = repo.split( '/' ).shift();
+
+		folder = repo.split( '/' ).pop()
+
+		folder = repo.includes( '.github.io' ) ? folder : user + '.github.io/' + folder;
+
+		item = document.getElementById( repo );
+
+// console.log( 'repo', folder );
+
+		item.src = 'http://' + folder;
+
+	}
+
+
+
+
+// may not be used
 
 	EUS.requestGitHubAPIUserEventsStatusUpdate = function( user ) {
 
@@ -232,6 +290,9 @@
 		var events, event, txt, dates, body;
 
 		var urlEvents = 'https://api.github.com/users/' + user + '/events?per_page=100' + ( API.token || '' );
+
+//console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
+
 
 		xhr = new XMLHttpRequest();
 		xhr.open( 'get', urlEvents, true );
@@ -276,7 +337,7 @@
 
 				'';
 
-//console.log( 'event', event );
+
 
 			}
 
@@ -325,7 +386,7 @@
 
 		return '<small>issue ' + event.payload.issue.title.link( event.payload.issue.html_url ) + '</small>' + b +
 
-					'<div class=issue style="border: 1px solid;" >' + COR.converter.makeHtml( body ) + '</div>' +
+					'<div class=issue >' + COR.converter.makeHtml( body ) + '</div>' +
 
 				'';
 //		return 'issue ' + event.payload.issue.title.link( event.payload.issue.html_url ); 

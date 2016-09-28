@@ -3,7 +3,7 @@
 
 [Jaanga]( index.html ) 
 ===
-_Your 3D happy place. And, btw, we're using [browserstack]( https://www.browserstack.com ) to help with testing our scrpts on all sorts of devices_
+_Your 3D happy place. And, btw, we're using [browserstack]( https://www.browserstack.com ) to help with testing our scripts on all sorts of devices_
 
 
 [Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )

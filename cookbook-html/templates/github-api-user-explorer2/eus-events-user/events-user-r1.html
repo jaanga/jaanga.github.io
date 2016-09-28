@@ -22,7 +22,7 @@
 //	var user = 'ladybug-analysis-tools';
 //	var user = 'torvalds';
 //	var user = 'paulmasson';
-//	var user = 'theo-armour';
+	var user = 'theo-armour';
 
 	DAT.currentTopic = 'stats';
 
@@ -38,13 +38,13 @@
 
 			COR.getMenuDetailsHeader() +
 
-			API.getMenuDetailsAPIKey() +
+//			API.getMenuDetailsAPIKey() +
 
 			EUS.getMenuDetailsUserEvents() +
 
-			COR.getMenuDetailsTemplate() +
+//			COR.getMenuDetailsTemplate() +
 
-//			COR.getMenuDetailsObjectProperties() +
+			COR.getMenuDetailsObjectProperties( EUS ) +
 
 			COR.getMenuDetailsAbout() +
 
@@ -52,7 +52,7 @@
 
 		b;
 
-		detailsTemplate.setAttribute('open', 'open');
+//		detailsTemplate.setAttribute('open', 'open');
 
 //		EUS.target = EUSrepositoryEvents;
 

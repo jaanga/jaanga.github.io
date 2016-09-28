@@ -7,7 +7,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [WebSite via GitHubAPI Read Me]( https://jaanga.github.io/cookbook-html/templates/website-via-github-api/website-via-github-api-r1.html#readme.md )
 ===
 
-## [github-api-files-in-folder]( https://jaanga.github.io/cookbook-html/templates/website-via-github-api/ )
+## full screen: [WebSite via GitHubAPI]( https://jaanga.github.io/cookbook-html/templates/website-via-github-api/ )
 
 
 ## Concept
@@ -38,7 +38,6 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 * Always a bit more simple than it could be
 	* It's easier to recover from no abstraction than the wrong abstraction
 
- 
 
 ### Vision 
 
@@ -47,12 +46,20 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 
 ## Features
 
-
-* Request details of all files in a gh-pages branch of a GitHub repository.
-* Create a file explorer with menu. 
+* Create a file explorer with menu
+	* Display all folder and files of a repo in a directory-style tree
 * Enable browsing and viewing of selected files.
-* Menu has breadcrumbs and other useful links. 
-* Lists tagged issues in right side menu
+	* Request details of all files in a gh-pages branch of a GitHub repository.
+	* If a folder has an associated Read Me in Markdown format then display its contents as HTML
+* Menu has breadcrumbs and other useful links
+	* Display repo stats
+	* Provide links to source code
+	* Allow active users to enter their GitHub API key
+	* Show users where they currently stand on usage limits
+* Highlight recent updates
+	* Lists tagged issues in right side menu
+* View and act on the current contents
+	* Includes a script carousel feature
 * Short, easy code
 	* About 300 lines of mostly air
 * Single dependency on ShowDown - a MarkDown interpreter
@@ -62,14 +69,9 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 ## To Do
 
 * 2016-08-16 ~ Setup ladybug as a project?
-* 2016-08-16 ~ Custom center panel
-	* repos as 'pinterest' blocks
-	* Three most recent repos highlighted
-	* Show the code
+* Show the code
 * Add pop-ups?
-* Add view all files
 * View file details from SHA
-* Open page in new tab does what it says
 * Build files object
 	* Tracks files sizes
 	* Tracks SHA
@@ -78,14 +80,23 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 
 ## Issues
 
-* 2016-08-04 ~ Add better menu display handling if n0 subfolders 
-* 2016-08-04 ~ Breadcrumbs and files menu display/style still not totally clear
-* 2016-08-03 ~ Errors reporting when certain scripts in readme iframes
-
-
 
 
 ## Change log
+
+### 2016-09-27 ~ R2
+
+
+* Looking Good
+* Mostly solved:
+* 2016-08-16 ~ Custom center panel
+	* repos as 'pinterest' blocks
+	* Three most recent repos highlighted
+	* Add view all files
+	* Open page in new tab does what it says
+	* 2016-08-04 ~ Add better menu display handling if no subfolders 
+	* 2016-08-04 ~ Breadcrumbs and files menu display/style still not totally clear
+	* 2016-08-03 ~ Errors reporting when certain scripts in readme iframes
 
 ### 2016-09-21 ~ Website via GitHub API2 R1
 
