@@ -95,26 +95,26 @@ var raycaster = new THREE.Raycaster();
 		controls.maxDistance = 1000;
 
 // Lights
-		light = new THREE.AmbientLight( 0xffffff );
+		light = new THREE.AmbientLight( 0x555555 );
 		scene.add( light );
 
-		light = new THREE.DirectionalLight( 0xffffff, 1 );
+		light = new THREE.DirectionalLight( 0x888888, 0.5 );
 		light.position.set( 0, 200, 0 );
 
 		var d = 50;
-		light.shadowCameraLeft = -d;
-		light.shadowCameraRight = d;
-		light.shadowCameraTop = d;
-		light.shadowCameraBottom = -d;
+		light.shadow.camera.left = -d;
+		light.shadow.camera.right = d;
+		light.shadow.camera.top = d;
+		light.shadow.camera.bottom = -d;
 
-		light.shadowCameraNear = 150;
-		light.shadowCameraFar = 300;
+		light.shadow.camera.near = 150;
+		light.shadow.camera.far = 300;
 
 // can help stop appearance of gridlines in objects with opacity < 1
-		light.shadowBias = -0.0002; // default 0 ~ distance fron corners?
-		light.shadowDarkness = 0.3; // default 0.5
-		light.shadowMapWidth = 2048;  // default 512
-		light.shadowMapHeight = 2048;
+		light.shadow.bias = -0.0002; // default 0 ~ distance fron corners?
+//		light.shadowDarkness = 0.3; // default 0.5
+		light.shadow.mapSize.width = 2048;  // default 512
+		light.shadow.mapSize.height = 2048;
 
 		light.castShadow = true;
 //		light.shadowCameraVisible = true;

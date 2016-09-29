@@ -2,6 +2,7 @@
 
 	var TRE = TRE || {};
 
+	TRE.extension = '.html';
 
 
 // MENUS Full version
@@ -150,7 +151,7 @@
 
 			if ( !item.includes( dir ) ) { continue; }
 
-			if ( !item.includes( '.html' ) ) { continue; }
+			if ( !item.includes( TRE.extension ) ) { continue; }
 
 			if ( item.includes( 'archive' ) ) { continue; }
 
