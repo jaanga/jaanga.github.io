@@ -26,7 +26,7 @@
 
 
 	COR.aboutCredits = '<p>Thank you <a href=https://developer.github.com/v3/ > GitHub API </a> ';
-//					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
+//		'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
 
 
 //	COR.txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
@@ -34,7 +34,7 @@
 
 	COR.converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
-// end also in DEF
+// and also in DEF
 
 	COR.initThreeColumns = function() {
 
@@ -97,14 +97,15 @@
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 			'.GETupdate { border: 1px solid #aaa; height: 300px; overflow: auto }' +
 
-			'#contents { border: 0px red solid; left: 25%; position: absolute; top: 0; max-width: 40%; }' +
+			'#contents { border: 0px red solid; left: 24%; position: absolute; top: 0; max-width: 50%; }' +
 			'#contents p { margin: 0 0 12px 0 }' +
 
 			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 20%; }' +
 			'#menu h2, #menu h3 { margin: 0 0 10px 0; }' +
 			'#menu img { max-width: 200px; }' +
 
-			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 25%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
+			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 20%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
+			'#updates img { width: 100%; }' +
 
 			'#repositoryEvents h4 { margin: 0; }' +
 			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +

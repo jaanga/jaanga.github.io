@@ -9,6 +9,7 @@
 	var EUS = EUS || {};
 
 	EUS.eventTypes = [ "CommitCommentEvent","CreateEvent","DeleteEvent","DeploymentEvent","DeploymentStatusEvent","DownloadEvent","FollowEvent","ForkEvent","ForkApplyEvent","GistEvent","GollumEvent","IssueCommentEvent","IssuesEvent","MemberEvent","MembershipEvent","PageBuildEvent","PublicEvent","PullRequestEvent","PullRequestReviewCommentEvent","PushEvent","ReleaseEvent","RepositoryEvent","StatusEvent","TeamAddEvent","WatchEvent" ];
+
 	EUS.type = {};
 	EUS.dates = [];
 	EUS.repos = [];
@@ -282,7 +283,7 @@
 
 
 
-// may not be used
+// may not be in use
 
 	EUS.requestGitHubAPIUserEventsStatusUpdate = function( user ) {
 
@@ -291,7 +292,7 @@
 
 		var urlEvents = 'https://api.github.com/users/' + user + '/events?per_page=100' + ( API.token || '' );
 
-//console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
+console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
 
 
 		xhr = new XMLHttpRequest();
@@ -388,7 +389,8 @@
 
 					'<div class=issue >' + COR.converter.makeHtml( body ) + '</div>' +
 
-				'';
+		'';
+
 //		return 'issue ' + event.payload.issue.title.link( event.payload.issue.html_url ); 
 
 	}

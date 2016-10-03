@@ -173,6 +173,8 @@
 
 		}
 
+// updates contents and right side
+ 
 		if ( EUS.requestGitHubAPIUserEvents ) {
 
 			EUS.target = updates;

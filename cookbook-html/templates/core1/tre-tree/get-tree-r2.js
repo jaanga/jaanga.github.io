@@ -335,7 +335,7 @@ console.log( 'non-event', event );
 	}
 
 
-// called by onHashChange
+// right side menu called by onHashChange
 
 	TRE.getUpdates = function() {
 
@@ -347,20 +347,39 @@ console.log( 'non-event', event );
 
 			updates = JSON.parse( xhr.target.responseText );
 
-			txt = '<h2>' + DEF.repo + ' status updates</h2>';
+			txt = '<h2>' + DEF.repo + ' Status Updates</h2>';
 
 			for ( var i = 0; i < updates.length; i++ ) {
 
 				update = updates[ i ];
 
+/*
 				txt += '<h2><a href=' + update.html_url + ' >' + update.title + '</a></h2>' +
-					'<div class=TREupdate >' + COR.converter.makeHtml( update.body ) + '</div>';
+					'<div class=TREupdate >' + COR.converter.makeHtml( update.body ) + '</div>' +
+				'';
+*/
+
+				body =  update.body;
+
+//				if ( body.length > 500 ) { 
+
+					body = '<div>' +  COR.converter.makeHtml( body.slice( 0, 500 ) ) + '</div>more...';
+
+//				}
+
+//				txt += '<small>issue ' + event.payload.issue.title.link( event.payload.issue.html_url ) + '</small>' + b +
+
+				txt += '<hr><h2>' + update.title.link( update.html_url ) + '</h2>' +
+
+					'<div class=issue ><small>' +  body + '</small></div>' +
+
+				'';
 
 			}
 
 			COR.updates.innerHTML = txt + 
 
-				'<hr>' +
+				'' +
 
 				'<center>' +
 					'<a href=javascript:COR.updates.scrollTop=0; style=text-decoration:none; onmouseover=pop3.style.display=""; onmouseout=pop3.style.display="none"; ><h1> &#x2766 <h1></a>' +

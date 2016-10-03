@@ -68,14 +68,16 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 
 ## To Do
 
-* 2016-08-16 ~ Setup ladybug as a project?
-* Show the code
-* Add pop-ups?
-* View file details from SHA
-* Build files object
+* Project Sites
+	* 2016-08-16 ~ Setup ladybug as a project?
+* Updates
+	* 2016-10-03 ~ Fix style and more issues
+* Contents section
+	* Show the code
+	* View file details from SHA
+	* Build files object
 	* Tracks files sizes
 	* Tracks SHA
-	* Tracks is a dir - so can display http://www.fileformat.info/info/unicode/char/1f4c1/browsertest.htm - 📁
 
 
 ## Issues
@@ -84,8 +86,13 @@ A possible alternative is to have a client-side JavaScript app to act as a CMS
 
 ## Change log
 
-### 2016-09-27 ~ R2
+### 2016-10-03 ~ R4
 
+* Add dir icon - so can display http://www.fileformat.info/info/unicode/char/1f4c1/browsertest.htm - 📁
+* Add pop-ups?
+
+
+### 2016-09-27 ~ R2
 
 * Looking Good
 * Mostly solved:
