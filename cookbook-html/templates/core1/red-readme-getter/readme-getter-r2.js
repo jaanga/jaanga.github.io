@@ -14,7 +14,7 @@
 
 //			'[ '+ DEF.searchInFolder.replace( /[-\/]/g, ' ' ) + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
 
-			return '[ '+ COR.title + ' Read Me]( ' + DEF.baseURL + DEF.repo + '/' + DEF.folder + '/#readme.md )' + n +
+			return '[ '+ COR.title + ' Read Me]( ' + DEF.urlBase + '#readme.md )' + n +
 
 			'===' + n +
 			n +
@@ -102,7 +102,7 @@
 
 				'## full screen: [' + item + ']( ' + DEF.urlGHPages + item + ' )' + n +
 
-				'<div id=ifrTitle >vvvvv</div>' +
+				'<div id=ifrTitle ></div>' +
 
 			n +
 
