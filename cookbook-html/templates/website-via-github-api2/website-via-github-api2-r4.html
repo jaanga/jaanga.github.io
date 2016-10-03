@@ -14,24 +14,24 @@ Menu has breadcrumbs and other useful links.
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
-<!--
+
 <script src=../core1/0-def-defaults/defaults-r1.js ></script>
 <script src=../core1/0-cor-core/core-r1.js ></script>
 <script src=../core1/1-key-api-key/api-key-r1.js ></script>
 <script src=../core1/tre-tree/get-tree-r2.js ></script>
 <script src=../core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
 <script src=../core1/red-readme-getter/readme-getter-r2.js ></script>
--->
+<!--
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/0-def-defaults/defaults-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/0-cor-core/core-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/1-key-api-key/api-key-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/tre-tree/get-tree-r2.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/red-readme-getter/readme-getter-r2.js ></script>
-
+-->
 <script>
 
-//	DEF.readmeURL = '../../../terrain3' + DEF.searchInFolder;
+//	DEF.readmeURL = '../../../terrain3';
 
 	IFR.sites = [
 
@@ -90,6 +90,8 @@ Menu has breadcrumbs and other useful links.
 
 		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
 
+//item = '../../../../terrain3/elevations-core3/elevations-core3-r1.html';
+
 		if ( item.endsWith( '.md' ) === true ) {
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
@@ -106,8 +108,6 @@ Menu has breadcrumbs and other useful links.
 
 
 		} else if ( item.endsWith( '.html' ) === true ) {
-
-
 
 			COR.setMenuBreadCrumbs( item );
 

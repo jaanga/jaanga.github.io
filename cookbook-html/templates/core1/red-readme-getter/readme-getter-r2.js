@@ -1,4 +1,6 @@
 
+//DEF.urlGHPages = './terrain3/';
+
 	var RED = RED || {};
 
 	RED.getHeader = function() {
@@ -67,7 +69,6 @@
 
 	RED.callback = function( xhr ) {
 
-
 		RED.readMeBody = xhr.target.responseText;
 
 		var txt =
@@ -91,16 +92,17 @@
 
 	RED.setReadMe = function ( item ) {
 
-
 		var txt =
 
 			RED.getHeader() +
 
-			'<iframe id=ifr src="' + DEF.urlGHPages + item + '"; width=100% height=500px frameBorder=0 ></iframe>' +
+			'<iframe id=REDifr src="' + DEF.urlGHPages + item + '"; width=100% height=500px frameBorder=0 onload=onLoadIframe() ></iframe>' +
 
 			n +
 
-				'## full screen: [' + item + ']( ' + DEF.urlGHPages + item + ' )' +
+				'## full screen: [' + item + ']( ' + DEF.urlGHPages + item + ' )' + n +
+
+				'<div id=ifrTitle >vvvvv</div>' +
 
 			n +
 
@@ -111,9 +113,63 @@
 
 			RED.getFooter() +
 
-		''
+		'';
+
+
+		onLoadIframe = function() {
+
+			var metas;
+
+//			var icw;
+
+			icw = REDifr.contentWindow;
+
+			
+
+			if ( location.protocol.slice( 0, 4 ) === REDifr.src.slice( 0, 4 )  ) {
+
+				ifrTitle.innerHTML = '<h2 style=margin:0; ><i>' + REDifr.contentDocument.title + '</i></h2>';
+
+				metas = REDifr.contentDocument.getElementsByTagName( 'meta' );
+
+				for ( var i = 0, m; i < metas.length; i++ ) {
+
+					m = metas[ i ];
+
+					switch( m.name ) {
+
+						case 'description':
+							ifrTitle.innerHTML += '<h3 style=margin:0; >Description</h3>' + m.content + b; break;
+
+						case 'keywords':
+							ifrTitle.innerHTML += '<h3 style=margin:0; >Keywords</h3>' + m.content + b; break;
+
+						case 'date':
+							ifrTitle.innerHTML += '<h3 style=margin:0; >Update</h3>' + m.content + b; break;
+
+						default:
+							break;
+
+					}
+
+				}
+
+				if( icw.THR ) {
+
+					icw.THR.controls.enableZoom = false;
+
+				}
+
+			} else {
+
+				ifrTitle.innerHTML = REDifr.src;
+
+			}
+
+			IFR.index ++;
+
+		};
 
 		return COR.converter.makeHtml( txt );
-
 
 	}

@@ -14,6 +14,8 @@
 
 	];
 
+
+
 	IFR.onLoad = function() {
 
 		var icw;
@@ -21,8 +23,9 @@
 		icw = ifr.contentWindow;
 
 		icw.divIfr.innerHTML =
-			'<iframe id=IFRifr width=100% height=500px ></iframe>' +
+			'<iframe id=IFRifr width=100% height=480px ></iframe>' +
 			'<center><div id=buttons ></div></center>' +
+
 		'';
 
 		IFR.index = Math.floor( Math.random() * IFR.sites.length );
@@ -64,7 +67,7 @@
 
 					title = IFR.sites[ IFR.index ] ? IFR.sites[ IFR.index ].title : '';
 
-					ifrTitle.innerHTML = '<i>' + title + '</i>' + b;
+					ifrTitle.innerHTML = '<h2 style=margin:0; ><i>' + title + '</i></h2>';
 
 					if ( location.protocol.slice( 0, 4 ) === ifr.contentWindow.IFRifr.src.slice( 0, 4 )  ) {
 
@@ -77,11 +80,14 @@
 							switch( m.name ) {
 
 								case 'description':
-									ifrTitle.innerHTML += 'Description: ' + m.content + b; break;
+									ifrTitle.innerHTML += '<h3 style=margin:0; >Description</h3>' + m.content + b; break;
+
 								case 'keywords':
-									ifrTitle.innerHTML += 'Keywords: ' + m.content + b; break;
+									ifrTitle.innerHTML += '<h3 style=margin:0; >Keywords</h3>' + m.content + b; break;
+
 								case 'date':
-									ifrTitle.innerHTML += 'Update: ' + m.content + b; break;
+									ifrTitle.innerHTML += '<h3 style=margin:0; >Update</h3>' + m.content + b; break;
+
 								default:
 									break;
 
@@ -100,11 +106,11 @@
 
 					}
 
+					IFR.index ++;
+
 				};
 
 				console.clear();
-
-				IFR.index ++;
 
 			}
 

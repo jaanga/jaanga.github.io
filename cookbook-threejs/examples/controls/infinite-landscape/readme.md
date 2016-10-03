@@ -47,6 +47,15 @@ Intended for Leap Motion device, FGx and terrain projects
 
 ## Change Log
 
+### 2016-09-30 ~ Within Distance R1
+
+The center of attention can be at any place at any time
+The code must be able to deal with previously used elements where ever they may be
+
+
+* Easy and seems to solve the problem
+* Tidies based on the idea that elements further than a given distanve from the center of attention may be removed
+
 ### 2016-06-06 ~ R4
 
 * Improvements to the movements
