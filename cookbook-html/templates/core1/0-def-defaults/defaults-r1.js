@@ -44,7 +44,6 @@
 	DEF.user = 'jaanga';
 	DEF.repo = 'terrain3';
 
-
 	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
 
 

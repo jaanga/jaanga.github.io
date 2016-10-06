@@ -1,5 +1,5 @@
 
-//DEF.urlGHPages = './terrain3/';
+// DEF.urlGHPages = './terrain3/';
 
 	var RED = RED || {};
 
