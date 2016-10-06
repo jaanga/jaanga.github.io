@@ -152,7 +152,7 @@
 
 			repo = EUS.repos[ repoKeys[ i ] ];
 
-			txt += '<iframe id=' + repoName + ' height=300 ></iframe>';
+			txt += '<iframe id=' + repoName + ' height=300 width=100% ></iframe>';
 
 //			EUS.getIframeContents( repoName );
 

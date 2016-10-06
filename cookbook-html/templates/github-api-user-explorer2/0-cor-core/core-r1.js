@@ -93,14 +93,14 @@
 			'.butt2 { width: 108px; }' +
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
-			'#contents { border: 0px red solid; left: 25%; position: absolute; top: 0; max-width: 50%; }' +
+			'#contents { border: 0px red solid; left: 24%; position: absolute; top: 0; width: 50%; }' +
 
 //			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 10px 0 10px; position: absolute; max-width: 20%; }' +
 			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; max-width: 20%; }' +
 			'#menu img { max-width: 200px; }' +
 
-//			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 25%; padding: 0 20px; }' +
-			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 25%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
+//			'#updates { box-sizing: border-box; background-color: #eee; float: right; max-width: 20%; padding: 0 20px; }' +
+			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 20%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
 
 			'#repositoryEvents h4 { margin: 0; }' +
 			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +
