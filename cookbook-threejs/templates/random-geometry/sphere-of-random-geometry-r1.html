@@ -197,7 +197,9 @@
 			var z = radius * Math.cos( theta )
 
 			obj.position.set( x, y, z );
-			obj.lookAt( v );
+			obj.rotation.x += 0.01 * Math.random();
+			obj.rotation.y += 0.005 * Math.random();
+//			obj.lookAt( v );
 
 		}
 
