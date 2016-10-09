@@ -31,10 +31,12 @@
 
 
 //	DEF.searchInFolder = 'elevations-core3/';
+	DEF.searchInFolder = 'core4/';
 
-//	DEF.urlBase = '../../../../terrain3/' + DEF.searchInFolder;
+	DEF.urlBase = '../../../../terrain3/';
+	DEF.urlGHPages = '../../../../terrain3/';
 
-//	DEF.readmeURL = '../../../../terrain3/';
+	DEF.readmeURL = '../../../terrain3/';
 
 	IFR.sites = [
 
@@ -86,6 +88,7 @@
 
 		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
 
+
 		if ( item.match( 'readme.md' ) === true ) {
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
@@ -98,17 +101,12 @@
 
 				}
 
-				COR.contents.style.overflow = 'auto';
-
 			} );
-
-
 
 		} else {
 
-
-
 			COR.setMenuBreadCrumbs( item );
+
 
 			if ( DEF.carousels.includes( item ) === true ) {
 

@@ -46,9 +46,23 @@
 
 	};
 
+	RED.getLastModified = function( url ) {
+// https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+
+		var oReq = new XMLHttpRequest();
+		oReq.open("HEAD" /* use HEAD if you only need the headers! */, url);
+		oReq.onload = getHeaderTime;
+		oReq.send();
+
+		function getHeaderTime () {
+
+//			ifrHeaders.innerHTML = this.getResponseHeader( 'Last-Modified' ) );  // A valid GMTString date or null
+			ifrHeaders.innerText = this.getAllResponseHeaders();
+		}
+
+	}
 
 	RED.fullScreenChoices = function() {
-
 
 		if ( DEF.includeFullScreenChoices === false ) { return ''; }
 
@@ -98,11 +112,14 @@
 
 			'<iframe id=REDifr src="' + DEF.urlGHPages + item + '"; width=100% height=500px frameBorder=0 onload=onLoadIframe() ></iframe>' +
 
+
 			n +
 
 				'## full screen: [' + item + ']( ' + DEF.urlGHPages + item + ' )' + n +
 
 				'<div id=ifrTitle ></div>' +
+
+				'<div id=ifrHeaders ></div>' +
 
 			n +
 
@@ -120,15 +137,13 @@
 
 			var metas;
 
-//			var icw;
+			var icw;
 
 			icw = REDifr.contentWindow;
 
-			
-
 			if ( location.protocol.slice( 0, 4 ) === REDifr.src.slice( 0, 4 )  ) {
 
-				ifrTitle.innerHTML = '<h2 style=margin:0; ><i>' + REDifr.contentDocument.title + '</i></h2>';
+				ifrTitle.innerHTML = '<h2 style=margin:0; >' + REDifr.contentDocument.title + '</i></h2>';
 
 				metas = REDifr.contentDocument.getElementsByTagName( 'meta' );
 
@@ -162,7 +177,7 @@
 
 			} else {
 
-				ifrTitle.innerHTML = REDifr.src;
+//				ifrTitle.innerHTML = REDifr.src;
 
 			}
 

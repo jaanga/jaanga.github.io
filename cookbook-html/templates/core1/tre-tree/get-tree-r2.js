@@ -202,6 +202,11 @@
 
 		TREtoc.innerHTML = toc;
 
+		if( TRE.filesSelected.length === 1 ) {
+
+
+		}
+
 	}
 
 

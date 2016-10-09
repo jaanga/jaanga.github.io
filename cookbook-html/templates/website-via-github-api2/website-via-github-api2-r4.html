@@ -33,6 +33,11 @@ Menu has breadcrumbs and other useful links.
 
 //	DEF.readmeURL = '../../../terrain3';
 
+	DEF.urlBase =  '../../../terrain3/';
+	DEF.urlGHPages =   '../../../terrain3/';
+
+//	DEF.defaultFile	= 'index.html';
+
 	IFR.sites = [
 
 		{ fileName: DEF.readmeURL + 'globes/earth-globe-displacement/index.html', title: 'Earth Globe Displacement', txt: '' },
@@ -111,6 +116,7 @@ Menu has breadcrumbs and other useful links.
 
 			COR.contents.innerHTML = RED.setReadMe( item );
 
+			RED.getLastModified( DEF.readmeURL + '/' + item );
 
 		} else {
 
@@ -128,11 +134,19 @@ Menu has breadcrumbs and other useful links.
 
 			} else {
 
-				COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
+				if ( TRE.filesSelected.length === 1 ) {
 
-					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+					location.hash = TRE.filesSelected[ 0 ];
 
-				} );
+				} else {
+
+					COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function ( xhr ) {
+
+						COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+					} );
+
+				}
 
 			}
 

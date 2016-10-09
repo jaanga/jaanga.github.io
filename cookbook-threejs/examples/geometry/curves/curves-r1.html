@@ -26,6 +26,8 @@
 	var line, line1, line2, curve1, curve2, catmullRomCurve3, catmullRomCurve3b, closedSplineCurve;
 	var lines;
 
+	var cmcurve1;
+
 	var stats, renderer, scene, camera, controls, mesh;
 
 	init();
@@ -81,10 +83,14 @@
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
+
+				'<p><button onclick=drawCurveTypes(); >drawCurveTypes</button></p>' +
+				'<p><button onclick=getBox(); >get box</button></p>' +
 				'<p><button onclick=getLine(); >get line</button></p>' +
 				'<p><button onclick=getWigglyLine(); >getWigglyLine</button></p>' +
 				'<p><button onclick=getWigglyCircle(); >getWigglyCircle</button></p>' +
 
+				'<p>Tension: <input type=range id=inpTension min=0 max=1 step=0.01 value=0.5 oninput=outTension.value=inpTension.value; title="0 to 1: OK" > <output id=outTension >0.5</output></p>' +
 
 /*
 				'<p>' +
@@ -163,15 +169,122 @@
 
 // assets
 
+		drawCurveTypes();
+
+//		getBox();
 
 //		getLine();
 
 //		getWigglyLine();
 
-		getWigglyCircle();
+//		getWigglyCircle();
 
 	}
 
+	function getBox() {
+
+		var vertices;
+		var points = 500;
+		scene.remove( lines );
+
+		lines = new THREE.Object3D();
+		scene.add( lines );
+
+		vertices = [ v( 30, 10, 30 ), v( 30, 10, -30 ), v( -30, 10, -30 ), v( - 30, 10, 30 ) ];
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = vertices;
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		line = new THREE.Line( geometry, material );
+
+		lines.add( line );
+
+//
+		catmullRomCurve3 = new THREE.CatmullRomCurve3( vertices );
+//		catmullRomCurve3.type = 'chordal';
+//		catmullRomCurve3.type = 'catmullrom';
+		catmullRomCurve3.tension = inpTension.valueAsNumber;
+		catmullRomCurve3.closed = true;
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = catmullRomCurve3.getPoints( points );
+
+		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+
+		catmullRomCurve3 = new THREE.Line( geometry, material );
+
+//		catmullRomCurve3.position.y = 12;
+
+		lines.add( catmullRomCurve3 );
+
+	}
+
+
+	function drawCurveTypes() {
+
+		var vertices;
+		var points = 500;
+		scene.remove( lines );
+
+		lines = new THREE.Object3D();
+		scene.add( lines );
+
+		vertices = [ v( 30, 10, 30 ), v( 30, 10, -30 ), v( -30, 10, -30 ), v( - 30, 10, 30 ) ];
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = vertices;
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		line = new THREE.Line( geometry, material );
+
+		lines.add( line );
+
+// default
+		catmullRomCurve3 = new THREE.CatmullRomCurve3( vertices );
+		catmullRomCurve3.type = 'centripetal';
+		catmullRomCurve3.closed = true;
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = catmullRomCurve3.getPoints( points );
+
+		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
+
+		catmullRomCurve3 = new THREE.Line( geometry, material );
+		catmullRomCurve3.position.y = 0.3;
+		lines.add( catmullRomCurve3 );
+
+
+// green
+		catmullRomCurve3chordal = new THREE.CatmullRomCurve3( vertices );
+		catmullRomCurve3chordal.type = 'chordal';
+		catmullRomCurve3chordal.closed = true;
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = catmullRomCurve3chordal.getPoints( points );
+
+		material = new THREE.LineBasicMaterial( { color: 0x00ff00 } );
+
+		catmullRomCurve3chordal = new THREE.Line( geometry, material );
+
+		lines.add( catmullRomCurve3chordal );
+
+// blue
+		catmullRomCurve3cmr= new THREE.CatmullRomCurve3( vertices );
+		catmullRomCurve3cmr.type = 'catmullrom';
+		catmullRomCurve3cmr.tension = inpTension.valueAsNumber;
+		catmullRomCurve3cmr.closed = true;
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = catmullRomCurve3cmr.getPoints( points );
+
+		material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+
+		catmullRomCurve3cmr = new THREE.Line( geometry, material );
+
+		lines.add( catmullRomCurve3cmr );
+
+
+
+	}
 
 	function getLine() {
 
@@ -185,6 +298,7 @@
 
 		scene.add( lines );
 
+// basic black lines
 		for ( var i = 0; i < 25; i++ ) {
 
 			vertices.push( v( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
@@ -198,6 +312,8 @@
 
 		lines.add( line );
 
+
+// catrom
 		catmullRomCurve3 = new THREE.CatmullRomCurve3( vertices );
 		catmullRomCurve3.closed = true;
 
@@ -211,10 +327,12 @@
 		lines.add( catmullRomCurve3 );
 
 
+// blue - adjust the tension
 		catmullRomCurve3b = new THREE.CatmullRomCurve3( vertices );
 		catmullRomCurve3b.type = 'catmullrom';
-		catmullRomCurve3b.tension = 0.9;
+		catmullRomCurve3b.tension = inpTension.valueAsNumber;
 		catmullRomCurve3b.closed = true;
+
 
 		geometry = new THREE.Geometry();
 		geometry.vertices = catmullRomCurve3b.getPoints( points );
@@ -225,9 +343,13 @@
 
 		lines.add( catmullRomCurve3b );
 
-
-		closedSplineCurve = new THREE.ClosedSplineCurve3( vertices );
+/*
+//		closedSplineCurve = new THREE.ClosedSplineCurve3( vertices );
 //		closedSplineCurve.closed = true;
+
+
+// green
+
 
 		geometry = new THREE.Geometry();
 		geometry.vertices = closedSplineCurve.getPoints( points );
@@ -238,7 +360,7 @@
 
 		lines.add( closedSplineCurve );
 
-
+*/
 
 	}
 
@@ -301,7 +423,8 @@
 		line1 = new THREE.Line( geometry, material );
 
 		lines.add( line1 );
-console.log( 'cmcurve1', cmcurve1, sp );
+
+//console.log( 'cmcurve1', cmcurve1, sp );
 
 	}
 
@@ -336,7 +459,7 @@ console.log( 'cmcurve1', cmcurve1, sp );
 		curve1 = new THREE.CatmullRomCurve3( vertices );
 		curve1.closed = false;
 
-		spacedPoints = cmcurve1.getPoints( 20 );
+		spacedPoints = curve1.getPoints( 20 );
 //		spacedPoints = curve1.getSpacedPoints( 20 );
 
 		geometry = new THREE.Geometry();
