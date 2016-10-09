@@ -58,6 +58,8 @@
 
 //			ifrHeaders.innerHTML = this.getResponseHeader( 'Last-Modified' ) );  // A valid GMTString date or null
 			ifrHeaders.innerText = this.getAllResponseHeaders();
+
+
 		}
 
 	}
@@ -118,7 +120,7 @@
 				'## full screen: [' + item + ']( ' + DEF.urlGHPages + item + ' )' + n +
 
 				'<div id=ifrTitle ></div>' +
-
+				'<h2 style=margin-bottom:0; >File Headers</h2>' + 
 				'<div id=ifrHeaders ></div>' +
 
 			n +
@@ -160,7 +162,8 @@
 							ifrTitle.innerHTML += '<h3 style=margin:0; >Keywords</h3>' + m.content + b; break;
 
 						case 'date':
-							ifrTitle.innerHTML += '<h3 style=margin:0; >Update</h3>' + m.content + b; break;
+//							ifrTitle.innerHTML += '<h3 style=margin:0; >Update</h3>' + m.content + b;
+							break;
 
 						default:
 							break;
