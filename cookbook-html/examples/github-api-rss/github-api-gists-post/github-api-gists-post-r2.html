@@ -15,6 +15,8 @@ Menu and contents in HTML.
 
 //  http://jaanga.github.io/cookbook-html/snippets/hamburger-menu/hamburger-child.html
 
+	var b = '<br>';
+
 	var url;
 
 	init();
@@ -97,8 +99,9 @@ Menu and contents in HTML.
 			'</details>' +
 */
 
+
 			'<p>' +
-				'<button onclick=postFile(); title="Save as gist" > Post gist </button> ' +
+				'<button onclick=postFile(); title="Save as gist" > Post gist </button> ' + b + b + 
 				'<button onclick=editGist(); > Edit Gist </button> ' +
 //				'<button onclick=doIt(); > Button 3 </button>' +
 			'</p>' +
@@ -119,8 +122,11 @@ Menu and contents in HTML.
 
 		fileName = 'https://api.github.com/gists/f8bc4534c9bab9d1d14e8701694d756d';
 
+		fileName = 'https://api.github.com/gists/322caabf68e2c81505a74231168ab5c0/9e0ef1fa53a63d90263fd709c652652676345fca';
+
+
 		xhr = new XMLHttpRequest();
-		xhr.open( 'PATCH', fileName, true );
+		xhr.open( 'GET', fileName, true );
 //		xhr.setRequestHeader( "Content-type", "application/json" );
 //		files = {"description":"the description for this gist","public":true,"files":{ "file1.txt":{"content":"String file contents testing "}}}
 //		files = {"files":{ "file1.txt":{"content":"String file contents"}}}
@@ -141,11 +147,14 @@ Menu and contents in HTML.
 
 		function callback() {
 
-			text = xhr.responseText;
+			text = JSON.parse( xhr.responseText );
 
 			console.log( text );
 
+			contents.innerText = text.content;
+
 		}
+
 	}
 
 	function postFile() {

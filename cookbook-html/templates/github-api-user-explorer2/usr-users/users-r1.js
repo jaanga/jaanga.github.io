@@ -31,8 +31,11 @@
 		'<option>chriswmackey</option>' +
 		'<option>ayezioro</option>' +
 	'</optgroup>' +
-	'<optgroup label="Xplora" >' +
+	'<optgroup label="Sage Math" >' +
 		'<option>PaulMasson</option>' +
+		'<option>WilliamStein</option>' +
+		'<option>HaraldSchilly</option>' +
+		'<option>DanDrake</option>' +
 	'</optgroup>' +
 	'<optgroup label="???" >' +
 		'<option>3Dmashup</option>' +
@@ -70,7 +73,7 @@
 
 		'<option value="math+stars:%3E200" >Users with word \'math\' & stars > 200</option>' +
 		'<option value="calculus+stars:%3E20" >Users with word \'calculus\' & stars > 20</option>' +
-
+		'<option value="sagemath+stars:>0" >Users with word \'sagemath\' & stars > 0</option>' +
 		'<option value="cartography+stars:%3E8" >Users with word \'cartography\' & stars >8</option>' +
 		'<option value="maps+stars:%3E1000" >Users with word \'maps\' & stars >1000</option>' +
 		'<option value="geojson+stars:%3E100" >Users with word \'geojson\' & stars >100</option>' +

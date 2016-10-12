@@ -22,6 +22,8 @@
 
 	var stats, renderer, scene, camera, controls, mesh;
 	var gridHelper, axisHelper;
+
+
 	init();
 	animate();
 
@@ -29,8 +31,6 @@
 
 		var css, hamburger, menu;
 		var geometry, material;
-
-
 		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
@@ -121,7 +121,7 @@
 		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
 
 
-		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
 //		renderer.setClearColor( 0xf0f0f0 );
 //		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );

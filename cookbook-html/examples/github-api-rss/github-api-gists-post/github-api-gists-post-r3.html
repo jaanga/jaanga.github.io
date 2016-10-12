@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Gist Post R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Jaanga Templates Core4 Hamburger R1. The essential HTML, CSS and JavaScript to get started
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-10-08 ~ ' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+
+<script src=../../../../lib/core4/0-def-defaults4/def-defaults4-r1.js ></script>
+<script src=../../../../lib/core4/0-cor-core4/cor-core4-r1.js ></script>
+<script>
+// Copyright &copy; 2016 Jaanga authors. MIT License
+// https://github.com/showdownjs/showdown
+//
+
+	COR.converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+//			COR.getMenuDetailsTemplate() +
+
+//		detailsTemplate.setAttribute('open', 'open');
+
+
+	COR.getMenuDetailsEditGist = function() {
+
+		var menuDetailsEditGist =
+
+			'<details id=detailsEditGist >' +
+
+				'<summary><h3>Edit Gist</h3></summary>' +
+
+				'<div id=divGist >' +
+
+					'<p><button onclick=getGist(); > get gist </button></p>' +
+
+					'<p><button onclick=setGist(); > set gist </button></p>' +
+
+
+				'</div>' +
+
+			'</details>' +
+
+		b;
+
+		return menuDetailsEditGist;
+
+	};
+
+
+	init();
+
+	function init() {
+
+		DEF.menuHeaderTagline = 'A hard core howdy!' + b;
+
+		COR.initLeftMenu();
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs() +
+
+			COR.getMenuDetailsEditGist() +
+
+			COR.getMenuDetailsObjectProperties() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		detailsEditGist.setAttribute('open', 'open');
+
+		CORdivContents.innerHTML = '<textarea id=textArea cols=90 rows=50 ></textarea>';
+
+
+	}
+
+
+	function getGist() {
+
+//		var xhr;
+
+		fileName = 'https://api.github.com/gists/f8bc4534c9bab9d1d14e8701694d756d';
+		fileName = 'https://api.github.com/gists/322caabf68e2c81505a74231168ab5c0/9e0ef1fa53a63d90263fd709c652652676345fca';
+
+		url = 'https://gist.githubusercontent.com/theo-armour/322caabf68e2c81505a74231168ab5c0/raw/e7d32e93f93b4e5be00e32e9a55115364e0a3365/test-editing.md'
+
+		COR.requestFile( url, callback )
+
+		function callback( xhr ) {
+
+			text = xhr.target.responseText;
+
+			console.log( text );
+
+			textArea.value = text;;
+
+		}
+
+	}
+
+
+	function setGist() {
+
+
+// https://api.github.com/gists/18b626fb181552c4cdac6c1789066e13
+
+//		var fileName, str;
+//		var response
+//		var xhr;
+
+
+		fileName = 'https://api.github.com/gists/';
+		id = 'd266d7918d341aed456dc48fc578bf06'
+
+//		url = "https://api.github.com/gists/18b626fb181552c4cdac6c1789066e13/cc1c8ae1c76ff3c748aa30cd9e1272bc369725fd"
+
+		url = fileName + id + '?authToken=token';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'PATCH', url );
+//		xhr.setRequestHeader("Authorization", "token"); 
+
+		files = {
+			"description": "a description for this gist",
+			"files": {
+				"test.md": {
+				"content": "updated file contents: " + ( new Date() )
+				}
+			}
+		}
+
+		str = JSON.stringify( files );
+
+		xhr.onload = callback;
+		xhr.send( str );
+
+		function callback( xhr ) {
+
+			response = JSON.parse( xhr.target.response );
+
+			console.log( response );
+
+//			textArea.value = response;
+
+			CORdivContents.innerHTML = 
+
+				'<p><a href=' + response.files[ 'test.md' ].raw_url + ' target="_blank" >' + response.description + '</a></p>' +
+
+			'';
+
+		}
+
+
+	}
+
+</script>
+</body>
+</html>
