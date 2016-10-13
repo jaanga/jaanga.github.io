@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>CCapture Iframe R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
+Menu and contents in HTML.
+' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-07-11' >
+</head>
+<body>
+<script src=https://rawgit.com/spite/ccapture.js/dev/build/CCapture.all.min.js ></script>
+<script>
+
+//  http://jaanga.github.io/cookbook-html/templates/hamburger-menu-iframe/
+
+
+//	var capturer = new CCapture( { format: 'webm' } );
+
+	// Create a capturer that exports an animated GIF
+	// Notices you have to specify the path to the gif.worker.js 
+	var capturer = new CCapture( { format: 'gif', workersPath: 'js/' } );
+
+	// Create a capturer that exports PNG images in a TAR file
+//	var capturer = new CCapture( { format: 'png' } );
+
+	// Create a capturer that exports JPEG images in a TAR file
+//	var capturer = new CCapture( { format: 'jpg' } );
+
+	var step = 0;
+	var icw;
+	var radius;
+
+	init();
+
+	function init() {
+
+		var css, contents, hamburger, menu;
+
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 
+
+			'html, body { font: 12pt monospace; height: 100%; margin: 0; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+//			'iframe { height: 100%; width: 100%; }' +
+			'iframe { border: 0px solid; height: 480px; margin-left: 400px;  width: 640px; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary h3 { display:inline; }' +
+			'summary { outline: none; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=pop1.style.display=""; onmouseout=pop1.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+				'<div class=popUp id=pop1 style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+/*
+				'<p>' +
+					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
+				'</p>' +
+
+				'<p>' +
+					'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
+						'<option title="this is a" >aaa aaa aaa</option>' +
+						'<option selected >bbb bbb bbb</option>' +
+						'<optGroup label="Type 2" >' +
+							'<option>cc cc cc cc</option>' +
+						'</optGroup>' +
+					'</select>' +
+				'</p>' +
+
+				'<p>' +
+					'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
+					'<button onclick=console.log("button2"); > Button 2 </button> ' +
+					'<button onclick=doIt(); > Button 3 </button>' +
+				'</p>' +
+
+				'<p>' +
+					'<input type=radio name=field id=but1 />button 1 ' +
+					'<input type=radio name=field id=but2 checked />button 2 ' +
+					'<input type=radio name=field id=but3 />button 3' +
+				'</p>' +
+
+				'<p>' +
+					'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
+				'</p>' +
+
+				'<p title="Nothing here yet. ;-(">' +
+					'<input id=inpPretty type=checkbox > Pretty colors ' +
+				'</p>' +
+
+				'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
+					'<datalist id=numbers >' +
+					'<option value=10 >' +
+					'<option value=30 >' +
+					'<option value=50 >' +
+					'<option value=100 >' +
+					'<option value=512 >' +
+					'</datalist>' +
+*/
+
+
+				'<p><input type=file id=inpFile onchange=openFile(this); ></p>' +
+				'<p id=menuOpenFile ></p>' +
+
+				'<p><button onclick=updateScene(); >update scene</button></p>' +
+
+				'<p><button onclick=capturer.start(); >capture start</button></p>' +
+
+				'<p><button onclick=capturer.stop();step=-1; >capture stop</button></p>' +
+
+				'<p><button onclick=capturer.save(); >capture save</button></p>' +
+
+				'<details >' +
+					'<summary><h3>About</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place. <br>Click here to return to the top of the page</div>' +
+
+	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+//				'<h1>Typical contents</h1>' + txt + txt + txt +
+			'</div>' +
+
+		'';
+
+		ifr = document.body.appendChild( document.createElement( 'iframe' ) );
+		ifr.id = 'ifr';
+//		ifr.src = 'http://jaanga.github.io/cookbook-threejs/templates/threejs-basic/template-threejs-basic.html';
+		ifr.src = '../../..//cookbook-threejs/templates/threejs-basic/template-threejs-basic.html';
+
+/*
+		capturer = new CCapture( { 
+			verbose: false, 
+			display: true,
+			framerate: framerate,
+			motionBlurFrames: ( 960 / framerate ) * ( document.querySelector('input[name="motion-blur"]').checked ? 1 : 0 ),
+			quality: 100,
+			format: document.querySelector('input[name="encoder"]:checked').value,
+			workersPath: './js/',
+			timeLimit: 4,
+			frameLimit: 0,
+			autoSaveTime: 0,
+			onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+		} );
+
+*/
+
+
+		capturer = new CCapture( { 
+			verbose: true, 
+			display: true,
+			name: 'demo',
+			framerate: 20, //framerate
+//			motionBlurFrames: ( 960 / framerate ) * ( document.querySelector('input[name="motion-blur"]').checked ? 1 : 0 ),
+			quality: 80,
+			format: 'gif', //document.querySelector('input[name="encoder"]:checked').value,
+			workersPath: './js/',
+//			timeLimit: 2,  // number of seconds to capture
+			frameLimit: 240,
+			autoSaveTime: 0,
+//			onProgress: function( p ) { progress.style.width = ( p * 100 ) + '%' }
+		} );
+
+	}
+
+
+	function openFile( files ) {
+
+		var fileData, reader, data;
+
+		reader = new FileReader();
+		reader.onload = function( event ) {
+
+			ifr.srcdoc = reader.result;
+
+			menuOpenFile.innerHTML =
+				'name: ' + files.files[0].name + '<br>' +
+				'size: ' + files.files[0].size.toLocaleString() + ' bytes<br>' +
+				'type: ' + files.files[0].type + '<br>' +
+				'modified: ' + files.files[0].lastModifiedDate.toLocaleDateString() +
+			'';
+
+		}
+
+		reader.readAsText( files.files[ 0 ] );
+
+	}
+
+	var animate = function () {
+
+		icw.requestAnimationFrame( animate );
+		icw.controls.update();
+		icw.stats.update();
+		icw.renderer.render( icw.scene, icw.camera );
+
+		if ( step >= 0 ) {
+
+			step += Math.PI / 120;
+			icw.camera.position.x = radius * Math.cos( step );
+			icw.camera.position.z = radius * Math.sin( step );
+
+			capturer.capture( icw.renderer.domElement );
+
+		}
+	}
+
+	function updateScene() {
+
+		icw = ifr.contentWindow;
+		icw.controls.autoRotate = false;
+		icw.renderer.setClearColor( 0xf0f0f0 );
+
+		radius = icw.camera.position.distanceTo( new icw.THREE.Vector3( 0, icw.camera.position.y, 0 ) );
+		step = 0;
+		icw.animate = animate;
+
+	}
+
+
+	function endTheAction() {
+
+		step = -1;
+
+	}
+
+</script>
+</body>
+</html>
