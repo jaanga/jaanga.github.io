@@ -1,7 +1,7 @@
 <span style=display:none; >
 [You are now in a GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/demo/konstantine-p/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/konstantine-p/'; 
+( https://jaanga.github.io/demo/konstantine-t/index.html "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/konstantine-t/'; 
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 [Jaanga]( https://jaanga.github.io ) » [Demo]( https://jaanga.github.io/demo/  ) »
