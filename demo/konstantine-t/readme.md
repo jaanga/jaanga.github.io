@@ -9,6 +9,14 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [konstantineT Read Me]( ./index.html )
 ===
 
+[log3 on YouTube]( https://youtu.be/IyN74PvMLNw )
+
+[Log file read me]( logs/dataload.m )
+
+[Log File Reader R1]( logs/log-reader-r1.html )
+
+***
+
 Things that I have worked on that have point cloud aspects:
 
 

@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Menu R10</title>
+<title>Canvas Draw Callout</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
@@ -14,6 +14,8 @@ Menu and contents in HTML.
 <script>
 
 //  http://jaanga.github.io/cookbook-html/templates/hamburger-menu/
+
+	var canvas;
 
 	init();
 
@@ -70,12 +72,10 @@ Menu and contents in HTML.
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
 				'<details open>' +
-					'<summary><h3>Menu</h3></summary>' +
+					'<summary><h3>Menuu</h3></summary>' +
 
 					'<p>' +
-						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-						'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
-//						txt + txt +
+						'<button onclick=drawCanvasCallout(); >drawCanvasCallout</button>' +
 					'</p>' +
 
 // onclick=this.select();
@@ -149,14 +149,58 @@ Menu and contents in HTML.
 			'</div>' +
 
 			'<div id=contents >' +
-				'<h1>Typical contents</h1>' + txt + txt + txt +
+//				'<h1>Typical contents</h1>' + txt + txt + txt +
 			'</div>' +
 
 		'';
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+
+
+		drawCanvasCallout();
+
 	}
+
+
+	function drawCanvasCallout() {
+
+		var width = 200 + 100 * Math.random();
+		var height = 100 + 50 * Math.random();
+		var radius = 20 +  + 10 * Math.random();
+		startX = 40;
+		startY = 69;
+		var lineWidth = 0.01;
+		var color = '#000000';
+		var backgroundColor = '#ffffff';
+
+
+		canvas.style.cssText = 'border: 1px solid red; margin-left: 450px; ';
+		canvas.width = 800
+		canvas.height = 500;
+		context = canvas.getContext("2d");
+
+		context.beginPath();
+		context.moveTo( startX + radius, startY );
+//		context.lineTo( 130, 10 );
+		context.arcTo( width, startY, width, startY + radius, radius );
+//		context.lineTo( 150, 100 );
+		context.arcTo( width, height, width - radius, height, radius );
+
+//		context.lineTo( 100, height );
+//		context.lineTo( 110, 170 );
+//		context.lineTo( 80, height );
+//		context.lineTo( 30, height );
+
+		context.arcTo( startX, height, startX, height - radius, radius );
+//		context.lineTo( 10, 30 );
+		context.arcTo( startX, startY, startY + radius, startY, radius );
+		
+		context.stroke();
+
+	}
+
 
 </script>
 </body>

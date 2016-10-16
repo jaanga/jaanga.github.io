@@ -160,18 +160,21 @@ console.time( 'timer 0' );
 
 		loader = new THREE.TextureLoader();
 		loader.crossOrigin = '';
-		heightmap = loader.load( 'letter-a.png' );
-		texture = loader.load( 'letter-a.png' );
+		heightmap = canvasMultilineText( 'Hello, world!', 0.1, 120, 0, 40, 0 );  // loader.load( 'letter-a.png' );
+		texture = canvasMultilineText( 'Hello, world!', 0.1, 120, 0, 40, 0 ); //loader.load( 'letter-a.png' );
 
-		geometry = new THREE.PlaneBufferGeometry( 512, 768, 512, 768 );
+//		geometry = new THREE.SphereBufferGeometry( 200, 512, 128, 0, 1, 1, 0.5 );
+
 
 		material = new THREE.MeshPhongMaterial( {
 
 			color: 0xccccff,
 			map: texture,
+			opacity: 0.85,
 			displacementMap: heightmap,
-			displacementScale: -50,
-			side: 2
+			displacementScale: -150,
+			side: 2,
+			transparent: true
 
 		} );
 
@@ -179,6 +182,55 @@ console.time( 'timer 0' );
 		scene.add( letter );
 
 console.timeEnd( 'timer 0' );
+
+	}
+
+
+		function canvasMultilineText( textArray, parameters ) {
+
+			var parameters = parameters || {} ;
+
+			var canvas = document.createElement( 'canvas' );
+			var context = canvas.getContext( '2d' );
+			var width = parameters.width ? parameters.width : 0;
+			var font = parameters.font ? parameters.font : '48px monospace';
+			var color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
+
+			if ( typeof textArray === 'string' ) textArray = [ textArray ];
+
+			context.font = font;
+
+			for ( var i = 0; i < textArray.length; i++) {
+
+				width = context.measureText( textArray[ i ] ).width > width ? context.measureText( textArray[ i ] ).width : width;
+
+			}
+
+			canvas.width = width + 20;
+			canvas.height =  parameters.height ? parameters.height : textArray.length * 60;
+
+			context.fillStyle = 'hsl( ' + color + ', 80%, 50% )' ;
+			context.fillRect( 0, 0, canvas.width, canvas.height);
+
+			context.lineWidth = 1 ;
+			context.strokeStyle = '#000';
+			context.strokeRect( 0, 0, canvas.width, canvas.height );
+
+			context.fillStyle = '#000' ;
+			context.font = font;
+
+			for ( i = 0; i < textArray.length; i++) {
+
+				context.fillText( textArray[ i ], 10, 48  + i * 60 );
+
+			}
+
+			var texture = new THREE.Texture( canvas );
+			texture.minFilter = texture.magFilter = THREE.NearestFilter;
+			texture.needsUpdate = true;
+
+			return texture;
+
 
 	}
 

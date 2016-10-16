@@ -19,6 +19,7 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
+// 2016-10-14
 
 	var stats, renderer, scene, camera, controls, mesh;
 	var gridHelper, axisHelper;
@@ -75,26 +76,31 @@
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
+				'<details open>' +
+					'<summary><h3>Menu</h3></summary>' +
+					'<p><button onclick=getIt(); >get it</button></p>' +
 
-				'<p><button onclick=getIt(); >get it</button></p>' +
+					'<p id=menuInfo >' +
+						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+						'The widgets below don\'t do anything but are here to indicate the look and feel.' +
+					'</p>' +
 
-				'<p>' +
-					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-					'The widgets below don\'t do anything but are here to indicate the look and feel.' +
-				'</p>' +
-
-
-				'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
-				'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
-				'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
-				'<p title="Press spacebar or click in window to stop." >' +
-						'<input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate checked > rotation ' +
-				'</p>'  +
-
-				'<div id=menuInfo ></div>' +
+				'</details>' +
 
 				'<details>' +
-					'<summary><h3>about</h3></summary>' +
+					'<summary><h3>Settings</h3></summary>' +
+					'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
+					'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
+					'<p title="Press spacebar or click in window to stop." >' +
+							'<input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate checked > rotation ' +
+					'</p>'  +
+
+					'<p></p>' +
+				'</details>' +
+
+				'<details>' +
+					'<summary><h3>About</h3></summary>' +
 					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
 					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 					'<p></p>' +

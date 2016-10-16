@@ -2,13 +2,13 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Hamburger Menu R10</title>
+<title>Hamburger Menu R9.2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
 Menu and contents in HTML.
 ' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-10-14' >
+<meta name=date content='2016-07-24' >
 </head>
 <body>
 <script>
@@ -69,67 +69,56 @@ Menu and contents in HTML.
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
-				'<details open>' +
-					'<summary><h3>Menu</h3></summary>' +
-
-					'<p>' +
-						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-						'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
-//						txt + txt +
-					'</p>' +
-
+				'<p>' +
+					'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'The widgets below don\'t do anything but are here to indicate the look and feel.' + 
+//					txt + txt +
+				'</p>' +
 // onclick=this.select();
 
-					'<div id=menuInfo ></div>' +
+				'<p>' +
+					'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
+						'<option title="this is a" >aaa aaa aaa</option>' +
+						'<option selected >bbb bbb bbb</option>' +
+						'<optGroup label="Type 2" >' +
+							'<option>cc cc cc cc</option>' +
+						'</optGroup>' +
+					'</select>' +
+				'</p>' +
 
-				'</details>' +
+				'<p>' +
+					'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
+					'<button onclick=console.log("button2"); > Button 2 </button> ' +
+					'<button onclick=doIt(); > Button 3 </button>' +
+				'</p>' +
 
-				'<details>' +
-					'<summary><h3>Settings</h3></summary>' +
+				'<p>' +
+					'<input type=radio name=field id=but1 />button 1 ' +
+					'<input type=radio name=field id=but2 checked />button 2 ' +
+					'<input type=radio name=field id=but3 />button 3' +
+				'</p>' +
 
-					'<p>' +
-						'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
-							'<option title="this is a" >aaa aaa aaa</option>' +
-							'<option selected >bbb bbb bbb</option>' +
-							'<optGroup label="Type 2" >' +
-								'<option>cc cc cc cc</option>' +
-							'</optGroup>' +
-						'</select>' +
-					'</p>' +
+				'<p>' +
+					'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
+				'</p>' +
 
-					'<p>' +
-						'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
-						'<button onclick=console.log("button2"); > Button 2 </button> ' +
-						'<button onclick=doIt(); > Button 3 </button>' +
-					'</p>' +
+				'<p title="Nothing here yet. ;-(">' +
+					'<input id=inpPretty type=checkbox > Pretty colors ' +
+				'</p>' +
 
-					'<p>' +
-						'<input type=radio name=field id=but1 />button 1 ' +
-						'<input type=radio name=field id=but2 checked />button 2 ' +
-						'<input type=radio name=field id=but3 />button 3' +
-					'</p>' +
+				'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
+					'<datalist id=numbers >' +
+					'<option value=10 >' +
+					'<option value=30 >' +
+					'<option value=50 >' +
+					'<option value=100 >' +
+					'<option value=512 >' +
+					'</datalist>' +
 
-					'<p>' +
-						'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
-					'</p>' +
+				'<div id=menuInfo ></div>' +
 
-					'<p title="Nothing here yet. ;-(">' +
-						'<input id=inpPretty type=checkbox > Pretty colors ' +
-					'</p>' +
-
-					'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
-						'<datalist id=numbers >' +
-						'<option value=10 >' +
-						'<option value=30 >' +
-						'<option value=50 >' +
-						'<option value=100 >' +
-						'<option value=512 >' +
-
-				'</details>' +
-
-
-				'<details>' +
-					'<summary><h3>About</h3></summary>' +
+				'<details open >' +
+					'<summary><h3>about</h3></summary>' +
 					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
 					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 					'<p></p>' +
