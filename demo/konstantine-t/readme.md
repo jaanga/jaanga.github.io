@@ -15,7 +15,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [log3.mov on YouTube]( https://youtu.be/IyN74PvMLNw )
 
-[Log files MatLab read me]( logs/dataload.m )
+[Log files MatLab read me]( #logs/dataload.m )
 
 [Log File Reader R1]( logs/log-reader-r1.html )
 
