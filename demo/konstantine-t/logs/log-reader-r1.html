@@ -4,11 +4,12 @@
 <meta charset=utf-8 >
 <title>Log Reader R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.
-Menu and contents in HTML.
-' >
-<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-10-14' >
+<meta name=description content='Read Konstantine T\'s binary data log files and display their contents.
+Select the type of Typed Array to use to view the data.
+Select data from a menu or load from local hard disk.' 
+>
+<meta name=keywords content='binary data,file reader,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-10-15' >
 </head>
 <body>
 <script>
@@ -65,9 +66,10 @@ Menu and contents in HTML.
 			'<div id=menu >' +
 
 				'<h2>' +
-					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a> &raquo; ' +
+					'<a href=http://jaanga.github.io/demo/konstantine-t title="T\'s Greak Island Fantasy" > konstantine </a><br>' +
 					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+					' ~ <a href=../index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
@@ -87,7 +89,6 @@ Menu and contents in HTML.
 				'<details open>' +
 
 					'<summary><h3>Typed Array Types</h3></summary>' +
-
 
 					'<p>' +
 						'<input type=radio name=field id=but1 onclick=typedArray=Int8Array; />Int8Array() ' + b +
@@ -149,7 +150,7 @@ Menu and contents in HTML.
 
 	function requestFile( fileName ) {
 
-		var xhr, text, lines;
+		var xhr, byteArray, txt;
 
 		xhr = new XMLHttpRequest();
 		xhr.crossOrigin = 'anonymous'; 
@@ -166,12 +167,11 @@ Menu and contents in HTML.
 
 			for ( var i = 0; i < 1000; i++ ) {
 
-				txt += byteArray[ i ] +'\n'
+				txt += byteArray[ i ] +'\n';
 
 			}
 
 			textArea.value = txt;
-
 
 		}
 
@@ -181,12 +181,12 @@ Menu and contents in HTML.
 
 	function openFile( files ) {
 
-		var fileData, reader, data;
+		var byteArray, reader, txt;
 
 		reader = new FileReader();
 		reader.onload = function( event ) {
 
-			byteArray = new Int32Array( reader.result );
+			byteArray = new typedArray( reader.result );
 
 			txt = '';
 
