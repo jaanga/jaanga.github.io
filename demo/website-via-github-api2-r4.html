@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>webSite via GitHub API2 Demo R1</title>
+<title>webSite via GitHub API2 R4</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Request details of all files in a GitHub repository.
 Creates a file explorer with menu. 
@@ -31,21 +31,22 @@ Menu has breadcrumbs and other useful links.
 
 <script>
 
-	DEF.repo = 'jaanga.github.io';
-	DEF.searchInFolder = 'demo/';
-	DEF.branch = 'master';
+//	DEF.readmeURL = '../../../terrain3';
 
-	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
+//	DEF.urlBase =  '../../../terrain3/';
+//	DEF.urlGHPages =   '../../../terrain3/';
 
-	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
-	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
-	DEF.urlReadMeFile = DEF.urlGHPages + '#readme.md';
+	DEF.searchInFolder =  'demo';
+	DEF.urlBase =  '../';
+	DEF.urlGHPages =   '../';
 
+	DEF.defaultFile	= 'index.html';
+/*
 	IFR.sites = [
 
-		{ fileName: 'https://jaanga.github.io/terrain3/globes/earth-globe-displacement/index.html', title: 'Earth Globe Displacement', txt: '' },
-		{ fileName: 'https://cynthiaarmour.github.io/oakland-gran-fondo-2016/code/oakland-gran-fondo-28-r1.html', title: 'Oakland Gran Fondo 28 2016', txt: '' },
-		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania Greak Island Fantasy' },
+		{ fileName: DEF.readmeURL + 'globes/earth-globe-displacement/index.html', title: 'Earth Globe Displacement', txt: '' },
+		{ fileName: 'https://cynthiaarmour.github.io/oakland-gran-fondo-2016/oakland-gran-fondo-2016.html', title: 'Oakland Gran Fondo 28 2016', txt: '' },
+		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-tgif-r1.html', title: 'Elevations View TGIF', txt: 'Tania\'s Greek Island Fantasy' },
 		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-core3-r1.html', title: 'Elevations Core3', txt: 'Basic 3D map data viewer' },
 		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-ace-it-r2.html', title: 'Elevations View ACE-IT', txt: 'Family places' },
 //		{ fileName: DEF.readmeURL + 'elevations-core3/elevations-view-json-r2.html', title: 'Elevations View JSON', txt: 'Maps with paths' },
@@ -54,6 +55,7 @@ Menu has breadcrumbs and other useful links.
 //		[ fileName: '', txt: '' ],
 
 	];
+*/
 
 	init();
 
@@ -87,8 +89,6 @@ Menu has breadcrumbs and other useful links.
 
 		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
 
-		location.hash = 'demo';
-
 	}
 
 
@@ -121,6 +121,7 @@ Menu has breadcrumbs and other useful links.
 
 			COR.contents.innerHTML = RED.setReadMe( item );
 
+			RED.getLastModified( DEF.readmeURL + '/' + item );
 
 		} else {
 
@@ -138,11 +139,19 @@ Menu has breadcrumbs and other useful links.
 
 			} else {
 
-				COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
+				if ( TRE.filesSelected.length === 1 ) {
 
-					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+					location.hash = TRE.filesSelected[ 0 ];
 
-				} );
+				} else {
+
+					COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function ( xhr ) {
+
+						COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+
+					} );
+
+				}
 
 			}
 

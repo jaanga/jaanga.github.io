@@ -119,7 +119,101 @@
 	};
 
 
+	COR.initLeftMenu = function() {
 
+		var hamburger, menu, contents;
+
+		COR.getCSSLeft();
+
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>';
+
+		bars.id = 'bars';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		COR.menu = hamburger.appendChild( document.createElement( 'div' ) );
+		COR.menu.id = 'menu';
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		COR.contents = document.body.appendChild( document.createElement( 'div' ) );
+		COR.contents.id = 'contents';
+		COR.contents.innerHTML =
+			'<div >' +
+				'<h1>Typical contents</h1>' + // txt + txt + txt +
+			'</div>' +
+
+
+
+		COR.onLeftMenuLoaded();
+
+	}
+
+	COR.onLeftMenuLoaded = function (){};
+
+
+
+	COR.getCSSLeft = function() {
+
+		var css;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+
+			'html { height: 100%; margin: 0; overflow: hidden; }' +
+			'body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
+			'h2, h3 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'iframe { background-color: white; border: 0px; height: 100%; margin-top: 0px; width: 100%; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'p { margin: 0 0 5px 0; }' +
+//			'select { width: 100%; }' +
+			'summary h3, summary h4 { display:inline; }' +
+			'summary { outline: none; }' +
+
+			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+
+			'#bars { background-color: #eee; color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+
+			'#contents { border: 0px red solid; margin-left: 400px; min-height: 500px; min-width: 800px; position: absolute; top: 0; }' +
+			'#contents p { margin: 0 0 12px 0 }' +
+
+
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s;  z-index: 1;}' +
+			'#mapDiv { height: 100%; text-align: center; }' +
+
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -325px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; z-index: 1;}' +
+
+			'#repositoryEvents h4 { margin: 0; }' +
+			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +
+
+			'#divThreejs { background-color: #ccc; border: 2px solid #888; height: 80%; min-width: 70%;' +
+				'overflow: hidden; left: 350px; position: absolute; resize: none; top: 100px; }' +
+			'#threejsHeader { text-align: right; }' +
+
+			'#txtElevations { min-height: 50px; width: 100%; }' +
+			'#txtPath { min-height: 60px; width: 100%; }' +
+
+		'';
+
+	}
+
+
+//
 
 
 	COR.getMenuBreadCrumbs = function() {
@@ -175,6 +269,49 @@
 	};
 
 
+	COR.setMenuBreadCrumbsFolder = function( dir ) {
+
+//console.log( 'dir', dir );
+
+		var CORbreadCrumbs, dirArray, dirString;
+
+		dirArray = dir === '/' ? [] : dir.split( '/' );
+
+		if ( dirArray.length > 0 ) {
+
+			CORbreadCrumbs =
+
+			'<h3 class=>' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' </a> &raquo; ' +
+				'<a href="" >' + DEF.repo + '</a> &raquo; ' +
+			'</h3>';
+
+		} else {
+
+			CORbreadCrumbs =
+
+			'<h3>' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
+			'</h3>' +
+			'<h2><a href="" >' + DEF.repo + '</a> &raquo; </h2>';
+
+		}
+
+		for ( var i = 0; i < dirArray.length; i++ ) {
+
+			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
+
+			if ( dirString.endsWith( '.md' ) || dirString.endsWith( '.html' ) ) { continue; }
+
+			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
+
+		}
+
+		COR.title = dirArray.length ? dirArray.pop().replace( /-/g, ' ' ) : DEF.repo;
+
+		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs;
+
+	};
 
 
 	COR.getMenuDetailsHeader = function() {

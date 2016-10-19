@@ -8,7 +8,7 @@
 
 			'<details id=APIapiKey >' +
 
-				'<summary><h3>Set api key</h3></summary>' +
+				'<summary><h3>Set API Key</h3></summary>' +
 
 				'<small>If small request, no need for API key</small>' +
 

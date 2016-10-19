@@ -11,7 +11,7 @@
 
 		var menuDetailsSelectGroup =
 
-			'<details id=detailsSelectGroup >' +
+			'<details id=detailsSelectGroup open >' +
 
 				'<summary><h3>Search groups of users</h3></summary>' +
 

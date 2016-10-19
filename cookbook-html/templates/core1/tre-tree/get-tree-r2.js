@@ -90,6 +90,23 @@
 	};
 
 
+	TRE.getMenuDetailsFolderStatistics = function() {
+
+		var menuDetailsFolderStatistics =
+
+			'<details id=detailsFolderStatistics >' +
+
+				'<summary><h3>Folder Statistics</h3></summary>' +
+
+				'<div id=TREfolderStats ></div>' + b +
+
+			'</details>' +
+
+		'';
+
+		return menuDetailsFolderStatistics;
+
+	};
 
 
 // called by init
@@ -249,6 +266,44 @@
 
 	}
 
+
+	TRE.setMenuDetailsFolderStatistics = function() {
+
+		var dirs, files, filesSize, item;
+
+		dirs = 0;
+		files = 0;
+		filesSize = 0;
+
+		for ( var i = 0; i < TRE.tree.length; i++ ) {
+
+			item = TRE.tree[ i ];
+
+			if ( !item.path.match( DEF.searchInFolder ) ) { continue; }
+
+			if ( item.type === 'blob' ) {
+
+				files++;
+				filesSize += item.size;
+
+			} else {
+
+				dirs++;
+
+			}
+
+		}
+
+		TREfolderStats.innerHTML =
+
+//			'Items in repo: ' + TRE.itemsAll.length.toLocaleString() + b +
+			'&bull; Folders &nbsp;  &nbsp: ' + dirs.toLocaleString() + b +
+			'&bull; Files &nbsp  &nbsp  &nbsp: ' + files.toLocaleString() + b +
+			'Size of files: ' + filesSize.toLocaleString() + ' bytes' +
+
+		'';
+
+	}
 
 
 

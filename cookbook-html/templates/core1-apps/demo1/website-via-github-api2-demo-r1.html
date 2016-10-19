@@ -14,21 +14,21 @@ Menu has breadcrumbs and other useful links.
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r1.js ></script>
+<script src=../../core1/1-key-api-key/api-key-r1.js ></script>
+<script src=../../core1/tre-tree/get-tree-r2.js ></script>
+<script src=../../core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
+<script src=../../core1/red-readme-getter/readme-getter-r2.js ></script>
 <!--
-<script src=../core1/0-def-defaults/defaults-r1.js ></script>
-<script src=../core1/0-cor-core/core-r1.js ></script>
-<script src=../core1/1-key-api-key/api-key-r1.js ></script>
-<script src=../core1/tre-tree/get-tree-r2.js ></script>
-<script src=../core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
-<script src=../core1/red-readme-getter/readme-getter-r2.js ></script>
--->
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/0-def-defaults/defaults-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/0-cor-core/core-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/1-key-api-key/api-key-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/tre-tree/get-tree-r2.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/ifr-iframe-carousel/iframe-carousel-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/red-readme-getter/readme-getter-r2.js ></script>
-
+-->
 <script>
 
 	DEF.repo = 'jaanga.github.io';
@@ -40,6 +40,8 @@ Menu has breadcrumbs and other useful links.
 	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
 	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
 	DEF.urlReadMeFile = DEF.urlGHPages + '#readme.md';
+
+	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
 
 	IFR.sites = [
 
@@ -59,7 +61,7 @@ Menu has breadcrumbs and other useful links.
 
 	function init() {
 
-		COR.initThreeColumns();
+		COR.initLeftMenu();
 
 		COR.menu.innerHTML =
 
@@ -71,7 +73,7 @@ Menu has breadcrumbs and other useful links.
 
 			TRE.getMenuRepositoryEvents() +
 
-			TRE.getMenuDetailsRepositoryStatistics() +
+			TRE.getMenuDetailsFolderStatistics() +
 
 			KEY.getMenuDetailsAPIKey() +
 
@@ -102,7 +104,7 @@ Menu has breadcrumbs and other useful links.
 
 		if ( item.endsWith( '.md' ) === true ) {
 
-			COR.setMenuBreadCrumbs( DEF.searchInFolder );
+			COR.setMenuBreadCrumbsFolder( DEF.searchInFolder );
 
 			COR.requestFile( TRE.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
 
@@ -117,14 +119,14 @@ Menu has breadcrumbs and other useful links.
 
 		} else if ( item.endsWith( '.html' ) === true ) {
 
-			COR.setMenuBreadCrumbs( item );
+			COR.setMenuBreadCrumbsFolder( item );
 
 			COR.contents.innerHTML = RED.setReadMe( item );
 
 
 		} else {
 
-			COR.setMenuBreadCrumbs( item );
+			COR.setMenuBreadCrumbsFolder( item );
 
 			TRE.getFilesFromFolder( item );
 
@@ -148,10 +150,10 @@ Menu has breadcrumbs and other useful links.
 
 			KEY.getRateLimits();
 
-			if ( !TRErepoStats.innerHTML ) { 
+			if ( !TREfolderStats.innerHTML ) { 
 
-				TRE.setMenuDetailsRepositoryStatistics(); 
-				TRE.getUpdates();
+				TRE.setMenuDetailsFolderStatistics(); 
+//				TRE.getUpdates();
 
 			}
 
