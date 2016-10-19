@@ -150,7 +150,7 @@
 
 			item = TRE.itemsAll[ i ];
 
-			if ( !item.includes( dir ) ) { continue; }
+			if ( !item.includes( dir + '/' ) ) { continue; }
 
 			if ( !item.includes( 'readme.md' ) ) { continue; }
 
