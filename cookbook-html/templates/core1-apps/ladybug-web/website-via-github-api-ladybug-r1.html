@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>webSite via GitHub APIR1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Request details of all files in a GitHub repository.
+Creates a file explorer with menu. 
+Enables browsing and viewing of selected files.
+Menu has breadcrumbs and other useful links. 
+' >
+<meta name=keywords content='CMS,JavaScript,GitHub Developer API,GitHub,FOSS,STEM' >
+<meta name=date content='2016-08-13' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=website-via-github-api-r2.js ></script>
+<script>
+// https://github.com/showdownjs/showdown
+
+	var user = 'ladybug-analysis-tools';
+	var tagLine ='your climate control happy place';
+	var logo = '&#x2766';
+
+	var urlEvents = 'https://api.github.com/orgs/ladybug-analysis-tools/events';
+//	var urlEvents = 'https://api.github.com/repos/mrdoob/three.js/events';
+//	var urlEvents = 'https://api.github.com/orgs/sagemath/events';
+
+/*
+	var repo = 'jaanga.github.io';
+	var branch = 'master';
+//	var folder = 'cookbook-threejs/examples/';
+	var folder = 'cookbook-html/examples/github-api-rss/';
+*/
+
+	var org = 'ladybug-analysis-tools';
+	var repo = 'ladybug-web';
+	var branch = 'gh-pages';
+	var folder = '';
+	var defaultFile = '/readme.md';
+
+	var urlGitHubTree = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+	var urlGHPages = 'https://' + user + '.github.io/' + repo + '/';
+	var urlSource = 'https://github.com/' + user + '/' + repo + '/tree/' + branch + '/';
+	var urlIssues = 'https://api.github.com/repos/' + user + '/' + repo + '/issues?labels=Status%20Update';
+
+
+	init();
+
+	function init() {
+
+		var menu;
+
+		getCSS();
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			getMenuBreadCrumbs( folder ) +
+
+			'<div id=menuFolderNameTableOfContents ></div>' +
+
+			getMenuDetailsPageActions() +
+
+			getMenuDetailsRepositoryStatistics() +
+
+			getMenuRepositoryEvents() +
+
+			getMenuDetailsAbout() +
+
+			getMenuFooter() +
+
+		b;
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+
+		getContents();
+
+		divUpdates = document.body.appendChild( document.createElement( 'div' ) );
+		divUpdates.id = 'divUpdates';
+
+		getUpdates();
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+	}
+
+</script>
+</body>
+</html>
