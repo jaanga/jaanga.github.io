@@ -42,6 +42,8 @@
 
 			COR.getMenuDetailsHeader() +
 
+			API.getMenuDetailsAPIKey() +
+
 			SER.getMenuDetailsSelectGroup() +
 
 			SER.getMenuDetailsSelectUser() +
@@ -64,11 +66,10 @@
 
 	}
 
+
 // gets called by SER.setUserDetails...
 
 	SER.getUserDetails = function( user ) {
-
-		location.hash = user;
 
 		if ( DAT.getUserData ) {
 
@@ -104,7 +105,7 @@
 		if ( EUS.requestGitHubAPIUserEvents ) {
 
 			EUS.target = updates;
-			EUS.requestGitHubAPIUserEvents( user);
+			EUS.requestGitHubAPIUserEvents( user );
 
 		}
 

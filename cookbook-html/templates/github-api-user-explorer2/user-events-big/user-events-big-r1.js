@@ -26,7 +26,7 @@ console.log( 'user', user );
 
 		pageHeader =
 		'<h1>' +
-			'Org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
+			'user/org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
 //			'page <button onclick=proceed(-1); >prev</button> <a href=' + fileName + ' > ' + page + '</a> <button onclick=proceed(1); >next</a></button> ' +
 //			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';

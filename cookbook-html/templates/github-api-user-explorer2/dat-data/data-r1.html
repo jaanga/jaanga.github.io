@@ -13,7 +13,9 @@
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 <script src=../0-cor-core/core-r1.js ></script>
 <script src=../1-api-api-key/api-key-r1.js ></script>
+
 <script src=../dat-data/data-r1.js ></script>
+<script src=../user-events-big/user-events-big-r1.js ></script>
 <script>
 
 	var user = 'torvalds';
@@ -28,6 +30,8 @@
 	init();
 
 	function init() {
+
+		COR.taglineHeader += '+ a searching howdy!' + b;
 
 		COR.initThreeColumns();
 
@@ -52,24 +56,28 @@
 
 		DAT.getUserData( user );
 
-		switch( DAT.currentTopic ) {
+			switch( DAT.currentTopic ) {
 
-			case 'events':
-				DAT.getEvents ( user, 0, contents )
-				break;
-			case 'gists':
-				DAT.getGists ( user )
-				break;
-			case 'orgs':
-				DAT.getOrgs( user ) 
-				break;
-			case 'repos':
-				DAT.getRepos( user ) 
-				break;
-			default:
-				DAT.getRepos( user ) 
+				case 'events':
+					DAT.getEvents ( user, 0, contents )
+					break;
+				case 'gists':
+					DAT.getGists ( user )
+					break;
+				case 'orgs':
+					DAT.getOrgs( user ) 
+					break;
+				case 'repos':
+					DAT.getRepos( user ) 
+					break;
+				case 'stats':
+//					EUS.buildStatsReport( user )
+					break;
+				default:
+					DAT.getRepos( user ) 
 
-		}
+			}
+
 
 	}
 

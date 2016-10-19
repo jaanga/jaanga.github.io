@@ -15,8 +15,8 @@
 	COR.taglineHeader = 
 
 		'<small>' +
-			'Search for various types of GitHub users. ' +
-			'Explore what GitHub users have created.' +
+			'Explore various types of GitHub users. ' + b +
+			'Preview what GitHub users have created. ' + b +
 			'Monitor their activity.' + b +
 		'</small>';
 
@@ -78,7 +78,7 @@
 
 			'a { color: crimson; text-decoration: none; }' +
 
-			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; cursor: pointer; }' +
 
 			'#menu h1, #menu h2, #menu h3 { margin: 0; }' +
 

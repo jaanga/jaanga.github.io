@@ -11,22 +11,23 @@
 
 		var menuDetailsSelectGroup =
 
-			'<details id=detailsSelectGroup >' +
+			'<details id=SELdetailsSelectGroup open title="code here: sel-select.js" >' +
 
-				'<summary><h3>Select groups of users</h3></summary>' +
+				'<summary><h3>Select types of GitHub users</h3></summary>' +
 
-				'<p>' +
 					'<select id=selGroup onchange=SER.setUserDetails(this); title="Select the group of users" size=15 >' +
 
 						USR.groupOptions +
 
 					'</select>' +
 
-				'</p>' +
+				'<small>Enter your query and press enter: </small>' + b +
 
-// add input your own query
+				'<input id=SERinpQuery placeholder="Enter a search query" onchange=SER.getSearchItems(this.value); style=width:100%; >' + b +
 
-				'<p><i>Returns first 100 items found. This limit might be removed.</i></p>' +
+				b +
+
+//				'<p><i>Returns first 100 items found. This limit might be removed.</i></p>' +
 
 			'</details>' +
 
@@ -42,18 +43,19 @@
 
 		menuDetailsSelectUser =
 
-			'<details id=detailsSelectPopular open >' +
+			'<details id=SELdetailsSelectPopular open >' +
 
-				'<summary><h3>Select a GitHub user</h3></summary>' +
+				'<summary><h3>Select GitHub user and repo</h3></summary>' +
 
-				'<p>' +
-					'<select id=selUser onchange=SER.getUserDetails(this.value); title="Select the user" size=15 >' +
-					'</select>' +
-				'</p>' +
+				'<select id=selUser onchange=SER.getUserDetails(this.value); title="Select the user" size=15 ></select>' + b +
 
-				'<p><input placeholder="Enter a user name" onchange=SER.getUserDetails(this.value); ></p>' +
+				b +
 
-				'<p id=stats ></p>' +
+				'<input placeholder="Enter a GitHub user name" onchange=SER.getUserDetails(this.value); size=35>' + b +
+
+				b +
+
+				'<div id=SELstats ></div>' + b +
 
 			'</details>' +
 
@@ -61,7 +63,7 @@
 
 		'<div id=menuUserInfo ></div>' +
 
-		b;
+		'';
 
 		return menuDetailsSelectUser;
 
@@ -73,52 +75,49 @@
 
 	SER.setUserDetails = function() {
 
-console.log( '', 2344 );
-
 		if ( selGroup.value === 'listTheo' ) {
 
 			selUser.innerHTML = USR.peepsTheo;
 
 			SER.getUserDetails( selUser.value );
 
-//		} else if ( location.hash.length ) {
+		} else if ( location.hash.length ) {
 
-//			SER.getSearchItems();
+			SER.getSearchItems( selGroup.value );
 
-//			SER.getUserDetails( location.hash.slice( 1 ) );
+			SER.getUserDetails( location.hash.slice( 1 ) );
 
 		} else {
 
-//			history.replaceState( '', document.title, window.location.pathname );
-
-//			location.hash = '';
-
-			SER.getSearchItems();
+			SER.getSearchItems( selGroup.value );
 
 		}
+
+		SERinpQuery.value = selGroup.value;
 
 	};
 
 
 
-	SER.getSearchItems = function() {
-
-
+	SER.getSearchItems = function( query ) {
 
 		var url, xhr, response, txt;
 
-		url = 'https://api.github.com/search/repositories?q=' + selGroup.value + '&sort=comments&order=desc&per_page=100&' + ( SER.token || '' );
+		url = 'https://api.github.com/search/repositories?q=' + query + '&sort=comments&order=desc&per_page=100&' + ( SER.token || '' );
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', url, true );
-		xhr.onload = callback;
-		xhr.send( null );
+//		xhr = new XMLHttpRequest();
+//		xhr.open( 'get', url, true );
+//		xhr.onload = callback;
+//		xhr.send( null );
 
-		function callback() {
+		COR.requestFile( url, callbackSearch );
 
-			response = JSON.parse( xhr.responseText );
 
-			stats.innerHTML = 'total count: ' + response.total_count.toLocaleString();
+		function callbackSearch( xhr ) {
+
+			response = JSON.parse( xhr.target.responseText );
+
+			SELstats.innerHTML = 'Github users found with ' + SERinpQuery.value + ' : ' + response.total_count.toLocaleString();
 
 			selUser.innerHTML = txt = '';
 
@@ -136,14 +135,24 @@ console.log( '', 2344 );
 
 				SER.getUserDetails( selUser.value );
 
+			} else {
+
+				selGroup.selectedIndex = -1;
+
+				selUser.selectedIndex = -1;
+
+				SER.getUserDetails( location.hash.slice( 1 ) );
+
 			}
 
 		}
 
 	};
 
+	SER.getUserDetails = function() {};
 
-// see in html
+
+/* see HTML
 
 	SER.getUserDetails = function( user ) {
 
@@ -179,6 +188,8 @@ console.log( '', 2344 );
 
 		}
 
+// updates contents and right side
+ 
 		if ( EUS.requestGitHubAPIUserEvents ) {
 
 			EUS.target = updates;
@@ -188,3 +199,4 @@ console.log( '', 2344 );
 
 	}
 
+*/

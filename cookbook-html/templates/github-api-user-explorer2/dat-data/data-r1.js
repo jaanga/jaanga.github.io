@@ -12,9 +12,9 @@
 
 		var menuDetailsUserData =
 
-			'<details id=detailsTemplate open >' +
+			'<details id=DATdetailsTemplate open >' +
 
-				'<summary><h3>User data</h3></summary>' +
+				'<summary><h3>GitHub User Data</h3></summary>' +
 
 				'<p id=pUserData ></p>' +
 
@@ -42,14 +42,17 @@
 
 		url = 'https://api.github.com/users/' +  user + '?' + ( API.token || '' );
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', url, true );
-		xhr.onload = callback;
-		xhr.send( null );
+//		xhr = new XMLHttpRequest();
+//		xhr.open( 'get', url, true );
+//		xhr.onload = callback;
+//		xhr.send( null );
 
-		function callback() {
 
-			DAT.userData = JSON.parse( xhr.responseText );
+		COR.requestFile( url, callbackUserData );
+
+		function callbackUserData( xhr ) {
+
+			DAT.userData = JSON.parse( xhr.target.responseText );
 
 			if ( DAT.userData.message ) {
 
@@ -80,7 +83,7 @@
 
 	DAT.get.avatar_url = function( item ) {
 
-		return '<img src=' + item + ' width=280; >';
+		return '<a href=https://avatars.githubusercontent.com/u/' + DAT.userData.id + ' target=_blank ><img src=' + item + ' width=280; ><a>';
 
 	};
 
@@ -227,9 +230,9 @@
 
 	DAT.get.id = function( item ) {
 
-		return '<button onclick=DAT.getRawData("https://api.github.com/user/' + item + '"); > raw </button> ' +
-			'<button class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/user/' + item + '"); > id </button> ' +
-			item.toLocaleString();
+		return '<button onclick=DAT.getRawData("https://api.github.com/user/' + item + '");  title="unformatted API data results straight from GitHub" > raw </button> ' +
+			'<button class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/user/' + item + '"); title="GitHub API data prettified" > id </button> ' +
+			'<a href=https://api.github.com/user/' + item + '>' + item.toLocaleString() + '</a>';
 
 	};
 
@@ -247,9 +250,9 @@
 
 	DAT.get.login = function( item ) {
 
-		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + item + '"); > raw </button> ' +
-			'<button class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/users/' + item + '"); > login </button> ' +
-			'<a href=' + DAT.userData.html_url + ' >' + item + '</a>';
+		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + item + '"); title="unformatted API data results straight from GitHub" > raw </button> ' +
+			'<button class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/users/' + item + '"); title="GitHub API data prettified" > login </button> ' +
+			'<a href=' + DAT.userData.html_url + ' title="Link to he data as rendered by GitHub" >' + item + '</a>';
 
 	};
 
@@ -307,7 +310,7 @@
 
 	DAT.get.public_gists = function( item ) {
 
-		return  '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/gists"); > raw </button> ' +
+		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/gists"); > raw </button> ' +
 			'<button  class=butt2 onclick=DAT.getGists("' + DAT.userData.login + '"); > gists </button> ' +
 			'<a href=https://gist.github.com/' + DAT.userData.login + ' >' + item + ' gists </a>';
 
@@ -336,7 +339,9 @@
 	DAT.get.starred_url = function( item ) {
 
 		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/starred"); > raw </button> ' +
-			'<button  class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/users/' + DAT.userData.login + '/starred"); > starred </button> ' +
+//			'<button  class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/users/' + DAT.userData.login + '/starred"); > starred </button> ' +
+			'<button  class=butt2 onclick=DAT.getStarred("' + DAT.userData.login + '"); > starred </button> ' +
+
 			'<a href=https://github.com/stars/' + DAT.userData.login + ' >stars</a>';
 
 	};
@@ -349,6 +354,15 @@
 
 	};
 
+	DAT.get.subscriptions_url= function( item ) {
+
+		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/subscriptions"); > raw </button> ' +
+//			'<button  class=butt2 onclick=DAT.getObjectProperties("https://api.github.com/users/' + DAT.userData.login + '/starred"); > subscriptions </button> ' +
+			'<button  class=butt2 onclick=DAT.getSubscriptions("' + DAT.userData.login + '"); > subscriptions </button> ' +
+
+//			'<a href=https://github.com/stars/' + DAT.userData.login + ' >stars</a>';
+			'';
+	};
 
 	DAT.get.site_admin = function( item ) {
 
@@ -396,16 +410,18 @@
 
 		urlToken = url + '?' + ( API.token || '' );
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', urlToken, true );
-		xhr.onload = callback;
-		xhr.send( null );
+//		xhr = new XMLHttpRequest();
+//		xhr.open( 'get', urlToken, true );
+//		xhr.onload = callback;
+//		xhr.send( null );
 
-		function callback() {
+		COR.requestFile( urlToken, callback );
+
+		function callback( xhr ) {
 
 			window.scrollTo( 0, 0 );
 
-			DAT.target.innerText = '\nURL sent: ' + url + '\n\nGitHub API Response:\n\n' + xhr.response;
+			DAT.target.innerText = '\nURL sent: ' + url + '\n\nGitHub API Response:\n\n' + xhr.target.response;
 
 		}
 
@@ -418,19 +434,16 @@
 
 		urlToken = url + '?' + ( API.token || '' );
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', urlToken, true );
-		xhr.onload = callback;
-		xhr.send( null );
+		COR.requestFile( urlToken, callback );
 
-		function callback() {
+		function callback( xhr ) {
 
 			window.scrollTo( 0, 0 );
 
-			obj = JSON.parse( xhr.responseText );
+			obj = JSON.parse( xhr.target.responseText );
 
 			keys = Object.keys( obj );
-			txt = '<h1>url: ' + url + '</h1>' + b + b;
+			txt = '<h1>url: <a href=' + url + ' >' + url + '</a></h1>' + b + b;
 
 			for ( var i = 0; i < keys.length; i++ ) {
 
@@ -460,33 +473,62 @@
 
 
 
+	DAT.getGists = function( user ) {
+
+		var url, gists, txt;
+
+		url = 'https://api.github.com/users/' + user + '/gists' + '?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
+
+		DAT.currentTopic = 'gists';
+
+		COR.requestFile( url, callback );
+
+		function callback( xhr ) {
+
+			gists = JSON.parse( xhr.target.responseText );
+
+console.log( 'gists', gists );
+			txt = '<h2>' + DAT.userData.login + ' Gists</h2>';
+
+			for ( var i = 0; i < gists.length; i++ ) {
+
+				gist = gists[ i ];
+				txt += '<h3>' + ( gist.updated_at.slice( 0, 10 ) + ' ~ ' + gist.description ).link( gist.html_url ) + '</h3>' +
+					'<div>' + 
+
+				'</div>';
+			}
+
+			DAT.target.innerHTML = txt;
+
+		}
+
+	}
+
+
 	DAT.getOrgs = function( user ) {
 
-		var fileName, xhr, response, orgs, txt;
+		var url, xhr, response, orgs, txt;
 
-		fileName = 'https://api.github.com/users/' + user + '/orgs?' + ( API.token || '' );
+		url = 'https://api.github.com/users/' + user + '/orgs?' + ( API.token || '' );
 
 		DAT.currentTopic = 'orgs';
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
+		COR.requestFile( url, callback );
 
-		function callback() {
+		function callback( xhr ) {
 
-			orgs = JSON.parse( xhr.responseText );
+			orgs = JSON.parse( xhr.target.responseText );
 
 //console.log( 'orgs', orgs );
 
 			if ( orgs.message ) { // there's been an error...
 
-				contents.innerHTML = orgs.message;
+				DAT.target.innerHTML = orgs.message;
 
 				return;
 
 			}
-
 
 			txt = '<h2>' + user + ' organizations</h2>';
 
@@ -494,92 +536,54 @@
 
 				org = orgs[ i ];
 
-console.log( 'org', org );
+//console.log( 'org', org );
 
 				txt += 
 
 					'<h3>' +
 
-						( i + 1 ) + ' ' + org.login.link( 'https://github.com/' + org.login ) +
+						( i + 1 ) + ' ' + org.login.link( 'https://github.com/' + org.login ) + b +
+
+						'<img src=' + org.avatar_url + ' width=180 >' +
 
 					'</h3>' +
 
-					'<p>' + org.description + '</p>';
-
+					'<div>' + org.description + '</div>';
 
 			}
 
-			contents.innerHTML = txt;
+			DAT.target.innerHTML = txt;
 
 		}
 
 	}
 
-
-
-
-
-	DAT.getGists = function( user ) {
-
-		var fileName, xhr, gists, txt;
-
-		fileName = 'https://api.github.com/users/' + user + '/gists' + '?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
-
-		DAT.currentTopic = 'gists';
-
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			gists = JSON.parse( xhr.responseText );
-
-			txt = '<h2>' + DAT.userData.login + ' Gists</h2>';
-
-			for ( var i = 0; i < gists.length; i++ ) {
-
-				gist = gists[ i ];
-				txt += '<h3><a href=' + gist.html_url + ' >' + gist.description + '</a></h3>' +
-					'<p>' + gist.updated_at.slice( 0, 10 ) + '</p>';
-
-			}
-
-			contents.innerHTML = txt;
-
-		}
-
-	}
 
 	DAT.getRepos = function( user ) {
 
-		var fileName, xhr, repos, txt;
+		var urlToken, xhr, repos, txt;
 
-		fileName = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
+		urlToken = 'https://api.github.com/users/' + user + '/repos' + '?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
 
 		DAT.currentTopic = 'repos';
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
+		COR.requestFile( urlToken, callback );
 
-		function callback() {
+		function callback( xhr ) {
 
-			repos = JSON.parse( xhr.responseText );
+			repos = JSON.parse( xhr.target.responseText );
 
-//console.log( 'repos', repos );
+console.log( 'repos', repos );
 
 			if ( repos.message ) {
 
-				contents.innerHTML = repos.message;
+				DAT.target.innerHTML = repos.message;
 
 				return;
 
 			}
 
-			txt = '<h1>' + user + ' Repositories</h1>';
+			txt = '<h1>' + user + ' Repositories </h1>';
 
 			for ( var i = 0; i < repos.length; i++ ) {
 
@@ -601,8 +605,94 @@ console.log( 'org', org );
 
 			}
 
-			contents.innerHTML = txt;
+			DAT.target.innerHTML = txt;
 
 		}
 
 	}
+
+
+	DAT.getStarred = function( user ) {
+
+		var urlToken, starred, keys, txt;
+
+		urlToken = 'https://api.github.com/users/' + user + '/starred?' + ( API.token || '' );
+
+		COR.requestFile( urlToken, callback );
+
+		function callback( xhr ) {
+
+			window.scrollTo( 0, 0 );
+
+			starred = JSON.parse( xhr.target.responseText );
+
+//console.log( 'starred', starred );
+
+			txt = '<h1>url: <a href=' + urlToken + ' >' + urlToken + '</a></h1>' + b;
+
+			for ( var i = 0; i < starred.length; i++ ) {
+
+				star = starred[ i ];
+
+				txt +=
+
+					'<h3>' +
+
+						( i + 1 ) + ' ' + star.name.link( star.html_url ) + 
+						' stars ' + star.watchers.toLocaleString().link( star.html_url + '/stargazers' ) +
+						' forks ' + star.forks.toLocaleString().link( star.html_url + '/network/members' ) +
+						' update ' + star.updated_at.slice( 0, 10 ).link( star.html_url + '/pulse' ) +
+					'</h3>' +
+
+					'<div>' + star.description + '</div>';
+
+			}
+
+			DAT.target.innerHTML = '<table>' + txt + '</table>';
+
+		}
+
+	};
+
+
+
+	DAT.getSubscriptions = function( user ) {
+
+//		var urlToken, subscriptions, keys, txt;
+
+		urlToken = 'https://api.github.com/users/' + user + '/subscriptions?' + ( API.token || '' );
+
+		COR.requestFile( urlToken, callback );
+
+		function callback( xhr ) {
+
+			window.scrollTo( 0, 0 );
+
+			subscriptions = JSON.parse( xhr.target.responseText );
+
+console.log( 'subscriptions', subscriptions );
+
+			txt = '<h1>url: <a href=' + urlToken + ' >' + urlToken + '</a></h1>' + b;
+
+			for ( var i = 0; i < subscriptions.length; i++ ) {
+
+				subscription = subscriptions[ i ];
+
+				txt +=
+
+					'<h3>' +
+						( i + 1 ) + ' ' + subscription.name.link( subscription.html_url ) + 
+						' subscriptions ' + subscription.watchers.toLocaleString().link( subscription.html_url + '/subscriptiongazers' ) +
+						' forks ' + subscription.forks.toLocaleString().link( subscription.html_url + '/network/members' ) +
+						' update ' + subscription.updated_at.slice( 0, 10 ).link( subscription.html_url + '/pulse' ) +
+					'</h3>' +
+
+					'<div>' + subscription.description + '</div>';
+
+			}
+
+			DAT.target.innerHTML = '<table>' + txt + '</table>';
+
+		}
+
+	};
