@@ -7,7 +7,7 @@
 		'<option selected >Theo-Armour</option>' +
 		'<option>jaanga</option>' +
 	'</optgroup>' +
-	'<optgroup label="Three.js" >' +
+	'<optgroup label="Three.js/WenGL" >' +
 		'<option>MrDoob</option>' +
 		'<option>bhouston</option>' +
 		'<option>gero3</option>' +
@@ -17,6 +17,14 @@
 		'<option>koblin</option>' +
 		'<option>alteredq</option>' +
 		'<option>kig</option>' +
+		'<option>spite</option>' +
+		'<option>greggman</option>' +
+		'<option>philigb</option>' +
+		'<option>toji</option>' +
+		'<option>tparisi</option>' +
+		'<option>aroduc</option>' +
+		'<option>lo-th</option>' +
+		'<option>callumprentice</option>' +
 	'</optgroup>' +
 	'<optgroup label="FGx">' +
 		'<option>GeoffMcl</option>' + 
@@ -66,19 +74,28 @@
 	USR.groupOptions =
 
 		'<option value="listTheo" >Theo\'s list of favs</option>' +
-		'<option selected value="stars:%3E20000" >Users with repos & stars > 20,000</option>' +
-		'<option value="three+stars:%3E300" >Users with word \'three\' & stars > 300</option>' +
-		'<option value="3D+stars:%3E1000" >Users with word \'3D\' & stars > 1000</option>' +
-		'<option value="stl+stars:%3E50" >Users with word \'stl\' & stars > 50</option>' +
-
-		'<option value="math+stars:%3E200" >Users with word \'math\' & stars > 200</option>' +
-		'<option value="calculus+stars:%3E20" >Users with word \'calculus\' & stars > 20</option>' +
-		'<option value="sagemath+stars:>0" >Users with word \'sagemath\' & stars > 0</option>' +
-		'<option value="cartography+stars:%3E8" >Users with word \'cartography\' & stars >8</option>' +
-		'<option value="maps+stars:%3E1000" >Users with word \'maps\' & stars >1000</option>' +
-		'<option value="geojson+stars:%3E100" >Users with word \'geojson\' & stars >100</option>' +
-		'<option value="geography+stars:%3E100" >Users with word \'geography\' & stars >100</option>' +
-
-		'<option value="flight+stars:%3E100" >Users with word \'flight\' & stars >100</option>' +
-
+		'<optgroup label="Popular" >' +
+			'<option selected value="stars:>20000" >Users with repos & stars > 20,000</option>' +
+			'<option value="JavaScript+stars:>3000" >Users with word \'JavaScript\' & stars > 3000</option>' +
+			'<option value="Python+stars:>3000" >Users with word \'Python\' & stars > 3000</option>' +
+		'</optgroup>' +
+		'<optgroup label="Pertaining to Three.js & 3D" >' +
+			'<option value="three+stars:>300" >Users with word \'three\' & stars > 300</option>' +
+			'<option value="3D+stars:>1000" >Users with word \'3D\' & stars > 1000</option>' +
+			'<option value="stl+stars:>50" >Users with word \'stl\' & stars > 50</option>' +
+		'</optgroup>' +
+		'<optgroup label="Pertaining to mathematics" >' +
+			'<option value="math+stars:>200" >Users with word \'math\' & stars > 200</option>' +
+			'<option value="calculus+stars:>20" >Users with word \'calculus\' & stars > 20</option>' +
+			'<option value="sagemath+stars:>0" >Users with word \'sagemath\' & stars > 0</option>' +
+		'</optgroup>' +
+		'<optgroup label="Pertaining to cartography" >' +
+			'<option value="cartography+stars:>8" >Users with word \'cartography\' & stars >8</option>' +
+			'<option value="maps+stars:>1000" >Users with word \'maps\' & stars >1000</option>' +
+			'<option value="geojson+stars:>100" >Users with word \'geojson\' & stars >100</option>' +
+			'<option value="geography+stars:>100" >Users with word \'geography\' & stars >100</option>' +
+		'</optgroup>' +
+		'<optgroup label="Pertaining to flight simulation" >' +
+			'<option value="flight+stars:>100" >Users with word \'flight\' & stars >100</option>' +
+		'</optgroup>' +
 	'';

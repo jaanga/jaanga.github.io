@@ -105,7 +105,7 @@ value='Source code listing' >
 
 ##  To Do List / Goals
 
-
+* 2016-10-18 ~ Read all cases pf readme.MD
 * Add GitHub no connection note
 * Add API key entry
 * Add number of stars to each repo < add to rate limit

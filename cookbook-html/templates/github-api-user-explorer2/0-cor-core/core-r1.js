@@ -14,11 +14,11 @@
 
 	COR.taglineHeader = 
 
-		'<p><small>' +
-
-			'Search for various types of GitHub users' + b +
-			'See what GitHub users are doing' + b +
-		'</small></p>';
+		'<small>' +
+			'Search for various types of GitHub users. ' +
+			'Explore what GitHub users have created.' +
+			'Monitor their activity.' + b +
+		'</small>';
 
 
 	COR.aboutCredits = '<p>Thank you <a href=https://developer.github.com/v3/ > GitHub API </a> ';
