@@ -168,7 +168,7 @@
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML =
 
-			'html { height: 100%; margin: 0; overflow: hidden; }' +
+			'html { height: 100%; margin: 0; }' +
 			'body { font: 12pt monospace; height: 100%; margin: 0; padding: 0; }' +
 			'h2, h3 { margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
@@ -269,6 +269,7 @@
 	};
 
 
+
 	COR.setMenuBreadCrumbsFolder = function( dir ) {
 
 //console.log( 'dir', dir );
@@ -282,8 +283,8 @@
 			CORbreadCrumbs =
 
 			'<h3 class=>' +
-				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' </a> &raquo; ' +
-				'<a href="" >' + DEF.repo + '</a> &raquo; ' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' jaanga </a> &raquo; ' +
+//				'<a href=https:// >' + DEF.repo + '</a> &raquo; ' +
 			'</h3>';
 
 		} else {
