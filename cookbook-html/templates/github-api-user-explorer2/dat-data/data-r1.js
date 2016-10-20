@@ -172,7 +172,7 @@
 	DAT.get.followers = function( item ) {
 
 		return '<button onclick=DAT.getRawData("' + DAT.userData.followers_url + '"); > raw </button> ' +
-			'<button  class=butt2 onclick=DAT.sendMessage("Followers"); > followers </button> ' +
+			'<button  class=butt2 onclick=DAT.getFollowers("' + DAT.userData.login + '"); > followers </button> ' +
 			'<a href=https://github.com/' + DAT.userData.login + '/followers >' + item + ' followers </a>';
 
 	};
@@ -187,7 +187,7 @@
 	DAT.get.following = function( item ) {
 
 		return '<button onclick=DAT.getRawData("https://api.github.com/users/' + DAT.userData.login + '/following"); > raw </button> ' +
-			'<button  class=butt2 onclick=DAT.sendMessage("Following"); > following </button> ' +
+			'<button  class=butt2 onclick=DAT.getFollowing("' + DAT.userData.login + '"); > following </button> ' +
 			'<a href=https://github.com/' + DAT.userData.login + '/following >' + item + ' following</a>';
 
 	};
@@ -329,8 +329,8 @@
 	DAT.get.received_events_url = function( item ) {
 
 		return '<button onclick=DAT.getRawData("' + DAT.userData.received_events_url + '"); > raw </button> ' +
-//			'<button  class=butt2 onclick=DAT.sendMessage("Receivedevents"); > received events </button> ';
-			'<button onclick=DAT.getObjectProperties("' + DAT.userData.received_events_url + '"); > received events </button> ';
+			'<button  class=butt2 onclick=DAT.getReceivedEvents("' + DAT.userData.login + '"); > received events </button> ';
+//			'<button onclick=DAT.getObjectProperties("' + DAT.userData.received_events_url + '"); > received events </button> ';
 //		return 'Received Events: <a href=' + DAT.userData.received_events_url + ' >received events</a>';
 
 	};
@@ -471,7 +471,116 @@
 	};
 
 
+	DAT.getFollowers = function( user ) {
 
+		var url, xhr, response, followers , txt;
+
+		url = 'https://api.github.com/users/' + user + '/followers?' + ( API.token || '' );
+
+//		DAT.currentTopic = 'followers ';
+
+		COR.requestFile( url, callback );
+
+		function callback( xhr ) {
+
+			followers  = JSON.parse( xhr.target.responseText );
+
+//console.log( 'followers ', followers  );
+
+			if ( followers.message ) { // there's been an error...
+
+				DAT.target.innerHTML = followers.message;
+
+				return;
+
+			}
+
+			txt = '<h2>' + ( user + ' followers' ).link( 'https://api.github.com/users/' + user + '/followers' ) + '</h2>';
+
+			for ( var i = 0; i < followers.length; i++ ) {
+
+				follower = followers[ i ];
+
+//console.log( 'follower', follower );
+
+				txt += 
+
+					'<h3>' +
+
+						( i + 1 ) + ' ' + follower.login.link( 'https://github.com/' + follower.login ) + b +
+
+						'<img src=' + follower.avatar_url + ' width=180 >' +
+
+					'</h3>' +
+
+					'<div>' + 
+						'following'.link( follower.html_url + '?tab=following' ) + 
+						' followers'.link( follower.html_url + '?tab=followers' ) + 
+					'</div>';
+
+			}
+
+			DAT.target.innerHTML = txt;
+
+		}
+
+	}
+
+
+	DAT.getFollowing = function( user ) {
+
+		var url, xhr, response, followings , txt;
+
+		url = 'https://api.github.com/users/' + user + '/following?' + ( API.token || '' );
+
+//		DAT.currentTopic = 'followings ';
+
+		COR.requestFile( url, callback );
+
+		function callback( xhr ) {
+
+			followings  = JSON.parse( xhr.target.responseText );
+
+//console.log( 'followings ', followings  );
+
+			if ( followings.message ) { // there's been an error...
+
+				DAT.target.innerHTML = followings.message;
+
+				return;
+
+			}
+
+			txt = '<h2>' + ( user + ' followings' ).link( 'https://api.github.com/users/' + user + '/following' ) + '</h2>';
+
+			for ( var i = 0; i < followings.length; i++ ) {
+
+				following = followings[ i ];
+
+//console.log( 'following', following );
+
+				txt += 
+
+					'<h3>' +
+
+						( i + 1 ) + ' ' + following.login.link( 'https://github.com/' + following.login ) + b +
+
+						'<img src=' + following.avatar_url + ' width=180 >' +
+
+					'</h3>' +
+
+					'<div>' + 
+						'following'.link( following.html_url + '?tab=following' ) + 
+						' followings'.link( following.html_url + '?tab=following' ) + 
+					'</div>';
+
+			}
+
+			DAT.target.innerHTML = txt;
+
+		}
+
+	}
 
 	DAT.getGists = function( user ) {
 
@@ -488,6 +597,7 @@
 			gists = JSON.parse( xhr.target.responseText );
 
 console.log( 'gists', gists );
+
 			txt = '<h2>' + DAT.userData.login + ' Gists</h2>';
 
 			for ( var i = 0; i < gists.length; i++ ) {
@@ -557,6 +667,62 @@ console.log( 'gists', gists );
 		}
 
 	}
+
+
+	DAT.getReceivedEvents = function( user ) {
+
+		var url, xhr, response, receivedEvents, txt;
+
+		url = 'https://api.github.com/users/' + user + '/received_events?sort=updated&order=desc&per_page=100&' + ( API.token || '' );
+
+//		DAT.currentTopic = 'receivedEvents';
+
+		COR.requestFile( url, callback );
+
+		function callback( xhr ) {
+
+			receivedEvents = JSON.parse( xhr.target.responseText );
+
+//console.log( 'receivedEvents', receivedEvents );
+
+			if ( receivedEvents.message ) { // there's been an error...
+
+				DAT.target.innerHTML = receivedEvents.message;
+
+				return;
+
+			}
+
+			txt = '<h2>' + user + ' organizations</h2>';
+
+			for ( var i = 0; i < receivedEvents.length; i++ ) {
+
+				receivedEvent = receivedEvents[ i ];
+
+//console.log( 'receivedEvent', receivedEvent );
+
+				txt += 
+
+					'<h3>' +
+
+						( i + 1 ) + ' ' + receivedEvent.created_at.slice( 0, 10 ) + ' ' +
+
+						receivedEvent.type + ' ' + receivedEvent.actor.login.link( 'https://github.com/' + receivedEvent.actor.url ) + b +
+
+						'<img src=' + receivedEvent.actor.avatar_url + ' width=180 >' +
+
+					'</h3>' +
+
+					'<div>' + receivedEvent.repo.name.link( 'https://github.com/' + receivedEvent.repo.name ) + '</div>';
+
+			}
+
+			DAT.target.innerHTML = txt;
+
+		}
+
+	}
+
 
 
 	DAT.getRepos = function( user ) {
