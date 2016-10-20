@@ -200,6 +200,9 @@ console.clear();
 //			case 'Abantech':
 			case 'fgx':
 			case 'jeremytammik':
+			case 'webmath':
+			case 'lo-th':
+
 				branch = repo.includes( '.github.io' ) ? '/master/' : '/gh-pages/';
 				fileName = 'readme.md';
 				break;
@@ -242,7 +245,9 @@ console.clear();
 
 			} else {
 
-				text = 'File not found: ' + xhr.repo + branch + fileName;
+				text = 'File not found: ' + xhr.repo + branch + fileName + b +
+
+				branch + ' may not be the correct branch to use here'; 
 
 			}
 
@@ -287,7 +292,9 @@ console.clear();
 
 			} else {
 
-				text = 'File not found: ' + xhr.repo + branch + fileName;
+				text = 'File not found: ' + xhr.repo + branch + fileName + b +
+
+				branch + ' may not be the correct branch to use here'; 
 
 			}
 

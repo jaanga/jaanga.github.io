@@ -10,6 +10,9 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [GitHub API User Explorer Read Me]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/index.html#readme.md )
 ===
 
+New name: GHubGHub
+
+Seehttps://en.wikipedia.org/wiki/Doctor_Dolittle & https://en.wikipedia.org/wiki/Gub_Gub%27s_Book
 
 ## full screen [GitHub API User Explorer2]( https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/ )
 
@@ -57,14 +60,16 @@ Therefore the idea is to build tols to help you snoop around GitHub and finds th
 ### Mission
 
 * Make the GitHub web pages and the data come to you
-	* None of that endless go there and come back, go there and come back scenes
-* Provide as many stats as possible really quickly and easily readable
-* Show the readme files wherever possible
+	* Reduce that endless go there and come back, go there and come back repeated endlessly
+* Provide as many statistics as possible - really quickly and easily readable
+* Display the read me files wherever possible
+	* Show what is being created
 
 
 ### Vision
 
-* TBD
+* Help people discover new algorithms and new concepts
+* Link associated projects that had no idea they were associated
 
 ## Features
 
@@ -105,10 +110,10 @@ value='Source code listing' >
 
 ##  To Do List / Goals
 
-* 2016-10-18 ~ Read all cases pf readme.MD
+* leaving and coming back returns to same user / better location.hash management
 * Add GitHub no connection note
 * Add API key entry
-* Add number of stars to each repo < add to rate limit
+* Add number of stars to each repo < would add to rate limit
 * Add iframes to orgs
 * Add iframes to gists
 
@@ -136,6 +141,11 @@ Web sites that help you explore GitHub
 
 
 ## Change Log
+
+### 2016-10-19 ~ 
+
+* 2016-10-18 ~ Read all cases of readme.MD < mostly fulfilled
+
 
 ### 2016-09-20
 
