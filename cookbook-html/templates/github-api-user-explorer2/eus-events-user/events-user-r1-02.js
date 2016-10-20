@@ -14,7 +14,6 @@
 	EUS.dates = [];
 //	EUS.repos = [];
 
-	EUS.css = '<style>body { font: 10pt monospace; }</style>\n';
 
 // may not be in use
 	EUS.getMenuDetailsUserEvents = function() {
@@ -134,8 +133,6 @@
 
 		var txt, keys, repo;
 
-console.clear();
-
 		txt = 
 
 			'<h1>' + user + '</h1>' +
@@ -199,7 +196,6 @@ console.clear();
 			case 'cynthiaarmour':
 //			case 'Abantech':
 			case 'fgx':
-			case 'jeremytammik':
 				branch = repo.includes( '.github.io' ) ? '/master/' : '/gh-pages/';
 				fileName = 'readme.md';
 				break;
@@ -212,31 +208,33 @@ console.clear();
 
 		}
 
-//		EUS.getReadMe( repo, branch, fileName );
-
-		EUS.getReadMe( repo, branch, 0 );
+		EUS.getReadMe( repo, branch, fileName );
 
 	}
 
 
 
-	EUS.cccgetReadMe = function( repo, branch, fileName ) {
+	EUS.getReadMe = function( repo, branch, fileName) {
 
 		var urlReadMe, xhr;
 
 		urlReadMe = 'https://rawgit.com/' + repo + branch + fileName;
 
-		xhr = new XMLHttpRequest();
-		xhr.repo = repo;
-		xhr.open( 'get', urlReadMe, true );
-		xhr.onload = callback;
-		xhr.send( null );
+//		xhr = new XMLHttpRequest();
+//		xhr.repo = repo;
+//		xhr.open( 'get', urlReadMe, true );
+//		xhr.onload = callback;
+//		xhr.send( null );
+
+		COR.requestFile( urlReadMe, callback )
 
 		function callback() {
 
-			var text, item;
+			var text, css, item;
 
-			if ( xhr.status !== 404 ) {
+			css = '<style>body { font: 10pt monospace; }</style>\n';
+
+			if ( xhr.status != 404 ) {
 
 				text = COR.converter.makeHtml( xhr.responseText );
 
@@ -248,52 +246,18 @@ console.clear();
 
 			item = document.getElementById( xhr.repo );
 
-			item.srcdoc = EUS.css + COR.converter.makeHtml( text );
 
-		}
+			user = xhr.repo.split( '/' ).shift();
 
-	}
+			if ( fileName === '' ) {
 
-
-	EUS.getReadMe = function( repo, branch, count ) {
-
-		var urlReadMe, xhr;
-
-		files = [ 'README.md', 'readme.md', 'README.markdown', 'README.rst', 'README' ];
-
-		urlReadMe = 'https://rawgit.com/' + repo + branch + files[ count ];
-
-//console.log( '', repo, branch, files[ count ] );
-
-		xhr = new XMLHttpRequest();
-		xhr.repo = repo;
-		xhr.branch = branch;
-		xhr.count = count;
-		xhr.open( 'get', urlReadMe, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			var text, item;
-
-			if ( xhr.status !== 404 ) {
-
-				text = COR.converter.makeHtml( xhr.responseText );
-
-			} else if ( ++xhr.count < files.length ) {
-
-				EUS.getReadMe( xhr.repo, xhr.branch, xhr.count ) 
+				EUS.getIndexHTML( xhr.repo );
 
 			} else {
 
-				text = 'File not found: ' + xhr.repo + branch + fileName;
+				item.srcdoc = css + COR.converter.makeHtml( text );
 
 			}
-
-			item = document.getElementById( xhr.repo );
-
-			item.srcdoc = EUS.css + COR.converter.makeHtml( text );
 
 		}
 
