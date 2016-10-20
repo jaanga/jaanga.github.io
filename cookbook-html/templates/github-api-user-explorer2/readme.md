@@ -122,6 +122,7 @@ value='Source code listing' >
 
 Web sites that help you explore GitHub
 
+* https://resume.github.io/ ~ added 2016-10-19
 * https://github.com/trending
 * https://github.com/trending/javascript
 * https://www.reddit.com/r/github/
@@ -142,8 +143,10 @@ Web sites that help you explore GitHub
 
 ## Change Log
 
-### 2016-10-19 ~ 
+### 2016-10-19
 
+( All buttons have working actions
+* Duttons show hand icon on mouseover
 * 2016-10-18 ~ Read all cases of readme.MD < mostly fulfilled
 
 
