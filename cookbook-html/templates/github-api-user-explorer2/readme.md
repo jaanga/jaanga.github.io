@@ -75,7 +75,7 @@ So, if you are looking to build tools to help you snoop around GitHub and finds 
 * Make all of this your own
 
 
-## Usage
+## <a href=#Usage >Usage</a>
 
 The script creates and updates three columns
 
