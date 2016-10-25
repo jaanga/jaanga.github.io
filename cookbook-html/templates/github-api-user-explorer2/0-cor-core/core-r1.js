@@ -1,16 +1,17 @@
-// Copyright &copy; 2016 Jaanga authors
+// Copyright © 2016 Jaanga authors. MIT License
+
 
 	var b = '<br>';
+	var COR = {};
 
 	var API = API || {};
-	var COR = {};
 	var SER = SER || {};
 	var DAT = DAT || {};
 	var EUS = EUS || {};
 
 	API.token = '';
 
-// move to DEF file
+// Add USR defaults to COR?
 
 	COR.taglineHeader = 
 
@@ -27,7 +28,11 @@
 
 //	COR.txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 	COR.txt = '<p>GitHub API responses will appear here.</p>';
+
 	COR.converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+	COR.objectName = 'COR';
+
 
 
 	COR.initThreeColumns = function() {
@@ -53,7 +58,7 @@
 
 
 		COR.contents = document.body.appendChild( document.createElement( 'div' ) );
-		COR.contents.id = 'contents';
+		COR.contents.id = 'CORcontents';
 		COR.contents.innerHTML = '<h1>contents</h1><div id=divContents >' + COR.txt + '</div>';
 
 
@@ -93,7 +98,7 @@
 			'.butt2 { width: 108px; }' +
 			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
-			'#contents { border: 0px red solid; left: 24%; position: absolute; top: 0; width: 50%; }' +
+			'#CORcontents { border: 0px red solid; left: 24%; position: absolute; top: 0; width: 50%; }' +
 
 //			'#menu { box-sizing: border-box; background-color: #ccc; padding: 0 10px 0 10px; position: absolute; max-width: 20%; }' +
 			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; max-width: 20%; }' +
@@ -157,11 +162,11 @@
 				'<p>Thank you <a href=https://developer.github.com/v3/ > GitHub API </a> ' +
 //					'<a href=http://threejs.org target="_blank">Mr.doob.</a></p>' +
 
-				'<p>Click the \'i in a circle\' info icon for more <a href=index.html#readme.md >help</a></p>' +
+				'<p>Click the \'i in a circle\' info icon for more <a href=index.html#readme.md >help</a></p>' + b +
 
 			'</details>' +
 
-		b;
+		'';
 
 		return menuDetailsAbout;
 
@@ -176,25 +181,36 @@
 			'<hr>' +
 
 			'<center>' +
-				'<a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a>' +
+				'<a href=javascript:COR.menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a>' +
 			'</center>' +
 
 			'<div class=popUp id=pop2 style=display:none;bottom:100px; >' +
-				'Jaanga - your 3D happy place.<br>Click here to return to the top of the page' +
+				'Jaanga - your 3D happy place.<br>Click here to return to the top of the page' + b +
 			'</div>' +
 
-		b;
+		'';
 
 		return footer;
 
 	};
+
+	COR.getPageFooter = function() {
+
+		return '<hr>' + b +
+		'<center><h1>' +
+			'<a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766; </a>' +
+		'</h1></center>';
+
+	}
+
+
 
 
 	COR.getMenuDetailsTemplate = function() {
 
 		var menuDetailsTemplate =
 
-			'<details id=detailsTemplate >' +
+			'<details id=CORdetailsTemplate >' +
 
 				'<summary><h3>Template</h3></summary>' +
 
@@ -202,72 +218,20 @@
 
 					'<button > button </button>' + b +
 
-					COR.txt +
+					COR.txt + b +
 
 			'</p>' +
 
 			'</details>' +
 
-		b;
+		'';
 
 		return menuDetailsTemplate;
 
 	};
 
 
-
-
-	COR.getMenuDetailsObjectProperties = function( obj ) {
-
-		obj = obj || COR.defaults;
-
-		var menuDetailsObjectProperties =
-
-			'<details> ' +
-
-				'<summary id=MenuSummaryObjectProperties ><h3>Object Properties: ' + ( obj.objectName || '' ) + ' </h3></summary>' +
-
-				'<p>' +
-					'<button onclick=properties.innerHTML=COR.getObjectProperties(COR.place); >Get place properties</button> ' +
-					'<button onclick=properties.innerHTML=COR.getObjectProperties(); >Get defaults</button> ' +
-				'</p>' +
-
-				'<p id=properties ></p>' + b +
-
-			'</details>' +
-
-		'';
-
-		return menuDetailsObjectProperties;
-
-	};
-
-
 // utils
-
-
-// make more generic
-	COR.getObjectProperties = function( obj ) {
-
-		var keys, txt;
-		obj = obj || COR.defaults;
-
-		keys = Object.keys( obj );
-
-		txt = '';
-
-		for ( var i = 0; i < keys.length; i++ ) {
-
-			txt += '<tr><td>' + keys[ i ] + ': </td><td> ' + obj[ keys[ i ] ] + '</td></tr>';
-
-		}
-
-		MenuSummaryObjectProperties.innerHTML = '<h3>Object Properties: ' + ( obj.objectName || '' ) + '</h3>';
-
-		return '<table>' + txt + '</table>';
-
-	}
-
 
 	COR.requestFile = function( url, callback ) {
 

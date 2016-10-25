@@ -7,7 +7,7 @@
 <meta name=description content='
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-16' >
+<meta name=date content='2016-10-23' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
@@ -18,7 +18,7 @@
 
 	function init() {
 
-		COR.taglineHeader = 'A hard core howdy!' + b;
+		COR.taglineHeader += '+ a hard core howdy!' + b;
 
 		COR.initThreeColumns();
 
@@ -28,17 +28,17 @@
 
 			COR.getMenuDetailsTemplate() +
 
-//			COR.getMenuDetailsObjectProperties() +
-
 			COR.getMenuDetailsAbout() +
 
 			COR.getMenuFooter() +
 
 		b;
 
-		if ( window.self !== window.top ) { hamburger.style.left = '0px'; }
+		CORdetailsTemplate.setAttribute( 'open', 'open' );
 
-		detailsTemplate.setAttribute('open', 'open');
+		COR.contents = CORcontents;
+
+		if ( window.self !== window.top ) { hamburger.style.left = '0px'; }
 
 	}
 

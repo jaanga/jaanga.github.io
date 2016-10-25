@@ -147,15 +147,16 @@ Menu and contents in HTML.
 		for ( var i = 0; i < users.length; i++ ) {
 
 			user = users[ i ];
+
 			if ( user.startsWith('#') ) {
 
-			selUser.appendChild( document.createElement( 'optgroup' ) );
-			selUser.children[ i ].label = user.slice( 1 );
+				selUser.appendChild( document.createElement( 'optgroup' ) );
+				selUser.children[ i ].label = user.slice( 1 );
 
 			} else {
 
-			selUser.appendChild( document.createElement( 'option' ) );
-			selUser.children[ i ].text = user;
+				selUser.appendChild( document.createElement( 'option' ) );
+				selUser.children[ i ].text = user;
 
 			}
 

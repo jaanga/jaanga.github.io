@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>API Key R1</title>
+<title>API Authentication Access Token R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='GitHub API
 ' >
@@ -12,14 +12,18 @@
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 <script src=../0-cor-core/core-r1.js ></script>
-<script src=../1-api-api-key/api-key-r1.js ></script>
+<script src=../1-api-authentication/api-authentication-r1.js ></script>
 <script>
+// Copyright © 2016 Jaanga authors. MIT License
+
+// https://developer.github.com/v3/#authentication
+
 
 	init();
 
 	function init() {
 
-		COR.taglineHeader = 'An API howdy!' + b;
+		COR.taglineHeader += '+ an API token howdy!' + b;
 
 		COR.initThreeColumns();
 
@@ -27,11 +31,11 @@
 
 			COR.getMenuDetailsHeader() +
 
-			API.getMenuDetailsAPIKey() +
+			API.getMenuDetailsAPIAccessToken() +
 
 			COR.getMenuDetailsTemplate() +
 
-			API.getMenuDetailsAPIRates() +
+//			API.getMenuDetailsAPIRates() +
 
 //			COR.getMenuDetailsObjectProperties() +
 
@@ -41,7 +45,11 @@
 
 		b;
 
-		detailsTemplate.setAttribute('open', 'open');
+		APIapiAcessToken.setAttribute( 'open', 'open' );
+
+		APIapiRates.setAttribute( 'open', 'open' );
+
+		CORdetailsTemplate.setAttribute( 'open', 'open' );
 
 		API.getRateLimits();
 

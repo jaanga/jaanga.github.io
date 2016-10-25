@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Search R1</title>
+<title>Select R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Select or enter a query for the GitHub User API.
 Select a user from the list of results or enter a user name.
@@ -14,8 +14,8 @@ Preview many aspects of their GitHub corpus. Monitor recent activity
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 <script src=../0-cor-core/core-r1.js ></script>
-<script src=../1-api-api-key/api-key-r1.js ></script>
-<script src=../2-ser-search/search-r1.js ></script>
+<script src=../1-api-authentication/api-authentication-r1.js ></script>
+<script src=../2-sel-select/sel-select-r1.js ></script>
 <script src=../usr-users/users-r1.js ></script>
 <script>
 
@@ -23,7 +23,7 @@ Preview many aspects of their GitHub corpus. Monitor recent activity
 
 	function init() {
 
-		COR.taglineHeader += '+ a searching howdy!' + b;
+		COR.taglineHeader += '+ a select howdy!' + b;
 
 		COR.initThreeColumns();
 
@@ -31,11 +31,11 @@ Preview many aspects of their GitHub corpus. Monitor recent activity
 
 			COR.getMenuDetailsHeader() +
 
-			API.getMenuDetailsAPIKey() +
+			API.getMenuDetailsAPIAccessToken() +
 
-			SER.getMenuDetailsSelectGroup() +
+			SEL.getMenuDetailsSelectGroup() +
 
-			SER.getMenuDetailsSelectUser() +
+			SEL.getMenuDetailsSelectUser() +
 
 			COR.getMenuDetailsAbout() +
 
@@ -45,17 +45,17 @@ Preview many aspects of their GitHub corpus. Monitor recent activity
 
 //		selGroup.value = 'listTheo';
 
-		SER.setUserDetails();
+		SEL.setUserDetails();
 
 	}
 
 
 
-	SER.getUserDetails = function( user ) {
+	SEL.getUserDetails = function( user ) {
 
 		location.hash = user;
 
-		if ( DAT.getUserData ) {
+		if ( DAT.getUserData ) { // for testing
 
 			DAT.getUserData( user );
 
@@ -87,10 +87,10 @@ Preview many aspects of their GitHub corpus. Monitor recent activity
 
 // updates contents and right side
  
-		if ( EUS.requestGitHubAPIUserEvents ) {
+		if ( EUS.requestGitHubAPIUserEvents ) { // for testing
 
 			EUS.target = updates;
-			EUS.requestGitHubAPIUserEvents( user);
+			EUS.requestGitHubAPIUserEvents( user );
 
 		}
 

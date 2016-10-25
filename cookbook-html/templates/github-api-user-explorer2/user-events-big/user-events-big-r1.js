@@ -9,8 +9,7 @@
 	var page = 0;
 
 
-	DAT.getEvents = function( user, page, target ) {
-
+	DAT.getEvents = function( user, page ) {
 
 console.log( 'user', user );
 
@@ -22,30 +21,33 @@ console.log( 'user', user );
 
 		page = page || 0;
 
-		fileName = 'https://api.github.com/users/' + user + '/events?sort=comments&order=desc&per_page=100&page=' + page + '&' + ( API.token || '' );
+		url = 'https://api.github.com/users/' + user + '/events?sort=comments&order=desc&per_page=100&page=' + page ;
+
+		urlToken = url + '&' + ( API.token || '' );
 
 		pageHeader =
-		'<h1>' +
-			'user/org: <a href=https://github.com/' + user + '>' + user + '</a> ' +
-//			'page <button onclick=proceed(-1); >prev</button> <a href=' + fileName + ' > ' + page + '</a> <button onclick=proceed(1); >next</a></button> ' +
-//			'<button onclick=window.scrollTo(0,0); >top</button>' +
-		'</h1>';
 
+			'<h1>' + 
+				DAT.userData.type + ': ' + user.link( 'https://github.com/' + user ) + ' events by date' +
+			'</h1>' +
+			'<div>Same data as right column but presented with more detail </div>' +
+			'<div>raw url: ' + url.link( url ) + '</div>' +
+		'';
+
+/*
 		pageFooter =
 		'<h1>' +
 //			'page <button onclick=proceed(-1); >prev</button> ' + page + ' <button onclick=proceed(1); >next</a></button> ' +
 			'<button onclick=window.scrollTo(0,0); >top</button>' +
 		'</h1>';
+*/
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', fileName, true );
-		xhr.onload = callback;
-		xhr.send( null );
+		COR.requestFile( urlToken, callback );
 
-		function callback() {
+		function callback( xhr ) {
 
 			dates = [];
-			events = JSON.parse( xhr.responseText );
+			events = JSON.parse( xhr.target.responseText );
 
 //console.log( 'events', events );
 
@@ -104,7 +106,10 @@ console.log( 'non-event', event );
 			} else {
 */
 
-				contents.innerHTML = pageHeader + pageContent + pageFooter;
+				pageHeader += '<div>' + events.length + ' events from ' + EUS.dates[ 1 ] + ' to ' + EUS.dates[ 0 ] + '</div>';
+
+				COR.contents.innerHTML = pageHeader + pageContent + COR.getPageFooter();
+
 				window.scrollTo( 0, 0 );
 
 //			}

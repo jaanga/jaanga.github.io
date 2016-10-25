@@ -17,6 +17,11 @@
 	var defaultFile = 'github-api-user-explorer2-r1.html';
 //	location.hash = 'readme.md';
 
+
+//	var defaultFile = 'index.html'; // 'github-api-user-explorer2-r1.html';
+//	location.hash = 'readme.md';
+
+
 	var contents;
 
 	init();
@@ -55,6 +60,7 @@
 		url = location.hash.slice( 1 );
 
 		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous'; 
 		xhr.open( 'get', url, true );
 		xhr.onload = function() { contents.innerHTML = converter.makeHtml( xhr.responseText ); };
 		xhr.send( null );

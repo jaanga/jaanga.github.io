@@ -13,12 +13,13 @@
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
 
 <script src=./0-cor-core/core-r1.js ></script>
-<script src=./1-api-api-key/api-key-r1.js ></script>
-<script src=./2-ser-search/search-r1.js ></script>
-<script src=./dat-data/data-r1.js ></script>
+<script src=./1-api-authentication/api-authentication-r1.js ></script>
+<script src=./2-sel-select/sel-select-r1.js ></script>
+<script src=./dat-data/dat-data-r1.js ></script>
 <script src=./user-events-big/user-events-big-r1.js ></script>
-<script src=./eus-events-user/events-user-r1.js ></script>
+<script src=./eus-events-user/eus-events-user-r1.js ></script>
 <script src=./usr-users/users-r1.js ></script>
+
 <!--
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/0-cor-core/core-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/github-api-user-explorer2/1-api-api-key/api-key-r1.js ></script>
@@ -42,15 +43,13 @@
 
 			COR.getMenuDetailsHeader() +
 
-			API.getMenuDetailsAPIKey() +
+			API.getMenuDetailsAPIAccessToken() +
 
-			SER.getMenuDetailsSelectGroup() +
+			SEL.getMenuDetailsSelectGroup() +
 
-			SER.getMenuDetailsSelectUser() +
+			SEL.getMenuDetailsSelectUser() +
 
 			DAT.getMenuDetailsUserData() +
-
-			API.getMenuDetailsAPIRates() +
 
 			COR.getMenuDetailsAbout() +
 
@@ -60,7 +59,7 @@
 
 //		selGroup.value = 'listTheo';
 
-		SER.setUserDetails();
+		SEL.setUserDetails();
 
 		API.getRateLimits();
 
@@ -69,47 +68,50 @@
 
 // gets called by SER.setUserDetails...
 
-	SER.getUserDetails = function( user ) {
+	SEL.getUserDetails = function( user ) {
 
-		if ( DAT.getUserData ) {
+		location.hash = user;
 
-			DAT.getUserData( user );
+//		if ( DAT.getUserData ) {
 
-			switch( DAT.currentTopic ) {
+		DAT.getUserData( user );
 
-				case 'events':
-					DAT.getEvents ( user, 0, contents )
-					break;
-				case 'gists':
-					DAT.getGists ( user )
-					break;
-				case 'orgs':
-					DAT.getOrgs( user ) 
-					break;
-				case 'repos':
-					DAT.getRepos( user ) 
-					break;
-				case 'stats':
+		switch( DAT.currentTopic ) {
+
+			case 'events':
+				DAT.getEvents ( user, 0, COR.contents )
+				break;
+			case 'gists':
+				DAT.getGists ( user )
+				break;
+			case 'orgs':
+				DAT.getOrgs( user ) 
+				break;
+			case 'repos':
+				DAT.getRepos( user ) 
+				break;
+			case 'stats':
 //					EUS.buildStatsReport( user )
-					break;
-				default:
-					DAT.getRepos( user ) 
+				break;
+			default:
+				DAT.getRepos( user ) 
 
 			}
 
 //		DAT.getRepos( user );
 
-		}
+//		}
 
 
 		if ( EUS.requestGitHubAPIUserEvents ) {
 
-			EUS.target = updates;
+//			EUS.target = updates;
 			EUS.requestGitHubAPIUserEvents( user );
 
 		}
 
 		window.scrollTo( 0, 0 );
+		COR.updates.scrollTop = 0;
 
 	}
 

@@ -3,21 +3,23 @@
 // Documentation: https://developer.github.com/v3/
 // https://developer.github.com/v3/activity/events/
 
-// https://rawgit.com/mrdoob/three.js/
-// https://jaanga.github.io/terrain3/elevations-core3/elevations-view-r6.html 
 
 	var EUS = EUS || {};
+
+// from: https://developer.github.com/v3/activity/events/types/
 
 	EUS.eventTypes = [ "CommitCommentEvent","CreateEvent","DeleteEvent","DeploymentEvent","DeploymentStatusEvent","DownloadEvent","FollowEvent","ForkEvent","ForkApplyEvent","GistEvent","GollumEvent","IssueCommentEvent","IssuesEvent","MemberEvent","MembershipEvent","PageBuildEvent","PublicEvent","PullRequestEvent","PullRequestReviewCommentEvent","PushEvent","ReleaseEvent","RepositoryEvent","StatusEvent","TeamAddEvent","WatchEvent" ];
 
 	EUS.type = {};
 	EUS.dates = [];
-//	EUS.repos = [];
+	EUS.repos = [];
 
+	EUS.readmeTypes = [ 'README.md', 'readme.md', 'README.markdown', 'README.rst', 'README' ];
 	EUS.css = '<style>body { font: 10pt monospace; }</style>\n';
 
 // may not be in use
-	EUS.getMenuDetailsUserEvents = function() {
+
+	EUS.xxxgetMenuDetailsUserEvents = function() {
 
 		EUS.target = updates;
 
@@ -35,40 +37,55 @@
 
 		return menuDetailsUserEvents;
 
-	}
+	};
 
 
-// Used by right menu
-// events-user-r1.html
-// github-api-user-explorer2-r1.html
+// Called by HTML. fetches data and draws right column menu
+// User: events-user-r1.html
+// User github-api-user-explorer2-r1.html
 
 	EUS.requestGitHubAPIUserEvents = function( user ) {
 
-		var xhr;
-		var events, event, txt, dates, actor, repo, link, index;
+		var urlEvents, event, txt, dates, actor, repo, link, index;
 
-		var urlEvents = 'https://api.github.com/users/' + user + '/events?per_page=100' + ( API.token || '' );
+		urlEvents = 'https://api.github.com/users/' + user + '/events?per_page=100&' + ( API.token || '' );
 
-		xhr = new XMLHttpRequest();
-		xhr.open( 'get', urlEvents, true );
-		xhr.onload = callback;
-		xhr.send( null );
+		COR.requestFile( urlEvents, callback )
 
-		function callback() {
+		function callback( xhr ) {
 
-			EUS.events = JSON.parse( xhr.responseText );
+			EUS.events = JSON.parse( xhr.target.responseText );
 			EUS.dates = [];
 			EUS.repos = [];
 			EUS.user = user;
 
-			txt = '<h2>' + user + ' recent events</h2>' +
-				'<button onclick=DAT.currentTopic="stats";window.location.reload() >show activity statistics</button>' + b;
+			if ( EUS.events.message ) { // there's been an error...
+
+				COR.contents.innerHTML = 
+
+					'<h1>' + EUS.events.message + '</h1>' +
+					'<p>See: </p>' +
+					'<p>' + ("https://github.com/settings/tokens").link( "https://github.com/settings/tokens" ) + '</p>' +
+					'<p>' + ('https://developer.github.com/v3/auth/#basic-authentication').link( 'https://github.com/settings/tokens' ) + '</p>' +
+				'';
+
+				return;
+
+			}
+
+			txt = '<h2 style=margin-botom:0; >' + user + '</h2>' +
+				'<h3 style=margin-bottom:0; >' + EUS.events.length + ' recent user events by date</h3>' +
+
+//				'<button onclick=DAT.currentTopic="stats";window.location.reload(); >show activity statistics</button>' + b;
+				'<button onclick=DAT.currentTopic="stats";EUS.requestGitHubAPIUserEvents("' + user + '"); >show events by repository and type</button>' + b +
+				'<button onclick=DAT.currentTopic="events";DAT.getEvents("' + DAT.userData.login + '",0); >show events in detail</button>' + b;
+
 
 			for ( var i = 0; i < EUS.events.length; i++ ) {
 
 				event = EUS.events[ i ];
 
-				if ( !EUS.repos[ event.repo.name ] ) { 
+				if ( !EUS.repos[ event.repo.name ] ) {
 
 					EUS.repos[ event.repo.name ] = { "name" : event.repo.name, "stats" : Array(  EUS.eventTypes.length ).fill( 0 ) };
 
@@ -88,20 +105,20 @@
 
 					actor = event.actor.login.link( event.actor.url );
 
-				} else { 
+				} else {
 
 					actor = 'repo: ' ;
 
 				}
 
-				repo = event.repo.name
+				repo = event.repo.name;
 
 				link = repo.replace ( user + '/', '' ).link( 'https://github.com/' + repo );
 
-				txt += 
+				txt +=
 
 					( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + ' ' + actor + ' ' + link + b +
-					'<small>' + EUS.type[ 'on' + event.type ]( event ) + '</small>' + 
+					'<small>' + EUS.type[ 'on' + event.type ]( event ) + '</small>' +
 
 				b;
 
@@ -111,7 +128,7 @@
 
 			}
 
-			EUS.target.innerHTML = txt;
+			COR.updates.innerHTML = txt;
 
 			if ( DAT.currentTopic === 'stats' ) {
 
@@ -123,7 +140,8 @@
 
 		}
 
-	}
+	};
+
 
 
 // Used by center contents
@@ -132,32 +150,37 @@
 
 	EUS.buildStatsReport = function( user ) {
 
-		var txt, keys, repo;
+		var txt, repoKeys, repo;
 
 console.clear();
 
-		txt = 
+		txt =
 
-			'<h1>' + user + '</h1>' +
-				'<h2>Statistics of ' + EUS.events.length + ' most recent events' +
+			'<h1>' + DAT.userData.type + ': ' +
+				user.link( DAT.userData.html_url ) +
+			'</h1>' +
+			'<h2>' + 
+				EUS.events.length + ' recent ' + DAT.userData.type + ' events by repository and type' +
 			'</h2>' +
-			'Time period covers ' + EUS.dates.slice( -1 )  + ' to ' + EUS.dates[ 0 ] + ' with ' + EUS.dates.length + ' day(s) of activity' + b + 
+			'<div>'+
+				'Time period covers ' + EUS.dates.slice( -1 )  + ' to ' + EUS.dates[ 0 ] + ' with ' + EUS.dates.length + ' day(s) of activity' + 
+			'</div>' +
 
 		b;
 
-		repoKeys = Object.keys( EUS.repos ); 
+		repoKeys = Object.keys( EUS.repos );
 
 		for ( var i = 0; i < repoKeys.length; i++ ) {
 
 			repoName = EUS.repos[ repoKeys[ i ] ].name;
+
+// can we add type of user here?
 
 			txt += '<h2 style=margin-bottom:0; >User/repo: ' + repoName.link( 'https://github.com/' + repoName ) + '</h2>';
 
 			repo = EUS.repos[ repoKeys[ i ] ];
 
 			txt += '<iframe id=' + repoName + ' height=300 width=100% ></iframe>';
-
-//			EUS.getIframeContents( repoName );
 
 			for ( var j = 0; j < EUS.eventTypes.length; j++ ) {
 
@@ -171,8 +194,7 @@ console.clear();
 
 		}
 
-
-		for ( var i = 0; i < repoKeys.length; i++ ) {
+		for ( i = 0; i < repoKeys.length; i++ ) {
 
 			repoName = EUS.repos[ repoKeys[ i ] ].name;
 
@@ -180,9 +202,9 @@ console.clear();
 
 		}
 
-		contents.innerHTML = txt;
+		COR.contents.innerHTML = txt + COR.getPageFooter();
 
-	}
+	};
 
 
 
@@ -209,66 +231,24 @@ console.clear();
 
 			default:
 
-				branch = '/master/'
+				branch = '/master/';
 				fileName = 'README.md';
 				break;
 
 		}
 
-//		EUS.getReadMe( repo, branch, fileName );
-
 		EUS.getReadMe( repo, branch, 0 );
 
-	}
-
-
-
-	EUS.cccgetReadMe = function( repo, branch, fileName ) {
-
-		var urlReadMe, xhr;
-
-		urlReadMe = 'https://rawgit.com/' + repo + branch + fileName;
-
-		xhr = new XMLHttpRequest();
-		xhr.repo = repo;
-		xhr.open( 'get', urlReadMe, true );
-		xhr.onload = callback;
-		xhr.send( null );
-
-		function callback() {
-
-			var text, item;
-
-			if ( xhr.status !== 404 ) {
-
-				text = COR.converter.makeHtml( xhr.responseText );
-
-			} else {
-
-				text = 'File not found: ' + xhr.repo + branch + fileName + b +
-
-				branch + ' may not be the correct branch to use here'; 
-
-			}
-
-			item = document.getElementById( xhr.repo );
-
-			item.srcdoc = EUS.css + COR.converter.makeHtml( text );
-
-		}
-
-	}
+	};
 
 
 	EUS.getReadMe = function( repo, branch, count ) {
 
-		var urlReadMe, xhr;
+		var urlReadMe, xhr, text, item;
 
-		files = [ 'README.md', 'readme.md', 'README.markdown', 'README.rst', 'README' ];
+		urlReadMe = 'https://rawgit.com/' + repo + branch + EUS.readmeTypes[ count ];
 
-		urlReadMe = 'https://rawgit.com/' + repo + branch + files[ count ];
-
-//console.log( '', repo, branch, files[ count ] );
+//console.log( '', repo, branch, EUS.readmeTypes[ count ] );
 
 		xhr = new XMLHttpRequest();
 		xhr.repo = repo;
@@ -280,21 +260,19 @@ console.clear();
 
 		function callback() {
 
-			var text, item;
-
 			if ( xhr.status !== 404 ) {
 
 				text = COR.converter.makeHtml( xhr.responseText );
 
-			} else if ( ++xhr.count < files.length ) {
+			} else if ( ++xhr.count < EUS.readmeTypes.length ) {
 
-				EUS.getReadMe( xhr.repo, xhr.branch, xhr.count ) 
+				EUS.getReadMe( xhr.repo, xhr.branch, xhr.count );
 
 			} else {
 
 				text = 'File not found: ' + xhr.repo + branch + fileName + b +
 
-				branch + ' may not be the correct branch to use here'; 
+				branch + ' may not be the correct branch to use here';
 
 			}
 
@@ -304,25 +282,27 @@ console.clear();
 
 		}
 
-	}
+	};
 
 
 
-	EUS.getIndexHTML = function( repo ) {
+
+
+	EUS.ccccgetIndexHTML = function( repo ) {
 
 		user = repo.split( '/' ).shift();
 
-		folder = repo.split( '/' ).pop()
+		folder = repo.split( '/' ).pop();
 
 		folder = repo.includes( '.github.io' ) ? folder : user + '.github.io/' + folder;
 
 		item = document.getElementById( repo );
 
- console.log( 'index mmmmmmmmmmmm repo', folder );
+// console.log( 'index mmmmmmmmmmmm repo', folder );
 
 		item.src = '//' + folder;
 
-	}
+	};
 
 
 
@@ -359,7 +339,7 @@ console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
 
 				if ( dates.indexOf( event.created_at.slice( 0, 10 ) ) === -1 ) {
 
-					dates.push( event.created_at.slice( 0, 10 ) )
+					dates.push( event.created_at.slice( 0, 10 ) );
 
 					txt += '<h4 style=margin-bottom:0; >' + event.created_at.slice( 0, 10 ) + '</h4>';
 
@@ -367,13 +347,13 @@ console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
 
 				body =  event.payload.issue.body;
 
-				if ( body.length > 800 ) { 
+				if ( body.length > 800 ) {
 
 					body = body.slice( 0, 800 ) + '</div>more...';
 
 				}
 
-				txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + ' ' + event.repo.name.link( 'https://github.com/' + event.repo.name ) + b + 
+				txt += ( i + 1 ) + ' ' + event.created_at.slice( 11, -4 ) + ' ' + event.repo.name.link( 'https://github.com/' + event.repo.name ) + b +
 
 					'<small>' + event.payload.issue.title.link( event.payload.issue.html_url ) + '</small>' + b +
 
@@ -381,48 +361,46 @@ console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
 
 				'';
 
-
-
 			}
 
 			EUS.target.innerHTML = txt;
 
 		}
 
-	}
+	};
 
 
 
 //
 
-	EUS.type.onCommitCommentEvent = function( event ) { return 'commit comment ' + event.payload.comment.body.slice( 0, 100 ).link( event.payload.comment.html_url ) + '...'; }
+	EUS.type.onCommitCommentEvent = function( event ) { return 'commit comment ' + event.payload.comment.body.slice( 0, 100 ).link( event.payload.comment.html_url ) + '...'; };
 
-	EUS.type.onCreateEvent = function( event ) { return 'create ' + event.payload.master_branch; }
+	EUS.type.onCreateEvent = function( event ) { return 'create ' + event.payload.master_branch; };
 
-	EUS.type.onDeleteEvent = function( event ) { return 'delete ' + event.payload.ref_type; }
+	EUS.type.onDeleteEvent = function( event ) { return 'delete ' + event.payload.ref_type; };
 
-	EUS.type.onDeploymentEvent = function( event ) { return 'DeploymentEvent ' + event.payload ; }
+	EUS.type.onDeploymentEvent = function( event ) { return 'DeploymentEvent ' + event.payload ; };
 
-	EUS.type.onDeploymentStatusEvent = function( event ) { return 'DeploymentStatusEvent ' + event.payload ; }
+	EUS.type.onDeploymentStatusEvent = function( event ) { return 'DeploymentStatusEvent ' + event.payload ; };
 
-	EUS.type.onDownloadEvent = function( event ) { return 'DownloadEvent ' + event.payload ; }
+	EUS.type.onDownloadEvent = function( event ) { return 'DownloadEvent ' + event.payload ; };
 
-	EUS.type.onFollowEvent = function( event ) { return 'follow ' + event.payload ; }
+	EUS.type.onFollowEvent = function( event ) { return 'follow ' + event.payload ; };
 
-	EUS.type.onForkApplyEvent = function( event ) { return 'ForkApplyEvent ' + event.payload ; }
+	EUS.type.onForkApplyEvent = function( event ) { return 'ForkApplyEvent ' + event.payload ; };
 
-	EUS.type.onForkEvent = function( event ) { return 'fork by ' + event.actor.display_login.link( 'https://github.com/' + event.actor.display_login ); }
+	EUS.type.onForkEvent = function( event ) { return 'fork by ' + event.actor.display_login.link( 'https://github.com/' + event.actor.display_login ); };
 
-	EUS.type.onGistEvent = function( event ) { return 'gist ' + event.payload ; }
+	EUS.type.onGistEvent = function( event ) { return 'gist ' + event.payload ; };
 
-	EUS.type.onGollumEvent = function( event ) { return 'wiki edited'; }
+	EUS.type.onGollumEvent = function( event ) { return 'wiki edited'; };
 
-	EUS.type.onIssuesEvent = function( event ) { 
+	EUS.type.onIssuesEvent = function( event ) {
 
 		EUS.type.issuesEvents = !EUS.type.issuesEvents ? 1 : EUS.type.issuesEvents + 1;
 		body =  event.payload.issue.body;
 
-		if ( body.length > 500 ) { 
+		if ( body.length > 500 ) {
 
 			body = body.slice( 0, 500 ) + '</div>more...';
 
@@ -434,19 +412,19 @@ console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
 
 		'';
 
-//		return 'issue ' + event.payload.issue.title.link( event.payload.issue.html_url ); 
+//		return 'issue ' + event.payload.issue.title.link( event.payload.issue.html_url );
 
-	}
+	};
 
-	EUS.type.onIssueCommentEvent = function( event ) { return 'issue comment ' + event.payload.issue.title.link( event.payload.issue.html_url ); }
+	EUS.type.onIssueCommentEvent = function( event ) { return 'issue comment ' + event.payload.issue.title.link( event.payload.issue.html_url ); };
 
-	EUS.type.onMemberEvent = function( event ) { return 'member ' + event.payload.action; }
+	EUS.type.onMemberEvent = function( event ) { return 'member ' + event.payload.action; };
 
-	EUS.type.onMembershipEvent = function( event ) { return 'MembershipEvent ' + event.payload ; }
+	EUS.type.onMembershipEvent = function( event ) { return 'MembershipEvent ' + event.payload ; };
 
-	EUS.type.onPageBuildEvent = function( event ) { return 'PageBuildEvent ' + event.payload ; }
+	EUS.type.onPageBuildEvent = function( event ) { return 'PageBuildEvent ' + event.payload ; };
 
-	EUS.type.onPublicEvent = function( event ) { return 'PublicEvent ' + event.payload ; }
+	EUS.type.onPublicEvent = function( event ) { return 'PublicEvent ' + event.payload ; };
 
 
 	EUS.type.onPushEvent = function( event ) {
@@ -461,33 +439,33 @@ console.log( 'requestGitHubAPIUserEventsStatusUpdate', user );
 
 		}
 
-	}
+	};
 
-	EUS.type.onPullRequestEvent = function( event ) { 
-
-		return 'pull request ' + event.payload.action + ' ' + event.payload.pull_request.title.link( event.payload.pull_request.html_url );
-
-			event.payload.pull_request.body.slice( 0, 100 ) + '<br>more...' ; 
-
-	}
-
-	EUS.type.onPullRequestReviewCommentEvent = function( event ) { 
-
-//		return 'pull comment ' + event.payload.comment.body.slice( 0, 100 ); 
+	EUS.type.onPullRequestEvent = function( event ) {
 
 		return 'pull request ' + event.payload.action + ' ' + event.payload.pull_request.title.link( event.payload.pull_request.html_url );
 
-			event.payload.pull_request.body.slice( 0, 100 ) + '<br>more...' ; 
+//			event.payload.pull_request.body.slice( 0, 100 ) + '<br>more...' ;
 
-	}
+	};
 
-	EUS.type.onReleaseEvent = function( event ) { return 'release ' + event.payload.release.name ; }
+	EUS.type.onPullRequestReviewCommentEvent = function( event ) {
 
-	EUS.type.onRepositoryEvent = function( event ) { return 'RepositoryEvent ' + event.payload ; }
+//		return 'pull comment ' + event.payload.comment.body.slice( 0, 100 );
 
-	EUS.type.onStatusEvent = function( event ) {return 'StatusEvent ' + event.payload ; }
+		return 'pull request ' + event.payload.action + ' ' + event.payload.pull_request.title.link( event.payload.pull_request.html_url );
 
-	EUS.type.onTeamAddEvent = function( event ) { return 'TeamAddEvent ' + event.payload ; }
+//			event.payload.pull_request.body.slice( 0, 100 ) + '<br>more...' ;
 
-	EUS.type.onWatchEvent = function( event ) { return 'watch ' + event.payload.action + ' by ' + event.actor.display_login.link( 'https://github.com/' + event.actor.display_login ); }
+	};
+
+	EUS.type.onReleaseEvent = function( event ) { return 'release ' + event.payload.release.name ; };
+
+	EUS.type.onRepositoryEvent = function( event ) { return 'RepositoryEvent ' + event.payload ; };
+
+	EUS.type.onStatusEvent = function( event ) {return 'StatusEvent ' + event.payload ; };
+
+	EUS.type.onTeamAddEvent = function( event ) { return 'TeamAddEvent ' + event.payload ; };
+
+	EUS.type.onWatchEvent = function( event ) { return 'watch ' + event.payload.action + ' by ' + event.actor.display_login.link( 'https://github.com/' + event.actor.display_login ); };
 
