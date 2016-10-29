@@ -1,13 +1,18 @@
 ﻿<span style=display:none; >
 [You are now in a GitHub source code view - click this link to view Read Me file as a web page]
 ( https://jaanga.github.io/demo/pm/index.html "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/pm/'; 
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/pm/';
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
-[Jaanga]( https://jaanga.github.io ) » [Demo]( https://jaanga.github.io/demo/pm/  ) »
+[Jaanga]( https://jaanga.github.io ) » [Demo]( https://jaanga.github.io/demo/  ) »
 
-[PM Read Me]( ./index.html )
-===
+[Paul M Read Me]( ./index.html )
+===============================================================================
+
+## 2016-10-28
+
+* [GubGub PM]( http://jaanga.github.io/demo/paul-m/gubgub-pm/index.html )
+
 
 ## 2016-05-23
 
@@ -17,7 +22,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [SageMath Documentation Absolute Links R1]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/sage-documentation-home-page-r1.html )
 
-* SageMath Documentation home page edited to have absolute links 
+* SageMath Documentation home page edited to have absolute links
 
 [Sage Documentation Site Map Maker R1]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/sage-documentation-site-map-maker-r1.html )
 
@@ -25,7 +30,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Site Map]( http://jaanga.github.io/demo/pm/sage-documentation-home-page/site-map.html )
 
-* A site map produced using Sage Documentation Site Map Maker 
+* A site map produced using Sage Documentation Site Map Maker
 
 
 ## 2016-05-19
@@ -37,7 +42,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## _2016-04-18_
 
-[Plane Donuts R2]( http://jaanga.github.io/demo/pm/plane-donuts/plane-donuts-r2.html ) 
+[Plane Donuts R2]( http://jaanga.github.io/demo/pm/plane-donuts/plane-donuts-r2.html )
 
 * Gently slide the lerp slider from left to right
 * Works only once. Reload to do it again
@@ -45,7 +50,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## _2016-02-21_
 
-[Marching Cubes R1]( http://jaanga.github.io/demo/pm/marching-cubes/marching-cubes-r1.html ) 
+[Marching Cubes R1]( http://jaanga.github.io/demo/pm/marching-cubes/marching-cubes-r1.html )
 
 
 
@@ -57,7 +62,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * Displays the list of all folder and file names found in left menu column
 	* Currently selected file is highlighted
 * Opens, reads and displays the contents of currently selected file
-	* View source buttons links to the source code of the current page 
+	* View source buttons links to the source code of the current page
 
 ## _2016-01-12_
 
@@ -82,7 +87,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * Opens and reads the contents of every file
 * Carries out a simple line-by line search on the contents
 * Records and lists the search results in the right-side contents pane
-	* The name of each file is listed 
+	* The name of each file is listed
 	* The name is also a link to the original file
 	* Search results are listed under
 
@@ -101,7 +106,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * Adds listing of all the def's in a file except for 'def __init__(self)'
 * Code clean-up
 	* Uses JSON.parse instead of eval
-	* Display format improvements 
+	* Display format improvements
 	* Could be used to compare files from any two branches
 
 ## _2016-01-09_
