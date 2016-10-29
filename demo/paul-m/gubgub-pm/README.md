@@ -6,8 +6,27 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Jaanga]( https://jaanga.github.io ) » [Demo PaulM]( https://jaanga.github.io/demo/paul-m/  ) »
 
-
 GubGub Paul M README
 ================================================================================
+_A custom GubGub for Paul M_
 
-[../index.html]( ../index.html )
+## Full screen [GubGub Paul M]( http://jaanga.github.io/demo/paul-m/gubgub-pm/ )
+
+### 2016-10-29 Questions
+
+* What features need to be added or subtracted to make this script useful to you?
+* Are there some good queries or favorites that should be added?
+* Are there any aspects that need simplifying or clarifying
+
+### Notes
+
+This version of GubGub is not intended for use on the small screen of a mobile phone.
+
+
+
+Change log
+--------------------------------------------------------------------------------
+
+### 2016-10-29 ~ R1
+
+* First commit
