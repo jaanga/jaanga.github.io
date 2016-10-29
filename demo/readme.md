@@ -15,7 +15,7 @@
 
 ## [Moon]( http://jaanga.github.io/moon/ ) [Voyager]( http://jaanga.github.io/moon/voyager/ ) [Gamer]( http://jaanga.github.io/moon/voyager/gamer/dev/ ) [Altitude]( http://jaanga.github.io/moon/voyager/altitude/dev/ ) [Satellities]( http://jaanga.github.io/moon/voyager/satellites/dev/ ) [SEM]( http://jaanga.github.io/moon/voyager/sun-earth-moon/dev/ )
 
-## [Moon]( http://jaanga.github.io/moon ) [Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ ) [64p]( http://jaanga.github.io/moon/rover-64p/dev/ ) [256p]( http://jaanga.github.io/moon/rover-256p/dev/ ) 
+## [Moon]( http://jaanga.github.io/moon ) [Rover Mobile]( http://jaanga.github.io/moon/rover-mobile/dev/ ) [64p]( http://jaanga.github.io/moon/rover-64p/dev/ ) [256p]( http://jaanga.github.io/moon/rover-256p/dev/ )
 
 ## [Mars]( http://jaanga.github.io/mars/ ) [Voyager]( http://jaanga.github.io/mars/voyager/gamer/dev/ )
 
@@ -50,14 +50,14 @@
 
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
-## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [pm]( http://jaanga.github.io/demo/pm/ )  [rb]( http://jaanga.github.io/demo/rb/shower-the-monkey/shower-the-monkey-r1.html ) [ms]( http://jaanga.github.io/demo/ms/ )
+## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [paul m]( http://jaanga.github.io/demo/paul-m/ )  [ronan-b]( http://jaanga.github.io/demo/ronanb-b/ ) [ms]( http://jaanga.github.io/demo/ms/ )
 
 ## [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineT]( http://jaanga.github.io/demo/konstantine-t/ )
- 
+
 ## [Moving Manuals]( http://jaanga.github.io/moving-manuals/ ) ~ [not Kallax]( http://jaanga.github.io/moving-manuals/kallax-nxn/ )
 
 
-# [Terrain]( http://jaanga.github.io/terrain-viewer/readme-reader.html ) ~ 
+# [Terrain]( http://jaanga.github.io/terrain-viewer/readme-reader.html ) ~
 
 ## [unFlatland R11]( http://jaanga.github.io/terrain-viewer/un-flatland/latest/ ) &nbsp; [GH]( https://github.com/jaanga/terrain-viewer/tree/gh-pages/un-flatland )
 
@@ -78,7 +78,7 @@
 
 ## [FGx 3D Globe]( http://fgx.github.io/fgx-globe/index.html ) [FGx 3D Globe R5]( http://fgx.github.io/fgx-globe/fgx-globe-r5/index.html )
 
-## [FGx Plane Spotter]( http://jaanga.github.io/fgx-plane-spotter/latest/ ) 
+## [FGx Plane Spotter]( http://jaanga.github.io/fgx-plane-spotter/latest/ )
 
 ## [Craziness]( http://jaanga.github.io/terrain-viewer/un-flatland/r11/un-flatland-r11-debug.html ) <span style=font-size:7pt; >Click 'addPath' then 'toggleFollow'</span>
 
