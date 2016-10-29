@@ -22,6 +22,11 @@ _A custom GubGub for Paul M_
 
 This version of GubGub is not intended for use on the small screen of a mobile phone.
 
+See Change Log of main README for current test results
+
+This version is the 'Kitchen Sink' script. It tries to play with everything/anything.
+Future revisions will explore the building of much simpler tools.
+
 
 
 Change log
