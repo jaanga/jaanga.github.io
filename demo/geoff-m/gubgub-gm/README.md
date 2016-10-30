@@ -11,3 +11,31 @@ GubGub Geoff M README
 ================================================================================
 
 [../index.html]( ../index.html )
+
+_A custom GubGub for Geoff M_
+
+## Full screen [GubGub Geoff M]( http://jaanga.github.io/demo/geoff-m/gubgub-gm/ )
+
+### 2016-10-29 Questions
+
+* What features need to be added or subtracted to make this script useful to you?
+* Are there some good queries or favorites that should be added?
+* Are there any aspects that need simplifying or clarifying?
+
+### Notes
+
+See Change Log of main README for current test results.
+
+This version of GubGub is not intended for use on the small screen of a mobile phone.
+
+This version is the 'Kitchen Sink' script. It tries to play with everything/anything.
+Future revisions will explore the building of much simpler tools.
+
+
+
+Change log
+--------------------------------------------------------------------------------
+
+### 2016-10-29 ~ R1
+
+* First commit
