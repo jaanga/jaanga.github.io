@@ -154,7 +154,7 @@
 //			if ( !item.includes( '.html' ) ) { continue; }
 			if ( !item.includes( '.jpg' ) ) { continue; }
 
-			if ( item.includes( 'thumb' ) ||  item.includes( 'sized' ) ) { continue; }
+			if ( item.includes( 'thumb' ) ||  item.includes( 'sized' ||  item.includes( 'highlight' ) ) { continue; }
 			if ( item.includes( 'archive' ) ) { continue; }
 
 			if ( item.includes( 'index.html' ) ) { continue; }
