@@ -152,8 +152,9 @@
 			if ( !item.includes( dir ) ) { continue; }
 
 //			if ( !item.includes( '.html' ) ) { continue; }
-			if ( !item.includes( '.jpggg' ) ) { continue; }
+			if ( !item.includes( '.jpg' ) ) { continue; }
 
+			if ( item.includes( 'thumb' ) ||  item.includes( 'sized' ) ) { continue; }
 			if ( item.includes( 'archive' ) ) { continue; }
 
 			if ( item.includes( 'index.html' ) ) { continue; }
@@ -166,12 +167,36 @@
 
 		}
 
-		GET.createFolderNameTableOfContents();
+		if ( dir === 'albums/' )  { GETtoc.innerHTML = GET.createFolderNameTableOfFolders(); }
+
+		if ( dir !== 'albums/' ) { MNU.contents.innerHTML = GET.createGallery(); }
 
 	};
 
 
-	GET.createFolderNameTableOfContents = function() {
+	GET.createGallery = function() {
+
+		var toc, folderName, folder;
+
+		toc = '';
+
+		for ( var i = 0; i < GET.filesSelected.length; i++ ) {
+
+			item = GET.filesSelected[ i ];
+			item2 = item.split( '/' )
+
+			fileName = item2.pop();
+			fileName = fileName.replace( /-/g, ' ' );
+
+			toc += '<div style=display:inline-block;margin:10px; ><img src=' + DEF.urlGHPages + item + ' ><br>' + fileName + '</div>';
+
+		}
+
+		return toc;
+
+	}
+
+	GET.createFolderNameTableOfFolders = function() {
 
 		var toc, folderName, folder;
 
@@ -188,6 +213,16 @@
 
 		}
 
+		return toc;
+
+	}
+
+
+	GET.createFolderNameTableOfFiles = function() {
+
+		var toc, folderName, folder;
+
+		toc = '';
 
 		for ( var i = 0; i < GET.filesSelected.length; i++ ) {
 
@@ -202,9 +237,10 @@
 		}
 
 
-		GETtoc.innerHTML = toc;
+		return toc;
 
 	}
+
 
 
 

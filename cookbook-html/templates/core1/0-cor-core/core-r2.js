@@ -36,89 +36,6 @@
 
 // and also in DEF
 
-	COR.initThreeColumns = function() {
-
-		COR.getCSSThreeColumns();
-
-		COR.menu = document.body.appendChild( document.createElement( 'div' ) );
-		COR.menu.id = 'menu';
-
-// use this in your HTML file
-
-		COR.menu.innerHTML =
-
-			COR.getMenuDetailsHeader() +
-
-			COR.getMenuDetailsTemplate() +
-
-			COR.getMenuDetailsAbout() +
-
-			COR.getMenuFooter() +
-
-		b;
-
-
-		COR.contents = document.body.appendChild( document.createElement( 'div' ) );
-		COR.contents.id = 'contents';
-		COR.contents.innerHTML = '<h1>contents</h1><div id=CORdivContents >' + COR.txt + '</div>';
-
-
-		COR.updates = document.body.appendChild( document.createElement( 'div' ) );
-		COR.updates.id = 'updates';
-		COR.updates.innerHTML = '<h1>updates</h1><div id=CORdivUpdates >' + COR.txt + '</div>';
-
-//		detailsTemplate.setAttribute('open', 'open');
-
-	};
-
-
-
-	COR.getCSSThreeColumns = function() {
-
-		var css;
-
-		css = document.body.appendChild( document.createElement( 'style' ) );
-		css.innerHTML =
-
-			'body { font: 12pt monospace; margin: 0; }' +
-
-			'a { color: crimson; text-decoration: none; }' +
-
-			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
-
-//			'img { max-width: 100%; }' +
-//			'iframe { width: 100%; }' +
-
-			'select { width: 100%; }' +
-			'summary h2, summary h3, summary h4 { display: inline; }' +
-			'summary { outline: none; }' +
-
-//			'.butt2 { width: 108px; }' +
-			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
-			'.GETupdate { border: 1px solid #aaa; height: 300px; overflow: auto }' +
-
-			'#contents { border: 0px red solid; left: 24%; position: absolute; top: 0; max-width: 50%; }' +
-			'#contents p { margin: 0 0 12px 0 }' +
-
-			'#menu { background-color: #eee; height: ' + window.innerHeight + 'px; padding: 0 5px 0 10px; overflow-x: hidden; overflow-y: auto; position: fixed; width: 20%; }' +
-			'#menu h2, #menu h3 { margin: 0 0 10px 0; }' +
-			'#menu img { max-width: 200px; }' +
-
-			'#updates { background-color: #eee;  height: ' + window.innerHeight + 'px; right: 0; max-width: 20%; overflow-x: hidden; overflow-y: auto; padding: 0 20px; position: fixed; }' +
-			'#updates img { width: 100%; }' +
-
-			'#repositoryEvents h4 { margin: 0; }' +
-			'#repositoryEvents { max-height: 200px; overflow-y: scroll; font-size: 9pt; }' +
-
-			'#divSplash { background-color: #ccc; border: 2px solid #888; height: 80%; width: 500px;' +
-				'overflow: hidden; left: 350px; position: absolute; resize: none; top: 100px; }' +
-			'#splashHeader { text-align: right; }' +
-
-		b;
-
-	};
-
-
 
 	COR.getMenuBreadCrumbs = function() {
 
@@ -173,6 +90,50 @@
 	};
 
 
+
+	COR.setMenuBreadCrumbsFolder = function( dir ) {
+
+//console.log( 'dir', dir );
+
+		var CORbreadCrumbs, dirArray, dirString;
+
+		dirArray = dir === '/' ? [] : dir.split( '/' );
+
+		if ( dirArray.length > 0 ) {
+
+			CORbreadCrumbs =
+
+			'<h3 class=>' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' jaanga </a> &raquo; ' +
+//				'<a href=https:// >' + DEF.repo + '</a> &raquo; ' +
+			'</h3>';
+
+		} else {
+
+			CORbreadCrumbs =
+
+			'<h3>' +
+				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
+			'</h3>' +
+			'<h2><a href="" >' + DEF.repo + '</a> &raquo; </h2>';
+
+		}
+
+		for ( var i = 0; i < dirArray.length; i++ ) {
+
+			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
+
+			if ( dirString.endsWith( '.md' ) || dirString.endsWith( '.html' ) ) { continue; }
+
+			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
+
+		}
+
+		COR.title = dirArray.length ? dirArray.pop().replace( /-/g, ' ' ) : DEF.repo;
+
+		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs;
+
+	};
 
 
 	COR.getMenuDetailsHeader = function() {

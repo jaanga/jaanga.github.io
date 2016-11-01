@@ -2,30 +2,52 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Core1 Hamburger R1</title>
+<title>MNU Menu Left R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='Jaanga Templates Core1 Core R1. The essential HTML, CSS and JavaScript to get sarted
+<meta name=description content='Jaanga Templates Menu Left R1. The essential HTML, CSS and JavaScript to get sarted
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-25' >
+<meta name=date content='2016-10-31' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+
 <script src=../../core1/0-def-defaults/defaults-r1.js ></script>
-<script src=../../core1/0-cor-core/core-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r2.js ></script>
+<script src=../../core1/mnu-menu-left/mnu-menu-left-r1.js ></script>
+
 <script>
 // Copyright &copy; 2016 Jaanga authors. MIT License
 
+	DEF.user = 'leaderphotos';
+	DEF.repo = 'leaderphotos.github.io';
+	DEF.branch = 'master';
+	DEF.searchInFolder = 'albums/';
+	DEF.defaultFile	= '../README.md'; // if no default, select a random file
+
+//	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
+
+//	DEF.urlEvents = 'https://api.github.com/users/' + DEF.user + '/events';
+//	DEF.urlIssues = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/issues';
+
+
+//	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/' + DEF.repo + '/';
+	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/';
+
+//	DEF.readmeURL = DEF.urlGHPages + DEF.searchInFolder;
+//	DEF.urlReadMeFile = DEF.urlGHPages + '#../README.md';
+
+//	DEF.urlSource = 'https://github.com/' + DEF.user + '/' + DEF.repo + '/tree/' + DEF.branch + '/';
 
 	init();
 
 	function init() {
 
-		DEF.menuHeaderTagline = 'A hard core howdy!' + b;
+		DEF.menuHeaderTagline += 'Plus an MNU howdy!' + b;
 
-		COR.initLeftMenu();
+		MNU.initLeftMenu();
 
-		COR.menu.innerHTML =
+		MNU.menu.innerHTML =
 
 			COR.getMenuDetailsHeader() +
 
@@ -80,7 +102,7 @@
 
 			COR.requestFile( DEF.urlGHPages + item + '/' + DEF.defaultFile, function callbackMD( xhr ) {
 
-				COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+				MNU.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
 //				COR.contents.style.overflow = 'auto';
 
 			} );
