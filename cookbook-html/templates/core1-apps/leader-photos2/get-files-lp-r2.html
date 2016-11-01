@@ -2,33 +2,33 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Get Files R1</title>
+<title>Leader Photos R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='
+<meta name=description content='Leader Photos
 ' >
 <meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2016-09-13' >
+<meta name=date content='2016-10-31' >
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
-<!--
 <script src=../../core1/0-def-defaults/defaults-r1.js ></script>
 <script src=../../core1/0-cor-core/core-r2.js ></script>
 <script src=../../core1/mnu-menu-left/mnu-menu-left-r1.js ></script>
 <script src=../../core1/get-files/get-files-r3.js ></script>
--->
+<!--
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/0-def-defaults/defaults-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/0-cor-core/core-r2.js ></script>
-<script src=https://jaanga.github.io/cookbook-html/templates/core1/mnu-menu-left/mnu-menu-left-r1.j ></script>
+<script src=https://jaanga.github.io/cookbook-html/templates/core1/mnu-menu-left/mnu-menu-left-r1.js ></script>
 <script src=https://jaanga.github.io/cookbook-html/templates/core1/get-files/get-files-r3.js ></script>
 
+-->
 <script>
 
 	DEF.user = 'leaderphotos';
 	DEF.repo = 'leaderphotos.github.io';
 	DEF.branch = 'master';
 	DEF.searchInFolder = 'albums/';
-	DEF.defaultFile	= '../README.md'; // if no default, select a random file
+	DEF.defaultFile	= '../README.md';
 
 	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
 	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/';
@@ -39,7 +39,10 @@
 
 		MNU.taglineHeader = 'A hard core howdy!' + b;
 
+
 		MNU.initLeftMenu();
+
+		MNU.css.innerHTML += '.CORmenuBreadCrumbs {display: none; }';
 
 		MNU.menu.innerHTML =
 
@@ -49,11 +52,7 @@
 
 			GET.getMenuDetailsTableOfContents() +
 
-			GET.getMenuDetailsPageActions() +
-
-//			GET.getMenuRepositoryEvents() +
-
-//			GET.getMenuDetailsRepositoryStatistics() +
+//			GET.getMenuDetailsPageActions() +
 
 			COR.getMenuDetailsAbout() +
 
@@ -62,6 +61,8 @@
 		b;
 
 		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		GETmenuToCSummary.innerHTML = 'Albums';
 
 		GET.getGitHubRepoTreeContents(); // calls onHashChange();
 
@@ -87,6 +88,8 @@
 console.log( 'item', item );
 
 			COR.setMenuBreadCrumbs( item );
+
+			CORmenuRepo.style.display = 'none';
 
 			GET.getFilesFromFolder( item );
 

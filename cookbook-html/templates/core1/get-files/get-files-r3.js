@@ -12,7 +12,7 @@
 
 			'<details open >' +
 
-				'<summary><h3>Table of Contents</h3></summary>' +
+				'<summary><h3 id=GETmenuToCSummary >Table of Contents</h3></summary>' +
 
 				'<div id=GETtoc ></div>' + b +
 

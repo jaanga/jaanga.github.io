@@ -31,7 +31,10 @@
 		MNU.contents.id = 'contents';
 		MNU.contents.innerHTML =
 			'<div >' +
-				'<h1>Typical contents</h1>' + // txt + txt + txt +
+				'<h1>Albums</h1>' +
+                '<p>2016-10-31 ~ Still pre-release / very alpha stage</p>' +
+                '<p>Album folders have been flattened. No folders inside folders. This will be fixed.</p>' +
+                '<p>So some albums appear to be empty</p>' +
 			'</div>' +
 
 

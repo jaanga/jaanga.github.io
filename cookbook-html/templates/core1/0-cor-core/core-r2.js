@@ -59,7 +59,7 @@
 
 			'<h3 class=>' +
 				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
-				'<a href="" >' + DEF.repo + '</a> &raquo; ' +
+				'<div id=CORmenuRepo ><a href="" >' + DEF.repo + '</a> &raquo; </div>' +
 			'</h3>';
 
 		} else {
@@ -79,7 +79,7 @@
 
 			if ( dirString.endsWith( '.md' ) || dirString.endsWith( '.html' ) ) { continue; }
 
-			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
+			CORbreadCrumbs += '<h2 class=CORmenuBreadCrumbs ><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
 
 		}
 
@@ -115,7 +115,7 @@
 			'<h3>' +
 				'<a href=http://' + DEF.user + '.github.io title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + ' ' + DEF.user + '</a> &raquo; ' +
 			'</h3>' +
-			'<h2><a href="" >' + DEF.repo + '</a> &raquo; </h2>';
+			'<h2 ><a href="" >' + DEF.repo + '</a> &raquo; </h2>';
 
 		}
 
