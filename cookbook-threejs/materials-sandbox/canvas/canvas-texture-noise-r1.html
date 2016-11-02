@@ -46,7 +46,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -170,19 +170,19 @@
 		lightDirectional.position.set( -200, 200, 200 );
 
 		var d = size;
-		lightDirectional.shadowCameraLeft = -d;
-		lightDirectional.shadowCameraRight = d;
-		lightDirectional.shadowCameraTop = d;
-		lightDirectional.shadowCameraBottom = -d;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
 
-		lightDirectional.shadowCameraNear = 20;
-		lightDirectional.shadowCameraFar = 2 * size;
+		lightDirectional.shadow.camera.near = 20;
+		lightDirectional.shadow.camera.far = 2 * size;
 
 // can help stop appearance of gridlines in objects with opacity < 1
-		lightDirectional.shadowBias = -0.001; // default 0 ~ distance from corners?
-		lightDirectional.shadowDarkness = 0.3; // default 0.5
-		lightDirectional.shadowMapWidth = 2048;  // default 512
-		lightDirectional.shadowMapHeight = 2048;
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+//		lightDirectional.shadowDarkness = 0.3; // default 0.5
+		lightDirectional.shadow.mapSize.Width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.Height = 2048;
 
 		lightDirectional.castShadow = true;
 		scene.add( lightDirectional );
@@ -218,4 +218,3 @@
 </script>
 </body>
 </html>
-
