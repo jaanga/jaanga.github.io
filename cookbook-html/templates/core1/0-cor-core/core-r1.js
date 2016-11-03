@@ -17,7 +17,7 @@
 	var tagLine ='your 3D happy place';
 	var logo = '&#x2766';
 
-	COR.taglineHeader = 
+	COR.taglineHeader =
 
 		'<div><small>' +
 			'Tools to market your apps' + b +
@@ -321,7 +321,7 @@
 
 			'<h3>' +
 				'<a href=http://' + DEF.user + '/github.io/ title="' + DEF.user + ' - ' + DEF.titleTagline + '" >' + DEF.logo + '</a> &raquo; ' +
-				'<a href=http://' + DEF.user + '.github.io/templates/ title="your happy templates place" > Templates </a> &raquo; ' + 
+				'<a href=http://' + DEF.user + '.github.io/templates/ title="your happy templates place" > Templates </a> &raquo; ' +
 			'</h3>' +
 			'<h2>' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +

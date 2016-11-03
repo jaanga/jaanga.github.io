@@ -147,7 +147,9 @@
 			'<h2>' +
 				'<a href="" title="Click here to refresh this page" >' + document.title + '</a> ~ ' +
 //				'<a href=' + DEF.urlReadMeFile + ' title="Click here for help and information" > &#x24D8; </a>' +
-				'<a href=' + DEF.urlReadMeFile + ' onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > ' + DEF.logoInfoIcon + ' </a>' +
+//				'<a href=' + DEF.urlReadMeFile + ' onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > ' + DEF.logoInfoIcon + ' </a>' +
+				'<a href=#README.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > ' + DEF.logoInfoIcon + ' </a>' +
+
 
 			'</h2>' +
 

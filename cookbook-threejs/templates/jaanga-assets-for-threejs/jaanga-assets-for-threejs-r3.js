@@ -69,7 +69,7 @@
 // 2016-02-21 ~ add-lights/template-threejs-lights-r2.html
 
 		renderer.shadowMap.enabled = true;
-		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+//		renderer.shadowMap.cullFace = THREE.CullFaceBack;
 		renderer.gammaInput = true;
 		renderer.gammaOutput = true;
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -129,7 +129,7 @@
 
 			axisHelper = new THREE.AxisHelper( length );
 
-		} 
+		}
 
 		if ( scene.getObjectById( axisHelper.id )  ) {
 

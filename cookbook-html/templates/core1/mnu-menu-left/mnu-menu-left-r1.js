@@ -1,5 +1,4 @@
 
-
     MNU = {};
 
 	MNU.initLeftMenu = function() {

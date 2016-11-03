@@ -117,14 +117,14 @@
 
 	GET.getFilesFromFolder = function( dir ) {
 
-		var dirArray, dirLen, item, itemArray;
+//		var dirArray, dirLen, item, itemArray;
 
 		GET.dirsSelected = [];
 		GET.filesSelected = [];
 
 		dirArray = dir === '/' ? [] : dir.split( '/' );
 
-		dirLen = dirArray.length + 2;
+		dirLen = dirArray.length; // + 2;
 
 		for ( var i = 0; i < GET.itemsAll.length; i++ ) {
 
@@ -137,9 +137,9 @@
 
 			itemArray = item.split( '/' );
 
+			if ( i < 10 ){ 'len', itemArray.length, dirLen}
 
-//			if ( itemArray.length !== dirLen ) { continue; }
-
+			if ( itemArray.length !== dirLen ) { continue; }
 //			GET.dirsSelected.push( item.replace( '/readme.md', '' ) );
 			GET.dirsSelected.push( item.replace( '/photos.dat.lock', '' ) );
 
@@ -154,7 +154,7 @@
 //			if ( !item.includes( '.html' ) ) { continue; }
 			if ( !item.includes( '.jpg' ) ) { continue; }
 
-			if ( item.includes( 'thumb' ) ||  item.includes( 'sized' ||  item.includes( 'highlight' ) ) { continue; }
+			if ( item.includes( 'thumb' ) ||  item.includes( 'sized' ) ||  item.includes( 'highlight' ) ) { continue; }
 			if ( item.includes( 'archive' ) ) { continue; }
 
 			if ( item.includes( 'index.html' ) ) { continue; }

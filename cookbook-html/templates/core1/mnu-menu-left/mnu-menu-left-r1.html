@@ -82,15 +82,13 @@
 
 			COR.setMenuBreadCrumbs( DEF.searchInFolder );
 
-			COR.requestFile( GET.urlGITHubAPITreeContents + item, function callbackMD( xhr ) {
+			COR.requestFile( item, function callbackMD( xhr ) {
 
 				if ( xhr.target.status !== 404 ) {
 
-					COR.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
+					MNU.contents.innerHTML = COR.converter.makeHtml( xhr.target.responseText );
 
 				}
-
-//				COR.contents.style.overflow = 'auto';
 
 			} );
 
