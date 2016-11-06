@@ -11,46 +11,30 @@
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.4/showdown.min.js ></script>
 
-<!--
-<script src=../r2/0-cor-core/cor-core.js ></script>
-<script src=../r2/0-mn3-menu-three/mn3-menu-three.js ></script>
-<script src=../r2/0-api-authentication/api-authentication.js ></script>
-
-<script src=../r2/1-sel-select/sel-select.js ></script>
-<script src=../r2/0-usr-users/usr-users.js ></script>
-
-<script src=../r2/1-dat-data/dat-data.js ></script>
-
-<script src=../r2/2-res-results/res-results.js ></script>
-<script src=../r2/2-res-results/res-results-events.js ></script>
-<script src=../r2/2-eus-events-user/eus-events-user.js ></script>
--->
 <script src=https://jaanga.github.io/gubgub/r2/0-cor-core/cor-core.js ></script>
 <script src=https://jaanga.github.io/gubgub/r2/0-mn3-menu-three/mn3-menu-three.js ></script>
 <script src=https://jaanga.github.io/gubgub/r2/0-api-authentication/api-authentication.js ></script>
-
 <script src=https://jaanga.github.io/gubgub/r2/1-sel-select/sel-select.js ></script>
 <script src=https://jaanga.github.io/gubgub/r2/0-usr-users/usr-users.js ></script>
-
 <script src=https://jaanga.github.io/gubgub/r2/1-dat-data/dat-data.js ></script>
-
 <script src=https://jaanga.github.io/gubgub/r2/2-res-results/res-results.js ></script>
 <script src=https://jaanga.github.io/gubgub/r2/2-res-results/res-results-events.js  ></script>
 <script src=https://jaanga.github.io/gubgub/r2/2-eus-events-user/eus-events-user.js ></script>
+
 <script>
 
-// bespoke setups for folks that be spoken for
-
-
-	COR.readMeURL = 'paul-m-r2.html#https://jaanga.github.io/gubgub/README.md';
+	COR.readMeURL = 'pm2.html#https://jaanga.github.io/gubgub/README.md';
 	COR.readMeText =
 
 		'Bespoke edition of <a href="https://jaanga.github.io/gubgub/" target="_blank">GubGub</a> especially crafted for <a href="http://jaanga.github.io/demo/paul-m/gubgub-pm" target="_blank">Paul M</a> - ' +
 		'and yet created <i>post priori</i> in an easy and simple manner. ' +
-		'See also <a href="paul-m-r2.html#README.md" >GubGub Paul M README</a>' +
+		'See also <a href="pm2.html#README.md" >GubGub Paul M README</a>' +
 
 	'';
 
+	var oneWeekAgo = new Date();
+	oneWeekAgo.setDate( oneWeekAgo.getDate() - 7 );
+	var oneWeekAgo$ = oneWeekAgo.toJSON().slice( 0, 10 );
 
 	USR.peepsFavorites =
 
@@ -116,19 +100,31 @@
 
 	'';
 
+	var oneWeekAgo = new Date();
+	oneWeekAgo.setDate( oneWeekAgo.getDate() - 7 );
+	var oneWeekAgo$ = oneWeekAgo.toJSON().slice( 0, 10 );
 
-// at least one item must be selected
 	USR.groupOptions =
 
+	/*
+		'<optgroup label="" >' +
+			'<option value="+stars:>0" >User w/ repo w/ word "" & stars > 0</option>' +
+			'<option value="+stars:>0" >User w/ repo w/ word "" & stars > 0</option>' +
+			'<option value="+stars:>0" >User w/ repo w/ word "" & stars > 0</option>' +
+		'</optgroup>' +
+	*/
+
+	// at least one item must be selected
 		'<option value="listFavorites" >List of Favorites</option>' +
 
 		'<optgroup label="Popular" >' +
 			'<option value="Python+stars:>3000" >Users with word \'Python\' & stars > 3000</option>' +
 			'<option value="JavaScript+stars:>3000" >Users with word \'JavaScript\' & stars > 3000</option>' +
+			'<option value="created:>' + oneWeekAgo$ + '" >Users/repos newer than ' + oneWeekAgo$ + '</option>' +
 		'</optgroup>' +
 
 		'<optgroup label="SageMath Mathematical Software System" >' +
-			'<option value="sagemath+stars:>0" selected >Users with word \'sagemath\' & stars > 0</option>' +
+			'<option   selected   value="sagemath+stars:>0" >Users with word \'sagemath\' & stars > 0</option>' +
 		'</optgroup>' +
 
 		'<optgroup label="Pertaining to Three.js & 3D" >' +
@@ -150,13 +146,11 @@
 			'<option value="unified+field+theory" >Users with words \'unified + field + theory\' & stars >0</option>' +
 			'<option value="runge+vector" >Users with words \'runge + vector\' </option>' +
 			'<option value="schrodinger" >Users with words \'schrodinger\' </option>' +
-
 		'</optgroup>' +
 
 		'<optgroup label="Pertaining to Exploratorium" >' +
 			'<option value="exploratorium" >Users with word \'exploratorium\'</option>' +
 			'<option value="christmas+lights" >Users with word \'christmas + lights\'</option>' +
-
 		'</optgroup>' +
 
 	'';
@@ -166,7 +160,7 @@
 
 	function init() {
 
-		COR.taglineHeader += '+ a home page howdy!' + b;
+//		COR.taglineHeader += '+ a home page howdy!' + b;
 
 		MNU.initThreeColumns();
 
@@ -192,7 +186,7 @@
 
 		window.addEventListener( 'hashchange', onHashChange, false );
 
-//		SELselQuery.selectedIndex = 0;
+		SELselQuery.selectedIndex = 0;
 
 		SEL.setUserDetails();
 
