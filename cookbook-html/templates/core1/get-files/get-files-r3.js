@@ -124,7 +124,9 @@
 
 		dirArray = dir === '/' ? [] : dir.split( '/' );
 
-		dirLen = dirArray.length; // + 2;
+		dirLen = dirArray.length + 1;
+
+		console.log( 'dir', dir, 'dirLen', dirLen );
 
 		for ( var i = 0; i < GET.itemsAll.length; i++ ) {
 
@@ -137,7 +139,7 @@
 
 			itemArray = item.split( '/' );
 
-			if ( i < 10 ){ 'len', itemArray.length, dirLen}
+			if ( i < 100000 ){ console.log( 'len', itemArray.length, dirLen, dir ); }
 
 			if ( itemArray.length !== dirLen ) { continue; }
 //			GET.dirsSelected.push( item.replace( '/readme.md', '' ) );

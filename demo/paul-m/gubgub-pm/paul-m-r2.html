@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GubGub Paul M R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Explore and monitor the many GitHub projects helped by the GitHub API and client-side cookbook JavaScript' >
+<meta name=keywords content='Jaanga,Theo Armour,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-11-06' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.4/showdown.min.js ></script>
+
+<!--
+<script src=../r2/0-cor-core/cor-core.js ></script>
+<script src=../r2/0-mn3-menu-three/mn3-menu-three.js ></script>
+<script src=../r2/0-api-authentication/api-authentication.js ></script>
+
+<script src=../r2/1-sel-select/sel-select.js ></script>
+<script src=../r2/0-usr-users/usr-users.js ></script>
+
+<script src=../r2/1-dat-data/dat-data.js ></script>
+
+<script src=../r2/2-res-results/res-results.js ></script>
+<script src=../r2/2-res-results/res-results-events.js ></script>
+<script src=../r2/2-eus-events-user/eus-events-user.js ></script>
+-->
+<script src=https://jaanga.github.io/gubgub/r2/0-cor-core/cor-core.js ></script>
+<script src=https://jaanga.github.io/gubgub/r2/0-mn3-menu-three/mn3-menu-three.js ></script>
+<script src=https://jaanga.github.io/gubgub/r2/0-api-authentication/api-authentication.js ></script>
+
+<script src=https://jaanga.github.io/gubgub/r2/1-sel-select/sel-select.js ></script>
+<script src=https://jaanga.github.io/gubgub/r2/0-usr-users/usr-users.js ></script>
+
+<script src=https://jaanga.github.io/gubgub/r2/1-dat-data/dat-data.js ></script>
+
+<script src=https://jaanga.github.io/gubgub/r2/2-res-results/res-results.js ></script>
+<script src=https://jaanga.github.io/gubgub/r2/2-res-results/res-results-events.js  ></script>
+<script src=https://jaanga.github.io/gubgub/r2/2-eus-events-user/eus-events-user.js ></script>
+<script>
+
+// bespoke setups for folks that be spoken for
+
+
+	COR.readMeURL = 'paul-m-r2.html#https://jaanga.github.io/gubgub/README.md';
+	COR.readMeText =
+
+		'Bespoke edition of <a href="https://jaanga.github.io/gubgub/" target="_blank">GubGub</a> especially crafted for <a href="http://jaanga.github.io/demo/paul-m/gubgub-pm" target="_blank">Paul M</a> - ' +
+		'and yet created <i>post priori</i> in an easy and simple manner. ' +
+		'See also <a href="paul-m-r2.html#README.md" >GubGub Paul M README</a>' +
+
+	'';
+
+
+	USR.peepsFavorites =
+
+	//	'<optgroup label="Paul" >' +
+			'<option selected >PaulMasson</option>' +
+			'<option>Exploratoria</option>' +
+	//	'</optgroup>' +
+
+		'<optgroup label="Sage Math" >' +
+			'<option>SageMath</option>' +
+			'<option>WilliamStein</option>' +
+			'<option>HaraldSchilly</option>' +
+			'<option>alex-konovalov</option>' +
+			'<option>burcin</option>' +
+			'<option>dimpase</option>' +
+			'<option>drvinceknight</option>' +
+			'<option>jasongrout</option>' +
+			'<option>kini</option>' +
+			'<option>kohlhase</option>' +
+			'<option>novoselt</option>' +
+			'<option>ohanar</option>' +
+			'<option>ppurka</option>' +
+			'<option>rasmi</option>' +
+			'<option>saraedum</option>' +
+			'<option>vbraun</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="SageMath, Inc" >' +
+			'<option>SageMathInc</option>' +
+			'<option>WilliamStein</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="Starred or Following" >' +
+			'<option>mrdoob</option>' +
+			'<option>josdejong</option>' +
+			'<option>davidedc</option>' +
+			'<option>Microsoft</option>' +
+			'<option>pynac</option>' +
+			'<option>ev3dev</option>' +
+			'<option>ohanar</option>' +
+			'<option>arodic</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="Three.js/WedGL" >' +
+			'<option>Mr.doob</option>' +
+			'<option>bhouston</option>' +
+			'<option>gero3</option>' +
+			'<option>Saqoosha</option>' +
+			'<option>WestLangley</option>' +
+			'<option>zz85</option>' +
+			'<option>koblin</option>' +
+			'<option>alteredq</option>' +
+			'<option>kig</option>' +
+			'<option>spite</option>' +
+			'<option>greggman</option>' +
+			'<option>philigb</option>' +
+			'<option>toji</option>' +
+			'<option>tparisi</option>' +
+			'<option>aroduc</option>' +
+			'<option>lo-th</option>' +
+			'<option>callumprentice</option>' +
+		'</optgroup>' +
+
+	'';
+
+
+// at least one item must be selected
+	USR.groupOptions =
+
+		'<option value="listFavorites" >List of Favorites</option>' +
+
+		'<optgroup label="Popular" >' +
+			'<option value="Python+stars:>3000" >Users with word \'Python\' & stars > 3000</option>' +
+			'<option value="JavaScript+stars:>3000" >Users with word \'JavaScript\' & stars > 3000</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="SageMath Mathematical Software System" >' +
+			'<option value="sagemath+stars:>0" selected >Users with word \'sagemath\' & stars > 0</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="Pertaining to Three.js & 3D" >' +
+			'<option value="three+stars:>300" >Users with word \'three\' & stars > 300</option>' +
+			'<option value="3D+stars:>1000" >Users with word \'3D\' & stars > 1000</option>' +
+			'<option value="stl+stars:>50" >Users with word \'stl\' & stars > 50</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="Pertaining to Mathematics" >' +
+			'<option value="math+stars:>200" >Users with word \'math\' & stars > 200</option>' +
+			'<option value="calculus+stars:>20" >Users with word \'calculus\' & stars > 20</option>' +
+			'<option value="special+functions" >Users with word \'special + functions\' & stars > 20</option>' +
+			'<option value="rheimann" >Users with word \'riemann\'</option>' +
+		'</optgroup>' +
+
+		'<optgroup label="Pertaining to Physics" >' +
+			'<option value="physics+stars:>8" >Users with word \'physics\' & stars >100</option>' +
+			'<option value="quantum+mechanics+stars:>0" >Users with words \'quantum + mechanics\' & stars > 0</option>' +
+			'<option value="unified+field+theory" >Users with words \'unified + field + theory\' & stars >0</option>' +
+			'<option value="runge+vector" >Users with words \'runge + vector\' </option>' +
+			'<option value="schrodinger" >Users with words \'schrodinger\' </option>' +
+
+		'</optgroup>' +
+
+		'<optgroup label="Pertaining to Exploratorium" >' +
+			'<option value="exploratorium" >Users with word \'exploratorium\'</option>' +
+			'<option value="christmas+lights" >Users with word \'christmas + lights\'</option>' +
+
+		'</optgroup>' +
+
+	'';
+
+
+	init();
+
+	function init() {
+
+		COR.taglineHeader += '+ a home page howdy!' + b;
+
+		MNU.initThreeColumns();
+
+		MNU.css.innerHTML += '.DATbuttonLeft { display: none; }'; // uncomment to hide left column User Data buttons
+
+		MNU.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			API.getMenuDetailsAPIAccessToken() +
+
+			SEL.getMenuDetailsSelectQuery() +
+
+			SEL.getMenuDetailsSelectUser() +
+
+			DAT.getMenuDetailsUserData() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+//		SELselQuery.selectedIndex = 0;
+
+		SEL.setUserDetails();
+
+		onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		var hash, callback, xhr, txt;
+
+		hash = location.hash.slice( 1 );
+
+		if ( hash.match( 'token=' ) ){ API.onEventAPIKeyUpdate(); return;  }
+
+		if ( hash.endsWith( '.md' ) === true ) {
+
+			COR.requestFile( hash, callbackMD );
+
+			function callbackMD( xhr ) {
+
+				if ( xhr.target.status === 404 ) { return; }
+
+				txt = xhr.target.responseText;
+
+				if ( hash.includes( 'README.md' ) === true ){ txt = txt.replace( 'READMEbespokeText', COR.readMeText || '' ); }
+
+				MNU.contents.innerHTML = COR.converter.makeHtml( txt );
+
+			}
+
+			return;
+
+		}
+
+		if ( hash && hash !== SEL.user ) {
+
+			SEL.user = hash;
+
+			SEL.getUserDetails();
+
+		}
+
+	};
+
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+// r11
+
+var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+
+				'<details>' +
+					'<summary><h3>Settings</h3></summary>' +
+
+					'<p>' +
+						'Select:<br><select id=selList onchange="" title="Select the item" size=5 >' +
+							'<option title="this is a" >aaa aaa aaa</option>' +
+							'<option selected >bbb bbb bbb</option>' +
+							'<optGroup label="Type 2" >' +
+								'<option>cc cc cc cc</option>' +
+							'</optGroup>' +
+						'</select>' +
+					'</p>' +
+
+					'<p>' +
+						'<button onclick=alert("button1"); title="Save as PNG" > Save </button> ' +
+						'<button onclick=console.log("button2"); > Button 2 </button> ' +
+						'<button onclick=doIt(); > Button 3 </button>' +
+					'</p>' +
+
+					'<p>' +
+						'<input type=radio name=radio1 id=but1 /><label for="radio1" >button 1</label>' +
+						'<input type=radio name=radio1 id=but2 checked /><label for="radio1" >button 2</label>' +
+						'<input type=radio name=radio1 id=but3 /><label for="radio1" >button 3</label>' +
+                        '<input type=radio name=radio1 id=but1 /><label for="radio1" >button 4</label>' +
+						'<input type=radio name=radio1 id=but1 /><label for="radio1" >button 5</label>' +
+					'</p>' +
+
+					'<p>' +
+						'Slider: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value title="0 to 10: OK" > <output id=out >5</output>' +
+					'</p>' +
+
+					'<p title="Nothing here yet. ;-(">' +
+						'<input id=inpPretty type=checkbox > Pretty colors ' +
+					'</p>' +
+
+					'<p>Samples: <input list=numbers id=inpSamples min=1 max=1024 onchange=initMap(); placeholder="Select sample size" title="Select the number of samples" ></p>' +
+						'<datalist id=numbers >' +
+						'<option value=10 >' +
+						'<option value=30 >' +
+						'<option value=50 >' +
+						'<option value=100 >' +
+						'<option value=512 >' +
+
+				'</details>' +
+
+
+				'<details>' +
+					'<summary><h3>About</h3></summary>' +
+					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p></p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+	//			'<center title="dingbat" ><h1><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > &#x2766 </a></h1></center>' +

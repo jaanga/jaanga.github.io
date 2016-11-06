@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>CSS3 styled checkbox</title>
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300' rel='stylesheet' type='text/css'>
+    <link href='index.css' rel='stylesheet' type='text/css'>
+    <link href='checkbox.css' rel="stylesheet" type='text/css'>
+</head>
+<body>
+    <h1>CSS3 Checkbox</h1>
+
+    <div id="container">
+        <h2>Radio button</h2>
+        <ul>
+            <li>
+                <div class="radio-btn">
+                    <input type="radio" value="value-1" id="rc1" name="rc1" checked="checked" />
+                    <label for="rc1" onclick>Radio button</label>
+                </div>
+            </li>
+            <li>
+                <div class="radio-btn">
+                    <input type="radio" value="value-2" id="rc2" name="rc1" />
+                    <label for="rc2" onclick>Radio button 2</label>
+                </div>
+            </li>
+        </ul>
+
+        <h2>Checkbox</h2>
+        <ul>
+            <li>
+                <div class="checkbox-btn">
+                    <input type="checkbox" value="value-1" id="rc3" name="rc3" checked="checked" />
+                    <label for="rc3" onclick>Styled checkbox (Checked)</label>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox-btn">
+                    <input type="checkbox" value="value-2" id="rc4" name="rc4" />
+                    <label for="rc4" onclick>Styled checkbox</label>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox-btn">
+                    <input type="checkbox" value="value-3" id="rc5" name="rc5" disabled />
+                    <label for="rc5" onclick>Styled disabled checkbox</label>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</body>
+</html>

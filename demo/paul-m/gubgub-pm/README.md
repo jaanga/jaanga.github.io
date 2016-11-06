@@ -6,11 +6,14 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Jaanga]( https://jaanga.github.io ) » [Demo Paul M]( https://jaanga.github.io/demo/paul-m/  ) »
 
-GubGub Paul M README
+[GubGub Paul M README]( paul-m-r2.html#README.md )
 ================================================================================
-_A custom GubGub for Paul M_
+_A custom [GubGub]( https://jaanga.github.io/gubgub/ ) for Paul M_
 
-## Full screen [GubGub Paul M]( http://jaanga.github.io/demo/paul-m/gubgub-pm/ )
+## Full screen [GubGub Paul M R2]( http://jaanga.github.io/demo/paul-m/gubgub-pm/paul-m-r2.html )
+
+## Full screen [GubGub Paul M R1]( http://jaanga.github.io/demo/paul-m/gubgub-pm/paul-m-r1.html )
+
 
 ### 2016-10-29 Questions
 
@@ -31,6 +34,10 @@ Future revisions will explore the building of much simpler tools.
 
 Change log
 --------------------------------------------------------------------------------
+
+### 2016-11-06 ~ R2
+
+* Code clean-up
 
 ### 2016-10-29 ~ R1
 
