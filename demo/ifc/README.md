@@ -1,27 +1,27 @@
 <span style=display:none; >[You are now in GitHub source code view. Click here to view README file in GitHub Pages view]
-( https://jaanga.github.io/demo/xxxxx/#README.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/xxxxx/';
+( https://jaanga.github.io/demo/ifc/#README.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/ifc/';
 value='You are now in a GitHub Pages view. Click here to view README file in GitHub source code view.' >
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [Demo]( https://jaanga.github.io/demo ) &raquo;
 
-[XXXXXX Read Me]( index.html#README.md )
+[IFC View Read Me]( index.html#README.md )
 ================================================================================
 
 _<small>
-
+View industry foundation class files
 </small>_
 
-## Full Screen: [ Open Index or Markdown ]( https://jaanga.github.io/cookbook-html/templates/open-index-or-markdown/index.html )
+## Full Screen: [IFC View ]( https://jaanga.github.io/demo/ifc-view-r1.html )
 
 
 <img src="" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/demo/xxxxx/index.html width=100% height=500px ></iframe>
+<iframe src=https://jaanga.github.io/demo/ifc/ifc-view-r1.html width=100% height=500px ></iframe>
 
 
-_XXXXXX_
+_IFC View_
 
 ***
 
@@ -63,13 +63,13 @@ _XXXXXX_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	http://jaanga.github.io/demo/xxxxx/index.html' width=100% height=600 ></iframe>
+	http://jaanga.github.io/demo/ifc/index.html' width=100% height=600 ></iframe>
 
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/index.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/demo/xxxxx/index.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/demo/ifc/index.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
