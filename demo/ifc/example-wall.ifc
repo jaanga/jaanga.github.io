@@ -1,0 +1,260 @@
+ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION (
+        ('ViewDefinition [CoordinationView, QuantityTakeOffAddOnView]'),
+        '2;1');
+FILE_NAME (
+        'example.ifc',
+        '2016-11-05T15:38:12',
+        ('Architect'),
+        ('Test Office'),
+        'IFC Engine DLL version 1.03 beta',
+        'Geometry example',
+        'The authorising person');
+FILE_SCHEMA (('IFC4RC4'));
+ENDSEC;
+DATA;
+
+/* --------------------------------------------------------------------------------------------- */
+/* general entities required for all IFC data sets, defining the context for the exchange ------ */
+#1 = IFCPROJECT('0mFv_9CzjCJQDeMtB1$yar', #2, 'Default Project', 'Description of Default Project', $, $, $, (#20), #7);
+
+/* single owner history sufficient if not otherwise required by the view definition ------------ */
+/* provides the person and application creating the data set, and the time it is created ------- */
+#2 = IFCOWNERHISTORY(#3, #6, $, .NOTDEFINED., $, $, $, 1478385492);
+#3 = IFCPERSONANDORGANIZATION(#4, #5, $);
+#4 = IFCPERSON($, 'Bonsma', 'Peter', $, $, $, $, $);
+#5 = IFCORGANIZATION($, 'RDF', 'RDF Ltd.', $, $);
+#6 = IFCAPPLICATION(#5, '0.10', 'Test Application', 'TA 1001');
+
+/* each IFC data set containing geometry has to define at absolute minimum length and angle ---- */
+/* here length is milli metre as SI unit, and plane angle is 'degree' as non SI unit ----------- */
+#7 = IFCUNITASSIGNMENT((#8, #9, #10, #11, #15, #16, #17, #18, #19));
+#8 = IFCSIUNIT(*, .LENGTHUNIT., .MILLI., .METRE.);
+#9 = IFCSIUNIT(*, .AREAUNIT., $, .SQUARE_METRE.);
+#10 = IFCSIUNIT(*, .VOLUMEUNIT., $, .CUBIC_METRE.);
+#11 = IFCCONVERSIONBASEDUNIT(#12, .PLANEANGLEUNIT., 'DEGREE', #13);
+#12 = IFCDIMENSIONALEXPONENTS(0, 0, 0, 0, 0, 0, 0);
+#13 = IFCMEASUREWITHUNIT(IFCPLANEANGLEMEASURE(1.745E-2), #14);
+#14 = IFCSIUNIT(*, .PLANEANGLEUNIT., $, .RADIAN.);
+#15 = IFCSIUNIT(*, .SOLIDANGLEUNIT., $, .STERADIAN.);
+#16 = IFCSIUNIT(*, .MASSUNIT., $, .GRAM.);
+#17 = IFCSIUNIT(*, .TIMEUNIT., $, .SECOND.);
+#18 = IFCSIUNIT(*, .THERMODYNAMICTEMPERATUREUNIT., $, .DEGREE_CELSIUS.);
+#19 = IFCSIUNIT(*, .LUMINOUSINTENSITYUNIT., $, .LUMEN.);
+#20 = IFCGEOMETRICREPRESENTATIONCONTEXT($, 'Model', 3, 1.E-5, #21, #23);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#21 = IFCAXIS2PLACEMENT3D(#22, $, $);
+#22 = IFCCARTESIANPOINT((0., 0., 0.));
+#23 = IFCDIRECTION((0., 1., 0.));
+
+/* shared coordinates - it is permissable to share common instances to reduce file size -------- */
+#24 = IFCCARTESIANPOINT((0., 0., 0.));
+#25 = IFCDIRECTION((1., 0., 0.));
+#26 = IFCDIRECTION((0., 1., 0.));
+#27 = IFCDIRECTION((0., 0., 1.));
+#28 = IFCDIRECTION((-1., 0., 0.));
+#29 = IFCDIRECTION((0., -1., 0.));
+#30 = IFCDIRECTION((0., 0., -1.));
+
+/* if site is irrelevant Building could be connected to project directly ----------------------- */
+#31 = IFCSITE('217s1yRAX83fNbE0SALh4V', #2, 'Default Site', 'Description of Default Site', $, #32, $, $, .ELEMENT., (24, 28, 0), (54, 25, 0), 10., $, $);
+#32 = IFCLOCALPLACEMENT($, #33);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#33 = IFCAXIS2PLACEMENT3D(#24, $, $);
+
+/* each IFC data set containing elements in a building context has to include a building ------- */
+/* at absolute minimum (could have a site and stories as well) --------------------------------- */
+#34 = IFCBUILDING('3Y5tBCJmT7cfZA64KHqeq8', #2, 'Default Building', 'Description of Default Building', $, #35, $, $, .ELEMENT., $, $, #37);
+/* if the building is the uppermost spatial structure element it defines the absolut position -- */
+#35 = IFCLOCALPLACEMENT(#32, #36);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#36 = IFCAXIS2PLACEMENT3D(#24, $, $);
+#37 = IFCPOSTALADDRESS($, $, $, $, ('RDF Ltd.', 'Main Office'), '32', 'Bankya', 'Sofia', '1320', 'Bulgaria');
+#38 = IFCBUILDINGSTOREY('2aFDc1Gf13vR$phqw5ZUTc', #2, 'Default Building Storey', 'Description of Default Building Storey', $, #39, $, $, .ELEMENT., 0.);
+#39 = IFCLOCALPLACEMENT(#35, #40);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#40 = IFCAXIS2PLACEMENT3D(#24, $, $);
+#41 = IFCRELAGGREGATES('0BQj$NgGTEKRam$d94tdhq', #2, 'BuildingContainer', 'BuildingContainer for BuildigStories', #34, (#38));
+#42 = IFCRELAGGREGATES('3fvZJ8$MH0jgIVA6H4BCX7', #2, 'SiteContainer', 'SiteContainer For Buildings', #31, (#34));
+#43 = IFCRELAGGREGATES('0Y2rl3WfT25vU7Z1hYdkgZ', #2, 'ProjectContainer', 'ProjectContainer for Sites', #1, (#31));
+#44 = IFCRELCONTAINEDINSPATIALSTRUCTURE('2H1EAUjTjBtwfO8rZNS3n7', #2, 'Default Building', 'Contents of Building Storey', (#45, #152), #38);
+
+/* the wall itself ----------------------------------------------------------------------------- */
+#45 = IFCWALL('3JMVTlVpHEuwviCR1cJdTC', #2, 'Wall xyz', 'Description of Wall', $, #46, #48, $, .STANDARD.);
+#46 = IFCLOCALPLACEMENT(#39, #47);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#47 = IFCAXIS2PLACEMENT3D(#24, $, $);
+#48 = IFCPRODUCTDEFINITIONSHAPE($, $, (#77, #81, #109));
+#49 = IFCWALLTYPE('0n8PHZYBf4iOJaQLyUxVbj', #2, 'Wall xyz', 'Description of Window Type', $, $, $, $, $, .STANDARD.);
+#50 = IFCRELDEFINESBYTYPE('0_BA1sUgf9mBTFPozm2OQx', #2, $, $, (#45), #49);
+#51 = IFCRELDECLARES('2sbuUe5rr6mOQGzrCToGr3', #2, $, $, #52, (#49, #157));
+#52 = IFCPROJECTLIBRARY('0px_SLCDL9Px29ClLWaLzu', #2, $, $, $, $, $, $, $);
+#53 = IFCRELDECLARES('0t5r1wg2D2lw8vCgSnJz$y', #2, $, $, #52, (#1));
+
+/* properties for the wall, standard property set from PSet collection ------------------------- */
+#54 = IFCPROPERTYSET('27iBB0Zd50qAadf5_VoZ1H', #2, 'Pset_WallCommon', $, (#55, #56, #57, #58, #59, #60, #61, #62, #63, #64));
+#55 = IFCPROPERTYSINGLEVALUE('Reference', 'Reference', IFCIDENTIFIER(''), $);
+#56 = IFCPROPERTYSINGLEVALUE('AcousticRating', 'AcousticRating', IFCLABEL(''), $);
+#57 = IFCPROPERTYSINGLEVALUE('FireRating', 'FireRating', IFCLABEL(''), $);
+#58 = IFCPROPERTYSINGLEVALUE('Combustible', 'Combustible', IFCBOOLEAN(.F.), $);
+#59 = IFCPROPERTYSINGLEVALUE('SurfaceSpreadOfFlame', 'SurfaceSpreadOfFlame', IFCLABEL(''), $);
+#60 = IFCPROPERTYSINGLEVALUE('ThermalTransmittance', 'ThermalTransmittance', IFCTHERMALTRANSMITTANCEMEASURE(2.4E-1), $);
+#61 = IFCPROPERTYSINGLEVALUE('IsExternal', 'IsExternal', IFCBOOLEAN(.T.), $);
+#62 = IFCPROPERTYSINGLEVALUE('ExtendToStructure', 'ExtendToStructure', IFCBOOLEAN(.F.), $);
+#63 = IFCPROPERTYSINGLEVALUE('LoadBearing', 'LoadBearing', IFCBOOLEAN(.F.), $);
+#64 = IFCPROPERTYSINGLEVALUE('Compartmentation', 'Compartmentation', IFCBOOLEAN(.F.), $);
+/* connection of properties to the wall -------------------------------------------------------- */
+#65 = IFCRELDEFINESBYPROPERTIES('288HAP_EL4Ne0btva6Scoq', #2, $, $, (#45), #54);
+#66 = IFCELEMENTQUANTITY('1pNSH6Zln3QBliXDXhtkb_', #2, 'BaseQuantities', $, $, (#67, #68, #69, #70, #71, #72, #73, #74, #75));
+#67 = IFCQUANTITYLENGTH('Width', 'Width', $, 300., $);
+#68 = IFCQUANTITYLENGTH('Length', 'Length', $, 5000., $);
+#69 = IFCQUANTITYAREA('GrossFootprintArea', 'GrossFootprintArea', $, 1.5, $);
+#70 = IFCQUANTITYAREA('NetFootprintArea', 'NetFootprintArea', $, 1.5, $);
+#71 = IFCQUANTITYAREA('GrossSideArea', 'GrossSideArea', $, 11.5, $);
+#72 = IFCQUANTITYAREA('NetSideArea', 'NetSideArea', $, 10.45, $);
+#73 = IFCQUANTITYVOLUME('GrossVolume', 'GrossVolume', $, 3.45, $);
+#74 = IFCQUANTITYVOLUME('NetVolume', 'NetVolume', $, 3.135, $);
+#75 = IFCQUANTITYLENGTH('Height', 'Height', $, 2300., $);
+#76 = IFCRELDEFINESBYPROPERTIES('2uFxThXdT9efld_iF2sHTO', #2, $, $, (#45), #66);
+
+/* line (shape) representation) of the object -------------------------------------------------- */
+#77 = IFCSHAPEREPRESENTATION(#20, 'Axis', 'Curve2D', (#78));
+#78 = IFCPOLYLINE((#79, #80));
+#79 = IFCCARTESIANPOINT((0., 150.));
+#80 = IFCCARTESIANPOINT((5000., 150.));
+#81 = IFCSHAPEREPRESENTATION(#20, 'Body', 'Brep', (#108));
+#82 = IFCCLOSEDSHELL((#88, #95, #98, #101, #104, #107));
+#83 = IFCPOLYLOOP((#24, #84, #85, #86));
+#84 = IFCCARTESIANPOINT((0., 300., 0.));
+#85 = IFCCARTESIANPOINT((5000., 300., 0.));
+#86 = IFCCARTESIANPOINT((5000., 0., 0.));
+#87 = IFCFACEOUTERBOUND(#83, .T.);
+#88 = IFCFACE((#87));
+#89 = IFCPOLYLOOP((#90, #91, #92, #93));
+#90 = IFCCARTESIANPOINT((0., 0., 2300.));
+#91 = IFCCARTESIANPOINT((5000., 0., 2300.));
+#92 = IFCCARTESIANPOINT((5000., 300., 2300.));
+#93 = IFCCARTESIANPOINT((0., 300., 2300.));
+#94 = IFCFACEOUTERBOUND(#89, .T.);
+#95 = IFCFACE((#94));
+#96 = IFCPOLYLOOP((#24, #90, #93, #84));
+#97 = IFCFACEOUTERBOUND(#96, .T.);
+#98 = IFCFACE((#97));
+#99 = IFCPOLYLOOP((#84, #93, #92, #85));
+#100 = IFCFACEOUTERBOUND(#99, .T.);
+#101 = IFCFACE((#100));
+#102 = IFCPOLYLOOP((#85, #92, #91, #86));
+#103 = IFCFACEOUTERBOUND(#102, .T.);
+#104 = IFCFACE((#103));
+#105 = IFCPOLYLOOP((#86, #91, #90, #24));
+#106 = IFCFACEOUTERBOUND(#105, .T.);
+#107 = IFCFACE((#106));
+#108 = IFCFACETEDBREP(#82);
+#109 = IFCSHAPEREPRESENTATION(#20, 'Box', 'BoundingBox', (#110));
+#110 = IFCBOUNDINGBOX(#24, 5000., 300., 2300.);
+
+/* the opening in the wall containing the window ----------------------------------------------- */
+#111 = IFCOPENINGELEMENT('3FGAB_uPD3KxnR5N_tzoq4', #2, 'Opening Element xyz', 'Description of Opening', $, #112, #115, $, .OPENING.);
+#112 = IFCLOCALPLACEMENT(#46, #113);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#113 = IFCAXIS2PLACEMENT3D(#114, $, $);
+#114 = IFCCARTESIANPOINT((900., 0., 250.));
+#115 = IFCPRODUCTDEFINITIONSHAPE($, $, (#122, #150));
+#116 = IFCELEMENTQUANTITY('1kZmvt6HH9HRP9mk1omCn8', #2, 'BaseQuantities', $, $, (#117, #118, #119));
+#117 = IFCQUANTITYLENGTH('Depth', 'Depth', $, 300., $);
+#118 = IFCQUANTITYLENGTH('Height', 'Height', $, 1400., $);
+#119 = IFCQUANTITYLENGTH('Width', 'Width', $, 750., $);
+#120 = IFCRELDEFINESBYPROPERTIES('0uzBEu6kH0q9yG4s5UW84u', #2, $, $, (#111), #116);
+#121 = IFCRELVOIDSELEMENT('3OXN$18rP1_R6j91ftf09d', #2, $, $, $, $);
+#122 = IFCSHAPEREPRESENTATION(#20, 'Body', 'Brep', (#149));
+#123 = IFCCLOSEDSHELL((#129, #136, #139, #142, #145, #148));
+#124 = IFCPOLYLOOP((#24, #125, #126, #127));
+#125 = IFCCARTESIANPOINT((0., 300., 0.));
+#126 = IFCCARTESIANPOINT((750., 300., 0.));
+#127 = IFCCARTESIANPOINT((750., 0., 0.));
+#128 = IFCFACEOUTERBOUND(#124, .T.);
+#129 = IFCFACE((#128));
+#130 = IFCPOLYLOOP((#131, #132, #133, #134));
+#131 = IFCCARTESIANPOINT((0., 0., 1400.));
+#132 = IFCCARTESIANPOINT((750., 0., 1400.));
+#133 = IFCCARTESIANPOINT((750., 300., 1400.));
+#134 = IFCCARTESIANPOINT((0., 300., 1400.));
+#135 = IFCFACEOUTERBOUND(#130, .T.);
+#136 = IFCFACE((#135));
+#137 = IFCPOLYLOOP((#24, #131, #134, #125));
+#138 = IFCFACEOUTERBOUND(#137, .T.);
+#139 = IFCFACE((#138));
+#140 = IFCPOLYLOOP((#125, #134, #133, #126));
+#141 = IFCFACEOUTERBOUND(#140, .T.);
+#142 = IFCFACE((#141));
+#143 = IFCPOLYLOOP((#126, #133, #132, #127));
+#144 = IFCFACEOUTERBOUND(#143, .T.);
+#145 = IFCFACE((#144));
+#146 = IFCPOLYLOOP((#127, #132, #131, #24));
+#147 = IFCFACEOUTERBOUND(#146, .T.);
+#148 = IFCFACE((#147));
+#149 = IFCFACETEDBREP(#123);
+#150 = IFCSHAPEREPRESENTATION(#20, 'Box', 'BoundingBox', (#151));
+#151 = IFCBOUNDINGBOX(#24, 750., 300., 1400.);
+
+/* the window itself --------------------------------------------------------------------------- */
+#152 = IFCWINDOW('1wlV6xeGvFyf9wMEnQEZEy', #2, 'Window xyz', 'Description of Window', $, #153, #156, $, 1400., 750., .WINDOW., .SINGLE_PANEL.);
+#153 = IFCLOCALPLACEMENT(#112, #154);
+/* no rotation - z and x axes set to '$' are therefore identical to "world coordinate system" -- */
+#154 = IFCAXIS2PLACEMENT3D(#155, $, $);
+#155 = IFCCARTESIANPOINT((0., 12., 0.));
+#156 = IFCPRODUCTDEFINITIONSHAPE($, $, (#175, #203));
+#157 = IFCWINDOWTYPE('2HTrIfA1L5UxufjNLaaxow', #2, 'Window xyz', 'Description of Window Type', $, $, $, $, $, .WINDOW., .SINGLE_PANEL., $);
+#158 = IFCRELDEFINESBYTYPE('2Yga5FDKP0MO5QpTW_yqlB', #2, $, $, (#152), #157);
+#159 = IFCRELFILLSELEMENT('05Wwg0shf1duJ1cS$HizOb', #2, $, $, #111, #152);
+
+/* properties for the window, standard property set from PSet collection ----------------------- */
+#160 = IFCPROPERTYSET('05mZCwhyP7x8UwkfurYa4r', #2, 'Pset_WindowCommon', $, (#161, #162, #163, #164, #165, #166, #167, #168, #169));
+#161 = IFCPROPERTYSINGLEVALUE('Reference', 'Reference', IFCIDENTIFIER(''), $);
+#162 = IFCPROPERTYSINGLEVALUE('FireRating', 'FireRating', IFCLABEL(''), $);
+#163 = IFCPROPERTYSINGLEVALUE('AcousticRating', 'AcousticRating', IFCLABEL(''), $);
+#164 = IFCPROPERTYSINGLEVALUE('SecurityRating', 'SecurityRating', IFCLABEL(''), $);
+#165 = IFCPROPERTYSINGLEVALUE('IsExternal', 'IsExternal', IFCBOOLEAN(.T.), $);
+#166 = IFCPROPERTYSINGLEVALUE('Infiltration', 'Infiltration', IFCVOLUMETRICFLOWRATEMEASURE(3.E-1), $);
+#167 = IFCPROPERTYSINGLEVALUE('ThermalTransmittance', 'ThermalTransmittance', IFCTHERMALTRANSMITTANCEMEASURE(2.4E-1), $);
+#168 = IFCPROPERTYSINGLEVALUE('GlazingAreaFraction', 'GlazingAreaFraction', IFCPOSITIVERATIOMEASURE(7.E-1), $);
+#169 = IFCPROPERTYSINGLEVALUE('SmokeStop', 'SmokeStop', IFCBOOLEAN(.F.), $);
+/* connection of properties to window ---------------------------------------------------------- */
+#170 = IFCRELDEFINESBYPROPERTIES('1xvZWyDL5Eh9G7VhkH_lr_', #2, $, $, (#152), #160);
+#171 = IFCELEMENTQUANTITY('3NGjg577D5dPVpFWJ_WJ7p', #2, 'BaseQuantities', $, $, (#172, #173));
+#172 = IFCQUANTITYLENGTH('Height', 'Height', $, 1400., $);
+#173 = IFCQUANTITYLENGTH('Width', 'Width', $, 750., $);
+#174 = IFCRELDEFINESBYPROPERTIES('0$m0sw4kPBYAh0CWBm4Xl5', #2, $, $, (#152), #171);
+#175 = IFCSHAPEREPRESENTATION(#20, 'Body', 'Brep', (#202));
+#176 = IFCCLOSEDSHELL((#182, #189, #192, #195, #198, #201));
+#177 = IFCPOLYLOOP((#24, #178, #179, #180));
+#178 = IFCCARTESIANPOINT((0., 190., 0.));
+#179 = IFCCARTESIANPOINT((750., 190., 0.));
+#180 = IFCCARTESIANPOINT((750., 0., 0.));
+#181 = IFCFACEOUTERBOUND(#177, .T.);
+#182 = IFCFACE((#181));
+#183 = IFCPOLYLOOP((#184, #185, #186, #187));
+#184 = IFCCARTESIANPOINT((0., 0., 1400.));
+#185 = IFCCARTESIANPOINT((750., 0., 1400.));
+#186 = IFCCARTESIANPOINT((750., 190., 1400.));
+#187 = IFCCARTESIANPOINT((0., 190., 1400.));
+#188 = IFCFACEOUTERBOUND(#183, .T.);
+#189 = IFCFACE((#188));
+#190 = IFCPOLYLOOP((#24, #184, #187, #178));
+#191 = IFCFACEOUTERBOUND(#190, .T.);
+#192 = IFCFACE((#191));
+#193 = IFCPOLYLOOP((#178, #187, #186, #179));
+#194 = IFCFACEOUTERBOUND(#193, .T.);
+#195 = IFCFACE((#194));
+#196 = IFCPOLYLOOP((#179, #186, #185, #180));
+#197 = IFCFACEOUTERBOUND(#196, .T.);
+#198 = IFCFACE((#197));
+#199 = IFCPOLYLOOP((#180, #185, #184, #24));
+#200 = IFCFACEOUTERBOUND(#199, .T.);
+#201 = IFCFACE((#200));
+#202 = IFCFACETEDBREP(#176);
+#203 = IFCSHAPEREPRESENTATION(#20, 'Box', 'BoundingBox', (#204));
+#204 = IFCBOUNDINGBOX(#24, 750., 190., 1400.);
+ENDSEC;
+END-ISO-10303-21;

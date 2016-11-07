@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Get Tree R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-13' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.4/showdown.min.js ></script>
+
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r2.js ></script>
+<script src=../../core1/0-mnu-menu-left/mnu-menu-left-r1.js ></script>
+
+
+<script src=../../core1/tre-tree/get-tree-r3.js ></script>
+<script>
+
+
+	init();
+
+	function init() {
+
+//		COR.taglineHeader = 'A hard core howdy!' + b;
+
+		MNU.initLeftMenu();
+
+		MNU.menu.innerHTML =
+
+//			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs() +
+
+			TRE.getMenuDetailsTableOfContents() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
+
+		COR.setMenuBreadCrumbs( item );
+
+		TRE.getFilesFromFolder( item );
+
+		MNU.contents.innerHTML =
+
+			'<h1>' + COR.title + '</h1>' +
+
+			'Item: ' + item + b + b +
+
+		//	'<iframe src="' + DEF.urlGHPages + item + '" width=800 height=500 ></iframe>' +
+
+		b;
+
+/*
+		var item;
+
+
+		if ( item.endsWith( '.md' ) === true ) {
+
+			COR.setMenuBreadCrumbs( DEF.searchInFolder );
+
+		} else if ( item.endsWith( '.html' ) === true ) {
+
+			COR.setMenuBreadCrumbs( item );
+
+		} else {
+
+//console.log( 'item', item );
+
+		}
+
+		TRE.setMenuDetailsRepositoryStatistics();
+
+
+
+		*/
+	}
+
+</script>
+</body>
+</html>

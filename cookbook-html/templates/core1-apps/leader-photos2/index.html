@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Get Tree LP R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='
+' >
+<meta name=keywords content='Jaanga,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-09-13' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.4/showdown.min.js ></script>
+
+<script src=defaults-r1.js ></script>
+<script src=core-r2.js ></script>
+<script src=mnu-menu-left-r1.js ></script>
+
+<script src=get-tree-lp-r3.js ></script>
+<script>
+
+	DEF.user = 'leaderphotos';
+	DEF.repo = 'leaderphotos.github.io';
+	DEF.branch = 'master';
+	DEF.searchInFolder = 'albums/';
+	DEF.defaultFile	= '../README.md'; // if no default, select a random file
+
+	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
+
+	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
+
+	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/';
+
+	TRE.extension = '.lock';
+
+	init();
+
+	function init() {
+
+//		COR.taglineHeader = 'A leader photo howdy!' + b;
+
+		MNU.initLeftMenu();
+
+		MNU.menu.innerHTML =
+
+//			COR.getMenuDetailsHeader() +
+
+			COR.getMenuBreadCrumbs() +
+
+			TRE.getMenuDetailsTableOfContents() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		TRE.getGitHubRepoTreeContents(); // calls onHashChange();
+
+	}
+
+
+	function onHashChange() {
+
+		var item;
+
+		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
+
+		COR.setMenuBreadCrumbs( item );
+
+		TRE.getFilesFromFolder( item );
+
+/*
+		MNU.contents.innerHTML =
+
+			'<h1>' + COR.title + '</h1>' +
+
+			'Item: ' + item + b + b +
+
+		//	'<iframe src="' + DEF.urlGHPages + item + '" width=800 height=500 ></iframe>' +
+
+		b;
+*/
+
+	}
+
+</script>
+</body>
+</html>
