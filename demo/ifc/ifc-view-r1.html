@@ -254,7 +254,6 @@
 
             }
 
-//            console.log( 'ifc.projectText', ifc.projectText );
             menuProjectInfo.innerHTML = ifc.projectText;
 
             getPolygons();
@@ -300,9 +299,6 @@
 
         }
 
-//console.log( 'ifc.polyloops', ifc.polyloops );
-//console.log( 'ifc.coordinates', ifc.coordinates );
-
         drawPolyloops();
         drawPolylines();
 
@@ -310,26 +306,23 @@
 
     function drawPolyloops() {
 
+        va polyloops, polyloop, pts;
+        var geometry, material, line;
+        var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
         polyloops = Object.keys( ifc.polyloops );
 
         for ( var i = 0; i < polyloops.length; i++ ) {
 
             polyloop = ifc.polyloops[ polyloops[ i ] ];
-
-//console.log( 'polyloop.hashes', polyloop.hashes );
-
-            var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-            var pts = [];
+            pts = [];
 
             for ( var j = 0; j < polyloop.hashes.length - 1; j++ ) {
 
-                //console.log( 'polyloop.hashes', ifc.coordinates[ polyloop.hashes[ 0 ] ].coordinates );
                 pt = ifc.coordinates[ polyloop.hashes[ j ] ].coordinates;
-                //console.log( 'pt', pt );
                 pts.push( v( pt[ 0 ], pt[ 2 ], pt[ 1 ] ) );
-            }
 
-//            var geometry, material, line;
+            }
 
             geometry = new THREE.Geometry();
             geometry.vertices = pts
