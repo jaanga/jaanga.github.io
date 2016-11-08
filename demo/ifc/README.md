@@ -9,10 +9,10 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 ================================================================================
 
 _<small>
-View industry foundation class files
+View [industry foundation classes]( https://en.wikipedia.org/wiki/Industry_Foundation_Classes ) (IFC) files
 </small>_
 
-## Full Screen: [IFC View ]( https://jaanga.github.io/demo/ifc-view-r1.html )
+## Full Screen: [IFC View R1]( https://jaanga.github.io/demo/ifc/ifc-view-r1.html )
 
 
 <img src="" style=display:none; width=800 >
@@ -21,31 +21,34 @@ View industry foundation class files
 <iframe src=https://jaanga.github.io/demo/ifc/ifc-view-r1.html width=100% height=500px ></iframe>
 
 
-_IFC View_
+_IFC View R1_
 
 ***
-
-[test.md]( index.html#test.md )
-
 
 
 ## Concept
 
-* TBD
+* IFC is an emerging AEC standard
+* Many apps are proprietary and closed source
+* Most of the open source apps require a download and install
+* Mobile apps seem almost non-existent
 
+_qll of the above needs confirming_
 
 ### Mission
 
-* TBD
+* Build lightweight IFC apps that work in your browser
+* Provide interactive 3D views
+* Entry level code accessible by engineers and architects
 
 
 ### Vision
 
-* TBD
+*
 
 ## Features
 
-* TBD
+* Choose from three examples
 * Click three bars( 'hamburger' ) icon to slide menu in or out
 * Direct link to this read me file
 * Click on title to reload
@@ -77,28 +80,40 @@ value='Source code listing' >
 
 ## Issues
 
+* 2016-11-07 ~ Need help in finding a glossary of IFC terms for dummies that loads reasonably quickly
 
 
-## To Do / Wish List
+## To Do / Wish List / Goals
 
+* 2016-11-07 ~ Read rile from your hard disk
+* 2016-11-07 ~ Read file from URL
 
-
-## Users
-
-Intended for general use
-
-
-## Goals
 
 
 ## Links of Interest
 
+* https://en.wikipedia.org/wiki/Industry_Foundation_Classes
+* http://buildingsmart.org/
 
+### Examples
+* http://www.buildingsmart-tech.org/implementation/ifc4-implementation/helpful-examples
+* http://web.stanford.edu/group/narratives/classes/08-09/CEE215/ReferenceLibrary/Industry%20Foundation%20Classes%20(IFC)/Sample%20IFC%20Files/
 
 ## Change Log
 
-###
+### 2016-11-07 ~ R1
 
+* Opens, reads, parses and displays IFC files
+* Three examples
+    * Hello Wall
+        * [Building Smart - Examples]( http://www.buildingsmart-tech.org/implementation/ifc4-implementation/helpful-examples )
+    * Hello House
+        * Still at very early stage of interpretation - date held in library blocks needs extrusion, position and rotation
+        * [Building Smart - Examples]( http://www.buildingsmart-tech.org/implementation/ifc4-implementation/helpful-examples )
+    * rst_advanced_sample_project.ifc
+        * 15K entities - takes a while to load
+* Reads and displays in 3D polylines, polyloops and coordinates
+* Reads and displays on menu some unformatted project meta-data
 * First commit
 * Add Read Me
 
