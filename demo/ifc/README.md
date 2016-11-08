@@ -15,11 +15,10 @@ View [industry foundation classes]( https://en.wikipedia.org/wiki/Industry_Found
 ## Full Screen: [IFC View R1]( https://jaanga.github.io/demo/ifc/ifc-view-r1.html )
 
 
-<img src="" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/20081479/c0a2ef34-a504-11e6-93d8-e58b4e0d61ed.png" style=display:none; width=800 >
 
 
 <iframe src=https://jaanga.github.io/demo/ifc/ifc-view-r1.html width=100% height=500px ></iframe>
-
 
 _IFC View R1_
 
@@ -29,22 +28,28 @@ _IFC View R1_
 ## Concept
 
 * IFC is an emerging AEC standard
-* Many apps are proprietary and closed source
-* Most of the open source apps require a download and install
-* Mobile apps seem almost non-existent
+* [industry foundation classes]( https://en.wikipedia.org/wiki/Industry_Foundation_Classes ) ((IFC) is an open and neutral data format for [building information modeling]( https://en.wikipedia.org/wiki/Building_information_modeling ) (BIM).
+* There is an existing mix of proprietary, closed source apps and open source apps, but most require a download and install
+* The choice of FOSS web-based apps is very limited
+* Mobile 3D viewing apps for IFC seem almost non-existent
 
-_qll of the above needs confirming_
+_all of the above needs confirming_
 
 ### Mission
 
 * Build lightweight IFC apps that work in your browser
 * Provide interactive 3D views
-* Entry level code accessible by engineers and architects
+* Entry level code accessible/hackable by engineers and architects
+    * Build custom apps for day-to-day needs quickly and easily
+* Read IFC data and directly generate 3D - no translations or intermediate formats
 
 
 ### Vision
 
-*
+* Basic IFC property editing capability
+* Just-in-time viewing based on streaming or gradual loading of different layers - instead of loading everything at once.
+* Ability to Redline IFC models
+* 3D project management
 
 ## Features
 

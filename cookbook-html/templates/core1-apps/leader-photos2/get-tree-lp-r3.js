@@ -55,7 +55,7 @@
 
 	TRE.getFilesFromFolder = function( dir ) {
 
-//		var dirArray, dirLen, item, itemArray;
+		var dirArray, dirLen, item, itemArray;
 
 		TRE.dirsSelected = [];
 		TRE.filesSelected = [];
@@ -111,8 +111,7 @@
 
 	TRE.createFolderNameTableOfContents = function() {
 
-//		var toc, folderName, folder;
-
+		var toc, folderName, folder;
 		toc = '';
 
 		for ( var i = 0; i < TRE.dirsSelected.length; i++ ) {
@@ -141,10 +140,7 @@
 */
 		TREtoc.innerHTML = toc;
 
-
-
 		if ( TRE.dirsSelected.length === 0 ) { TRE.createPageOfImages(); }
-
 
 	}
 

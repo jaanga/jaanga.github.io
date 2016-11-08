@@ -12,11 +12,12 @@
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.4/showdown.min.js ></script>
 
-<script src=defaults-r1.js ></script>
-<script src=core-r2.js ></script>
-<script src=mnu-menu-left-r1.js ></script>
+<script src=../../core1/0-def-defaults/defaults-r1.js ></script>
+<script src=../../core1/0-cor-core/core-r2.js ></script>
+<script src=../../core1/0-mnu-menu-left/mnu-menu-left-r1.js ></script>
 
 <script src=get-tree-lp-r3.js ></script>
+
 <script>
 
 	DEF.user = 'leaderphotos';
@@ -27,7 +28,7 @@
 
 	DEF.urlGITHubAPITreeContents = 'https://api.github.com/repos/' + DEF.user + '/' + DEF.repo + '/git/trees/' + DEF.branch + '?recursive=1';
 
-	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
+//	DEF.urlBase = 'https://github.com/' + DEF.user + '/' + DEF.repo + DEF.searchInFolder;
 
 	DEF.urlGHPages = 'https://' + DEF.user + '.github.io/';
 
@@ -68,7 +69,7 @@
 
 		item = location.hash ? location.hash.slice( 1 ) : DEF.searchInFolder;
 
-		COR.setMenuBreadCrumbs( item );
+		COR.setMenuBreadCrumbsFolder( item );
 
 		TRE.getFilesFromFolder( item );
 

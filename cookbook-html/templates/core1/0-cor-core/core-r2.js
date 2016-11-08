@@ -44,6 +44,7 @@
 	}
 
 
+// note two types
 
 	COR.setMenuBreadCrumbs = function( dir ) {
 
@@ -89,7 +90,7 @@
 
 	};
 
-
+// use when there a github.io involved?
 
 	COR.setMenuBreadCrumbsFolder = function( dir ) {
 
@@ -119,19 +120,23 @@
 
 		}
 
-		for ( var i = 0; i < dirArray.length; i++ ) {
+		for ( var i = 0; i < dirArray.length - 1; i++ ) {
 
 			dirString = dirArray.slice( 0, i + 1 ).join( '/' );
 
-			if ( dirString.endsWith( '.md' ) || dirString.endsWith( '.html' ) ) { continue; }
+		//	if ( dirString.endsWith( '.md' ) || dirString.endsWith( '.html' ) ) { continue; }
 
-			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo </h2>';
+			CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> &raquo; </h2>';
 
 		}
 
+		dirString = dirArray.slice( 0, i + 1 ).join( '/' );
+
+		CORbreadCrumbs += '<h2><a href=#' + dirString + ' >' + dirArray[ i ].replace( /-/g, ' ' ) + '</a> </h2>';
+
 		COR.title = dirArray.length ? dirArray.pop().replace( /-/g, ' ' ) : DEF.repo;
 
-		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs;
+		CORdivBreadCrumbs.innerHTML = CORbreadCrumbs.slice( 0, -2 );
 
 	};
 

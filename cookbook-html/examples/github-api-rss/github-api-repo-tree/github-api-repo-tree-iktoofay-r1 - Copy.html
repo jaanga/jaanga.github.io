@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>github-api-repo-tree-r1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-11-05' >
+</head>
+<body>
+<script>
+
+// http://stackoverflow.com/questions/17140711/how-to-show-a-list-or-array-into-a-tree-structure-in-javascript
+
+    var user = 'jaanga';
+    var repo = 'jaanga.github.io';
+    var branch = 'master';
+    var folder = 'cookbook-threejs\/examples\/';
+
+	var url = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+    var tree = {};
+
+	init();
+
+	function init() {
+
+		var css, container, contents, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			'body { font: 12pt monospace; margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'summary h3 { display: inline; }' +
+			'summary { outline: none; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<details open>' +
+
+					'<summary><h3>Menu</h3></summary>' +
+
+					'<p>' +
+						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'</p>' +
+
+					'<p>' +
+						'<button onclick=doIt(); > Button 3 </button>' +
+					'</p>' +
+
+					'<div id=menuInfo ></div>' +
+
+				'</details>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' +
+			'</div>' +
+
+		'';
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+        requestAPIContents();
+
+	}
+
+    function requestAPIContents() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+//			var response, file;
+
+			response = JSON.parse( xhr.response );
+			paths = [];
+
+			for ( var i = 0; i < response.tree.length; i++ ) {
+
+				file = response.tree[ i ].path;
+
+				if ( file.indexOf( folder ) === -1 ) { continue; }
+
+//				if ( file.indexOf( '.md' ) === -1 && file.indexOf( '.html' ) === -1 ) { continue; }
+
+				paths.push( file );
+
+			}
+
+//console.log( 'paths', paths );
+
+			menuInfo.innerHTML = 'Files count: ' + paths.length;
+
+            paths = paths.map(function(path) { return path.split('/'); });
+
+            function structurize(paths) {
+
+                var items;
+                items = [];
+
+                for( var i = 0, l = paths.length; i < l; i++) {
+                    var path = paths[i];
+                    var name = path[0];
+                    var rest = path.slice(1);
+                    var item = null;
+
+                    for ( var j = 0, m = items.length; j < m; j++ ) {
+                        if ( items[j].name === name ) {
+                            item = items[j];
+                            break;
+                        }
+                    }
+
+                    if ( item === null ) {
+                        item = { name: name, children: [] };
+                        items.push(item);
+                    }
+
+                    if ( rest.length > 0 ) {
+                        item.children.push(rest);
+                    }
+                }
+
+                for( i = 0, l = items.length; i < l; i++ ) {
+                    item = items[i];
+                    item.children = structurize( item.children );
+                }
+
+                return items;
+            }
+
+            function stringify(items) {
+
+                var lines = [];
+                for( var i = 0, l = items.length; i < l; i++ ) {
+                    var item = items[i];
+                    lines.push(item.name);
+                    var subLines = stringify( item.children );
+                    for( var j = 0, m = subLines.length; j < m; j++ ) {
+                        lines.push( "&nbsp;  " + subLines[j] );
+                    }
+                }
+                return lines;
+            }
+
+            things = result = structurize( paths );
+
+            result = stringify( structurize(paths) ).join( "<br>" );
+            //var output = document.getElementById('output');
+            contents.innerHTML = result;
+
+
+		}
+
+	}
+
+
+</script>
+</body>
+</html>
