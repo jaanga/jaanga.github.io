@@ -103,6 +103,9 @@ value='Source code listing' >
 ### Examples
 * http://www.buildingsmart-tech.org/implementation/ifc4-implementation/helpful-examples
 * http://web.stanford.edu/group/narratives/classes/08-09/CEE215/ReferenceLibrary/Industry%20Foundation%20Classes%20(IFC)/Sample%20IFC%20Files/
+* https://github.com/BuildingSMART/IfcScript/tree/master/Examples
+* https://github.com/opensourceBIM/IFC-files
+* https://github.com/mvaerle/python-ifc/tree/master/testdata
 
 ## Change Log
 
