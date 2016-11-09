@@ -105,9 +105,21 @@ value='Source code listing' >
 * http://web.stanford.edu/group/narratives/classes/08-09/CEE215/ReferenceLibrary/Industry%20Foundation%20Classes%20(IFC)/Sample%20IFC%20Files/
 * https://github.com/BuildingSMART/IfcScript/tree/master/Examples
 * https://github.com/opensourceBIM/IFC-files
+* https://github.com/BuildingSMART/IfcScript/tree/master/Examples
 * https://github.com/mvaerle/python-ifc/tree/master/testdata
 
 ## Change Log
+
+2016-11-09 ~ R2
+
+The files from https://github.com/opensourceBIM/IFC-files look like they will be a very handy resources.
+
+
+
+* Add opensourceBIM/IFC-files example: Wall.ifc
+    * Display wall as a 3D mesh
+* Add Stanford.edu example: BIMhouse_ARK_info4
+    * Some of the geometry displays
 
 ### 2016-11-07 ~ R1
 
