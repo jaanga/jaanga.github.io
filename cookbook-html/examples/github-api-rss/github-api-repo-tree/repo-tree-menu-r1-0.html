@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>repo tree menu r1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-11-05' >
+</head>
+<body>
+<script>
+
+// http://stackoverflow.com/questions/17140711/how-to-show-a-list-or-array-into-a-tree-structure-in-javascript
+
+    var user = 'jaanga';
+    var repo = 'jaanga.github.io';
+    var branch = 'master';
+    var folder = 'cookbook-threejs/examples/';
+
+
+    var user = 'leaderphotos';
+    var repo = 'leaderphotos.github.io';
+    var branch = 'master';
+    var folder = 'albums';
+
+	var url = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+    var data = {};
+
+	init();
+
+	function init() {
+
+		var css, container, contents, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			'body { font: 12pt monospace; margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'summary h3 { display: inline; }' +
+			'summary { outline: none; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<details open>' +
+
+					'<summary><h3>Menu</h3></summary>' +
+
+					'<div id=menuItems ></div>' +
+
+					'<p>' +
+						'<button onclick=doIt(); > Button 3 </button>' +
+					'</p>' +
+
+					'<div id=menuInfo ></div>' +
+
+				'</details>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' +
+			'</div>' +
+
+		'';
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+        requestAPIContents();
+
+	}
+
+    function requestAPIContents() {
+
+		var xhr, response, paths, path, treeNode, newNode;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			response = JSON.parse( xhr.response );
+			paths = [];
+
+			for ( var i = 0; i < response.tree.length; i++ ) {
+
+				path = response.tree[ i ].path;
+
+				if ( !path.includes( folder ) ) { continue; }
+
+//				if ( file.indexOf( '.md' ) === -1 && file.indexOf( '.html' ) === -1 ) { continue; }
+
+				paths.push( path );
+
+			}
+
+            paths = paths.map( function( path ) { return buildTree( path.split( '/' ), data ) } );
+
+/*
+            for ( var i = 0 ; i < paths.length; i++ ) {
+
+                buildTree( paths[ i ].split( '/' ), data );
+
+            }
+*/
+
+//debugger;
+
+            function buildTree( parts, treeNode ) {
+
+                if ( parts.length === 0 ) { return; }
+
+                var keys = Object.keys( treeNode );
+
+                for ( var i = 0 ; i < keys.length; i++ ) {
+
+                    if ( parts[ 0 ] === treeNode[ keys[ i ] ].text ) {
+
+                        buildTree( parts.splice( 1, parts.length ), treeNode[ keys[ i ] ].children );
+
+                        return;
+                    }
+
+                }
+
+                newNode = { 'text' : parts[ 0 ], 'children' : {} };
+
+
+//                treeNode.push( newNode );
+                treeNode[ newNode.text ] = newNode;
+
+                buildTree( parts.splice( 1, parts.length ), newNode.children );
+
+            }
+
+console.log( 'data', data );
+
+            menuInfo.innerHTML = 'Path count: ' + paths.length;
+
+            result = stringify( data ).join( '<br>' );
+            contents.innerHTML = result;
+
+//            setMenu( data.albums.children[ "Gypsies" ].children[ "roma-lyon"] );
+
+//            setMenu( 'Britain/castles-scotland' );
+            setMenu();
+		}
+
+	}
+
+    function setMenu( path ) {
+
+/*
+        if ( !path ) {
+
+            link = data[ folder ].children;
+
+        } else {
+
+            folders = path.split( '/' );
+
+            if ( folders.length === 1 ) {
+
+                link = data[ folder ].children[ folders[ 0 ] ].children;
+
+            } else {
+
+                link = data[ folder ].children[ folders[ 0 ] ].children[ folders[ 1 ] ].children;
+
+            }
+
+        }
+*/
+
+
+
+
+
+        folders = path ? path.split( '/' ) : '' ;
+
+        obj = data[ folder ];
+
+        console.log( 'obj ', obj );
+
+console.log( 'folders ', folders );
+
+
+        for ( var i = 0; i < folders.length; i++ ) {
+
+//            obj = getChildren( obj, folders[ i ] );
+            obj = obj.children[ folders[ i ] ];
+        }
+
+
+link = obj.children
+
+        keys = Object.keys( link );
+
+        txt = '';
+        var b = '<br>';
+
+        for ( var i = 0; i < keys.length; i++ ) {
+
+//            if ( keys[ i ].includes( '.' ) ) { continue; }
+
+            p = path ? path + '/' : '';
+
+            txt += '<a href=JavaScript:setMenu("' + p + keys[ i ] + '"); >' + keys[ i ] + '</a>'+ b;
+
+        }
+
+        menuItems.innerHTML = txt;
+
+    }
+
+    function stringify( items ) {
+
+        var lines, item, subLines;
+        var lines = [];
+
+        var keys = Object.keys( items );
+
+        for ( var i = 0; i < keys.length; i++ ) {
+
+            item = items[ keys[ i ] ];
+
+            lines.push( item.text );
+
+            subLines = stringify( item.children );
+
+            for ( var j = 0; j < subLines.length; j++ ) {
+
+                lines.push( '&nbsp;  ' + subLines[ j ] );
+
+            }
+        }
+
+        return lines;
+
+    }
+
+</script>
+</body>
+</html>
