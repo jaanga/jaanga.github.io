@@ -12,6 +12,8 @@ _<small>
 View [industry foundation classes]( https://en.wikipedia.org/wiki/Industry_Foundation_Classes ) (IFC) files
 </small>_
 
+## Full Screen: [IFC View R2]( https://jaanga.github.io/demo/ifc/ifc-view-r2.html )
+
 ## Full Screen: [IFC View R1]( https://jaanga.github.io/demo/ifc/ifc-view-r1.html )
 
 
@@ -99,6 +101,7 @@ value='Source code listing' >
 
 * https://en.wikipedia.org/wiki/Industry_Foundation_Classes
 * http://buildingsmart.org/
+* IFC4 reference: http://www.buildingsmart-tech.org/mvd/IFC4Add1/RV/1.0/html/
 
 ### Examples
 * http://www.buildingsmart-tech.org/implementation/ifc4-implementation/helpful-examples
