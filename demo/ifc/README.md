@@ -112,8 +112,21 @@ value='Source code listing' >
 
 2016-11-09 ~ R2
 
-The files from https://github.com/opensourceBIM/IFC-files look like they will be a very handy resources.
+The files from https://github.com/BuildingSMART/IfcScript/tree/master/Examples look like they will be a very handy resources.
+There's a good number of examples with each showing a discrete facet of IFC.
+Also there's a folder with images of what each example should look like.
 
+We have taken a simple example - Wall.ifc. We can load it, parse the data and display its Geometry in 3D.
+We are planning to add new examples to the menu on an ongoing basis.
+With each new example added there should also be additions and enhancements to the capabilities of the reader/interpreter
+
+Unfortunately it looks like there are many style for creating IFC files.
+The Buildingsmart files were created with a tool tiled 'Geometry Gym'.
+These files do not seen to create data in the same way that Revit creates IFC data.
+Thus the display of none of the other examples has been enhanced by the added capabilities in R2.
+
+This is all part of a learning process.
+The important thing will be to keep the code readable and simple so that it will be easy for people too adapt the code to new situations.  
 
 
 * Add opensourceBIM/IFC-files example: Wall.ifc
