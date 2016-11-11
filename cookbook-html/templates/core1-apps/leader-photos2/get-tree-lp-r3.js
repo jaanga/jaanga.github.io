@@ -90,7 +90,7 @@
 
 			if ( !item.includes( dir ) ) { continue; }
 
-			if ( !item.includes( 'jpg' ) ) { continue; }
+			if ( !item.includes( '.jpg' ) ) { continue; }
 
 //			if ( item.includes( 'archive' ) ) { continue; }
 
@@ -121,7 +121,7 @@
 			TRE.folderName = TRE.folder.split( '/' ).pop();
 			TRE.folderName = TRE.folderName.replace( /-/g, ' ' );
 
-			toc += '<h3>&#x1f4c1; <a href=#' + TRE.folder + ' > ' + TRE.folderName + '</a></h3>';
+			toc += '<h3> &#x1f4c1; <a href=#' + TRE.folder + ' > ' + TRE.folderName + '</a></h3>';
 
 		}
 

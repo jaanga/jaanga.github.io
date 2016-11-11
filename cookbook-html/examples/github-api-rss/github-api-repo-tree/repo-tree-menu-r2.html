@@ -2,34 +2,56 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>repo tree menu r1</title>
+<title>repo tree menu r2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
 <meta name=date content='2016-11-05' >
 </head>
 <body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.4/showdown.min.js ></script>
 <script>
 
 // http://stackoverflow.com/questions/17140711/how-to-show-a-list-or-array-into-a-tree-structure-in-javascript
 
 
-/*
-    var user = 'jaanga';
-    var repo = 'jaanga.github.io';
-    var branch = 'master';
-    var folder = 'cookbook-threejs';
-*/
+    var JAA = {};
+    JAA.user = 'jaanga';
+    JAA.repo = 'jaanga.github.io';
+    JAA.branch = 'master';
+    JAA.folder = 'cookbook-threejs';
 
-    var user = 'leaderphotos';
-    var repo = 'leaderphotos.github.io';
-    var branch = 'master';
-    var folder = 'albums';
-	var url = 'https://api.github.com/repos/' + user + '/' + repo + '/git/trees/' + branch + '?recursive=1';
+    var LDR = {};
+    LDR.user = 'leaderphotos';
+    LDR.repo = 'leaderphotos.github.io';
+    LDR.branch = 'master';
+    LDR.folder = 'albums';
 
-    var urlGHPages =  'https://' + user + '.github.io/' + repo + '/' + folder + '/';
+    var WBM = {};
+    WBM.user = 'webmath';
+    WBM.repo = 'webmath.github.io';
+    WBM.branch = 'master';
+    WBM.folder = '';
 
-    var data = {};
+    var THR = {};
+    THR.user = 'mrdoob';
+    THR.repo = 'three.js';
+    THR.branch = 'master';
+    THR.folder = '';
+
+    groupOptions =
+
+		'<option value=JAA >JAA</option>' +
+		'<option value=LDR >LDR</option>' +
+        '<option value=WBM >WBM</option>' +
+    '';
+
+    TRE = THR;
+
+	var url = 'https://api.github.com/repos/' + TRE.user + '/' + TRE.repo + '/git/trees/' + TRE.branch + '?recursive=1';
+    var urlGHPages = 'https://' + TRE.user + '.github.io/' + TRE.repo + '/' + TRE.folder + '/';
+
+    var data = { 'children' : {} };
 
     var b = '<br>';
 
@@ -71,6 +93,25 @@
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+                '<details id=SELdetailsUser open title="" >' +
+
+    				'<summary><h3>Select GitHub users</h3></summary>' +
+
+    					'<select id=SELselUser onchange=TRE=this.value; title="Select user" size=5 >' +
+
+   						groupOptions +
+
+    					'</select>' + b +
+
+    				'<small>Enter a user name and press enter: </small>' + b +
+
+    				'<input id=SELinpUser placeholder="Enter a search user" onchange=""; style=width:100%; >' + b +
+
+    				b +
+
+    			'</details>' +
+
 
 				'<details open>' +
 
@@ -125,18 +166,19 @@
 
 				path = response.tree[ i ].path;
 
-				if ( !path.includes( folder ) ) { continue; }
+                if ( path.startsWith( '.' ) ) { continue; }
+
+                if ( TRE.folder !== '' && !path.includes( TRE.folder ) ) { continue; }
 
 				paths.push( path );
 
 			}
 
-            paths = paths.map( function( path ) { return buildTree( path.split( '/' ), data ) } );
-
+            paths = paths.map( function( path ) { return buildTree( path.split( '/' ), data.children ) } );
 /*
             for ( var i = 0 ; i < paths.length; i++ ) {
 
-                buildTree( paths[ i ].split( '/' ), data );
+                buildTree( paths[ i ].split( '/' ), data.children );
 
             }
 */
@@ -184,11 +226,12 @@
 
     function setMenu( path ) {
 
-    //    var obj, folders, keys;
+        var obj, folders, keys;
         var txt = '';
 
         folders = path ?  path.split( '/' ) : [] ;
-        obj = data[ folder ];
+
+        obj = TRE.folder ? data[ TRE.folder ] : data;
 
         for ( var i = 0; i < folders.length; i++ ) {
 
@@ -204,36 +247,19 @@
         for ( var i = 0; i < keys.length; i++ ) {
 
             p = path ? path + '/' : '';
+            key = keys[ i ];
 
-            if ( !keys[ i ].includes( '.') ) {
+            if ( !key.includes( '.') ) {
 
-                folders += ' &#x1f4c1; <a href=JavaScript:setMenu("' + p + keys[ i ] + '"); >' + keys[ i ] + '</a>'+ b;
+                folders += ' &#x1f4c1; <a href=JavaScript:setMenu("' + p + key + '"); >' + key + '</a>'+ b;
 
             } else {
 
-                files += '<a href=JavaScript:setMenu("' + p + keys[ i ] + '"); >' + keys[ i ] + '</a>'+ b;
+                files += '<a href=JavaScript:setMenu("' + p + key + '"); >' + key + '</a>'+ b;
 
-                if ( keys[ i ] === 'README.md' || keys[ i ] === 'album.dat' ) {
-
-                    p = path ? path + '/' : '';
-
-
-                    requestFile( urlGHPages + p + keys[ i ], callback )
-
-                }
-
-                function callback( xhr ) {
-
-                    console.log( 'i', xhr );
-                    contents.innerText =
-                        xhr.target.responseURL + '\n\n' +
-                        'Unprettified text \n\n' +
-                    xhr.target.response;
-
-                }
+                setContents( path, key );
 
             }
-
 
         }
 
@@ -244,13 +270,53 @@
     }
 
 
+    function setContents( path, key ) {
+
+console.log( 'key', key );
+
+        var p;
+
+        p = path ? path + '/' : '';
+
+        if ( key.toLowerCase().endsWith( 'md' ) ) {
+
+            requestFile( urlGHPages + p + key, callbackMD );
+
+        } else {
+            requestFile( urlGHPages + p + key, callbackUnPretty );
+
+        }
+
+        function callbackMD( xhr ) {
+
+            var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+            contents.innerHTML = converter.makeHtml( xhr.target.response );
+
+        }
+
+        function  callbackUnPretty( xhr ) {
+
+            var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
+
+            contents.innerText =
+                xhr.target.responseURL + '\n\n' +
+                'Unprettified text ~ last modified: ' + lastMod + '\n\n' +
+                xhr.target.response +
+            '';
+
+        }
+
+    }
+
+
     function setBreadcrumbs( path ) {
 
 //console.log( 'path', path );
 
         var txt, folders, str;
 
-        txt = '<h3><a href=JavaScript:setMenu(); >' + folder + '</a> &raquo; </h3>';
+        txt = '<h3><a href=JavaScript:setMenu(); >' + TRE.folder + '</a> &raquo; </h3>';
         folders = path ?  path.split( '/' ) : [] ;
         str = '';
 
@@ -297,6 +363,7 @@
         var xhr;
 
         xhr = new XMLHttpRequest();
+        xhr.crossOrigin = 'anonymous';
 		xhr.open( 'GET', url, true );
 		xhr.onload = callback;
 		xhr.send( null );
