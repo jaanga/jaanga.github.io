@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>repo tree menu r2</title>
+<title>repo tree menu r3</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
@@ -15,46 +15,51 @@
 // http://stackoverflow.com/questions/17140711/how-to-show-a-list-or-array-into-a-tree-structure-in-javascript
 
 
-    var JAA = {};
+    var users = {};
+
+    JAA = {};
     JAA.user = 'jaanga';
     JAA.repo = 'jaanga.github.io';
     JAA.branch = 'master';
     JAA.folder = 'cookbook-threejs';
+    users.JAA = JAA;
 
     var LDR = {};
     LDR.user = 'leaderphotos';
     LDR.repo = 'leaderphotos.github.io';
     LDR.branch = 'master';
     LDR.folder = 'albums';
+    users.LDR = LDR;
 
     var WBM = {};
     WBM.user = 'webmath';
     WBM.repo = 'webmath.github.io';
     WBM.branch = 'master';
     WBM.folder = '';
+    users.WBM = WBM;
 
     var THR = {};
     THR.user = 'mrdoob';
     THR.repo = 'three.js';
-    THR.branch = 'master';
+    THR.branch = 'dev';
     THR.folder = '';
+    users.THR = THR;
+
 
     groupOptions =
 
 		'<option value=JAA >JAA</option>' +
 		'<option value=LDR >LDR</option>' +
         '<option value=WBM >WBM</option>' +
+        '<option value=THR >THR</option>' +
     '';
 
-    TRE = LDR;
+    TRE = users['THR'];
 
-	var url = 'https://api.github.com/repos/' + TRE.user + '/' + TRE.repo + '/git/trees/' + TRE.branch + '?recursive=1';
-    var urlGHPages = 'https://' + TRE.user + '.github.io/' + TRE.repo + '/' + TRE.folder + '/';
+	var url; // = 'https://api.github.com/repos/' + TRE.user + '/' + TRE.repo + '/git/trees/' + TRE.branch + '?recursive=1';
+    var urlGHPages; // = 'https://' + TRE.user + '.github.io/' + TRE.repo + '/' + TRE.folder + '/';
 
-
-    var data = {}; //{ 'children' : {} };
-
-
+    TRE.data = {}; // { 'children' : {} };
 
     var b = '<br>';
 
@@ -101,7 +106,7 @@
 
     				'<summary><h3>Select GitHub users</h3></summary>' +
 
-    					'<select id=SELselUser onchange=TRE=this.value; title="Select user" size=5 >' +
+    					'<select id=SELselUser onchange=setUser(users[this.value]); title="Select user" size=5 >' +
 
    						groupOptions +
 
@@ -146,12 +151,34 @@
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
-        requestAPIContents();
+        setUser( users['THR'] );
 
 	}
 
+    function setUser( user ){
 
-    function requestAPIContents() {
+        TRE = user;
+
+        url = 'https://api.github.com/repos/' + TRE.user + '/' + TRE.repo + '/git/trees/' + TRE.branch + '?recursive=1';
+        urlGHPages = 'https://rawgit.com/' + TRE.user + '/' + TRE.repo + '/' + TRE.branch + '/' + TRE.folder + ( TRE.folder ? '/' : '' );
+
+// add if folder = ''...
+
+        if ( TRE.folder === '' ) {
+
+            TRE.data = { 'children' : {} };
+
+        } else {
+
+            TRE.data = {};
+
+        }
+
+        requestAPIContents( url );
+
+    }
+
+    function requestAPIContents( url ) {
 
 		var xhr, response, paths, path, treeNode, newNode;
 
@@ -163,6 +190,7 @@
 		function callback() {
 
 			response = JSON.parse( xhr.response );
+// make into object so can add index numbers ~ than can use later to check if folder or files
 			paths = [];
 
 			for ( var i = 0; i < response.tree.length; i++ ) {
@@ -171,23 +199,30 @@
 
                 if ( path.startsWith( '.' ) ) { continue; }
 
-//                if ( TRE.folder !== '' && !path.includes( TRE.folder ) ) { continue; }
-                if ( !path.includes( TRE.folder ) ) { continue; }
+                if ( TRE.folder !== '' && !path.includes( TRE.folder ) ) { continue; }
 
 				paths.push( path );
 
 			}
 
-//            paths = paths.map( function( path ) { return buildTree( path.split( '/' ), data ) } );
+            if ( TRE.folder === '' ) {
 
-console.log( '', paths );
+                paths = paths.map( function( path ) { return buildTree( path.split( '/' ), TRE.data.children ) } );
 
-            for ( var i = 0 ; i < paths.length; i++ ) {
+            } else {
 
-                buildTree( paths[ i ].split( '/' ), data );
+                paths = paths.map( function( path ) { return buildTree( path.split( '/' ), TRE.data ) } );
 
             }
 
+
+/*
+            for ( var i = 0 ; i < paths.length; i++ ) {
+
+                buildTree( paths[ i ].split( '/' ), TRE.data.children );
+
+            }
+*/
 
 //debugger;
 
@@ -218,7 +253,7 @@ console.log( '', paths );
 
             menuInfo.innerHTML = 'Path count: ' + paths.length;
 
-//            result = stringify( data ).join( '<br>' );
+//            result = stringify( TRE.data ).join( '<br>' );
 //            contents.innerHTML = result;
 
 //            setMenu( 'Britain/castles-scotland' );
@@ -232,13 +267,13 @@ console.log( '', paths );
 
     function setMenu( path ) {
 
-       var obj, folders, keys;
+        var obj, folders, keys;
         var foldersText, filesText;
 
         folders = path ?  path.split( '/' ) : [] ;
 
-        obj = TRE.folder ? data[ TRE.folder ] : data;
-console.log( 'obj', obj );
+        obj = TRE.folder ? TRE.data[ TRE.folder ] : TRE.data;
+
         for ( var i = 0; i < folders.length; i++ ) {
 
             obj = obj.children[ folders[ i ] ];
@@ -252,7 +287,7 @@ console.log( 'obj', obj );
 
         for ( var i = 0; i < keys.length; i++ ) {
 
-            p = path ? path + '/' : '';
+            p = path ? path + '/': '';
             key = keys[ i ];
 
             if ( !key.includes( '.') ) {
@@ -261,9 +296,7 @@ console.log( 'obj', obj );
 
             } else {
 
-                filesText += '<a href=JavaScript:setMenu("' + p + key + '"); >' + key + '</a>'+ b;
-
-                setContents( path, key );
+                filesText += '<a href=JavaScript:getFileSetContents("' + p + key + '"); >' + key + '</a>'+ b;
 
             }
 
@@ -273,23 +306,53 @@ console.log( 'obj', obj );
 
         setBreadcrumbs( path );
 
+        setContents( path, filesText );
+
     }
 
+    function getFileSetContents( path ){
 
-    function setContents( path, key ) {
+        requestFile( urlGHPages + path, callbackUnPretty );
 
-console.log( 'key', key );
+        function  callbackUnPretty( xhr ) {
+
+            var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
+
+            contents.innerText =
+                xhr.target.responseURL + '\n\n' +
+                'Unprettified text ~ last modified: ' + lastMod + '\n\n' +
+                xhr.target.response +
+            '';
+
+        }
+
+    }
+
+    function setContents( path, filesText ) {
+
+//console.log( 'key', key );
 
         var p;
 
-        p = path ? path + '/' : '';
+        p = path ? path + '/': '/';
 
-        if ( key.toLowerCase().endsWith( 'md' ) ) {
+console.log( 'path', p );
 
-            requestFile( urlGHPages + p + key, callbackMD );
+        txt = filesText.toLowerCase();
+
+        if ( txt.includes( 'readme.md' ) ) {
+
+            start = txt.indexOf( 'readme.' );
+
+            file = urlGHPages + p + filesText.slice( start, start + 9 );
+
+console.log( 'file ', file );
+
+            requestFile( file, callbackMD );
 
         } else {
-            requestFile( urlGHPages + p + key, callbackUnPretty );
+
+//            requestFile( urlGHPages + p + key, callbackUnPretty );
 
         }
 
@@ -314,6 +377,8 @@ console.log( 'key', key );
         }
 
     }
+
+
 
 
     function setBreadcrumbs( path ) {

@@ -42,6 +42,10 @@
 
 ## Issues
 
+* 2016-11-11 ~ Breadcrumbs: need top level crumb
+* 2016-11-11 ~ Contents: Display source code using Ace editor
+* 2016-11-11 ~ Contents: display multiple images as a gallery
+* 2016-11-11 ~ Display HTML as source or in an iframe 
 
 ## Users
 
@@ -57,16 +61,17 @@ Intended for xxx
 
 ## Change Log
 
-### 2016-07-02
+
+
+### 2016-11-11 ~ R3
+
+* Working quite nicely
+
+### 2016-11-08
 
 * First commit
 * Add Read Me
 
-http://ladybug-analysis-tools.github.io/ladybug-web/index.html#github-api/api-explorer/readme.md
-
-http://ladybug-analysis-tools.github.io/ladybug-web/github-api/api-explorer/ladybug-github-api-explorer-r1.html
-
-http://jaanga.github.io/demo/pm/index.html
 
 ***
 
