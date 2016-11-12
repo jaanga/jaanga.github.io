@@ -13,6 +13,8 @@ _Your 3D happy place. And, btw, we're using [browserstack]( https://www.browsers
 ~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
 ~ [All of It]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-html-jaanga/viewer-html-jaanga-r1.html ) 
 
+<!--
+
 ### New [GitHub API File Viewer]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-viewer/github-api-files-viewer-r1.html )
 
 ## Sample Web Pages / Source Code
@@ -20,7 +22,7 @@ _Your 3D happy place. And, btw, we're using [browserstack]( https://www.browsers
 <iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
 
 ######_Sample Jaanga Scripts - [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
-
+-->
 
 ## Concept
 
