@@ -6,7 +6,7 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-11-12' >
 </head>
 <body>
 <!--
@@ -19,10 +19,9 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script>
 // Copyright 2016 Jaanga authors ~ MIT license
-// Update 2016-11-10
 
 	var stats, renderer, scene, camera, controls, mesh;
-	var gridHelper, axisHelper;
+	var gground, gridHelper, axisHelper;
 
 
 	init();
@@ -75,6 +74,7 @@
 
 				'<details>' +
 					'<summary><h3>Settings</h3></summary>' +
+					'<p><input type=checkbox id=chkWire onchange=mesh.material.wireframe=chkWire.checked; > Wireframe</p>' +
 					'<p><input type=checkbox onchange=mesh.material.visible=!mesh.material.visible; checked > Ground plane</p>' +
 					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
 					'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
@@ -135,9 +135,9 @@
 
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -11, 0 );
-		scene.add( mesh );
+		ground = new THREE.Mesh( geometry, material );
+		ground.position.set( 0, -11, 0 );
+		scene.add( ground );
 
 		gridHelper  = new THREE.GridHelper( 50, 10 );
 		gridHelper.position.set( 0, -10, 0 );

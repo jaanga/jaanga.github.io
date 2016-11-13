@@ -18,13 +18,14 @@ Constructive Solid Geometry Read Me
 
 > Constructive solid geometry allows a modeler to create a complex surface or object by using Boolean operators to combine objects.
 
-[Chandler Prall's CSG]( https://github.com/chandlerprall/ThreeCSG )  
-[S Shirikov BSP]( https://github.com/sshirokov/ThreeBSP )  
-[Joe Dirksen's Binary Operations]( http://www.smartjava.org/ltjs/chapter-06/08-binary-operations.html )
+* [Chandler Prall's CSG]( https://github.com/chandlerprall/ThreeCSG )  
+* [S Shirikov BSP]( https://github.com/sshirokov/ThreeBSP )  
+* [Joe Dirksen's Binary Operations]( http://www.smartjava.org/ltjs/chapter-06/08-binary-operations.html )
+* http://stackoverflow.com/questions/tagged/threecsg
 
 
 ## Change Log
 
-2015-03-14 ~ Theo 
+2015-03-14 ~ Theo
 
 * R1 first commit

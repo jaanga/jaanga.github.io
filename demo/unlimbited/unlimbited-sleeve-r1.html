@@ -2,11 +2,11 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>csg-basic-r1</title>
+<title>unlimbited-sleeve-r1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='' >
+<meta name=date content='2016-11-12' >
 </head>
 <body>
 <!--
@@ -17,13 +17,14 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-<script src=https://rawgit.com/chandlerprall/ThreeCSG/master/ThreeCSG.js ></script>
 <script>
 // Copyright 2016 Jaanga authors ~ MIT license
-// Update 2016-11-10
 
-    var result;
-
+    var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+    var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+    function cos( a ){ return Math.cos( a ); }
+    function sin( a ){ return Math.sin( a ); }
+    function atan2( x, y ){ return Math.atan2( x, y ); }
 	var stats, renderer, scene, camera, controls, mesh;
 	var ground, gridHelper, axisHelper;
 
@@ -69,27 +70,18 @@
 
 				'<details open>' +
 					'<summary><h3>Menu</h3></summary>' +
-
-                    '<p>Prall Examples</p>' +
-					'<p><button onclick=getCubeMeshSubtractSphereMesh();chkWire.checked=false; >Example #1 - Cube (mesh) subtract Sphere (mesh)</button></p>' +
-                    '<p><button onclick=getSphereGeometryUnionCubeGeometry();chkWire.checked=false; >Example #2 - Sphere (geometry) union Cube (geometry)</button></p>' +
-                    '<p><button onclick=getSphereGeometryIntesectSphereMesh();chkWire.checked=false; >Example #3 - Sphere (geometry) intersect Sphere (mesh)</button></p>' +
-
-                    '<p>More</p>' +
-                    '<p><button onclick=getCubeGeometryUnionKnotGeometry();chkWire.checked=false; > Cube Geometry Union Knot Geometry</button></p>' +
-                    '<p><button onclick=subtractCylinderFromMergedObjects();chkWire.checked=false; >Subtract Cylinder From Merged Objects</button></p>' +
-
-//                    '<p><button onclick=();chkWire.checked=false; ></button></p>' +
+//					'<p><button onclick=getIt(); >get it</button></p>' +
 					'<p id=menuInfo >' +
-//						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-//						'The widgets below don\'t do anything but are here to indicate the look and feel.' +//
+						'2016-11-12 ~ This is the first pass at building a templete for creating prosthetic devices for ' +
+						'<a href="http://www.teamunlimbited.org/" target="_blank">Team UnLimbited</a>. ' +
+                        'It\'s very much a work in progress.' +
 					'</p>' +
 				'</details>' +
 
 				'<details open>' +
 					'<summary><h3>Settings</h3></summary>' +
-					'<p><input type=checkbox id=chkWire onchange=result.material.wireframe=chkWire.checked; > Wireframe</p>' +
-					'<p><input type=checkbox onchange=ground.material.visible=!ground.material.visible; checked > Ground plane</p>' +
+					'<p><input type=checkbox id=chkWire onchange=mesh.material.wireframe=chkWire.checked; > Wireframe</p>' +
+					'<p><input type=checkbox onchange=mesh.material.visible=!mesh.material.visible; checked > Ground plane</p>' +
 					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
 					'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
 					'<p title="Press spacebar or click in window to stop." >' +
@@ -97,7 +89,7 @@
 					'</p>'  +
 				'</details>' +
 
-				'<details>' +
+				'<details open>' +
 					'<summary><h3>About</h3></summary>' +
 					'<ul>' +
 						'<li>Rotate|Zoom|Pan => 1|2|3 finger/button</li>' +
@@ -133,7 +125,7 @@
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+		camera.position.set( 200, 200, 200 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.maxDistance = 800;
@@ -147,164 +139,148 @@
 
 // helpers
 
-		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		geometry = new THREE.BoxGeometry( 300, 2, 300 );
 		material = new THREE.MeshNormalMaterial();
 		ground = new THREE.Mesh( geometry, material );
 		ground.position.set( 0, -21, 0 );
+        ground.scale.set( -1, -1, -1 )
 		scene.add( ground );
 
-		gridHelper  = new THREE.GridHelper( 50, 10 );
+		gridHelper  = new THREE.GridHelper( 150, 10 );
 		gridHelper.position.set( 0, -20, 0 );
 		scene.add( gridHelper );
 
-		axisHelper = new THREE.AxisHelper( 50 );
+		axisHelper = new THREE.AxisHelper( 150 );
 		scene.add( axisHelper );
 
 // assets
 
+        getSleeve();
 
 	}
 
 
-    function getCubeMeshSubtractSphereMesh() {
+    function getSleeve() {
 
-        scene.remove( result );
+        var length = length || 200;
+        var widthFront = widthFront || 140;
+        var widthBack = widthBack || 200;
+        var widthOffset = widthOffset || 50;
+        var jointRadius = jointRadius || 20;
 
-        var start_time = new Date();
+        var shape, hole;
+		var geometry, material;
 
-		var cube_geometry = new THREE.CubeGeometry( 30, 30, 30 );
-		var cube_mesh = new THREE.Mesh( cube_geometry );
-		var cube_bsp = new ThreeBSP( cube_mesh );
+		shape = new THREE.Shape();
 
-		var sphere_geometry = new THREE.SphereGeometry( 18, 32, 32 );
-		var sphere_mesh = new THREE.Mesh( sphere_geometry );
-		var sphere_bsp = new ThreeBSP( sphere_mesh );
+// right side
+        shape.absarc( widthBack, 0, jointRadius, -pi, pi05 );
+        shape.lineTo( widthOffset + widthFront, length );
+        shape.absarc( widthOffset + widthFront + 40, length + jointRadius, jointRadius, -pi05, 0 );
+        shape.lineTo( widthOffset + widthFront + 40 + jointRadius, length + 2 * jointRadius );
 
-		var subtract_bsp = cube_bsp.subtract( sphere_bsp );
-		result = subtract_bsp.toMesh( new THREE.MeshNormalMaterial() );
-		result.geometry.computeVertexNormals();
+// left side
+        shape.lineTo( widthOffset, length + 2 * jointRadius );
+        shape.lineTo( widthOffset, length + jointRadius );
+        shape.absarc( widthOffset + jointRadius, length + jointRadius, jointRadius, pi, - pi05 );
 
-		scene.add( result );
+        shape.absarc( 0, 0, jointRadius, pi05, 0 );
 
-		console.log( 'Example 1: ' + ( new Date() - start_time ) + 'ms' );
+// holes
 
-    }
+		var hole = getHole( widthBack, 0 );
+		shape.holes.push( hole );
 
-    function getSphereGeometryUnionCubeGeometry() {
+        var hole = getHole( widthOffset + widthFront + 40, length + jointRadius);
+		shape.holes.push( hole );
 
-        scene.remove( result );
+        var hole = getHole( widthOffset + jointRadius, length + jointRadius );
+		shape.holes.push( hole );
 
-        var start_time = new Date();
+        var hole = getHole( 0, 0 );
+		shape.holes.push( hole );
 
-        var sphere_geometry = new THREE.SphereGeometry( 20, 16, 16 );
-        var sphere_bsp = new ThreeBSP( sphere_geometry );
+// slots
 
-        var cube_geometry = new THREE.CubeGeometry( 70, 5, 30 );
-        var cube_bsp = new ThreeBSP( cube_geometry );
+        var angleLeft = pi05 - atan2( widthOffset + 2 * jointRadius, length ) // not quite right
 
-        var union_bsp = sphere_bsp.union( cube_bsp );
+        for ( var i = 0, slot; i < 5; i++ ) {
 
-        result = union_bsp.toMesh( new THREE.MeshNormalMaterial() );
-        result.geometry.computeVertexNormals();
-        scene.add( result );
+            slot = getSlot( 10 + i * 30 * cos( angleLeft ), 25 + i * 30 * sin( angleLeft ), angleLeft )
+            shape.holes.push( slot );
 
-        console.log( 'Example 2: ' + ( new Date() - start_time ) + 'ms' );
+        }
 
-    }
+        var angleRight = pi05 - atan2( - 0.5 * jointRadius, length ) // not quite right
 
+        for ( i = 0; i < 4; i++ ) {
 
-    function getSphereGeometryIntesectSphereMesh() {
+            slot = getSlot( widthBack - 10 + i * 30 * cos( angleRight ), 25 + i * 30 * sin( angleRight ), angleRight )
+            shape.holes.push( slot );
 
-        scene.remove( result );
+        }
 
-        var start_time = new Date();
+        for ( var x = 0; x < 2; x++ ) {
+			for ( var y = 0; y < 3; y++ ) {
 
-		var sphere_geometry_1 = new THREE.SphereGeometry( 20, 64, 8 );
-		var sphere_bsp_1 = new ThreeBSP( sphere_geometry_1 );
-
-		var sphere_geometry_2 = new THREE.SphereGeometry( 20, 8, 32 );
-		var sphere_mesh_2 = new THREE.Mesh( sphere_geometry_2 );
-		sphere_mesh_2.position.x = -20;
-		var sphere_bsp_2 = new ThreeBSP( sphere_mesh_2 );
-
-		var intersect_bsp = sphere_bsp_1.intersect( sphere_bsp_2 );
-
-		result = intersect_bsp.toMesh( new THREE.MeshNormalMaterial() );
-		result.geometry.computeVertexNormals();
-		scene.add( result );
-
-		console.log( 'Example 3: ' + ( new Date() - start_time ) + 'ms' );
-
-    }
-
-
-    function getCubeGeometryUnionKnotGeometry(){
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-		var knot_geometry = new THREE.TorusKnotGeometry();
-        knot_geometry.applyMatrix( new THREE.Matrix4().makeScale( 0.1, 0.1, 0.1 ) );
-		var knot_bsp = new ThreeBSP( knot_geometry );
-
-		var box_geometry = new THREE.BoxGeometry( 20, 8, 32 );
-		var box_bsp = new ThreeBSP( box_geometry );
-
-		var union_bsp = knot_bsp.union( box_bsp );
-
-		result = union_bsp.toMesh( new THREE.MeshNormalMaterial() );
-		result.geometry.computeVertexNormals();
-		scene.add( result );
-
-		console.log( 'Example 3: ' + ( new Date() - start_time ) + 'ms' );
-
-
-    }
-
-
-    function subtractCylinderFromMergedObjects() {
-
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-		thingGeometry = new THREE.BoxGeometry( 15, 12, 30 );
-
-		for (var i = 0; i < 50; i++) {
-
-			geometry2 = new THREE.BoxGeometry( 15, 12, 50 );
-			geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 6 * Math.random() ) );
-			geometry2.applyMatrix( new THREE.Matrix4().makeRotationY( 6 * Math.random() ) );
-			geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 50 * Math.random() + 10, 100 * Math.random() - 50  ) );
-
-			thingGeometry.merge( geometry2 );
-
+                slot = getSlot( 100 + x * 20, 20 + y * 50, 0 )
+                shape.holes.push( slot );
+			}
 		}
 
-		var thingBSP = new ThreeBSP( thingGeometry );
+//
+        geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: 10 } );
+        geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+        geometry.center();
 
-		cylinderGeometry = new THREE.CylinderGeometry( 30, 20, 200, 20 );
-		cylinderGeometry.applyMatrix( new THREE.Matrix4().makeRotationX( 1.5 ) );
-		cylinderGeometry.applyMatrix( new THREE.Matrix4().makeRotationY( 0.7 ) );
-        cylinderGeometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 30, 0 ) );
-        var cylinderBSP = new ThreeBSP( cylinderGeometry );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
 
-        var subtract_bsp = thingBSP.subtract( cylinderBSP );
+    }
 
-        result = subtract_bsp.toMesh( new THREE.MeshNormalMaterial() );
-        result.geometry.computeVertexNormals();
-        scene.add( result );
+    function getSlot( x, y, angle ){
 
-        console.log( 'Example: subtractCylinderFromMergedObjects ' + ( new Date() - start_time ) + 'ms' );
+        var radius = 5;
+        var length = 30;
+        var angle = angle ? angle : 1;
 
-	}
+        var slot = new THREE.Path();
 
+        slot.absarc( x , y + length, radius, 0, pi );
+        slot.absarc( x, y, radius, pi, 0 );
+        slot.autoClose = true;
 
+        return slot;
 
+    }
 
+    function getSlot( x, y, angle ){
 
+        var radius = 3;
+        var length = 20;
+        var angle = angle ? angle : pi05;
+
+        var slot = new THREE.Path();
+
+        slot.absarc( x + length * cos( angle ), y + length * sin( angle ), radius, angle - pi05, angle + pi05 );
+        slot.absarc( x, y, radius, angle + pi05, angle - pi05 );
+        slot.autoClose = true;
+
+        return slot;
+
+    }
+
+    function getHole( x, y, size ) {
+
+        size = size ? size : 4;
+        var hole = new THREE.Path();
+
+        hole.fromPoints( [ v2( x + size, y + size ), v2( x + size, y - size ), v2( x - size, y - size ), v2( x - size, y + size ) ] );
+
+        return hole;
+
+    }
 
 	function onKeyUp ( event ) {
 

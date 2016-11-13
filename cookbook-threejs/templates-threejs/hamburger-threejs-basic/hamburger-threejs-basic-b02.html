@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>csg-basic-r1</title>
+<title>Hamburger Three.js Basic</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -17,15 +17,12 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
-<script src=https://rawgit.com/chandlerprall/ThreeCSG/master/ThreeCSG.js ></script>
 <script>
 // Copyright 2016 Jaanga authors ~ MIT license
 // Update 2016-11-10
 
-    var result;
-
 	var stats, renderer, scene, camera, controls, mesh;
-	var ground, gridHelper, axisHelper;
+	var gridHelper, axisHelper;
 
 
 	init();
@@ -69,27 +66,16 @@
 
 				'<details open>' +
 					'<summary><h3>Menu</h3></summary>' +
-
-                    '<p>Prall Examples</p>' +
-					'<p><button onclick=getCubeMeshSubtractSphereMesh();chkWire.checked=false; >Example #1 - Cube (mesh) subtract Sphere (mesh)</button></p>' +
-                    '<p><button onclick=getSphereGeometryUnionCubeGeometry();chkWire.checked=false; >Example #2 - Sphere (geometry) union Cube (geometry)</button></p>' +
-                    '<p><button onclick=getSphereGeometryIntesectSphereMesh();chkWire.checked=false; >Example #3 - Sphere (geometry) intersect Sphere (mesh)</button></p>' +
-
-                    '<p>More</p>' +
-                    '<p><button onclick=getCubeGeometryUnionKnotGeometry();chkWire.checked=false; > Cube Geometry Union Knot Geometry</button></p>' +
-                    '<p><button onclick=subtractCylinderFromMergedObjects();chkWire.checked=false; >Subtract Cylinder From Merged Objects</button></p>' +
-
-//                    '<p><button onclick=();chkWire.checked=false; ></button></p>' +
+					'<p><button onclick=getIt(); >get it</button></p>' +
 					'<p id=menuInfo >' +
-//						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
-//						'The widgets below don\'t do anything but are here to indicate the look and feel.' +//
+						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+						'The widgets below don\'t do anything but are here to indicate the look and feel.' +
 					'</p>' +
 				'</details>' +
 
-				'<details open>' +
+				'<details>' +
 					'<summary><h3>Settings</h3></summary>' +
-					'<p><input type=checkbox id=chkWire onchange=result.material.wireframe=chkWire.checked; > Wireframe</p>' +
-					'<p><input type=checkbox onchange=ground.material.visible=!ground.material.visible; checked > Ground plane</p>' +
+					'<p><input type=checkbox onchange=mesh.material.visible=!mesh.material.visible; checked > Ground plane</p>' +
 					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
 					'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
 					'<p title="Press spacebar or click in window to stop." >' +
@@ -149,12 +135,12 @@
 
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
-		ground = new THREE.Mesh( geometry, material );
-		ground.position.set( 0, -21, 0 );
-		scene.add( ground );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
 
 		gridHelper  = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -20, 0 );
+		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
 		axisHelper = new THREE.AxisHelper( 50 );
@@ -164,147 +150,6 @@
 
 
 	}
-
-
-    function getCubeMeshSubtractSphereMesh() {
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-		var cube_geometry = new THREE.CubeGeometry( 30, 30, 30 );
-		var cube_mesh = new THREE.Mesh( cube_geometry );
-		var cube_bsp = new ThreeBSP( cube_mesh );
-
-		var sphere_geometry = new THREE.SphereGeometry( 18, 32, 32 );
-		var sphere_mesh = new THREE.Mesh( sphere_geometry );
-		var sphere_bsp = new ThreeBSP( sphere_mesh );
-
-		var subtract_bsp = cube_bsp.subtract( sphere_bsp );
-		result = subtract_bsp.toMesh( new THREE.MeshNormalMaterial() );
-		result.geometry.computeVertexNormals();
-
-		scene.add( result );
-
-		console.log( 'Example 1: ' + ( new Date() - start_time ) + 'ms' );
-
-    }
-
-    function getSphereGeometryUnionCubeGeometry() {
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-        var sphere_geometry = new THREE.SphereGeometry( 20, 16, 16 );
-        var sphere_bsp = new ThreeBSP( sphere_geometry );
-
-        var cube_geometry = new THREE.CubeGeometry( 70, 5, 30 );
-        var cube_bsp = new ThreeBSP( cube_geometry );
-
-        var union_bsp = sphere_bsp.union( cube_bsp );
-
-        result = union_bsp.toMesh( new THREE.MeshNormalMaterial() );
-        result.geometry.computeVertexNormals();
-        scene.add( result );
-
-        console.log( 'Example 2: ' + ( new Date() - start_time ) + 'ms' );
-
-    }
-
-
-    function getSphereGeometryIntesectSphereMesh() {
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-		var sphere_geometry_1 = new THREE.SphereGeometry( 20, 64, 8 );
-		var sphere_bsp_1 = new ThreeBSP( sphere_geometry_1 );
-
-		var sphere_geometry_2 = new THREE.SphereGeometry( 20, 8, 32 );
-		var sphere_mesh_2 = new THREE.Mesh( sphere_geometry_2 );
-		sphere_mesh_2.position.x = -20;
-		var sphere_bsp_2 = new ThreeBSP( sphere_mesh_2 );
-
-		var intersect_bsp = sphere_bsp_1.intersect( sphere_bsp_2 );
-
-		result = intersect_bsp.toMesh( new THREE.MeshNormalMaterial() );
-		result.geometry.computeVertexNormals();
-		scene.add( result );
-
-		console.log( 'Example 3: ' + ( new Date() - start_time ) + 'ms' );
-
-    }
-
-
-    function getCubeGeometryUnionKnotGeometry(){
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-		var knot_geometry = new THREE.TorusKnotGeometry();
-        knot_geometry.applyMatrix( new THREE.Matrix4().makeScale( 0.1, 0.1, 0.1 ) );
-		var knot_bsp = new ThreeBSP( knot_geometry );
-
-		var box_geometry = new THREE.BoxGeometry( 20, 8, 32 );
-		var box_bsp = new ThreeBSP( box_geometry );
-
-		var union_bsp = knot_bsp.union( box_bsp );
-
-		result = union_bsp.toMesh( new THREE.MeshNormalMaterial() );
-		result.geometry.computeVertexNormals();
-		scene.add( result );
-
-		console.log( 'Example 3: ' + ( new Date() - start_time ) + 'ms' );
-
-
-    }
-
-
-    function subtractCylinderFromMergedObjects() {
-
-
-        scene.remove( result );
-
-        var start_time = new Date();
-
-		thingGeometry = new THREE.BoxGeometry( 15, 12, 30 );
-
-		for (var i = 0; i < 50; i++) {
-
-			geometry2 = new THREE.BoxGeometry( 15, 12, 50 );
-			geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 6 * Math.random() ) );
-			geometry2.applyMatrix( new THREE.Matrix4().makeRotationY( 6 * Math.random() ) );
-			geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 50 * Math.random() + 10, 100 * Math.random() - 50  ) );
-
-			thingGeometry.merge( geometry2 );
-
-		}
-
-		var thingBSP = new ThreeBSP( thingGeometry );
-
-		cylinderGeometry = new THREE.CylinderGeometry( 30, 20, 200, 20 );
-		cylinderGeometry.applyMatrix( new THREE.Matrix4().makeRotationX( 1.5 ) );
-		cylinderGeometry.applyMatrix( new THREE.Matrix4().makeRotationY( 0.7 ) );
-        cylinderGeometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 30, 0 ) );
-        var cylinderBSP = new ThreeBSP( cylinderGeometry );
-
-        var subtract_bsp = thingBSP.subtract( cylinderBSP );
-
-        result = subtract_bsp.toMesh( new THREE.MeshNormalMaterial() );
-        result.geometry.computeVertexNormals();
-        scene.add( result );
-
-        console.log( 'Example: subtractCylinderFromMergedObjects ' + ( new Date() - start_time ) + 'ms' );
-
-	}
-
-
-
-
-
 
 	function onKeyUp ( event ) {
 
