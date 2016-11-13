@@ -12,13 +12,16 @@ _<small>
 Welcome to your online second hand store. Our handypeeps are here to help you with your un-disarming experience.
 </small>_
 
+
+## Full Screen: [ Unlimbited Forearm R2]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r2.html )
+
 ## Full Screen: [ Unlimbited Forearm R1]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r1.html )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/20243288/7f72ac92-a906-11e6-8d35-bc862072c982.png" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r1.html width=100% height=500px ></iframe>
+<iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r2.html width=100% height=500px ></iframe>
 
 _UnLimbited Forearm R1_
 
@@ -93,7 +96,15 @@ value='Source code listing' >
 
 ### 2016-11-13 ~ R2
 
-* part renamed from sleeve to forearm
+* Variables names updated to more closely match Tean UnLimbited terminology
+* Geometry calculations simplified
+* Spacers added
+* Angled slots run at correct angles
+* Inside fillet added
+* Tendon path added
+* Sliders bars for length and bicep added
+* TL export added
+* Part renamed from sleeve to forearm
 
 ### 2016-11-12 ~ R1
 
