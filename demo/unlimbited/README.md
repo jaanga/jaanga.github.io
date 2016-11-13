@@ -32,7 +32,8 @@ _UnLimbited Sleeve R1_
 
 ### Mission
 
-* To convert an OpenSCAD app into a Three.js app.
+* Can we help Team UnLimbited to convert an OpenSCAD app into a Three.js app?
+* Can we hand over models of 3D prosthetic devices that can be printed and fitted to peeps in need?
 
 
 ### Vision
@@ -105,8 +106,10 @@ For the ThreCSG example we created today see: [csg-basic-r1]( http://jaanga.gith
 
 The ThreeCSG method follows closely the methods that Team UnLimbited currently use with OpenSCAD. We plan on building some UnLimbited demoes using ThreeCSG
 
- 
+Today, however, we started with the Boolean operations available on the Three.js [shape]( https://threejs.org/docs/#Reference/Extras.Core/Shape ).
+ This creates an arbitrary polygon with holes in it. A shape may be extruded into a 3D mesh.
 
+The script created today is very preliminary.
 
 * A first pass at creating the forearm model
 * All geometry is parametric but not yet controlled by the UI
