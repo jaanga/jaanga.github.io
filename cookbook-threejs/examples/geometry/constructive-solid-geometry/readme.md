@@ -1,7 +1,24 @@
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]
+( https://jaanga.github.io/cookbook-threejs/examples/geometry/constructive-solid-geometry/index.html#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/geometry/constructive-solid-geometry/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+
+[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaanga.github.io/cookbook-threejs/  ) &raquo;
+[Examples]( https://jaanga.github.io/cookbook-threejs/examples/ ) &raquo; [Geometry]( https://jaanga.github.io/cookbook-threejs/examples/geometry/ ) &raquo;
+
+
+
 Constructive Solid Geometry Read Me
 ===
 
-[Constructive solid geometry R1]( http://abantech.github.io/interaction-studies/threejs-contructive-solid-geometry/r1/constructive-solid-geometry.html )
+[CSG Basic R1]( http://jaanga.github.io/cookbook-threejs/examples/geometry/constructive-solid-geometry/csg-basic-r1.html )
+
+* Based on Chandler Prall's latest code
+* Shows his examples and two more
+
+
+
+
+[Constructive solid geometry R1]( http://jaanga.github.io/cookbook-threejs/examples/geometry/constructive-solid-geometry/constructive-solid-geometry-r1.html )
 
 * Click any of the six buttons to generate the examples
 * Demonstrations of moderately complex Boolean operations. A work in progress
@@ -26,6 +43,19 @@ Constructive Solid Geometry Read Me
 
 ## Change Log
 
-2015-03-14 ~ Theo
+### 2016-11-12 ~
+
+* Updated Constructive solid geometry R1 ~ should have renumbered
+* Added CSD Basic R1
+
+
+
+#### 2015-03-14 ~ Theo
 
 * R1 first commit
+
+***
+
+<center title='Jaanga ~ your 3D happy place' >
+# <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a>
+</center>

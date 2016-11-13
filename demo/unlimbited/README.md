@@ -92,6 +92,25 @@ value='Source code listing' >
 
 ### 2016-11-12 ~ R1
 
+The model we are looking at is printed flat then bend around into shape. This format lends itself to constructive solid geometry (CSG ).
+
+In Three.js there are multiple ways of carrying out CSG.
+
+Today we considered two ways:
+
+* Chandler Prall's ThreeCSG
+* zz85/Joshua Koo's shape geometry in Three.js
+
+For the ThreCSG example we created today see: [csg-basic-r1]( http://jaanga.github.io/cookbook-threejs/examples/geometry/constructive-solid-geometry/csg-basic-r1.html )
+
+The ThreeCSG method follows closely the methods that Team UnLimbited currently use with OpenSCAD. We plan on building some UnLimbited demoes using ThreeCSG
+
+ 
+
+
+* A first pass at creating the forearm model
+* All geometry is parametric but not yet controlled by the UI
+* Dimensions are by guesswork
 * First commit
 * Add Read Me
 
