@@ -12,15 +12,15 @@ _<small>
 Welcome to your online second hand store. Our handypeeps are here to help you with your un-disarming experience.
 </small>_
 
-## Full Screen: [ Unlimbited Sleeve R1]( https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html )
+## Full Screen: [ Unlimbited Forearm R1]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r1.html )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/20243288/7f72ac92-a906-11e6-8d35-bc862072c982.png" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html width=100% height=500px ></iframe>
+<iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r1.html width=100% height=500px ></iframe>
 
-_UnLimbited Sleeve R1_
+_UnLimbited Forearm R1_
 
 ***
 
@@ -90,6 +90,10 @@ value='Source code listing' >
 * http://thingiverse-production-new.s3.amazonaws.com/renders/e0/d8/7d/84/79/b926afa23d0ac220a7ef81f756a7f641_preview_featured.jpg
 
 ## Change Log
+
+### 2016-11-13 ~ R2
+
+* part renamed from sleeve to forearm
 
 ### 2016-11-12 ~ R1
 
