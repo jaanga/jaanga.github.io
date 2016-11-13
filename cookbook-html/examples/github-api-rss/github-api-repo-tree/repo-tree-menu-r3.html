@@ -17,14 +17,19 @@
 
     var users = {};
 
-    JAA = {};
-    JAA.user = 'jaanga';
-    JAA.repo = 'jaanga.github.io';
-    JAA.branch = 'master';
-    JAA.folder = 'cookbook-threejs';
-    users.JAA = JAA;
-
-    var LDR = {};
+    users.DEM = {
+        user: 'jaanga',
+        repo: 'jaanga.github.io',
+        branch: 'master',
+        folder: 'demo'
+    }
+    users.JAA = {
+        user: 'jaanga',
+        repo: 'jaanga.github.io',
+        branch: 'master',
+        folder: 'cookbook-threejs'
+    };
+    LDR = {};
     LDR.user = 'leaderphotos';
     LDR.repo = 'leaderphotos.github.io';
     LDR.branch = 'master';
@@ -48,6 +53,7 @@
 
     groupOptions =
 
+		'<option value=DEM >DEM</option>' +
 		'<option value=JAA >JAA</option>' +
 		'<option value=LDR >LDR</option>' +
         '<option value=WBM >WBM</option>' +

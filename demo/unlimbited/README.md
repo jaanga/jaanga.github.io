@@ -18,7 +18,7 @@ Welcome to your online second hand store. Our handypeeps are here to help you wi
 <img src="https://cloud.githubusercontent.com/assets/547626/20243288/7f72ac92-a906-11e6-8d35-bc862072c982.png" style=display:none; width=800 >
 
 
-<iframe src=https://http://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html width=100% height=500px ></iframe>
+<iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html width=100% height=500px ></iframe>
 
 _UnLimbited Sleeve R1_
 
