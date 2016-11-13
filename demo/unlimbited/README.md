@@ -9,7 +9,7 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 ================================================================================
 
 _<small>
-Welcome to your online second hand store. Our handypeeps are here to help you with you unddisarming experience.
+Welcome to your online second hand store. Our handypeeps are here to help you with you un-disarming experience.
 </small>_
 
 ## Full Screen: [ Unlimbited ]( https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html )
