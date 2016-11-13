@@ -9,33 +9,30 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 ================================================================================
 
 _<small>
-Welcome to your online second hand store. Our handypeeps are here to help you with you un-disarming experience.
+Welcome to your online second hand store. Our handypeeps are here to help you with your un-disarming experience.
 </small>_
 
-## Full Screen: [ Unlimbited ]( https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html )
+## Full Screen: [ Unlimbited Sleeve R1]( https://http://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/20243288/7f72ac92-a906-11e6-8d35-bc862072c982.png" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html width=100% height=500px ></iframe>
+<iframe src=https://http://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html width=100% height=500px ></iframe>
 
 _UnLimbited Sleeve R1_
 
 ***
 
-[test.md]( index.html#test.md )
-
-
 
 ## Concept
 
-* TBD
+* This work is in response to a request on the Three.js subreddit : https://www.reddit.com/r/threejs/comments/5bs5bt/need_threejs_guru/
 
 
 ### Mission
 
-* TBD
+* To convert an OpenSCAD app into a Three.js app.
 
 
 ### Vision
@@ -51,7 +48,6 @@ _UnLimbited Sleeve R1_
 
 
 ## Things you can do using this script
-
 
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
 * Press Control-U/Command-Option-U to view the source code
@@ -78,21 +74,14 @@ value='Source code listing' >
 
 
 
-## To Do / Wish List
+## To Do / Wish List / Goals
 
-
-
-## Users
-
-Intended for general use
-
-
-## Goals
 
 
 ## Links of Interest
 
 * http://www.teamunlimbited.org/
+* https://www.facebook.com/teamunlimbited
 * http://www.thingiverse.com/thing:1672381
 
 ### Images
@@ -101,7 +90,7 @@ Intended for general use
 
 ## Change Log
 
-### 2016-11-12
+### 2016-11-12 ~ R1
 
 * First commit
 * Add Read Me
