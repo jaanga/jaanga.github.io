@@ -96,14 +96,16 @@ value='Source code listing' >
 
 ### 2016-11-13 ~ R2
 
-* Variables names updated to more closely match Tean UnLimbited terminology
+The effort progressed nicely, but there's still a lot more to be done.
+
+* Variables names updated to more closely match Team UnLimbited terminology
 * Geometry calculations simplified
 * Spacers added
 * Angled slots run at correct angles
 * Inside fillet added
 * Tendon path added
 * Sliders bars for length and bicep added
-* TL export added
+* STL export added
 * Part renamed from sleeve to forearm
 
 ### 2016-11-12 ~ R1
@@ -117,7 +119,7 @@ Today we considered two ways:
 * Chandler Prall's ThreeCSG
 * zz85/Joshua Koo's shape geometry in Three.js
 
-For the ThreCSG example we created today see: [csg-basic-r1]( http://jaanga.github.io/cookbook-threejs/examples/geometry/constructive-solid-geometry/csg-basic-r1.html )
+For the ThreeCSG example we created today see: [csg-basic-r1]( http://jaanga.github.io/cookbook-threejs/examples/geometry/constructive-solid-geometry/csg-basic-r1.html )
 
 The ThreeCSG method follows closely the methods that Team UnLimbited currently use with OpenSCAD. We plan on building some UnLimbited demoes using ThreeCSG
 
