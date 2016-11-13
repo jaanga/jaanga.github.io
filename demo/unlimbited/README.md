@@ -5,14 +5,14 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [Demo]( https://jaanga.github.io/demo ) &raquo;
 
-[Unlimbited Read Me]( index.html#README.md )
+[UnLimbited Read Me]( index.html#README.md )
 ================================================================================
 
 _<small>
 Welcome to your online second hand store. Our handypeeps are here to help you with your un-disarming experience.
 </small>_
 
-## Full Screen: [ Unlimbited Sleeve R1]( https://http://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html )
+## Full Screen: [ Unlimbited Sleeve R1]( https://jaanga.github.io/demo/unlimbited/unlimbited-sleeve-r1.html )
 
 
 <img src="https://cloud.githubusercontent.com/assets/547626/20243288/7f72ac92-a906-11e6-8d35-bc862072c982.png" style=display:none; width=800 >
