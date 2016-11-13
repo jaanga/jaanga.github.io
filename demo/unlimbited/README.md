@@ -13,17 +13,17 @@ Welcome to your online second hand store. Our handypeeps are here to help you wi
 </small>_
 
 
-## Full Screen: [ Unlimbited Forearm R2]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r2.html )
+## Full Screen: [ UnLimbited Forearm R2]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r2.html )
 
-## Full Screen: [ Unlimbited Forearm R1]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r1.html )
+## Full Screen: [ UnLimbited Forearm R1]( https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r1.html )
 
 
-<img src="https://cloud.githubusercontent.com/assets/547626/20243288/7f72ac92-a906-11e6-8d35-bc862072c982.png" style=display:none; width=800 >
+<img src="https://cloud.githubusercontent.com/assets/547626/20249125/8dd8c64e-a9a7-11e6-8411-21c9efcea8d8.png" style=display:none; width=800 >
 
 
 <iframe src=https://jaanga.github.io/demo/unlimbited/unlimbited-forearm-r2.html width=100% height=500px ></iframe>
 
-_UnLimbited Forearm R1_
+_UnLimbited Forearm R2_
 
 ***
 
@@ -104,7 +104,8 @@ The effort progressed nicely, but there's still a lot more to be done.
 * Angled slots run at correct angles
 * Inside fillet added
 * Tendon path added
-* Sliders bars for length and bicep added
+* Sliders bars to adjust length and bicep added
+    * Model updates in realtime
 * STL export added
 * Part renamed from sleeve to forearm
 
