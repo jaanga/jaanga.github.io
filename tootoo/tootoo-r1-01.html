@@ -23,82 +23,39 @@
         branch: 'master',
         folder: 'demo'
     }
-    users.jTerrain = {
+    users.jaanga = {
         user: 'jaanga',
         repo: 'terrain3',
         branch: 'gh-pages',
         folder: ''
     };
-    users.jaanga = {
-        user : 'jaanga',
-        repo : 'jaanga.github.io',
-        branch : 'master',
-        folder : ''
-    };
-
-    users.ladybugDynamo = {
-        user : 'ladybug-analysis-tools',
-        repo : 'ladybug-dynamo',
-        branch : 'gh-pages',
-        folder : ''
-    };
-    users.ladybugWeb = {
-        user : 'ladybug-analysis-tools',
-        repo : 'ladybug-web',
-        branch : 'gh-pages',
-        folder : ''
-    };
-
     users.leader = {
         user : 'leaderphotos',
         repo : 'leaderphotos.github.io',
         branch : 'master',
         folder :'albums'
     };
+
+    users.webmath = {
+        user : 'webmath',
+        repo : 'webmath.github.io',
+        branch : 'master',
+        folder : ''
+    };
+
     users.mrdoob = {
         user : 'mrdoob',
         repo : 'three.js',
         branch : 'dev',
-        folder : '',
-        rawgit: true
-    };
-
-    users.paulmasson = {
-        user : 'paulmasson',
-        repo : 'paulmasson.github.io',
-        branch : 'master',
         folder : ''
     };
 
-    users.sagemath = {
-        user : 'sagemath',
-        repo : 'documentation',
-        branch : 'gh-pages',
-        folder : 'html'
-    };
-
-    users.theoArmour = {
-        user : 'theo-armour',
-        repo : 'theo-armour.github.io',
-        branch : 'master',
-        folder : ''
-    };
-
-/*
-    users. = {
-        user : '',
-        repo : '',
-        branch : '',
-        folder : ''
-    };
-*/
     TRE = {};
 
 	var url;
     var urlGHPages;
 
     var b = '<br>';
-    var editor;
 
 	init();
 
@@ -108,21 +65,22 @@
 
 		css = document.body.appendChild( document.createElement('style') );
 		css.innerHTML =
-			'html, body { font: 12pt monospace; height: 100%; margin: 0; }' +
+			'body { font: 12pt monospace; margin: 0; }' +
 			'a { color: crimson; text-decoration: none; }' +
 			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
 //			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
 //			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
 //			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
             'summary { outline: none; }' +
 			'summary h3 { display: inline; }' +
 			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
-			'#container {  height: 100%; left: 0; position: absolute; transition: left 1s; width: 100%;}' +
-			'#contents { border: 0px #ccc solid; left: 375px; position: absolute; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+			'#contents { border: 0px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
 			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
 			'#hamburger h2 { margin: 0; }' +
-			'#menu { background-color: #eee; border: 1px #ccc solid; box-sizing:border-box;  height: 100%; overflow-y: auto; padding: 0 10px; position: fixed; width: 300px; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
 			'#menu h2 { margin: 0; }' +
 		'';
 
@@ -144,7 +102,7 @@
 
     				'<summary><h3>Select GitHub users</h3></summary>' +
 
-    					'<select id=SELselUser onchange=setUser(this.value); title="Select user" size=10 style=width:100%;  >' +
+    					'<select id=SELselUser onchange=setUser(this.value); title="Select user" size=5 style=width:100%;  >' +
 
     					'</select>' + b +
 
@@ -169,22 +127,6 @@
 
 				'</details>' +
 
-                '<details>' +
-					'<summary><h3>About</h3></summary>' +
-					'<ul>' +
-						'<li>Rotate|Zoom|Pan => 1|2|3 finger/button</li>' +
-						'<li>Rotation => spacebar</li>' +
-						'<li>Slide menu => \'hamburger\' icon</li>' +
-					'</ul>' +
-					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
-					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-				'</details>' +
-
-				'<hr>' +
-				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
-				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
-
-
 			'</div>' +
 
 			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
@@ -197,9 +139,7 @@
 
 		'';
 
-        window.addEventListener( 'resize', onWindowResize, false );
-
-        onWindowResize();
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
         getSelectUserOptions();
 
@@ -227,16 +167,23 @@
         TRE = users[ user ];
 
         url = 'https://api.github.com/repos/' + TRE.user + '/' + TRE.repo + '/git/trees/' + TRE.branch + '?recursive=1';
+        urlGHPages = 'https://rawgit.com/' + TRE.user + '/' + TRE.repo + '/' + TRE.branch + '/' + TRE.folder + ( TRE.folder ? '/' : '' );
 
-        if ( TRE.rawgit ) {
+        urlGHPages = 'https://' + TRE.user + '.github.io/' + TRE.repo + '/' + TRE.folder + ( TRE.folder ? '/' : '' );
 
-            urlGHPages = 'https://rawgit.com/' + TRE.user + '/' + TRE.repo + '/' + TRE.branch + '/' + TRE.folder + ( TRE.folder ? '/' : '' );
+/*
+        if ( TRE.folder === '' ) {
+
+            TRE.data = { 'children' : {} };
 
         } else {
 
-            urlGHPages = 'https://' + TRE.user + '.github.io/' + TRE.repo + '/' + TRE.folder + ( TRE.folder ? '/' : '' );
+            TRE.data = {};
 
         }
+*/
+
+
 
         requestAPIContents( url );
 
@@ -270,6 +217,20 @@
 
 			}
 
+            TRE.data = TRE.folder === '' ? { 'children' : {} } : {};
+/*
+            if ( TRE.folder === '' ) {
+
+                paths = paths.map( function( path ) { return buildTree( path.split( '/' ), TRE.data.children ) } );
+
+            } else {
+
+                paths = paths.map( function( path ) { return buildTree( path.split( '/' ), TRE.data ) } );
+
+            }
+*/
+
+
             if ( TRE.folder === '' ) {
 
                 TRE.data = { 'children' : {} };
@@ -282,15 +243,8 @@
 
             }
 
-/*
-            for ( var i = 0 ; i < paths.length; i++ ) {
-
-                buildTree( paths[ i ].split( '/' ), TRE.data.children );
-
-            }
-*/
-
             paths = paths.map( function( path ) { return buildTree( path.split( '/' ), obj ) } );
+
 
 //debugger;
 
@@ -336,8 +290,6 @@
 
         obj = TRE.folder ? TRE.data[ TRE.folder ] : TRE.data;
 
-// very curious things going on here, but it works...
-
         for ( var i = 0; i < folders.length; i++ ) {
 
             obj = obj.children[ folders[ i ] ];
@@ -353,15 +305,13 @@
             p = path ? path + '/': '';
             key = keys[ i ];
 
-//            if ( !key.includes( '.') ) {
+            if ( !key.includes( '.') ) {
 
-            if ( Object.keys( obj.children[ key ].children ).length > 0 ) {
-
-                foldersText += ' &#x1f4c1; <a href=JavaScript:setMenu("' + p + encodeURI( key ) + '"); >' + key + '</a>'+ b;
+                foldersText += ' &#x1f4c1; <a href=JavaScript:setMenu("' + p + key + '"); >' + key + '</a>'+ b;
 
             } else {
 
-                filesText += '<a href=JavaScript:getFileSetContents("' + p + encodeURI( key ) + '"); >' + key + '</a>'+ b;
+                filesText += '<a href=JavaScript:getFileSetContents("' + p + key + '"); >' + key + '</a>'+ b;
 
             }
 
@@ -371,37 +321,34 @@
 
         setBreadcrumbs( path );
 
-        setDefaultContents( path, filesText );
+        setContents( path, filesText );
 
     }
 
-    function setBreadcrumbs( path ) {
 
-//console.log( 'path', path );
+    function getFileSetContents( path ){
 
-        var txt, folders, str;
+        var p =  path.toLowerCase();
 
-        name = TRE.folder ? TRE.folder : TRE.repo;
-        txt = '<h2><a href=JavaScript:setMenu(); >' + name + '</a> &raquo; </h2>';
-        folders = path ?  path.split( '/' ) : [] ;
-        str = '';
+        if ( p.endsWith( '.md' ) ){
 
-        for ( var i = 0; i < folders.length; i++ ) {
+            requestFile( urlGHPages + path, callbackMD );
 
-            str += folders[ i ] + '/';
+        } else if ( p.endsWith( '.html' ) ||  p.endsWith( '.htm' ) || p.endsWith( '.jpg' ) || p.endsWith( '.png' ) || p.endsWith( '.gif' ) ) {
 
-            txt += '<h3><a href=JavaScript:setMenu("' + str.slice( 0, -1 ) + '"); >' + folders[ i ] + '</a> &raquo; </h3>';
+            callbackHTML( urlGHPages + path );
+
+        } else {
+
+            requestFile( urlGHPages + path, callbackUnPretty );
 
         }
 
-        menuBreadcrumbs.innerHTML = txt;
-
     }
 
+    function setContents( path, filesText ) {
 
-    function setDefaultContents( path, filesText ) {
-
-//console.log( 'filesText', filesText );
+//console.log( 'key', key );
 
         var p;
 
@@ -421,48 +368,30 @@
 
         } else {
 
-            contents.innerHTML = '<h2 style=margin-top:200px; >Select a file to view</h2>';
+//            requestFile( urlGHPages + p + key, callbackUnPretty );
 
         }
 
     }
 
+    function callbackHTML( fName ){
 
-    function getFileSetContents( path ){
-
-//console.log( 'path:', path );
-
-        var p = path.toLowerCase();
-
-        if ( p.endsWith( '.md' ) ){
-
-            requestFile( urlGHPages + encodeURI( path ), callbackMD );
-
-        } else if ( p.endsWith( '.html' ) ||  p.endsWith( '.htm' ) ||
-
-            p.endsWith( '.ico' ) || p.endsWith( '.jpg' ) || p.endsWith( '.png' ) || p.endsWith( '.gif' ) ) {
-
-           callbackHTML( urlGHPages + encodeURI( path ) );
-
-       } else if ( p.endsWith( '.js' ) ||  p.endsWith( '.css' ) ) {
-
-           contents.innerHTML = '<div id=contentsCode style=width:800px;height:' + window.innerHeight + 'px; >item will appear here</div>';
-
-           callbackCode( path );
-
-        } else {
-
-            contents.innerHTML =
-                '<div id=contentsHeader >item will appear here</div>' +
-                '<div id=contentsText ></div>' +
-            '';
-
-            requestFile( urlGHPages + path, callbackUnPretty );
-
-        }
+        contents.innerHTML = '<iframe src=' + fName + ' width=800 height=' + window.innerHeight + ' ><iframe>';
 
     }
 
+
+    function  callbackUnPretty( xhr ) {
+
+        var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
+
+        contents.innerText =
+            xhr.target.responseURL + '\n\n' +
+            'Unprettified text ~ last modified: ' + lastMod + '\n\n' +
+            xhr.target.response +
+        '';
+
+    }
 
     function callbackMD( xhr ) {
 
@@ -473,64 +402,25 @@
     }
 
 
-    function callbackHTML( fName ){
+    function setBreadcrumbs( path ) {
 
-        contents.innerHTML = '<iframe id=ifr src=' + fName + ' width=' + ( window.innerWidth - 400 ) + ' height=' + ( window.innerHeight - 5 ) + ' style=box-sizing:border-box; ><iframe>';
+//console.log( 'path', path );
 
-        ifr.onload = function() {
+        var txt, folders, str;
 
-            ifr.contentDocument.replace( /http:/gi, 'https:' );
+        name = TRE.folder ? TRE.folder : TRE.repo;
+        txt = '<h3><a href=JavaScript:setMenu(); >' + name + '</a> &raquo; </h3>';
+        folders = path ?  path.split( '/' ) : [] ;
+        str = '';
 
-        }
-    }
+        for ( var i = 0; i < folders.length; i++ ) {
 
-
-    function callbackCode( path ){
-
-        if ( !editor ) {
-
-            editor = document.body.appendChild( document.createElement( 'script' ) );
-            editor.onload = setEditContents;
-            editor.src = 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.5/ace.js';
-
-        } else {
-
-            setEditContents();
+            str += folders[ i ] + '/';
+            txt += '<h3><a href=JavaScript:setMenu("' + str.slice( 0, -1 ) + '"); >' + folders[ i ] + '</a> &raquo; </h3>';
 
         }
 
-        function setEditContents() {
-
-            editor = ace.edit( 'contentsCode' );
-            editor.$blockScrolling = Infinity;
-            editor.getSession().setMode("ace/mode/markdown");
-
-            requestFile( urlGHPages + encodeURI( path ), function( xhr ) { editor.setValue( xhr.target.response, -1 ) } );
-
-        }
-
-    }
-
-
-    function callbackUnPretty( xhr ) {
-
-console.log( 'xhr', xhr );
-
-        if ( xhr.target.readyState === 4  ) {
-
-            var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
-
-            contentsHeader.innerHTML =
-                'URL: ' + xhr.target.responseURL + b +
-                'Unprettified text ~ size: ' + xhr.total.toLocaleString() + ' ~ last modified: ' + lastMod + b +
-                'Loaded maximum first 10,000 characters only.' + b +
-            b;
-
-            contentsText.innerText =  xhr.target.response.slice( 0, 10000 );
-
-		} else {
-
-		}
+        menuBreadcrumbs.innerHTML = txt;
 
     }
 
@@ -561,8 +451,6 @@ console.log( 'xhr', xhr );
     }
 
 
-// requestFile( 'http://analyticphysics.com/robots.txt' , function( xhr ){ console.log( 'xhr', xhr.target.response ); } );
-
     function requestFile( url, callback ) {
 
         var xhr;
@@ -573,14 +461,6 @@ console.log( 'xhr', xhr );
 		xhr.send( null );
 
     }
-
-    function onWindowResize() {
-
-        if ( window.self !== window.top || window.innerWidth < 500 ) { container.style.left = '-325px'; }
-
-        contents.style.width = window.innerWidth - 350;
-
-	}
 
 </script>
 </body>
