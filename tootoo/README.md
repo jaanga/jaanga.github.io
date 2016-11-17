@@ -1,14 +1,13 @@
 <span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/cookbook-html/examples/github-api-rss/index.html#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
+( https://jaanga.github.io/tootoo/index.html#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/tootoo/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' >
 
-[Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook Three.js]( http://jaangas.github.io/cookbook-html/  ) &raquo;
-[Examples]( https://jaanga.github.io/cookbook-html/examples/ ) &raquo; [GitHub API]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/ ) &raquo;
+[Jaanga]( https://jaanga.github.io ) &raquo;
 
-[GitHub API Read Me]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/index.html#readme.md )
+[Jaanga TooToo R1 Read Me]( https://jaanga.github.io/tootoo/ )
 ===
 
-[repo-tree-menu-r1]( repo-tree-menu-r1.html )
+[tootoo-r1]( repo-tree-menu-r1.html )
 
 ## Concept
 
@@ -45,7 +44,7 @@
 * 2016-11-11 ~ Breadcrumbs: need top level crumb
 * 2016-11-11 ~ Contents: Display source code using Ace editor
 * 2016-11-11 ~ Contents: display multiple images as a gallery
-* 2016-11-11 ~ Display HTML as source or in an iframe 
+* 2016-11-11 ~ Display HTML as source or in an iframe
 
 ## Users
 

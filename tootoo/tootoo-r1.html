@@ -35,7 +35,20 @@
         branch : 'master',
         folder : ''
     };
-
+    users.jupyter = {
+        user : 'jupyter',
+        repo : 'jupyter.github.io',
+        branch : 'master',
+        folder : '',
+        rawgit: true
+    };
+    users.jupyterNotebook = {
+        user : 'jupyter',
+        repo : 'notebook',
+        branch : 'master',
+        folder : '',
+        rawgit: true
+    };
     users.ladybugDynamo = {
         user : 'ladybug-analysis-tools',
         repo : 'ladybug-dynamo',
@@ -140,6 +153,8 @@
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
+                '<div><small>Browse the contents of many files on GitHub really quickly</small></div>' +
+
                 '<details id=SELdetailsUser open title="" >' +
 
     				'<summary><h3>Select GitHub users</h3></summary>' +
@@ -150,7 +165,7 @@
 
     				'<small>Enter a user name and press enter: </small>' + b +
 
-    				'<input id=SELinpUser placeholder="Enter a search user" onchange=""; style=width:100%; >' + b +
+    				'<input id=SELinpUser placeholder="Enter a search user < will be working soon" onchange=""; style=width:100%; >' + b +
 
     				b +
 
@@ -171,11 +186,6 @@
 
                 '<details>' +
 					'<summary><h3>About</h3></summary>' +
-					'<ul>' +
-						'<li>Rotate|Zoom|Pan => 1|2|3 finger/button</li>' +
-						'<li>Rotation => spacebar</li>' +
-						'<li>Slide menu => \'hamburger\' icon</li>' +
-					'</ul>' +
 					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
 					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 				'</details>' +
@@ -183,7 +193,6 @@
 				'<hr>' +
 				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
 				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
-
 
 			'</div>' +
 
@@ -203,7 +212,7 @@
 
         getSelectUserOptions();
 
-        setUser( 'jDemo' );
+        setUser( 'jaang' );
 
 	}
 
@@ -319,7 +328,7 @@
 
             }
 
-            menuInfo.innerHTML = 'Path count: ' + paths.length;
+            menuInfo.innerHTML = '<p> Path count: ' + paths.length + '</p>';
 
             setMenu();
 
@@ -440,11 +449,11 @@
 
         } else if ( p.endsWith( '.html' ) ||  p.endsWith( '.htm' ) ||
 
-            p.endsWith( '.ico' ) || p.endsWith( '.jpg' ) || p.endsWith( '.png' ) || p.endsWith( '.gif' ) ) {
+             p.endsWith( '.gif' ) || p.endsWith( '.ico' ) || p.endsWith( '.jpg' ) || p.endsWith( '.png' ) ||  p.endsWith( '.svg' ) ) {
 
            callbackHTML( urlGHPages + encodeURI( path ) );
 
-       } else if ( p.endsWith( '.js' ) ||  p.endsWith( '.css' ) ) {
+       } else if ( p.endsWith( '.js' ) ||  p.endsWith( '.css' ) ||  p.endsWith( '.py' ) ) {
 
            contents.innerHTML = '<div id=contentsCode style=width:800px;height:' + window.innerHeight + 'px; >item will appear here</div>';
 
