@@ -183,6 +183,7 @@
 
 	}
 
+// formats to consider adding: PDF
 
 	function getFileSetContents( path ){
 
