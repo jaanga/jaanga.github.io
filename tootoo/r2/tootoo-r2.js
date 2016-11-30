@@ -167,7 +167,16 @@
 
 		txt = filesText.toLowerCase();
 
-		if ( txt.includes( 'readme.md' ) ) {
+		if ( txt.includes( 'index.html' ) ) {
+
+			start = txt.indexOf( 'index.html' );
+
+			file =  filesText.slice( start, start + 10 );
+
+//			requestFile( TRE.urlGHPages + p + file, callbackHTML );
+			callbackHTML( TRE.urlGHPages + p + file );
+
+		} else if ( txt.includes( 'readme.md' ) ) {
 
 			start = txt.indexOf( 'readme.md' );
 
