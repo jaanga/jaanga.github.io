@@ -1,4 +1,4 @@
-﻿<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/blog/ "View file as a web page." ) </span>
+﻿<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/blog/ "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/blog/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
 
 [Jaanga Blog Read Me]( index.html )
@@ -7,15 +7,15 @@
 
 The following blogs keep their posts here
 
-* [Bloder]( http://jaanga.github.io/cookbook-html/templates/bloder/request-posts-template.html )
-* [Jaanga Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
-* [Outer Space Blog]( http://jaanga.github.io/outer-space/get-posts.html )
-* [Gestification Blog]( http://jaanga.github.io/gestification-r2/request-gestification-blog-posts.html )
+* [Bloder]( https://jaanga.github.io/cookbook-html/templates/bloder/request-posts-template.html )
+* [Jaanga Blog]( https://jaanga.github.io/request-jaanga-blog-posts.html )
+* [Outer Space Blog]( https://jaanga.github.io/outer-space/get-posts.html )
+* [Gestification Blog]( https://jaanga.github.io/gestification-r2/request-gestification-blog-posts.html )
 
 
 The script for these blogs is here:
 
-* [Bloder Read Me]( http://jaanga.github.io/cookbook-html/templates/bloder/ )
+* [Bloder Read Me]( https://jaanga.github.io/cookbook-html/templates/bloder/ )
 
 ## Concept
 
@@ -48,7 +48,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 
 ## Copyright and License
 
-* [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+* [Copyright and License]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
 
 ***
 

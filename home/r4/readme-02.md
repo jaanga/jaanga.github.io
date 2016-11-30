@@ -6,28 +6,28 @@
 _Your 3D happy place. And, btw, we're using [browserstack]( https://www.browserstack.com ) to help with testing our scripts on all sorts of devices_
 
 
-[Blog]( https://jaanga.github.io/request-jaanga-blog-posts.html )
-~ [Documents]( https://jaanga.github.io/documents ) 
-~ [Read Me]( https://jaanga.github.io/#https://jaanga.github.io/readme.md )
-~ [Copyright and License]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
-~ [Contacts and Organization]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-contacts-and-organization.md ) 
-~ [All of It]( https://jaanga.github.io/cookbook-threejs/viewers/viewer-html-jaanga/viewer-html-jaanga-r1.html ) 
+[Blog]( http://jaanga.github.io/request-jaanga-blog-posts.html )
+~ [Documents]( http://jaanga.github.io/documents ) 
+~ [Read Me]( http://jaanga.github.io/#http://jaanga.github.io/readme.md )
+~ [Copyright and License]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
+~ [Contacts and Organization]( http://jaanga.github.io/#http://jaanga.github.io/jaanga-contacts-and-organization.md ) 
+~ [All of It]( http://jaanga.github.io/cookbook-threejs/viewers/viewer-html-jaanga/viewer-html-jaanga-r1.html ) 
 
 <!--
 
-### New [GitHub API File Viewer]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-viewer/github-api-files-viewer-r1.html )
+### New [GitHub API File Viewer]( http://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-files-viewer/github-api-files-viewer-r1.html )
 
 ## Sample Web Pages / Source Code
 
 <iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
 
-######_Sample Jaanga Scripts - [Code Edit View]( https://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
+######_Sample Jaanga Scripts - [Code Edit View]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
 -->
 
 ## Concept
 
-[Jaanga.github.io]( https://jaanga.github.io ) is a [GitHub]( https://github.com ) [organization]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4 )
-with source code at [github.com/jaanga]( https://github.com/jaanga ).
+[Jaanga.github.io]( http://jaanga.github.io ) is a [GitHub]( http://github.com ) [organization]( https://github.com/jaanga/jaanga.github.io/tree/master/home/r4 )
+with source code at [github.com/jaanga]( http://github.com/jaanga ).
 
 The name 'Jaanga' was chosen for this effort because it sounds jazzy, it is short and search results indicate uniqueness.
 Similarly the concept of Jaanga is to be a place to help you write software that is fun, easy and gets things done.
@@ -53,151 +53,151 @@ Similarly the concept of Jaanga is to be a place to help you write software that
 _Years indicate latest date when significant effort was made_
 
 <div class=figure >
-<a href=https://jaanga.github.com/demo ><img src=https://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png>
+<a href=http://jaanga.github.com/demo ><img src=http://jaanga.github.io/home/images/simplitechture-05-nerbous-240x180.png>
 <h2>Demo</h2><a>
 Links to just the good stuff - nothing more - the collection of fun scripts - built to work on your mobile device. 2015
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/outer-space/ >
-<img src=https://jaanga.github.io/home/images/star-spotter-screen-stars-240x180.png >
+<a href=http://jaanga.github.io/outer-space/ >
+<img src=http://jaanga.github.io/home/images/star-spotter-screen-stars-240x180.png >
 <h2>Outer Space</h2></a>
 Explore the surfaces of the Moon and Mars in 3D - and much more 
 Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap files. 2015
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/sp500/index.html >
-<img src=https://jaanga.github.io/home/images/sp500-r2-240x180.png >
+<a href=http://jaanga.github.io/sp500/index.html >
+<img src=http://jaanga.github.io/home/images/sp500-r2-240x180.png >
 <h2>SP500</h2></a>2015
 <li>All 500 stocks all at once in 3D with frequent updates
 <li>Access web resources in real-time
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/algesurf >
-<img src=https://jaanga.github.io/home/images/2-Algesurf.png >
+<a href=http://jaanga.github.io/algesurf >
+<img src=http://jaanga.github.io/home/images/2-Algesurf.png >
 <h2>algeSurf</h2></a> 2015
 <li>Mathematics with a 3D perspective
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/terrain-r2/terrain.html >
-<img src=https://jaanga.github.io/home/images/terrain-sf-240x180.png >
+<a href=http://jaanga.github.io/terrain-r2/terrain.html >
+<img src=http://jaanga.github.io/home/images/terrain-sf-240x180.png >
 <h2>Terrain R2</h2></a> 2015
 <li>In the mi[d]st of a complete reconstruction. 
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/gestification-r3/ >
-<img src=https://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png >
+<a href=http://jaanga.github.io/gestification-r3/ >
+<img src=http://jaanga.github.io/home/images/show-of-hands-screen-grab-240x180.png >
 <h2>Gestification R3</h2></a>
-<li><a href="https://jaanga.github.io/gestification-r2/" >Gestification R2</a> 2015 / <a href=https://jaanga.github.io/gestification/>Gestification</a> 2013
-<li>Work that involves Three.js and the <a href=https://leapmotion.com >Leap Motion</a> device.
+<li><a href="http://jaanga.github.io/gestification-r2/" >Gestification R2</a> 2015 / <a href=http://jaanga.github.io/gestification/>Gestification</a> 2013
+<li>Work that involves Three.js and the <a href=http://leapmotion.com >Leap Motion</a> device.
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.com/cookbook-threejs >
-<img src=https://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png >
+<a href=http://jaanga.github.com/cookbook-threejs >
+<img src=http://jaanga.github.io/home/images/template-threejs-lights-r1-240x180.png >
 <h2>Cookbook Three.js</h2></a>
-<li>Lots of templates, utilities and viewers for <a href=https://threejs.org >Three.js</a>
+<li>Lots of templates, utilities and viewers for <a href=http://threejs.org >Three.js</a>
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/cookbook-html/>
-<img src=https://jaanga.github.io/home/images/stats-lorenz-attractor-r2-240x180.png >
+<a href=http://jaanga.github.io/cookbook-html/>
+<img src=http://jaanga.github.io/home/images/stats-lorenz-attractor-r2-240x180.png >
 <h2>Cookbook HTML</h2></a>
 <li>Templates and code snippets for doing stuff with JavaScript and HTML
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.com/cookbook >
-<img src=https://jaanga.github.io/home/images/rubiks-cube-base-240x180.png >
+<a href=http://jaanga.github.com/cookbook >
+<img src=http://jaanga.github.io/home/images/rubiks-cube-base-240x180.png >
 <h2>Cookbook</h2></a>
 <li>Various and sundry code cookbook projects and files used for presentations or in blog posts.
 </div>
 
 <!--
 
-* <a href="https://jaanga.github.io/terrain/" >Terrain Data</a> ~ The data for the altitude above sea level of everywhere on earth to a resolution of 90 meters supplied as PNG heightmaps.
+* <a href="http://jaanga.github.io/terrain/" >Terrain Data</a> ~ The data for the altitude above sea level of everywhere on earth to a resolution of 90 meters supplied as PNG heightmaps.
 
-* <a href="https://jaanga.github.io/terrain-viewer/" >Terrain Viewer</a> ~ Three quite different ways of viewing the Terrain Data
+* <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Viewer</a> ~ Three quite different ways of viewing the Terrain Data
 
-* <a href="https://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
+* <a href="http://jaanga.github.io/terrain-viewer/" >Terrain Plus</a> ~ Gazetteers and other mapping extras
 -->
 
 
 <div class=figure >
-<a href=https://jaanga.github.io/urdacha >
-<img src=https://jaanga.github.io/home/images/3-Urdacha.png >
+<a href=http://jaanga.github.io/urdacha >
+<img src=http://jaanga.github.io/home/images/3-Urdacha.png >
 <h2>Urdacha</h2></a>2011
 <li>Entry for the Swiss Center _Urban Data Challenge_ in 2013.
 </div>
 <div class=figure >
-<a href=https://jaanga.github.io/brainofrichard/>
-<img src=https://jaanga.github.io/home/images/4-Brain-of-Richard.png ) >
+<a href=http://jaanga.github.io/brainofrichard/>
+<img src=http://jaanga.github.io/home/images/4-Brain-of-Richard.png ) >
 <h2>The Brain of Richard</h2></a> 2012
 <li>3D compilations of hundreds of 2D scanned MRI images.
 </div>
 
 <div class=figure >
-<a href=https://jaanga.github.io/tutorials/ >
-<img src=https://jaanga.github.io/home/images/threejs-lesson-01-240x180.png >
+<a href=http://jaanga.github.io/tutorials/ >
+<img src=http://jaanga.github.io/home/images/threejs-lesson-01-240x180.png >
 <h2>Tutorials</h2></a> 2015
-<li>Lessons to help you learn how to design things using <a href=https://threejs.org >Three.js</a>
+<li>Lessons to help you learn how to design things using <a href=http://threejs.org >Three.js</a>
 </div>
 
 ## Spin-Offs
 
 <div class=figure >
-<a href=https://wikihouse.github.io/viewer-experiments/ >
-<img src= https://jaanga.github.io/home/images/wikihouse-studio2-240x180.png  >
+<a href=http://wikihouse.github.io/viewer-experiments/ >
+<img src= http://jaanga.github.io/home/images/wikihouse-studio2-240x180.png  >
 <h2>WikiHouse</h2>
 </a> 2015
-<li><a href=https://www.wikihouse.cc/ >WikiHouse</a> is an open source building system. Many designers, collaborating to make it simple for everyone to design, print and assemble beautiful, low-energy homes, customised to their needs.
+<li><a href=http://www.wikihouse.cc/ >WikiHouse</a> is an open source building system. Many designers, collaborating to make it simple for everyone to design, print and assemble beautiful, low-energy homes, customised to their needs.
 </div>
 
 <div class=figure >
-<a href=https://opendesk.github.io/design-playground/ >
-<img src=https://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png  >
+<a href=http://opendesk.github.io/design-playground/ >
+<img src=http://jaanga.github.io/home/images/opendesk-half-sheet-table-240x180.png  >
 <h2>OpenDesk</h2></a>2015
 <li>Fit out your workspace with open furniture, designed to be made locally anywhere in the world.
 </div>
 
 <div class=figure >
-<a href=https://va3c.github.io/ >
-<img src=https://jaanga.github.io/home/images/va3c-r1-240x180.png  >
+<a href=http://va3c.github.io/ >
+<img src=http://jaanga.github.io/home/images/va3c-r1-240x180.png  >
 <h2>vA3C</h2></a> 2014
 <li>Visualize your Architecture, Engineering, Construction (AEC) Building Models on any web browser using Three.js.
 <li>This project was developed at the AEC Technology Symposium + Hackathon in New York City May 2014.
 </div>
 
 <div class=figure >
-<a href=https://fgx.github.io/  >
-<img src=https://jaanga.github.io/home/images/6-FGx.png >
+<a href=http://fgx.github.io/  >
+<img src=http://jaanga.github.io/home/images/6-FGx.png >
 <h2>FGx</h2></a> 2014
 <li>FGx creates open source projects for FlightGear - the open-source, multi-platform, cooperative flight simulator development project.
 </div>
 
 <div class=figure >
-<a href=https://soundviz.github.io/ >
-<img src=https://jaanga.github.io/home/images/soundviz-240x180.png >
+<a href=http://soundviz.github.io/ >
+<img src=http://jaanga.github.io/home/images/soundviz-240x180.png >
 <h2>SoundViz</h2></a>2014
 <li>Translate numeric sound data in ASCII format to 3D animations viewable in your browser
 <li>Data from Dr Michele Ducceschi's research on wave turbulence in elastic plates
 </div>
 
 <div class=figure >
-<a href=https://atechathon.github.io/ >
-<img src=https://jaanga.github.io/home/images/atechathon-240x180.png >
+<a href=http://atechathon.github.io/ >
+<img src=http://jaanga.github.io/home/images/atechathon-240x180.png >
 <h2>aTechathon</h2></a> 2014
 <li>Investigate walls, floors and openings on various terrains
 <li>Can a dialectic between code and brain create designs that neither could create without the other?
 </div>
 
 <div class=figure >
-<a href=https://aechack.github.io/  >
-<img src=https://jaanga.github.io/home/images/aechack-240x180.png >
+<a href=http://aechack.github.io/  >
+<img src=http://jaanga.github.io/home/images/aechack-240x180.png >
 <h2>aeChack</h2></a>2013
 <li>The web site for Team aeCkack's high energy entry to the AEC Hackathon held at Facebook HQ in Menlo Park CA, November 8-10, 2013.
 <li>The team entry was a winner. Then again, so were all the entries from the other half dozen teams.
@@ -208,7 +208,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
 
-[GRE Question of the Day]( https://www.grequestionaday.com/ )
+[GRE Question of the Day]( http://www.grequestionaday.com/ )
 
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
