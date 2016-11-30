@@ -7,8 +7,8 @@
 [Jaanga TooToo Read Me]( https://jaanga.github.io/tootoo/ )
 ===
 
-[tootoo-r2]( r2/tootoo-r2.html )
-[tootoo-r1]( tootoo-r1.html )
+## [tootoo-r2]( r2/tootoo-r2.html )
+## [tootoo-r1]( tootoo-r1.html )
 
 ## Concept
 
