@@ -105,7 +105,8 @@
         folder : ''
     };
 */
-    TRE = {};
+
+    var TRE = {};
 
 	var url;
     var urlGHPages;
@@ -212,7 +213,7 @@
 
         getSelectUserOptions();
 
-        setUser( 'jaang' );
+        setUser( 'jaanga' );
 
 	}
 
@@ -252,6 +253,7 @@
         SELselUser.selectedIndex = users.keys.indexOf( user );
 
     }
+
 
     function requestAPIContents( url ) {
 
@@ -336,6 +338,7 @@
 
 	}
 
+
     function setMenu( path ) {
 
         var obj, folders, keys;
@@ -383,6 +386,7 @@
         setDefaultContents( path, filesText );
 
     }
+
 
     function setBreadcrumbs( path ) {
 
@@ -491,6 +495,7 @@
             ifr.contentDocument.replace( /http:/gi, 'https:' );
 
         }
+
     }
 
 
@@ -582,6 +587,7 @@ console.log( 'xhr', xhr );
 		xhr.send( null );
 
     }
+
 
     function onWindowResize() {
 

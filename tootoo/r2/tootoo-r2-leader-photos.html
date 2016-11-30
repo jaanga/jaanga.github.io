@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Leader Photos</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-11-28' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.0/showdown.min.js ></script>
+<script src=tootoo-r2.js ></script>
+<script>
+
+// https://github.com/showdownjs/showdown
+// http://stackoverflow.com/questions/17140711/how-to-show-a-list-or-array-into-a-tree-structure-in-javascript
+
+
+    var users = {};
+
+    users.leader = {
+        user : 'leaderphotos',
+        repo : 'leaderphotos.github.io',
+        branch : 'master',
+        folder :'albums'
+    };
+
+/*
+    users. = {
+        user : '',
+        repo : '',
+        branch : '',
+        folder : ''
+    };
+*/
+
+    var TRE = {};
+
+    var b = '<br>';
+    var editor;
+
+	init();
+
+	function init() {
+
+		var css, container, contents, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			'html, body { font: 12pt monospace; height: 100%; margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+//			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+//			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+//			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+            'summary { outline: none; }' +
+			'summary h3 { display: inline; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container {  height: 100%; left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+			'#contents { border: 0px #ccc solid; left: 375px; position: absolute; }' +
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; box-sizing:border-box;  height: 100%; overflow-y: auto; padding: 0 10px; position: fixed; width: 325px; }' +
+//			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+
+			'<div id=menu >' +
+
+				'<h2>' +
+//					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a> &raquo; '+
+//                    '<a href="http://jaanga.github.io/tootoo" title="Browse the contents of many files in a GitHub repo really quickly" target="_blank">tootoo</a>' + b +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+                '<p><small>Browse a few of Nigel Dickinson\'s photos with a utility still in the process of being designed.</small></p>' +
+/*
+                '<details id=SELdetailsUser open title="" >' +
+
+    				'<summary><h3>Select GitHub users</h3></summary>' +
+
+    					'<select id=SELselUser onchange=setUser(this.value); title="Select user" size=10 style=width:100%;  >' +
+
+    					'</select>' + b +
+
+    				'<small>Enter a user name and press enter: </small>' + b +
+
+    				'<input id=SELinpUser placeholder="Enter a search user < will be working soon" onchange=""; style=width:100%; >' + b +
+
+    				b +
+
+    			'</details>' +
+*/
+
+				'<details open>' +
+
+					'<summary><h3>Repository</h3></summary>' +
+
+					'<div id=menuBreadcrumbs ></div>' +
+
+					'<div id=menuItems ></div>' +
+
+					'<div id=menuInfo ></div>' +
+
+				'</details>' +
+
+                '<details>' +
+					'<summary><h3>About</h3></summary>' +
+					'<p>Photos: copyright &copy; 2016 Nigel Dickinson. All rights reserved.</p>' +
+					'<p>Software: copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+				'</details>' +
+
+				'<hr>' +
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' +
+			'</div>' +
+
+		'';
+
+        window.addEventListener( 'resize', onWindowResize, false );
+
+        onWindowResize();
+
+        TRE = users[ 'leader' ];
+
+        TRE.url = 'https://api.github.com/repos/' + TRE.user + '/' + TRE.repo + '/git/trees/' + TRE.branch + '?recursive=1';
+
+        TRE.urlGHPages = 'https://' + TRE.user + '.github.io/' + TRE.folder + ( TRE.folder ? '/' : '' );
+
+        TRE.breadcrumbs = menuBreadcrumbs;
+        TRE.menu = menuItems;
+        TRE.contents = contents;
+
+        requestAPIContents();
+
+		menuInfo.style.visibility = 'hidden';
+
+	}
+
+
+    function setMenu( path ) {
+
+        var obj, folders, keys;
+        var foldersText, filesText;
+		photos = [];
+
+        folders = path ? path.split( '/' ) : [] ;
+
+        obj = TRE.folder ? TRE.data[ TRE.folder ] : TRE.data;
+
+// very curious things going on here, but it works...
+
+        for ( var i = 0; i < folders.length; i++ ) {
+
+            obj = obj.children[ folders[ i ] ];
+
+        }
+
+        keys = Object.keys( obj.children );
+        foldersText = '';
+        filesText = '';
+
+        p = path ? path + '/': '';
+		
+
+        for ( var i = 0; i < keys.length; i++ ) {
+
+
+            key = keys[ i ];
+
+            if ( Object.keys( obj.children[ key ].children ).length > 0 ) {
+
+                foldersText += ' &#x1f4c1; <a href=JavaScript:setMenu("' + p + encodeURI( key ) + '"); >' + key + '</a>'+ b;
+
+            } else if ( key.match( '.thumb' ) || key.match( '.highlight' ) || key.match( '.sized' ) || key.endsWith( '.dat' ) || key.endsWith( '.lock' ) ) {
+
+                continue;
+
+            } else if ( !key.endsWith( '.jpg' ) && !key.endsWith( '.md' )  ) {
+
+                continue;
+
+            } else {
+
+				fileName = key.replace( /[-_]/g, ' ' ).slice( 0, -4 );
+                filesText += '<a href=JavaScript:getFileSetContents("' + p + encodeURI( key ) + '"); >' + fileName + '</a>'+ b;
+				photos.push( key );
+
+            }
+
+        }
+
+        TRE.menu.innerHTML = foldersText + filesText;
+
+		createPageOfImages( p, photos );
+
+        setBreadcrumbs( path );
+
+        setDefaultContents( path, filesText );
+
+    }
+
+
+	function createPageOfImages( path, photos ) {
+
+		var page, item, item2, fileName;
+
+		page = '';
+
+		for ( var i = 0; i < photos.length; i++ ) {
+
+			item = photos[ i ];
+			item2 = item.split( '/' )
+
+			fileName = item2.pop();
+			fileName = fileName.replace( /[-_]/g, ' ' );
+
+			page += '<div style=display:inline-block;margin:10px; >' +
+				'<a href=JavaScript:getFileSetContents("' + path + item +'"); ><img src=' + TRE.urlGHPages + path + item + ' height=200; title="' + fileName.slice( 0, -4 ) + '" ></a>' +
+				'</div>';
+
+		}
+
+//console.log( 'page', page  );
+
+		contents.innerHTML = page;
+
+	}
+
+
+    function onWindowResize() {
+
+        if ( window.self !== window.top || window.innerWidth < 500 ) { container.style.left = '-325px'; }
+
+        contents.style.width = window.innerWidth - 350;
+
+	}
+
+</script>
+</body>
+</html>
