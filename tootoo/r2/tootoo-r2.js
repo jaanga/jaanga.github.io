@@ -250,12 +250,6 @@
 			'URL: ' + url.slice( 8 ).link( url ) + b +
 		b;
 
-		ifr.onload = function() {
-
-			ifr.contentDocument.replace( /http:/gi, 'https:' );
-
-		}
-
 	}
 
 
