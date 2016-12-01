@@ -133,7 +133,7 @@
 		user : 'theo-armour',
 		repo : 'theo-armour.github.io',
 		branch : 'master',
-		folder : ''
+		folder : 'tootoo'
 	};
 
 /*
@@ -187,7 +187,7 @@
 				'<h2>' +
 					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
 					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-					' ~ <a href=../index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+					' ~ <a href=JavaScript:getFileMD("https://jaanga.github.io/jaanga.github.io/tootoo/README.md"); onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
@@ -196,7 +196,7 @@
 
 				'<details id=SELdetailsUser open title="" >' +
 
-					'<summary><h3>Select GitHub users</h3></summary>' +
+					'<summary><h3>Select GitHub User</h3></summary>' +
 
 						'<select id=SELselUser onchange=setUser(this.value); title="Select user" size=10 style=width:100%;  >' +
 
@@ -220,6 +220,14 @@
 					'<div id=menuItems ></div>' +
 
 					'<div id=menuInfo ></div>' +
+
+				'</details>' +
+
+				'<details open>' +
+
+					'<summary><h3>Current File Data</h3></summary>' +
+
+					'<div id=menuFileData ></div>' +
 
 				'</details>' +
 

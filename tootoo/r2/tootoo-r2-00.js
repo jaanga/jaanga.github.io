@@ -78,7 +78,7 @@
 
 			menuInfo.innerHTML = '<p> Number of items found: ' + paths.length + b +
 			
-				'<a href="https://github.com/' + TRE.user + '/' + TRE.repo + '" target="_blank"> View repository on GitHub </a>' +
+				'<a href="https://github.com/' + TRE.user + '/' + TRE.repo + '" target="_blank"> View on GitHub </a>' +
 			'</p>';
 
 			setMenu();
@@ -173,7 +173,8 @@
 
 			file =  filesText.slice( start, start + 10 );
 
-			getFileHTML( TRE.urlGHPages + p + file );
+//			requestFile( TRE.urlGHPages + p + file, callbackHTML );
+			callbackHTML( TRE.urlGHPages + p + file );
 
 		} else if ( txt.includes( 'readme.md' ) ) {
 
@@ -181,7 +182,7 @@
 
 			file =  filesText.slice( start, start + 9 );
 
-			getFileMD( TRE.urlGHPages + p + file );
+			requestFile( TRE.urlGHPages + p + file, callbackMD );
 
 		} else {
 
@@ -200,55 +201,58 @@
 
 		if ( p.endsWith( '.md' ) ){
 
-			getFileMD( TRE.urlGHPages + encodeURI( path ) );
+			requestFile( TRE.urlGHPages + encodeURI( path ), callbackMD );
 
-		} else if ( p.endsWith( '.html' ) || p.endsWith( '.htm' ) ) {
+		} else if ( p.endsWith( '.html' ) ||  p.endsWith( '.htm' ) ) {
 
-			getFileHTML( TRE.urlGHPages + encodeURI( path ) );
+			callbackHTML( TRE.urlGHPages + encodeURI( path ) );
 
 		} else if ( p.endsWith( '.gif' ) || p.endsWith( '.ico' ) || p.endsWith( '.jpg' ) || p.endsWith( '.png' ) ||  p.endsWith( '.svg' ) ) {
 
-			getFileImage( TRE.urlGHPages + encodeURI( path ) );
+			callbackImage( TRE.urlGHPages + encodeURI( path ) );
 
+		} else {  // if ( p.endsWith( '.js' ) ||  p.endsWith( '.css' ) ||  p.endsWith( '.py' ) ) {
+
+// move DIV part to callback?
+
+			contents.innerHTML = '<div id=contentsCode style=margin-left:50px;width:800px;height:' + window.innerHeight + 'px; > item will appear here </div>';
+
+			callbackCode( path );
+
+// Why not treat everything as code nd let the Ace editor deal with it
+
+/*
 		} else {
 
-			getFileCode( TRE.urlGHPages + encodeURI( path ) );
+			contents.innerHTML =
+				'<div id=contentsHeader >item will appear here</div>' +
+				'<div id=contentsText ></div>' +
+			'';
+
+			requestFile( TRE.urlGHPages + path, callbackUnPretty );
+*/
 
 		}
 
 	}
 
 
-	function getFileMD( url ) {
+	function callbackMD( xhr ) {
 
 		var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 
-		requestFile( url, callbackMD );
-
-		function callbackMD( xhr ) {
-
-			contents.innerHTML = 
-				'<div style=margin-left:50px;max-width:800px; >' + 
-				converter.makeHtml( xhr.target.response ) + 
-			'<div>';
-
-			getFileDataXHR( xhr );
-
-		}
+		contents.innerHTML = '<div style=margin-left:50px;max-width:800px; >' + 
+			converter.makeHtml( xhr.target.response ) + 
+		'<div>';
 
 	}
 
 
-	function getFileHTML( url ){
+	function callbackHTML( fName ){
 
-		contents.innerHTML = 
-			'<iframe id=ifr src=' + url + ' width=' + ( window.innerWidth - 325 ) + ' height=' + ( window.innerHeight - 5 ) + 
+		contents.innerHTML = '<iframe id=ifr src=' + fName + ' width=' + ( window.innerWidth - 325 ) + ' height=' + ( window.innerHeight - 5 ) + 
 			' style="border:0px solid red"; >' +
 		'<iframe>';
-
-		menuFileData.innerHTML =
-			'URL: ' + url.slice( 8 ).link( url ) + b +
-		b;
 
 		ifr.onload = function() {
 
@@ -259,24 +263,16 @@
 	}
 
 
-	function getFileImage( url ){
 
-		contents.innerHTML = 
-			'<img id=image src=' + url + 
+	function callbackImage( fName ){
+
+		contents.innerHTML = '<img id=image src=' + fName + 
 			' style="border:2px solid gray; margin: 25px 0 0 50px;" >';
 
-		menuFileData.innerHTML =
-			'URL: ' + url.slice( 8 ).link( url ) + b +
-		b;
 	}
 
 
-	function getFileCode( url ) {
-
-		contents.innerHTML = 
-			'<div id=contentsCode style=margin-left:50px;width:800px;height:' + window.innerHeight + 'px; >' +
-			' item will appear here ' +
-		'</div>';
+	function callbackCode( path ){
 
 		if ( editor ) {
 
@@ -284,7 +280,7 @@
 
 		} else {
 
-// https://cdnjs.com/libraries/ace/
+	// https://cdnjs.com/libraries/ace/
 
 			editor = document.body.appendChild( document.createElement( 'script' ) );
 			editor.onload = setEditContents;
@@ -298,42 +294,26 @@
 			editor.$blockScrolling = Infinity;
 			editor.getSession().setMode( 'ace/mode/markdown' );
 
-			requestFile( url, callback );
-
-			function callback( xhr ) {
-
-				getFileDataXHR( xhr ); 
-				editor.setValue( xhr.target.response.slice( 0, 10000 ), -1 ); 
-
-			}
+			requestFile( TRE.urlGHPages + encodeURI( path ), function( xhr ) { editor.setValue( xhr.target.response, -1 ) } );
 
 		}
 
 	}
 
 
-	function getFileDataXHR( xhr ) {
-
-		var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
-
-		menuFileData.innerHTML =
-			'URL: ' + xhr.target.responseURL.slice( 8 ).link( xhr.target.responseURL ) + b +
-			'Size: ' + xhr.total.toLocaleString() + ' ~ last modified: ' + lastMod + b +
-		b;
-
-	}
-
 // may not be needed
 
 	function callbackUnPretty( xhr ) {
+
+	console.log( 'xhr', xhr );
 
 		if ( xhr.target.readyState === 4  ) {
 
 			var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
 
 			contentsHeader.innerHTML =
-				'URL: ' + xhr.target.responseURL.link( xhr.target.responseURL ) + b +
-				'size: ' + xhr.total.toLocaleString() + ' ~ last modified: ' + lastMod + b +
+				'URL: ' + xhr.target.responseURL + b +
+				'Unprettified text ~ size: ' + xhr.total.toLocaleString() + ' ~ last modified: ' + lastMod + b +
 				'Loaded maximum first 10,000 characters.' + b +
 			b;
 
@@ -367,7 +347,6 @@
 				lines.push( '&nbsp;  ' + subLines[ j ] );
 
 			}
-
 		}
 
 		return lines;
