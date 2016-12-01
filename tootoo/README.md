@@ -53,14 +53,16 @@ Nonetheless it would be nice to have more including features such as the followi
 
 ## Issues
 
-* 2016-11-30 ~ Material Design version
-* 2016-11-30 ~ Better handling of current file data
-* 2016-11-11 ~ Display HTML as source or in an iframe
 
 
 
 
 ## Goals / To Do
+
+* 2016-11-30 ~ Go to next file using cursor keys
+* 2016-11-30 ~ Material Design version
+* 2016-11-30 ~ Better handling of current file data
+* 2016-11-11 ~ Display HTML as source or in an iframe
 
 
 ## Users
