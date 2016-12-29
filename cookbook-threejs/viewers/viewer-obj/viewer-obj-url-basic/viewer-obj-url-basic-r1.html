@@ -9,19 +9,19 @@
 <meta name=date content='' >
 </head>
 <body>
-
+<!--
 <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/loaders/OBJLoader.js ></script>
-<!--
+-->
 <script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
--->
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/OBJLoader.js ></script>
 <script>
 
-	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj';
+	var fileName1 = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';
 
 	var object, groundPlane;
 
@@ -48,7 +48,7 @@
 
 			menu = document.body.appendChild( document.createElement( 'div' ) );
 			menu.style.cssText = `margin: 0 20px; position: absolute; `;
-			menu.innerHTML = 
+			menu.innerHTML =
 
 				'<h2>' +
 					'<a href="" >' + document.title + '</a> ' +
@@ -131,8 +131,8 @@
 
 		object = obj;
 
-		bbh = new THREE.BoundingBoxHelper( object );
-		bbh.update();
+		bbh = new THREE.BoxHelper( object );
+				bbh.update();
 
 //console.log( '\nbbh', bbh );
 
@@ -142,19 +142,19 @@
 // console.log( dis,  '\nsize', size, '\ndis' );
 
 //		object.scale.set( size, size, size );
-		object.scale.multiplyScalar( size );
+//		object.scale.multiplyScalar( size );
 
 
 		scene.add( object );
 
-		bbh = new THREE.BoundingBoxHelper( object );
-		bbh.update();
+//		bbh = new THREE.BoundingBoxHelper( object );
+//		bbh.update();
 
 //		scene.add( bbh );
 
-		groundPlane.position.y = bbh.box.min.y - 1;
+//		groundPlane.position.y = bbh.box.min.y - 1;
 
-		
+
 	}
 
 	function onWindowResize() {

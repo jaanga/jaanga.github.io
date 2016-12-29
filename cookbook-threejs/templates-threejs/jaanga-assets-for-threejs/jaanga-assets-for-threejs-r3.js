@@ -156,6 +156,7 @@
 		var backgroundGradient = document.body.style.backgroundImage;
 
 console.log( '',backgroundGradient);
+
 		if ( backgroundGradient === '' ) {
 
 			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
@@ -165,8 +166,6 @@ console.log( '',backgroundGradient);
 			document.body.style.backgroundImage = '';
 
 		}
-
-
 
 	}
 

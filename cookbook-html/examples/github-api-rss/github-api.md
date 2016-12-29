@@ -111,6 +111,7 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 
 
 ## Issues
+--------------------------------------------------------------------------------
 
 * https://developer.github.com/v3/issues/
 
@@ -153,6 +154,7 @@ https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 ***
 
 ## Miscellaneous
+--------------------------------------------------------------------------------
 
 * https://developer.github.com/v3/misc/
 * https://api.github.com/emojis
@@ -171,6 +173,7 @@ https://api.github.com/rate_limit
 ***
 
 ## Orgs
+--------------------------------------------------------------------------------
 
 https://api.github.com/orgs/
 
@@ -198,10 +201,10 @@ https://api.github.com/organizations?q=followers:%3E20
 ***
 
 ## Repos
+--------------------------------------------------------------------------------
+
 
 * https://developer.github.com/v3/repos/contents/
-
-
 * http://stackoverflow.com/questions/15831313/is-it-possible-to-get-commits-history-for-one-file-in-github-api
 * http://api.github.com/repos/:owner/:repo/commits?path=PATH_TO_FILE
 
@@ -291,7 +294,7 @@ https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 ***
 
 ## Users
-
+--------------------------------------------------------------------------------
 
 * https://developer.github.com/v3/users/
 
@@ -317,7 +320,7 @@ https://api.github.com/users/theo-armour/events?per_page=100
 https://api.github.com/users/theo-armour/events?type="WatchEvent"
 
 https://api.github.com/users/jaanga/events?path=cookbook-html/examples < not
- 
+
 https://api.github.com/users/jaanga/events?login=redheli < not
 
 
@@ -378,7 +381,7 @@ sort stars, forks update
 
 https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
 
-https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc << 
+https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc <<
 
 https://api.github.com/search/repositories?q=forks:%3E9000&sort=forks&order=asc < OK
 https://api.github.com/search/repositories?q=commits:%3E1000 < bogus
@@ -391,7 +394,7 @@ https://api.github.com/search/repositories?q=collaborators:%3E20&sort=stars&orde
 
 
 From https://gist.github.com/jasonrudolph/6065289
-https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc  
+https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc
 
 
 https://api.github.com/search/repositories?q=type:org
