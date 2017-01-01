@@ -21,8 +21,8 @@
 -->
 <script>
 
-	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj';
-	var fileName2 = '../../models/Saab-37_Viggen/Saab-37_Viggen.obj';
+	var fileName1 = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';
+	var fileName2 = '../../models/saab-37-viggen/Saab-37_Viggen.obj';
 	var fileName3 = '../../models/HumanHeart.obj';
 	var fileName4 = '../../models/tree.obj';
 
@@ -64,7 +64,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 			'	<a href="" >' + document.title + '</a>' +
@@ -152,7 +152,7 @@
 	function addObject( object ) {
 
 //		var bbox;
- 
+
 		bbox = new THREE.Box3();
 
 		object.traverse( function ( child ) {
@@ -181,8 +181,8 @@
 		delta = bbox.max.sub( bbox.min );
 		radius = bbox.getBoundingSphere().radius;
 		s = 100 / radius;
-		os = object.scale; 
-		os.set( s * os.x, s * os.y, s * os.z ); 
+		os = object.scale;
+		os.set( s * os.x, s * os.y, s * os.z );
 //		object.position.set( 0, -0.5 * s * delta.y, 0 );
 
 console.log( '', radius );

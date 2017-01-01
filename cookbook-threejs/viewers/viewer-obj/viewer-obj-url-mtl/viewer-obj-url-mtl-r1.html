@@ -29,7 +29,7 @@
 
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/male02/male02.obj';
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/male02/male02.mtl';
-	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/male02/male02_dds.mtl';
+	var fileName1 = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/male02/male02_dds.mtl';
 
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/campfire/campfire.obj';
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/campfire/campfire.mtl';
@@ -194,25 +194,25 @@
 
 		object = obj;
 
-		bbh = new THREE.BoundingBoxHelper( object );
-		bbh.update();
+//		bbh = new THREE.BoundingBoxHelper( object );
+//		bbh.update();
 
 //console.log( '\nbbh', bbh );
 
-		dis = bbh.position.distanceTo( bbh.scale );
-		size = object.scale.y * 80 / dis;
+//		dis = bbh.position.distanceTo( bbh.scale );
+//		size = object.scale.y * 80 / dis;
 
 // console.log( dis,  '\nsize', size, '\ndis' );
 
 //		object.scale.set( size, size, size );
-		object.scale.multiplyScalar( size );
+//		object.scale.multiplyScalar( size );
 
 		scene.add( object );
 
 		object.position.sub( bbh.position.clone() );
-		bbh = new THREE.BoundingBoxHelper( object );
-		bbh.update();
-		scene.add( bbh );
+//		bbh = new THREE.BoundingBoxHelper( object );
+//		bbh.update();
+//		scene.add( bbh );
 		groundPlane.position.y = bbh.box.min.y - 1;
 
 	}

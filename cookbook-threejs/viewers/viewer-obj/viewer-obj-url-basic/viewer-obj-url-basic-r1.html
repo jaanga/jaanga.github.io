@@ -21,7 +21,8 @@
 <script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/loaders/OBJLoader.js ></script>
 <script>
 
-	var fileName1 = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';
+//	var fileName1 = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';
+	var fileName1 = 'digestive-color.obj';
 
 	var object, groundPlane;
 
@@ -87,7 +88,8 @@
 // helpers
 
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
-		material = new THREE.MeshPhongMaterial();
+//		material = new THREE.MeshPhongMaterial();
+		material = new THREE.MeshNormalMaterial( { side: 2 } ) ;
 		groundPlane = new THREE.Mesh( geometry, material );
 //		groundPlane.position.set( 0, -5, 0 );
 		scene.add( groundPlane );
@@ -131,19 +133,47 @@
 
 		object = obj;
 
-		bbh = new THREE.BoxHelper( object );
-				bbh.update();
+//		bbh = new THREE.BoxHelper( object );
+//				bbh.update();
 
 //console.log( '\nbbh', bbh );
 
-		dis = bbh.position.distanceTo( bbh.scale );
-		size = object.scale.y * 80 / dis;
+//		dis = bbh.position.distanceTo( bbh.scale );
+//		size = object.scale.y * 80 / dis;
 
 // console.log( dis,  '\nsize', size, '\ndis' );
 
 //		object.scale.set( size, size, size );
-//		object.scale.multiplyScalar( size );
+		object.scale.multiplyScalar( 0.1 );
 
+//		object.geometry.computeFaceNormals();
+//		object.geometry.computeVertexNormals();
+
+
+
+		object.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+//				child.geometry.computeFaceNormals();
+//				child.geometry.merge;
+//				child.geometry.computeVertexNormals();
+
+// http://stackoverflow.com/questions/26607094/three-js-objloader-load-to-geometry-manipulate-then-save-to-buffergeometry
+
+
+				var geometry = new THREE.Geometry().fromBufferGeometry( child.geometry );
+				geometry.computeFaceNormals();
+				geometry.mergeVertices();
+				geometry.computeVertexNormals();
+				child.geometry = new THREE.BufferGeometry().fromGeometry( geometry );
+
+//				child.material = new THREE.MeshNormalMaterial( { side: 2 } ) ;
+				child.material.needsUpdate = true;
+
+			}
+
+		} );
 
 		scene.add( object );
 
@@ -152,7 +182,7 @@
 
 //		scene.add( bbh );
 
-//		groundPlane.position.y = bbh.box.min.y - 1;
+		groundPlane.position.y = - 30;
 
 
 	}

@@ -32,7 +32,7 @@
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/obj/male02/male02.mtl';
 
 	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/campfire/campfire.obj';
-	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/campfire/campfire.mtl';
+	var fileName1 = 'http://rawgit.com/mrdoob/three.js/dev/examples/models/campfire/campfire.mtl';
 
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/campfire/brownrock.obj';
 //	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/campfire/brownrock.mtl';
@@ -48,7 +48,7 @@
 //	urlContents = 'https://api.github.com/repos/jaanga/3d-models/git/trees/gh-pages?recursive=1';
 
 
-	var urlFiles = 'http://mrdoob.github.io/three.js/';
+	var urlFiles = 'http://rawgit.com/mrdoob/three.js/dev/';
 //	var urlFiles = '../viewer-obj-url-basic/viewer-obj-url-basic-r1.html#http://ladybug-analysis-tools.github.io/3d-models/';
 //	var urlFiles = '../viewer-obj-url-basic/viewer-obj-url-basic-r1.html#http://jaanga.github.io/3d-models/';
 
@@ -82,7 +82,7 @@
 
 			menu = document.body.appendChild( document.createElement( 'div' ) );
 			menu.style.cssText = `margin: 0 20px; position: absolute; `;
-			menu.innerHTML = 
+			menu.innerHTML =
 
 				'<h2>' +
 					'<a href="" >' + document.title + '</a> ' +
@@ -185,7 +185,7 @@ onHashChange();
 
 				files.push( file );
 				fileName = file.split( '/' ).pop().toLowerCase();
- 
+
 				txt += '<div><a href=#' + urlFiles + file + ' >' + fileName + '</a></div>';
 
 			}
@@ -295,7 +295,7 @@ console.log( 'fileName oops', fileName );
 
 		groundPlane.position.y = bbh.box.min.y - 1;
 
-		
+
 	}
 
 	function onWindowResize() {

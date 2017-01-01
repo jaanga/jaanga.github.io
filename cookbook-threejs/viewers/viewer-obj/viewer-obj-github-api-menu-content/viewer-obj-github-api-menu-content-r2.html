@@ -36,8 +36,8 @@ Basic slide in and slide out menu with three bar icon that adjusts for small scr
 	var parameters2 = '?recursive=1'
 	var engine = '../viewer-obj-url-mtl/viewer-obj-url-mtl-r1.html';
 
-	var urlFiles = '../viewer-obj-url-mtl/viewer-obj-url-mtl-r1.html#http://mrdoob.github.io/three.js/';
-	var urlPrefixFiles = 'http://mrdoob.github.io/three.js/';
+	var urlFiles = '../viewer-obj-url-mtl/viewer-obj-url-mtl-r1.html#http://rawgit.com/mrdoob/three.js/dev/';
+	var urlPrefixFiles = 'http://rawgit.com/mrdoob/three.js/dev/';
 	files = [];
 
 	init();
@@ -109,7 +109,7 @@ Basic slide in and slide out menu with three bar icon that adjusts for small scr
 
 	}
 
-	function updateMenu() { 
+	function updateMenu() {
 
 		var xhr, response;
 		var files = [], txt = '';
@@ -137,7 +137,7 @@ Basic slide in and slide out menu with three bar icon that adjusts for small scr
 
 				file = tag( file );
 
-				if ( file ) { 
+				if ( file ) {
 
 					fileArray = file.split( '/' );
 

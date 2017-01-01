@@ -16,7 +16,7 @@
 	var fileName = '../models/female02.obj';
 	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj';
 //	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/leeperrysmith/LeePerrySmith.obj';
-	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj';
+	var fileName = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';
 //	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/walt/WaltHead.obj';
 
 	var css, info, stats, renderer, scene, camera, controls;
@@ -99,7 +99,7 @@
 
 	function drop( event ) {
 
-		event.preventDefault(); 
+		event.preventDefault();
 
 		fileName = event.dataTransfer.getData( 'URL' );
 
@@ -117,7 +117,7 @@
 
 	function loadFileOBJByURL( fileName ) {
 
-// 
+//
 
 
 		var loader = new THREE.OBJLoader();

@@ -4,9 +4,9 @@
 <meta charset=utf-8 >
 <title>Hamburger Three.js Basic</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='Three.js template with basic slide in and slide out menu with three bar icon that adjusts for small screen size' >
-<meta name=keywords content='Jaanga,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2017-01-01' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-11-12' >
 </head>
 <body>
 <!--
@@ -18,10 +18,11 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script>
-// Copyright 2017 Jaanga authors ~ MIT license
+// Copyright 2016 Jaanga authors ~ MIT license
 
 	var stats, renderer, scene, camera, controls, mesh;
-	var ground, gridHelper, axisHelper;
+	var gground, gridHelper, axisHelper;
+
 
 	init();
 	animate();
@@ -31,7 +32,6 @@
 		var css, hamburger, menu;
 		var geometry, material;
 		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
-		var b = '<br>';
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -57,37 +57,27 @@
 			'<div id=menu >' +
 
 				'<h2>' +
-					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a>' + b +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
 					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
-					' ~ <a href=index.html#READE.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 				'</h2>' +
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
 
 				'<details open>' +
 					'<summary><h3>Menu</h3></summary>' +
-
-//					'<p><button onclick=getIt(); >get it</button></p>' +
-
-					'Description:' + b +
-					document.head.querySelector("[name=description]").content + b + b +
-					'Keywords:' + b +
-					document.head.querySelector("[name=keywords]").content.replace( /,/g, ', ' ) + b + b +
-					'Latest Update:' + b +
-					document.head.querySelector("[name=date]").content + b + b +
-					'File name:' + b +
-
+					'<p><button onclick=getIt(); >get it</button></p>' +
 					'<p id=menuInfo >' +
-						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects. ' +
+						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+						'The widgets below don\'t do anything but are here to indicate the look and feel.' +
 					'</p>' +
 				'</details>' +
 
 				'<details>' +
 					'<summary><h3>Settings</h3></summary>' +
-					'<p><input type=checkbox id=chkWire onchange=toggleWireframe(); > Wireframe</p>' +
-					'<p><input type=checkbox onchange=ground.material.visible=!ground.material.visible; checked > Ground plane</p>' +
+					'<p><input type=checkbox id=chkWire onchange=mesh.material.wireframe=chkWire.checked; > Wireframe</p>' +
+					'<p><input type=checkbox onchange=mesh.material.visible=!mesh.material.visible; checked > Ground plane</p>' +
 					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
 					'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
-					'<p><input type=checkbox id=chkBackground onchange=toggleBackgroundGradient(); checked > Gradient background</p>' +
 					'<p title="Press spacebar or click in window to stop." >' +
 						'<input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate checked > Rotation ' +
 					'</p>'  +
@@ -105,9 +95,8 @@
 				'</details>' +
 
 				'<hr>' +
-
 				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
-				'<div class=popUp id=pop2 style=display:none;bottom:100px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:10px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
 
 			'</div>' +
 
@@ -159,36 +148,6 @@
 
 // assets
 
-		toggleBackgroundGradient();
-
-	}
-
-
-	function toggleWireframe() {
-
-		scene.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh ) {
-
-				child.material.wireframe = chkWire.checked;
-
-			}
-
-		} );
-
-	}
-
-
-	function toggleBackgroundGradient() {
-
-// 2016-07-18
-
-		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
-		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
-		var image = document.body.style.backgroundImage;
-
-		document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
-				pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
 
 	}
 
@@ -207,7 +166,6 @@
 
 	}
 
-
 	function onWindowResize() {
 
 		camera.aspect = window.innerWidth / window.innerHeight;
@@ -218,7 +176,6 @@
 		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
 
 	}
-
 
 	function animate() {
 
