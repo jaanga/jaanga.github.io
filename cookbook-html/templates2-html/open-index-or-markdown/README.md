@@ -15,7 +15,6 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <img src="" style=display:none; width=800 >
 
-
 <iframe src=https://jaanga.github.io/cookbook-html/templates2-html/open-index-or-markdown/index.html width=100% height=600px ></iframe>
 
 
@@ -60,7 +59,7 @@ _Open Index or Markdown_
 <iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
 	https://jaanga.github.io/cookbook-html/templates2-html/open-index-or-markdown/index.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates2/open-index-or-markdown/index.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates2-html/open-index-or-markdown/index.html';
 value='Source code listing' >
 
 
@@ -87,7 +86,6 @@ Intended for general use
 
 
 ## Links of Interest
-
 
 
 ## Change Log
