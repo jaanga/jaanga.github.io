@@ -16,7 +16,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <img src="" style=display:none; width=800 >
 
 
-<iframe src=https://jaanga.github.io/cookbook-html/templates-html/open-index-or-markdown/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-html/templates2-html/open-index-or-markdown/index.html width=100% height=600px ></iframe>
 
 
 _Open Index or Markdown_
