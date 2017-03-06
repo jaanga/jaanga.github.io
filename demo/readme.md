@@ -1,4 +1,4 @@
-[jaanga.github.io]( http://jaanga.github.io/ ) / [demo]( http://jaanga.github.io/demo/ ) / [GH]( https://github.com/jaanga/jaanga.github.io ) / [tootoo]( https://jaanga.github.io/demo/tootoo-jaanga-demo.html )
+[jaanga.github.io]( https://jaanga.github.io/ ) / [demo]( https://jaanga.github.io/demo/ ) / [GH]( https://github.com/jaanga/jaanga.github.io ) / [tootoo]( https://jaanga.github.io/demo/tootoo-jaanga-demo.html )
 ===
 
 
