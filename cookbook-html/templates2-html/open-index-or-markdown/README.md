@@ -6,7 +6,6 @@ value='You are now in a GitHub web page view - Click this button to view this re
 [Jaanga]( https://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaangas.github.io/cookbook-html/  ) &raquo;
 [Templates2]( https://jaanga.github.io/cookbook-html/templates2-html/ ) &raquo;
 
-vvvvvv
 
 [Open Index or Markdown Read Me]( https://jaanga.github.io/cookbook-html/templates2-html/open-index-or-markdown/index.html#README.md )
 ===
