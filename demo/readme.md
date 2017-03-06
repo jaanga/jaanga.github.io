@@ -1,4 +1,4 @@
-[jaanga.github.io]( http://jaanga.github.io/ ) / [demo]( http://jaanga.github.io/demo/ ) / [GH]( https://github.com/jaanga/jaanga.github.io )
+[jaanga.github.io]( http://jaanga.github.io/ ) / [demo]( http://jaanga.github.io/demo/ ) / [GH]( https://github.com/jaanga/jaanga.github.io ) / [tootoo]( https://jaanga.github.io/demo/tootoo-jaanga-demo.html )
 ===
 
 
@@ -52,7 +52,7 @@
 
 ## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [paul m]( http://jaanga.github.io/demo/paul-m/ )  [ronan-b]( http://jaanga.github.io/demo/ronanb-b/ ) [ms]( http://jaanga.github.io/demo/ms/ )
 
-## [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineT]( http://jaanga.github.io/demo/konstantine-t/ )
+## [CynthiaA]( https://cynthiaarmour.github.io ) [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineT]( http://jaanga.github.io/demo/konstantine-t/ )
 
 ## [Moving Manuals]( http://jaanga.github.io/moving-manuals/ ) ~ [not Kallax]( http://jaanga.github.io/moving-manuals/kallax-nxn/ )
 
