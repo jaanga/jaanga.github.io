@@ -18,13 +18,13 @@ Theo Armour ~ 2013-08-17 started
 This document is an outline of a:
 
 * [Manifesto]* https://en.wikipedia.org/wiki/Manifesto )
-* [game plan]( http://www.merriam-webster.com/dictionary/game%20plan ), 
-* [Constitution]( https://en.wikipedia.org/wiki/Constitution ), 
-* [Rules of engagement]( https://en.wikipedia.org/wiki/Rules_of_engagement ), 
-* [Rules of order]( https://en.wikipedia.org/wiki/Parliamentary_procedure ), 
-* [Recipe]( https://en.wikipedia.org/wiki/Recipe ), 
+* [game plan]( http://www.merriam-webster.com/dictionary/game%20plan ),
+* [Constitution]( https://en.wikipedia.org/wiki/Constitution ),
+* [Rules of engagement]( https://en.wikipedia.org/wiki/Rules_of_engagement ),
+* [Rules of order]( https://en.wikipedia.org/wiki/Parliamentary_procedure ),
+* [Recipe]( https://en.wikipedia.org/wiki/Recipe ),
 * [Code of conduct]( https://en.wikipedia.org/wiki/Code_of_conduct )
-* [Code of behavior](  http://www.thefreedictionary.com/code+of+behavior ), 
+* [Code of behavior](  http://www.thefreedictionary.com/code+of+behavior ),
 * [Compact](). Compact as used in politics may refer broadly to a pact or treaty
 * Whatever.
 
@@ -68,14 +68,14 @@ https://en.wikipedia.org/wiki/De_architectura
 ### Context / Nature of the Problem
 
 * Research data is lost.
-* People can't be found or are left off lists 
-* Reference works cannot be legally copied 
+* People can't be found or are left off lists
+* Reference works cannot be legally copied
 * People are not in the same time zone
 * The distance between people is very great
-* Person A does not know what Person B is doing. 
-* People need help completing projects. 
-* Emails get lost. 
-	* Email threads are inaccessible to non-recipients 
+* Person A does not know what Person B is doing.
+* People need help completing projects.
+* Emails get lost.
+	* Email threads are inaccessible to non-recipients
 * Significant message threads from the past cannot be reconstituted
 * Meetings are held, things are decided and nobody takes notes
 
@@ -85,7 +85,7 @@ The work product of the endeavor should be accessible to all members. And it sho
 
 * Free as in beer - little or no monetary cost to access
 * Free as in liberty - Creative Commons license - do what you want with the data
-* Free as in ticket - location/ distance is not an issue - ubiquitous availability implies global asynchronous Internet availability. Anybody in the world - members of the project and members of the public at-large - has access 
+* Free as in ticket - location/ distance is not an issue - ubiquitous availability implies global asynchronous Internet availability. Anybody in the world - members of the project and members of the public at-large - has access
 * Free as in time - asynchronous communication - no need for face to face - synchronicity is not an issue
 * Free as in Get-out-of-jail-free - make changes, hack and fiddle without punishment
 
@@ -105,12 +105,12 @@ The value of an email mailing list includes:
 * Data is publicly accessible
 * Data including attachments - can last for a long time / forever
 * Users can choose how and when to receive messages
-* User fallibilities are mitigated 
+* User fallibilities are mitigated
 * Admins can control access. stop spamming and trolling
 
 
 Normal email traffic has *none* of these benefits
- 
+
 See
 
 * GitHub issues
@@ -125,9 +125,9 @@ Other communications tools to use include
 #### Online Document Repository
 
 Repository for papers and documents that the endeavor is working on and 'owns'
-Could be DropBox, Google Docs or Evernote or another. 
+Could be DropBox, Google Docs or Evernote or another.
 Curated/Deep links to Essential Texts
-The Alexandria Library of the future. Deep links into Google books. 
+The Alexandria Library of the future. Deep links into Google books.
 
 GitHub offers
 
@@ -157,7 +157,7 @@ A fully-performing in terms of technology endeavor runs circles around the avera
 
 Trying to explain to one of the types the vagaries of the other type is beyond my skill set.
 
-In the fully performing endeavour everybody can know anything about the organization in seconds. The knowledge of the organization is accessible to all. And all have the opportunity to add and ameliorate the knowledge. This is second nature to the participants. This is all regardless of time or location.  If an unfamiliar technology is required for some aspect, the participants acquire the skill set to operate the new tool I’ma matter of days.
+In the fully performing endeavour everybody can know anything about the organization in seconds. The knowledge of the organization is accessible to all. And all have the opportunity to add and ameliorate the knowledge. This is second nature to the participants. This is all regardless of time or location.  If an unfamiliar technology is required for some aspect, the participants acquire the skill set to operate the new tool in a matter of days.
 
 Preserving knowledge is the enemy. It's about growing knowledge, making it self-repairing, allowing it to plant seeds.
 
@@ -173,8 +173,8 @@ Knowledge is the DNA. Reality is the baby.
 
 ### Context / Nature of the Problem
 
-Much that people do is not particularly productive - watching TV comes to mind. 
-Stuff one has learned, books one has read are so easy to forget. Doing hard things well takes lots of practice. People mindlessly repeat. People don’t actually listen to each other. People don’t end up building a common collective agreed understanding. People leave stuff unfinished. There’s never enough time. Or people finish stuff but then it breaks. Keeping track of things is not easy. 
+Much that people do is not particularly productive - watching TV comes to mind.
+Stuff one has learned, books one has read are so easy to forget. Doing hard things well takes lots of practice. People mindlessly repeat. People don't actually listen to each other. People don't end up building a common collective agreed understanding. People leave stuff unfinished. There's never enough time. Or people finish stuff but then it breaks. Keeping track of things is not easy.
 
 The essence is: How to get a really complicated thing done that needs help from a lot of people - and it must be done in a matter of weeks?
 
@@ -193,7 +193,7 @@ The topic covers so much, it should be of assistance across disciplines.
 The endeavor should towards usability. With hope, at least a little of the work product of the endeavor useful to almost anybody
 by the ultra-erudite
 by the texting teen
-by ordinary people tools in order to help decide stuff 
+by ordinary people tools in order to help decide stuff
 
 
 ### Solutions/Tools
@@ -219,7 +219,7 @@ And, of course, "There's a method to his madness". The method is not mere repeti
 If, perhaps, the section on accessibility relates to the behavior aspect of a web page ( the JavaScript) then this section refers to the content (HTML) and the following section on style (CSS).
 
 The content should be as if it were part of your brain but kept/stored/safeguarded outside of your brain until it is needed. See David Allen, GTD and writing things down.
- 
+
 
 ***
 
@@ -256,18 +256,18 @@ adding value is adding meaning
 
 ### Comments
 
-If you divide things up in terms of who, what, when where and why, then this is the why part. 
+If you divide things up in terms of who, what, when where and why, then this is the why part.
 This is the part about value, warmth, happiness and fulfillment.
 
-On the other hand, this is also the part that says "I will not rest until it is done" or 
-"I will give up my theory when you take it out of my cold dead hands." 
+On the other hand, this is also the part that says "I will not rest until it is done" or
+"I will give up my theory when you take it out of my cold dead hands."
 
 
 ## FAQ
 
 ### Where are the footnotes?
 
-I so want this document to be a thought process that reflects generations of thoughts, many voices and deep reasoning. 
+I so want this document to be a thought process that reflects generations of thoughts, many voices and deep reasoning.
 
 ### Why can't I find links to such processes? Are our efforts always capricious, and particular?
 
@@ -275,7 +275,7 @@ I so want this document to be a thought process that reflects generations of tho
 
 Linus Torvalds and his Linux team
 
-Linus Torvalds and his Git team 
+Linus Torvalds and his Git team
 
 The creators of virtually all major operating systems
 
@@ -286,25 +286,24 @@ Certain tiny start-ups that drive large complex operations: DropBox, GitHub and 
 BDFL are good
 https://en.wikipedia.org/wiki/Benevolent_Dictator_for_Life
 
-Decisions are made, executed and reviewed through a collaborative process 
+Decisions are made, executed and reviewed through a collaborative process
 
 When bad stuff happens that's when the BDFL may be very useful
 What are some of the references used to prepare this document?
 I am reminded of Vitruvius' thought that architecture should be graced with firmness, commodity and delight
 
-Also that project management has the following: 
+Also that project management has the following:
 
 resources, tasks, time, budget
 
 And there is some of Christopher Alexander's A Pattern Language
 
 Can't we solve the mind-body thing without all this mumbo-jumbo?
-We are looking at an enigma that has not been responded to with a successful patty-cake (for want of a better term) in thousands of years. If there is a solution it will derive from the efforts of large numbers of people working in many disciplinees. So just as in the endeavors of a large corporation the work must be profitable, auditable and beneficial. Ascertaining whether these conditions are being fulfilled or not is complex. Defining what ‘profitable’, ‘auditable’ and ‘beneficial’ are from the point of view of audiences such as shareholders, local governments, the LGBT and union-registered circus clowns requires jumbo mumbo-jumbo and probably the help of Dumbo.
+We are looking at an enigma that has not been responded to with a successful patty-cake (for want of a better term) in thousands of years. If there is a solution it will derive from the efforts of large numbers of people working in many disciplinees. So just as in the endeavors of a large corporation the work must be profitable, auditable and beneficial. Ascertaining whether these conditions are being fulfilled or not is complex. Defining what 'profitable', 'auditable' and 'beneficial' are from the point of view of audiences such as shareholders, local governments, the LGBT and union-registered circus clowns requires jumbo mumbo-jumbo and probably the help of Dumbo.
 
-The rules of order of the endeavor must endeavor to order the rules or rue the ensuing disorder. 
+The rules of order of the endeavor must endeavor to order the rules or rue the ensuing disorder.
 
 **
 
-Banal endeavor, average skill set, unconsidered activity. I'll accept two of these but not three 
+Banal endeavor, average skill set, unconsidered activity. I'll accept two of these but not three
 
- 
