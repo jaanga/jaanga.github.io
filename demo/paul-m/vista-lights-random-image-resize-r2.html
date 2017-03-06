@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Vista Lights Random Image Resize R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+
+</head>
+<body>
+<script>
+
+// the scream
+// http://i.imgur.com/03y3pov.jpg
+
+
+// the files can be URLs from any location.
+// They are local here just to avoid CORS issues while writing the script.
+
+	images = [
+
+		'images/ornament-clip-art-holidays_christmas_ornament_blue.png',
+		'images/ornament-clipart-holidays_christmas_ornament_red.png',
+		'images/Blue-Christmas-Ball-Ornament-Clipart.png',
+		'images/Christmas-Ornament-Clipart-Gold-PNG.png',
+		'images/Christmas-Ornament-Clipart.png',
+		'images/Clip-Art-Free-Christmas-White-Background.jpg'
+
+	];
+
+	var image, canvas1, context1, canvas2, context2, boxes, box;
+
+	var css, menu;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; }
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+			h2, a { margin: 0; }
+			.box { border: solid 1px green; color: white; display: inline-block; height: 20px; margin: 0 10px; width: 20px; }
+			#aa { text-decoration: none; }
+			#lights { width: 420px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a>
+				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<p><i>
+				Loads a random image every time its called
+			</i></p>
+			<div id=lights ></div>
+			<p>For testing:</p>
+			<div id=info ></div>
+
+		`;
+
+		image = document.createElement( 'img' );
+
+		canvas2 = info.appendChild( document.createElement( 'canvas' ) );
+		canvas2.width = 10;
+		canvas2.height = 28;
+		canvas2.style.cssText = 'border: 5px solid #d3d3d3; display: block; ';
+		context2 = canvas2.getContext("2d");
+
+		canvas1 = info.appendChild( document.createElement( 'canvas' ) );
+		context1 = canvas1.getContext("2d");
+		boxes = [];
+
+		for ( var i = 0; i < 28; i++ ) {
+
+			for ( var j = 0; j < 10; j++ ) {
+
+				box = lights.appendChild( document.createElement( 'div' ) );
+				box.className = 'box';
+				box.style.top = i * 25 + 'px';
+				box.style.left = j * 50 + 'px';
+				boxes.push( box )
+
+			}
+
+		}
+
+		processImage();
+
+	}
+
+	function processImage() {
+
+		currentImage = images[ Math.floor( Math.random() * images.length ) ];
+
+		image.crossOrigin = 'anonymous';
+		image.onload = function() {
+
+			canvas1.width = image.width;
+			canvas1.height = image.height;
+			context1.drawImage( image, 0, 0 );
+			context2.drawImage( image, 0, 0, image.width, image.height, 0, 0, 10, 28 );
+			iDD = context2.getImageData( 0, 0, 10, 28 ).data;
+
+			for ( var i = 0, j = 0, txt = ''; i < boxes.length; i++, j++ ) {
+
+				boxes[ i ].style.backgroundColor = `rgb( ${ iDD[ j++ ] } , ${ iDD[ j++ ] }, ${ iDD[ j++ ] } )`;
+
+			}
+
+			for ( i = 0, txt = ''; i < boxes.length; i++ ) {
+
+				txt += boxes[ i ].style.backgroundColor.replace( /rgb|\(|\)| /gi, '' ) + '#';
+
+			}
+
+		window.location.href = '#' + txt;
+
+		}
+
+		image.src = currentImage;
+
+	}
+
+</script>
+</body>
+</html>

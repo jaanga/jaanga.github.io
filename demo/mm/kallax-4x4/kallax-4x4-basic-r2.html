@@ -1,0 +1,1246 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Kallax 4x4 R2</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
+<script>
+
+	var kallax;
+	var edges;
+
+	var caseTop, caseBottom, caseLeft, caseRight;
+	var components;
+	var holes;
+	var shelves;
+	var dividers;
+	var screws;
+	var pegs;
+
+	var playList;
+	var count = 0;
+	var itemCount = 0;
+	var animation;
+	var steps;
+	var duration = 500;
+
+	var width = 147;
+	var width05 = 0.5 * width;
+
+	var widthUnit = 33.5;
+	var widthUnit05 = 0.5 * widthUnit;
+
+	var height = 147;
+	var height05 = 0.5 * height;
+
+	var depth = 39;
+	var depth05 = 0.5 * depth;
+
+	var thicknessCase = 3;
+	var thicknessCase05 = 0.5 * thicknessCase;
+
+	var thicknessShelf = 2;
+	var thicknessShelf05 = 0.5 * thicknessShelf;
+
+	var materialCase = new THREE.MeshNormalMaterial();
+
+	var geometryHole = new THREE.CircleBufferGeometry( 1, 12 );
+	var materialHole = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+
+	var geometryScrew = new THREE.CylinderGeometry( 1, 0.3, 10 );
+	var materialScrew = new THREE.MeshNormalMaterial();
+
+	var geometryPeg = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+	var materialPeg = new THREE.MeshBasicMaterial( { color: 0x0aa8888 } );
+	var countPegs = 0;
+	var pegHoles = [];
+
+	var pi = Math.PI;
+	var pi05 = 0.5 * pi;
+	var pi_05 = -0.5 * pi;
+	var pi2 = 2 * pi;
+
+	var cos = function( a ){ return Math.cos( a ); };
+	var sin = function( a ){ return Math.sin( a ); };
+
+	var ran = function( n ) { return n * Math.random(); };
+	var sign = function( n ) { return Math.sign( n ); };
+
+	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var raycaster;
+	var mouse;
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a>
+				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
+			</h2>
+			<p>Click on an object to toggle between assembled and unassembled location...</p>
+			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
+			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
+			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
+
+			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play Step-by-Step Assembly</p>
+			<div id=info ></div>
+
+		`;
+
+// 			<p><button onclick=animation=true;stepByStepTween(true); >Assemble Step-by-step</button></p>
+//			<p><button onclick=getBits(); >getBits</button></p>
+//			<p><button onclick=returnBits(); >returnBits</button></p>
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 150, 150, 150 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+// helpers
+		var gridHelper = new THREE.GridHelper( 120, 10 );
+		gridHelper.position.set( 0, -1, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 120 );
+		scene.add( axisHelper );
+
+		geometry = new THREE.BoxGeometry( 240, 2, 300 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -2, -30 );
+		scene.add( mesh );
+
+// assets
+		drawKallax();
+
+		raycaster = new THREE.Raycaster();
+		mouse = new THREE.Vector2();
+
+		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+	}
+
+	function drawKallax() {
+
+		scene.remove( kallax );
+		kallax = new THREE.Object3D();
+
+		scene.remove( edges );
+		edges = new THREE.Object3D();
+
+		components = [];
+		shelves = [];
+		dividers = [];
+		holes = [];
+
+		screws = [];
+		pegs = [];
+
+		caseRight = buildCaseVertical();
+		caseRight.userData.places.push( [ v( 0, 0 + thicknessCase05, -100 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+		caseRight.userData.places.push( [ v( 0, depth05, -height05 + thicknessCase05 ), v( pi05, 0, 0 ) ] );
+		caseRight.position.copy( caseRight.userData.places[ 0 ][ 0 ] );
+		caseRight.rotation.setFromVector3( caseRight.userData.places[ 0 ][ 1 ] );
+
+		caseTop = buildCaseHorizontal();
+		caseTop.userData.places.push( [ v( - 0.5 * width - 30, 0 + thicknessCase05, 0 ), v( 0, pi05 + ran( 0.2 ) -0.1, 0 ) ] );
+		caseTop.userData.places.push( [ v( -width05 + thicknessCase05, depth05, 0 ), v( pi05, 0, pi_05 ) ] );
+		caseTop.position.copy( caseTop.userData.places[ 0 ][ 0 ] );
+		caseTop.rotation.setFromVector3( caseTop.userData.places[ 0 ][ 1 ] );
+
+		caseLeft = buildCaseVertical();
+		caseLeft.userData.places.push( [ v( 0, 0 + thicknessCase05, 100 ), v( 0, pi + ran( 0.2 ) - 0.1, 0 ) ] );
+		caseLeft.userData.places.push( [ v( 0, depth05, height05 - thicknessCase05 ), v( pi_05, pi, 0 ) ] );
+		caseLeft.position.copy( caseLeft.userData.places[ 0 ][ 0 ] );
+		caseLeft.rotation.setFromVector3( caseLeft.userData.places[ 0 ][ 1 ] );
+
+		caseBottom = buildCaseHorizontal();
+		caseBottom.name = 'caseBottom';
+		caseBottom.userData.places.push( [ v( 0.5 * width + 30, 0 + thicknessCase05, 0 ), v( 0, pi_05 + ran( 0.2 ) - 0.1, 0 ) ] );
+		caseBottom.userData.places.push( [ v( width05 - thicknessCase05, depth05, 0  ), v( pi05, 0, pi05 ) ] );
+		caseBottom.position.copy( caseBottom.userData.places[ 0 ][ 0 ] );
+		caseBottom.rotation.setFromVector3( caseBottom.userData.places[ 0 ][ 1 ] );
+
+		for ( var i = 0; i < 3; i++ ) {
+
+			obj = buildShelf ();
+			obj.userData.places.push( [ v( 30, i * 1.5 * thicknessCase, -160 ), v( 0, + ran( 0.2 ) - 0.1, 0 ) ] );
+			obj.userData.places.push( [ v( i * ( widthUnit + thicknessShelf )- widthUnit - 2, depth05, 0 ), v( pi05, 0, pi05 ) ] );
+
+			obj.position.copy( obj.userData.places[ 0 ][ 0 ] );
+			obj.rotation.setFromVector3( obj.userData.places[ 0 ][ 1 ] );
+
+		}
+
+		for ( var i = 0; i < 4; i++ ) {
+			for ( var j = 0; j < 3; j++ ) {
+
+				obj = buildDivider ();
+				obj.userData.places.push( [ v( -0.5 * width, ( i * 3 + j ) * 1.5 * thicknessCase, -160 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+
+				obj.userData.places.push( [ v( j * widthUnit + 20, 0, 0 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
+				obj.userData.places.push( [ v( i * ( widthUnit + thicknessCase05 + 0.75 ) - 1.5 * widthUnit - thicknessCase05 - thicknessShelf,
+					depth05, j * ( widthUnit ) - widthUnit - thicknessCase05 + 1.5 ), v( pi05, 0, 0 ) ] );
+
+				obj.position.copy( obj.userData.places[ 0 ][ 0 ] );
+				obj.rotation.setFromVector3( obj.userData.places[ 0 ][ 1 ] );
+
+			}
+		}
+
+		kallax.userData.places = [];
+		kallax.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		kallax.userData.places.push( [ v( 0, height05, 0 ), v( 0, 0, pi05 ) ] );
+
+		scene.add( kallax );
+		scene.add( edges );
+
+		camera.userData.places = [];
+		camera.userData.places.push( [ v( 159, 150 ), v( 0, 0, 0 ) ] );
+		camera.userData.places.push( [ v( 200, 200, 200 ), v( 0, 0, pi05 ) ] );
+
+		playList = [
+
+			[ [ caseRight, 1, 2000 ] ],
+			[ [ caseTop, 1, 2000 ] ],
+//			[ [ screws[ 0 ], 1, 3000 ], [ screws[ 1 ], 1, 3000 ] ],
+			[ [ dividers[ 0 ].parent, 1, 2000 ], [ dividers[ 1 ].parent, 1, 2500 ], [ dividers[ 2 ].parent, 1, 3000 ] ],
+//			[ [ pegs[ 0 ], 1, 3000 ], [ pegs[ 1 ], 1, 3000 ], [ pegs[ 2 ], 1, 3000 ], [ pegs[ 3 ], 1, 3000 ], [ pegs[ 4 ], 1, 3000 ], [ pegs[ 5 ], 1, 3000 ]   ],
+			[ [ dividers[ 0 ].parent, 2, 2000 ], [ dividers[ 1 ].parent, 2, 2500 ], [ dividers[ 2 ].parent, 2, 3000 ] ],
+			[ [ shelves[ 0 ].parent, 1, 2000 ] ],
+			[ [ dividers[ 3 ].parent, 1, 2000 ], [ dividers[ 4 ].parent, 1, 2500 ], [ dividers[ 5 ].parent, 1, 2500 ] ],
+			[ [ dividers[ 3 ].parent, 2, 1000 ], [ dividers[ 4 ].parent, 2, 1000 ], [ dividers[ 5 ].parent, 2, 1000 ] ],
+			[ [ shelves[ 1 ].parent, 1 ] ],
+			[ [ dividers[ 6 ].parent, 1 ], [ dividers[ 7 ].parent, 1 ], [ dividers[ 8 ].parent, 1 ] ],
+			[ [ dividers[ 6 ].parent, 2 ], [ dividers[ 7 ].parent, 2 ], [ dividers[ 8 ].parent, 2 ] ],
+			[ [ shelves[ 2 ].parent, 1 ] ],
+			[ [ dividers[ 9 ].parent, 1 ], [ dividers[ 10 ].parent, 1 ], [ dividers[ 11 ].parent, 1 ] ],
+			[ [ dividers[ 9 ].parent, 2 ], [ dividers[ 10 ].parent, 2 ], [ dividers[ 11 ].parent, 2 ] ],
+			[ [ caseLeft, 1, 2000 ] ],
+			[ [ caseBottom, 1, 2000 ] ],
+			[ [ kallax, 1, 5000 ] ],
+
+		];
+
+	}
+
+	function findStuff() {
+// http://stackoverflow.com/questions/21557341/three-js-get-world-rotation-from-matrixworld
+
+		things = [];
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.geometry instanceof THREE.CircleBufferGeometry) {
+
+				things.push( child );
+
+				child.parent.updateMatrixWorld();
+
+				geometry = new THREE.BoxGeometry( 2, 2, 20 );
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.quaternion.copy( child.getWorldQuaternion() );
+				mesh.position.copy( child.getWorldPosition() );
+				scene.add( mesh );
+
+			}
+		} );
+
+		info.innerHTML = 'things.length ' + things.length
+
+	}
+
+	function fh( n ) {
+
+		hole = holes[ n ];
+		hole.parent.updateMatrixWorld();
+
+		geometry = new THREE.BoxGeometry( 2, 2, 20 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.quaternion.copy( hole.getWorldQuaternion() );
+		mesh.position.copy( hole.getWorldPosition() );
+		scene.add( mesh );
+
+	}
+
+
+	function buildCaseHorizontal () {
+
+		var geometry = new THREE.BoxGeometry( width, thicknessCase, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'caseHorizontal';
+		mesh.castShadow = mesh.receiveShadow = true;
+		components.push( mesh );
+
+		var obj = new THREE.Object3D();
+		obj.userData.places = [];
+		obj.add( mesh);
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+// four corners top
+		drawHole( obj, -0.5 * width + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -0.5 * width + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0.5 * width - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0.5 * width - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+
+// four corners bottom
+		drawHole( obj, -0.5 * width + thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		drawHole( obj, -0.5 * width + thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0.5 * width - thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0.5 * width - thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+
+// down the middle
+		drawHole( obj, 0, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the left
+		drawHole( obj, -widthUnit, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the right
+		drawHole( obj, widthUnit, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+		kallax.add( obj );
+
+		return obj;
+
+	}
+
+	function buildCaseVertical () {
+
+		var geometry = new THREE.BoxGeometry( height - 2 * thicknessCase, thicknessCase, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.castShadow = mesh.receiveShadow = true;
+		components.push( mesh );
+
+		var obj = new THREE.Object3D();
+		obj.userData.places = [];
+		obj.add( mesh);
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+// four corners
+		drawHole( obj, 0.5 * height - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0, 'screwHole' );
+		drawHole( obj, 0.5 * height - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0, 'screwHole' );
+		drawHole( obj, -0.5 * height + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0, 'screwHole' );
+		drawHole( obj, -0.5 * height + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0, 'screwHole' );
+
+// wall brackets
+		drawHole( obj, 0.5 * height - 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		drawHole( obj, 0.5 * height - 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		drawHole( obj, -0.5 * height + 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		drawHole( obj, -0.5 * height + 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+
+// down the middle
+		drawHole( obj, 0, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the plus
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit + 0.75 * thicknessCase, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+// down the minus
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit - 0.75 * thicknessCase, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+		kallax.add( obj );
+
+		return obj;
+
+	}
+
+	function buildDivider () {
+
+		var geometry = new THREE.BoxGeometry( widthUnit, thicknessShelf, depth );
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.name = 'divider';
+
+		components.push( mesh );
+		dividers.push( mesh );
+
+		var obj = new THREE.Object3D();
+		obj.userData.places = [];
+		obj.add( mesh);
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+		if ( dividers.length < 4 ) {
+
+			drawHole( obj, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( obj, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( obj, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+			drawHole( obj, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0,  'pegHole' );
+
+		} else if ( dividers.length > 9 ) {
+
+			drawHole( obj, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+			drawHole( obj, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+			drawHole( obj, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0 );
+			drawHole( obj, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0 );
+
+		} else {
+
+			drawHole( obj, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( obj, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
+			drawHole( obj, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0 );
+			drawHole( obj, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0 );
+
+		}
+
+		drawHole( obj, widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0 );
+		drawHole( obj, -widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0 );
+
+		kallax.add( obj );
+
+		return obj;
+
+	}
+
+	function buildShelf () {
+
+		var geometry = new THREE.BoxGeometry( width - 2 * thicknessCase, thicknessShelf, depth );
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = mesh.receiveShadow = true;
+		components.push( mesh );
+		shelves.push( mesh );
+
+		var obj = new THREE.Object3D();
+		obj.userData.places = [];
+		obj.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+// four corners plus
+		drawHole( obj, width05 - thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		drawHole( obj, width05 - thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		drawHole( obj, width05 - thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		drawHole( obj, width05 - thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+
+// four corners minus
+		drawHole( obj, -width05 + thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		drawHole( obj, -width05 + thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		drawHole( obj, -width05 + thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		drawHole( obj, -width05 + thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+
+// down the middle
+		drawHole( obj, 0, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( obj, 0, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, 0, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+
+// down the right
+		drawHole( obj, widthUnit, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( obj, widthUnit, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, widthUnit, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+
+// down the left
+		drawHole( obj, -widthUnit, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+		drawHole( obj, -widthUnit, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+		drawHole( obj, -widthUnit, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0, 'pegHole' );
+
+		kallax.add( obj );
+
+		return obj;
+
+	}
+
+	function drawHole( obj, x, y, z, aX, aY, aZ, type ) {
+
+		var mesh = new THREE.Mesh( geometryHole, materialHole );
+		mesh.name = 'hole';
+		mesh.position.set( x + sign( x ) * 0.1 , y + sign( y ) * 0.1, z  + sign( z ) * 0.1); // to stop shimmering
+		mesh.rotation.set( aX, aY, aZ );
+
+		holes.push( mesh );
+
+		if ( type === 'pegHole' ) {
+
+			buildPeg( mesh );
+//			pegHoles.push( mesh );
+//			mesh.name = 'pegHole';
+
+		} else if ( type === 'screwHole' ) {
+
+			buildScrew( mesh );
+		}
+
+		obj.add( mesh );
+
+	}
+
+	function buildScrew( hole ) {
+
+		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
+
+		a = ran( pi2 ); r = ran( 10 );
+		mesh.userData.places = [];
+		mesh.userData.places.push( [ v( -90 + r * cos( a ), ran( 5 ), 90 + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
+		mesh.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		mesh.userData.holeParent = hole;
+
+		mesh.position.copy( mesh.userData.places[ 0 ][ 0 ] );
+		mesh.rotation.setFromVector3( mesh.userData.places[ 0 ][ 1 ] );
+
+		hole.name = 'screw location' + screws.length;
+		hole.userData.screw = mesh;
+
+		screws.push( mesh );
+		kallax.add( mesh );
+
+		return mesh;
+
+	}
+
+	function buildPeg( hole ) {
+
+		var a = ran( pi2 ); 
+		var r = ran( 25 );
+
+		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
+		mesh.name = 'peg';
+		mesh.userData.places = [];
+		mesh.userData.places.push( [ v( 95 + r * cos( a ), ran( 5 ), -100 + r * sin ( a ) ), v( 0, ran( 3 ), -pi05 ) ] );
+		mesh.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		mesh.userData.holeParent = hole;
+
+		mesh.position.copy( mesh.userData.places[ 0 ][ 0 ] );
+		mesh.rotation.setFromVector3( mesh.userData.places[ 0 ][ 1 ] );
+
+		hole.name = 'peg location' + pegs.length;
+		hole.userData.peg = mesh;
+
+		pegs.push( mesh );
+		kallax.add( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+	}
+
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		intersects = raycaster.intersectObjects( components );
+
+		if ( intersects.length > 0 ) {
+
+			movRotTween( intersects[ 0 ].object.parent );
+
+		}
+
+	}
+
+	function togglePositions() {
+
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			movRotTween( components[ i ].parent );
+
+		}
+
+	}
+
+	function togglePlay() {
+
+		if ( chkPlay.checked === false ) { return; }
+
+		if ( count === 0 ) {
+
+			returnAllToStartTween();
+			itemCount = 0;
+
+			movRotTweenIndex( playList[ count ] );
+			count = 1;
+
+		} else if ( count >= playList.length ) {
+
+			chkPlay.checked = false
+			count = 0;
+			itemCount = 0;
+
+		} else {
+
+			movRotTweenIndex( playList[ count ] );
+			count++;
+
+		}
+
+	}
+
+	function movRotTween( obj ) {
+
+		oud = obj.userData.places;
+
+		if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) === 0 ) {
+
+			send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000, dispatchScrewsPegs( obj ) );
+
+		} else {
+
+			send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000, dispatchScrewsPegsHome( obj )  );
+
+		}
+
+	}
+
+	function dispatchScrewsPegs( obj ) {
+
+		obj.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 5 ) === 'screw') {
+
+				switchParent( screws, child.name.substr( 14 ) );
+
+			} 
+
+			if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+				switchParent( pegs, [ child.name.substr( 12 ) ] );
+
+			}
+
+		} );
+
+	}
+
+	function dispatchScrewsPegsHome( obj ) {
+
+		obj.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 14) === 'screw location') {
+
+				screw = child.userData.screw;
+
+				screw.scale.set( 1, 1, 1 );
+				child.remove( screw );
+				scene.add( screw );
+
+				send2location( screw, screw.userData.places[ 0 ][ 0 ], screw.userData.places[ 0 ][ 1 ], 2000 );
+
+			} 
+
+			if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+
+				peg = child.userData.peg;
+
+				peg.scale.set( 1, 1, 1 );
+				child.remove( peg );
+				scene.add( peg );
+
+				send2location( peg, peg.userData.places[ 0 ][ 0 ], peg.userData.places[ 0 ][ 1 ], 2000 );
+
+			}
+
+		} );
+
+	}
+
+	function movRotTweenIndex( list ) {
+
+		itemCount = 0;
+
+		for ( var i = 0; i < list.length; i++ ) {
+
+			item = list[ i ];
+			obj = item[ 0 ];
+			index = item[ 1 ];
+			ms = item[ 2 ] ? item[ 2 ] : duration;
+			oud = obj.userData.places;
+			send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], ms, frameDispath );
+
+			dispatchScrewsPegs( obj );
+
+		}
+
+	}
+
+	function frameDispath() {
+
+			if ( chkPlay.checked === false ) { return; }
+
+			itemCount++;
+
+			if ( itemCount >= playList[ count - 1 ].length ) {
+
+				itemCount = 0;
+				togglePlay();
+
+			}
+
+	}
+
+	function returnAllToStartTween() {
+
+		var oud = kallax.userData.places;
+
+		send2location( kallax, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			var obj = components[ i ].parent, oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+		for ( var i = 0; i < screws.length; i++ ) {
+
+			var obj = screws[ i ];
+			ohp = obj.userData.holeParent;
+			oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				obj.scale.set( 1, 1, 1 );
+				ohp.remove( obj );
+				scene.add( obj );
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+		for ( var i = 0; i < pegs.length; i++ ) {
+
+			var obj = pegs[ i ];
+			ohp = obj.userData.holeParent;
+			oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				obj.scale.set( 1, 1, 1 );
+				ohp.remove( obj );
+				scene.add( obj );
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+	}
+
+	function assembleQuicklyTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			var obj = components[ i ].parent, oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ oud.length - 1 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+		for ( var i = 0; i < screws.length; i++ ) {
+
+			var obj = screws[ i ];
+			ohp = obj.userData.holeParent;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				switchParent( screws, [ i ] ) 
+
+			}
+
+		}
+
+		for ( var i = 0; i < pegs.length; i++ ) {
+
+			var obj = pegs[ i ];
+			ohp = obj.userData.holeParent;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				switchParent( pegs, [ i ] ) 
+
+			}
+
+		}
+
+	}
+
+	function send2location( obj, pos, rot, ms, func ) {
+
+		onComplete = func ? func : function() {} ;
+		new TWEEN.Tween( obj.position )
+		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation )
+		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.onComplete( onComplete )
+		.start();
+
+	}
+
+	function switchParent( type, arr ) {
+
+		for ( var i = 0; i < arr.length; i++ ) {
+
+				obj = type[ arr[ i ] ];
+				scene.remove( obj );
+
+				hole = obj.userData.holeParent;
+				hole.add( obj );
+
+				obj.position.set( 0, 0, 0 );
+				obj.rotation.set( pi05, 0, 0 );
+				obj.scale.set( 3, 3, 3 );
+
+		}
+
+	}
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		intersects = raycaster.intersectObjects( components );
+
+		if ( intersects.length > 0 ) {
+
+			movRotTween( intersects[ 0 ].object.parent );
+
+		}
+
+	}
+
+	function togglePositions() {
+
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			movRotTween( components[ i ].parent );
+
+		}
+
+	}
+
+	function togglePlay() {
+
+		if ( chkPlay.checked === false ) { return; }
+
+		if ( count === 0 ) {
+
+			returnAllToStartTween();
+			itemCount = 0;
+
+			movRotTweenIndex( playList[ count ] );
+			count = 1;
+
+		} else if ( count >= playList.length ) {
+
+			chkPlay.checked = false
+			count = 0;
+			itemCount = 0;
+
+		} else {
+
+			movRotTweenIndex( playList[ count ] );
+			count++;
+
+		}
+
+	}
+
+	function movRotTween( obj ) {
+
+		oud = obj.userData.places;
+
+		if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) === 0 ) {
+
+			send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000, dispatchScrewsPegs( obj ) );
+
+		} else {
+
+			send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000, dispatchScrewsPegsHome( obj )  );
+
+		}
+
+	}
+
+	function dispatchScrewsPegs( obj ) {
+
+		obj.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 5 ) === 'screw') {
+
+				switchParent( screws, child.name.substr( 14 ) );
+
+			} 
+
+			if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+				switchParent( pegs, [ child.name.substr( 12 ) ] );
+
+			}
+
+		} );
+
+	}
+
+	function dispatchScrewsPegsHome( obj ) {
+
+		obj.traverse( function ( child ) {
+
+			if ( child.name.substr( 0, 14) === 'screw location') {
+
+				screw = child.userData.screw;
+
+				screw.scale.set( 1, 1, 1 );
+				child.remove( screw );
+				scene.add( screw );
+
+				send2location( screw, screw.userData.places[ 0 ][ 0 ], screw.userData.places[ 0 ][ 1 ], 2000 );
+
+			} 
+
+			if ( child.name.substr( 0, 7 ) === 'peg loc') {
+
+
+				peg = child.userData.peg;
+
+				peg.scale.set( 1, 1, 1 );
+				child.remove( peg );
+				scene.add( peg );
+
+				send2location( peg, peg.userData.places[ 0 ][ 0 ], peg.userData.places[ 0 ][ 1 ], 2000 );
+
+			}
+
+		} );
+
+	}
+
+	function movRotTweenIndex( list ) {
+
+		itemCount = 0;
+
+		for ( var i = 0; i < list.length; i++ ) {
+
+			item = list[ i ];
+			obj = item[ 0 ];
+			index = item[ 1 ];
+			ms = item[ 2 ] ? item[ 2 ] : duration;
+			oud = obj.userData.places;
+			send2location( obj, oud[ index ][ 0 ], oud[ index ][ 1 ], ms, frameDispath );
+
+			dispatchScrewsPegs( obj );
+
+		}
+
+	}
+
+	function frameDispath() {
+
+			if ( chkPlay.checked === false ) { return; }
+
+			itemCount++;
+
+			if ( itemCount >= playList[ count - 1 ].length ) {
+
+				itemCount = 0;
+				togglePlay();
+
+			}
+
+	}
+
+	function returnAllToStartTween() {
+
+		var oud = kallax.userData.places;
+
+		send2location( kallax, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			var obj = components[ i ].parent, oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ 0 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+		for ( var i = 0; i < screws.length; i++ ) {
+
+			var obj = screws[ i ];
+			ohp = obj.userData.holeParent;
+			oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				obj.scale.set( 1, 1, 1 );
+				ohp.remove( obj );
+				scene.add( obj );
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+		for ( var i = 0; i < pegs.length; i++ ) {
+
+			var obj = pegs[ i ];
+			ohp = obj.userData.holeParent;
+			oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				obj.scale.set( 1, 1, 1 );
+				ohp.remove( obj );
+				scene.add( obj );
+				send2location( obj, oud[ 0 ][ 0 ], oud[ 0 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+	}
+
+	function assembleQuicklyTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			var obj = components[ i ].parent, oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ oud.length - 1 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ oud.length - 1 ][ 0 ], oud[ oud.length - 1 ][ 1 ], 2000 );
+
+			}
+
+		}
+
+		for ( var i = 0; i < screws.length; i++ ) {
+
+			var obj = screws[ i ];
+			ohp = obj.userData.holeParent;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				switchParent( screws, [ i ] ) 
+
+			}
+
+		}
+
+		for ( var i = 0; i < pegs.length; i++ ) {
+
+			var obj = pegs[ i ];
+			ohp = obj.userData.holeParent;
+
+			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
+
+				switchParent( pegs, [ i ] ) 
+
+			}
+
+		}
+
+	}
+
+	function send2location( obj, pos, rot, ms, func ) {
+
+		onComplete = func ? func : function() {} ;
+		new TWEEN.Tween( obj.position )
+		.to( {x: pos.x, y: pos.y, z: pos.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.start();
+
+		new TWEEN.Tween( obj.rotation )
+		.to( { x: rot.x, y: rot.y, z: rot.z }, ms )
+		.easing( TWEEN.Easing.Elastic.Out)
+		.onComplete( onComplete )
+		.start();
+
+	}
+
+	function switchParent( type, arr ) {
+
+		for ( var i = 0; i < arr.length; i++ ) {
+
+				obj = type[ arr[ i ] ];
+				scene.remove( obj );
+
+				hole = obj.userData.holeParent;
+				hole.add( obj );
+
+				obj.position.set( 0, 0, 0 );
+				obj.rotation.set( pi05, 0, 0 );
+				obj.scale.set( 3, 3, 3 );
+
+		}
+
+	}
+
+	function findStuff() {
+// http://stackoverflow.com/questions/21557341/three-js-get-world-rotation-from-matrixworld
+
+		things = [];
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.geometry instanceof THREE.CircleBufferGeometry) {
+
+				things.push( child );
+
+				child.parent.updateMatrixWorld();
+
+				geometry = new THREE.BoxGeometry( 2, 2, 20 );
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.quaternion.copy( child.getWorldQuaternion() );
+				mesh.position.copy( child.getWorldPosition() );
+				scene.add( mesh );
+
+			}
+		} );
+
+		info.innerHTML = 'things.length ' + things.length
+
+	}
+
+	function fh( n ) {
+
+		hole = holes[ n ];
+		hole.parent.updateMatrixWorld();
+
+		geometry = new THREE.BoxGeometry( 2, 2, 20 );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.quaternion.copy( hole.getWorldQuaternion() );
+		mesh.position.copy( hole.getWorldPosition() );
+		scene.add( mesh );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		TWEEN.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1234 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Poang Rocker R3.4</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Not the Poang Rocking chair - but looks like it' >
+<meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/tween.min.js ></script>
+
+<script src=../js/mm-object-r3.js ></script>
+<script src=../js/tweenjs-r1.js ></script>
+<script src =../js/qline-r1.js ></script>
+<script>
+
+	var chairWidth = 68;
+	var seatWidth = 56;
+	var frameWidth = ( chairWidth - seatWidth ) / 2;
+	var frameThickness = 2.5;
+	var bevelThickness = 2;
+	var bevelSize = 2;
+	var hexKey;
+
+	var edgesColor = 0x884444;
+
+	var edges;
+	var helpers;
+	var tools;
+
+	var screws119046 = [];
+	var screws112522 = [];
+	var screws112091 = [];
+	var screws122606 = [];
+	var screws122607 = [];
+	var spindles123786 = [];
+	var roundNuts100514 = [];
+
+	var placards = [];
+
+	var materialScrew = new THREE.MeshNormalMaterial( { side: 2 });
+
+	var poang, edges, hardware, helpers;
+
+// assets
+
+	var verticesSection =  [ v2( 0, 0 ), v2( 0, -frameThickness ), v2( - frameWidth, -frameThickness ), v2( - frameWidth, 0 ) ];
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'button { background-color: silver; border: 2px silver solid; color: #888; }' +
+			'h2 { margin: 0 }' +
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
+		menu.innerHTML =
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/demo/mm/ >🛈</a>' +
+			'</h2>' +
+			'<p>Click objects to move between assembled and disassembled...</p>' +
+
+			'<p><button onclick=tweenAllToLocation(); >Return all to start</button>' +
+			'<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>' +
+			'<p><input type=checkbox onchange=toggleHW(); >Toggle Hardware</p>' +
+			'<div id=info ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.name = 'camera';
+		camera.position.set( -200, 120, -200 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.target.set( 20, 50, 50 );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+		drawHelpers();  // mm-object-rX.js
+
+		drawPoangRocker();
+
+		addLights( 200 );
+
+		addShadows();
+
+	}
+
+	function toggleHW() {
+
+		if ( hardware.children.length > 0 ) {
+
+			children = hardware.children
+			var sHW = children[0].scale.x === 0.1 ? 0.5 : 0.1;
+
+			for ( var i = 0; i < children.length; i++ ) {
+
+				children[ i ].scale.set( sHW, sHW, sHW );
+
+			}
+
+		}
+
+		if ( holes.length > 0 ) {
+
+			for ( var i = 0; i < holes.length; i++ ) {
+
+				if ( holes[i].children.length > 0 ) { 
+
+					var sHW = holes[i].children[0].scale.x === 0.1 ? 0.5 : 0.1;
+					holes[i].children[ 0 ].scale.set( sHW, sHW, sHW );
+
+				}
+
+			}
+
+		}
+
+	}
+
+	function drawPoangRocker() {
+
+		tweenAllToLocation();
+
+		scene.remove( poang, edges, hardware, helpers, tools );
+
+		poang = new THREE.Object3D();
+		poang.name = 'poang';
+
+		helpers = new THREE.Object3D();
+		drawHelpers();
+
+		edges = new THREE.Object3D();
+		edges.name = 'edges';
+
+		hardware = new THREE.Object3D();
+		hardware.name = 'hardware';
+
+		tools = new THREE.Object3D();
+		tools.name = 'tools';
+
+		rockerRight = drawRocker( 'rockerRight' );
+
+		rockerRight.userData.places.push( { pX: -50, pY: 0, pZ: -60, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		rockerRight.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+
+		rockerLeft = drawRocker( 'rockerRight' );
+
+		rockerLeft.userData.places.push( { pX: -50, pY: frameWidth, pZ: -60, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		rockerLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - frameWidth, rX: 0, rY: 0, rZ: 0 } );
+
+
+		armRight = drawArm( 'armRight' );
+
+		armRight.userData.places.push( { pX: -30, pY: 0, pZ: -130, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		armRight.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+
+		armLeft = drawArm( 'armLeft' );
+
+		armLeft.userData.places.push( { pX: -30, pY: frameWidth, pZ: -130, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		armLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - frameWidth, rX: 0, rY: 0, rZ: 0 } );
+
+
+		backRight = drawBack( 'backRight' );
+
+		backRight.userData.places.push( { pX: -10, pY: 0, pZ: -180, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		backRight.userData.places.push( { pX: 0, pY: 0, pZ: frameWidth, rX: 0, rY: 0, rZ: 0 } );
+
+
+		backLeft = drawBack( 'backLeft' );
+
+		backLeft.userData.places.push( { pX: -20, pY: 0, pZ: -180, rX: pi05, rY: 0, rZ: ran( 0.4 ) - 0.2 } );
+		backLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - 2 * frameWidth, rX: 0, rY: 0, rZ: 0 } );
+
+
+		seatRight = drawSeat( 'seatRight' );
+
+		seatRight.userData.places.push( { pX: 100, pY: 0, pZ: -80, rX: pi05, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatRight.userData.places.push( { pX: 0, pY: 0, pZ: frameWidth, rX: 0, rY: 0, rZ: 0 } );
+
+		seatLeft = drawSeat( 'seatLeft' );
+
+		seatLeft.userData.places.push( { pX: 100, pY: 0, pZ: -70, rX: pi05, rY: 0, rZ: ran( 0.4 ) - 0.2 } );
+		seatLeft.userData.places.push( { pX: 0, pY: 0, pZ: chairWidth - 2 * frameWidth, rX: 0, rY: 0, rZ: 0 } );
+
+
+		armBar = drawArmBar( 'armBar' );
+
+		armBar.userData.places.push( { pX: 90, pY: -frameWidth, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		armBar.userData.places.push( { pX: 9, pY: 25, pZ: 0, rX: 0, rY: 0, rZ: -0.2 } );
+
+
+		seatBar1 = drawSeatBar( 'seatBar1' );
+		seatBar1.userData.places.push( { pX: 85, pY: 0, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatBar1.userData.places.push( { pX: 12, pY: 36.5, pZ: 0, rX: 0, rY: 0, rZ: -0.125 } );
+
+		seatBar2 = drawSeatBar( 'seatBar2' );
+		seatBar2.userData.places.push( { pX: 80, pY: 0, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatBar2.userData.places.push( { pX: 43, pY: 32.5, pZ: 0, rX: 0, rY: 0, rZ: -0.125 } );
+
+		seatBar3 = drawSeatBar( 'seatBar3' );
+		seatBar3.userData.places.push( { pX: 75, pY: 0, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatBar3.userData.places.push( { pX: 60, pY: 50, pZ: 0, rX: 0, rY: 0, rZ: 1.3 } );
+
+		seatBar4 = drawSeatBar( 'seatBar4' );
+		seatBar4.userData.places.push( { pX: 65, pY: 0, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatBar4.userData.places.push( { pX: 70, pY: 65, pZ: 0, rX: 0, rY: 0, rZ: 1.3 } );
+
+		seatBar5 = drawSeatBar( 'seatBar5' );
+		seatBar5.userData.places.push( { pX: 60, pY: 0, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatBar5.userData.places.push( { pX: 80, pY: 80, pZ: 0, rX: 0, rY: 0, rZ: 1.3 } );
+
+		seatBar6 = drawSeatBar( 'seatBar6' );
+		seatBar6.userData.places.push( { pX: 55, pY: 0, pZ: -80, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatBar6.userData.places.push( { pX: 82, pY: 95, pZ: 0, rX: 0, rY: 0, rZ: 1.3 } );
+
+
+		seatCloth = drawSeatCloth( 'seatCloth' );
+		seatCloth.userData.places.push( { pX: 95, pY: 0, pZ: -30, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		seatCloth.userData.places.push( { pX: 10, pY: 36, pZ: 0, rX: 0, rY: 0, rZ: -0.125 } );
+
+
+		cushionTop = drawCushionTop( 'cushionTop' );
+		cushionTop.userData.places.push( { pX: 95, pY: 0, pZ: -120, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		cushionTop.userData.places.push( { pX: 80, pY: 90, pZ: frameWidth + bevelThickness, rX: 0, rY: 0, rZ: 1.3 } );
+
+		cushionMiddle = drawCushionMiddle( 'cushionMiddle' );
+		cushionMiddle.userData.places.push( { pX: 69, pY: 0, pZ: 120, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		cushionMiddle.userData.places.push( { pX: 52, pY: 34, pZ: frameWidth + bevelThickness, rX: 0, rY: 0, rZ: 1.2 } );
+
+		cushionBottom = drawCushionBottom( 'cushionBottom' );
+		cushionBottom.userData.places.push( { pX: 25, pY: 0, pZ: 120, rX: 0, rY: 0, rZ: ran( 0.2 ) - 0.1 } );
+		cushionBottom.userData.places.push( { pX: 7, pY: 38, pZ: frameWidth + bevelThickness, rX: 0, rY: 0, rZ: -0.125 } );
+
+		hexKey = draw_hexKey_100001();
+		hexKey.scale.set( 0.1, 0.1, 0.1 );
+
+		hexKey.userData.places.push( { pX: 0, pY: 30, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+
+		objects.push( hexKey );
+		tools.add( hexKey );
+
+		scene.add( poang, edges, hardware, helpers, tools );
+
+		camera.userData.places = [];
+		camera.userData.tween = tweenCamera;
+
+		var p = camera.position.clone();
+		var t = controls.target.clone();
+		var p2 = 100;
+
+// 		camera.userData.places.push( { pX: 0, pY: 0, pZ: 0, tX: 0, tY: 0, tZ: 0 } );
+
+		camera.userData.places.push( { pX: p.x, pY: p.y, pZ: p.z, tX: t.x, tY: t.y, tZ: t.z } ); // 0 - start
+		camera.userData.places.push( { pX: -100, pY: 100, pZ: 150, tX: 20, tY: 50, tZ: 50 } ); // assembled
+
+		camera.userData.places.push( { pX: 130, pY: 400, pZ: 30, tX: 2, tY: 12, tZ: -11 } ); // zoom out / high up
+		camera.userData.places.push( { pX: -230, pY: 60, pZ: -180, tX: -10, tY: 10, tZ: -30 } ); // close in / far corner / outside
+		camera.userData.places.push( { pX: 95, pY: 154, pZ: 84, tX: 3, tY: 3, tZ: 0 } ); // close in / middle
+
+		camera.userData.places.push( { pX: 80, pY: 140, pZ: 140, tX: 2, tY: 12, tZ: -11 } ); // close in far right - inside
+
+		camera.userData.places.push( { pX: -200, pY: 60, pZ: 200, tX: -10, tY: 5, tZ: 0 } );
+		camera.userData.places.push( { pX: 1.5 * p2, pY: 50, pZ: -0.25 * p2, tX: -40, tY: 50, tZ: 30 } ); //  the end
+
+		tweenAllToLocation();
+
+	}
+
+	function drawCushionBottom( name ) {
+
+		cushionBottomSection = [
+
+			v2( 0, 0, 0 ),
+			v2( 0, 1, 0 ),
+			v2( 1, 3.7, 0 ),
+			v2( 2, 4.2, 0 ),
+			v2( 3, 4.5, 0 ),
+			v2( 4, 4.8, 0 ),
+			v2( 5, 5, 0 ),
+
+			v2( 35, 5, 0 ),
+			v2( 36, 4.8, 0 ),
+			v2( 37, 4.5, 0 ),
+			v2( 38, 4.2, 0 ),
+			v2( 39, 3.7, 0 ),
+			v2( 40, 1, 0 ),
+			v2( 40, 0, 0 )
+
+		]
+
+		mesh = drawCushion( cushionBottomSection, seatWidth - 2 * bevelThickness, 10 );
+		mesh.name = ( name );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawCushionMiddle( name ) {
+
+		var delta = -6;
+		var length = 40;
+
+		var cushionMiddleSection = [
+
+
+			v2( 15, 0, 0 ),
+			v2( 0, 0, 0 ),
+			v2( 0, 1, 0 ),
+			v2( 1, 3.7, 0 ),
+			v2( 2, 4.2, 0 ),
+			v2( 3, 4.5, 0 ),
+			v2( 4, 4.8, 0 ),
+			v2( 5, 5, 0 ),
+			v2( 15, 5, 0 ),
+
+			v2( length + 0, delta + 5, 0 ),
+			v2( length + 10, delta + 5, 0 ),
+			v2( length + 16, delta + 4.8, 0 ),
+			v2( length + 17, delta + 4.5, 0 ),
+			v2( length + 18, delta + 4.2, 0 ),
+			v2( length + 19, delta + 3.7, 0 ),
+			v2( length + 20, delta + 1, 0 ),
+			v2( length + 20, delta + 0, 0 ),
+			v2( length + 0, delta + 0, 0 )
+
+		]
+
+		var mesh = drawCushion( cushionMiddleSection, seatWidth - 2 * bevelThickness, 10 );
+
+		mesh.name = ( name );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawCushionTop( name ) {
+
+		var cushionTopSection = [
+
+			v2( 0, 0, 0 ),
+			v2( 0, 1, 0 ),
+			v2( 1, 3.7, 0 ),
+			v2( 2, 4.2, 0 ),
+			v2( 3, 4.5, 0 ),
+			v2( 4, 4.8, 0 ),
+			v2( 5, 5, 0 ),
+
+			v2( 10, 5, 0 ),
+			v2( 11, 4.8, 0 ),
+			v2( 12, 4.5, 0 ),
+			v2( 13, 4.2, 0 ),
+			v2( 14, 3.7, 0 ),
+			v2( 15, 1, 0 ),
+			v2( 15, 0, 0 )
+
+		];
+
+		var mesh = drawCushion( cushionTopSection, seatWidth - 2 * bevelThickness, 10 );
+
+		mesh.name = ( name );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawSeatCloth( name ) {
+
+// causes errors...
+
+		var seatSection =  [ v2( -5, 0 ), v2( -4, -1 ), v2( -1, -1  ), v2( 0, 0 ), v2( -1, 1 ), v2( -4, 1 ), v2( -5.5, 0 ), v2( -30, 0 ),
+			v2( -31, 1 ), v2( -34, 1 ), v2( -35, 0 ), v2( -34,- 1 ), v2( -31, -1 ), v2( -30.5, 0.1 )  ];
+
+		var vertices = [
+
+			v( 0, 0, 2 * frameWidth ),
+			v( 0, -1.5, 1.5 * frameWidth + 0.5 * seatWidth - 0.5 * frameWidth ),
+			v( 0, 0, chairWidth - 2 * frameWidth ),
+
+		];
+
+		var mesh = drawExtrusion( vertices, seatSection, 10, 0xeeeeee );
+
+		mesh.name = ( name );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+
+	function drawSeatBar( name ) {
+
+		var barSection =  [ v2( 0, 0 ), v2( 0, frameThickness - 1 ), v2( frameWidth - 2, frameThickness - 1 ), v2( frameWidth - 2, 0 ) ];
+		var offset = -0.5 * ( frameWidth - 2 );
+
+		var vertices = [
+
+			v( 0, 0, 1.5 * frameWidth ),
+			v( 0, 0, 2 * frameWidth ),
+			v( 0, -1.5, 1.5 * frameWidth + 0.5 * seatWidth - 0.5 * frameWidth ),
+			v( 0, 0, chairWidth - 2 * frameWidth ),
+			v( 0, 0, chairWidth - 1.5 * frameWidth )
+
+		];
+
+		var mesh = drawExtrusion( vertices, barSection, 10 );
+		mesh.name = ( name );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		if ( name !== 'seatBar1' && name !== 'seatBar2' ) {
+
+			build_hole2( mesh, offset, 0.1, 1.5 * frameWidth + 2, pi05, 0, 0, draw_screw_119046 );
+			build_hole2( mesh, offset, 0.11, chairWidth - 1.5 * frameWidth - 2, pi05, 0, 0, draw_screw_119046  );
+
+		} else {
+
+			build_hole2( mesh, offset, 0.1, 1.5 * frameWidth + 2, pi05, 0, 0, draw_screw_112522 );
+			build_hole2( mesh, offset, 0.11, chairWidth - 1.5 * frameWidth - 2, pi05, 0, 0, draw_screw_112522  );
+
+		}
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawArmBar( name ) {
+
+		var barSection =  [ v2( 0, 0 ), v2( 0, frameThickness - 0.75 ), v2( - frameWidth + 1, frameThickness - 0.75 ), v2( - frameWidth + 1, 0 ) ];
+		var offset = 0.5 * ( frameWidth );
+
+		var vertices = [
+
+			v( 0, 0, frameWidth ),
+			v( 0, 0, chairWidth - frameWidth )
+
+		];
+
+		var mesh = drawExtrusion( vertices, barSection, 3 );
+		mesh.name = ( name );
+
+		build_hole2( mesh, -0.1, offset, frameWidth + 2, 0, pi05, 0, draw_round_nut_100514 );
+		build_hole2( mesh, -0.1, offset, chairWidth - frameWidth - 2, 0, pi05, 0, draw_round_nut_100514 );
+
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawSeat( name ) {
+
+		var vertices = [
+
+			v( 62, 45, 0 ),
+			v( 57, 35, 0 ),
+			v( 52, 31, 0 ),
+			v( 50, 30, 0 ),
+			v( 5, 35, 0 )
+		];
+
+		var mesh = drawExtrusion( vertices, verticesSection, 50 );
+		mesh.name = ( name );
+
+		build_hole2( mesh, 7, 35.1 + frameThickness, 0.5 * frameWidth, pi05, 0, 0  );
+		build_hole2( mesh, 35, 34.1, 0.5 * frameWidth, pi05, 0, 0 );
+		build_hole2( mesh, 10, 35.1, -0.1, 0, 0, 0 );
+		build_hole2( mesh, 57, 42, 0.5 * frameWidth, 0, pi05, 0,draw_screw_112522 );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawBack( name ) {
+
+		var offset = 0.5 * frameWidth;
+
+		var vertices = [
+
+			v( 85, 95, 0 ),
+			v( 80, 75, 0 ),
+			v( 70, 60, 0 ),
+			v( 60, 40, 0 )
+
+		];
+
+		var mesh = drawExtrusion( vertices, verticesSection, 50 );
+		mesh.name = ( name );
+
+		build_hole2( mesh, 85 - frameThickness - 2, 92, offset, 0, pi05, 0 );
+		build_hole2( mesh, 80 - frameThickness - 2, 75, offset, 0, pi05, 0 );
+		build_hole2( mesh, 70 - frameThickness - 1, 60, offset, 0, pi05, 0 );
+		build_hole2( mesh, 60 - frameThickness - 0, 43, offset, 0, pi05, 0 );
+		build_hole2( mesh, 63 - frameThickness - 0, 48, offset, 0, pi05, 0 );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawArm ( name ) {
+
+		var offset = 0.5 * frameWidth;
+		var vertices = [
+
+			v( 74, 65, 0 ),
+			v( 65, 55, 0 ),
+			v( 25, 55, 0 ),
+			v( 21, 54, 0 ),
+			v( 15, 40, 0 ),
+			v( 10, 10, 0 ),
+			v( 15, 7, 0 ),
+			v( 25, 5, 0 )
+
+		];
+
+		var mesh = drawExtrusion( vertices, verticesSection, 50 );
+		mesh.name = ( name );
+
+		build_hole2( mesh, 15, 3, offset, pi05, 0, 0 );
+		build_hole2( mesh, 35, 54, offset, pi05, 0, 0 );
+		build_hole2( mesh, 12, 35, -0.1, 0, 0, 0, draw_spindle_123786 );
+		build_hole2( mesh, 71, 64, -0.1, 0, 0, 0, draw_screw_122607 );
+
+		build_hole2( mesh, 10, 26, frameWidth + 0.1, 0, 0, 0, draw_screw_122606 );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+	function drawRocker( name ) {
+
+		var offset = 0.5 * ( frameWidth );
+
+		var vertices = [
+
+			v( 30, 55, 0 ),
+			v( 40, 55, 0 ),
+			v( 60, 50, 0 ),
+			v( 75, 45, 0 ),
+			v( 90, 30, 0 ),
+			v( 94, 10, 0 ),
+			v( 50, 0, 0 ),
+			v( 8, 3, 0 ),
+			v( 0, 5, 0 )
+
+		];
+
+		var mesh = drawExtrusion( vertices, verticesSection, 80 );
+		mesh.name = ( name );
+
+		build_hole2( mesh, 2, 4, offset, pi05, 0, 0, draw_screw_112091 );
+		build_hole2( mesh, 32, 52, offset, pi05, 0, 0, draw_screw_112091 );
+		build_hole2( mesh, 55, 50, -0.1, 0, 0, 0 );
+
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		poang.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+
+	function drawExtrusion( path, section, steps, color ) {
+
+		steps = steps ? steps : 50;
+
+		shape = new THREE.Shape();
+		shape.fromPoints( section );
+
+/*
+		var line;
+		var geometry = new THREE.Geometry();
+		geometry.vertices = path;
+		var material = new THREE.LineBasicMaterial( { color: 'magenta' } );
+		line = new THREE.Line( geometry, material );
+		line.position.z = 75;
+		scene.add( line );
+*/
+
+		var extrudePath = new THREE.CatmullRomCurve3( path );
+
+		var geometry = new THREE.ExtrudeGeometry( shape, { extrudePath: extrudePath, steps: steps } );
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		material = new THREE.MeshNormalMaterial( { wireframe: false } );
+		color = color ? color : 0x44221f;
+		var material = new THREE.MeshPhongMaterial( {
+
+			color: color,
+//			color: 0xffffff * Math.random(),
+//			emissive: 0xffffff * Math.random(),
+			specular: 0x33333,
+			shininess: 3,
+//			side: THREE.DoubleSide
+		} );
+
+		var mesh = new THREE.Mesh( geometry, material );
+
+
+//		mesh.geometry.verticesNeedUpdate = true;
+		mesh.geometry.normalsNeedUpdate = true;
+
+		return mesh;
+
+	}
+
+
+	function drawCushion( section, amount, steps ) {
+
+		amount = amount ? amount : 50;
+		steps = steps ? steps : 50;
+
+		var shape = new THREE.Shape();
+		shape.fromPoints( section );
+
+		var geometry = new THREE.ExtrudeGeometry( shape, { amount: amount, bevelThickness: bevelThickness, bevelSize: bevelSize, steps: steps } );
+//		material = new THREE.MeshNormalMaterial( { wireframe: false } );
+
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0x000000,
+//			emissive: 0x444444 * Math.random(),
+			specular: 0x444444
+//			shininess: 30,
+//			side: THREE.DoubleSide
+		} );
+
+		var mesh = new THREE.Mesh( geometry, material );
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		mesh.geometry.verticesNeedUpdate = true;
+		mesh.geometry.normalsNeedUpdate = true;
+
+		return mesh;
+
+	}
+
+	function build_hole2( obj, x, y, z, aX, aY, aZ, drawType ) {
+
+		var mesh = new THREE.Mesh( geometryHole, materialHole );
+		mesh.name = 'hole';
+		mesh.position.set( x + sign( x ) * 0.1 , y + sign( y ) * 0.1, z  + sign( z ) * 0.1 ); // to stop shimmering
+		mesh.rotation.set( aX, aY, aZ );
+
+		holes.push( mesh );
+
+		if ( drawType ) { drawType( mesh ); }
+
+		obj.add( mesh );
+
+	}
+
+	function draw_screw_119046( hole ) {
+
+		var geometry = createFlatHeadHexScrew( 0, 15, 1, 0, 3.5, 2.5 );
+		var X = 90, Z =  60, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '119046', 0.05, 120, 0, 20, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: 0, pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function draw_screw_112522( hole ) {
+
+		var geometry = createFlatHeadHexScrew( 0, 10, 1, 5 );
+		var X = 100, Z =  50, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '112522', 0.05, 120, 0, 20, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: 0, pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function draw_screw_112091( hole ) {
+
+		var geometry = createFlatHeadHexScrew( 0, 20, 1 );
+		var X = 110, Z =  80, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '112091', 0.05, 120, 0, 20, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: 0, pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function draw_screw_122607( hole ) {
+
+		var geometry = createFlatHeadHexScrew( 30 );
+		var X = 95, Z =  60, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '122604', 0.05, 120, 0, 20, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function draw_screw_122606( hole ) {
+
+		var geometry = createFlatHeadHexScrew();
+		var X = 100, Z =  70, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '122604', 0.05, 120, 0, 20, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function draw_spindle_123786( hole ) {
+
+		var geometry = createSpindle();
+		var X = 100, Z =  90, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '123786', 0.05, 120, 0, 20, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi05, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function draw_round_nut_100514( hole ) {
+
+		var geometry = createRoundNut();
+		var X = 90, Z = 80, a = ran( pi2 ), r = ran( 10 );
+
+		var mesh = tweakHW( geometry, hole, build_placard( '100514', 0.05, 120, 50, 50, 0 ) );
+		mesh.userData.places.push( { parent: hardware, scale: 0.1, pX: X + r * cos( a ), pY: ran( 5 ), pZ: Z + r * sin ( a ), rX: 0, rY: ran( 3 ), rZ: -pi05  } );
+		mesh.userData.places.push( { parent: hole, scale: 0.1, pX: 0, pY: 0, pZ: 0, rX: pi, rY: 0, rZ: 0 } ); // assembled
+
+		return mesh;
+
+	}
+
+	function tweakHW( geometry, hole, placard ) {
+
+		var mesh = new THREE.Mesh( geometry, materialScrew );
+		mesh.userData.holeParent = hole;
+		mesh.userData.places = [];
+
+		hardware.add( mesh );
+
+		hole.userData.screw = mesh;
+		hole.name = 'screw location';
+
+		placards.push( placard );
+		mesh.add( placard );
+
+		edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		return mesh;
+
+	}
+
+
+	function createFlatHeadHexScrew( lengthBody, lengthThread, lengthTip, chamfer, radiusBody, radiusThread ) {
+
+		var lengthBody = lengthBody !== undefined ? lengthBody : 50;
+		var lengthThread = lengthThread ? lengthThread : 20;
+		var lengthTip = lengthTip ? lengthTip : 3;
+		var chamfer = chamfer !== undefined ? chamfer : 0;
+		var radiusBody = radiusBody ? radiusBody : 4;
+		var radiusThread = radiusThread ? radiusThread : 3;
+
+		var radiusHead = 8;
+		var radiusHex = 2;
+		var stepHead = 2;
+
+		var depthHex = 1.9 * stepHead;
+
+// hex dims
+		var segments = 6;
+		points = [];
+		angle = 2 * Math.PI / segments;
+
+		var shape, hole;
+		var geometry, material, mesh;
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radiusHead, 0, 2 * Math.PI );
+
+//head & hex
+		hole = new THREE.Path();
+
+		for ( var i = 0; i < segments; i++ ) {
+
+			points.push( v2( radiusHex * Math.cos( i * angle ), radiusHex * Math.sin( i * angle ) ) );
+
+		}
+
+		hole.fromPoints( points );
+		shape.holes.push( hole );
+
+		geometry = shape.extrude( { amount: depthHex, bevelEnabled: false, curveSegments: 30, steps: 3 } );
+
+// body, thread & tip
+
+		points = [
+
+			v2( radiusHead, 0 ) , v2( radiusHead + stepHead, 0 ), v2( radiusHead + stepHead, stepHead ),
+
+			v2 ( radiusBody, stepHead + chamfer ), v2( radiusBody, stepHead + chamfer + lengthBody ),
+
+			v2( radiusThread, stepHead + chamfer + lengthBody ), v2( radiusThread, stepHead + chamfer + lengthBody + lengthThread ),
+
+			v2( 0, stepHead + chamfer + lengthBody + lengthThread + lengthTip )
+
+		];
+
+		var geometry2 = new THREE.LatheGeometry( points, 24, 0, 1.75 * Math.PI );
+
+		geometry2.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+		geometry2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead ) );
+
+		geometry.merge( geometry2 );
+
+		var geometry3 = build_spiralAlongZ( radiusThread, radiusBody, 12, lengthThread, 1 )
+		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, stepHead + stepHead + chamfer + lengthBody ) );
+
+		geometry.merge( geometry3 );
+
+		return geometry;
+
+	}
+
+	function createRoundNut() {
+		var shape;
+		var geometry, material, mesh;
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		var radius = 10;
+		var radiusHole = 5;
+		var depthSlot = 5;
+		var depthBody = 10;
+
+		var y = 2;
+
+		var sine = y / radius;
+		var  angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+//console.log( 'angle', Math.asin( sine ), 'x,y', x, y );
+
+		shape = new THREE.Shape();
+
+		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
+		shape.lineTo( -x, y );
+
+// choose one
+		geometry = shape.extrude( { amount: depthSlot, bevelEnabled: false, curveSegments: 10 } );
+
+		geometry2 = geometry.clone();
+		geometry2.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry2 );
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
+
+		geometry3 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry3.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot ) );
+		geometry.merge( geometry3 );
+
+		y = radiusHole;
+		sine = y / radius;
+		angle = Math.asin( sine );
+		var x = Math.cos( angle ) * radius;
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, angle, Math.PI - angle  );
+		shape.lineTo( -x, y );
+
+		geometry4 = shape.extrude( { amount: 2 * radiusHole, bevelEnabled: false, curveSegments: 5 } );
+		geometry4.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody ) );
+		geometry.merge( geometry4 );
+
+		geometry5 = geometry4.clone();
+		geometry5.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+		geometry.merge( geometry5 );
+
+		shape = new THREE.Shape();
+		shape.absarc( 0, 0, radius, 0, 2 * Math.PI  );
+
+		geometry6 = shape.extrude( { amount: depthBody, bevelEnabled: false, curveSegments: 10 } );
+		geometry6.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + 2 * radiusHole ) );
+		geometry.merge( geometry6 );
+
+		geometry7 = build_spiralAlongZ( 2.5, radiusHole, 12, 5, 3 );
+		geometry7.applyMatrix( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
+		geometry7.applyMatrix( new THREE.Matrix4().makeTranslation( -radius, 0, depthSlot + depthBody + radiusHole ) );
+		geometry7.computeFaceNormals();
+		geometry7.computeVertexNormals();
+
+		geometry.merge( geometry7 );
+
+		geometry8 = new THREE.CylinderGeometry( radiusHole, radiusHole, 2 * radius, 12, 1, true );
+		geometry8.applyMatrix( new THREE.Matrix4().makeRotationZ( 0.5 * Math.PI ) );
+		geometry8.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, depthSlot + depthBody + radiusHole ) );
+		geometry.merge( geometry8 );
+
+		return geometry;
+
+	}
+
+	function build_spiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+// 2016-02-11
+
+		var radiusInside = rIn ? rIn : 10;
+		var radiusOutside = rOut ? rOut : 15;
+
+		var segments = seg ? seg : 36;
+		var turns = tur ? tur : 7;
+		var segementsTotal = turns * segments;
+
+		var pitch = pit ? pit : 15;
+		var pitchDelta = 0.5 * pitch / segments;
+
+		var angleDelta = Math.PI / segments;
+
+		var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
+		var vertices = geometry.vertices;
+
+		for ( var i = 0; i < vertices.length; i++ ) {
+
+			var v = vertices[ i ];
+
+			if ( v.x < 0 ) {
+
+				v.x = radiusInside * Math.cos( angleDelta * i );
+				v.y = radiusInside * Math.sin( angleDelta * i );
+				v.z = pitchDelta * i;
+
+			} else {
+
+				v.x = radiusOutside * Math.cos( angleDelta * i );
+				v.y = radiusOutside * Math.sin( angleDelta * i );
+				v.z = pitchDelta * i;
+
+			}
+
+		}
+
+		return geometry;
+
+	}
+
+	function createSpindle( radius, radiusSpacer, fillet ) {
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		radius = radius ? radius : 3;
+		radiusSpacer = radiusSpacer ? radiusSpacer : 5;
+		fillet = fillet ? fillet : 1;
+
+		depthShaft1 = 15;
+		depthSpacer = 16;
+		depthShaft2 = 31;
+
+		var points = [];
+
+		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ), 
+			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),  
+			v2( radius, depthShaft2 - fillet), v2( radius - fillet, depthShaft2 ), v2( 0, depthShaft2 ),
+
+		];
+
+		var geometry = new THREE.LatheGeometry( points, 24, Math.PI, 1.5 * Math.PI );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, -depthShaft1, 0 ) );
+
+		return geometry;
+
+	}
+
+
+	function addLights( size ) {
+
+// 2016-01-29
+
+		var size = size ? size : 100;
+		var lightAmbient, lightDirectional, lightPoint;
+
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -size, size, size );
+
+		var d = size;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
+
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 4 * size;
+
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+	function addShadows() {
+
+// 2016-01-29
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+//				child.material.needsUpdate = true;
+
+			}
+
+		} );
+
+	}
+
+
+	function drawHelpers() {
+
+// 2016-01-27
+
+		geometry = new THREE.BoxGeometry( 200, 5, 200 );
+
+		var material = new THREE.MeshPhongMaterial( {
+
+//			color: 0xff0000
+			color: 0xffffff * Math.random()
+//			emissive: 0xffffff * Math.random(),
+//			specular: 0xffffff * Math.random(),
+//			shininess: 30,
+//			side: THREE.DoubleSide
+		} );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 50, -10, 0 );
+		scene.add( mesh );
+
+		helper = new THREE.EdgesHelper( mesh );
+		helper.material.color.setRGB( 1, 0, 1 );
+		scene.add( helper );
+
+		var helper = new THREE.GridHelper( 100, 10 );
+		helper.position.set( 50, -7.5, 0 );
+		scene.add( helper );
+
+		var axisHelper = new THREE.AxisHelper( 150 );
+		scene.add( axisHelper );
+
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		TWEEN.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

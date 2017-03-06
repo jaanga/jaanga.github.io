@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Moving Manuals R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Moving Manual home page' >
+<meta name=keywords content='HTML,CSS,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-03-11' >
+</head>
+<body>
+<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.3.0/showdown.min.js ></script>
+<script>
+
+	var iframes = [];
+	var renderers = [];
+	var renderersLimit = 3;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0;  }' +
+			'h2 { margin: 0; }' +
+			'a { text-decoration: none; }' +
+			'iframe { border: 2px solid green; height: 500px; width: ' + ( window.innerWidth - 25 ) + 'px; }' +
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+//		menu.innerHTML =
+//			'<div id=contents ></div>' +
+//		'';
+
+		var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+
+		var fileName = location.hash ? location.hash.substr( 1 ) : 'index.md';
+
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'get', fileName, true );
+		xmlHttp.onreadystatechange = function() {
+
+			if ( xmlHttp.readyState !== 4 ) { return; }
+
+			contents.innerHTML = converter.makeHtml( xmlHttp.responseText );
+
+			iframes = document.getElementsByTagName( 'iframe' );
+
+//			if ( iframes !== undefined ) {
+
+				for ( var i = 0; i < iframes.length; i++ ) {
+
+					ifrm = iframes[ i ];
+					ifrm.style.margin = '100px 0 0' + ( -0.5 * ( window.innerWidth - document.body.clientWidth ) + 10 ) + 'px';
+//					ifrm.style.width = ( window.innerWidth - 25 ) + 'px';
+//					ifrm.style.height = '500px';
+					ifrm.data = ifrm.src;
+					ifrm.id = 'ifr' + i ;
+					ifrm.src = '';
+					ifrm.onload = function() { 
+
+//						this.contentWindow.audioContext.close()
+
+						if ( this.contentWindow.controls ) {
+
+							this.contentWindow.controls.enableZoom = false; 
+							this.contentWindow.controls.autoRotate = true;
+
+						}
+					};
+
+				}
+
+//			}
+
+		};
+
+		xmlHttp.send( null );
+
+	}
+
+	function updateView( ifram ) {
+
+		iframesActive = document.getElementsByClassName( 'ifr' );
+
+		if ( iframesActive.length > renderersLimit ) {
+
+			var iframeDiscard = renderers.shift();
+			iframeDiscard.src = iframeDiscard.className = '';
+
+		}
+
+		if ( ifram.src === window.location.href ) {
+
+			ifram.src = iframes[ ifram.id.slice( 3 ) ].data;
+			ifram.className = 'ifr';
+			renderers.push( ifram );
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( var i = 0; i < iframes.length; i++ ) {
+
+			var iframe = iframes[ i ];
+			var rect = iframe.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			updateView( iframe );
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

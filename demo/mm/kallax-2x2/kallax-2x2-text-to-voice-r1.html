@@ -1,0 +1,635 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Kallax 2x2 Text To Voice R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+	var utterance = new SpeechSynthesisUtterance();
+	utterance.lang = 'en-US';
+//	utterance.lang = 'fr-FR';
+
+	phrases ='\
+		Welcome to the Moving Manuals demo.\
+		Every time you click I will say something.\
+		Click any object and watch where it goes.\
+		Click it again and watch it go home.\
+		Click \'Assemble Quickly\' if you are in a hurry.\
+		Click \'Return all to start\' and begin again.\
+		There are more demos. Click the info icon.\
+		Use one finger to rotate.\
+		Use two fingers to zoom.\
+		Use three fingers to pan.\
+		Well, now let\'s rewind\
+	';
+	var sentences = phrases.split( '.' )
+	var count = 0;
+
+	var kallax;
+	var edges;
+	var components;
+
+	var width = 77;
+	var height = 77;
+	var depth = 39;
+
+	var thicknessCase = 4;
+	var thicknessShelf = 2;
+
+	var pi = Math.PI;
+	var pi05 = 0.5 * pi;
+
+	var components;
+	var raycaster;
+	var mouse;
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
+			</h2>
+			<div><small>Touch any component</small></div>
+			<div><button onclick=returnAllToStartTween(); >Return all to start</button>
+			<button onclick=assembleQuicklyTween(); >Assemble Quickly</button></div>
+			<p>width: <input type=range id=inpWidth max=100 min=30 step=1 value=${ width } oninput=drawKallax(); title="30 to 100: OK" >
+			 <output id=outWidth >${ width }</output></p>
+			<p>height: <input type=range id=inpHeight max=100 min=30 step=1 value=${ height } oninput=drawKallax(); title="30 to 100: OK" >
+			 <output id=outHeight >${ height }</output></p>
+			<p>depth: <input type=range id=inpDepth max=60 min=20 step=1 value=${ depth } oninput=drawKallax(); title="1 to 25: OK" > 
+			 <output id=outDepth >${ depth }</output></p>
+
+			<p>thickness case: <input type=range id=inpThicknessCase max=10 min=3 step=0.5 value=${ thicknessCase } oninput=drawKallax() title="3 to 10: OK" >
+			 <output id=outThicknessCase >${ thicknessCase }</output></p>
+			<p>thickness shelf: <input type=range id=inpThicknessShelf max=5 min=1 step=0.5 value=${ thicknessShelf } oninput=drawKallax(); title="0.5 to 5: OK" > 
+			 <output id=outThicknessShelf >${ thicknessShelf }</output></p>
+
+			<p>rotation: <input type=checkbox id=inpRotation onchange=toggleAutoRotate(); checked ></p>
+
+			<div id=info ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 120, 120, 120 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.target.y = 20;
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+// assets
+
+		drawKallax();
+
+		raycaster = new THREE.Raycaster();
+		mouse = new THREE.Vector2();
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // for mobile
+
+		toggleGroundBoxLights();
+		groundBoxLights.position.y = -5;
+
+		toggleAxis();
+		toggleBackgroundGradient();
+		toggleAutoRotate();
+
+		addWindowResize();
+		addLights( 200 );
+		addShadows();
+
+	}
+
+	function updateVariables() {
+
+		outWidth.value=width=inpWidth.valueAsNumber;
+		outHeight.value=height=inpHeight.valueAsNumber;
+		outDepth.value=depth=inpDepth.valueAsNumber;
+		outThicknessCase.value=thicknessCase=inpThicknessCase.valueAsNumber;
+		outThicknessShelf.value=thicknessShelf=inpThicknessShelf.valueAsNumber;
+
+	}
+
+	function drawKallax() {
+
+		updateVariables();
+
+		scene.remove( kallax );
+		kallax = new THREE.Object3D();
+
+		scene.remove( edges );
+		edges = new THREE.Object3D();
+
+		components = [];
+
+		obj = buildCaseHorizontal ();
+		drawObject( obj, 0, v( 0, 0 + 0.5 * thicknessCase, -30 ), v( 0, 0.5 * thicknessCase, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+
+		obj = buildCaseHorizontal ();
+		drawObject( obj, 0, v( 0, 5 + 1.5 * thicknessCase, -30 ), v( 0, height - 0.5 * thicknessCase, 20 ), v( 0, 0, 0 ), v( pi, 0, 0 ));
+
+		obj = buildCasevertical ();
+		drawObject( obj, 0, v( 0, 10 + 2.5 * thicknessCase, -30 ), v( -0.5 * width + 0.5 * thicknessCase, 0.5 * height, 20 ), v( 0, 0, 0 ), v( 0, 0, -pi05 ));
+
+		obj = buildCasevertical ();
+		drawObject( obj, 0, v( 0, 15 + 3.5 * thicknessCase, -30 ), v( 0.5 * width - 0.5 * thicknessCase, 0.5 * height, 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
+
+		obj = buildShelfVertical ();
+		drawObject( obj, 0, v( -0.25 * width, 20 + 4.5 * thicknessCase, -30), v( 0, height - thicknessCase - 0.5 * (0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
+
+		obj = buildShelfVertical ();
+		drawObject( obj, 0, v( 0.25 * width, 20 + 4.5 * thicknessCase, -30), v( 0, thicknessCase + 0.5 * (0.5 * width - thicknessCase - 0.5 * thicknessShelf ), 20 ), v( 0, 0, 0 ), v( 0, 0, pi05 ));
+
+		obj = buildShelfHorizontal ();
+		drawObject( obj, 0, v( 0, 20 + 5.5 * thicknessCase, -30), v( 0, 0.5 * height, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 48 ), v( 0.5 * width - 0.5 * thicknessCase, height - 0.85 * thicknessCase, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, 0 ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 45 ), v( 0.5 * width - 0.5 * thicknessCase, height - 0.85 * thicknessCase, 20 - 0.5 * depth + 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, 0 ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 42 ), v( - 0.5 * width + 0.5 * thicknessCase, height - 0.85 * thicknessCase, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, 0 ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 39 ), v( - 0.5 * width + 0.5 * thicknessCase, height - 0.85 * thicknessCase, 20 - 0.5 * depth + 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, 0 ));
+
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 36 ), v( 0.5 * width - 0.5 * thicknessCase, 0.85 * thicknessCase, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 33 ), v( 0.5 * width - 0.5 * thicknessCase, 0.85 * thicknessCase, 20 - 0.5 * depth + 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 30 ), v( - 0.5 * width + 0.5 * thicknessCase, 0.85 * thicknessCase, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+		obj = buildScrew()
+		drawObject( obj, 0, v( 45, 3, 27 ), v( - 0.5 * width + 0.5 * thicknessCase, 0.85 * thicknessCase, 20 - 0.5 * depth + 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 21 ), v( 0, 0.5 * height, 20 + 0.5 * depth - 0.75 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, 0 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 18 ), v( 0, 0.5 * height, 20 - 0.5 * depth + 0.75 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, 0 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 15 ), v( 0, height - thicknessCase, 20 + 0.5 * depth - 0.75 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 12 ), v( 0, height - thicknessCase, 20 - 0.5 * depth + 0.75 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 9 ), v( 0, thicknessCase, 20 + 0.5 * depth - 0.75 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 6 ), v( 0, thicknessCase, 20 - 0.5 * depth + 0.75 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, pi ));
+
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 3 ), v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, 0 ), v( 0.5 * width - thicknessCase, 0.5 * height, 20 + 0.5 * depth - 1 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, -3 ), v( 0.5 * width - thicknessCase, 0.5 * height, 20 - 0.5 * depth + 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, -6 ), v( 0.5 * width - thicknessCase, 0.5 * height, 20 - 0.5 * depth + 1 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, -9 ), v( -0.5 * width + thicknessCase, 0.5 * height, 20 + 0.5 * depth - 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, -12), v( -0.5 * width + thicknessCase, 0.5 * height, 20 + 0.5 * depth - 1 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, -15 ), v( -0.5 * width + thicknessCase, 0.5 * height, 20 - 0.5 * depth + 0.5 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		obj = buildPeg()
+		drawObject( obj, 0, v( 45, 3, -18 ), v( -0.5 * width + thicknessCase, 0.5 * height, 20 - 0.5 * depth + 1 * thicknessCase ), v( 0, 0, -pi05 ), v( 0, 0, -pi05 ));
+
+		scene.add( kallax );
+		scene.add( edges );
+
+	}
+
+	function buildPeg() {
+
+		var obj = new THREE.Object3D();
+//	radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded
+		var geometry = new THREE.CylinderGeometry( 0.8, 0.8, 6 );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		obj.add( mesh);
+		components.push( mesh );
+
+		return obj;
+
+	}
+
+	function buildScrew() {
+
+		var obj = new THREE.Object3D();
+		var geometry = new THREE.CylinderGeometry( 1, 0.3, 10 );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		obj.add( mesh);
+		components.push( mesh );
+
+		return obj;
+
+	}
+
+	function buildShelfHorizontal () {
+
+		var geometry = new THREE.BoxGeometry( width - 2 * thicknessCase, thicknessShelf, depth );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+
+		var obj = new THREE.Object3D();
+		obj.add( mesh);
+		components.push( mesh );
+
+		edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+		drawHole( obj, 0.5 * width - thicknessCase, 0, 0.5 * depth - 0.5 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, 0.5 * width - thicknessCase, 0, -0.5 * depth + 0.5 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -0.5 * width + thicknessCase, 0, 0.5 * depth - 0.5 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -0.5 * width + thicknessCase, 0, -0.5 * depth + 0.5 * thicknessCase, 0, pi05, 0 );
+
+		drawHole( obj, 0.5 * width - thicknessCase, 0, 0.5 * depth - 1 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, 0.5 * width - thicknessCase, 0, -0.5 * depth + 1 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -0.5 * width + thicknessCase, 0, 0.5 * depth - 1 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -0.5 * width + thicknessCase, 0, -0.5 * depth + 1 * thicknessCase, 0, pi05, 0 );
+
+		return obj;
+
+	}
+
+
+	function buildShelfVertical () {
+
+		var geometry = new THREE.BoxGeometry( 0.5 * width - thicknessCase - 0.5 * thicknessShelf, thicknessShelf, depth );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+
+		var obj = new THREE.Object3D();
+		obj.add( mesh);
+		components.push( mesh )
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+		drawHole( obj, 0.25 * width - 0.5 * thicknessCase - 0.25 * thicknessShelf, 0, 0.5 * depth - 0.5 * thicknessCase, 0, pi05, 0, 0 );
+		drawHole( obj, 0.25 * width - 0.5 * thicknessCase - 0.25 * thicknessShelf, 0, -0.5 * depth + 0.5 * thicknessCase, 0, pi05, 0, 0 );
+		drawHole( obj, -0.25 * width + 0.5 * thicknessCase + 0.25 * thicknessShelf, 0, 0.5 * depth - 0.5 * thicknessCase, 0, pi05, 0, 0 );
+		drawHole( obj, -0.25 * width + 0.5 * thicknessCase + 0.25 * thicknessShelf, 0, -0.5 * depth + 0.5 * thicknessCase, 0, pi05, 0, 0 );
+
+		drawHole( obj, 0.25 * width - 0.5 * thicknessCase - 0.25 * thicknessShelf, 0, 0.5 * depth - 1 * thicknessCase, 0, pi05, 0, 0 );
+		drawHole( obj, 0.25 * width - 0.5 * thicknessCase - 0.25 * thicknessShelf, 0, -0.5 * depth + 1 * thicknessCase, 0, pi05, 0, 0 );
+		drawHole( obj, -0.25 * width + 0.5 * thicknessCase + 0.25 * thicknessShelf, 0, 0.5 * depth - 1 * thicknessCase, 0, pi05, 0, 0 );
+		drawHole( obj, -0.25 * width + 0.5 * thicknessCase + 0.25 * thicknessShelf, 0, -0.5 * depth + 1 * thicknessCase, 0, pi05, 0, 0 );
+
+		return obj;
+
+	}
+
+	function buildCasevertical () {
+
+		var obj = new THREE.Object3D();
+
+		var geometry = new THREE.BoxGeometry( height - 2 * thicknessCase, thicknessCase, depth );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		obj.add( mesh);
+		components.push( mesh )
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+		drawHole( obj, 0.5 * height - thicknessCase, 0, 0.5 * depth - 0.5 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, 0.5 * height - thicknessCase, 0, -0.5 * depth + 0.5 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -0.5 * height + thicknessCase, 0, 0.5 * depth - 0.5 * thicknessCase, 0, pi05, 0 );
+		drawHole( obj, -0.5 * height + thicknessCase, 0, -0.5 * depth + 0.5 * thicknessCase, 0, pi05, 0 );
+
+		drawHole( obj, 0, 0.5 * thicknessCase, 0.5 * depth - 0.75 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0, 0.5 * thicknessCase, 0.5 * depth - 1.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0, 0.5 * thicknessCase, -0.5 * depth + 1.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0, 0.5 * thicknessCase, -0.5 * depth + 0.75 * thicknessCase, pi05, 0, 0 );
+
+		return obj;
+
+	}
+
+	function buildCaseHorizontal () {
+
+		var obj = new THREE.Object3D();
+
+		var geometry = new THREE.BoxGeometry( width, thicknessCase, depth );
+		var material = new THREE.MeshNormalMaterial();
+		var mesh = new THREE.Mesh( geometry, material );
+		obj.add( mesh);
+		components.push( mesh )
+
+		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
+		edges.add( edge );
+
+		drawHole( obj, 0.5 * width - 0.5 * thicknessCase, 0.5 * thicknessCase, 0.5 * depth - 0.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0.5 * width - 0.5 * thicknessCase, 0.5 * thicknessCase, -0.5 * depth + 0.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, -0.5 * width + 0.5 * thicknessCase, 0.5 * thicknessCase, 0.5 * depth - 0.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, -0.5 * width + 0.5 * thicknessCase, 0.5 * thicknessCase, -0.5 * depth + 0.5 * thicknessCase, pi05, 0, 0 );
+
+		drawHole( obj, 0, 0.5 * thicknessCase, 0.5 * depth - 0.75 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0, 0.5 * thicknessCase, 0.5 * depth - 1.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0, 0.5 * thicknessCase, -0.5 * depth + 1.5 * thicknessCase, pi05, 0, 0 );
+		drawHole( obj, 0, 0.5 * thicknessCase, -0.5 * depth + 0.75 * thicknessCase, pi05, 0, 0 );
+
+		return obj;
+
+	}
+
+	function drawHole( obj, x, y, z, aX, aY, aZ ) {
+
+		var geometry = new THREE.CircleGeometry( 1, 12 );
+		var material = new THREE.MeshBasicMaterial( { color: 0x000000, side: 2 } );
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( x, y, z );
+		mesh.rotation.set( aX, aY, aZ );
+		obj.add( mesh );
+
+	}
+
+	function drawObject( obj, id, startPosition, endPosition, startRotation, endRotation ) {
+
+		obj.position.copy( startPosition );
+		obj.rotation.x = startRotation.x;
+		obj.rotation.y = startRotation.y;
+		obj.rotation.z = startRotation.z;
+
+		obj.userData.startPosition = startPosition;
+		obj.userData.endPosition = endPosition;
+
+		obj.userData.startRotation = startRotation;
+		obj.userData.endRotation = endRotation;
+
+		obj.userData.index = id;
+		obj.castShadow = obj.receiveShadow = true;
+
+		kallax.add( obj );
+
+	}
+
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		var intersects = raycaster.intersectObjects( components );
+
+//console.log( intersects );
+
+		if ( intersects.length > 0 ) {
+
+			sayIt();
+
+			intersected = intersects[ 0 ].object;
+
+// console.log( intersected );
+
+			movRotTween( intersected );
+
+		} else {
+
+			intersected = null;
+
+		}
+
+	}
+
+	function sayIt() {
+
+			window.speechSynthesis.cancel();
+			utterance.text = sentences[ count];
+			speechSynthesis.speak( utterance );
+			info.innerHTML = sentences[ count++ ];
+			count = count < sentences.length ? count : 0;
+
+
+	}
+
+	function movRotTween( obj ) {
+
+		obj = obj.parent;
+		var tween = new TWEEN.Tween( obj.position );
+		var oData = obj.userData;
+
+		if ( obj.position.distanceTo( obj.userData.startPosition ) < 1 ) {
+
+			tween.to( {
+				x: oData.endPosition.x,
+				y: oData.endPosition.y,
+				z: oData.endPosition.z }, 2000 )
+
+			tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+			new TWEEN.Tween( obj.rotation ).to( {
+				x: oData.endRotation.x,
+				y: oData.endRotation.y,
+				z: oData.endRotation.z }, 2000 )
+			.easing( TWEEN.Easing.Elastic.Out).start();
+
+		} else {
+
+			tween.to( {
+				x: oData.startPosition.x,
+				y: oData.startPosition.y,
+				z: oData.startPosition.z }, 2000 )
+
+			tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+			new TWEEN.Tween( obj.rotation ).to( {
+				x: oData.startRotation.x,
+				y: oData.startRotation.y,
+				z: oData.startRotation.z }, 2000 )
+			.easing( TWEEN.Easing.Elastic.Out).start();
+
+		}
+
+	}
+
+	function returnAllToStartTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			obj = components[ i ].parent;
+
+			var tween = new TWEEN.Tween( obj.position );
+			var oData = obj.userData;
+
+			if ( obj.position.distanceTo( obj.userData.startPosition ) != 0 ) {
+
+				tween.to( {
+					x: oData.startPosition.x,
+					y: oData.startPosition.y,
+					z: oData.startPosition.z }, 2000 )
+
+				tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+				new TWEEN.Tween( obj.rotation ).to( {
+					x: oData.startRotation.x,
+					y: oData.startRotation.y,
+					z: oData.startRotation.z }, 2000 )
+				.easing( TWEEN.Easing.Elastic.Out).start();
+
+			}
+
+		}
+
+	}
+
+	function assembleQuicklyTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			obj = components[ i ].parent;
+
+			var tween = new TWEEN.Tween( obj.position );
+			var oData = obj.userData;
+
+			if ( obj.position.distanceTo( obj.userData.endPosition ) != 0 ) {
+
+				tween.to( {
+					x: oData.endPosition.x,
+					y: oData.endPosition.y,
+					z: oData.endPosition.z }, 2000 )
+
+				tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+				new TWEEN.Tween( obj.rotation ).to( {
+					x: oData.endRotation.x,
+					y: oData.endRotation.y,
+					z: oData.endRotation.z }, 2000 )
+				.easing( TWEEN.Easing.Elastic.Out).start();
+
+			}
+
+		}
+
+	}
+
+	function setExplodeStructure() {
+
+		s = 1 + 1;
+
+		cc = components;
+
+		for ( var i = 0; i < cc.length; i++ ) {
+/*
+			if ( !cc[ i ].positionStart ) {
+
+				cc[ i ].positionStart = cc[ i ].position.clone();
+
+			}
+*/
+			p = cc[ i ].userData.endPosition;
+
+			cc[ i ].position.set( s * p.x, s * p.y, s * p.z );
+
+			cc[ i ].rotation.x = cc[ i ].userData.endRotation.x;
+			cc[ i ].rotation.y = cc[ i ].userData.endRotation.y;
+			cc[ i ].rotation.z = cc[ i ].userData.endRotation.z;
+
+//console.log(  'name', cc[ i ].name );
+
+		}
+
+	}
+
+	function v2( x, y ){ return new THREE.Vector2( x, y ); }
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		TWEEN.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

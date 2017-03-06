@@ -1,0 +1,376 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Moving Manuals Logo Basic R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+	var thickness = 18;
+	var count = 0;
+
+	var pi = Math.PI;
+	var components = [];
+	var raycaster;
+	var mouse;
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/demo/mm/ >🛈</a>
+			</h2>
+			<div><small>Touch any component</small></div>
+			<div><button onclick=returnAllToStartTween(); >Return all to start</button>
+			<button onclick=assembleQuicklyTween(); >Assemble Quickly</button></div>
+			<p><input type=checkbox id=chkPlay onchange=togglePlay(); > Play</p>
+			<div id=info ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// helpers
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -5, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -6, 0 );
+		scene.add( mesh );
+
+//		geometry = new THREE.BoxGeometry( 5, 50, 5 );
+		vertices = [ v2( 0, 0 ), v2( 8, 0 ), v2( 8, 5 ), v2( 5, 5 ), v2( 5, 45 ),  v2( 8, 45 ),  v2( 8, 50 ), v2( 0, 50 ) ];
+		geometry = createGeometryFromVertices( vertices );
+
+		drawBar( geometry, 0, v( -40, 0, -20), v( -40, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( -30, 0, -20), v( -10, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+		drawBar( geometry, 0, v( -20, 0, -20), v( 10, 0, 20 + thickness ), v( 0, 0, 0 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( -10, 0, -20), v( 40, 0, 20 ), v( 0, 0, 0 ), v( 0, 0, 0 ));
+
+//		geometry = new THREE.BoxGeometry( 5, 52, 5 );
+		vertices = [ v2( 12.5, 0 ), v2( 15, 0 ), v2( 15, 5 ), v2( 0, 50 ),  v2( 0, 38 ) ];
+		geometry = createGeometryFromVertices( vertices );
+
+		drawBar( geometry, 0, v( -5, 5, -20), v( -10, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( 5, 5, -20), v( -40, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
+		drawBar( geometry, 0, v( 15, 5, -20), v( 40, 0, 20 + thickness ), v( 0, 0, -0.3 ), v( 0, pi, 0 ));
+		drawBar( geometry, 0, v( 25, 5, -20), v( 10, 0, 20 ), v( 0, 0, -0.3 ), v( 0, 0, 0 ));
+
+		raycaster = new THREE.Raycaster();
+		mouse = new THREE.Vector2();
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // for mobile
+
+	}
+
+	function togglePlay() {
+
+		if ( chkPlay.checked === false ) { return; }
+
+		if ( count >= components.length ) {
+
+			returnAllToStartTween();
+			count = 0;
+
+		}
+
+		movRotTween( components[ count ] );
+		count++;
+
+console.log( count );
+
+	}
+
+	function createGeometryFromVertices( vertices ) {
+
+		shape = new THREE.Shape();
+		shape.fromPoints( vertices );
+
+		geometry = shape.extrude( { amount: thickness, bevelEnabled: false} );
+		return geometry;
+	}
+
+	function drawBar( geometry, id, startPosition, endPosition, startRotation, endRotation ) {
+
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( startPosition );
+		mesh.rotation.setFromVector3( startRotation );
+
+		mesh.userData.startPosition = startPosition;
+		mesh.userData.endPosition = endPosition;
+
+		mesh.userData.startRotation = startRotation;
+		mesh.userData.endRotation = endRotation;
+
+		mesh.userData.index = id;
+
+		scene.add( mesh );
+		components.push( mesh );
+
+		edges = new THREE.EdgesHelper( mesh, 0xff0000 );
+		scene.add( edges );
+
+		return mesh;
+
+	}
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+		onDocumentMouseDown( event );
+
+	}
+
+	function onDocumentMouseDown( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		var intersects = raycaster.intersectObjects( components );
+
+		if ( intersects.length > 0 ) {
+
+			intersected = intersects[ 0 ].object;
+
+// console.log( intersected );
+
+			movRotTween( intersected );
+
+		} else {
+
+			intersected = null;
+
+		}
+
+	}
+
+	function movRotTween( obj ) {
+
+		var tween = new TWEEN.Tween( obj.position );
+		var oData = obj.userData;
+
+		if ( obj.position.distanceTo( obj.userData.startPosition ) < 1 ) {
+
+			tween.to( {
+				x: oData.endPosition.x,
+				y: oData.endPosition.y,
+				z: oData.endPosition.z }, 2000 )
+
+			tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+			new TWEEN.Tween( obj.rotation ).to( {
+				x: oData.endRotation.x,
+				y: oData.endRotation.y,
+				z: oData.endRotation.z }, 2000 )
+			.easing( TWEEN.Easing.Elastic.Out)
+			.onComplete( function() {
+				togglePlay();
+			} ).start();
+
+		} else {
+
+			tween.to( {
+				x: oData.startPosition.x,
+				y: oData.startPosition.y,
+				z: oData.startPosition.z }, 2000 )
+
+			tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+			new TWEEN.Tween( obj.rotation ).to( {
+				x: oData.startRotation.x,
+				y: oData.startRotation.y,
+				z: oData.startRotation.z }, 2000 )
+			.easing( TWEEN.Easing.Elastic.Out)
+			.onComplete( function() {
+				togglePlay();
+			} ).start();
+
+		}
+
+	}
+
+	function returnAllToStartTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			obj = components[ i ];
+
+			var tween = new TWEEN.Tween( obj.position );
+			var oData = obj.userData;
+
+			if ( obj.position.distanceTo( obj.userData.startPosition ) != 0 ) {
+
+				tween.to( {
+					x: oData.startPosition.x,
+					y: oData.startPosition.y,
+					z: oData.startPosition.z }, 2000 )
+
+				tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+				new TWEEN.Tween( obj.rotation ).to( {
+					x: oData.startRotation.x,
+					y: oData.startRotation.y,
+					z: oData.startRotation.z }, 2000 )
+				.easing( TWEEN.Easing.Elastic.Out).start();
+
+			}
+
+		}
+
+	}
+
+	function assembleQuicklyTween() {
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			obj = components[ i ];
+
+			var tween = new TWEEN.Tween( obj.position );
+			var oData = obj.userData;
+
+			if ( obj.position.distanceTo( obj.userData.endPosition ) != 0 ) {
+
+				tween.to( {
+					x: oData.endPosition.x,
+					y: oData.endPosition.y,
+					z: oData.endPosition.z }, 2000 )
+
+				tween.easing( TWEEN.Easing.Elastic.Out).start();
+
+				new TWEEN.Tween( obj.rotation ).to( {
+					x: oData.endRotation.x,
+					y: oData.endRotation.y,
+					z: oData.endRotation.z }, 2000 )
+				.easing( TWEEN.Easing.Elastic.Out).start();
+
+			}
+
+		}
+
+	}
+
+	function setExplodeStructure() {
+
+		s = 1 + 1;
+
+		cc = components;
+
+		for ( var i = 0; i < cc.length; i++ ) {
+/*
+			if ( !cc[ i ].positionStart ) {
+
+				cc[ i ].positionStart = cc[ i ].position.clone();
+
+			}
+*/
+			p = cc[ i ].userData.endPosition;
+
+			cc[ i ].position.set( s * p.x, s * p.y, s * p.z );
+
+			cc[ i ].rotation.x = cc[ i ].userData.endRotation.x;
+			cc[ i ].rotation.y = cc[ i ].userData.endRotation.y;
+			cc[ i ].rotation.z = cc[ i ].userData.endRotation.z;
+
+//console.log(  'name', cc[ i ].name );
+
+		}
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function v2( x, y ){ return new THREE.Vector2( x, y ); }
+	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		TWEEN.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

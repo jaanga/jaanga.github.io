@@ -1,0 +1,800 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>notKallax NxN R8</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='3D animation that shows you how to assemble a book shelf with 1 to 6 rows and 1 to 7 columns of cubby holes.' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM,Jaanga,Moving Manuals' >
+<meta name=date content='2016-02-28' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/tween.min.js ></script>
+-->
+<script src=../js/mm-object-r3.js ></script>
+<script src=../js/tweenjs-r1.js ></script>
+<script>
+
+	var rows = 4;
+	var columns = 4;
+
+	var edgesColor = 0x884444;
+
+	var kallax, edges, hardware, helpers;
+
+	var caseTop, caseBottom, caseLeft, caseRight;
+
+	var shelves;
+	var dividers;
+
+	var holes;
+	var screws;
+	var pegs;
+
+	var objects;
+
+	var widthCase;
+	var width05Case;
+
+	var heightCase;
+	var height05Case;
+
+	var widthUnit = 33.5;  // width & height appear to be equal
+	var widthUnit05 = 0.5 * widthUnit;
+
+	var depth = 39;
+	var depth05 = 0.5 * depth;
+
+	var thicknessCase = 3;
+	var thicknessCase05 = 0.5 * thicknessCase;
+
+	var thicknessShelf = 2;
+	var thicknessShelf05 = 0.5 * thicknessShelf;
+
+	var playList;
+
+	var indexAssembly = 0;
+
+//	var startTime = Date.now();
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h2 { margin: 0; }' +
+			'a { text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#bars { cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#bars { color: pink; } ' +
+			'#hamburger { left: 275px; position: absolute; top: 0px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -265px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: 0; transition: left 1s; width: 240px; }' +
+
+		'';
+
+		var hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "275px" : 0; };
+
+		var menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a> ' +
+			'	<a href=http://jaanga.github.io/demo/mm/ >❦</a>' +
+			'</h2>' +
+			'<p>Click objects to move between assembled and disassembled...</p>' +
+			'<p>' +
+			'	Rows:<br><input type=range id=inpRows max=6 min=1 step=1 value=' + rows + ' oninput=drawKallax(); title="1 to 6: OK" > <output id=outRows >value</output><br>' +
+			'	Columns: <br><input type=range id=inpColumns max=7 min=1 step=1 value=' + columns + ' oninput=drawKallax(); title="1 to 6: OK" > <output id=outColumns >value</output>' +
+			'</p>' +
+
+ 			'<p><button onclick=toggleAssembly(); >Toggle Assembly</button>' +
+
+			'<p><input type=checkbox id=chkPlay onchange=togglePlayClip(playList,chkPlay); > Play Step-by-Step Assembly</p>' +
+
+			'<p>' +
+			'	<input type=radio name=field id=birch onchange=updateMaterial(0xfdccaa); checked />birch' +
+			'	<input type=radio name=field id=black onchange=updateMaterial(0x333333); />black' +
+			'	<input type=radio name=field id=white onchange=updateMaterial(0xf8f8f8); />white' +
+			'</p>' +
+
+			'<p>' +
+			'	<input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate; > Auto-Rotate<br>' +
+			'	<input type=checkbox id=chkPlacards onchange=togglePlacardVisible(); checked > Placards Visible<br>' +
+			'	<input type=checkbox onchange=toggleBackgroundGradient(); checked > Background' +
+			'</p>' +
+
+			'<p><a href="http://jaanga.github.io/demo/mm/kallax-wall-bracket/" >notKallax Wall Bracket</a></p>' +
+//			'<p><a href="http://www.ikea.com/us/en/assembly_instructions/kallax-shelving-unit__AA-1009445-8_pub.pdf" >Assembly Manual</a></p>' +
+
+			'<div id=info style=font-size:9pt; ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff}  );
+//		renderer.setClearColor( 0xffffff );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+//		renderer.gammaInput = true;
+//		renderer.gammaOutput = true;
+//		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.name = 'camera';
+		camera.position.set( 180, 180, 180 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		if ( window.self !== window.top ) { controls.enableZoom = false; }
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+// assets
+
+		drawKallax();
+
+		loadTexture2( '../textures/birch-256x256.png' ); // mm-object-rx.js
+
+		addLights( 200 );
+
+		toggleBackgroundGradient();
+
+	}
+
+	function drawKallax() {
+
+		outRows.value = rows = inpRows.valueAsNumber;
+		outColumns.value = columns = inpColumns.valueAsNumber;
+
+		rows05 = 0.5 * rows;
+		columns05 = 0.5 * columns;
+
+		widthCase = columns * widthUnit + 2 * thicknessCase + ( columns - 1 ) * thicknessShelf;
+		width05Case = 0.5 * widthCase;
+
+		heightCase = rows * widthUnit + 2 * thicknessCase  + ( columns - 1 ) * thicknessShelf;
+		height05Case = 0.5 * heightCase;
+
+		tweenAllToLocation();
+
+		scene.remove( kallax, edges, hardware, helpers );
+
+		helpers = new THREE.Object3D();
+		drawHelpers();
+
+		kallax = new THREE.Object3D();
+		kallax.name = 'kallax';
+
+		edges = new THREE.Object3D();
+		edges.name = 'edges';
+
+		hardware = new THREE.Object3D();
+		hardware.name = 'hardware';
+
+		objects = [];
+		shelves = [];
+		dividers = [];
+		holes = [];
+		screws = [];
+		pegs = [];
+
+//		.userData.places.push( { pX: , pY: , pZ: , rX: 0, rY: 0, rZ: 0 } );
+
+		caseRight = buildCaseVertical( 'caseRight' );
+
+		caseRight.userData.places.push( { pX: 0, pY: thicknessCase05, pZ: - width05Case - widthUnit05 - 10, rX: 0, rY: ran( 0.2 ) - 0.1, rZ: 0 } );
+		caseRight.userData.places.push( { pX: 0, pY: depth05, pZ: -width05Case + thicknessCase05, rX: pi05, rY: 0, rZ: 0 } );
+
+		caseLeft = buildCaseVertical( 'caseLeft' );
+
+		caseLeft.userData.places.push( { pX: 0, pY: thicknessCase05, pZ: width05Case + widthUnit05 + 30, rX: 0, rY: pi + ran( 0.2 ) - 0.1, rZ: 0 } );
+		caseLeft.userData.places.push( { pX: 0, pY: depth05, pZ: width05Case - thicknessCase05, rX: pi_05, rY: pi, rZ: 0 } );
+		caseLeft.userData.places.push( { pX: 0, pY: depth05, pZ: width05Case - thicknessCase05 + 30, rX: 0, rY: pi, rZ: 0 } );
+
+		caseTop = buildCaseHorizontal( 'caseTop' );
+
+		caseTop.userData.places.push( { pX: - height05Case - 30, pY: thicknessCase05, pZ: 0, rX: 0, rY: pi05 + ran( 0.2 ) -0.1, rZ: 0 } );
+		caseTop.userData.places.push( { pX: - height05Case + thicknessCase05, pY: depth05, pZ: 0, rX: pi05, rY: 0, rZ: pi_05 } );
+		caseTop.userData.places.push( { pX: - height05Case + thicknessCase05, pY: depth05, pZ: 0, rX: pi05, rY: 0, rZ: pi_05 } );
+		caseTop.userData.places.push( { pX: - height05Case + thicknessCase05, pY: depth05, pZ: 0, rX: pi05, rY: 0, rZ: pi_05 } );
+
+		caseBottom = buildCaseHorizontal( 'caseBottom' );
+
+		caseBottom.userData.places.push( { pX: height05Case + 60, pY: thicknessCase05, pZ: 0, rX: 0, rY: pi_05 + ran( 0.2 ) - 0.1, rZ: 0 } );
+		caseBottom.userData.places.push( { pX: height05Case - thicknessCase05, pY: depth05, pZ: 0, rX: pi05, rY: 0, rZ: pi05 } );
+
+
+		for ( var i = 0; i < rows - 1; i++ ) {
+
+			obj = buildShelf ( i );
+
+		}
+
+		for ( var i = 0; i < rows; i++ ) {
+
+			for ( var j = 0; j < columns - 1; j++ ) {
+
+				obj = buildDivider ( i, j );
+
+			}
+
+		}
+
+		kallax.userData.places = [];
+		kallax.userData.places.push( { autoRotate: false, pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		kallax.userData.places.push( { autoRotate: true, pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: ran( 2 ) - 1 , rZ: -pi05 } );
+//		kallax.userData.places.push( { pX: 0, pY: height05Case, pZ: 0, rX: 0, rY: 0, rZ: pi05 } );
+
+		objects.push( kallax );
+
+		if ( textureCase ) { updateMaterial( materialCaseColor ); }
+
+		scene.add( kallax, edges, hardware, helpers );
+
+		hexKey = draw_hexKey_100092();
+		hexKey.userData.places.push( { pX: - width05Case - 20, pY: 0, pZ: -height05Case - 20, rX: pi05, rY: 0, rZ: 0 } );
+		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+		hexKey.userData.places.push( { pX: 0, pY: 0, pZ: 0, rX: 0, rY: 0, rZ: 0 } );
+
+		objects.push( hexKey );
+		scene.add( hexKey );
+
+		camera.userData.places = [];
+		camera.userData.tween = tweenCamera;
+
+		var p = camera.position.clone();
+		var t = controls.target.clone();
+		var p2 = 0.06 * Math.pow( heightCase + widthCase, 1.4 ) + 50;
+
+// 		camera.userData.places.push( { pX: 0, pY: 0, pZ: 0, tX: 0, tY: 0, tZ: 0 } );
+
+		camera.userData.places.push( { pX: p.x, pY: p.y, pZ: p.z, tX: t.x, tY: t.y, tZ: t.z } ); // 0 - start
+		camera.userData.places.push( { pX: p2, pY: p2, pZ: p2, tX: 0, tY: height05Case, tZ: 0 } ); // assembled
+
+		camera.userData.places.push( { pX: 130, pY: 400, pZ: 30, tX: 2, tY: 12, tZ: -11 } ); // zoom out / high up
+		camera.userData.places.push( { pX: -230, pY: 60, pZ: -180, tX: -10, tY: 10, tZ: -30 } ); // close in / far corner / outside
+		camera.userData.places.push( { pX: 95, pY: 154, pZ: 84, tX: 3, tY: 3, tZ: 0 } ); // close in / middle
+
+		camera.userData.places.push( { pX: 80, pY: 140, pZ: 140, tX: 2, tY: 12, tZ: -11 } ); // close in far right - inside
+
+		camera.userData.places.push( { pX: -200, pY: 60, pZ: 200, tX: -10, tY: 5, tZ: 0 } );
+		camera.userData.places.push( { pX: 1.5 * p2, pY: heightCase, pZ: -0.25 * p2, tX: -40, tY: height05Case, tZ: 30 } ); //  the end
+
+		createClips();
+
+		tweenAllToLocation();
+
+		addShadows();
+
+	}
+
+	function buildCaseHorizontal ( name ) {
+
+		var geometry = new THREE.BoxGeometry( widthCase, thicknessCase, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = name ;
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+// four corners top
+
+		if ( name === 'caseBottom' ) {
+
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi05, 0, 0, 'screwHole' );
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0, 'screwHole' );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi05, 0, 0, 'screwHole'  );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0, 'screwHole'  );
+
+		} else {
+
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, -width05Case + thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+
+		}
+
+		build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, depth05 - thicknessCase, pi_05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, thicknessCase05, -depth05 + thicknessCase, pi_05, 0, 0 );
+
+// four corners bottom
+		build_hole( mesh, -width05Case + thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, -width05Case + thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, -thicknessCase05, depth05 - thicknessCase, pi05, 0, 0 );
+		build_hole( mesh, width05Case - thicknessCase05, -thicknessCase05, -depth05 + thicknessCase, pi05, 0, 0 );
+
+		for ( var i = 0; i < columns - 1; i++ ) {
+
+//			var w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+			var w = i * ( widthUnit + 0.75 * thicknessCase ) - ( columns05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
+			build_hole( mesh, w, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+		}
+
+		return mesh;
+
+	}
+
+	function buildCaseVertical ( name ) {
+
+		var geometry = new THREE.BoxGeometry( heightCase - 2 * thicknessCase, thicknessCase, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = name;
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		objects.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+// four corners
+
+		if ( name === 'caseRight' ) {
+
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0 );
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0);
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0, 'screwHole' );
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0, 'screwHole' );
+
+		} else {
+
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, depth05 - thicknessCase, 0, pi05, 0, 'screwHole' );
+			build_hole( mesh, 0.5 * heightCase - thicknessCase, 0, -depth05 + thicknessCase, 0, pi05, 0, 'screwHole' );
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, depth05 - thicknessCase, 0, pi_05, 0);
+			build_hole( mesh, -0.5 * heightCase + thicknessCase, 0, -depth05 + thicknessCase, 0, pi_05, 0 );
+
+		}
+
+// wall brackets
+		build_hole( mesh, 0.5 * heightCase - 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, 0.5 * heightCase - 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, -0.5 * heightCase + 3 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+		build_hole( mesh, -0.5 * heightCase + 4 * thicknessCase, thicknessCase05, -depth05 + thicknessCase05, pi_05, 0, 0 );
+
+		for ( var i = 0; i < rows - 1; i++ ) {
+
+//			var w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+			var h = i * ( widthUnit + 0.75 * thicknessCase ) - ( rows05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
+			build_hole( mesh, h, thicknessCase05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, h, thicknessCase05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+
+		}
+
+		return mesh;
+
+	}
+
+	function buildDivider ( i, j ) {
+
+		var geometry = new THREE.BoxGeometry( widthUnit, thicknessShelf, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'divider';
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		mesh.userData.places = [];
+
+		mesh.userData.places.push( { pX: - height05Case - 30, pY: ( i * 3 + j ) * 1.5 * thicknessCase, pZ: - width05Case - 90, rX: 0, rY: ran( 0.2 ) - 0.1, rZ: 0 } );
+
+		var w = j * ( widthUnit + 0.75 * thicknessCase ) - ( columns05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
+		var h = i * ( widthUnit + 0.75 * thicknessCase ) - ( rows05 - 0.5 ) * ( widthUnit + 0.75 * thicknessCase );
+
+		mesh.userData.places.push( { pX: h, pY: depth05, pZ: w, rX: pi05, rY: 0, rZ: 0 } ); // assembled
+		mesh.userData.places.push( { pX:  j * ( widthUnit + 15 ) - 30 + 30 * i , pY: 3, pZ: 0, rX: 0, rY: pi05 + ran( 0.2 ) - 0.1, rZ: 0 } );
+
+		objects.push( mesh );
+		dividers.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+		build_hole( mesh, widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, -widthUnit05, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -widthUnit05, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+
+		build_hole( mesh, widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0 );
+		build_hole( mesh, -widthUnit05, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0 );
+		build_hole( mesh, -widthUnit05, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0 );
+
+		return mesh;
+
+	}
+
+	function buildShelf ( i ) {
+
+		var geometry = new THREE.BoxGeometry( widthCase - 2 * thicknessCase, thicknessShelf, depth );
+		var mesh = new THREE.Mesh( geometry, materialCase );
+		mesh.name = 'shelf';
+		mesh.castShadow = mesh.receiveShadow = true;
+		mesh.userData.places = [];
+
+		mesh.userData.places.push( { pX: width05Case - 40, pY: i * 1.5 * thicknessCase, pZ: - width05Case - 90, rX: 0, rY: + ran( 0.2 ) - 0.1, rZ: 0 } );
+
+		var h = i * ( widthUnit + 0.75 * thicknessCase ) - ( rows05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
+		mesh.userData.places.push( { pX: h, pY: depth05, pZ: 0, rX: pi05, rY: 0, rZ: pi_05 } ); // assembled
+
+		mesh.userData.places.push( { pX: h, pY: depth05, pZ: 20, rX: pi05, rY: 0, rZ: pi_05 } );
+		mesh.userData.places.push( { pX: h + 25 + i * 10, pY: 0, pZ: 10, rX: pi05, rY: pi05, rZ: pi_05 } );
+//		mesh.userData.places.push( { pX: h + 25 + i * 10, pY: 0, pZ: 10, rX: pi05, rY: pi05, rZ: pi_05 } );
+
+		objects.push( mesh );
+		shelves.push( mesh );
+		kallax.add( mesh );
+
+		var edge = new THREE.EdgesHelper( mesh, edgesColor );
+		edges.add( edge );
+
+// four corners plus
+		build_hole( mesh, width05Case - thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi05, 0, 'pegHole' );
+		build_hole( mesh, width05Case - thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi05, 0, 'pegHole' );
+
+// four corners minus
+		build_hole( mesh, -width05Case + thicknessCase, 0, depth05 - 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, -depth05 + 1 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, depth05 - 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+		build_hole( mesh, -width05Case + thicknessCase, 0, -depth05 + 2 * thicknessCase, 0, pi_05, 0, 'pegHole' );
+
+		for ( var i = 0; i < columns - 1; i++ ) {
+
+//			w = i * ( widthUnit + 0.75 * thicknessCase ) - 1.5 * ( widthUnit + 0.75 * thicknessCase );
+			var w = i * ( widthUnit + 0.75 * thicknessCase ) - ( columns05 - 1 ) * ( widthUnit + 0.75 * thicknessCase );
+			build_hole( mesh, w, thicknessShelf05, depth05 - 1 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, depth05 - 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, -depth05 + 2 * thicknessCase, pi_05, 0, 0 );
+			build_hole( mesh, w, thicknessShelf05, -depth05 + 1 * thicknessCase, pi_05, 0, 0 );
+		}
+
+		return mesh;
+
+	}
+
+	function drawHelpers() {
+
+		w = heightCase > widthCase ? height05Case : width05Case;
+
+		var axisHelper = new THREE.AxisHelper( w + 75 );
+		helpers.add( axisHelper );
+
+		geometry = new THREE.BoxGeometry( 2 * heightCase, 2, 2.75 * widthCase );
+		material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, bumpMap: buildTextureNoise(), bumpScale: 6, specularMap: buildTextureNoise(),  } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -1, 0 );
+		helpers.add( mesh );
+
+
+		geometry = new THREE.PlaneBufferGeometry( 2000, 2000 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, bumpMap: buildTextureNoise(), bumpScale: 6, specularMap: buildTextureNoise(),  } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -2, 0 );
+
+		helpers.add( mesh );
+
+	}
+
+	function createClips() {
+
+		var speed05 = 500;
+		var speed1 = 1000;
+		var speed2 = 2000;
+		var speed3 = 3000;
+		var speed5 = 5000;
+
+		playList = [
+
+			[ [ caseTop, 2, speed2 ], [ caseRight, 0, speed2, 0 ], [ camera, 2, speed2 ] ],
+			[ [ caseTop, 2, speed2 ], [ caseRight, 1, speed2, 0 ], [ camera, 3, speed2 ]  ],
+			[ [ caseTop, 3, speed3 ], [ caseRight, 1, speed3, 2 ] ],
+			[ [ caseTop, 1, speed3 ], [ caseRight, 1, speed3 ] ],
+
+		];
+
+
+// dividers
+
+		var items = [ [ camera, 1, speed2 ] ];
+
+		for ( var i = 0; i < columns - 1; i++ ) {
+
+			items.push( [ dividers[ i ], 2, speed2, 0 ] );
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+		items = [];
+
+		for ( i = 0; i < columns - 1; i++ ) {
+
+			items.push( [ dividers[ i ], 2, speed2, 2 ] );
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+
+		items = [];
+
+		for ( i = 0; i < columns - 1; i++ ) {
+
+			items.push( [ dividers[ i ], 2, speed2, 1 ] );
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+
+
+		items = [];
+
+		for ( i = 0; i < columns - 1; i++ ) {
+
+			items.push( [ dividers[ i ], 1, speed2, 1 ] );
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+
+
+// shelves
+
+		items = [];
+
+		for ( i = 0; i < rows - 1; i++ ) {
+
+			if ( i < shelves.length ) {
+
+				items.push( [ shelves[ i ], 3, speed2, 0 ] );
+
+			}
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+
+		items = [ [ camera, 4, speed2 ] ];
+
+		for ( i = 0; i < rows - 1; i++ ) {
+
+			if ( i < shelves.length ) {
+
+				items.push( [ shelves[ i ], 3, speed2, 2 ] );
+
+			}
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+		items = [];
+
+		for ( i = 0; i < rows - 1; i++ ) {
+
+			if ( i < shelves.length ) {
+
+				items.push( [ shelves[ i ], 3, speed2, 1 ] );
+
+			}
+
+		}
+
+		if ( items.length ) { playList.push( items ); }
+
+
+		playList.push ( [ [ shelves[ 0 ], 2, speed1, 1 ] ] );
+
+		playList.push ( [ [ shelves[ 0 ], 1, speed1 ] ] );
+
+//
+
+
+		for ( i = 1; i < rows; i++ ) {
+
+			items = [];
+			var d = columns - 1;
+
+			for ( var j = i * d ; j < i * d + d; j++ ) {
+
+				items.push( [ dividers[ j ], 2, speed05, 2 ] );
+
+			}
+
+			playList.push( items );
+
+			items = [];
+
+			for ( j = i * d ; j < i * d + d; j++ ) {
+
+				items.push( [ dividers[ j ], 2, speed05, 1 ] );
+
+			}
+
+			playList.push( items );
+
+			items = [];
+
+			for ( j = i * d ; j < i * d + d; j++ ) {
+
+				items.push( [ dividers[ j ], 1, speed05, 1 ] );
+
+			}
+
+			playList.push( items );
+
+			if ( i < rows - 1 ) {
+
+				playList.push ( [ [ shelves[ i ], 2, speed05, 1 ] ] );
+				playList.push ( [ [ shelves[ i ], 1, speed05 ] ] );
+
+			}
+		}
+
+		playList.push( [ [ caseLeft, 1, speed2, 0 ], [ camera, 6, speed2 ]  ]);
+		playList.push( [ [ caseLeft, 1, speed1, 2 ] ]);
+		playList.push( [ [ caseLeft, 1, speed3, 1 ] ]);
+
+		playList.push( [ [ caseBottom, 1, speed2, 0 ], [ camera, 7, speed2 ] ] );
+		playList.push( [ [ caseBottom, 1, speed1, 2 ] ] );
+		playList.push( [ [ caseBottom, 1, speed3, 1 ] ] );
+
+		playList.push( [ [ kallax, 1, speed3 ], [ hexKey, 0, speed3 ] ] );
+
+	}
+
+
+	function addLights( size ) {
+
+// 2016-02-21 ~ http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r2.html
+
+		var size = size ? size : 100;
+		var lightAmbient, lightDirectional, lightPoint;
+
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+		lightDirectional.position.set( -size, size, size );
+
+		var d = size;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
+
+		lightDirectional.shadow.camera.near = 0;
+		lightDirectional.shadow.camera.far = 3 * size;
+
+// helps stop appearance of grid lines in objects
+		lightDirectional.shadow.bias = -0.001; // default 0 ~ distance from corners?
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+//		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+	}
+
+	function addShadows() {
+
+// 2016-02-21 ~ http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r2.html
+
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+		renderer.gammaInput = true;
+		renderer.gammaOutput = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+//				child.material.needsUpdate = true;
+
+			}
+
+		} );
+
+	}
+
+	function toggleBackgroundGradient() {
+
+// 2016-01-28
+
+		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+
+		if ( document.body.style.backgroundImage === '' ) {
+
+			backgroundGradient = document.body.style.backgroundImage = 'radial-gradient( circle farthest-corner at ' + pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100%)';
+
+		} else {
+
+			document.body.style.backgroundImage = '';
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		TWEEN.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

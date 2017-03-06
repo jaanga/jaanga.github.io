@@ -1,0 +1,199 @@
+﻿<!doctype html>
+<html lang=en >
+	<head>
+		<meta charset=utf-8 >
+		<title>Moving Manuals Files Viewer</title>
+		<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+		<meta name=description content='Gallery of a variety of scripts that enable you to view the Three.js exsmple files in new ways.' >
+		<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+	</head>
+	<body>
+		<script>
+
+			var urlRepo = 'https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1';
+
+			var urlFolder = 'demo/mm/';
+
+			var footer =
+			`
+
+				<center title="dingbat" >
+				<h1><a href=javascript:window.scrollTop=0; style=text-decoration:none; > ❦ </a></h1>
+				</center>
+
+			`;
+
+			var iframeContainers = [];
+			var iframesActive = [];
+			var iframesActiveLimit = 3;
+
+			var texts, files;
+
+			init();
+			animate();
+
+			function init() {
+
+				var css = document.body.appendChild( document.createElement( 'style' ) );
+				css.innerHTML =
+				`
+
+					body { font: 12pt monospace; left: 0; right: 0; margin: auto; position: absolute; max-width: 800px; }
+					a, a:visited { color: crimson; text-decoration: none; }
+					iframe { border: 0px solid green; height: 100%; width: 100%; }
+
+					.divIframe { border: 1px solid crimson; height:512px; margin: 80px 0 0 ${ -0.5 * ( window.innerWidth - 1000 ) }px; width: ${ window.innerWidth - 200 }px; }
+
+				`;
+
+				var contents = document.body.appendChild( document.createElement( 'div' ) );
+				contents.innerHTML =
+				`
+
+					<h1>
+						<a href="" > ${ document.title }</a>
+						<a href=http://jaanga.github.io/demo/mm/ >🛈</a>
+					</h1>
+
+					<p><i>Moving Manuals kit of parts.</i><hr></p>
+					<p>A collection of scripts where each script creates a different part.
+						See also the <a href=index.html >Read Me </a>file for further details.
+					</p>
+					<p>Click any file title to open the file full screen.</p>
+
+					<div id=container ></div>
+
+				`;
+
+				requestFileNames();
+
+			}
+
+			function requestFileNames() {
+
+				var xhr = new XMLHttpRequest();
+				xhr.open( 'GET', urlRepo, true );
+				xhr.onreadystatechange = callback;
+				xhr.send( null );
+
+				function callback() {
+
+					if ( xhr.readyState !== 4  ) { return; }
+
+					var response = JSON.parse( xhr.response );
+					var keys = Object.keys( response.tree );
+
+					files = [];
+					var count = 0;
+
+					for ( var key in keys ) {
+
+						var file = response.tree[ key ].path;
+
+						if ( file.indexOf( urlFolder ) === - 1 || file.indexOf( '.html' ) === -1 || file.indexOf( '@' ) === -1 )  { continue; }
+
+						files.push( file );
+
+						count++;
+
+					}
+
+					createMultipleViews()
+
+				}
+
+			}
+
+
+			function createMultipleViews() {
+
+				for ( var i = 0; i < files.length; i++ ) {
+
+					container.innerHTML += `
+
+						<div class=divIframe id=${ i }  ></div>
+						<div class=divText >header ${ i + 1 }</div>
+						<hr>
+
+					`;
+
+				}
+
+				container.innerHTML += footer;
+
+				iframeContainers = document.getElementsByClassName( 'divIframe' );
+				texts = document.getElementsByClassName( 'divText' );
+
+			}
+
+			function updateIframe( activeContainer ) {
+
+				var iframes = document.getElementsByTagName( 'iframe' );
+
+				if ( iframes.length > iframesActiveLimit ) {
+
+					var frameTooMany = iframesActive.shift();
+					frameTooMany.innerHTML = '';
+
+
+				}
+
+				if ( activeContainer.innerHTML === '' ) {
+
+					id = activeContainer.id;
+
+					activeContainer.innerHTML = `<iframe src=${ '../../' + files[ id ] } onload=loadIt(this,${ id }); ></iframe>`;
+
+					iframesActive.push( activeContainer );
+
+				}
+
+			}
+
+			function loadIt( that, index ) {
+
+				var metas = that.contentWindow.document.getElementsByTagName('meta'); ;
+				var description = 'none';
+				var keywords = 'none';
+
+				for ( var i = 0; i < metas.length; i++ ) {
+
+					if ( metas[ i ].name === 'description' ) { description = metas[ i ].content; }
+					if ( metas[ i ].name === 'keywords' ) { keywords = metas[ i ].content; }
+
+				}
+
+				texts[ index ].innerHTML =
+				`
+
+					<h2><a href=${ that.src } >${ that.contentWindow.document.title }</a></h2>
+					<p>${ description }</p>
+					<p>keywords: ${ keywords }</p>
+
+				`;
+
+				that.contentWindow.controls.enableZoom = false;
+
+			}
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				for ( var i = 0; i < iframeContainers.length; i++ ) {
+
+					var iframeContainer = iframeContainers[ i ];
+
+					var rect = iframeContainer.getBoundingClientRect();
+
+					if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+					updateIframe( iframeContainer );
+
+				}
+
+			}
+
+		</script>
+	</body>
+</html>

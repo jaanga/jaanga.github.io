@@ -1,0 +1,438 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Poang Rocker R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+
+<script>
+
+	chairWidth = 68;
+	var seatWidth = 56;
+	frameWidth = ( chairWidth - seatWidth ) / 2;
+	frameThickness = 2.5;
+	bevelThickness = 2;
+	bevelSize = 2;
+
+	var v = function( x, y, z ){ return new THREE.Vector3( x, y , z ); };
+	var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			a {text-decoration: none; }
+			h2 { margin: 0 }
+
+/*			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+*/
+		`;
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" >${ document.title }</a>
+				 <a href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<div id=info ></div>
+
+		`;
+
+//			<p><button onclick=doIt(); >do it</button></p>
+//			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+		renderer.setClearColor( 0xf0f0f0 );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, 100, 150 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.target.set( 20, 50, 50 );
+		controls.maxDistance = 800;
+
+		scene = new THREE.Scene();
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 50, -11, 50 );
+		scene.add( mesh );
+
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 50, -10, 50 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+	verticesSection =  [ v2( 0, 0 ), v2( 0, -frameThickness ), v2( - frameWidth, -frameThickness ), v2( - frameWidth, 0 ) ];
+
+// rocker
+
+
+		var vertices = [
+
+			v( 30, 55, 0 ),
+			v( 40, 55, 0 ),
+			v( 60, 50, 0 ),
+			v( 75, 45, 0 ),
+			v( 90, 30, 0 ),
+			v( 94, 10, 0 ),
+			v( 50, 0, 0 ),
+			v( 8, 3, 0 ),
+			v( 0, 5, 0 )
+
+		];
+
+		mesh = drawExtrusion( vertices, verticesSection, 80 );
+		scene.add( mesh );
+		clone = mesh.clone();
+		clone.position.z = chairWidth - frameWidth;
+		scene.add( clone );
+
+
+// arm
+
+		var vertices = [
+
+			v( 74, 65, 0 ),
+			v( 65, 55, 0 ),
+			v( 25, 55, 0 ),
+			v( 21, 54, 0 ),
+			v( 15, 40, 0 ),
+			v( 10, 10, 0 ),
+			v( 15, 7, 0 ),
+			v( 25, 5, 0 )
+
+		];
+
+		mesh = drawExtrusion( vertices, verticesSection, 120 );
+		scene.add( mesh );
+		clone = mesh.clone();
+		clone.position.z = chairWidth - frameWidth;
+		scene.add( clone );
+
+
+// back
+
+		var vertices = [
+
+			v( 85, 95, 0 ),
+			v( 80, 75, 0 ),
+			v( 70, 60, 0 ),
+			v( 60, 40, 0 )
+
+		];
+
+		mesh = drawExtrusion( vertices, verticesSection, 20 );
+		mesh.position.z = frameWidth;
+		scene.add( mesh );
+
+		clone = mesh.clone();
+		clone.position.z = chairWidth - 2 * frameWidth;
+		scene.add( clone );
+
+
+
+// seat
+
+		var vertices = [
+
+			v( 62, 45, 0 ),
+			v( 57, 35, 0 ),
+			v( 52, 31, 0 ),
+			v( 50, 30, 0 ),
+			v( 5, 35, 0 )
+		];
+
+		mesh = drawExtrusion( vertices, verticesSection, 30 );
+		mesh.position.z = frameWidth;
+		scene.add( mesh );
+
+		clone = mesh.clone();
+		clone.position.z = chairWidth - 2 * frameWidth;
+		scene.add( clone );
+
+// leg bar
+
+		barSection =  [ v2( 0, 0 ), v2( 0, frameThickness - 0.75 ), v2( - frameWidth + 1, frameThickness - 0.75 ), v2( - frameWidth + 1, 0 ) ];
+
+		var vertices = [
+
+			v( 0, 0, frameWidth ),
+			v( 0, 0, chairWidth - frameWidth )
+
+		];
+
+		mesh = drawExtrusion( vertices, barSection, 3 );
+		mesh.rotation.z = -0.2;
+		mesh.position.set( 9, 25, 0 );
+		scene.add( mesh );
+
+
+// seat bars
+
+		barSection =  [ v2( 0, 0 ), v2( 0, frameThickness - 1 ), v2( frameWidth - 2, frameThickness - 1 ), v2( frameWidth - 2, 0 ) ];
+
+		var vertices = [
+
+			v( 0, 0, 1.5 * frameWidth ),
+			v( 0, 0, 2 * frameWidth ),
+			v( 0, -1.5, 1.5 * frameWidth + 0.5 * seatWidth - 0.5 * frameWidth ),
+			v( 0, 0, chairWidth - 2 * frameWidth ),
+			v( 0, 0, chairWidth - 1.5 * frameWidth )
+
+		];
+
+		mesh = drawExtrusion( vertices, barSection, 10 );
+		mesh.position.set( 12, 36.5, 0 );
+		mesh.rotation.z = -0.125;
+		scene.add( mesh );
+
+
+		clone = mesh.clone();
+		clone.rotation.z = -0.125;
+		clone.position.set( 43, 32.5, 0 );
+		scene.add( clone );
+
+
+
+		clone = mesh.clone();
+		clone.rotation.z = 1.3;
+		clone.position.set( 60, 50, 0 );
+		scene.add( clone );
+
+		clone3 = mesh.clone();
+		clone3.rotation.z = 1.3;
+		clone3.position.set( 70, 65, 0 );
+		scene.add( clone3 );
+
+		clone4 = mesh.clone();
+		clone4.rotation.z = 1.3;
+		clone4.position.set( 80, 80, 0 );
+		scene.add( clone4 );
+
+		clone5 = mesh.clone();
+		clone5.rotation.z = 1.3;
+		clone5.position.set( 82, 95, 0 );
+		scene.add( clone5 );
+
+
+
+// seat cloth
+
+		seatSection =  [ v2( -5, 0 ), v2( -4, -1 ), v2( -1, -1  ), v2( 0, 0 ), v2( -1, 1 ), v2( -4, 1 ), v2( -5, 0 ), v2( -30, 0 ),
+			v2( -31, 1 ), v2( -34, 1 ), v2( -35, 0 ), v2( -34,- 1 ), v2( -31, -1 ), v2( -30, 0 )  ];
+
+		var vertices = [
+
+			v( 0, 0, 2 * frameWidth ),
+			v( 0, -1.5, 1.5 * frameWidth + 0.5 * seatWidth - 0.5 * frameWidth ),
+			v( 0, 0, chairWidth - 2 * frameWidth ),
+
+		];
+
+//		mesh = drawExtrusion( vertices, seatSection, 10 );
+//		mesh.rotation.z = -0.125;
+//		mesh.position.set( 10, 36, 0 );
+//		scene.add( mesh );
+
+
+// top cushion
+
+		cushionTopSection = [
+
+			v2( 0, 0, 0 ),
+			v2( 0, 1, 0 ),
+			v2( 1, 3.7, 0 ),
+			v2( 2, 4.2, 0 ),
+			v2( 3, 4.5, 0 ),
+			v2( 4, 4.8, 0 ),
+			v2( 5, 5, 0 ),
+
+			v2( 10, 5, 0 ),
+			v2( 11, 4.8, 0 ),
+			v2( 12, 4.5, 0 ),
+			v2( 13, 4.2, 0 ),
+			v2( 14, 3.7, 0 ),
+			v2( 15, 1, 0 ),
+			v2( 15, 0, 0 )
+
+		];
+
+		mesh = drawCushion( cushionTopSection, seatWidth - 2 * bevelThickness, 10 );
+		mesh.rotation.z = 1.3;
+		mesh.position.set( 80, 90, frameWidth + bevelThickness );
+		scene.add( mesh );
+
+// middle cushion
+
+		delta = -6;
+		length = 40;
+		cushionMiddleSection = [
+
+
+			v2( 15, 0, 0 ),
+			v2( 0, 0, 0 ),
+			v2( 0, 1, 0 ),
+			v2( 1, 3.7, 0 ),
+			v2( 2, 4.2, 0 ),
+			v2( 3, 4.5, 0 ),
+			v2( 4, 4.8, 0 ),
+			v2( 5, 5, 0 ),
+			v2( 15, 5, 0 ),
+
+			v2( length + 0, delta + 5, 0 ),
+			v2( length + 10, delta + 5, 0 ),
+			v2( length + 16, delta + 4.8, 0 ),
+			v2( length + 17, delta + 4.5, 0 ),
+			v2( length + 18, delta + 4.2, 0 ),
+			v2( length + 19, delta + 3.7, 0 ),
+			v2( length + 20, delta + 1, 0 ),
+			v2( length + 20, delta + 0, 0 ),
+			v2( length + 0, delta + 0, 0 )
+
+		]
+
+		mesh = drawCushion( cushionMiddleSection, seatWidth - 2 * bevelThickness, 10 );
+		mesh.rotation.z = 1.2;
+		mesh.position.set( 52, 34, frameWidth + bevelThickness );
+		scene.add( mesh );
+
+
+		cushionBottomSection = [
+
+			v2( 0, 0, 0 ),
+			v2( 0, 1, 0 ),
+			v2( 1, 3.7, 0 ),
+			v2( 2, 4.2, 0 ),
+			v2( 3, 4.5, 0 ),
+			v2( 4, 4.8, 0 ),
+			v2( 5, 5, 0 ),
+
+			v2( 35, 5, 0 ),
+			v2( 36, 4.8, 0 ),
+			v2( 37, 4.5, 0 ),
+			v2( 38, 4.2, 0 ),
+			v2( 39, 3.7, 0 ),
+			v2( 40, 1, 0 ),
+			v2( 40, 0, 0 )
+
+		]
+
+		mesh = drawCushion( cushionBottomSection, seatWidth - 2 * bevelThickness, 10 );
+		mesh.rotation.z = -0.125;
+		mesh.position.set( 7, 38, frameWidth + bevelThickness );
+		scene.add( mesh );
+
+	}
+
+	function drawExtrusion( path, section, steps ) {
+
+		steps = steps ? steps : 50;
+
+		shape = new THREE.Shape();
+		shape.fromPoints( section );
+
+		var line;
+		geometry = new THREE.Geometry();
+		geometry.vertices = path;
+		material = new THREE.LineBasicMaterial( { color: 'magenta' } );
+		line = new THREE.Line( geometry, material );
+		line.position.z = 75;
+		scene.add( line );
+
+		var extrudePath = new THREE.CatmullRomCurve3( path );
+
+		var geometry = new THREE.ExtrudeGeometry( shape, { extrudePath: extrudePath, steps: steps } );
+		material = new THREE.MeshNormalMaterial( { wireframe: false } );
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		return mesh;
+
+	}
+
+
+	function drawCushion( section, amount, steps ) {
+
+		amount = amount ? amount : 50;
+		steps = steps ? steps : 50;
+
+		shape = new THREE.Shape();
+		shape.fromPoints( section );
+
+		var geometry = new THREE.ExtrudeGeometry( shape, { amount: amount, bevelThickness: bevelThickness, bevelSize: bevelSize, steps: steps } );
+		material = new THREE.MeshNormalMaterial( { wireframe: false } );
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		return mesh;
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

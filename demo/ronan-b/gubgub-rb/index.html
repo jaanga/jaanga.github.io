@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GubGub Ronan B R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Search and explore GitHub users and see what they have been up to in full detail.' >
+<meta name=keywords content='Jaanga,Theo Armour,GitHub API,CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-10-28' >
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.4.3/showdown.min.js ></script>
+<script src=../../../gubgub/0-cor-core/core-r1.js ></script>
+<script src=../../../gubgub/1-api-authentication/api-authentication-r1.js ></script>
+<script src=../../../gubgub/2-sel-select/sel-select-r1.js ></script>
+<script src=../../../gubgub/dat-data/dat-data-r1.js ></script>
+<script src=../../../gubgub/user-events-big/user-events-big-r1.js ></script>
+<script src=../../../gubgub/eus-events-user/eus-events-user-r1.js ></script>
+<script src=../../../gubgub/usr-users/users-r1.js ></script>
+<!--
+<script src=https://jaanga.github.io/gubgub/0-cor-core/core-r1.js ></script>
+<script src=https://jaanga.github.io/gubgub/1-api-authentication/api-authentication-r1.js ></script>
+<script src=https://jaanga.github.io/gubgub/2-sel-select/sel-select-r1.js ></script>
+<script src=https://jaanga.github.io/gubgub/dat-data/dat-data-r1.js ></script>
+<script src=https://jaanga.github.io/gubgub/user-events-big/user-events-big-r1.js ></script>
+<script src=https://jaanga.github.io/gubgub/eus-events-user/eus-events-user-r1.js ></script>
+<script src=https://jaanga.github.io/gubgub/usr-users/users-r1.js ></script>
+-->
+<script>
+
+// bespoke setups for folks that be spoken for
+
+USR.peepsFavorites =
+
+//	'<optgroup label="Ronan" >' +
+		'<option selected >Hunvreus</option>' +
+		'<option>Wiredcraft</option>' +
+		'<option>bones</option>' +
+		'<option>QuentinBerder</option>' +
+
+//	'</optgroup>' +
+
+	'<optgroup label="Starred" >' +
+
+		'<option>TelescopeJS</option>' +
+		'<option>ansible</option>' +
+		'<option>avelino</option>' +
+		'<option>getsentry</option>' +
+		'<option>naptha</option>' +
+		'<option>jsonwebtoken</option>' +
+		'<option>datproject</option>' +
+		'<option>Netflix</option>' +
+		'<option>gravitational</option>' +								
+		'<option>alexFlint</option>' +
+		'<option>goLang</option>' +
+		'<option>allinurl</option>' +
+		'<option>danleech</option>' +
+		'<option>selectize</option>' +
+	'</optgroup>' +
+
+	'<optgroup label="Followers" >' +
+
+		'<option>theo-armour</option>' +
+		'<option>pedromorgan</option>' +
+		'<option>JT5D</option>' +
+		'<option>skynet</option>' +
+		'<option>girishsubramanyam</option>' +
+		'<option>UdacityDM</option>' +
+		'<option>djd333</option>' +
+		'<option>vielmetti</option>' +
+		'<option>KevinCarhart</option>' +
+
+	'</optgroup>' +
+
+'';
+
+
+USR.groupOptions =
+
+	'<option value="listFavorites" >List of Favorites</option>' +
+
+	'<optgroup label="Popular" >' +
+		'<option value="Perl+stars:>30" >Users with word \'Perl\' & stars > 30</option>' +
+		'<option value="JavaScript+stars:>3000" >Users with word \'JavaScript\' & stars > 3000</option>' +
+	'</optgroup>' +
+
+	'<optgroup label="FlightGear" >' +
+		'<option value="flight+gear" >Users with word \'flight + gear\'</option>' +
+		'<option value="flight+sim+stars:>2" >Users with word \'flight + sim\' & stars > 2 </option>' +
+		'<option value="flying+stars:>2" >Users with word \'flying\' & stars > 2 </option>' +
+	'</optgroup>' +
+
+	'<optgroup label="Pertaining to Three.js & 3D" >' +
+		'<option value="three+stars:>300" >Users with word \'three\' & stars > 300</option>' +
+		'<option value="3D+stars:>1000" >Users with word \'3D\' & stars > 1000</option>' +
+		'<option value="stl+stars:>50" >Users with word \'stl\' & stars > 50</option>' +
+	'</optgroup>' +
+
+	'<optgroup label="Pertaining to Mathematics" >' +
+		'<option value="math+stars:>200" >Users with word \'math\' & stars > 200</option>' +
+		'<option value="calculus+stars:>20" >Users with word \'calculus\' & stars > 20</option>' +
+		'<option value="special+functions" >Users with word \'special + functions\' & stars > 20</option>' +
+		'<option value="rheimann" >Users with word \'rheimann\'</option>' +
+	'</optgroup>' +
+
+	'<optgroup label="Pertaining to Pysics" >' +
+		'<option value="physics+stars:>8" >Users with word \'physics\' & stars >100</option>' +
+		'<option value="quantum+mechanics+stars:>0" >Users with words \'quantum + mechanics\' & stars > 0</option>' +
+		'<option value="unified+field+theory" >Users with words \'unified + field + theory\' & stars >0</option>' +
+		'<option value="runge+vector" >Users with words \'runge + vector\' </option>' +
+		'<option value="schrodinger" >Users with words \'schrodinger\' </option>' +
+
+	'</optgroup>' +
+
+	'<optgroup label="Pertaining to Exploratorium" >' +
+		'<option value="exploratorium" >Users with word \'exploratorium\'</option>' +
+		'<option value="christmas+lights" >Users with word \'christmas + lights\'</option>' +
+
+	'</optgroup>' +
+
+'';
+
+	COR.readmeText =
+
+		'Bespoke edition especially crafted for <a href="http://jaanga.github.io/demo/geoff-m/gubgub-gm" target="_blank">Geoff M</a> - ' +
+		'and yet created <i>post priori</i> in an easy and simple manner.' +
+
+	'';
+
+
+	init();
+
+	function init() {
+
+		COR.initThreeColumns();
+
+		COR.css.innerHTML += '.DATbuttonLeft { display: none; }';
+
+		COR.menu.innerHTML =
+
+			COR.getMenuDetailsHeader() +
+
+			API.getMenuDetailsAPIAccessToken() +
+
+			SEL.getMenuDetailsSelectGroup() +
+
+			SEL.getMenuDetailsSelectUser() +
+
+			DAT.getMenuDetailsUserData() +
+
+			COR.getMenuDetailsAbout() +
+
+			COR.getMenuFooter() +
+
+		b;
+
+		window.addEventListener( 'hashchange', COR.onHashChange, false );
+
+		if ( location.hash.match( '.md' ) ) { COR.onHashChange(); }
+
+		if ( location.hash.match( 'token=' ) ) { API.onEventAPIKeyUpdate(); }
+
+// if next line is commented out, random choices are selected
+
+		SELselGroup.value = 'listFavorites';
+
+		SEL.setUserDetails();
+
+		API.getRateLimits();
+
+	}
+
+
+
+// gets called by SEL.setUserDetails...
+
+	SEL.getUserDetails = function( user ) {
+
+		console.clear();
+
+		location.hash = user;
+
+		DAT.getUserData( user ); // left column update
+
+		EUS.requestGitHubAPIUserEvents( user ); // middle and right columns update
+
+		window.scrollTo( 0, 0 );
+		COR.updates.scrollTop = 0;
+
+	};
+
+
+</script>
+</body>
+</html>

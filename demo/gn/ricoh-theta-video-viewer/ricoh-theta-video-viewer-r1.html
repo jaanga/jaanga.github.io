@@ -1,0 +1,193 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Ricoh Theta Video Viewer R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Ricoh Theta images as sky spheres. Simple slide' >
+<meta name=keywords content='Ricoh Theta, WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-03-03' >
+</head>
+<video id="video" autoplay loop style="display:none">
+	<source src="../video/videos_s_5.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+
+</video>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+
+	videos = [
+
+		'../video/videos_s_5.mp4',
+
+
+	];
+	var boxes = [];
+
+			var video, texture, material, mesh;
+	var stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+
+
+	function init() {
+
+		var css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+			'h2 { margin: 0 }' +
+
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.style.cssText = `margin: 0 20px; position: absolute; `;
+		menu.innerHTML = 
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/demo/gn/ >&#x24D8;</a>' +
+			'</h2>' +
+			'<div id=imageMenu ></div>' +
+			'<p title="Press space bar to toggle rotation" ><input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate;  checked> Rotation</p>' +
+			'<div id=info ></div>' +
+
+		'';
+
+		var text = '';
+
+		for ( var i = 0; i < videos.length; i++ ) {
+
+			text += '<p><button onclick=selectImage(' + i + '); >' + videos[ i ] + '</button></p>';
+
+		}
+
+		imageMenu.innerHTML = text;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = `position: absolute; right: 0; top: 0; z-index: 100; `;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'keyup', onKeyUp, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 450, 0, 0 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 1200;
+
+		scene = new THREE.Scene();
+
+		var light = new THREE.DirectionalLight( 0xffffff );
+		light.position.set( 0.5, 1, 1 ).normalize();
+		scene.add( light );
+
+// helpers
+
+		var axisHelper = new THREE.AxisHelper( 500 );
+		scene.add( axisHelper );
+
+// assets
+		video = document.getElementById( 'video' );
+		geometry = new THREE.SphereGeometry( 500, 50, 25 );
+		material = new THREE.MeshBasicMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 30, 0 );
+		mesh.scale.set( -1, 1, 1 );
+
+		scene.add( mesh );
+
+		selectVideo( 0 );
+
+//		controls.autoRotate = true;
+
+//		updateBoxes();
+	animate();
+
+	}
+
+
+	function selectVideo( index ) {
+
+
+
+		texture = new THREE.VideoTexture( video );
+		texture.minFilter = THREE.NearestFilter;
+		texture.magFilter = THREE.NearestFilter;
+
+		texture.minFilter = texture.magFilter = THREE.NearestFilter;
+		texture.format = THREE.RGBFormat;
+		texture.needsUpdate = true;
+
+		mesh.material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+
+//		mesh.name = index;
+
+	}
+
+	function nextImage( direction ) {
+
+		index = parseInt( mesh.name, 10 ) + direction;
+		index = index < 0 ? images.length - 1: index;
+		index = index >= images.length ? 0 : index;
+		selectImage( index );
+
+	}
+
+	function onKeyUp ( event ) {
+
+// console.log( 'key', event.keyCode );
+
+		switch( event.keyCode ) {
+
+			case 32: /* space bar*/ controls.autoRotate=!controls.autoRotate; break;
+			case 37: /* left cursor */ nextImage( -1 ); break;
+			case 39: /* right cursor */ nextImage( 1 ); break;
+
+		}
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+
+
+	}
+
+</script>
+</body>
+</html>

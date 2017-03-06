@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<style></style>
+</head>
+
+<body style="margin: 0in">
+
+<script src="http://rawgit.com/mrdoob/three.js/r75/build/three.js"></script>
+<script src="http://rawgit.com/mrdoob/three.js/r75/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+
+var scene = new THREE.Scene();
+var renderer = new THREE.WebGLRenderer( { antialias: true } );
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setClearColor( 0x000000 );
+document.body.appendChild( renderer.domElement ); 
+
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 ); 
+camera.up.set( 0, 0, 1 );
+camera.position.set( 0,5,2 ); 
+scene.add( new THREE.AxisHelper( 2 ) );
+var controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+var light1 = new THREE.PointLight( 0xff2200 );
+light1.position.set( 10, 0, 10 );
+scene.add( light1 );
+
+var light2 = new THREE.PointLight( 0xff2200 );
+light2.position.set( 0, -10, -10 );
+scene.add( light2 );
+
+// geometric code goes here
+
+var size = 5;
+var radius = size / 2 / Math.PI;
+var t = 0;
+var sign = 1;
+
+var points = 51;
+
+var geometry = new THREE.PlaneGeometry( size, size, points-1, points-1 );
+
+for ( var i=0 ; i < geometry.vertices.length ; i++ ) {
+
+  var v = geometry.vertices[i];
+  geometry.vertices[i].x0 = v.x;
+  geometry.vertices[i].xf = radius * Math.sin( 2 * Math.PI * v.x / size );
+  geometry.vertices[i].zf = radius * ( 1 - Math.cos( 2 * Math.PI * v.x / size ) );
+
+}
+
+var material = new THREE.MeshPhongMaterial( { color: 0xff2040, side: THREE.DoubleSide } );
+
+var mesh = new THREE.Mesh( geometry, material );
+scene.add( mesh );
+
+window.addEventListener( 'resize', function() {
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix(); } );
+
+function render() {
+  requestAnimationFrame( render ); 
+  renderer.render( scene, camera );
+  controls.update();
+
+  for ( var i=0 ; i < geometry.vertices.length ; i++ ) {
+    var v = geometry.vertices[i];
+    v.x = v.xf + ( v.x0 - v.xf ) * Math.cos(t);
+    v.z = v.zf * Math.sin(t);
+  }
+  geometry.verticesNeedUpdate = true;
+
+  if ( t > Math.PI/2 || t < 0 ) sign = -sign;
+  t += sign * .005;
+
+}
+
+render();
+
+</script>
+
+</body>
+</html>

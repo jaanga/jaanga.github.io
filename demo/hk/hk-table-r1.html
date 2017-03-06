@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>HK Table R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<!--
+<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=face-array.js ></script>
+<script>
+
+	var stats, renderer, scene, camera, controls;
+
+	init();
+	animate();
+
+	function init() {
+
+		var geometry, material, mesh;
+		var css, hamburger, menu;
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a {text-decoration: none; }' +
+			'h2 { margin: 0 }' +
+
+			'button { background-color: #ccc; border: 2px #ccc solid; color: #666; }' +
+
+/*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
+			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }' +
+*/
+			'#bars { color: pink; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#hamburger { left: 325px; position: absolute; top: 20px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -324px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
+
+		'';
+		hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
+
+		menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/demo/hk > &#x24D8; </a>' +
+			'</h2>' +
+			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+			'<p><button onclick=renderInfo(); >Render Info</button></p>' +
+			'<div id=info ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
+		document.body.appendChild( stats.domElement );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer = new THREE.WebGLRenderer( {  alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10000 );
+		camera.position.set( 1500, 1500, 1500 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 10000;
+
+		scene = new THREE.Scene();
+
+		var axisHelper = new THREE.AxisHelper( 500 );
+		scene.add( axisHelper );
+
+// assets
+
+		addTable();
+
+	}
+
+
+	function addTable() {
+
+//		var geometry, geometry2, material, mesh;
+
+		var v = function( arr ){ return new THREE.Vector3().fromArray( arr ); };
+		material = new THREE.MeshNormalMaterial();
+		geometry = new THREE.Geometry(); 
+
+		for ( var i = 0; i < faces.length; i++ ){
+
+			face = faces[ i ];
+
+			geometry2 = new THREE.Geometry();
+			geometry2.vertices.push( v( face[ 0 ] ), v( face[ 1 ] ), v( face[ 2 ] ) );
+			geometry2.faces.push( new THREE.Face3( 0, 1, 2 ) );
+			geometry.merge( geometry2 );
+
+		}
+
+		geometry.mergeVertices();
+		geometry.computeFaceNormals();
+		geometry.center();
+
+		mesh = new THREE.Mesh( geometry, material ); 
+		scene.add( mesh );
+
+	}
+
+	function renderInfo() {
+
+		info.innerHTML =
+			'calls: ' + renderer.info.render.calls + '<br>' +
+			'faces: ' + renderer.info.render.faces + '<br>' +
+			'vertices: ' + renderer.info.render.vertices + '<br>' +
+		'';
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset=utf-8 >
+<title>Jaanga Demo</title>
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
+</head>
+<body>
+<script src=https://cdn.rawgit.com/showdownjs/showdown/master/dist/showdown.min.js  ></script>
+<script>
+
+	init();
+
+	function init() {
+
+//		document.body.style.cssText = ' font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px; ';
+
+		let css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = `
+			body { font: bold 12pt monospace; left: 5px; margin: 0 auto; max-width: 900px; position: absolute; right: 5px;}
+//			h2, a { margin: 0; }
+			h1 a, #i { text-decoration: none; }
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; cursor: pointer; }
+		`;
+
+		let info = document.body.appendChild( document.createElement( 'div' ) );
+
+		showdown.setFlavor('github');
+		let converter = new showdown.Converter();
+		let fileName = location.hash ? location.hash.split( '#' )[1] : 'readme.md';
+
+//		document.title = document.title ? document.title : fileName;
+
+		let xmlHttp = new XMLHttpRequest();
+		xmlHttp.open( 'GET', fileName, true );
+		xmlHttp.onreadystatechange = function() {
+
+			info.innerHTML = xmlHttp.readyState === 4  ? converter.makeHtml( xmlHttp.responseText ) : '';
+
+		};
+
+		xmlHttp.send( null );
+
+	}
+
+</script>
+</body>
+</html>

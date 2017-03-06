@@ -1,0 +1,232 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>sphere-refraction-shaders R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script>
+
+	var urlList = [];
+
+	var p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Bridge2/';
+	urlList.push( [ 'Bridge2', [ p + 'posx.jpg', p + 'negx.jpg', p + 'posy.jpg', p + 'negy.jpg',p + 'posz.jpg',p +'negz.jpg' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Escher/';
+	urlList.push( [ 'escher', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/MilkyWay/';
+	urlList.push( [ 'MilkyWay', [ p + 'dark-s_px.jpg', p + 'dark-s_nx.jpg', p + 'dark-s_py.jpg', p + 'dark-s_ny.jpg',p + 'dark-s_pz.jpg', p +'dark-s_nz.jpg' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Park2/';
+	urlList.push( [ 'Park2', [ p + 'posx.jpg', p + 'negx.jpg', p + 'posy.jpg', p + 'negy.jpg',p + 'posz.jpg',p +'negz.jpg' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Park3Med/';
+	urlList.push( [ 'Park3Med', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/pisa/';
+	urlList.push( [ 'pisa', [ p + 'px.png', p + 'nx.png', p + 'py.png', p + 'ny.png',p + 'pz.png',p +'nz.png' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+	urlList.push( [ 'skyboxX', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
+
+	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
+	urlList.push( [ 'SwedishRoyalCastle', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
+
+	var skybox;
+
+	var sphere;
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a> 
+				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+			<p><button onclick=addSkyBox2(urlList[0][1]); >Bridge2</button></p>
+			<p><button onclick=addSkyBox2(urlList[1][1]); >Escher</button></p>
+			<p><button onclick=addSkyBox2(urlList[2][1]); >Milk Way</button></p>
+			<p><button onclick=addSkyBox2(urlList[3][1]); >Park2</button></p>
+			<p><button onclick=addSkyBox2(urlList[4][1]); >Park3Med</button></p>
+			<p><button onclick=addSkyBox2(urlList[5][1]); >Pisa</button></p>
+			<p><button onclick=addSkyBox2(urlList[6][1]); >skybox</button></p>
+			<p><button onclick=addSkyBox2(urlList[7][1]); >Swedish Royal Castle</button></p>
+			<p><input type=checkbox onchange=toggleAxis() checked> Axis</p>
+			<p><input type=checkbox onchange=toggleAutoRotate() checked> Rotation</p>
+			<div id=info ></div>
+
+		`;
+
+// 			<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 2000 );
+		camera.position.set( -30, 30, -300 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+/*
+// helpers
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -50, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 80 );
+		scene.add( axisHelper );
+
+// assets
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -51, 0 );
+		scene.add( mesh );
+*/
+
+
+		addSkyBox2( urlList[ 7 ][ 1 ] );
+
+		addWindowResize();
+
+		toggleAxis();
+		toggleAutoRotate();
+
+		controls.autoRotateSpeed = 0.025;
+
+	}
+
+	function addSkyBox2( urls ) {
+
+		scene.remove( skybox )
+
+		THREE.ImageUtils.crossOrigin = 'anonymous';
+		textureCube = THREE.ImageUtils.loadTextureCube( urls, THREE.CubeRefractionMapping  );
+		textureCube.format = THREE.RGBFormat;
+
+		var shader = THREE.ShaderLib[ "cube" ];
+		shader.uniforms[ "tCube" ].value = textureCube;
+
+		var material = new THREE.ShaderMaterial( {
+
+			fragmentShader: shader.fragmentShader,
+			vertexShader: shader.vertexShader,
+			uniforms: shader.uniforms,
+			side: THREE.BackSide
+
+		} );
+
+		geometry = new THREE.BoxGeometry( 800, 800, 800 );
+
+		skybox = new THREE.Mesh( geometry, material );
+
+		scene.add( skybox );
+
+		updateScene();
+
+	}
+
+	function updateScene() {
+
+		scene.remove( sphere );
+
+		geometry = new THREE.SphereBufferGeometry( 50, 75, 10 );
+		material = new THREE.MeshNormalMaterial();
+
+		material = new THREE.MeshBasicMaterial( { color: 0xaaaaaa, envMap: textureCube, refractionRatio: 0.01 } ),
+		sphere = new THREE.Mesh( geometry, material );
+		sphere.position.y = -30;
+		scene.add( sphere );
+
+	}
+
+
+	function toggleAutoRotate() {
+
+		controls.autoRotate = controls.autoRotate === true ? false : true ;
+
+	}
+
+
+	function toggleAxis( length ) {
+
+		if ( axisHelper === undefined ) {
+
+			length = length ? length : 50;
+
+			axisHelper = new THREE.AxisHelper( length );
+
+		} 
+
+		if ( scene.getObjectById( axisHelper.id )  ) {
+
+			scene.remove( axisHelper );
+
+		} else {
+
+			scene.add( axisHelper );
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+		sphere.rotation.x -= 0.008;
+		sphere.rotation.y += 0.0005;
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Get Sage Function Names R3</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+
+</head>
+<body>
+<script>
+
+	var branch1 = 'master';
+	var branch2 = 'develop';
+
+	var fileName1 = 'https://api.github.com/repos/sagemath/sage/contents/src/sage/functions?ref=' + branch1;
+	var fileName2 = 'https://api.github.com/repos/sagemath/sage/contents/src/sage/functions?ref=' + branch2;
+
+	var urlRaw1 = 'https://raw.githubusercontent.com/sagemath/sage/' + branch1 + '/src/sage/functions/';
+	var urlRaw2 = 'https://raw.githubusercontent.com/sagemath/sage/' + branch2 + '/src/sage/functions/';
+
+	var files;
+	var keys;
+	var index;
+
+	var css, menu;
+
+	init();
+
+	function init() {
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: auto; }
+			#menu h2, a { margin: 0; }
+			#aa { text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+			#list1, #list2 { border: 1px black solid; display: inline-block; float: left; max-width: 40%; margin: 10px; padding: 20px;}
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+		`
+
+			<h2>
+				<a href="" > ${ document.title } </a>
+				<a id=aa href=http://jaanga.github.io/demo/pm/index.html >🛈</a>
+			</h2>
+			<div id=list1 ></div>
+			<div id=list2 ></div>
+		`;
+
+		requestFileNames( fileName1, list1, branch1, urlRaw1 );
+
+	}
+
+	function requestFileNames( fileName, element, branch, url ) {
+
+		index = 0;
+
+		var xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onreadystatechange = callback;
+		xhr.send( null );
+
+		function callback() {
+
+			element.innerHTML = '<h1>"' + branch + '" branch</h1>'
+
+			if ( xhr.readyState != 4  ) { return; }
+
+			files = JSON.parse( xhr.response );
+
+			keys = Object.keys( files );
+
+			requestFiles( url, element );
+
+		}
+
+	}
+
+	function requestFiles( url, element ) {
+
+		var xhr2 = new XMLHttpRequest();
+		xhr2.open( 'GET', url + files[ index ].name, true );
+		xhr2.onreadystatechange = callback2;
+		xhr2.send( null );
+
+		function callback2() {
+
+			if ( xhr2.readyState != 4  ) { return; }
+
+			response = xhr2.response;
+
+			lines = response.split(/\r\n|\n/);
+
+			text = `<h2><a href=${ url + files[ index ].name }  >${ files[ index ].name }<a> size:${ files[ index ].size }</h2>`;
+
+			for ( var i = 0; i < lines.length; i++ ) {
+
+				line = lines[ i ];
+
+				if ( line.substr( 0, 1 ) !== ' ' && line.indexOf( ' = ' ) > -1 ) {
+
+					text += line + '<br>';
+
+				}
+
+			}
+
+			text += '<br><br>';
+
+			for ( var i = 0; i < lines.length; i++ ) {
+
+				line = lines[ i ];
+
+				if ( line.indexOf( ' def ' ) > -1 && line.indexOf( 'def __init__(self)' ) === -1 ) {
+
+					text += line + '<br>';
+
+				}
+
+			}
+
+			text += '<br><br>';
+
+			element.innerHTML += text;
+
+			if ( ++index < keys.length ) { 
+
+				requestFiles( url, element ); 
+
+			} else if ( list2.innerHTML === '' ) {
+
+					requestFileNames( fileName2, list2, branch2, urlRaw2 );
+
+			}
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

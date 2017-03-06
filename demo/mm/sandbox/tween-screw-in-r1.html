@@ -1,0 +1,420 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Tween Screw-In R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
+<script src=../js/mm-r1.js ></script>
+<script>
+
+	var screwdriver, screw;
+	var chkPlay;
+
+//	var radiusScrew = 1.5;
+	var components = [];
+
+	var css, menu, stats, renderer, scene, camera, controls;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+		`
+
+			body { font: 12pt monospace; margin: 0; overflow: hidden; }
+			h2 { margin: 0 }
+			#aa {text-decoration: none; }
+			#menu { margin: 0 20px; position: absolute; }
+
+			button { background-color: #eee; border: 2px #eee solid; color: #888; }
+
+			input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }
+			input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }
+			input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; opacity: 0.85; width: 10px; }
+
+		`;
+
+		menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML = 
+		`
+
+			<h2>
+				<a href="" > ${ document.title }</a> 
+				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+			</h2>
+ 			<p><button onclick=returnAllToStartTween(); >Return all to start</button>
+			<p><button onclick=assembleQuicklyTween(); >Assemble Quickly</button></p>
+			<p><button onclick=togglePositions(); >Toggle Positions</button></p>
+			<p><input type=checkbox id=chkScrew onchange=togglePlayClip(screwInClip,chkScrew,itemDispatch); > Draw Screw Position</p>
+			<p><button onclick=screwIn(); >Screw In</button></p>
+			<div id=info ></div>
+
+		`;
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setClearColor( 0xfafafa );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false ); // mm-r1.js
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false ); // mm-r1.js
+
+// helpers
+		var gridHelper = new THREE.GridHelper( 50, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		var axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -11, 0 );
+		scene.add( mesh );
+
+		initComponents()
+
+	}
+
+	function screwIn() {
+
+		var obj, ohp, oud;
+
+		for ( var i = 0; i < components.length; i++ ) {
+
+			obj = components[ i ];
+			oud = obj.userData.places;
+
+			if ( obj.position.distanceTo( oud[ 2 ][ 0 ] ) !== 0 ) {
+
+				send2location( obj, oud[ 2 ][ 0 ], oud[ 2 ][ 1 ], 8000 );
+
+			}
+
+		}
+
+
+	}
+
+	function initComponents() {
+
+		screwdriver = drawScrewdriver();
+		screwdriver.userData.places.push( [ v( ran( -30 ), screwdriver.userData.radius, - ran( 80 ) + 40 ), v( 0, ran( 3 ), 0 ) ] );
+		screwdriver.userData.places.push( [ v( 0, 0, 10 ), v( 0, 0, 0 ) ] );
+		screwdriver.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		screwdriver.userData.places.push( [ v( 0, 0, -10 ), v( 0, 0, -5 * pi2 ) ] );
+		screwdriver.userData.places.push( [ v( 0, 0, 0 ), v( 0, 0, 0 ) ] );
+		components.push( screwdriver );
+		scene.add( screwdriver );
+
+		screw = drawScrew100372();
+		var radiusScrew = screw.userData.radiusScrew;
+		screw.userData.places.push( [ v( - 15 - ran( 30 ), radiusScrew, ran( 80 ) - 40  ), v( ran( 0.2 ), ran( 6 ), 0 ) ] );
+		screw.userData.places.push( [ v(  0, 0, -10  ), v( 0, 0, 0 ) ] );
+		screw.userData.places.push( [ v(  0, 0, -20  ), v( 0, 0, -5 * pi2 ) ] );
+		screw.userData.places.push( [ v(  0, 0, -10  ), v( 0, 0, 0 ) ] );
+		components.push( screw )
+		scene.add( screw );
+
+		camera.userData.places = [];
+		camera.name = 'camera';
+		camera.userData.places.push( [ camera.position.clone(), controls.target.clone() ] );
+		camera.userData.places.push( [ v( -100, 100, 100 ), v( 0, 0, 0 ) ] ); // 1. home
+		camera.userData.places.push( [ v( -50, 80, 80 ), v( 0, 0, 0 ) ] ); // 2 assembled
+
+		createScrewInClip();
+
+		returnAllToStartTween(); // mm-r1.js
+
+
+	}
+
+		function itemDispatch() {
+
+			if ( chkScrew.checked === true ) { 
+
+				if ( frameIndex < screwInClip.length && itemCount < screwInClip[ frameIndex ].length ) {
+
+					itemCount++;
+
+				}
+
+				togglePlayClip( screwInClip, chkScrew, itemDispatch );
+
+			}
+
+		}
+
+	function drawScrewdriver() {
+
+		var radiusHandle = 5;
+		var radiusShaft = 1;
+		var tipLength = 8;
+		var points = [ /* v( 0, 0, 0 ) , */ v( 1, 0, 0 ), v( 1, 0, 50 ), v( radiusHandle, 0, 50 ), v( radiusHandle, 0, 52), v( 4, 0, 52), v( 4, 0, 55 ), v( radiusHandle, 0, 55), v( radiusHandle, 0, 80 ), v( 0, 0, 81 ) ];
+		var geometry = new THREE.LatheGeometry( points, 8 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, tipLength ) ); 
+
+		var geo2 = drawPhillipsTip( radiusShaft, tipLength );
+		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( pi05 ) );
+		geometry.merge( geo2 );
+
+		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false });
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.name = 'pencil';
+		mesh.userData.places = [];
+		mesh.userData.radiusHandle = radiusHandle;
+
+//		screws.push( mesh );
+		return mesh;
+
+		function drawPhillipsTip( radiusShaft, tipLength, rows ) {
+
+			var radiusShaft = radiusShaft ? radiusShaft : 1;
+			var tipLength = tipLength ? tipLength : 5;
+			var columns = 12;
+			var rows = rows ? rows : 3;
+
+			var geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+			var vertices = geometry.vertices;
+			var count = 0;
+			var raddii = [ 0.2, 0.5, 1 ];
+			var lengths = [ 0, 0, 0.5, 1 ];
+			for ( var i = 0; i <= rows; i++ ) {
+
+				var theta = pi2 / columns;
+
+				for ( var j = 0; j <= columns; j++ ) {
+
+					if ( i < raddii.length ) {
+
+						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radiusShaft : raddii[ i ] * radiusShaft;
+
+					} else {
+
+						r = radiusShaft;
+
+					}
+
+					var vt = vertices[ count++ ];
+					vt.x = r * cos( theta * j );
+					vt.y = lengths[ i ] * tipLength
+					vt.z = r * sin( theta * j );
+
+				}
+
+			}
+
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+
+				return geometry;
+
+		}
+
+	}
+
+	function drawScrew100372() {
+
+		var radiusScrew = 1.5;
+		var radiusScrew05 = 0.5 * radiusScrew;
+		var delta = 2;
+		var height = 20;
+		var height05 = 0.5 * height;
+		var pitch = 2;
+		var segments = 12;
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		points = [
+
+// head
+//			v( 5, 0, height05 + 2) ,
+//			v( delta, 0, height05 + 2 ),
+//			v( de, 0, height05 + delta),
+			v( radiusScrew05 + delta, 0, height05 + delta ),
+			v( radiusScrew05, 0, height05 ),
+
+// body and tip
+			v( radiusScrew05, 0, -height05 ),
+			v( 0, 0, -height05 - delta )
+
+		];
+
+		geometry = new THREE.LatheGeometry( points, segments );
+
+		geo2 = drawPhillipsHead( radiusScrew + 1.25, radiusScrew + 1.25 ); // createPhillipsHead( radius, height, rows );
+		geo2.applyMatrix( new THREE.Matrix4().makeRotationX( -pi05 ) );
+		geo2.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, height05 + delta ) ); 
+
+		geometry.merge( geo2 );
+
+		geo2 = drawSpiralAlongZ( radiusScrew05, radiusScrew05 + 1, segments, height / pitch, pitch );
+		geometry.merge( geo2 );
+
+
+		mesh = new THREE.Mesh( geometry, material );
+
+		mesh.name = 'screw100372';
+		mesh.userData.places = [];
+		mesh.userData.radiusScrew = radiusScrew;
+
+		return mesh;
+
+		function drawPhillipsHead( radius, height, rows ) {
+
+			var radius = radius ? radius : 20;
+			var height = height ? height : -20;
+			var columns = 12;
+			var rows = rows ? rows : 2;
+
+			var geometry = new THREE.PlaneGeometry(  1, 1, columns, rows );
+			vertices = geometry.vertices;
+			var count = 0;
+			var raddii = [ 1, 0.75, 0.25 ];
+			for ( var i = 0; i <= rows; i++ ) {
+
+				var theta = pi2 / columns;
+
+				for ( var j = 0; j <= columns; j++ ) {
+
+					if ( i === 0 ) {
+
+						r = radius * raddii[ i ];
+						offset = 0;
+
+					} else {
+
+						r = j % 3 === 0 ? 0.5 * raddii[ i ] * radius : raddii[ i ] * radius;
+						offset = - height / rows;
+					}
+
+					vt = vertices[ count++ ];
+					vt.x = r * cos( theta * j );
+					vt.y = i * height / rows + offset;
+					vt.z = r * sin( theta * j );
+
+				}
+
+			}
+
+			geometry.computeFaceNormals();
+			geometry.computeVertexNormals();
+
+			return geometry;
+
+		}
+
+		function drawSpiralAlongZ( rIn, rOut, seg, tur, pit ) {
+
+			var radiusInside = rIn ? rIn : 10;
+			var radiusOutside = rOut ? rOut : 15;
+
+			var segments = seg ? seg : 36;
+			var turns = tur ? tur : 7;
+			var segementsTotal = turns * segments;
+
+			var pitch = pit ? pit : 15;
+			var pitchDelta = 0.5 * pitch / segments;
+
+			var angleDelta = pi / segments;
+
+			var geometry = new THREE.PlaneGeometry( 1, 1, 1, segementsTotal );
+			vertices = geometry.vertices;
+
+			for ( var i = 0; i < vertices.length; i++ ) {
+
+				var v = vertices[ i ];
+
+				if ( v.x < 0 ) {
+
+					v.x = radiusInside * cos( angleDelta * i );
+					v.y = radiusInside * sin( angleDelta * i );
+					v.z = pitchDelta * i;
+
+				} else {
+
+					v.x = radiusOutside * cos( angleDelta * i );
+					v.y = radiusOutside * sin( angleDelta * i );
+					v.z = pitchDelta * i;
+
+				}
+
+			}
+
+			geometry.center();
+
+			return geometry
+
+		}
+
+	}
+
+	function createScrewInClip() {
+
+		screwInClip = [
+
+			[ [ screw, 1, 2000 ] ],
+			[ [ screwdriver, 1, 2000 ] ],
+			[ [ screwdriver, 2, 2000 ] ],
+			[ [ camera, 2, 2000 ]  ],
+			[ [ screwdriver, 3, 8000 ], [ screw, 2, 8000 ] ],
+			[ [ screwdriver, 0, 5000 ] ]
+		];
+
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+/*
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		TWEEN.update();
+		stats.update();
+		renderer.render( scene, camera );
+
+	}
+*/
+
+</script>
+</body>
+</html>

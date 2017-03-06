@@ -1,0 +1,394 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>notKallax Wall Bracket Basic R13</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='3D animation that shows you how to position, install and afix a bracket to retain a book shelf against a wall.' >
+<meta name=keywords content='Moving Manuals,WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-02-28' >
+</head>
+<body>
+
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/tween.min.js ></script>
+<!--
+<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/tween.min.js ></script>
+-->
+<script src=../js/mm-object-r3.js ></script>
+<script src=../js/tweenjs-r1.js ></script>
+<script>
+
+	var bracketAssembly;
+
+	var bracket115753;
+	var part103693; // bracket screw mask
+	var screw100372;
+
+	var fixture;
+	var screwWall;
+	var pencil;
+	var pencilLine;
+	var screwdriver;
+
+	var heightBracket = 30;
+	var radiusScrew = 1.5;
+
+	var indexAssembly = 0;
+
+	var stats, renderer, scene, camera, controls;
+
+	init();
+	animate();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'h2 { margin: 0; }' +
+			'a { text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ddd; border: 2px #ddd solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#bars { cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#bars { color: pink; } ' +
+			'#hamburger { left: 275px; position: absolute; top: 0px; transition: left 1s; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; left: -265px; max-height: ' + ( window.innerHeight - 10 ) + 'px; ' +
+				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: 0; transition: left 1s; width: 240px; }' +
+
+		'';
+
+		var hamburger = document.body.appendChild( document.createElement( 'div' ) );
+		hamburger.id = 'hamburger';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
+		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "275px" : 0; };
+
+		var menu = hamburger.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+			'	<a href="" >' + document.title + ' </a>' +
+			'	<a href=http://jaanga.github.io/demo/mm/ >❦</a>' +
+			'</h2>' +
+
+ 			'<p><button onclick=toggleAssembly(); >Toggle Assembly</button>' +
+
+//			'<p><button onclick=tweenAllToLocation(0); >Return all to start</button>' +
+//			'<p><button onclick=tweenAllToLocation(1); >Assemble Quickly</button></p>' +
+
+			'<p><input type=checkbox id=chkBracket onchange=togglePlayClip(attachWallBracket,chkBracket); title="Attach Wall Bracket" > Attach Wall Bracket</p>' +
+			'<p><input type=checkbox id=chkPencilDraw onchange=togglePlayClip(pencilDrawClip,chkPencilDraw); title="Draw Screw Position" > Draw Screw Position</p>' +
+			'<p><input type=checkbox id=chkFixWallScrew onchange=togglePlayClip(fixWallScrew,chkFixWallScrew); title="Attach Wall Screw" > Attach Wall Screw</p>' +
+			'<p><input type=checkbox id=chkFixPart103693 onchange=togglePlayClip(fixPart103693,chkFixPart103693); title="Attach Keyhole Plate" > Attach Keyhole Plate</p>' +
+			'<p><a href="http://jaanga.github.io/demo/mm/kallax-nxn/" >notKallax NxN</a></p>' +
+			'<div id=info style=font-size:9pt; ></div>' +
+
+		'';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, 100, -100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		if ( window.self !== window.top ) { controls.enableZoom = false; }
+		controls.maxDistance = 800;
+		controls.dampingFactor = 0.25;
+		controls.enableDamping = true;
+		controls.update();
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+// tweenjs-r1.js
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+
+// ground plane
+		var geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		var material = new THREE.MeshNormalMaterial( { opacity: 0.75, transparent: true });
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -1, 0 );
+		mesh.name = 'ground';
+		scene.add( mesh );
+
+// assets
+		draw_WallBracketAssembly();
+
+	}
+
+	function draw_WallBracketAssembly() {
+
+		scene.remove( bracketAssembly, edges, helpers );
+
+// bracketAssembly may not be that useful...
+
+		bracketAssembly = new THREE.Object3D();
+		bracketAssembly.name = 'bracketAssembly';
+
+		edges = new THREE.Object3D();
+		edges.name = 'edges';
+
+		draw_helpers( 50 );
+
+		objects = [];
+		holes = [];
+		screws = [];
+		pegs = [];
+
+		origin = v( 80, 20, 30 );
+		moveTo = v( 120, 20, 80 );
+
+// all draw_X... in // mm-object-rX.js
+
+		fixture = draw_fixture();
+		fixture.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z, rX: 0, rY: pi05, rZ: 0 } );
+		fixture.userData.places.push( { pX: moveTo.x, pY: moveTo.y, pZ: moveTo.z, rX: 0, rY: pi05, rZ: 0 } );
+
+		scene.add( fixture );
+		objects.push( fixture );
+
+
+		bracket115753 = draw_bracket115753();
+
+		bracket115753.userData.places.push( { pX: 20 + ran( 10 ), pY: 10, pZ: -20 - ran( 20 ), rX: -pi05, rY: 0, rZ: ran( pi ) } );
+		bracket115753.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z - 100 + 3.2 * radiusScrew, rX: 0, rY: 0, rZ: 0 } );
+		bracket115753.userData.places.push( { pX: origin.x, pY: origin.y, pZ: origin.z - 100 + 6.6 * radiusScrew, rX: 0, rY: 0, rZ: 0 } );
+		bracket115753.userData.places.push( { pX: moveTo.x, pY: moveTo.y, pZ: moveTo.z - 100 + 3.2 * radiusScrew } );
+
+		var placard = build_placard( '115753', 0.05, 120, -10, 20, 0 )
+		bracket115753.add( placard );
+
+		objects.push( bracket115753 );
+		bracketAssembly.add( bracket115753 );
+
+		part103693 = draw_part103693();
+
+		part103693.userData.places.push( { pX: 20 + ran( 20 ), pY: 0, pZ: 20 + ran( 30 ), rX: -pi05, rY: 0, rZ: ran( pi ) } );
+		part103693.userData.places.push( { pX: origin.x - 20, pY: origin.y - 9, pZ: origin.z - 104 } );
+		part103693.userData.places.push( { pX: origin.x - 20, pY: origin.y - 12, pZ: origin.z - 104 } );
+
+		placard = build_placard2( '103693', 0.05, 120, 0, 0, 20 )
+		part103693.add( placard );
+
+		objects.push( part103693 );
+		bracketAssembly.add( part103693 );
+
+		for ( var i = 0; i < 2; i++ ) {
+
+			var screw = draw_screw100372();
+//			var radiusScrew = screw.userData.radiusScrew;
+
+			screw.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0 } );
+			screw.userData.places.push( { pX: origin.x, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
+			screw.userData.places.push( { pX: origin.x + 10, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), pZ: origin.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
+			screw.userData.places.push( { pX: moveTo.x + 10, pY: moveTo.y - 0.5 * heightBracket + 3 * radiusScrew + i * ( heightBracket - 6 * radiusScrew ), pZ: moveTo.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
+
+			placard = build_placard2( '100372', 0.05, 120, 0, 20, 30 );
+			screw.add( placard );
+
+			bracketAssembly.add( screw );
+			screws.push( screw );
+			objects.push( screw );
+
+		}
+
+		screwWall = draw_screw100372();
+
+		screwWall.userData.places.push( { pX: -ran( 45 ), pY: radiusScrew, pZ: -10 - ran( 30 ), rX: - ran( 0.1 ), rY: ran( 1.05 ) - 0.5, rZ: 0 } );
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0 } );
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: -5 * pi } );
+
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: 0} );
+
+		screwWall.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 115, rX: 0, rY: 0, rZ: -5 * pi } );
+
+		placard = build_placard( 'wall screw', 0.05, 120, 0, 20, 10 );
+		screwWall.add( placard );
+
+		bracketAssembly.add( screwWall );
+		objects.push( screwWall );
+
+		scene.add( bracketAssembly );
+
+
+		pencil = draw_pencil();
+
+		pencil.userData.places.push( { pX: 20 + ran( -50 ), pY: pencil.userData.radius, pZ: 30 + ran( 20 ), rX: 0, rY: pi_05 + ran( 0.5 ) - 0.25, rZ: 0 } );
+		pencil.userData.places.push( { pX: origin.x - 15, pY: origin.y, pZ: origin.z - 50, rX: 0, rY: 0, rZ: 0 } );
+		pencil.userData.places.push( { pX: origin.x - 16, pY: origin.y, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
+		pencil.userData.places.push( { pX: origin.x - 10, pY: origin.y, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
+		pencil.userData.places.push( { pX: origin.x - 14, pY: origin.y, pZ: origin.z - 100, rX: 0, rY: 0, rZ: 0 } );
+		pencil.userData.places.push( { pX: origin.x - 13, pY: origin.y + 2, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
+		pencil.userData.places.push( { pX: origin.x - 13, pY: origin.y - 2, pZ: origin.z - 107, rX: 0, rY: 0, rZ: 0 } );
+
+		objects.push( pencil );
+		scene.add( pencil );
+
+
+		screwdriver = draw_screwdriver();
+
+		screwdriver.userData.places.push( { pX: 30 + ran( -25 ), pY: screwdriver.userData.radiusHandle, pZ: ran( 30 ), rX: 0, rY: -pi05 + ran( 0.5 ) - 0.25, rZ: 0 } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 25, pY: origin.y + 0.5 * heightBracket - 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 10, pY: origin.y + 0.5 * heightBracket - 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 0, pY: origin.y + 0.5 * heightBracket - 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 25, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 10, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 5 * pi, rY: -pi05, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 0, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 10 * pi, rY: -pi05, rZ: 0 } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 0, pY: origin.y - 0.5 * heightBracket + 3 * radiusScrew, pZ: origin.z - 100 + 5 * radiusScrew, rX: 0, rY: -pi05, rZ: 0 } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 70, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 85, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: -5 * pi  } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0  } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 80, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 95, rX: 0, rY: 0, rZ: 0 } );
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: -5 * pi  } );
+
+		screwdriver.userData.places.push( { pX: origin.x - 12.5, pY: origin.y, pZ: origin.z - 105, rX: 0, rY: 0, rZ: 0  } );
+
+		objects.push( screwdriver );
+		scene.add( screwdriver );
+
+
+		camera.userData.places = [];
+		camera.userData.tween = tweenCamera;
+		camera.name = 'camera';
+
+		camera.userData.places.push( { pX: -100, pY: 100, pZ: 100, tX: 0, tY: 0, tZ: 0 } );
+		camera.userData.places.push( { pX: 30, pY: 100, pZ: -50, tX: 80, tY: 16, tZ: -73 } );
+		camera.userData.places.push( { pX: 50, pY: 40, pZ: 20, tX: origin.x, tY: origin.y, tZ: origin.z - 100 } );
+
+
+		pencilLine = {};
+		pencilLine.name ='pencilLine';
+		pencilLine.userData = {};
+		pencilLine.userData.places = [];
+		pencilLine.userData.tween = drawPencilLine;
+
+		pencilLine.userData.places.push({ pX: origin.x - 16, pY: origin.y, pZ: origin.z - 107, rX: origin.x - 10, rY: origin.y, rZ: origin.z - 107 } );
+		pencilLine.userData.places.push({ pX: origin.x - 13, pY: origin.y + 2, pZ: origin.z - 107, rX: origin.x - 13, rY: origin.y - 2, rZ: origin.z - 107 } );
+
+
+		createClips();
+
+		tweenAllToLocation(); // mm-tween-r1.js
+
+	}
+
+	function createClips() {
+
+		attachWallBracket = [
+
+			[ [ bracket115753, 1, 2000 ] ],
+			[ [ bracket115753, 2, 1000 ] ],
+			[ [ bracket115753, 1, 500 ] ],
+			[ [ bracket115753, 2, 1000 ] ],
+			[ [ bracket115753, 1, 500 ] ],
+			[ [ screws[ 1 ], 1, 2000 ] ],
+			[ [ screwdriver, 1, 2000 ] ],
+			[ [ camera, 1, 2000 ] ],
+			[ [ screwdriver, 2, 2000 ] ],
+			[ [ screws[ 1 ], 2, 5000 ], [ screwdriver, 3, 5000 ] ],
+			[ [ screwdriver, 4, 2000 ] ],
+			[ [ screws[ 0 ], 1, 2000 ] ],
+			[ [ screwdriver, 5, 3000 ] ],
+			[ [ screws[ 0 ], 2, 5000 ], [ screwdriver, 6, 5000 ] ],
+			[ [ camera, 0, 2000 ] ],
+			[ [ screwdriver, 7, 0 ] ],
+			[ [ screwdriver, 0, 3000 ] ]
+
+		];
+
+		pencilDrawClip = [
+
+			[ [ bracket115753, 1, 2000 ], [ objects[ 3 ], 2, 2000 ], [ objects[ 4 ], 2, 2000 ] ],
+			[ [ pencil, 1, 2000 ] ],
+			[ [ pencil, 2, 2000 ] ],
+			[ [ camera, 2, 1000 ] ],
+			[ [ pencil, 3, 2000 ]],
+			[ [ pencil, 4, 1000 ], [ pencilLine, 0, 500 ]  ],
+
+			[ [ pencil, 5, 2000 ] ],
+			[ [ pencil, 6, 1000 ], [ pencilLine, 1, 500 ] ],
+			[ [ camera, 0, 1000 ] ],
+			[ [ pencil, 0, 2000 ] ]
+
+		];
+
+		fixWallScrew = [
+
+			[ [ pencilLine, 0, 1000 ], [ pencilLine, 1, 1000 ], [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ],
+			[ [ fixture, 1, 2000 ], [ bracket115753, 3, 2000 ], [ screws[ 0 ], 3, 2000 ], [ screws[ 1 ], 3, 2000 ] ],
+			[ [ screwWall, 1, 2000 ] ],
+			[ [ screwdriver, 8, 3000 ] ],
+			[ [ camera, 2, 1000 ] ],
+			[ [ screwdriver, 9, 2000 ] ],
+			[ [ screwdriver, 10, 5000 ], [ screwWall, 2, 5000 ] ],
+			[ [ camera, 0, 1000 ], [ screwdriver, 11, 0 ] ],
+			[ [ screwdriver, 0, 3000 ] ],
+			[ [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ]
+
+		];
+
+		fixPart103693 = [
+
+			[ [ pencilLine, 0, 1000 ], [ pencilLine, 1, 1000 ], [ screwWall, 3, 2000 ], [ fixture, 0, 2000 ], [ bracket115753, 1, 2000 ], [ screws[ 0 ], 2, 2000 ], [ screws[ 1 ], 2, 2000 ] ],
+			[ [ part103693, 1, 2000 ] ],
+			[ [ camera, 2, 1000 ] ],
+			[ [ part103693, 2, 3000 ] ],
+			[ [ screwdriver, 12, 2000 ] ],
+			[ [ screwdriver, 13, 2000 ] ],
+			[ [ screwWall, 4, 2000 ], [ screwdriver, 14, 2000 ] ],
+			[ [ camera, 0, 1000 ], [ screwdriver, 15, 0 ] ],
+			[ [ screwdriver, 0, 2000 ] ]
+
+		]
+	}
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		controls.update();
+		stats.update();
+		TWEEN.update();
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
