@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>CSS Change</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<script>
+// http://stackoverflow.com/questions/32525421/dynamically-load-web-font
+
+
+	var css;
+
+	init();
+
+	function init() {
+
+		var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		var contents;
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<div id=info ></div>' +
+
+			'<p>' + txt + '</p>' +
+
+			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
+
+			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
+
+			'<p>' +
+				'Overlay: <select id=selList title="Select the 2D overlay" >' +
+					'<option>aaa aaa aaa</option>' +
+					'<option>bbb bbb</option>' +
+					'<option>cc cc cc cc</option>' +
+				'<select>' +
+			'</p>' +
+
+
+			'<p>' +
+				'<input type=radio name=field id=but1 />button 1' +
+				'<input type=radio name=field id=but2 checked />button 2' +
+				'<input type=radio name=field id=but3 />button 3' +
+			'</p>' +
+
+			'<p><button onclick=cssChangeDark(); value="it do" >css change dark</button></p>' +
+			'<p><button onclick=cssChangeLight(); value="it do" >css change Light</button></p>' +
+		'';
+
+	}
+
+	function cssChangeDark() {
+
+//		fontID = 'Open+Sans';
+		fontID = 'Great+Vibes';
+
+
+		font = document.body.appendChild( document.createElement( 'link' ) );
+		font.id = fontID;
+		font.rel = 'stylesheet';
+		font.href = 'http://fonts.googleapis.com/css?family=' + fontID;
+
+		document.body.style.backgroundColor = '#222';
+		document.body.style.color = '#ddd';
+		document.body.style.font = '18pt Great Vibes';
+
+
+
+/*
+		css.innerHTML =
+
+			'body { background-color: #222; color: #ccc; font: 12pt monospace; margin: 0 auto; max-width: 50em; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+
+		'';
+*/
+	}
+
+	function cssChangeLight() {
+
+		document.body.style.backgroundColor = '#fff';
+		document.body.style.color = '#000';
+		document.body.style.font = '12pt monospace';
+
+	}
+
+</script>
+</body>
+</html>

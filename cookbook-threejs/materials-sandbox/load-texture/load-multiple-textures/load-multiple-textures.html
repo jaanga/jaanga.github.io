@@ -80,7 +80,7 @@
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
@@ -127,6 +127,7 @@
 		h = hack02;
 
 		scans = new THREE.Object3D();
+
 		geometry = new THREE.PlaneBufferGeometry( 100, 100 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( h.angle ) );
 
@@ -146,6 +147,7 @@
 				scans.add( mesh );
 
 			}
+
 			image.src = h.dir + ( i + 1 ) + '.png';
 
 		}

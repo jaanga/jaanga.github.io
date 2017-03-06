@@ -9,13 +9,14 @@
 <meta name=date content='2017-01-01' >
 </head>
 <body>
-<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.5.5/showdown.min.js ></script>
+<script src=https://cdn.rawgit.com/showdownjs/showdown/master/dist/showdown.min.js ></script>
 <script>
+
 // https://github.com/showdownjs/showdown
 // https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates2/open-index-or-markdown
 
 	var defaultFile = 'index.html';
-	location.hash = 'README.md';
+	location.hash = 'test.md';
 
 	var contents;
 
@@ -50,7 +51,8 @@
 
 		contents = contents ? contents : document.body.appendChild( document.createElement( 'div' ) ) ;
 
-		converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
+		showdown.setFlavor('github');
+		converter = new showdown.Converter();
 
 		url = location.hash.slice( 1 );
 
