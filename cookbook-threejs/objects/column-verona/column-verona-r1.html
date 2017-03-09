@@ -43,7 +43,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -147,10 +147,10 @@
 			p.push( pt );
 		}
 
-		pt = v( pt.x - 1, 0, pt.z ) 
+		pt = v( pt.x - 1, 0, pt.z )
 		p.push( pt );
 
-		pt = v( pt.x, 0, pt.z + 1 ) 
+		pt = v( pt.x, 0, pt.z + 1 )
 		p.push( pt );
 		x = pt.x
 		z = pt.z + 2;
@@ -255,7 +255,7 @@
 
 		var geometry = new THREE.LatheGeometry( p, 30 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
-		material = new THREE.MeshNormalMaterial(  { side: 2, wireframe: false } ); 
+		material = new THREE.MeshNormalMaterial(  { side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material ) ;
 		verona.add( mesh );
 

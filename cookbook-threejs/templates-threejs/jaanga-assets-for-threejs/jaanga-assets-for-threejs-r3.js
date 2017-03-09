@@ -201,7 +201,7 @@ console.log( '',backgroundGradient);
 			groundBoxHelper.material.color.setRGB( 1, 0, 1 );
 			groundBoxLights.add( groundBoxHelper );
 
-			gridHelper = new THREE.GridHelper( 0.5 * size, 10 );
+			gridHelper = new THREE.GridHelper( 1 * size, 10 );
 			groundBoxLights.add( gridHelper );
 
 			scene.add( groundBoxLights );

@@ -45,7 +45,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -131,11 +131,12 @@
 
 			];
 
-			var material = new THREE.MeshNormalMaterial();
+
 			var phi, theta;
 
 			for ( var i = 0; i < objectsCount; i++ ) {
 
+			var material = new THREE.MeshNormalMaterial();
 				var geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
 				var mesh = new THREE.Mesh( geometry, material );
 				mesh.scale.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
@@ -149,8 +150,13 @@
 
 				randomGeometry.add( mesh );
 
-				helper = new THREE.EdgesHelper( mesh );
-				randomGeometryHelpers.add( helper );
+//				helper = new THREE.EdgesHelper( mesh );
+//				randomGeometryHelpers.add( helper );
+
+				var geometryEdge = new THREE.EdgesGeometry( mesh.geometry ); // or WireframeGeometry
+				var material = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 5 } );
+				var edges = new THREE.LineSegments( geometryEdge, material );
+				mesh.add( edges ); // add wireframe as a child of the parent mesh
 
 				objects.push( mesh )
 

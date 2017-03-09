@@ -8,7 +8,7 @@
 		material = material === undefined ? new THREE.MeshNormalMaterial( { opacity: 0.7, side: 2, transparent: true } ) : material;
 
 		var ground, helper, axis, cylinder, cube, sphere, torus, wave, loader, stl, female, suzanne, tree;
- 
+
 // back row
 		geometry = new THREE.BoxGeometry( 150, 5, 150 );
 		ground = new THREE.Mesh( geometry, material );
@@ -20,7 +20,7 @@
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
-		grid = new THREE.GridHelper( 75, 10 );
+		grid = new THREE.GridHelper( 150, 10 );
 		scene.add( grid );
 
 		axis = new THREE.AxisHelper( 100 );
@@ -61,7 +61,7 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 		geometry.computeFaceNormals();
 		geometry.computeVertexNormals();
-		geometry.verticesNeedUpdate = true;  
+		geometry.verticesNeedUpdate = true;
 		geometry.normalsNeedUpdate = true;
 
 		wave = new THREE.Mesh( geometry, material );
@@ -110,7 +110,7 @@
 			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
 			geometry.computeFaceNormals();
 			geometry.computeVertexNormals();
-			geometry.verticesNeedUpdate = true;  
+			geometry.verticesNeedUpdate = true;
 			geometry.normalsNeedUpdate = true;
 
 			suzannne = new THREE.Mesh( geometry, material );

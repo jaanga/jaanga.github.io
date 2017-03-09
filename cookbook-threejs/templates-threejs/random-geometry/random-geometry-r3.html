@@ -52,7 +52,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -95,7 +95,7 @@
 		controls.autoRotate === true;
 
 		var size = 100;
-		var lightAmbient, lightPoint;
+		//lightAmbient, lightPoint;
 
 		lightAmbient = new THREE.AmbientLight( 0x444444 );
 		scene.add( lightAmbient );
@@ -157,10 +157,10 @@
 		scene.remove( randomGeometry, randomGeometryHelpers );
 
 		randomGeometry = new THREE.Object3D();
-		randomGeometryHelpers = new THREE.Object3D();
+//		randomGeometryHelpers = new THREE.Object3D();
 
 		randomGeometry.name = 'randomGeometry';
-		randomGeometryHelpers.name = 'randomGeometryHelpers';
+//		randomGeometryHelpers.name = 'randomGeometryHelpers';
 
 // thanks to @greggman for the idea
 
@@ -196,14 +196,19 @@
 
 			randomGeometry.add( mesh );
 
-			helper = new THREE.EdgesHelper( mesh );
-			randomGeometryHelpers.add( helper );
+//			helper = new THREE.EdgesHelper( mesh );
+//			randomGeometryHelpers.add( helper );
+
+			var geometryEdge = new THREE.EdgesGeometry( mesh.geometry ); // or WireframeGeometry
+			var material = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 5 } );
+			var edges = new THREE.LineSegments( geometryEdge, material );
+			mesh.add( edges ); // add wireframe as a child of the parent mesh
 
 			objects.push( mesh )
 
 		}
 
-		scene.add( randomGeometry, randomGeometryHelpers );
+		scene.add( randomGeometry );
 
 	}
 

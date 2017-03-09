@@ -48,11 +48,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >??</a>
 			</h2>
 			<div id=info ></div>
@@ -85,7 +85,7 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 
 // helpers
-		var gridHelper = new THREE.GridHelper( 50, 10 );
+		var gridHelper = new THREE.GridHelper( 100, 10 );
 		gridHelper.position.set( 0, -20, 0 );
 		scene.add( gridHelper );
 

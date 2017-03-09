@@ -80,7 +80,7 @@
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
-		var gridHelper = new THREE.GridHelper( 50, 10 );
+		var gridHelper = new THREE.GridHelper( 100, 10 );
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 

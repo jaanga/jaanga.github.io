@@ -12,11 +12,11 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
 
-<script src=http://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r2.js ></script>
+<script src=https://jaanga.github.io/cookbook-threejs/templates-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r2.js ></script>
 <script>
 
 	var sphere;
@@ -55,7 +55,7 @@
 
 			<h2>
 				<a href="" > ${ document.title } </a>
-				<a id=aa href=http://jaanga.github.io/ >🛈</a>
+				<a id=aa href=https://jaanga.github.io/ >🛈</a>
 			</h2>
 			<p>radius: <input type=range id=inpRadius max=150 min=20 step=1 value=50 oninput=drawSphere();out.value=inpRadius.value; title="20 to 150: OK" > <output id=out >value</output></p>
 			<p>slices: <input type=range id=inpSlices max=50 min=2 step=1 value=${ numberOfSlices } oninput=drawSphere();outSlices.value=inpSlices.value; title="20 to 150: OK" > <output id=outSlices >${ numberOfSlices }</output></p>
@@ -87,7 +87,7 @@
 
 		THREE.ImageUtils.crossOrigin = 'anonymous';
 		material = new THREE.MeshBasicMaterial();
-		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		var r = 'http://rawgit.com/mrdoob/three.js/dev/examples/textures/cube/skybox/';
 		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
 
 		textureCube = THREE.ImageUtils.loadTextureCube( urls );

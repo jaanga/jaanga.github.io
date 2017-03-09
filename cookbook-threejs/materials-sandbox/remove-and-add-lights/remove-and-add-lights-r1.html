@@ -96,7 +96,7 @@
 // Ground Plane
 		geometry = new THREE.BoxGeometry( 100, 5, 100 );
 		var material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(), 
+			color: 0xffffff * Math.random(),
 			emissive: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 30,
@@ -115,8 +115,8 @@
 
 		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
-		
-		var helper = new THREE.GridHelper( 50, 10 );
+
+		var helper = new THREE.GridHelper( 100, 10 );
 		helper.position.set( 0, -7.5, 0 );
 		scene.add( helper );
 
@@ -125,7 +125,7 @@
 
 //		material = new THREE.MeshNormalMaterial();
 		material = new THREE.MeshPhongMaterial( {
-			color: 0xffffff * Math.random(), 
+			color: 0xffffff * Math.random(),
 			emissive: 0xffffff * Math.random(),
 			specular: 0xffffff * Math.random(),
 			shininess: 1
@@ -136,11 +136,17 @@
 		mesh.receiveShadow = true;
 		scene.add( mesh );
 
+		var geometryEdge = new THREE.EdgesGeometry( mesh.geometry ); // or WireframeGeometry
+		var material = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 1 } );
+		var edges = new THREE.LineSegments( geometryEdge, material );
+		mesh.add( edges ); // add wireframe as a child of the parent mesh
+
+
 // Cubes
 		geometry = new THREE.BoxGeometry( 10, 10, 10 );
 		for (var i = 0; i < 50; i++) {
 			material = new THREE.MeshPhongMaterial( {
-				color: 0xffffff * Math.random(), 
+				color: 0xffffff * Math.random(),
 				emissive: 0xffffff * Math.random(),
 				opacity: Math.random(),
 				specular: 0xffffff * Math.random(),
@@ -157,9 +163,14 @@
 			scene.add( mesh );
 			cubes.push( mesh );
 
-			helper = new THREE.EdgesHelper( mesh );
-			helper.material.color.setRGB( 1, 0, 0 );
-			scene.add( helper );
+//			helper = new THREE.EdgesHelper( mesh );
+//			helper.material.color.setRGB( 1, 0, 0 );
+//			scene.add( helper );
+
+			var geometryEdge = new THREE.EdgesGeometry( mesh.geometry ); // or WireframeGeometry
+			var material = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 1 } );
+			var edges = new THREE.LineSegments( geometryEdge, material );
+			mesh.add( edges ); // add wireframe as a child of the parent mesh
 
 		}
 
@@ -171,7 +182,7 @@
 
 		scene.traverse( function ( child ) {
 
-			if ( child instanceof THREE.AmbientLight || child instanceof THREE.AreaLight || child instanceof THREE.DirectionalLight || 
+			if ( child instanceof THREE.AmbientLight || child instanceof THREE.AreaLight || child instanceof THREE.DirectionalLight ||
 				child instanceof THREE.HemisphereLight || child instanceof THREE.PointLight || child instanceof THREE.SpotLight ) {
 
 				info.innerHTML += ++index + '. ' + child.type + ' id: ' + child.id + '<br>';
@@ -188,7 +199,7 @@
 
 		scene.traverse( function ( child ) {
 
-			if ( child instanceof THREE.AmbientLight || child instanceof THREE.AreaLight || child instanceof THREE.DirectionalLight || 
+			if ( child instanceof THREE.AmbientLight || child instanceof THREE.AreaLight || child instanceof THREE.DirectionalLight ||
 				child instanceof THREE.HemisphereLight || child instanceof THREE.PointLight || child instanceof THREE.SpotLight ) {
 
 				lights.push( child );

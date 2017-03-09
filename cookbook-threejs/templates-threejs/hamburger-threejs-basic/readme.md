@@ -13,7 +13,7 @@
 
 <img src="XXXX" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/cookbook-threejs/templates/hamburger-threejs-basic/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-threejs/templates-threejs/hamburger-threejs-basic/hamburger-threejs-basic.html width=100% height=600px ></iframe>
 
 _Hamburger Three.js Basic_
 
@@ -38,7 +38,7 @@ _Hamburger Three.js Basic_
 ## Things you can do using this script
 
 * Use one/two/three fingers to rotate/zoom/pan the display in 3D
-	* Or left/scroll/right with your pointing device 
+	* Or left/scroll/right with your pointing device
 * Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
 * Click the check box to display mesh as solid or wireframe
 * Click the 'I' in the circle to go to the read me file
@@ -52,13 +52,13 @@ _Hamburger Three.js Basic_
 ## Things you can do by editing the code
 
 <iframe src='https://jaanga.github.io/cookbook-html/templates/libraries/ace-editor/ace-view-r1.html#' +
-	'https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates/hamburger-threejs-basic/hamburger-threejs-basic.html' width=100% height=600 ></iframe>
+	'https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates-threejs/hamburger-threejs-basic/hamburger-threejs-basic.html' width=100% height=600 ></iframe>
 
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates/hamburger-threejs-basic/hamburger-threejs-basic.html';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/templates-threejs/hamburger-threejs-basic/hamburger-threejs-basic.html';
 value='Source code listing' >
 
 
-* Open this file: https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/templates/hamburger-threejs-basic/hamburger-threejs-basic.html
+* Open this file: https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-threejs/templates-threejs/hamburger-threejs-basic/hamburger-threejs-basic.html
 * Click the 'Raw' icon and save the raw file to your computer
 * Once you've downloaded the file, you can click it to run it.
 * Open the file with a text editor
@@ -80,7 +80,7 @@ Intended for xxx
 
 ## Change Log
 
-### 
+###
 
 * First commit
 * Add Read Me
