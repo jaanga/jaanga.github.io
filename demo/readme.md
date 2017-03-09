@@ -44,7 +44,7 @@
 
 ## [Equirec]( http://jaanga.github.io/equirec/ ) ~ [App]( http://jaanga.github.io/equirec/equirec-image-flickr/ )
 
-## [SP 500 tzzz]( tzigzagz.github.io/tzzz-stick-view-sp500/r1/tzzz-stick-view-sp500-r1.html )
+## [SP 500 tzzz]( https://tzigzagz.github.io/tzzz-stick-view-sp500/r1/tzzz-stick-view-sp500-r1.html )
 
 
 ## [Femur Heart UCSH]( http://theo-armour.github.io/ucsf/ )
