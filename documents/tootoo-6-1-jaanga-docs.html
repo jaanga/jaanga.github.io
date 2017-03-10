@@ -6,11 +6,11 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Browse and view files on GitHub with remarkable ease.' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2017-03-05' >
+<meta name=date content='2017-03-09' >
 </head>
 <body>
 <script src=https://cdn.rawgit.com/showdownjs/showdown/master/dist/showdown.min.js ></script>
-<script src=tootoo.js ></script>
+<script src=tootoo-6-1.js ></script>
 <script>
 // Copyright © 2017 PushMe PullYou authors. MIT license
 // https://github.com/showdownjs/showdown
@@ -86,7 +86,7 @@
 
 				'<details open>' +
 
-					'<summary><h3>Menu</h3></summary>' +
+					'<summary><h3 id=menuTitle >Menu</h3></summary>' +
 
 					'<div id=menuBreadcrumbs ></div>' + b +
 
@@ -108,7 +108,7 @@
 
 				'<details>' +
 					'<summary><h3>About</h3></summary>' +
-					'<p>Copyright &copy; 2017 Pushme-Pullyou authors. <a href=http://pushme-pullyou/pushme-pullyou.github.io >MIT license</a>.</p>' +
+					'<p>Copyright &copy; ' + ( new Date() ).getFullYear() + ' Pushme-Pullyou authors. <a href=http://pushme-pullyou/pushme-pullyou.github.io >MIT license</a>.</p>' +
 					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 				'</details>' +
 

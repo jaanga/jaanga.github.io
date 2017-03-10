@@ -24,7 +24,6 @@
 	var stats, renderer, scene, camera, controls, mesh;
 	var gridHelper, axisHelper;
 
-
 	init();
 	animate();
 
@@ -49,7 +48,7 @@
 			'summary { outline: none; }' +
 			'summary h3 { display:inline; }' +
 
-			'.popUp { background-color: white; left: 150px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'.popUp { background-color: white; left: 180px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
 
 			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
 
@@ -75,7 +74,7 @@
 				'</h2>' +
 
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
-
+/*
 				'<details open>' +
 					'<summary><h3>Menu</h3></summary>' +
 					'<p><button onclick=getIt(); >get it</button></p>' +
@@ -86,7 +85,7 @@
 					'</p>' +
 
 				'</details>' +
-
+*/
 				'<details>' +
 					'<summary><h3>Settings</h3></summary>' +
 					'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
@@ -101,7 +100,7 @@
 
 				'<details>' +
 					'<summary><h3>About</h3></summary>' +
-					'<p>Copyright &copy; 2016 Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Copyright &copy; ' + (new Date()).getFullYear() + ' Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
 					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 					'<p></p>' +
 				'</details>' +
@@ -154,7 +153,7 @@
 		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
-		gridHelper  = new THREE.GridHelper( 50, 10 );
+		gridHelper  = new THREE.GridHelper( 100, 10 );
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
@@ -168,21 +167,24 @@
         var shape = new THREE.Shape();
         shape.moveTo( 0,0 );
         shape.lineTo( 0, width );
+		shape.lineTo( 0.3 * length, 1.5 * width );
         shape.lineTo( length, width );
         shape.lineTo( length, 0 );
         shape.lineTo( 0, 0 );
 
         var extrudeSettings = {
+
         	steps: 2,
-        	amount: 16,
+        	amount: 10,
         	bevelEnabled: true,
         	bevelThickness: 1,
         	bevelSize: 1,
         	bevelSegments: 1
-        };
+
+		};
 
         var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-        var material = new THREE.MeshNormalMaterial( { color: 0x00ff00 } );
+        var material = new THREE.MeshNormalMaterial();
         var mesh = new THREE.Mesh( geometry, material ) ;
         scene.add( mesh );
 

@@ -1,6 +1,6 @@
 // Copyright © 2017 Jaanga authors. MIT license.
 
-	var TOO = {};
+	let TOO = {};
 	var b = '<br>';
 
 	TOO.init = function( user ) {
@@ -17,21 +17,20 @@
 
 		TOO.contents = contents;
 		TOO.breadcrumbs = menuBreadcrumbs;
+		TOO.menuTitle = menuTitle;
 		TOO.menu = menu;
 		TOO.menuItems = menuItems;
 		TOO.menuInfo = menuInfo;
+
+		TOO.setMenu = TOO.setMenuContents ? TOO.setMenuContents : TOO.setMenuDefault;
 
 		if ( location.hash ) {
 
 			params = (window.location.hash.substr(1)).split("&");
 
-console.log( 'params', params );
+			for ( let i = 0; i < params.length; i++ ) {
 
-			for ( var i = 0; i < params.length; i++ ) {
-
-				var a = params[ i ].split( '=' );
-
-console.log( 'a', a );
+				let a = params[ i ].split( '=' );
 
 				TOO.user    = a[ 0 ] === 'user'    ? a[ 1 ] : TOO.user;
 				TOO.repo    = a[ 0 ] === 'repo'    ? a[ 1 ] : TOO.repo;
@@ -90,19 +89,19 @@ console.log( 'a', a );
 
 	TOO.requestAPIContents = function() {
 
-		var xhr, obj, treeNode;
+		let xhr, obj, treeNode;
 
 		TOO.requestFile( TOO.url, callbackRequestFile );
 
 		function callbackRequestFile( xhr ) {
 
-			var response, paths, path;
+			let response, paths, path;
 
 			response = JSON.parse( xhr.target.response );
 
 			paths = [];
 
-			for ( var i = 0; i < response.tree.length; i++ ) {
+			for ( let i = 0; i < response.tree.length; i++ ) {
 
 				path = response.tree[ i ].path;
 
@@ -135,13 +134,13 @@ console.log( 'a', a );
 
 			function buildTree( parts, treeNode ) {
 
-				var keys, newNode;
+				let keys, newNode;
 
 				if ( parts.length === 0 ) { return; }
 
 				keys = Object.keys( treeNode );
 
-				for ( var i = 0 ; i < keys.length; i++ ) {
+				for ( let i = 0 ; i < keys.length; i++ ) {
 
 					if ( parts[ 0 ] === treeNode[ keys[ i ] ].text ) {
 
@@ -165,27 +164,18 @@ console.log( 'a', a );
 
 				params = (window.location.hash.substr(1)).split("&");
 
-//console.log( 'params', params );
+				for ( let i = 0; i < params.length; i++ ) {
 
-				for ( var i = 0; i < params.length; i++ ) {
+					let a = params[ i ].split( '=' );
 
-					var a = params[ i ].split( '=' );
-
-//console.log( 'a', a );
-
-					TOO.user = a[ 0 ] === 'user' ? a[ 1 ] : TOO.user;
-					TOO.repo = a[ 0 ] === 'repo' ? a[ 1 ] : TOO.repo;
+					TOO.user   = a[ 0 ] === 'user' ?   a[ 1 ] : TOO.user;
+					TOO.repo   = a[ 0 ] === 'repo' ?   a[ 1 ] : TOO.repo;
 					TOO.branch = a[ 0 ] === 'branch' ? a[ 1 ] : TOO.branch;
 					TOO.folder = a[ 0 ] === 'folder' ? a[ 1 ] : TOO.folder;
-
-					TOO.path = a[ 0 ] === 'path' ? a[ 1 ] : TOO.path;
-
-					TOO.file = a[ 0 ] === 'file' ? a[ 1 ] : TOO.file;
+					TOO.path   = a[ 0 ] === 'path'   ? a[ 1 ] : TOO.path;
+					TOO.file   = a[ 0 ] === 'file'   ? a[ 1 ] : TOO.file;
 
 				}
-
-//console.log( 'path', TOO.path );
-//console.log( 'file', TOO.file );
 
 				TOO.setMenu( TOO.path, TOO.file );
 
@@ -200,14 +190,16 @@ console.log( 'a', a );
 	}
 
 
-	TOO.setMenu = function( path, file ) {
+	TOO.setMenuDefault = function( path, file ) {
 
 //console.log( 'path', path );
 
-		var folders, obj;
-		var foldersText, filesText;
-		var count, pathString;
+		let folders, obj;
+		let foldersText, filesText;
+		let count, pathString;
 		TOO.files = [];
+		TOO.menuTitle.innerHTML="All Files";
+		TOO.menuItems.innerHTML = '';
 
 		folders = path ? path.split( '/' ) : [] ;
 
@@ -217,7 +209,7 @@ console.log( 'a', a );
 // without the loop, the menu re-displays the current menu
 // with the loop the menu displays the items in the just-selected folder
 
-		for ( var i = 0; i < folders.length; i++ ) {
+		for ( let i = 0; i < folders.length; i++ ) {
 
 			obj = obj.children[ folders[ i ] ];
 
@@ -230,19 +222,28 @@ console.log( 'a', a );
 
 		pathString = path ? path + '/': '';
 
-		for ( var i = 0; i < TOO.keys.length; i++ ) {
+		for ( let i = 0; i < TOO.keys.length; i++ ) {
 
 			key = TOO.keys[ i ];
 
-			if ( Object.keys( obj.children[ key ].children ).length > 0 ) {
+			if ( Object.keys( obj.children[ key ].children ).length > 0 ) { // it's a folder
 
-				foldersText += ' &#x1f4c1; <a href=JavaScript:TOO.setMenu("' + pathString + encodeURI( key ) + '"); >' + key + '</a>'+ b; // it's a folder
+				foldersText +=
 
-			} else {
-
-				filesText += '<div id=file' + ( count++ ) + ' style=width:100%; ><a href=JavaScript:TOO.getFileSetContents("' + pathString + '","' + encodeURI( key ) + '"); >' +
+				' &#x1f4c1; <a href=JavaScript:TOO.setMenu("' + pathString + encodeURI( key ) + '"); >' +
 					key +
-				'</a></div>';
+				'</a>'+
+				b;
+
+			} else { // it's a file
+
+				filesText +=
+
+				'<div id=file' + ( count++ ) + ' style=width:100%; >' +
+					'<a href=JavaScript:TOO.getFileSetContents("' + pathString + '","' + encodeURI( key ) + '"); >' +
+						key +
+					'</a>' +
+				'</div>';
 
 				TOO.files.push( key );
 			}
@@ -276,7 +277,7 @@ console.log( 'a', a );
 
 	TOO.setBreadcrumbs = function( path ) {
 
-		var name, txt, folders, str;
+		let name, txt, folders, str;
 
 		name = TOO.folder ? TOO.folder : TOO.repo;
 
@@ -284,7 +285,7 @@ console.log( 'a', a );
 		folders = path ?  path.split( '/' ) : [] ;
 		str = '';
 
-		for ( var i = 0; i < folders.length; i++ ) {
+		for ( let i = 0; i < folders.length; i++ ) {
 
 			str += folders[ i ] + '/';
 
@@ -296,10 +297,11 @@ console.log( 'a', a );
 
 	}
 
+// try to pick the most logical file to display, highlight it and display it contents
 
 	TOO.setDefaultContents = function( path, filesText ) {
 
-		var txt, start, file;
+		let txt, start, file;
 
 		txt = filesText.toLowerCase();
 
@@ -346,7 +348,7 @@ console.log( 'a', a );
 
 		url = TOO.urlGHPages + path + encodeURI( file );
 
-		var u = url.toLowerCase();
+		let u = url.toLowerCase();
 
 		if ( u.endsWith( '.md' ) ){
 
@@ -371,6 +373,7 @@ console.log( 'a', a );
 	};
 
 
+// edit, next and previous buttons
 	TOO.setButtons = function( path, file ) {
 
 		if ( TOO.button ) {
@@ -379,8 +382,8 @@ console.log( 'a', a );
 		}
 
 		index = TOO.files.indexOf( file );
-// console.log( 'index', index );
-		for ( var i = 0; i < TOO.files.length; i++ ) {
+
+		for ( let i = 0; i < TOO.files.length; i++ ) {
 
 			el = document.getElementById( 'file' + i );
 
@@ -415,7 +418,7 @@ console.log( 'a', a );
 
 		showdown.setFlavor('github');
 
-		var converter = new showdown.Converter();
+		let converter = new showdown.Converter();
 
 		TOO.requestFile( url, callbackMD );
 
@@ -509,11 +512,11 @@ console.log( 'a', a );
 
 	 TOO.createPageOfImages = function( path, photos ) {
 
-		var page, item, item2, fileName;
+		let page, item, item2, fileName;
 
 		page = '';
 
-		for ( var i = 0; i < photos.length; i++ ) {
+		for ( let i = 0; i < photos.length; i++ ) {
 
 			item = photos[ i ];
 //			item2 = item.split( '/' )
@@ -537,7 +540,7 @@ console.log( 'a', a );
 
 	 TOO.getFileDataXHR = function( xhr ) {
 
-		var lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
+		let lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
 
 		menuFileData.innerHTML =
 			'<small><i>Loaded maximum first 10,000 characters.<br></i></small>' + b +
@@ -553,7 +556,7 @@ console.log( 'a', a );
 
 	 TOO.requestFile = function( url, callback ) {
 
-		var xhr;
+		let xhr;
 		xhr = new XMLHttpRequest();
 		xhr.crossOrigin = 'anonymous';
 		xhr.open( 'GET', url, true );
