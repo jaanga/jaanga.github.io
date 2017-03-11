@@ -6,7 +6,7 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Three.js template with basic slide in and slide out menu with three bar icon that adjusts for small screen size' >
 <meta name=keywords content='Jaanga,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2017-03-10' >
+<meta name=date content='2017-01-01' >
 </head>
 <body>
 <!--
@@ -14,9 +14,9 @@
 <script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
-<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 <script>
 // Copyright 2017 Jaanga authors ~ MIT license
 
@@ -62,12 +62,19 @@
 					' ~ <a href=index.html#READE.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
 				'</h2>' +
 				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
-				'<p><small><i>' + document.head.querySelector("[name=description]").content + '</i></small></p>' +
 
 				'<details open>' +
 					'<summary><h3>Menu</h3></summary>' +
 
 //					'<p><button onclick=getIt(); >get it</button></p>' +
+
+					'Description:' + b +
+					document.head.querySelector("[name=description]").content + b + b +
+					'Keywords:' + b +
+					document.head.querySelector("[name=keywords]").content.replace( /,/g, ', ' ) + b + b +
+					'Latest Update:' + b +
+					document.head.querySelector("[name=date]").content + b + b +
+					'File name:' + b +
 
 					'<p id=menuInfo >' +
 						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects. ' +
@@ -88,24 +95,13 @@
 
 				'<details>' +
 					'<summary><h3>About</h3></summary>' +
-					'<p>' +
-						'&bull; Rotate|Zoom|Pan => 1|2|3' + b +
-						'&nbsp; fingers/buttons' + b +
-						'&bull; Rotation => spacebar' + b +
-						'&bull; Slide menu => \'hamburger\' icon' +
-					'<p>' +
-
-
-					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
-					'<p>' +
-					'Keywords:' + b +
-					document.head.querySelector("[name=keywords]").content.replace( /,/g, ', ' ) + b + b +
-					'Revision Date:' + b +
-					document.head.querySelector("[name=date]").content + b + b +
-					'File name:' + b +
-						location.pathname.split( '/' ).pop() + b +
-					'</p>' +
+					'<ul>' +
+						'<li>Rotate|Zoom|Pan => 1|2|3 finger/button</li>' +
+						'<li>Rotation => spacebar</li>' +
+						'<li>Slide menu => \'hamburger\' icon</li>' +
+					'</ul>' +
 					'<p>Copyright &copy; ' + ( new Date() ).getFullYear() + ' Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
 				'</details>' +
 
 				'<hr>' +

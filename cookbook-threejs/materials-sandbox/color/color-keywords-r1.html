@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Color Keywords R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Three.js cookbook example to implement and display the X11 color names as supported by Three.js' >
+<meta name=keywords content='Jaanga,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2017-03-10' >
+</head>
+<body>
+<!--
+<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script src=https://rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
+<script>
+// Copyright 2017 Jaanga authors ~ MIT license
+
+// https://en.wikipedia.org/wiki/X11_color_names
+// https://github.com/mrdoob/three.js/blob/dev/src/math/Color.js
+
+
+	var stats, renderer, scene, camera, controls, mesh;
+	var ground, gridHelper, axisHelper;
+	var cubes;
+
+/* as Three.js
+
+var ColorKeywords = { 'aliceblue': 0xF0F8FF, 'antiquewhite': 0xFAEBD7, 'aqua': 0x00FFFF, 'aquamarine': 0x7FFFD4, 'azure': 0xF0FFFF,
+	'beige': 0xF5F5DC, 'bisque': 0xFFE4C4, 'black': 0x000000, 'blanchedalmond': 0xFFEBCD, 'blue': 0x0000FF, 'blueviolet': 0x8A2BE2,
+	'brown': 0xA52A2A, 'burlywood': 0xDEB887, 'cadetblue': 0x5F9EA0, 'chartreuse': 0x7FFF00, 'chocolate': 0xD2691E, 'coral': 0xFF7F50,
+	'cornflowerblue': 0x6495ED, 'cornsilk': 0xFFF8DC, 'crimson': 0xDC143C, 'cyan': 0x00FFFF, 'darkblue': 0x00008B, 'darkcyan': 0x008B8B,
+	'darkgoldenrod': 0xB8860B, 'darkgray': 0xA9A9A9, 'darkgreen': 0x006400, 'darkgrey': 0xA9A9A9, 'darkkhaki': 0xBDB76B, 'darkmagenta': 0x8B008B,
+	'darkolivegreen': 0x556B2F, 'darkorange': 0xFF8C00, 'darkorchid': 0x9932CC, 'darkred': 0x8B0000, 'darksalmon': 0xE9967A, 'darkseagreen': 0x8FBC8F,
+	'darkslateblue': 0x483D8B, 'darkslategray': 0x2F4F4F, 'darkslategrey': 0x2F4F4F, 'darkturquoise': 0x00CED1, 'darkviolet': 0x9400D3,
+	'deeppink': 0xFF1493, 'deepskyblue': 0x00BFFF, 'dimgray': 0x696969, 'dimgrey': 0x696969, 'dodgerblue': 0x1E90FF, 'firebrick': 0xB22222,
+	'floralwhite': 0xFFFAF0, 'forestgreen': 0x228B22, 'fuchsia': 0xFF00FF, 'gainsboro': 0xDCDCDC, 'ghostwhite': 0xF8F8FF, 'gold': 0xFFD700,
+	'goldenrod': 0xDAA520, 'gray': 0x808080, 'green': 0x008000, 'greenyellow': 0xADFF2F, 'grey': 0x808080, 'honeydew': 0xF0FFF0, 'hotpink': 0xFF69B4,
+	'indianred': 0xCD5C5C, 'indigo': 0x4B0082, 'ivory': 0xFFFFF0, 'khaki': 0xF0E68C, 'lavender': 0xE6E6FA, 'lavenderblush': 0xFFF0F5, 'lawngreen': 0x7CFC00,
+	'lemonchiffon': 0xFFFACD, 'lightblue': 0xADD8E6, 'lightcoral': 0xF08080, 'lightcyan': 0xE0FFFF, 'lightgoldenrodyellow': 0xFAFAD2, 'lightgray': 0xD3D3D3,
+	'lightgreen': 0x90EE90, 'lightgrey': 0xD3D3D3, 'lightpink': 0xFFB6C1, 'lightsalmon': 0xFFA07A, 'lightseagreen': 0x20B2AA, 'lightskyblue': 0x87CEFA,
+	'lightslategray': 0x778899, 'lightslategrey': 0x778899, 'lightsteelblue': 0xB0C4DE, 'lightyellow': 0xFFFFE0, 'lime': 0x00FF00, 'limegreen': 0x32CD32,
+	'linen': 0xFAF0E6, 'magenta': 0xFF00FF, 'maroon': 0x800000, 'mediumaquamarine': 0x66CDAA, 'mediumblue': 0x0000CD, 'mediumorchid': 0xBA55D3,
+	'mediumpurple': 0x9370DB, 'mediumseagreen': 0x3CB371, 'mediumslateblue': 0x7B68EE, 'mediumspringgreen': 0x00FA9A, 'mediumturquoise': 0x48D1CC,
+	'mediumvioletred': 0xC71585, 'midnightblue': 0x191970, 'mintcream': 0xF5FFFA, 'mistyrose': 0xFFE4E1, 'moccasin': 0xFFE4B5, 'navajowhite': 0xFFDEAD,
+	'navy': 0x000080, 'oldlace': 0xFDF5E6, 'olive': 0x808000, 'olivedrab': 0x6B8E23, 'orange': 0xFFA500, 'orangered': 0xFF4500, 'orchid': 0xDA70D6,
+	'palegoldenrod': 0xEEE8AA, 'palegreen': 0x98FB98, 'paleturquoise': 0xAFEEEE, 'palevioletred': 0xDB7093, 'papayawhip': 0xFFEFD5, 'peachpuff': 0xFFDAB9,
+	'peru': 0xCD853F, 'pink': 0xFFC0CB, 'plum': 0xDDA0DD, 'powderblue': 0xB0E0E6, 'purple': 0x800080, 'red': 0xFF0000, 'rosybrown': 0xBC8F8F,
+	'royalblue': 0x4169E1, 'saddlebrown': 0x8B4513, 'salmon': 0xFA8072, 'sandybrown': 0xF4A460, 'seagreen': 0x2E8B57, 'seashell': 0xFFF5EE,
+	'sienna': 0xA0522D, 'silver': 0xC0C0C0, 'skyblue': 0x87CEEB, 'slateblue': 0x6A5ACD, 'slategray': 0x708090, 'slategrey': 0x708090, 'snow': 0xFFFAFA,
+	'springgreen': 0x00FF7F, 'steelblue': 0x4682B4, 'tan': 0xD2B48C, 'teal': 0x008080, 'thistle': 0xD8BFD8, 'tomato': 0xFF6347, 'turquoise': 0x40E0D0,
+	'violet': 0xEE82EE, 'wheat': 0xF5DEB3, 'white': 0xFFFFFF, 'whitesmoke': 0xF5F5F5, 'yellow': 0xFFFF00, 'yellowgreen': 0x9ACD32 };
+*/
+
+var colorKeywords = [
+
+		['aliceblue', 0xF0F8FF], ['antiquewhite', 0xFAEBD7], ['aqua', 0x00FFFF], ['aquamarine', 0x7FFFD4], ['azure', 0xF0FFFF,
+		'beige', 0xF5F5DC], ['bisque', 0xFFE4C4], ['black', 0x000000], ['blanchedalmond', 0xFFEBCD], ['blue', 0x0000FF], ['blueviolet', 0x8A2BE2,
+		'brown', 0xA52A2A], ['burlywood', 0xDEB887], ['cadetblue', 0x5F9EA0], ['chartreuse', 0x7FFF00], ['chocolate', 0xD2691E], ['coral', 0xFF7F50,
+		'cornflowerblue', 0x6495ED], ['cornsilk', 0xFFF8DC], ['crimson', 0xDC143C], ['cyan', 0x00FFFF], ['darkblue', 0x00008B], ['darkcyan', 0x008B8B,
+		'darkgoldenrod', 0xB8860B], ['darkgray', 0xA9A9A9], ['darkgreen', 0x006400], ['darkgrey', 0xA9A9A9], ['darkkhaki', 0xBDB76B], ['darkmagenta', 0x8B008B,
+		'darkolivegreen', 0x556B2F], ['darkorange', 0xFF8C00], ['darkorchid', 0x9932CC], ['darkred', 0x8B0000], ['darksalmon', 0xE9967A], ['darkseagreen', 0x8FBC8F,
+		'darkslateblue', 0x483D8B], ['darkslategray', 0x2F4F4F], ['darkslategrey', 0x2F4F4F], ['darkturquoise', 0x00CED1], ['darkviolet', 0x9400D3,
+		'deeppink', 0xFF1493], ['deepskyblue', 0x00BFFF], ['dimgray', 0x696969], ['dimgrey', 0x696969], ['dodgerblue', 0x1E90FF], ['firebrick', 0xB22222,
+		'floralwhite', 0xFFFAF0], ['forestgreen', 0x228B22], ['fuchsia', 0xFF00FF], ['gainsboro', 0xDCDCDC], ['ghostwhite', 0xF8F8FF], ['gold', 0xFFD700,
+		'goldenrod', 0xDAA520], ['gray', 0x808080], ['green', 0x008000], ['greenyellow', 0xADFF2F], ['grey', 0x808080], ['honeydew', 0xF0FFF0], ['hotpink', 0xFF69B4,
+		'indianred', 0xCD5C5C], ['indigo', 0x4B0082], ['ivory', 0xFFFFF0], ['khaki', 0xF0E68C], ['lavender', 0xE6E6FA], ['lavenderblush', 0xFFF0F5], ['lawngreen', 0x7CFC00,
+		'lemonchiffon', 0xFFFACD], ['lightblue', 0xADD8E6], ['lightcoral', 0xF08080], ['lightcyan', 0xE0FFFF], ['lightgoldenrodyellow', 0xFAFAD2], ['lightgray', 0xD3D3D3,
+		'lightgreen', 0x90EE90], ['lightgrey', 0xD3D3D3], ['lightpink', 0xFFB6C1], ['lightsalmon', 0xFFA07A], ['lightseagreen', 0x20B2AA], ['lightskyblue', 0x87CEFA,
+		'lightslategray', 0x778899], ['lightslategrey', 0x778899], ['lightsteelblue', 0xB0C4DE], ['lightyellow', 0xFFFFE0], ['lime', 0x00FF00], ['limegreen', 0x32CD32,
+		'linen', 0xFAF0E6], ['magenta', 0xFF00FF], ['maroon', 0x800000], ['mediumaquamarine', 0x66CDAA], ['mediumblue', 0x0000CD], ['mediumorchid', 0xBA55D3,
+		'mediumpurple', 0x9370DB], ['mediumseagreen', 0x3CB371], ['mediumslateblue', 0x7B68EE], ['mediumspringgreen', 0x00FA9A], ['mediumturquoise', 0x48D1CC,
+		'mediumvioletred', 0xC71585], ['midnightblue', 0x191970], ['mintcream', 0xF5FFFA], ['mistyrose', 0xFFE4E1], ['moccasin', 0xFFE4B5], ['navajowhite', 0xFFDEAD,
+		'navy', 0x000080], ['oldlace', 0xFDF5E6], ['olive', 0x808000], ['olivedrab', 0x6B8E23], ['orange', 0xFFA500], ['orangered', 0xFF4500], ['orchid', 0xDA70D6,
+		'palegoldenrod', 0xEEE8AA], ['palegreen', 0x98FB98], ['paleturquoise', 0xAFEEEE], ['palevioletred', 0xDB7093], ['papayawhip', 0xFFEFD5], ['peachpuff', 0xFFDAB9,
+		'peru', 0xCD853F], ['pink', 0xFFC0CB], ['plum', 0xDDA0DD], ['powderblue', 0xB0E0E6], ['purple', 0x800080], ['red', 0xFF0000], ['rosybrown', 0xBC8F8F,
+		'royalblue', 0x4169E1], ['saddlebrown', 0x8B4513], ['salmon', 0xFA8072], ['sandybrown', 0xF4A460], ['seagreen', 0x2E8B57], ['seashell', 0xFFF5EE,
+		'sienna', 0xA0522D], ['silver', 0xC0C0C0], ['skyblue', 0x87CEEB], ['slateblue', 0x6A5ACD], ['slategray', 0x708090], ['slategrey', 0x708090], ['snow', 0xFFFAFA,
+		'springgreen', 0x00FF7F], ['steelblue', 0x4682B4], ['tan', 0xD2B48C], ['teal', 0x008080], ['thistle', 0xD8BFD8], ['tomato', 0xFF6347], ['turquoise', 0x40E0D0,
+		'violet', 0xEE82EE], ['wheat', 0xF5DEB3], ['white', 0xFFFFFF], ['whitesmoke', 0xF5F5F5], ['yellow', 0xFFFF00], ['yellowgreen', 0x9ACD32]
+
+	];
+
+
+	init();
+	animate();
+
+	function init() {
+
+		var css, hamburger, menu;
+		var geometry, material;
+		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+		var b = '<br>';
+
+		css = document.head.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+			'body { font: 12pt monospace; margin: 0; overflow: hidden; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'summary { outline: none; }' +
+			'summary h3 { display:inline; }' +
+			'.popUp { background-color: white; left: 180px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; }' +
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; max-height: ' + window.innerHeight + 'px; overflow: auto; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a>' + b +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#READE.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+				'<p><small><i>' + document.head.querySelector("[name=description]").content + '</i></small></p>' +
+
+				'<details open >' +
+					'<summary><h3>Menu</h3></summary>' +
+
+					'<p>' +
+						'<select id=selColor onchange="drawCubes( [ colorKeywords[ this.selectedIndex ][ 0 ], colorKeywords[ this.selectedIndex ][ 1 ] ] );" size=20 style=width:100%; ></select>' +
+					'</p>' +
+
+					'<p>' +
+						'<button onclick=drawCubes(); > Draw cubes </button>' +
+					'</p>' +
+
+					'<p id=menuInfo >' +
+						'<a href="https://en.wikipedia.org/wiki/X11_color_names" target="_blank">Wikipedia: X11 Color Names</a>' + b +
+						'<a href="https://github.com/mrdoob/three.js/blob/dev/src/math/Color.js" target="_blank">Thre.js: Color.js</a>' +
+					'</p>' +
+				'</details>' +
+
+				'<details>' +
+					'<summary><h3>Settings</h3></summary>' +
+					'<p><input type=checkbox id=chkWire onchange=toggleWireframe(); > Wireframe</p>' +
+					'<p><input type=checkbox onchange=ground.material.visible=!ground.material.visible; checked > Ground plane</p>' +
+					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
+					'<p><input type=checkbox onchange=gridHelper.visible=!gridHelper.visible; checked > Grid</p>' +
+					'<p><input type=checkbox id=chkBackground onchange=toggleBackgroundGradient(); checked > Gradient background</p>' +
+					'<p title="Press spacebar or click in window to stop." >' +
+						'<input type=checkbox id=chkRotate onchange=controls.autoRotate=!controls.autoRotate checked > Rotation ' +
+					'</p>'  +
+				'</details>' +
+
+				'<details>' +
+					'<summary><h3>About</h3></summary>' +
+					'<p>' +
+						'&bull; Rotate|Zoom|Pan => 1|2|3' + b +
+						'&nbsp; fingers/buttons' + b +
+						'&bull; Rotation => spacebar' + b +
+						'&bull; Slide menu => \'hamburger\' icon' +
+					'<p>' +
+
+
+					'<p>Click the \'i in a circle\' icon for more <a href=index.html#readme.md title="Click here for help and information" >help</a>.</p>' +
+					'<p>' +
+					'Keywords:' + b +
+					document.head.querySelector("[name=keywords]").content.replace( /,/g, ', ' ) + b + b +
+					'Revision Date:' + b +
+					document.head.querySelector("[name=date]").content + b + b +
+					'File name:' + b +
+						location.pathname.split( '/' ).pop() + b +
+					'</p>' +
+					'<p>Copyright &copy; ' + ( new Date() ).getFullYear() + ' Jaanga authors. <a href=http://jaanga.github.io/home/r4/index.html#http://jaanga.github.io/jaanga-copyright-and-mit-license.md >MIT license</a>.</p>' +
+				'</details>' +
+
+				'<hr>' +
+
+				'<center><a href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; ><h1> &#x2766 <h1></a></center>' +
+				'<div class=popUp id=pop2 style=display:none;bottom:100px; >Jaanga - your 3D happy place.<br>Click here to return to the top of the page</div>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+		'';
+
+		for ( var i = 0; i < colorKeywords.length; i++ ) {
+
+			selColor[ i ] = new Option( colorKeywords[ i ][ 0 ], colorKeywords[ i ][ 1 ] );
+
+		}
+
+		selColor.selectedIndex = 3;
+
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;' ;
+		document.body.appendChild( stats.domElement );
+		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
+
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+//		renderer.setClearColor( 0xf0f0f0 );
+//		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 800;
+		controls.autoRotate = true;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'keyup', onKeyUp, false );
+		renderer.domElement.addEventListener( 'click', function() {  controls.autoRotate = false; chkRotate.checked = false; }, false );
+
+// helpers
+
+		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+		material = new THREE.MeshNormalMaterial();
+		ground = new THREE.Mesh( geometry, material );
+		ground.position.set( 0, -11, 0 );
+		scene.add( ground );
+
+		gridHelper  = new THREE.GridHelper( 100, 10 );
+		gridHelper.position.set( 0, -10, 0 );
+		scene.add( gridHelper );
+
+		axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+// assets
+
+		toggleBackgroundGradient();
+
+		drawCubes();
+
+	}
+
+
+	function drawCubes( col ) {
+
+// 2017-03-10
+
+		var color, geometry, material, mesh;
+
+		scene.remove( cubes );
+		cubes = new THREE.Object3D();
+
+		color = col !== undefined ? col : colorKeywords;
+		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+
+		for ( var i = 0; i < colorKeywords.length; i++) {
+
+			material = new THREE.MeshBasicMaterial( {
+
+//				color: 0xff0000
+//				color: 0xffffff * Math.random(),
+				color: color.length === 2 ? color[ 1 ] : color[ i ][ 1 ]
+
+//				emissive: 0xffffff * Math.random(),
+//				opacity: Math.random(),
+//				specular: 0xffffff * Math.random(),
+//				shading: THREE.FlatShading,
+//				shininess: 10,
+//				transparent: true
+
+			} );
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 70 * Math.random(), 100 * Math.random() - 50 );
+			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+			mesh.name = 'cube';
+			cubes.add( mesh );
+
+			var edgesGeometry, edgesMaterial, edges,
+
+			edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+			edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 5 } );
+			edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+			mesh.add( edges ); // add wireframe as a child of the parent mesh
+
+		}
+
+		scene.add( cubes )
+
+	}
+
+
+
+	function toggleWireframe() {
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material.wireframe = chkWire.checked;
+
+			}
+
+		} );
+
+	}
+
+
+	function toggleBackgroundGradient() {
+
+// 2016-07-18
+
+		var col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		var pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+		var image = document.body.style.backgroundImage;
+
+		document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
+				pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
+
+	}
+
+	function onKeyUp ( event ) {
+
+//console.log( 'key', event.keyCode );
+
+		controls.enableKeys = false;
+		event.preventDefault();
+
+		switch( event.keyCode ) {
+
+			case 32: controls.autoRotate = !controls.autoRotate; chkRotate.checked = controls.autoRotate; break; // space bar
+
+		}
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
+
+	}
+
+
+	function animate() {
+
+		controls.update();
+		stats.update();
+		renderer.render( scene, camera );
+		requestAnimationFrame( animate );
+	}
+
+</script>
+</body>
+</html>

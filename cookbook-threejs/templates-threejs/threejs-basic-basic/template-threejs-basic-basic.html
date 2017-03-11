@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Template Three.js Basic Basic</title>
+</head>
+<body>
+<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+<script>
+
+	var title, renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		document.body.style.cssText = 'font: 11pt monospace; margin: 0; overflow: hidden; text-align: center;';
+
+		title = document.body.appendChild( document.createElement( 'div' ) );
+		title.innerHTML = '<h1><a href="" >' + document.title + '</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
