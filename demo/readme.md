@@ -39,6 +39,11 @@
 
 ## [Analemma]( https://ladybug-tools.github.io/ladybug-web/analemma-3d/ )
 
+# Peeps
+
+## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [paul m]( http://jaanga.github.io/demo/paul-m/ )  [ronan-b]( http://jaanga.github.io/demo/ronanb-b/ ) [ms]( http://jaanga.github.io/demo/ms/ )
+
+## [cynthia-a]( https://cynthiaarmour.github.io ) [jaume-s](  http://jaanga.github.io/demo/jaume-s/ ) [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineT]( http://jaanga.github.io/demo/konstantine-t/ )
 
 # Fun
 
@@ -51,9 +56,6 @@
 
 ## [simplitecture #5 Nerbous]( http://atechathon.github.io/simplitechture/simplitechture-05-nerbous.html )
 
-## [aa]( http://jaanga.github.io/demo/aa/ ) [cba]( http://jaanga.github.io/demo/cba/snow-mountain-trek-april-2016/ ) [mm]( http://jaanga.github.io/demo/mm/ ) [nils]( http://jaanga.github.io/demo/nils/podcast-hero/ )  [paul m]( http://jaanga.github.io/demo/paul-m/ )  [ronan-b]( http://jaanga.github.io/demo/ronanb-b/ ) [ms]( http://jaanga.github.io/demo/ms/ )
-
-## [CynthiaA]( https://cynthiaarmour.github.io ) [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineT]( http://jaanga.github.io/demo/konstantine-t/ )
 
 ## [Moving Manuals]( http://jaanga.github.io/moving-manuals/ ) ~ [not Kallax]( http://jaanga.github.io/moving-manuals/kallax-nxn/ )
 

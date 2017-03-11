@@ -1,18 +1,35 @@
 <span style=display:none; >[You are now in GitHub source code view. Click here to view README file in GitHub Pages view]
 ( https://jaanga.github.io/demo/jaume-s/#README.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/xxxxx/';
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/jaume-s/';
 value='You are now in a GitHub Pages view. Click here to view README file in GitHub source code view.' >
 
 [Jaanga]( https://jaanga.github.io/ ) &raquo; [Demo]( https://jaanga.github.io/demo/jaume-s/ ) &raquo;
 
-[Jaame S Read Me]( index.html#README.md )
+[Jaume S Read Me]( index.html#README.md )
 ================================================================================
 _<small>
-things to play with
+things to play with when you are just meshing around
 </small>_
+***
 
-## Full Screen: [ XXXXX ]( https://jaanga.github.io/demo/xxxxxx/index.html )
+Draw lines with width with Three.js on a Windows machine (and all other OSes).
 
+MeshLine JavaScript library courtesy of Jaume S:
+
+* https://github.com/spite/THREE.MeshLine
+
+See also
+
+* https://www.clicktorelease.com/
+
+## Full Screen: [ MeshLine Basic Demo R1 ]( https://jaanga.github.io/demo/jaume-s/mesh-line-basic-demo/mesh-line-basic-demo-r1.html )
+* Simple demo with quite minimal code just to get a most basic MeshLine up and running in your browser
+
+
+## Full Screen: [ MeshLine Experiments R1 ]( https://jaanga.github.io/demo/jaume-s/mesh-line-experiments/mesh-lines-experiments-r1.html )
+* Exploring the possibilities of MeshLines in more detail
+* Every example is a simple short function you could copy and paste into your own code
+* There's a ton more fun things that could be added...
 
 <!--
 <img src="" style=display:none; width=800 >
