@@ -9,7 +9,7 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 
 _<small>deprecated folder</small>_
 
-## Full Screen: [ Get Sage Function Names R2 ]( https://jaanga.github.io/demo/pm/index.html )
+## Full Screen: [ Get Sage Function Names R2 ]( https://jaanga.github.io/demo/pm/get-sage-function-names/index.html )
 
 All other files now in Demo > [Paul M]( https://jaanga.github.io/demo/paul-m ) folder.
 
