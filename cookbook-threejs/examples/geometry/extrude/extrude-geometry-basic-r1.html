@@ -23,14 +23,14 @@
 
 	var stats, renderer, scene, camera, controls, mesh;
 	var gridHelper, axisHelper;
-
+	var geometry, material, mesh;
 	init();
 	animate();
 
 	function init() {
 
 		var css, hamburger, menu;
-		var geometry, material;
+
 		var txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
@@ -183,9 +183,11 @@
 
 		};
 
-        var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-        var material = new THREE.MeshNormalMaterial();
-        var mesh = new THREE.Mesh( geometry, material ) ;
+
+//		geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+		geometry = new THREE.ExtrudeGeometry( shape, { amount: 10, bevelEnabled: false } );
+        material = new THREE.MeshNormalMaterial();
+        mesh = new THREE.Mesh( geometry, material ) ;
         scene.add( mesh );
 
     }

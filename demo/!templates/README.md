@@ -1,16 +1,13 @@
-<span style=display:none; >[You are now in GitHub source code view. Click here to view README file in GitHub Pages view]
-( https://jaanga.github.io/demo/xxxxx/#README.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/xxxxx/';
-value='You are now in a GitHub Pages view. Click here to view README file in GitHub source code view.' >
+<span style=display:none; >[You are now in GitHub source code view. Click here to view README file in GitHub Pages view]( https://jaanga.github.io/demo/xxxxx/#README.md "View file as a web page." ) </span>
+<div><input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/xxxxx/';
+value='You are now in a GitHub Pages view. Click here to view README file in GitHub source code view.' ></div>
 
-[Jaanga]( https://jaanga.github.io/ ) &raquo; [Demo]( https://jaanga.github.io/demo/ ) &raquo;
+### [Jaanga]( https://jaanga.github.io/ ) &raquo; [Demo]( https://jaanga.github.io/demo/ ) &raquo;
 
 [XXXXXX Read Me]( index.html#README.md )
 ================================================================================
 
-_<small>
-
-</small>_
+_<small>subtext</small>_
 
 ## Full Screen: [ XXXXX ]( https://jaanga.github.io/demo/xxxxxx/index.html )
 

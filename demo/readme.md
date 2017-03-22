@@ -49,7 +49,7 @@
 
 ## [Equirec]( http://jaanga.github.io/equirec/ ) ~ [App]( http://jaanga.github.io/equirec/equirec-image-flickr/ )
 
-## [SP 500 Dev]( http://jaanga.github.io/sp500/dev/ )
+## [SP 500 Dev]( http://jaanga.github.io/sp500/build/ )
 
 
 ## [Femur Heart UCSH]( http://theo-armour.github.io/ucsf/ )

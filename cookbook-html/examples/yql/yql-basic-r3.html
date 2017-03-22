@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
@@ -45,32 +45,62 @@
 				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
 			'</h2>' +
 
+			'<p><button onclick=setQuery(); value="it do" >setQuery</button></p>' +
+
 			'<div id=info ></div>' +
-
-			'<p>' + txt + '</p>' +
-
-			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
-
-			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
-
-			'<p>' +
-				'Overlay: <select id=selList title="Select the 2D overlay" >' +
-					'<option>aaa aaa aaa</option>' +
-					'<option>bbb bbb</option>' +
-					'<option>cc cc cc cc</option>' +
-				'<select>' +
-			'</p>' +
-
-
-			'<p>' +
-				'<input type=radio name=field id=but1 />button 1' +
-				'<input type=radio name=field id=but2 checked />button 2' +
-				'<input type=radio name=field id=but3 />button 3' +
-			'</p>' +
-
-			'<p><button onclick=doIt(); value="it do" >do it</button></p>' +
+			'<div id=log ></div>' +
 
 		'';
+
+	}
+
+
+	function setQuery() {
+
+		var statement, scr, query;
+
+// Symbols must be uppercase
+//		statement = 'select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.google.com%2Ffinance%2Fgetprices%3Fq%3DGOOG%26i%3D60%22';
+		statement = 'select * from html where url="http://www.google.com/finance/getprices?q=GOOG&i=60&p=1d"';
+
+		encodedStatement = encodeURIComponent( statement );
+
+		query =	'https://query.yahooapis.com/v1/public/yql?q=' + encodedStatement + '&format=csv&callback=callbackQuery';
+
+		scr = document.body.appendChild( document.createElement( 'script' ) );
+		scr.src = query;
+
+	}
+
+
+	function callbackQuery( obj ){
+
+		text = obj.results[ 0 ];
+
+		lines = text.split( '\n' ).slice( 7, -1 );
+		lines[ 0 ] = [ 0, lines[ 0 ].split( ',' ).slice( 1 ) ];
+		log.innerText = lines.join();
+
+	}
+
+
+	function filterData( data ){
+
+		// filter all the nasties out
+		// no body tags
+		data = data.replace( /<?\/body[^>]*>/g,'' );
+		// no linebreaks
+			data = data.replace(/[\r|\n]+/g,'');
+		// no comments
+		data = data.replace(/<--[\S\s]*?-->/g,'');
+		// no noscript blocks
+		data = data.replace(/<noscript[^>]*>[\S\s]*?<\/noscript>/g,'');
+		// no script blocks
+		data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
+		// no self closing scripts
+		data = data.replace(/<script.*\/>/,'');
+		// [... add as needed ...]
+		return data;
 
 	}
 
