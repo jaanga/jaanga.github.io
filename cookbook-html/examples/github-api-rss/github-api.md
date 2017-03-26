@@ -58,22 +58,21 @@ fun look at issues
 
 ## Commits
 
-https://api.github.com/repos/jaanga/jaanga.github.io/commits
-https://api.github.com/repos/jaanga/terrain3/commits
-
-https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=readme.md
+* https://api.github.com/repos/jaanga/jaanga.github.io/commits
+* https://api.github.com/repos/jaanga/terrain3/commits
+* https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=readme.md
 
 
 ***
 
 ## Events
 
-https://api.github.com/repos/jaanga/jaanga.github.io/events
-https://api.github.com/repos/jaanga/terrain3/events
+* https://api.github.com/repos/jaanga/jaanga.github.io/events
+* https://api.github.com/repos/jaanga/terrain3/events
 
-
-https://api.github.com/repos/jaanga/jaanga.github.io/events?path=cookbook-html/examples << not
-https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << not
+not
+* https://api.github.com/repos/jaanga/jaanga.github.io/events?path=cookbook-html/examples << not
+* https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << not
 
 
 
@@ -105,13 +104,8 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 
 
 
-
-
-
-
-
 ## Issues
---------------------------------------------------------------------------------
+
 
 * https://developer.github.com/v3/issues/
 
@@ -124,29 +118,29 @@ https://api.github.com/repos/jaanga/jaanga.github.io/events?type=PushEvent << no
 * https://api.github.com/repos/fgx/fgx.github.io/issues?labels=Status%20Update
 * https://api.github.com/repos/jaanga/jaanga.github.io/issues?state=closed
 
-
-https://api.github.com/repos/jaanga/jaanga.github.io/trees << none
-https://api.github.com/repos/jaanga/jaanga.github.io/branches
-https://api.github.com/repos/jaanga/jaanga.github.io/tags << not
-https://api.github.com/repos/jaanga/jaanga.github.io/references << not
-https://api.github.com/repos/jaanga/jaanga.github.io/events?state=open
-
-
-https://api.github.com/repos/jaanga/jaanga.github.io/followers << not
-https://api.github.com/repos/jaanga/jaanga.github.io/labels
-https://api.github.com/repos/jaanga/jaanga.github.io/comments
-
-https://api.github.com/repos/jaanga/jaanga.github.io/commit_activity
+not
+* https://api.github.com/repos/jaanga/jaanga.github.io/trees << none
+* https://api.github.com/repos/jaanga/jaanga.github.io/branches
+* https://api.github.com/repos/jaanga/jaanga.github.io/tags << not
+* https://api.github.com/repos/jaanga/jaanga.github.io/references << not
+* https://api.github.com/repos/jaanga/jaanga.github.io/events?state=open
 
 
+* https://api.github.com/repos/jaanga/jaanga.github.io/followers << not
+* https://api.github.com/repos/jaanga/jaanga.github.io/labels
+* https://api.github.com/repos/jaanga/jaanga.github.io/comments
 
-https://api.github.com/repos/jquery/jquery/contributors?anon=true
-https://api.github.com/repos/jquery/jquery/contributors?login=jeresig << nope
+* https://api.github.com/repos/jaanga/jaanga.github.io/commit_activity
 
 
-https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
-https://api.github.com/repos/jquery/jquery/issues?state=closed << works
-https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
+
+* https://api.github.com/repos/jquery/jquery/contributors?anon=true
+* https://api.github.com/repos/jquery/jquery/contributors?login=jeresig << nope
+
+
+* https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+* https://api.github.com/repos/jquery/jquery/issues?state=closed << works
+* https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 
 
 
@@ -154,7 +148,6 @@ https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 ***
 
 ## Miscellaneous
---------------------------------------------------------------------------------
 
 * https://developer.github.com/v3/misc/
 * https://api.github.com/emojis
@@ -166,42 +159,41 @@ https://api.github.com/repos/jquery/jquery/issues?locked=true << not work
 
 ### Rate Limits
 
-https://api.github.com/rate_limit
+* https://api.github.com/rate_limit
 
 
 
 ***
 
 ## Orgs
---------------------------------------------------------------------------------
 
-https://api.github.com/orgs/
 
-https://api.github.com/orgs/ladybug-analysis-tools <<
-https://api.github.com/orgs/ladybug-analysis-tools/repos
-https://api.github.com/orgs/ladybug-analysis-tools/events <<
+* https://api.github.com/orgs/
 
-https://api.github.com/orgs/jaanga
+* https://api.github.com/orgs/ladybug-analysis-tools <<
+* https://api.github.com/orgs/ladybug-analysis-tools/repos
+* https://api.github.com/orgs/ladybug-analysis-tools/events <<
+
+* https://api.github.com/orgs/jaanga
 * lists number of repos
 
 
 ### Issues
 
-https://api.github.com/orgs/ladybug-analysis-tools/issues
+* https://api.github.com/orgs/ladybug-analysis-tools/issues
 
 
 
 ## Organizations
 
-https://api.github.com/organizations?since=20000000
-https://api.github.com/organizations?q=followers:%3E20
+* https://api.github.com/organizations?since=20000000
+* https://api.github.com/organizations?q=followers:%3E20
 
 
 
 ***
 
 ## Repos
---------------------------------------------------------------------------------
 
 
 * https://developer.github.com/v3/repos/contents/
@@ -222,7 +214,7 @@ https://api.github.com/repos/izuzak/pmrpc/commits?path=README.markdown
 * https://api.github.com/repos/jaanga/terrain3
 * https://api.github.com/repos/mrdoob/three.js
 
-https://github.com/mrdoob?tab=repositories
+* https://github.com/mrdoob?tab=repositories
 
 
 
@@ -230,55 +222,75 @@ https://github.com/mrdoob?tab=repositories
 
 ### Commits
 
-https://api.github.com/repos/jaanga/jaanga.github.io/commits
+* https://api.github.com/repos/jaanga/jaanga.github.io/commits
 
-https://api.github.com/repos/izuzak/pmrpc/commits?path=examples
-https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/examples
+* https://api.github.com/repos/izuzak/pmrpc/commits?path=examples
+* https://api.github.com/repos/jaanga/jaanga.github.io/commits?path=cookbook-html/examples
 
 
 
 ### Contents
 
-https://developer.github.com/v3/repos/contents/#get-contents
-https://api.github.com/repos/jaanga/jaanga.github.io/readme
+Docs
+* https://developer.github.com/v3/repos/contents/#get-contents
 
-https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
+examples
+* https://api.github.com/repos/mrdoob/three.js/contents/examples
+* https://api.github.com/repos/jaanga/terrain3/contents/elevations-core3
+* https://api.github.com/repos/jaanga/sp500/contents/trades
+* https://api.github.com/repos/google/tracing-framework/contents/index.html?ref=gh-pages
 
-https://api.github.com/repos/mrdoob/three.js/contents/examples
 
-https://api.github.com/repos/jaanga/terrain3/contents/elevations-core3
+
+Get the README << finds any readme!!
+
+* https://api.github.com/repos/jaanga/jaanga.github.io/readme
+
+or
+* https://api.github.com/repos/jaanga/jaanga.github.io/contents/readme.md
+
+### License
+
+* https://api.github.com/repos/benbalter/gman/license
+* https://api.github.com/repos/jaanga/jaanga.github.io/license
+
 
 ### Issues
 
-https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
+* https://api.github.com/repos/jquery/jquery/issues?state=open&labels=bug
 
 
 ### Pages
 
-https://api.github.com/repos/jaanga/jaanga.github.io
+* https://api.github.com/repos/jaanga/jaanga.github.io
 
+
+### Archive
+
+
+* https://api.github.com/repos/jaanga/jaanga.github.io/zipball/master
 
 
 ### Statistics
 
-https://api.github.com/repos/jaanga/jaanga.github.io/stats/contributors
+* https://api.github.com/repos/jaanga/jaanga.github.io/stats/contributors
 
-https://api.github.com/repos/jaanga/stats < not
+* https://api.github.com/repos/jaanga/stats < not
 
-https://api.github.com/repos/jaanga/jaanga.github.io/stats/commit_activity
+* https://api.github.com/repos/jaanga/jaanga.github.io/stats/commit_activity
 
-https://api.github.com/repos/jaanga/jaanga.github.io/stats/code_frequency
+* https://api.github.com/repos/jaanga/jaanga.github.io/stats/code_frequency
 
-https://api.github.com/repos/jaanga/jaanga.github.io/stats/participation
+* https://api.github.com/repos/jaanga/jaanga.github.io/stats/participation
 
-https://api.github.com/repos/jaanga/jaanga.github.io/stats/punch_card
+* https://api.github.com/repos/jaanga/jaanga.github.io/stats/punch_card
 
-https://api.github.com/repos/theo-armour/theo-armour.github.io/stats/code_frequency
+* https://api.github.com/repos/theo-armour/theo-armour.github.io/stats/code_frequency
 
 
 ### Tree
 
-* https://developer.github.com/v3/git/trees/
+* * https://developer.github.com/v3/git/trees/
 
 * https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1
 * https://api.github.com/repos/jaanga/terrain3/git/trees/gh-pages?recursive=1
@@ -288,24 +300,23 @@ https://api.github.com/repos/theo-armour/theo-armour.github.io/stats/code_freque
 
 ### Webhooks
 
-https://api.github.com/repos/jaanga/jaanga.github.io/hooks
+* https://api.github.com/repos/jaanga/jaanga.github.io/hooks
 
 
 ***
 
 ## Users
---------------------------------------------------------------------------------
 
 * https://developer.github.com/v3/users/
 
 
-https://api.github.com/users
+* https://api.github.com/users
 * all users starting with id: 1
 
-https://api.github.com/users?since=20000000
+* https://api.github.com/users?since=20000000
 
 
-https://api.github.com/users/theo-armour
+* https://api.github.com/users/theo-armour
 * lists repo count. gists, etc
 
 ### Events
@@ -313,15 +324,15 @@ https://api.github.com/users/theo-armour
 http://stackoverflow.com/questions/18733424/how-can-i-get-a-list-of-all-github-pushevents-for-a-user
 * No way to filter
 
-https://api.github.com/users/theo-armour/events?per_page=100
+* https://api.github.com/users/theo-armour/events?per_page=100
 
 * pre-sorted by date and time. Most recent first
 
-https://api.github.com/users/theo-armour/events?type="WatchEvent"
+* https://api.github.com/users/theo-armour/events?type="WatchEvent"
 
-https://api.github.com/users/jaanga/events?path=cookbook-html/examples < not
+* https://api.github.com/users/jaanga/events?path=cookbook-html/examples < not
 
-https://api.github.com/users/jaanga/events?login=redheli < not
+* https://api.github.com/users/jaanga/events?login=redheli < not
 
 
 
@@ -338,35 +349,31 @@ https://api.github.com/users/jaanga/events?login=redheli < not
 
 ### Code
 
-https://api.github.com/search/code?q=3D+extension:stl << not
+* https://api.github.com/search/code
+* https://api.github.com/search/code?q=repo
 
-https://api.github.com/search/code?q=MIT%32License%32path:project.clj
+Examples
+* https://api.github.com/search/code?q=MIT%32License%32path:project.clj
+* https://api.github.com/search/code?q=addClass+repo:jquery/jquery+filename:classes.js
+* https://api.github.com/search/code?q=repo:mrdoob/three.js+filename:CameraHelper.js
+* https://api.github.com/search/code?q=repo:jaanga/sp500/trades
 
-
-https://api.github.com/search/code?q=addClass+repo:jquery/jquery+filename:classes.js
-
-https://api.github.com/search/code?q=repo:mrdoob/three.js+filename:CameraHelper.js
-
+not
+* https://api.github.com/search/code?q=3D+extension:stl << not
 
 
 
 ### Issues
 
-
-https://api.github.com/search/issues?q=windows+label:bug+language:python+state:open&sort=created&order=asc
-
-https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc << ignores the repo
-https://api.github.com/search/issues?q=repo:jaanga/jaanga.github.io
-
-https://api.github.com/search/issues?q=@paulmasson+repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
-
-https://api.github.com/search/issues?q=language:js+created:2016-06-25
-
-https://api.github.com/search/issues?q=user:theo-armour
+* https://api.github.com/search/issues?q=windows+label:bug+language:python+state:open&sort=created&order=asc
+* https://api.github.com/search/issues?q=user:jaanga+repo:jaanga.github.io+state:open&sort=created&order=asc << ignores the repo
+* https://api.github.com/search/issues?q=repo:jaanga/jaanga.github.io
+* https://api.github.com/search/issues?q=@paulmasson+repo:jaanga/jaanga.github.io+state:open&sort=created&order=asc
+* https://api.github.com/search/issues?q=language:js+created:2016-06-25
+* https://api.github.com/search/issues?q=user:theo-armour
 
 js or JavaScript: both OK
-
-https://api.github.com/search/issues?q=created:2016-06-25&sort=comments&order=desc
+* https://api.github.com/search/issues?q=created:2016-06-25&sort=comments&order=desc
 
 
 
@@ -379,59 +386,62 @@ sort stars, forks update
 	* Access to the most popular repos on GitGub
 
 
-https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
+* https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc
 
-https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc <<
+* https://api.github.com/search/repositories?q=webgl&sort=stars&order=desc <<
 
-https://api.github.com/search/repositories?q=forks:%3E9000&sort=forks&order=asc < OK
-https://api.github.com/search/repositories?q=commits:%3E1000 < bogus
+* https://api.github.com/search/repositories?q=forks:%3E9000&sort=forks&order=asc < OK
+* https://api.github.com/search/repositories?q=commits:%3E1000 < bogus
 
 
 
-https://api.github.com/search/repositories?q=forks:%3E2000+type:org&sort=forks&order=desc < not
-https://api.github.com/search/repositories?q=type:org&sort=forks&order=asc < not good
-https://api.github.com/search/repositories?q=collaborators:%3E20&sort=stars&order=asc < not good
+* https://api.github.com/search/repositories?q=forks:%3E2000+type:org&sort=forks&order=desc < not
+* https://api.github.com/search/repositories?q=type:org&sort=forks&order=asc < not good
+* https://api.github.com/search/repositories?q=collaborators:%3E20&sort=stars&order=asc < not good
 
 
 From https://gist.github.com/jasonrudolph/6065289
-https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc
+* https://api.github.com/search/repositories?q=created:%3E2016-06-20&sort=stars&order=desc
 
 
-https://api.github.com/search/repositories?q=type:org
-https://api.github.com/search/repositories?q=followers:%3E1000
+* https://api.github.com/search/repositories?q=type:org
+* https://api.github.com/search/repositories?q=followers:%3E1000
 
 
-https://api.github.com/search/repositories?q=jaanga
-https://api.github.com/search/repositories?q=user:jaanga
+* https://api.github.com/search/repositories?q=jaanga
+* https://api.github.com/search/repositories?q=user:jaanga
 
 
-https://api.github.com/search/repositories?q=@jeresig-language:javascript << not
+* https://api.github.com/search/repositories?q=@jeresig-language:javascript << not
 
-https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=created&order=asc
+* https://api.github.com/search/repositories?q=repo:jaanga/jaanga.github.io&sort=created&order=asc
 
 
 
 ### Users
-https://www.quora.com/How-many-users-does-GitHub-have
-
+* https://www.quora.com/How-many-users-does-GitHub-have
 
 From https://gist.github.com/jasonrudolph/6065289
 
-https://api.github.com/search/users?q=followers:%3E1000
 
-https://api.github.com/search/users?q=type:org
-https://api.github.com/search/users?q=type:org&order=asc  < not
+#### basic
+* https://api.github.com/search/users?q=
 
-https://api.github.com/search/users?q=
-https://api.github.com/search/users?q=followers:0
-https://api.github.com/search/users?q=followers:>20
-https://api.github.com/search/users?q=followers:%3E2000&sort=created&order=desc
+type
+* https://api.github.com/search/users?q=type:org
+* https://api.github.com/search/users?q=type:org&order=asc  < not
+* https://api.github.com/search/users?q=type:org&sort=created&order=desc < no sorting
+* https://api.github.com/search/users?q=type:org+created:%3E2016-08-28&sort=stars&order=asc
+not
+* https://api.github.com/search/users?q=stars:%3E20+type:org < not
 
-https://api.github.com/search/users?q=type:org+created:%3E2016-08-28&sort=stars&order=asc
 
-https://api.github.com/search/users?q=stars:%3E20+type:org < not
 
-https://api.github.com/search/users?q=type:org&sort=created&order=desc < no sorting
+followers
+* https://api.github.com/search/users?q=followers:%3E1000
+* https://api.github.com/search/users?q=followers:0
+* https://api.github.com/search/users?q=followers:>20
+* https://api.github.com/search/users?q=followers:%3E2000&sort=created&order=desc
 
 
 
@@ -439,8 +449,8 @@ https://api.github.com/search/users?q=type:org&sort=created&order=desc < no sort
 
 ### Regular GitHub Search
 
-https://github.com/search?q=NASA-3D&extension:stl&type=Code&s=indexed
-https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
+* https://github.com/search?q=NASA-3D&extension:stl&type=Code&s=indexed
+* https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
 
 
 
@@ -448,28 +458,28 @@ https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
 
 ## Ladybug Web
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web << main one
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web << main one
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/collaborators/theo-armour << needs authentication
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/collaborators/theo-armour << needs authentication
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/commits <<
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/commits <<
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/events
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/events
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/readme << per file?
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/readme << per file?
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/pages/builds
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/pages/builds
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/contributors
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/commit_activity
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/code_frequency
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/participation
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/punch_card
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/contributors
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/commit_activity
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/code_frequency
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/participation
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/punch_card
 
-https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats
+* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats
 
-https://api.github.com/repos/ladybug-analysis-tools/stats
+* https://api.github.com/repos/ladybug-analysis-tools/stats
 
-https://api.github.com/users/ladybug-analysis-tools/received_events
-https://api.github.com/users/ladybug-analysis-tools/repos
+* https://api.github.com/users/ladybug-analysis-tools/received_events
+* https://api.github.com/users/ladybug-analysis-tools/repos
 
