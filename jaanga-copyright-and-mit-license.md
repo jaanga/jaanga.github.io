@@ -7,28 +7,28 @@
 Jaanga Copyright Notice and License
 ===
 
-'Copyright is the set of exclusive rights granted to the author or creator of an original work, 
+'Copyright is the set of exclusive rights granted to the author or creator of an original work,
 including the right to copy, distribute and adapt the work.'
 
-'License encapsulates the rights and privileges that a copyright holder grants to someone else vis a vis something they have created. 
-In the world of software the license defines the terms and conditions of someone else's usage of that software, 
+'License encapsulates the rights and privileges that a copyright holder grants to someone else vis a vis something they have created.
+In the world of software the license defines the terms and conditions of someone else's usage of that software,
 and their rights with regards to their ability to copy and redistribute that software.'
 
 \- [majordojo]( http://www.majordojo.com/2010/07/license-vs-copyright.php )
 
 ## Copyright Notice for All Jaanga Works
 
-[jaanga.com]( http://jaanga.com)  
-[jaanga.github.io]( http://jaanga.github.io/ )  
+[jaanga.com]( http://jaanga.com)
+[jaanga.github.io]( http://jaanga.github.io/ )
 [github.com/jaanga]( https://github.com/jaanga/ )
 
-Copyright © 2016 Jaanga authors
+Copyright © 2017 Jaanga authors
 
 <br>
 
 ## License for All Jaanga Works
 
-This work is available under two licenses: 
+This work is available under two licenses:
 
 1: Jaanga software is available under the [MIT License]( http://en.wikipedia.org/wiki/MIT_License) which states:
 
@@ -63,7 +63,7 @@ This work is published from: <span property="vcard:Country" datatype="dct:ISO316
 
 ## Jaanga Organization
 
-Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins. 
+Jaanga is a [GitHub]( http://github.com) [organization account]( https://help.github.com/articles/what-s-the-difference-between-user-and-organization-accounts ) and has multiple owners and admins.
 All Jaanga scripts are [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ).
 
 
