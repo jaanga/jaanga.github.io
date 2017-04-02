@@ -146,6 +146,7 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 		window.addEventListener( 'keyup', onKeyUp, false );
 		renderer.domElement.addEventListener( 'click', function() {  controls.autoRotate = false; chkRotate.checked = false; }, false );
+		renderer.domElement.addEventListener( 'touchstart', function() {  controls.autoRotate = false; chkRotate.checked = false; }, false );
 
 // assets
 
@@ -320,7 +321,7 @@
 		geometry = new THREE.BoxGeometry( 10, 10, 10 );
 		material = new THREE.MeshNormalMaterial();
 
-		for (let i = 0; i < count; i++) {
+		for ( let i = 0; i < count; i++) {
 
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( 100 * Math.random() - 50, 70 * Math.random(), 100 * Math.random() - 50 );
