@@ -2,7 +2,7 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Add Object Position Align R1</title>
+<title>Add Object Position Align R2</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
 <meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
@@ -134,7 +134,7 @@
 
 	function addObject() {
 
-		obj = scene.children[ 5 ]
+		obj = scene.children[ 4 ]
 		pt1 = obj.geometry.vertices[ 23 ];
 
 		geometry = new THREE.BoxGeometry( 1, 1, 1 );
@@ -174,6 +174,7 @@ console.log( '', pt3 );
 //		geometry.computeFaceNormals ();
 		geometry.computeVertexNormals ()
 		vector = geometry.faces[ 0 ].vertexNormals[ 0 ];
+
 var axis = new THREE.Vector3(0, 1, 0);
 console.log( 'geo', geometry, axis );
 
@@ -327,10 +328,10 @@ console.log( 'interested', pt, intersects[0] );
 // 2016-01-29 ~ add-lights/template-threejs-lights-r2.html
 
 		renderer.shadowMap.enabled = true;
-		renderer.shadowMap.cullFace = THREE.CullFaceBack;
-		renderer.gammaInput = true;
-		renderer.gammaOutput = true;
-		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+//		renderer.shadowMap.cullFace = THREE.CullFaceBack;
+//		renderer.gammaInput = true;
+//		renderer.gammaOutput = true;
+//		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 		scene.traverse( function ( child ) {
 
@@ -365,9 +366,16 @@ console.log( 'interested', pt, intersects[0] );
 		mesh.position.set( 0, -10, 0 );
 		scene.add( mesh );
 
-		helper = new THREE.EdgesHelper( mesh );
-		helper.material.color.setRGB( 1, 0, 1 );
-		scene.add( helper );
+//		helper = new THREE.EdgesHelper( mesh );
+//		helper.material.color.setRGB( 1, 0, 1 );
+//		scene.add( helper );
+
+			var edgesGeometry, edgesMaterial, edges,
+
+			edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+			edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+			edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+			mesh.add( edges );
 
 		var axisHelper = new THREE.AxisHelper( 50 );
 		scene.add( axisHelper );
@@ -434,9 +442,16 @@ console.log( 'interested', pt, intersects[0] );
 			objects.push( mesh );
 			scene.add( mesh );
 
-			helper = new THREE.EdgesHelper( mesh );
-			helper.material.color.setRGB( 1, 0, 0 );
-			scene.add( helper );
+//			helper = new THREE.EdgesHelper( mesh );
+//			helper.material.color.setRGB( 1, 0, 0 );
+//			scene.add( helper );
+
+			var edgesGeometry, edgesMaterial, edges,
+
+			edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+			edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+			edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+			mesh.add( edges );
 
 		}
 

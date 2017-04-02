@@ -6,7 +6,7 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
 <meta name=description content='Three.js template with basic slide in and slide out menu with three bar icon that adjusts for small screen size' >
 <meta name=keywords content='Jaanga,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2017-04-02' >
+<meta name=date content='2017-03-10' >
 </head>
 <body>
 <!--
@@ -29,6 +29,7 @@
 	function init() {
 
 		let css, hamburger, menu;
+
 		let txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 		let b = '<br>';
 
@@ -69,17 +70,16 @@
 				'<p><small><i>' + document.head.querySelector("[name=description]").content + '</i></small></p>' +
 
 				'<details open>' +
-					'<summary title="Hello" ><h3>Menu</h3></summary>' +
+					'<summary><h3>Menu</h3></summary>' +
 
 //					'<p><button onclick=getIt(); >get it</button></p>' +
 
-					'<p id=menuInfo >' +
-						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects. ' +
+					'<p id=log >' +
 					'</p>' +
 				'</details>' +
 
 				'<details>' +
-					'<summary title="Custmize the interface" ><h3>Settings</h3></summary>' +
+					'<summary><h3>Settings</h3></summary>' +
 					'<p><input type=checkbox id=chkWire onchange=toggleWireframe(); > Wireframe</p>' +
 					'<p><input type=checkbox onchange=ground.visible=!ground.visible; checked > Ground plane</p>' +
 					'<p><input type=checkbox onchange=axisHelper.visible=!axisHelper.visible; checked > Axes</p>' +
@@ -90,7 +90,7 @@
 					'</p>'  +
 				'</details>' +
 
-				'<details title="Click me!" >' +
+				'<details>' +
 					'<summary><h3>About</h3></summary>' +
 					'<p>' +
 						'&bull; Rotate|Zoom|Pan => 1|2|3' + b +
@@ -131,8 +131,6 @@
 
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
-//		renderer.setClearColor( 0xf0f0f0 );
-//		renderer.setPixelRatio( window.devicePixelRatio );
 		renderer.setSize( window.innerWidth, window.innerHeight );
 		document.body.appendChild( renderer.domElement );
 
@@ -152,10 +150,127 @@
 // assets
 
 		toggleBackgroundGradient();
+
 		drawHelpers();
+		drawCubes( 50 );
+
+		initHeadsUp();
 
 	}
 
+
+	function initHeadsUp() {
+
+		window.objects = [];
+		window.mouse = new THREE.Vector2();
+		window.raycaster;
+		window.intersection;
+
+		headsUp = document.body.appendChild( document.createElement( 'div' ) );
+		headsUp.style.cssText = 'background-color: #ddd; border-radius: 8px; display: none; padding: 0 5px 10px 5px; opacity: 0.85; ' +
+			'position: absolute; ';
+
+		raycaster = new THREE.Raycaster();
+
+		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+//		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
+
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh && child.name ) {
+
+				objects.push( child );
+
+			}
+
+		} );
+
+	}
+
+
+	function setHeadsUp() {
+
+		let txt;
+		const b = '<br>'
+
+		if ( intersection === undefined ){
+
+			headsUp.style.display = 'none';
+			document.body.style.cursor = 'auto';
+			return;
+
+		}
+
+		headsUp.style.left = 50 + 0.5 * window.innerWidth + mouse.x * 0.5 * window.innerWidth + 'px';
+		headsUp.style.top = -50 + 0.5 * window.innerHeight - mouse.y * 0.5 * window.innerHeight + 'px';
+		headsUp.style.display = '';
+
+		txt =
+			intersection.name + b +
+			mouse.x + b +
+			mouse.y +
+
+		'';
+
+		headsUp.innerHTML = txt;
+		document.body.style.cursor = 'pointer';
+
+	}
+
+
+	function onDocumentTouchStart( event ) {
+
+		event.preventDefault();
+
+		event.clientX = event.touches[0].clientX;
+		event.clientY = event.touches[0].clientY;
+
+		onDocumentMouseMove( event );
+
+	}
+
+
+	function onDocumentMouseMove( event ) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+		raycaster.setFromCamera( mouse, camera );
+
+		let intersects = raycaster.intersectObjects( objects );
+
+		if ( intersects.length > 0 ) {
+
+			intersection = intersects[ 0 ].object
+			intersection.rotation.y += 0.1;
+
+			log.innerHTML = 'Selected cube ID: ' + intersection.name ;
+
+		} else {
+
+			intersection = undefined;
+
+			log.innerHTML = 'No cube selected';
+
+		}
+
+		setHeadsUp();
+
+	}
+
+
+	function onDocumentMouseDown( event ) {
+
+		headsUp.style.display = 'none';
+
+	}
+
+
+//
 
 	function drawHelpers() {
 
@@ -187,6 +302,37 @@
 	}
 
 
+	function drawCubes( count ) {
+
+// 2017-04-02
+
+		let geometry, material, mesh;
+		let edgesGeometry, edgesMaterial, edges;
+
+		count = count ? count : 50;
+
+		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		material = new THREE.MeshNormalMaterial();
+
+		for (let i = 0; i < count; i++) {
+
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 70 * Math.random(), 100 * Math.random() - 50 );
+			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+			mesh.name = 'cube-' + i;
+			scene.add( mesh );
+
+			edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+			edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 5 } );
+			edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+			mesh.add( edges ); // add wireframe as a child of the parent mesh
+
+		}
+
+	}
+
+
+//
 	function toggleWireframe() {
 
 		scene.traverse( function ( child ) {
