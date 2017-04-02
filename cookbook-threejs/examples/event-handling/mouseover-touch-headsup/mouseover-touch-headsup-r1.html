@@ -173,7 +173,7 @@
 		raycaster = new THREE.Raycaster();
 
 		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
-//		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		renderer.domElement.addEventListener( 'touchstart', onDocumentTouchStart, false );
 
 
@@ -190,14 +190,19 @@
 	}
 
 
-	function setHeadsUp() {
+	function setHeadsUp( event ) {
 
 		let txt;
 		const b = '<br>'
 
 		if ( intersection === undefined ){
 
-			headsUp.style.display = 'none';
+			if ( event.type === 'touchstart' ) {
+
+				headsUp.style.display = 'none';
+
+			}
+
 			document.body.style.cursor = 'auto';
 			return;
 
@@ -246,6 +251,7 @@
 		if ( intersects.length > 0 ) {
 
 			intersection = intersects[ 0 ].object
+			intersection.userData.event = event;
 			intersection.rotation.y += 0.1;
 
 			log.innerHTML = 'Selected cube ID: ' + intersection.name ;
@@ -258,7 +264,7 @@
 
 		}
 
-		setHeadsUp();
+		setHeadsUp( event );
 
 	}
 
