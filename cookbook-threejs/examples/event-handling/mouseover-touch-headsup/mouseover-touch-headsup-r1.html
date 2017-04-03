@@ -4,9 +4,9 @@
 <meta charset=utf-8 >
 <title></title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='Three.js template with basic slide in and slide out menu with three bar icon that adjusts for small screen size' >
+<meta name=description content='Three.js template for headsup display' >
 <meta name=keywords content='Jaanga,WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
-<meta name=date content='2017-03-10' >
+<meta name=date content='2017-04-02' >
 </head>
 <body>
 <!--
@@ -164,14 +164,11 @@
 
 		window.objects = [];
 		window.mouse = new THREE.Vector2();
-		window.raycaster;
-		window.intersection;
+		window.intersected;
 
 		headsUp = document.body.appendChild( document.createElement( 'div' ) );
 		headsUp.style.cssText = 'background-color: #ddd; border-radius: 8px; display: none; padding: 0 5px 10px 5px; opacity: 0.85; ' +
 			'position: absolute; ';
-
-		raycaster = new THREE.Raycaster();
 
 		renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
 		renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -191,12 +188,45 @@
 	}
 
 
+	function onDocumentMouseMove( event ) {
+
+		var raycaster, intersects;
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+		raycaster = new THREE.Raycaster();
+		raycaster.setFromCamera( mouse, camera );
+
+		intersects = raycaster.intersectObjects( objects );
+
+		if ( intersects.length > 0 ) {
+
+			intersected = intersects[ 0 ].object
+			intersected.rotation.y += 0.1;
+
+			log.innerHTML = 'Selected cube ID: ' + intersected.name ;
+
+		} else {
+
+			intersected = undefined;
+
+			log.innerHTML = 'No cube selected';
+
+		}
+
+		setHeadsUp( event );
+
+	}
+
 	function setHeadsUp( event ) {
 
 		let txt;
 		const b = '<br>'
 
-		if ( intersection === undefined ){
+		if ( intersected === undefined ){
 
 			if ( event.type === 'touchstart' ) {
 
@@ -214,7 +244,7 @@
 		headsUp.style.display = '';
 
 		txt =
-			intersection.name + b +
+			intersected.name + b +
 			mouse.x + b +
 			mouse.y +
 
@@ -226,53 +256,22 @@
 	}
 
 
+
+	function onDocumentMouseDown( event ) {
+
+		headsUp.style.display = 'none';
+
+	}
+
+
 	function onDocumentTouchStart( event ) {
 
-		event.preventDefault();
+	//	event.preventDefault();
 
 		event.clientX = event.touches[0].clientX;
 		event.clientY = event.touches[0].clientY;
 
 		onDocumentMouseMove( event );
-
-	}
-
-
-	function onDocumentMouseMove( event ) {
-
-		event.preventDefault();
-
-		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-
-		raycaster.setFromCamera( mouse, camera );
-
-		let intersects = raycaster.intersectObjects( objects );
-
-		if ( intersects.length > 0 ) {
-
-			intersection = intersects[ 0 ].object
-			intersection.userData.event = event;
-			intersection.rotation.y += 0.1;
-
-			log.innerHTML = 'Selected cube ID: ' + intersection.name ;
-
-		} else {
-
-			intersection = undefined;
-
-			log.innerHTML = 'No cube selected';
-
-		}
-
-		setHeadsUp( event );
-
-	}
-
-
-	function onDocumentMouseDown( event ) {
-
-		headsUp.style.display = 'none';
 
 	}
 
