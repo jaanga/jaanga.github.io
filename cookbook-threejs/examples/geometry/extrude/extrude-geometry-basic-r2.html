@@ -19,7 +19,9 @@
 <script src=https://rawgit.com/mrdoob/three.js/dev/examples/js/libs/stats.min.js ></script>
 
 <script>
-// 2016-10-14
+// 2017-04-14
+
+
 
 	var stats, renderer, scene, camera, controls, mesh;
 	var gridHelper, axisHelper;
@@ -142,8 +144,6 @@
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
-		window.addEventListener( 'keyup', onKeyUp, false );
-		renderer.domElement.addEventListener( 'click', function() {  controls.autoRotate = !controls.autoRotate; chkRotate.checked = controls.autoRotate; }, false );
 
 // helpers
 
@@ -161,12 +161,34 @@
 		scene.add( axisHelper );
 
 // assets
+		material = new THREE.MeshNormalMaterial();
 
-		shapeLineTo();
+		geometry = shapeLineTo();
 
+		mesh = new THREE.Mesh( geometry, material ) ;
+		mesh.position.set( 40, 40, 0 );
+		scene.add( mesh );
+
+		geometry = shapePoints();
+		mesh = new THREE.Mesh( geometry, material ) ;
+		scene.add( mesh );
 
 	}
 
+
+	function shapePoints() {
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		vectors = [ v2(), v2( 30, 0 ), v2( 30, 30 ), v2( 0, 30 ) ];
+
+		shape = new THREE.Shape( vectors );
+
+		geometry = new THREE.ExtrudeGeometry( shape, { amount: 10, bevelEnabled: false } );
+
+		return geometry;
+
+	}
 
 
 	function shapeLineTo() {
@@ -196,28 +218,11 @@
 
 //		geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 		geometry = new THREE.ExtrudeGeometry( shape, { amount: 10, bevelEnabled: false } );
-		material = new THREE.MeshNormalMaterial();
-		mesh = new THREE.Mesh( geometry, material ) ;
-		scene.add( mesh );
 
+		return geometry;
 
 	}
 
-
-	function onKeyUp ( event ) {
-
-//console.log( 'key', event.keyCode );
-
-//		controls.enableKeys = false;
-		event.preventDefault();
-
-		switch( event.keyCode ) {
-
-			case 32: controls.autoRotate = !controls.autoRotate; chkRotate.checked = controls.autoRotate; break; // space bar
-
-		}
-
-	}
 
 	function onWindowResize() {
 

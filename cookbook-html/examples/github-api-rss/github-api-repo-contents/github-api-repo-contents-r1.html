@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub API Contents R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-11-05' >
+</head>
+<body>
+<script>
+
+	let b = '<br>';
+
+	init();
+
+	function init() {
+
+		var css, container, contents, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			'body { font: 12pt monospace; margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'summary h3 { display: inline; }' +
+			'summary { outline: none; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<details open>' +
+
+					'<summary><h3>Menu</h3></summary>' +
+
+					'<p>' +
+						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'</p>' +
+
+					'<p><button onclick=getReadMe(); > getReadMe </button></p>' +
+					'<p><button onclick=getFile(); > getFile </button></p>' +
+
+					'<p><button onclick=createFile(); > createFile </button></p>' +
+
+
+					'<p><button onclick=getRateLimit(); > getRateLimit </button></p>' +
+
+					'<div id=menuInfo ></div>' +
+
+				'</details>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' +
+			'</div>' +
+
+		'';
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+//		getReadMe();
+
+
+	}
+
+
+// https://developer.github.com/v3/repos/contents/#delete-a-file
+
+	function getReadMe() {
+
+		var fileName = 'https://api.github.com/repos/jaanga/jaanga.github.io/readme';
+
+		requestFile( fileName, callback );
+
+		function callback( xhr ) {
+
+			txt = xhr.target.response;
+			text = JSON.parse( txt );
+			cc = window.atob( text.content );
+			contents.innerHTML =
+				text.name + b +
+				text.size + b + b +
+				cc + b + b +
+				txt +
+			'';
+
+			console.log( text );
+
+		}
+
+	}
+
+
+	function getFile() {
+
+		var fileName = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/colophon.md';
+
+		requestFile( fileName, callbackGF );
+
+		function callbackGF( xhr ) {
+
+			txt = xhr.target.response;
+			text = JSON.parse( txt );
+
+			contents.innerHTML =
+				text.name + b +
+//				text.size + b + b +
+//				cc + b + b +
+				txt +
+			'';
+
+			console.log( text );
+
+
+		}
+
+	}
+
+
+
+
+
+	function getRateLimit() {
+
+		var fileName = 'https://api.github.com/rate_limit';
+
+		requestFile( fileName, callbackGF );
+
+		function callbackGF( xhr ) {
+
+			txt = xhr.target.response;
+			text = JSON.parse( txt );
+
+			contents.innerHTML =
+				'limit: ' + text.resources.core.limit + b +
+				'remaining: ' + text.resources.core.remaining + b + b +
+
+				txt.replace( /,/g, ',<br>' ) +
+			'';
+
+			console.log( text );
+
+		}
+
+	}
+
+
+	function requestFile( fileName, callback ) {
+
+		var fileName, text, lines;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', fileName, true );
+		xhr.onerror = function( xhr ) { console.log( 'error', xhr  ); };
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+
+	function createFile() {
+
+		var fileName = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/api-test.md';
+
+		putFile( fileName, callbackCF );
+
+		function callbackCF( xhr ) {
+
+			txt = xhr.target.response;
+			text = JSON.parse( txt );
+
+			contents.innerHTML =
+//				'limit: ' + text.resources.core.limit + b +
+//				'remaining: ' + text.resources.core.remaining + b + b +
+
+				txt.replace( /,/g, ',<br>' ) +
+			'';
+
+			console.log( text );
+		}
+
+	}
+
+	function putFile( fileName, callback ) {
+
+//		var fileName, text, lines;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'PUT', '' );
+		xhr.setRequestHeader( 'Content-Type', 'text/plain' );
+		xhr.onerror = function( xhr ) { console.log( 'error', xhr  ); };
+		xhr.onload = callback;
+		xhr.send( fileName );
+
+	}
+
+
+
+
+
+	function createFile() {
+
+
+// https://api.github.com/gists/18b626fb181552c4cdac6c1789066e13
+
+//		var fileName, str;
+//		var response
+//		var xhr;
+
+
+		path = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/api-test.txt';
+		id = 'd266d7918d341aed456dc48fc578bf06'
+
+//		url = "https://api.github.com/gists/18b626fb181552c4cdac6c1789066e13/cc1c8ae1c76ff3c748aa30cd9e1272bc369725fd"
+
+//		url = fileName + id + '?authToken=token';
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'PUT', path );
+//		xhr.setRequestHeader("Authorization", "token");
+
+		files = {
+			"message": "commit message",
+			"committer": {
+				"name": 'Theo Armour',
+				email: 't.armour@gmail.com'
+			},
+			"content": "updated file contents: " + ( new Date() )
+		}
+
+		str = JSON.stringify( files );
+
+		xhr.onerror = function( err ) { console.log( 'errr', err  ); }
+		xhr.onload = callback;
+		xhr.send( str );
+
+		function callback( xhr ) {
+
+			response = JSON.parse( xhr.target.response );
+
+			console.log( response );
+
+//			textArea.value = response;
+
+			contents.innerHTML =
+
+//				'<p><a href=' + response.files[ 'test.md' ].raw_url + ' target="_blank" >' + response.description + '</a></p>' +
+
+			'';
+
+		}
+
+
+	}
+
+</script>
+</body>
+</html>
+

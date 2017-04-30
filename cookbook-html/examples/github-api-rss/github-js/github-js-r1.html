@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>GitHub.js Basic R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Basic slide in and slide out menu with three bar icon that adjusts for small screen size.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2016-11-05' >
+</head>
+<body>
+<script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
+<script>
+
+	let gh;
+	let b = '<br>';
+	var zz = 'ed7a5e3e4' + '' + '58585dbe8' + 'c94ce39c322957' + '404af138';
+	let count;
+	init();
+
+	function init() {
+
+		var css, container, contents, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			'body { font: 12pt monospace; margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+			'summary h3 { display: inline; }' +
+			'summary { outline: none; }' +
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container { left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+			'#contents { border: 1px #ccc solid; left: 375px; max-width: 800px; position: absolute; }' +
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<details open>' +
+
+					'<summary><h3>Menu</h3></summary>' +
+
+					'<p>' +
+						'This is a template or boilerplate file that is frequently used to start-off a Jaanga projects.' +
+					'</p>' +
+
+
+					'<p><button onclick=gistCreate(); > gistCreate </button></p>' +
+					'<p><button onclick=deleteFile(); > deleteFile </button></p>' +
+
+					'<p><button onclick=getTree(); > getTree </button></p>' +
+
+					'<div id=menuInfo ></div>' +
+
+				'</details>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents >' +
+				'<h1>Typical contents</h1>' +
+			'</div>' +
+
+		'';
+
+		if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+		initGH();
+
+//		gistCreate();
+
+	}
+
+
+	function initGH() {
+
+// basic auth
+
+		gh = new GitHub( {
+//		username: 'theo-armour',
+//		password: 'password'
+
+// also acceptable:
+			token: zz
+
+		} );
+
+//var me
+/*
+		me = gh.getUser(); // no user specified defaults to the user for whom credentials were provided
+		me.listNotifications( function( err, notifications ) {
+
+			contents.innerHTML = '';
+
+			for ( var i = 0; i < notifications.length; i++ ) {
+
+				contents.innerHTML +=  'notifications ' + notifications[ i ].repository.name + b;
+
+			}
+
+		});
+
+*/
+//		getUser( 'theo-armour' );
+
+//		createFile();
+
+	}
+
+
+
+
+	function getUser( user ){
+
+
+		usr = gh.getUser( user );
+		usr.listStarredRepos( function( err, repos ) {
+
+console.log( 'repos', repos );
+
+			contents.innerHTML = '';
+
+			for ( var i = 0; i < repos.length; i++ ) {
+
+				contents.innerHTML += 'repos ' + i + ' ' + repos[ i ].name + b;
+
+			}
+		});
+
+	}
+
+
+	function createFile() {
+
+		var repository = gh.getRepo( 'webmath', 'webmath.github.io' );
+
+// Creates a new file (or updates it if the file already exists)
+// with the content provided
+		repository.writeFile(
+			'master', // e.g. 'master'
+			'api-test.txt', // e.g. 'blog/index.md'
+			'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?', // e.g. 'Hello world, this is my new content'
+			'first commit', // e.g. 'Created new index'
+			function( err ) {
+
+console.log( 'error', err );
+
+				}
+		);
+
+	}
+
+
+	function getTree() {
+
+		count = 0;
+//		var repository, sha;
+
+		repository = gh.getRepo( 'prediqtiv', 'prediqtiv.github.io' );
+		sha = repository.getSha( 'master', 'trades-dev/2017-04-19 02:12:15' )
+		.then( function( objj ) {
+
+			obj = objj;
+
+console.log( 'obj', obj.data );
+
+console.log( 'sha', sha );
+
+processFiles( count );
+
+		} );
+
+	}
+
+
+	function processFiles( count ) {
+
+		if ( count < obj.data.length ) {
+
+			deleteFile( obj.data[ count ].path )
+
+		} else {
+
+console.log( 'finito', 23 );
+
+		}
+
+	}
+
+
+	function deleteFile( path ) {
+
+		repository = gh.getRepo( 'prediqtiv', 'prediqtiv.github.io' );
+
+		repository.deleteFile(
+			'master',
+			path,
+			function( err, data ) {
+
+				contents.innerHTML = ( err ? err + ' - ' : '' ) + ( data && data.commit ? data.commit.message : data );
+
+console.log( 'erase', err ? err : '', data && data.commit ? data.commit.message : data );
+
+			}
+		)
+		.then( function() {
+
+			processFiles( ++count );
+
+		} );
+
+	}
+
+
+	function gistCreate() {
+
+// unauthenticated client
+
+		const gh = new GitHub();
+
+		let gist = gh.getGist(); // not a gist yet
+
+		gist.create( {
+
+			public: true,
+			description: 'My first gist',
+			files: {
+				"file1.txt": {
+					content: "Aren't gists great!"
+				}
+			}
+
+		} )
+		.then( function( { data } ) {
+
+// Promises!
+			let createdGist = data;
+			return gist.read();
+
+		})
+		.then( function( { data } ) {
+
+			let retrievedGist = data;
+console.log( 'retrievedGist', retrievedGist );
+
+		});
+
+	}
+
+</script>
+</body>
+</html>
