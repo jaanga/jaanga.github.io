@@ -16,7 +16,7 @@
 
 	function init() {
 
-		let css, container, contents, hamburger, menu;
+		let css, container, hamburger, menu;
 		let txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 		const b = '<br>';
 
@@ -84,14 +84,13 @@
 				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
 			'</div>' +
 
-			'<div id=contents >' +
-				'<h1>Typical contents</h1>' +
-			'</div>' +
+			'<div id=contents ></div>' +
 
 		'';
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
+		contents.innerHTML += 'llll';
 	}
 
 

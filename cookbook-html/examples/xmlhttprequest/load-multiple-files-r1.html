@@ -12,17 +12,14 @@
 <script>
 // Copyright 2017 Jaanga authors ~ MIT license
 
-	var linesTotal = 0;
-	var min = 1000000;
-	var max = 0;
-	var chars = 0;
-	var words = 0;
+	var files = [ 'aaa.js', 'bbb.js', 'ccc.js', 'ddd.js' ];
+	var count = 0;
 
 	init();
 
 	function init() {
 
-		let css, container, contents, hamburger, menu;
+		let css, container, hamburger, menu;
 		let txt = '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 		const b = '<br>';
 
@@ -90,73 +87,47 @@
 				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
 			'</div>' +
 
-
 			'<div id=contents ></div>' +
 
 		'';
 
 		if ( window.self !== window.top ) { container.style.left = '-325px'; }
 
-		var fileName;
+		contents.innerHTML += 'llll';
 
-		fileName = 'https://api.github.com/repos/prediqtiv/prediqtiv.github.io/contents/trades-dev/2017-04-20/';
-
-		requestFile( fileName, callbackFolder, 23 );
+		requestFile( files[ count ] );
 
 	}
 
+// loading multiple files and passing values
 
-	function callbackFolder( xhr ) {
-
-		symbols = xhr.target.response;
-		symbols = JSON.parse( symbols );
-
-		for ( var i = 0; i < symbols.length; i++ ) {
-
-			requestFile( symbols[ i ].download_url, callbackFile, i  );
-
-		}
-
-	}
-
-
-
-	function callbackFile( xhr, index ){
-
-//		let response, txt;
-
-		response = xhr.target.response;
-		lines = response.split( '\n' );
-		length = lines.length;
-		max = length > max ? length : max;
-		min = length < min ? length : min;
-		linesTotal += length;
-		chars += response.length;
-		words += response.split( / |,/ ).length;
-
-		contents.innerHTML += index + ' ' + response.slice( 0, response.indexOf( ',' ) ) + ' ' + lines.length + '<br>';
-
-		menuInfo.innerHTML =
-			'Lines: ' + linesTotal.toLocaleString() + '<br>' +
-			'Max lines: ' + max.toLocaleString() +'<br>' +
-			'Min lines: ' + min.toLocaleString() +'<br>' +
-			'Characters: ' + chars.toLocaleString() +'<br>' +
-			'Words: ' + words.toLocaleString() +'<br>' +
-		'';
-
-	}
-
-
-	function requestFile( fileName, callback, index ) {
+	function requestFile( txt ) {
 
 		var xhr;
 
-		xhr = new XMLHttpRequest();
+		xhr = new XMLHttpRequest( txt );
 		xhr.crossOrigin = 'anonymous';
-		xhr.open( 'GET', fileName, true );
+		xhr.open( 'GET', files[ count ], true );
 		xhr.onerror = function( xhr ) { console.log( 'error', xhr  ); };
-		xhr.onload = function( xhr ){ callback( xhr, index ) };
+		xhr.onload = function( xhr ){ callback( xhr, txt ) };
 		xhr.send( null );
+
+	}
+
+
+	function callback( xhr, item  ){
+
+		txt = xhr.target.response;
+
+		contents.innerText += '\n\n' +item + '\n' + txt;
+
+		count++;
+
+		if ( count < files.length ) {
+
+			requestFile( files[ count ] );
+
+		}
 
 	}
 
