@@ -777,7 +777,7 @@ console.log( '', TOO.files, path );
 
 // Copyright 2017 Pushme Pullyou authors ~ MIT license
 
-	let protocol, usr;
+	let protocol, usr, firstDot, path;
 
 	protocol = location.protocol;
 
@@ -788,13 +788,12 @@ console.log( '', TOO.files, path );
 		usr = usr.slice( usr.lastIndexOf( '/' ) + 1 );
 		path = location.pathname.slice( firstDot + 10, location.pathname.lastIndexOf( '/' )  );
 
-	} else if ( protocol === 'http:' ) {
+	} else if ( protocol.includes( 'http' ) ) {
 
 		firstDot = location.hostname.indexOf( '.github.io' );
 		usr = location.hostname.slice( 0, firstDot );
 		path = location.pathname.slice( 1, location.pathname.lastIndexOf( '/' )  );
 
-//console.log( '', usr, path );
 	}
 
 
@@ -803,8 +802,7 @@ console.log( '', TOO.files, path );
 		subText : '',
 		repo : usr + '.github.io',
 		branch : 'master',
-		folder : path,
-		defaultFile: 'documents/readme.md'
+		folder : path
 	};
 
 
@@ -812,7 +810,7 @@ console.log( '', TOO.files, path );
 
 	function init() {
 
-		mnuTitle.innerHTML = usr;
+		mnuTitle.innerHTML = user.user;
 		mnuTagline.innerHTML = '<small><p>' + document.head.querySelector( "[name=description]" ).content + '</p></small>';
 
 		TOO.initUser( user );
