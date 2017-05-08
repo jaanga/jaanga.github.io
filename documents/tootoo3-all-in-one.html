@@ -792,9 +792,9 @@ console.log( '', TOO.files, path );
 
 		firstDot = location.pathname.indexOf( 'github.io' );
 		usr = location.host.slice( 0, firstDot );
-		path = '';
+		path = location.pathname.slice( 1, location.pathname.lastIndexOf( '/' )  );
 
-console.log( '', usr, path );
+//console.log( '', usr, path );
 	}
 
 
