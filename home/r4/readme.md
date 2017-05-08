@@ -1,17 +1,19 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( https://jaanga.github.io/ "View file as a web page." ) </span>
-<div><input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/home/r4'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' /></div>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/home/r4'; value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( index.html ) 
+
+[Jaanga]( index.html )
 ===
+
 _Your 3D happy place. And, btw, we're using [browserstack]( https://www.browserstack.com ) to help with testing our scripts on all sorts of devices_
 
 
 [Blog]( https://jaanga.github.io/request-jaanga-blog-posts.html )
-~ [Documents]( https://jaanga.github.io/documents ) 
+~ [Documents]( https://jaanga.github.io/documents )
 ~ [Read Me]( https://jaanga.github.io/#https://jaanga.github.io/readme.md )
-~ [Copyright and License]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-copyright-and-mit-license.md ) 
-~ [Contacts and Organization]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-contacts-and-organization.md ) 
-~ [All of It]( https://jaanga.github.io/cookbook-threejs/viewers/viewer-html-jaanga/viewer-html-jaanga-r1.html ) 
+~ [Copyright and License]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-copyright-and-mit-license.md )
+~ [Contacts and Organization]( https://jaanga.github.io/#https://jaanga.github.io/jaanga-contacts-and-organization.md )
+~ [All of It]( https://jaanga.github.io/cookbook-threejs/viewers/viewer-html-jaanga/viewer-html-jaanga-r1.html )
 
 <!--
 
@@ -19,7 +21,7 @@ _Your 3D happy place. And, btw, we're using [browserstack]( https://www.browsers
 
 ## Sample Web Pages / Source Code
 
-<iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>  
+<iframe id=carousel class=ifr src=iframe-carousel-r4.html width=100% height=600px ></iframe>
 
 ######_Sample Jaanga Scripts - [Code Edit View]( https://jaanga.github.io/cookbook-html/templates/code-edit-view/ )_
 -->
@@ -32,7 +34,7 @@ with source code at [github.com/jaanga]( https://github.com/jaanga ).
 The name 'Jaanga' was chosen for this effort because it sounds jazzy, it is short and search results indicate uniqueness.
 Similarly the concept of Jaanga is to be a place to help you write software that is fun, easy and gets things done.
 
-### Mission  
+### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
 * To supply scripts that are useful, written in code that is simple to understand
@@ -42,7 +44,7 @@ Similarly the concept of Jaanga is to be a place to help you write software that
 * To supply all code as free open source software( [FOSS]( https://en.wikipedia.org/wiki/Free_and_open-source_software ) )
 * To visualize everything in 3D
 
-### Vision  
+### Vision
 <!--  a descriptive picture of a desired future state -->
 
 * So much of what people do is informed by the tradition of paper. Let's disrupt some of those notions
@@ -62,7 +64,7 @@ Links to just the good stuff - nothing more - the collection of fun scripts - bu
 <a href=https://jaanga.github.io/outer-space/ >
 <img src=https://jaanga.github.io/home/images/star-spotter-screen-stars-240x180.png >
 <h2>Outer Space</h2></a>
-Explore the surfaces of the Moon and Mars in 3D - and much more 
+Explore the surfaces of the Moon and Mars in 3D - and much more
 Gigabytes of formerly quite difficult to access digital elevation data transformed into CORS-enable PNG heightmap files. 2015
 </div>
 
@@ -85,7 +87,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 <a href=https://jaanga.github.io/terrain-r2/terrain.html >
 <img src=https://jaanga.github.io/home/images/terrain-sf-240x180.png >
 <h2>Terrain R2</h2></a> 2015
-<li>In the mi[d]st of a complete reconstruction. 
+<li>In the mi[d]st of a complete reconstruction.
 </div>
 
 <div class=figure >
@@ -203,7 +205,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 <li>The team entry was a winner. Then again, so were all the entries from the other half dozen teams.
 </div>
 
- 
+
 ***
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
@@ -213,8 +215,8 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
 
-<style> 
-img { border: 1px solid black; } 
+<style>
+img { border: 1px solid black; }
 
 .figure { display: inline-block; margin: 0 20px 50px 0 ; vertical-align: top; width: 240px;}
 </style>
