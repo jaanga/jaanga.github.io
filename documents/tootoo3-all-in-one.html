@@ -791,7 +791,7 @@ console.log( '', TOO.files, path );
 	} else if ( protocol === 'http:' ) {
 
 		firstDot = location.hostname.indexOf( '.github.io' );
-		usr = location.host.slice( 0, firstDot );
+		usr = location.hostname.slice( 0, firstDot );
 		path = location.pathname.slice( 1, location.pathname.lastIndexOf( '/' )  );
 
 //console.log( '', usr, path );
