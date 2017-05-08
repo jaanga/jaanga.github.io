@@ -790,8 +790,11 @@ console.log( '', TOO.files, path );
 
 	} else if ( protocol === 'https:' ) {
 
-		usr = location.host.slice( 0, location.host.indexOf( '.' ) );
+		firstDot = location.pathname.indexOf( 'github.io' );
+		usr = location.host.slice( 0, firstDot );
+		path = '';
 
+console.log( '', usr, path );
 	}
 
 
