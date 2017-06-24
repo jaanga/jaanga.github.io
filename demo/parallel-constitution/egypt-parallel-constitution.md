@@ -11,8 +11,11 @@ Constitution Preamble and Constitution
 ## Preamble and Nine Guiding Principles
 
 Driven by our cognizance of our responsibility before the nation, our will toward a unified nation, and our insistence on laying down the foundations for peace in Egypt; and standing strong with our belief in human rights and the principles of national sovereignty, we the Egyptians who are members of the Parallel Constitution Project strive for a real alternative that befits Egypt’s future and its citizens, as we work toward a nation that honors the blood of Egyptians who died in the two great revolutions of January and June in the name of freedom, justice, equality, and the rule of law.
-We have found it unacceptable for Egypt -- among the nations that established human rights internationally in 1948 -- to live in a world guided by these principles, while we are barred from the spirit of their covenants. Despite centuries of injustice and backwardness, our civilization persists to prevail.
+
+We have found it unacceptable for Egypt &mdash; among the nations that established human rights internationally in 1948 &mdash; to live in a world guided by these principles, while we are barred from the spirit of their covenants. Despite centuries of injustice and backwardness, our civilization persists to prevail.
+
 Our task force comprises specialized Egyptian experts in various applications of public policy, civil society, business, media and hard sciences, who advocate the interests of the real user of the Constitution as a social contract between the citizen and the State.
+
 And based on this, we present this draft of the Constitution to strive for a full guarantee of rights, rather than minimal rights, and to reflect the following nine principles:
 
 Sovereignty is for the people alone.
@@ -205,7 +208,7 @@ It is not permissible for either of the two houses to adjourn its meetings withi
 
 It is permissible for either speaker to call for a joint meeting, the hosting of which must be approved by a majority of both houses to be in adherence to the law.
 
-Meetings are public. Private meetings may be held upon request from five members of either house and approval of the majority of each house. If a private meeting ends with a vote, the details of the results of this vote shall be made public, including the votes of each member.
+Meetings are public. Private meetings may be held upon request from five members of either house and approval of the majority of each house. If a private meeting ends with a vote, the details of the results of this vote shall be made public,including the votes of each member.
 
 Members of Parliament shall not be held legally accountable for the ideas and opinions they express while attending Parliamentary meetings and sub-committee meetings.
 
@@ -255,8 +258,7 @@ Determine the necessary conditions and mechanisms that allow local governments t
 
 The House of Representatives shall have the following functions:
 
-The discussion and approval of the state budget and final budgetary report. 36.2. The discussion and approval for loans and grants from foreign countries or donor
-entities. 36.3. Implementation of taxes to cover the expenses of the State. 36.4. The authority, with a two-thirds majority vote, to file parliamentary charges against an official or government employee, including but not limited to a Cabinet Minister, an Ambassador, or the President.
+The discussion and approval of the state budget and final budgetary report. 36.2. The discussion and approval for loans and grants from foreign countries or donor entities. 36.3. Implementation of taxes to cover the expenses of the State. 36.4. The authority, with a two-thirds majority vote, to file parliamentary charges against an official or government employee, including but not limited to a Cabinet Minister, an Ambassador, or the President.
 
 ### Section 21
 
@@ -304,17 +306,21 @@ President to assign certain powers to the Vice President for a limited period of
 ### Section 24
 
 The State shall have municipalities that include governorates, cities, and villages.
+
 Every inhabited area shall be incorporated into one of these entities. It shall be permissible for an entity to incorporate more than one village or city, just as an inhabited area can be considered an entity, in the manner that is prescribed by the law. The judiciary shall adjudicate election appeals for the Legislative Council in the government and municipal bodies in the removal of membership in the manner that is prescribed by law.
+
 Legislatures shall work on the basis of independence of the governorates in the matters of public affairs, primary education, technical education, scientific research, medicine, transportation, local roads, the environment, markets, and various utilities and social services in a manner that does not violate the Constitution.
 
 ### Section 25: Governorate Legislative Councils
 
 Each governorate shall be represented by a Legislative Council elected by a secret direct ballot. The Council will select its head and deputies from among the elected members. Each Council will have the right to set election laws specific to its district, as long as the number of districts in the Council does not fall short of the representation it has in the House of Representatives for the same governorate and so that the number of members in one Council is not less than five members in any circumstance.
+
 The right to vote for the members of the Legislative Council is guaranteed to those who have the right to vote for the House of Representatives. A voter may nominate himself for membership on the Council and the same candidacy rules for the House of Representatives will apply to him.
 
 ### Section 26
 
 Every Legislative Council will have the right to issue laws specific to the governorate in a manner that does not violate the general principles of the Constitution.
+
 Among governorate resources will be taxes and original or additional local duties, in the manner that is prescribed by the law. These duties and taxes should not be affected by the movement of persons or the passage of funds between administrative units; the rights of citizens and their ability to work in the territories of their land should not be restricted in the exercising of such taxing power. Among governorate resources will also be a property tax on buildings and agricultural lands, with the possibility of allocating a portion of these resources to local councils as per the law.
 
 ### Section 27: Governors
@@ -323,14 +329,14 @@ With the exception of age restrictions, the conditions for candidates for the pr
 
 The term of office for the Governor and Lieutenant Governor shall be four Gregorian years, beginning the day after the previous term ends. A candidate may be re-elected to a governorship or lieutenant governorship in the same governorate only once.
 
-The Governor shall be responsible for developing a budget and presenting it to the legislative authority of the governorate, and expressing his objections to legislation concerning expenditures, and issuing orders to the armed forces (the police) to intervene in times of crisis, and appointing leaders to executive positions in the governorate. The Governor may not interfere in the work of the Judiciary. The Governor shall exercise his powers in accordance with the general provisions of this Constitution.
+The Governor shall be responsible for developing a budget and presenting it to the legislative authority of the governorate,and expressing his objections to legislation concerning expenditures, and issuing orders to the armed forces (the police) to intervene in times of crisis, and appointing leaders to executive positions in the governorate. The Governor may not interfere in the work of the Judiciary. The Governor shall exercise his powers in accordance with the general provisions of this Constitution.
 
 The law in each governorate may provide additional powers and prerogatives to the Governor without prejudice to the provisions contained in this Constitution.
 
 
 ### Section 28: Governorate Council of Judges
 
-Every governorate shall have a council of judges, composed of the chief of the highest court in the governorate, the governorate Attorney General, a lawyer elected by the governorate’s local union, in addition to an elected number of judges, and Prosecutors, and a proportionate number of lawyers. Each governorate’s general law will arrange this, and will define the mandate for these councils, appropriate to their level and under the supervision of the Supreme Judicial Council.
+Every governorate shall have a council of judges, composed of the chief of the highest court in the governorate, the governorate Attorney General, a lawyer elected by the governorate’s local union, in addition to an elected number of judges and Prosecutors, and a proportionate number of lawyers. Each governorate’s general law will arrange this, and will define the mandate for these councils, appropriate to their level and under the supervision of the Supreme Judicial Council.
 
 ### Section 29: Other Local Councils
 
@@ -358,6 +364,7 @@ The existing procedures for the collection of state funds shall be followed for 
 collection of taxes and fees owed to the local councils.
 
 The meetings of local councils are public, although they may be convened in confidentiality as law may provide. Each council has the right to set its annual budget, including its profits and expenses. The law shall establish and clarify the rules governing the annual budget and the period during which it can be vetoed by the executive. In all cases, the executive authority may request the amounts necessary for the performance of public services and in light of the obligations imposed by the law on the councils. Every council has the right to set forth its final accounting report for the fiscal year within legal limits.
+
 The council budgets and final accounting reports shall be published and kept up to date in a public and accessible manner for the citizen governed by their respective council. The same applies for local executive power, and the law shall regulate the procedures by which this information can be acquired.
 
 The authorities shall ensure that local councils receive the technical, administrative,
@@ -395,6 +402,7 @@ It shall not be permissible for any governorate, without the approval of Parliam
 ### Section 31
 
 Judges may not be removed from their positions. They are independent and there is no authority above them other than the Constitution. It shall not be permissible for any authority to intervene in litigation or in the course of justice.
+
 The judicial authority oversees the members of the Judiciary.
 
 A general law shall establish the guidelines governing the judiciary. This law shall govern the judicial bodies, determine their jurisdiction, and bring the various judicial bodies together according to the law.
@@ -422,6 +430,7 @@ The death penalty shall be abolished and never re-introduced into law.
 ### Section 33: The Supreme Constitutional Court
 
 The Supreme Constitutional Court shall be made up of nine justices selected from among justices, professors of law, lawyers from the Court of Cessation, and those who graduated at least fifteen years ago. The judges shall be elected from the regular administrative and higher courts. The lawyers shall be selected by the Supreme Judicial Council after the opinions of their lawyers are considered. The term for the Supreme Constitutional Court will be twelve years with a renewal as laid out by the law. The convening of the Supreme Constitutional Court shall be valid when seven justices are present.
+
 The law shall regulate the procedures to appoint judges to the Court, the organization of its chambers, the guidelines for the review of disputes put forth by authorities, individuals, the rules governing its work, and the procedures to ensure its independence.
 
 No justices of the Court shall be forced to retire or be suspended for his actions without an order from the Court. This order will only be issued due to a physical inability to complete work or serious negligence in the performance of work.
@@ -437,15 +446,22 @@ During the review of a case, if a court determines that an issue relates to the 
 ### Section 34: Amending the Constitution
 
 There shall be no debate to amend the the Bill of Rights, except in accordance with Article 2 of the Bill of Rights, in Chapter 1, Section 1. No debate to amend the constitution shall be held in closed session; any amendment so debated shall be considered null and void. Parliament shall not debate any amendment or suggestion unless by attendance of at least two two-thirds of both houses and two-thirds of the governorate legislatures acting as representatives of those bodies, and that the debate and discussion are, in all cases, public.
+
 Parliament may suggest amendments to the Constitution whenever two thirds of the members of either house find it necessary to do so. No amendment shall become law without the approval of two-thirds of the governorate legislatures. If two-thirds of governorate legislative organizations demand or suggest an amendment to the constitution not contrary to Article 2 of the first chapter of the Bill of Rights, Parliament shall convene a conference to announce the amendments, which shall become legal in terms of the objectives and purposes as part of this constitution, after which conferences shall be held in every governorate in the republic for the governorate legislative bodies to endorse the amendment.
 
 Section 35: General Provisions
 
 The Arabic language is an official language of the bureaucracy of the republic. Each governorate may select an official language or languages according to the choice of the individuals thereof. Governorate law shall determine this.
+
 No legislation or law shall be issued, nor amendment to the constitution proposed, to deprive any governorate of its right to legitimate elections as described in this Constitution. No amendment may be proposed that would remove or reduce the citizen’s right to vote on the grounds of nonpayment of taxes, provided the citizen is at least eighteen years old.
+
 If it is decided to create a local body with a special legal status, or to change its organization or jurisdiction, registered voters are invited to the local organizations concerned with this matter to vote on it. All of this shall be arranged according to the law.
+
 Throughout this Constitution, the use of the masculine pronoun referring to humans, does not indicate or belong to a particular sex or gender.
+
 Legislation shall take into account disadvantaged and marginalized groups, and geographic distance and its associated problems.
+
 The State does not have the authority to arrange or mandate any of the rights or freedoms described in this Constitution, but shall deter and punish crimes or infringements against the same.
+
 The State must fulfill the international conventions and treaties it has signed as national law, and abide by them. No law or legislation may be enacted in opposition to the articles or concepts of these conventions and treaties.
 
