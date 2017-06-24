@@ -16,7 +16,7 @@
 		border: 1px solid red;
 		float: left;
 		height: 200px;
-//		width: 200px; 
+//		width: 200px;
 		position: relative;
 	}
 
@@ -42,7 +42,7 @@
 	document.body.style.cssText = ' font: bold 12pt monospace; ';
 
 	var info = document.body.appendChild( document.createElement( 'div' ) );
-	info.innerHTML = '<h1>' + document.title + '</h1>' +
+	info.innerHTML = '<h1><a href="" >' + document.title + '</a></h1>' +
 		'<div id=msg ></div>';
 
 	for (var i = 0, len = 10; i < len; i++) {
@@ -51,8 +51,8 @@
 		info = document.body.appendChild( document.createElement( 'div' ) );
 		info.className = 'pic';
 		info.style.cssText += 'height: ' + hgt + 'px; width: ' + wid + 'px;';
-		info.innerHTML = 
-			'<img src=../images/lightning.jpg height= ' + hgt + ' width=' + wid + ' />' +
+		info.innerHTML =
+			'<img src=http://lorempixel.com/400/400/ height= ' + hgt + ' width=' + wid + ' />' +
 			'<div class=pic-text1  >text1 ' +  i  + '</div>' +
 			'<div class=pic-text2  >text2 ' +  i  + '</div>';
 	}

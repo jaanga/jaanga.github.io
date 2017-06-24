@@ -3,8 +3,8 @@
 ( http://jaanga.github.io/cookbook-html/templates/ "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) » 
-[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) » 
+[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) »
+[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) »
 
 [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
 ===
@@ -21,12 +21,11 @@ Interesting things you can do with Markdown.
 
 ![External Link Icon]( Icon_External_Link.png =100x100 )
 
-
 ![ text ]( http://lorempixel.com/800/600 =400x300 )
 
 ![ text ]( http://lorempixel.com/800/600 =200x150 )
 
- 
+
 ### Figures
 
 <figure>
@@ -60,11 +59,8 @@ ___
 
 ### Links of Interest
 
-https://github.com/showdownjs/showdown  
+https://github.com/showdownjs/showdown
 https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-
-http://google.com
-
 
 
 ### Strike through
@@ -124,12 +120,12 @@ _italics_
 ### Code
 ```
 	line of code with 3 backquote characters
-	line of code 
+	line of code
 	line of code
 ```
 
 	line of code
-	line of code 
+	line of code
 	line of code
 
 text with `back quote` characters

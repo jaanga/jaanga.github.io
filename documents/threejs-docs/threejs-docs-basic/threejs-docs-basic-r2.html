@@ -29,7 +29,7 @@ Menu and contents in HTML.
 		var css, hamburger, menu, contents;
 
 		css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = 
+		css.innerHTML =
 
 			'html, body { font: 12pt inconsolata,monospace; height: 100%; margin: 0; overflow: hidden; }' +
 			'a { color: crimson; text-decoration: none; }' +
@@ -59,11 +59,11 @@ Menu and contents in HTML.
 		contents.innerHTML = 'contents' +
 
 			'<p>' +
-				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
+				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' +
 			'</p>' +
 
 			'<p>' +
-				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' + 
+				'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.' +
 			'</p>' +
 
 		'';
@@ -77,7 +77,7 @@ Menu and contents in HTML.
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 				'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
@@ -105,7 +105,7 @@ Menu and contents in HTML.
 
 		'';
 
-		menu
+		menu;
 		selected = menu;
 
 		requestAPIContents();
@@ -285,10 +285,11 @@ Menu and contents in HTML.
 
 	}
 
+
 	function loadSource() {
 
 		name = 'https://rawgit.com/mrdoob/three.js/dev/src' + fileName.replace( 'docs\/api', '' ).replace( '.html', '.js' );
- 
+
 		contents.innerHTML = '<iframe src = "' + name + '"; ></iframe>';
 
 	}
@@ -317,10 +318,10 @@ console.log( 'fName', fName);
 
 	}
 
-	function slideMenu() { 
+	function slideMenu() {
 
-		hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; 
-		contents.style.left = ( contents.style.left === "0px" || contents.style.left === "25px" ) ? "375px" : "25px"; 
+		hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0;
+		contents.style.left = ( contents.style.left === "0px" || contents.style.left === "25px" ) ? "375px" : "25px";
 
 	}
 

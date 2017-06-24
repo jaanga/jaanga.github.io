@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title></title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='' >
+<meta name=keywords content='JavaScript,GitHub,FOSS,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<script>
+
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		var txt, css, contents;
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }' +
+
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + location.pathname.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+
+			'<p>' +
+				'<button onclick=setQuery("https://www.example.com","callbackSimple"); >setQuery Example</button> ' +
+				'<button onclick=setQuery("https://www.linkedin.com/company-beta/1441/","callbackTest"); >setQuery LinkedIn</button> ' + // not
+				'<button onclick=setQuerySO("https://www.stackoverflow.com","callbackSO"); >setQuery Stackoverflow</button> ' +
+				'<button onclick=setQuery("http://www.google.com/finance/getprices?q=GOOG&i=60&p=1d","callbackQuerySplitSliceJoin"); >setQuery Google</button> ' +
+				'<button onclick=setQueryBuildSim("http://www.buildingsimulation2017.org/sponsors.html","callbackBS"); >setQuery Build Sim2017</button> ' +
+			'</p>' +
+
+			'<div id=info ></div>' +
+
+			'<div id=logKeys ></div>' +
+			'<div id=logQuery ></div>' +
+			'<div id=log ></div>' +
+
+		'';
+
+	}
+
+	function setQuery( url, callback ) {
+
+		var statement, scr, query;
+
+// Symbols must be uppercase
+
+//		statement = 'select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.google.com%2Ffinance%2Fgetprices%3Fq%3DGOOG%26i%3D60%22';
+		statement = 'select * from html where url="' + url + '"';
+
+		encodedStatement = encodeURIComponent( statement );
+
+		query =	'https://query.yahooapis.com/v1/public/yql?q=' + encodedStatement + '&callback=' + callback;
+
+		scr = document.body.appendChild( document.createElement( 'script' ) );
+		scr.src = query;
+
+	}
+
+
+	function callbackTest( response ){
+
+		keys = Object.keys( response.query );
+
+		text = response.query;
+
+		logKeys.innerText = keys;
+
+		logQuery.innerHTML =
+			'count; ' + response.query.count + b +
+			'created; ' + response.query.created + b +
+			'lang; ' + response.query.lang + b +
+		b;
+
+		text = response.results[ 0 ];
+
+		log.innerHTML = text;
+
+	}
+
+
+	function callbackSimple( response ){
+
+		text = response.results[ 0 ];
+		log.innerHTML = text;
+
+	}
+
+//////////////////////////////
+
+
+	function setQueryBuildSim( url, callback ) {
+// https://developer.yahoo.com/yql/guide/yql-select-xpath.html
+
+// select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.buildingsimulation2017.org%2Fsponsors.html%22%20and%20xpath%3D%22%2F%2Fdiv%5B%40class%3D%22row%22%5D%2Fdiv%2Fa%22
+
+
+https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20wher…0and%20xpath%3D%22%2F%2Fdiv%5B%2Fdiv%2Fa%22&format=csv&callback=callbackBS
+//		var statement, scr, query;
+
+// Symbols must be uppercase
+
+//		statement = 'select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.google.com%2Ffinance%2Fgetprices%3Fq%3DGOOG%26i%3D60%22';
+		statement = 'select * from html where url="' + url + '" and xpath="//div/div/a"';
+		statement = 'select href from html where url="' + url + '" and compat="html5" and xpath="//a[@target=\'_blank\']"';
+		encodedStatement = encodeURIComponent( statement );
+
+		query =	'https://query.yahooapis.com/v1/public/yql?q=' + encodedStatement + '&callback=' + callback;
+
+		scr = document.body.appendChild( document.createElement( 'script' ) );
+		scr.src = query;
+
+	}
+
+
+	function callbackBS( response ){
+console.log( 'response', response );
+		keys = Object.keys( response.query );
+
+//		text = response.query;
+
+		logKeys.innerText = keys;
+
+		logQuery.innerHTML =
+			'count; ' + response.query.count + b +
+			'created; ' + response.query.created + b +
+			'lang; ' + response.query.lang + b +
+		b;
+
+
+		text = response.results;
+
+		log.innerText = text;
+
+	}
+
+
+////////////////////
+
+	function setQuerySO( url, callback ) {
+
+		var statement, scr, query;
+
+// Symbols must be uppercase
+
+//		statement = 'select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.google.com%2Ffinance%2Fgetprices%3Fq%3DGOOG%26i%3D60%22';
+		statement = 'select * from html where url="' + url + '" and xpath="//div/h3/a"';
+
+		encodedStatement = encodeURIComponent( statement );
+
+		query =	'https://query.yahooapis.com/v1/public/yql?q=' + encodedStatement + '&format=csv&callback=' + callback;
+
+		scr = document.body.appendChild( document.createElement( 'script' ) );
+		scr.src = query;
+
+	}
+
+	function callbackSO( response ){
+
+		keys = Object.keys( response.query );
+
+		text = response.query;
+
+		logKeys.innerText = keys;
+
+		logQuery.innerHTML =
+			'count; ' + response.query.count + b +
+			'created; ' + response.query.created + b +
+			'lang; ' + response.query.lang + b +
+		b;
+
+
+		text = response.results;
+
+		log.innerText = text;
+
+	}
+
+
+//////
+
+
+
+	function callbackQuerySplitSliceJoin( response ){
+
+		logQuery.innerHTML =
+			'count; ' + response.query.count + b +
+			'created; ' + response.query.created + b +
+			'lang; ' + response.query.lang + b +
+		b;
+
+		text = response.results[ 0 ];
+
+		lines = text.split( '\n' ).slice( 7, -1 );
+		lines[ 0 ] = [ 0, lines[ 0 ].split( ',' ).slice( 1 ) ];
+		log.innerText = lines.join();
+
+	}
+
+
+	function filterData( data ){
+
+		// filter all the nasties out
+		// no body tags
+		data = data.replace( /<?\/body[^>]*>/g,'' );
+		// no linebreaks
+			data = data.replace(/[\r|\n]+/g,'');
+		// no comments
+		data = data.replace(/<--[\S\s]*?-->/g,'');
+		// no noscript blocks
+		data = data.replace(/<noscript[^>]*>[\S\s]*?<\/noscript>/g,'');
+		// no script blocks
+		data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
+		// no self closing scripts
+		data = data.replace(/<script.*\/>/,'');
+		// [... add as needed ...]
+		return data;
+
+	}
+
+</script>
+</body>
+</html>

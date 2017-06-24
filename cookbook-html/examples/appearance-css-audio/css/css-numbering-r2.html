@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>css numbering</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+<style>
+/*
+body { font: bold 12pt monospace; counter-reset: chapter;  counter-reset: section; }
+h2::before { counter-increment: chapter; content: "Chapter " counter( chapter ) ". "; }
+h3::before { counter-increment: section; content: "Section " counter( section ) ". "; }
+*/
+</style>
+</head>
+<body>
+<script>
+
+// See https://developer.mozilla.org/en-US/docs/Web/API/window.getComputedStyle
+
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML =
+		'html {counter-reset: chapter; } ' +
+		'body { font: bold 12pt monospace; counter-reset: section;  counter-reset: paragraph; }' +
+		'h2 {  }' +
+		'h2:before { counter-increment: chapter; content: "Chapter " counter( chapter ) ". "; counter-increment: chapter; }' +
+		'h3:before { counter-increment: section; content: "Section " counter( section ) ". "; }' +
+		'p::before { counter-increment: paragraph; content: "" counter( paragraph ) ". "; }' +
+	'';
+
+	var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML =
+		'<h1><a href="" >Test Document</a></h1>' +
+		'<h2>AAA AAA</h2>' +
+		'<h3>Section</h3>' +
+		'<p>' + txt + '</p>' +
+		'<p>' + txt + '</p>' +
+		'<h2>BBB BBB</h2>' +
+		'<h3>Section </h3>' +
+		'<p>' + txt + '</p>' +
+		'<p>' + txt + '</p>' +
+		'<h2>CCC CCC </h2>' +
+		'<h3>Section</h3>' +
+		'<p>' + txt + '</p>' +
+		'<p>' + txt + '</p>' +
+	'';
+
+
+
+</script>
+</body>
+</html>
