@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Parallel Constitution R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Browse and view files on Parallel Constitution with remarkable ease.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2017-06-20' >
+<style>
+html,
+body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; }
+
+html { counter-reset: chapter; }
+body { counter-reset: section; }
+h1 { counter-reset: paragraph;}
+h2 { counter-reset: section; }
+
+a { color: crimson; text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:active { background-color: yellow; }
+aside { font-style: oblique; }
+button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }
+
+#contents h2::not(#preamble-and-nine-guiding-principles)::before{ counter-increment: chapter; content: 'Chapter ' counter( chapter ) ': '; }
+#contents h3::before { counter-increment: section; content: 'Section ' counter( chapter ) '.' counter( section ); }
+#contents p::before { counter-increment: paragraph; content: '[' counter( paragraph ) '] '; }
+
+pre, blockquote { background-color: #eee; padding: 10px; }
+summary { outline: none; }
+summary h3 { display: inline; }
+
+.popUp { background-color: white; border: 1px solid red; left: 180px; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }
+
+#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }
+
+#container { border: 0px #0f0 solid; height: 100%; left: 0; position: absolute; overflow: hidden; transition: left 1s; width: 100%; }
+
+/* #contents { border: 0px #ccc solid; height: 100%; margin-left: 325px; overflow-x: hidden; position: absolute; width: 100vw; } */
+#contents { border: 0px #f00 solid; height: 100%; left: 325px; overflow-x: hidden; position: absolute; max-width: calc( 100% - 325px); }
+
+#butEditFile { background-color: #555; color: #fff; opacity: 0.5; padding: 8px; position: fixed; right: 20px; top: 20px; }
+#butEditFile a { text-decoration: none; color: #fff; }
+#butEditFile:hover { cursor: pointer; opacity: 1; }
+
+#butNextFile { color: #888; font-size: 36pt; opacity: 0.5; padding: 8px; position: fixed; right: 20px; top: 50%; }
+#butPreviousFile { color: #888; font-size: 36pt; opacity: 0.5; padding: 8px; position: fixed; margin-left: 350px; top: 50%; }
+
+#butNextFile a, #butPreviousFile a { text-decoration: none; color: #888; }
+#butNextFile:hover, #butPreviousFile:hover { cursor: pointer; opacity: 1; }
+
+#divMD {border: 0px orange solid; margin: 0 auto; max-width: 800px; overflow-x: hidden; position: adsolute; }
+
+#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; z-index: 1 }
+#hamburger h2, #menuItems h2, #menuItems h4 { margin: 0; }
+
+#ifr { /* border: 0px yellow solid; */ height: 500px; width: 100%; }
+#ifrHTML { border: 0px yellow solid; margin: 0 8%; height: 100%; padding: 0; width: 100%; }
+
+#menu { background-color: #eee; border: 1px #ccc solid; box-sizing:border-box; height: 100%; overflow-y: auto; padding: 0 10px; position: fixed; width: 325px; }
+#menu ul { margin:0; padding-left:20px; }
+#menuBreadcrumbs h2, #menuBreadcrumbs h3, #mnuUserTitle h3 { font-size: 14pt; margin: 0; }
+
+
+</style>
+</head>
+<body>
+<script src=https://cdn.rawgit.com/showdownjs/showdown/master/dist/showdown.min.js ></script>
+<script>
+
+let basicHTML =
+
+`	<div id=menu >
+
+<h2>
+<!--
+<a href=http://pushme-pullyou.github.io title="pushMe pullYou - your Github repo happy place" > &#x2766 </a><br>
+-->
+<a id=mnuTitle href="" title="Click here to refresh this page" ></a>
+<a id=mnuHelp href=https://github.com/pushme-pullyou onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>
+</h2>
+
+<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>
+
+<div id=mnuTagline ><small></small></div>
+
+<div id=mnuSelectItem ></div>
+
+<div id=mnuSelectType ></div>
+
+<div id=mnuContents ></div>
+
+<div id=mnuSettings ></div>
+<div id=mnuCount ></div>
+<div id=mnuAbout ></div>
+
+</div>
+
+<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >
+<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>
+</div>
+
+<div id=contents ></div>
+
+<div id=butEditFile >Edit</div>
+<div id=butNextFile >&gt;</div>
+<div id=butPreviousFile >&lt;</div>
+
+`;
+
+
+let MNU = {};
+
+MNU.init = function() {
+
+mnuSettings.innerHTML =
+
+'<details>' +
+
+'<summary><h3>Settings</h3></summary>' +
+
+'<div><button onclick=MNU.cssColors("#222","#ddd","#555"); >Dark</button>' +
+' <button onclick=MNU.cssColors("#fff","#000","#eee"); >Light</button>' +
+' <button onclick=MNU.cssColors("#f3eacb","#704214","#704214"); >Sepia</button>' +
+'</div>' + b +
+
+'<div><button onclick=MNU.cssFontOpenSans(); >Open Sans</button>' +
+' <button onclick=MNU.cssFontInconsolata(); >Inconsolata</button>' +
+' <button onclick=MNU.cssFontMonospace(); >Monospace</button>' +
+'</div>' + b +
+
+'<div><button onclick=MNU.cssFontSize("12pt"); >Normal</button>' +
+' <button onclick=MNU.cssFontSize("14pt"); >Larger</button>' +
+' <button onclick=MNU.cssFontSize("18pt"); >Largest</button>' +
+'</div>' + b +
+
+'</details>' +
+'';
+
+
+mnuAbout.innerHTML =
+
+'<details>' +
+
+'<summary><h3>About</h3></summary>' +
+
+//	'<p>Copyright &copy; ' + ( new Date() ).getFullYear() + ' ' + user.user + ' authors. ' +
+'<div id=mnuCopyright ></div>' +
+//	'<a href=http://github.com/' + user.user + '/' + user.repo + ' >MIT license</a>.</p>' +
+'<div id=mnuLicense ></div>' +
+'<p>Click the \'i in a circle\' icon for more <a href=#README.md title="Click here for help and information" >help</a>.</p>' +
+
+'</details>' +
+
+'<hr>' +
+
+'<center><a id=mnuFooterLogo href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; >' +
+'<h1>❦</h1></a>' +
+'</center>' +
+'<div class=popUp id=pop2 style=display:none;bottom:20px; >Click here to return to the top of the page</div>' +
+
+'';
+
+};
+
+
+
+MNU.cssColors = function( back, color, mnu ) {
+
+document.body.style.backgroundColor = back;
+document.body.style.color = color;
+menu.style.backgroundColor = mnu;
+
+};
+
+
+
+MNU.cssFontOpenSans = function() {
+
+let fontID = 'Open+Sans';
+
+let font = document.body.appendChild( document.createElement( 'link' ) );
+font.id = fontID;
+font.rel = 'stylesheet';
+font.href = 'https://fonts.googleapis.com/css?family=' + fontID;
+
+document.body.style.fontFamily = 'Open Sans';
+
+};
+
+
+MNU.cssFontInconsolata = function() {
+
+let fontID = 'Inconsolata';
+
+let font = document.body.appendChild( document.createElement( 'link' ) );
+font.id = fontID;
+font.rel = 'stylesheet';
+font.href = 'https://fonts.googleapis.com/css?family=' + fontID;
+
+document.body.style.fontFamily = 'Inconsolata';
+
+};
+
+
+
+MNU.cssFontMonospace = function() {
+
+//	document.body.style.fontFamily = '"Lucida Console", Monaco, monospace';
+document.body.style.fontFamily = 'monospace';
+
+};
+
+
+
+MNU.cssFontSize = function( size ) {
+
+document.body.style.fontSize = size;
+
+};
+
+
+
+
+let CON = {};
+
+
+CON.editor = undefined;
+
+
+CON.initContents = function() {
+
+mnuContents.innerHTML =
+
+'<div id=mnuUserTitle ></div>' +
+'<div id=mnuUserTagline ></div>' + b +
+
+'<details open >' +
+
+'<summary><h3 id=mnuContentsTitle >Contents</h3></summary>' +
+
+'<div id=mnuBreadcrumbs ></div>' +
+'<div id=mnuItems ></div>' +
+
+'</details>' + b +
+
+'';
+}
+
+CON.setDefaultContents = function() {
+
+let txt, start, path, p;
+
+if ( user.defaultFile ) {
+
+location.hash = user.defaultFile;
+
+return;
+
+}
+
+for ( var i = 0; i < SEL.files.length; i++ ) {
+
+path = SEL.files[ i ];
+p = path.toLowerCase();
+
+//	if ( p.endsWith( 'readme.md' ) ) { CON.getFileSetContents( path ); return; }
+//	if ( p.endsWith( 'index.html' ) || p.endsWith( 'index.htm') ) { CON.getFileSetContents( path ); return; }
+
+if ( p.endsWith( 'readme.md' ) ) { location.hash = path; return; }
+if ( p.endsWith( 'index.html' ) || p.endsWith( 'index.htm') ) { location.hash = path; return; }
+
+}
+
+// nothing found, so just display the first file found
+
+path = SEL.files[ 0 ];
+location.hash = path;
+
+}
+
+
+
+
+CON.getFileSetContents = function( path ) {
+
+let url, u;
+
+if ( path === undefined ) {
+
+contents.innerHTML = '<center style=top:50%; >No files in this folder</center>';
+
+return;
+
+}
+
+if ( location.protocol === 'cccfile:' && user.defaultFile ) {
+
+CON.urlGHPages = '';
+
+url = user.defaultFile;
+
+} else {
+
+CON.urlGHPages = 'http://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/' ;
+
+url = CON.urlGHPages + path;
+
+}
+console.log( 'url', url );
+u = url.toLowerCase();
+
+if ( u.endsWith( '.md' ) ){
+
+CON.getFileMD( url );
+
+} else if ( u.endsWith( '.html' ) || u.endsWith( '.htm' ) ) {
+
+CON.getFileHTML( url );
+
+} else if ( u.endsWith( '.gif' ) || u.endsWith( '.ico' ) || u.endsWith( '.jpg' ) || u.endsWith( '.jpeg' ) || u.endsWith( '.png' ) || u.endsWith( '.svg' ) ) {
+
+CON.getFileImage( url );
+
+} else {
+
+CON.getFileCode( url );
+
+}
+
+CON.setButtons( path );
+SEL.highlightMenuItem();
+
+//	menu.scrollTop = 0;
+
+}
+
+
+CON.getFileHTML = function( url ){
+
+contents.innerHTML = '<iframe id=ifrHTML src=' + url + ' > ' + '<iframe>';
+
+}
+
+
+CON.massageText = function( response ){
+
+showdown.setFlavor( 'github' );
+CON.converter = new showdown.Converter();
+text = CON.converter.makeHtml( response );
+
+return text;
+
+};
+
+
+CON.getFileMD = function( url ) {
+
+// https://github.com/showdownjs/showdown
+
+let text, response;
+
+showdown.setFlavor('github');
+
+SEL.requestFile( url, callbackMD );
+
+function callbackMD( xhr ) {
+
+response = xhr.target.response;
+
+if ( response.includes( 'DOCTYPE') ) {
+
+// console.log( '', response );
+
+contents.innerHTML = '<h1 style=text-align:center; >file not found</h1>';
+
+return;
+
+}
+
+
+text = CON.massageText( response );
+
+contents.innerHTML =
+
+'<div id=divMD >' + text + '</div>';
+
+contents.scrollTop = 0;
+
+}
+
+}
+
+
+CON.getFileImage = function( url ){
+
+contents.innerHTML = '<img src="' + url + '" style="border: 0px solid gray; margin: 25px 0 0 50px; max-width: 800px; " >';
+
+}
+
+
+CON.getFileCode = function( url ) {
+
+// try embed gist
+
+contents.innerHTML =
+'<div id=contentsCode style="border: 0px red solid; height: 100%; margin: 0 auto; width: 900px; position: relative;" >' +
+' item will appear here ' +
+'</div>';
+
+if ( CON.editor !== undefined ) {
+
+setEditContents();
+
+} else {
+
+// check here for latest: https://cdnjs.com/libraries/ace/
+// Anyway to get latest automatically?
+// use GitHub code embed??
+
+CON.editor = document.body.appendChild( document.createElement( 'script' ) );
+CON.editor.onload = setEditContents;
+CON.editor.src = 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js';
+
+}
+
+
+function setEditContents() {
+
+editor = ace.edit( 'contentsCode' );
+editor.$blockScrolling = Infinity;
+editor.getSession().setMode( 'ace/mode/markdown' );
+
+SEL.requestFile( url, callback );
+
+function callback( xhr ) {
+
+editor.setValue( xhr.target.response.slice( 0, 10000 ), -1 );
+
+}
+
+}
+
+}
+
+
+CON.createPageOfImages = function( path ) {
+
+let page, url, items, item, source;
+
+page = '';
+
+url = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/contents/' + path;
+
+SEL.requestFile( url, callbackGalleryContents );
+
+function callbackGalleryContents( xhr ){
+
+response = xhr.target.response;
+items = JSON.parse( response );
+
+for ( let i = 0; i < items.length; i++ ) {
+
+item = items[ i ];
+
+source = item.download_url;
+
+if ( source.includes( '.thumb' ) || source.includes( '.highlight' ) || source.endsWith( '.dat' ) ||
+source.endsWith( '.lock' ) ) { continue; }
+
+page += '<div style=display:inline-block;margin:10px; >' +
+'<a href=JavaScript:CON.getFileSetContents("' + item.path +'"); ><img src=' + source + ' height=200; title="' + url.slice( 0, -4 ) + '" ></a>' +
+'</div>';
+
+}
+
+contents.innerHTML = page;
+
+CON.setHighlightAndButtons( path, true );
+
+location.hash = '!' + path;
+
+}
+
+}
+
+
+
+CON.setButtons = function( path ) {
+
+var index, folder, indexNext, indexPrevious;
+
+if ( butEditFile ) {
+
+folder = user.path ? user.path + '/' : '';
+
+butEditFile.innerHTML = '<a href="https://github.com/' + user.user + '/' + user.repo + '/blob/' + user.branch + '/' + folder + path + '" target="_blank"> Edit </a>';
+
+}
+
+index = SEL.files.indexOf( path );
+
+indexNext = index + 1;
+if ( indexNext >= SEL.files.length ) { indexNext = 0; }
+
+indexPrevious = index - 1;
+if ( indexPrevious < 0 ) { indexPrevious = SEL.files.length - 1; }
+
+if ( butNextFile || butPreviousFile ) {
+
+butNextFile.innerHTML = '<a href="#' + SEL.files[ indexNext ] + '" > &gt; </a>';
+butPreviousFile.innerHTML = '<a href="#' + SEL.files[ indexPrevious ] + '" > &lt; </a>';
+
+}
+
+}
+
+var SEL = SEL || {};
+
+
+SEL.typeSelectedIndex = MNU.tableOfContents ? 0 : 1;
+
+SEL.initSelectType = function() {
+
+mnuSelectType.innerHTML =
+
+'<details id=mnuTypeDetails open>' +
+
+'<summary><h3>Select Menu Type</h3></summary>' +
+
+'<select id=selType onchange=SEL.selectMenuType(); title="Select type of menu" size=6 style=width:100%; >' +
+'<option title="created by humans" >Table of Contents</option>' +
+'<option >All Files</option>' +
+'<option >Folders & Files</option>' +
+'<option >Folder Groups</option>' +
+'<option >List by Folders</option>' +
+'<option >Alphabetical</option>' +
+'</select>' + b +
+
+'</details>'
+
+'';
+
+
+selType.selectedIndex = SEL.typeSelectedIndex;
+
+}
+
+
+
+SEL.selectMenuType = function() {
+
+var types = [ SEL.setMenuContents, SEL.getTreeAllFiles, SEL.setMenuFoldersFiles, SEL.createGroups, SEL.listByFolders, SEL.listAlphabetical ]
+var path = user.path ? user.path : undefined;
+SEL.setMenu = types[ selType.selectedIndex ];
+SEL.setMenu( path );
+
+mnuContentsTitle.innerHTML = selType.value;
+mnuBreadcrumbs.innerHTML = '';
+
+}
+
+
+
+SEL.setMenuContents = function() { // we have a table of contents / SEL.tableOfContents somewhere
+
+let text, fNames, fName;
+
+if ( !MNU.tableOfContents ){
+
+mnuItems.innerHTML = 'Sadly, no human has created a curated menu for this repository. Do try another type of menu';
+return;
+}
+
+SEL.files = [];
+
+showdown.setFlavor( 'github' );
+
+SEL.converter = new showdown.Converter();
+
+text = CON.massageText( MNU.tableOfContents );
+
+mnuItems.innerHTML = text;
+
+fNames = MNU.tableOfContents.replace( / /g, '' ).replace( /(.*)\((.*)\)(.*)/gi, '$2' ).split( '\n' );
+
+for ( let i = 1; i < fNames.length - 1; i++ ) {
+
+fName = fNames[ i ];
+if ( fName.includes( '##' ) || fName === '' || fName.length < 5 ) { continue; }
+
+SEL.files.push( fName.replace( '#', '' ) );
+
+}
+
+CON.setDefaultContents();
+
+}
+
+
+
+SEL.getTreeAllFiles = function( path ) {
+let url;
+
+url = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/contents/' + ( path ? path : '' );
+
+SEL.requestFile( url, callback );
+
+SEL.setBreadcrumbs( path );
+
+function callback( xhr ) {
+
+//	let response, items, item, link;
+
+response = xhr.target.response;
+items = JSON.parse( response );
+
+SEL.files = [];
+mnuItems.innerHTML = '';
+
+for ( let item of items ) {
+
+if ( item.type === 'dir' ) {
+
+mnuItems.innerHTML +=
+//	'<div><a href=JavaScript:location.hash="";SEL.getTreeAllFiles("' + item.path + '"); > 🗀 ' + item.name + '</a></div>' +
+'<div><a href=JavaScript:SEL.getTreeAllFiles("' + item.path + '"); > 🗀 ' + item.name + '</a></div>' +
+
+'';
+
+}
+
+}
+
+link = 'https://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/';
+
+for ( let item of items ) {
+
+if ( !item.path && !item.path.includes( path ) ) { continue; }
+
+if ( item.type === 'file' ) {
+
+mnuItems.innerHTML +=
+'<div>' +
+'<a href=#' + encodeURI( item.path ) + ' > ' + item.name + '</a> ' +
+( item.path.endsWith( '.html') ? '<a href="' + encodeURI( link + item.path ) + '" target=_blank >&#x1F5D7;</a>' : '' ) +
+'</div>';
+
+SEL.files.push( item.path );
+
+}
+
+}
+
+CON.setDefaultContents();
+
+}
+
+}
+
+
+
+SEL.setMenuFoldersFiles = function( path ) {
+
+var tree = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/git/trees/' + user.branch + '?recursive=1';
+
+SEL.requestFile( tree, callback );
+
+function callback( xhr ) {
+
+response = JSON.parse( xhr.target.response );
+SEL.files = [];
+
+for ( let file of response.tree ) {
+
+if ( file.type === 'tree' ) { continue; }
+if ( !file.path.includes( path ) ) { continue; }
+
+SEL.files.push( file.path );
+
+}
+
+mnuItems.innerHTML =
+'Files count: ' + SEL.files.length + b +
+SEL.files.map( function( a ){ return '<small><div>' + a.link( '#' + a ) + '</div></small>'; } ).join( '' );
+
+CON.setDefaultContents();
+}
+
+}
+
+
+
+SEL.createGroups = function( path ) {
+
+let headers;
+let response, file, fileName;
+
+let tree = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/git/trees/' + user.branch + '?recursive=1';
+SEL.groups = [];
+SEL.requestFile( tree, callback );
+
+function callback( xhr ) {
+
+response = JSON.parse( xhr.target.response );
+
+mnuItems.innerHTML = '<select id=selHeaders size=20 onchange=SEL.onHeaderSelected() style=width:100%; ></select>' + b + b +
+'<div id=selFile ></div>';
+
+SEL.headers = [];
+
+for ( let i = 0; i < response.tree.length; i++ ) {
+
+file = response.tree[ i ];
+
+if ( file.type === 'tree' ) { continue; }
+if ( !file.path.includes( path ) ) { continue; }
+
+file = file.path;
+SEL.groups.push( file );
+
+file = file.split( '/' );
+fileName = file.pop();
+file = file.join( '/' );
+
+if ( ! SEL.headers.includes( file ) ) {
+
+selHeaders[ selHeaders.length ] = new Option( file );
+
+SEL.headers.push( file );
+
+}
+
+}
+
+}
+
+}
+
+
+
+SEL.onHeaderSelected = function() {
+
+let txt, header, name;
+
+txt = '';
+
+header = selHeaders.value;
+SEL.files = [];
+for ( let file of SEL.groups ) {
+
+if ( file.includes( header ) ) {
+
+name = file.replace( ( header + "\/" ), '' );
+txt += '<div>' + name.link( '#' + file ) + '</div>';
+
+SEL.files.push( file );
+}
+
+}
+
+selFile.innerHTML = 'Files count: ' + SEL.files.length + b + txt;
+
+CON.setDefaultContents();
+
+}
+
+
+SEL.listByFolders = function ( path ) {
+
+let txt, headers, response, file, fName, filePath, folders;
+let tree = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/git/trees/' + user.branch + '?recursive=1';
+let link = 'https://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/';
+
+txt = '';
+headers = [];
+
+SEL.requestFile( tree, callback );
+
+function callback( xhr ) {
+
+response = JSON.parse( xhr.target.response );
+
+for ( let file of response.tree ) {
+
+if ( file.type === 'tree' ) { continue; }
+if ( !file.path.includes( path ) ) { continue; }
+
+filePath = file.path;
+SEL.files.push( filePath )
+file = filePath.split( '/' );
+
+fName = file.pop();
+folders = file.join( '/' );
+
+if ( ! headers.includes( folders ) ) {
+
+txt += '<h4>' + folders + '</h4>';
+headers.push( folders );
+
+}
+
+txt += '<div>' +
+fName.link( '#' + filePath ) + ' ' +
+( filePath.endsWith( '.html') ? '<a href="' + encodeURI( link + filePath ) + '" target=_blank >&#x1F5D7;</a>' : '' ) +
+
+'</div>';
+
+}
+
+mnuItems.innerHTML = txt;
+
+CON.setDefaultContents();
+
+}
+
+}
+
+
+
+SEL.listAlphabetical = function( path ) {
+
+let tree = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/git/trees/' + user.branch + '?recursive=1';
+let link = 'https://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/';
+//	let response, txt, keys, filePath, name;
+
+SEL.requestFile( tree, callback );
+
+function callback( xhr ) {
+
+response = JSON.parse( xhr.target.response );
+
+txt = '';
+keys = [];
+SEL.files = [];
+
+for ( let file of response.tree ) {
+
+if ( file.type === 'tree' ) { continue; }
+if ( !file.path.includes( path ) ) { continue; }
+
+filePath = file.path;
+name = filePath.split( '/' ).pop();
+
+SEL.files.push( file.path );
+keys.push( name + '#' + filePath );
+
+}
+
+keys = keys.sort();
+
+for ( let i = 0; i < keys.length; i++ ) {
+
+key = keys[ i ].split( '#' );
+filePath = key[ 1 ];
+txt +=
+'<div>' +
+'<a href=#' + filePath + ' title="' + filePath + '" >' + ( i + 1 ) + ' ' + key[ 0 ] + '</a> ' +
+( filePath.endsWith( '.html') ? '<a href="' + encodeURI( link + filePath ) + '" target=_blank >&#x1F5D7;</a>' : '' ) +
+'</div>';
+
+}
+
+mnuItems.innerHTML =
+'Files in repo: ' + SEL.files.length + b +
+'Search <input id=inpText oninput=update(); />' + b +
+'<div id=mnuSelected ></div>';
+
+update();
+
+}
+
+}
+
+function update() {
+
+str = inpText.value;
+let link = 'https://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/';
+txt = '';
+for ( let i = 0; i < keys.length; i++ ) {
+
+key = keys[ i ].split( '#' );
+name = key[ 0 ];
+if ( name.includes( str ) ) {
+//console.log( '', name );
+filePath = key[ 1 ];
+txt +=
+'<div>' +
+'<a href=#' + filePath + ' title="' + filePath + '" >' + ( i + 1 ) + ' ' + key[ 0 ] + '</a> ' +
+( filePath.endsWith( '.html') ? '<a href="' + encodeURI( link + filePath ) + '" target=_blank >&#x1F5D7;</a>' : '' ) +
+'</div>';
+}
+
+}
+
+mnuSelected.innerHTML = txt;
+
+CON.setDefaultContents();
+// console.log( '', inpText.value );
+
+}
+
+////////////////// utilities
+
+SEL.highlightMenuItem = function() {
+
+let links;
+
+links = document.getElementsByTagName( 'a' );
+
+for ( let link of links ) {
+
+link.parentElement.style.backgroundColor = link.hash && link.hash === location.hash ? 'lightgreen' : '';
+
+}
+
+}
+
+
+
+SEL.setBreadcrumbs = function( path ) {
+
+let name, txt, folders, str;
+
+name = user.repo;
+
+name = user.path ? user.path : user.repo;
+
+txt = '<h3><a href=JavaScript:SEL.getTreeAllFiles(); >' + name + '</a> &raquo; </h3>';
+
+folders = path ? path.split( '/' ) : [] ;
+
+str = '';
+
+for ( let folder of folders ) {
+
+str += folder + '/';
+
+txt += '<h3><a href=JavaScript:SEL.getTreeAllFiles("' + str.slice( 0, -1 ) + '"); >' + folder + '</a> &raquo; </h3>';
+
+}
+
+mnuBreadcrumbs.innerHTML = txt;
+
+}
+
+
+
+SEL.requestFile = function ( fileName, callback ) {
+
+xhr = new XMLHttpRequest();
+xhr.crossOrigin = 'anonymous';
+xhr.open( 'GET', fileName, true );
+xhr.onerror = function( xhr ) { console.log( 'error', xhr ); };
+xhr.onload = callback;
+xhr.send( null );
+
+}
+
+
+
+
+// Copyright 2017 Pushme Pullyou authors ~ MIT license
+
+var images = 'https://prediqtiv.github.io/images/';
+
+var user = {
+
+user: 'jaanga',
+repo: 'jaanga.github.io',
+branch: 'master',
+path: 'demo/parallel-constitution/',
+//	path: '',
+
+infoLink : 'https://github.com/jaanga/jaanga.github.io/tree/master/demo/parallel-constitution',
+//	logo: '<img src=' + images + 'five-boxes.png height=32 >',
+//	tagLine : 'Invest smarter!',
+//	subText : 'Invest smarter!',
+//	title : '<img src=' + images + 'predIQtiv.png height=64 >',
+defaultFile : 'demo/parallel-constitution/egypt-parallel-constitution.md'
+}
+
+
+MNU.tableOfContents =
+
+`
+* [Egypt Parallel Constitution]( #demo/parallel-constitution/egypt-parallel-constitution.md )
+* [Copyright and license]( #license.md )
+
+`;
+
+SEL.typeSelectedIndex = 0;
+const b = '<br>';
+
+init();
+
+function init() {
+
+let tagLine;
+
+container = document.body.appendChild( document.createElement( 'div' ) );
+container.id = 'container';
+container.innerHTML = basicHTML;
+
+if ( window.self !== window.top ) { container.style.left = '-325px'; }
+
+window.addEventListener( 'resize', setContentsWidth, false );
+
+setContentsWidth();
+
+window.addEventListener ( 'hashchange', onHashChange, false );
+
+tagLine = user.tagLine ? user.tagLine : document.head.querySelector( "[name=description]" ).content;
+mnuTitle.innerHTML = user.title ? user.title : document.title;
+mnuTagline.innerHTML = '<small><p>' + tagLine + '</p></small>';
+mnuHelp.href = user.infoLink ? user.infoLink : 'https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo/';
+
+MNU.init();
+
+CON.initContents();
+
+SEL.initSelectType();
+
+//	mnuUserTitle.innerHTML = '<h3>User: ' + user.user + '</h3>';
+//	mnuUserTagline.innerHTML = 'Repo: ' + user.repo;
+
+SEL.selectMenuType();
+mnuTypeDetails.removeAttribute('open');
+
+}
+
+
+function onHashChange() {
+
+CON.getFileSetContents( location.hash.slice( 1 ) );
+//	CON.getFileSetContents( user.defaultFile );
+CON.setButtons( location.hash.slice( 1 ) );
+SEL.highlightMenuItem();
+
+}
+
+
+function setContentsWidth() {
+
+contents.style.width = ( window.innerWidth - 325 ) + 'px';
+
+}
+
+
+</script>
+</body>
+</html>
