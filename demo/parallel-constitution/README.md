@@ -1,4 +1,4 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/demo/parallel-constitution/#demo/parallel-constitution/README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/parallel-constitution/#demo/parallel-constitution/README.md "View file as a web page." ) </span>
 
 
 <!--
