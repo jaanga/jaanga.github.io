@@ -1,11 +1,15 @@
-﻿
-From a people protected by a revolutionary spirit,
-By a people who resists injustice with unity, security, peace, freedom, and all shared living,
-To a people who enjoy the future of a nation that is never broken:
-We are the people of Egypt and we establish and ordain this constitution.
+﻿<div>
+<br>
+From a people protected by a revolutionary spirit,<br>
+<br>
+By a people who resist injustice with unity, security, peace, freedom, and all shared living,<br>
+<br>
+To a people who enjoy the future of a nation that is never broken:<br>
+<br>
+We are the people of Egypt and we establish and ordain this constitution.<br>
+</div>
 
-
-Constitution Preamble and Constitution
+Preamble and Constitution
 ===
 
 ## Preamble and Nine Guiding Principles
@@ -56,9 +60,9 @@ National Security is an instrument of sovereignty and part of national wealth.
 * Like with national currency, a State exhibits good governance by limiting the supply and usage of national security practices, to preserve such tool from inflation and loss of intrinsic value. To that end, the State shall take a proactive approach to promote greater freedoms that increase interactive social practices in the public domain, in a manner that limits unrest or disruption and keeps state that require forceful intervention from the State.
 
 
-## Bill of Rights: on-Negotiable, Inalienable
+## Bill of Rights
 
-Rights and Freedoms
+Rights and Freedoms: non-Negotiable, Inalienable
 
 ### :
 

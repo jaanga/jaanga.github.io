@@ -5,7 +5,7 @@
 <a href="https://jaanga.github.io/" >jaanga.github.io</a> &raquo;  <a href="https://jaanga.github.io/demo/" >demo</a> &raquo; </h3>
 -->
 
-[Parallel Constitution Read Me]( https://jaanga.github.io/#demo/parallel-constitution/README.md )
+[Parallel Constitution Read Me]( https://jaanga.github.io/demo/parallel-constitution/#README.md )
 ===
 _say something fun here_
 
