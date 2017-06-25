@@ -2,18 +2,30 @@
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>TooToo Anywhere R1</title>
+<title>Parallel Constitution R1</title>
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
-<meta name=description content='Browse and view files on GitHub with remarkable ease.' >
+<meta name=description content='Browse and view files on Parallel Constitution with remarkable ease.' >
 <meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
-<meta name=date content='2017-06-15' >
+<meta name=date content='2017-06-20' >
 <style>
-html, body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; }
+html,
+body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; }
+
+html { counter-reset: chapter; }
+body { counter-reset: section; }
+h1 { counter-reset: paragraph;}
+h2 { counter-reset: section; }
+
 a { color: crimson; text-decoration: none; }
 a:hover { text-decoration: underline; }
 a:active { background-color: yellow; }
 aside { font-style: oblique; }
 button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }
+
+#contents h2::not(#preamble-and-nine-guiding-principles)::before{ counter-increment: chapter; content: 'Chapter ' counter( chapter ) ': '; }
+#contents h3::before { counter-increment: section; content: 'Section ' counter( chapter ) '.' counter( section ); }
+#contents p::before { counter-increment: paragraph; content: '[' counter( paragraph ) '] '; }
+
 pre, blockquote { background-color: #eee; padding: 10px; }
 summary { outline: none; }
 summary h3 { display: inline; }
@@ -145,7 +157,7 @@ mnuAbout.innerHTML =
 '<center><a id=mnuFooterLogo href=javascript:menu.scrollTop=0; style=text-decoration:none; onmouseover=pop2.style.display=""; onmouseout=pop2.style.display="none"; >' +
 '<h1>❦</h1></a>' +
 '</center>' +
-'<div id=mnuFooterText class=popUp id=pop2 style=display:none;bottom:20px; >Click here to return to the top of the page</div>' +
+'<div class=popUp id=pop2 style=display:none;bottom:20px; >Click here to return to the top of the page</div>' +
 
 '';
 
@@ -242,7 +254,7 @@ let txt, start, path, p;
 if ( user.defaultFile ) {
 
 location.hash = user.defaultFile;
-onHashChange();
+
 return;
 
 }
@@ -255,8 +267,8 @@ p = path.toLowerCase();
 //	if ( p.endsWith( 'readme.md' ) ) { CON.getFileSetContents( path ); return; }
 //	if ( p.endsWith( 'index.html' ) || p.endsWith( 'index.htm') ) { CON.getFileSetContents( path ); return; }
 
-if ( p.endsWith( 'readme.md' ) ) { location.hash = path; onHashChange(); return; }
-if ( p.endsWith( 'index.html' ) || p.endsWith( 'index.htm') ) { location.hash = path; onHashChange(); return; }
+if ( p.endsWith( 'readme.md' ) ) { location.hash = path; return; }
+if ( p.endsWith( 'index.html' ) || p.endsWith( 'index.htm') ) { location.hash = path; return; }
 
 }
 
@@ -264,7 +276,6 @@ if ( p.endsWith( 'index.html' ) || p.endsWith( 'index.htm') ) { location.hash = 
 
 path = SEL.files[ 0 ];
 location.hash = path;
-onHashChange();
 
 }
 
@@ -272,8 +283,6 @@ onHashChange();
 
 
 CON.getFileSetContents = function( path ) {
-
-CON.urlGHPages = 'http://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/' ;
 
 let url, u;
 
@@ -285,8 +294,20 @@ return;
 
 }
 
+if ( location.protocol === 'cccfile:' && user.defaultFile ) {
+
+CON.urlGHPages = '';
+
+url = user.defaultFile;
+
+} else {
+
+CON.urlGHPages = 'http://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch + '/' ;
+
 url = CON.urlGHPages + path;
 
+}
+console.log( 'url', url );
 u = url.toLowerCase();
 
 if ( u.endsWith( '.md' ) ){
@@ -537,7 +558,6 @@ SEL.setMenu( path );
 mnuContentsTitle.innerHTML = selType.value;
 mnuBreadcrumbs.innerHTML = '';
 
-
 }
 
 
@@ -580,7 +600,6 @@ CON.setDefaultContents();
 
 
 SEL.getTreeAllFiles = function( path ) {
-
 let url;
 
 url = 'https://api.github.com/repos/' + user.user + '/' + user.repo + '/contents/' + ( path ? path : '' );
@@ -617,7 +636,7 @@ link = 'https://rawgit.com/' + user.user + '/' + user.repo + '/' + user.branch +
 
 for ( let item of items ) {
 
-if ( !item.path.includes( path ) ) { break; }
+if ( !item.path && !item.path.includes( path ) ) { continue; }
 
 if ( item.type === 'file' ) {
 
@@ -877,7 +896,7 @@ txt +=
 mnuSelected.innerHTML = txt;
 
 CON.setDefaultContents();
-console.log( '', inpText.value );
+// console.log( '', inpText.value );
 
 }
 
@@ -943,47 +962,34 @@ xhr.send( null );
 
 // Copyright 2017 Pushme Pullyou authors ~ MIT license
 
-let protocol = location.protocol;
-
-if ( protocol === 'file:' ) {
-
-if ( location.pathname.includes( 'github.io' ) ) {
-
-firstDot = location.pathname.indexOf( 'github.io' );
-user = location.pathname.slice( 0, firstDot - 1 );
-user = user.slice( user.lastIndexOf( '/' ) + 1 );
-repo = user + '.github.io';
-
-path = location.pathname.slice( firstDot + 10, location.pathname.lastIndexOf( '/' ) );
-
-} else if ( location.pathname.includes( 'github.com' ) ) {
-
-firstDot = location.pathname.indexOf( 'github.com' );
-user = location.pathname.slice( 0, firstDot - 1 );
-user = user.slice( user.lastIndexOf( '/' ) + 1 );
-repo = user + '.github.com';
-path = location.pathname.slice( firstDot + 11, location.pathname.lastIndexOf( '/' ) );
-}
-
-} else if ( protocol.includes( 'http' ) ) {
-
-firstDot = location.hostname.indexOf( '.github.io' );
-user = location.hostname.slice( 0, firstDot );
-repo = user + '.github.io';
-path = location.pathname.slice( 1, location.pathname.lastIndexOf( '/' ) );
-
-}
+var images = 'https://prediqtiv.github.io/images/';
 
 var user = {
 
-user: user,
-repo: repo,
+user: 'jaanga',
+repo: 'jaanga.github.io',
 branch: 'master',
-path: path,
-defaultFile : 'demo/parallel-constitution/egypt-parallel-constitution.md',
+path: 'demo/parallel-constitution/',
+//	path: '',
+
+infoLink : 'https://github.com/jaanga/jaanga.github.io/tree/master/demo/parallel-constitution',
+//	logo: '<img src=' + images + 'five-boxes.png height=32 >',
+//	tagLine : 'Invest smarter!',
+//	subText : 'Invest smarter!',
+//	title : '<img src=' + images + 'predIQtiv.png height=64 >',
+defaultFile : 'demo/parallel-constitution/egypt-parallel-constitution.md'
 }
 
 
+MNU.tableOfContents =
+
+`
+* [Egypt Parallel Constitution]( #demo/parallel-constitution/egypt-parallel-constitution.md )
+* [Copyright and license]( #license.md )
+
+`;
+
+SEL.typeSelectedIndex = 0;
 const b = '<br>';
 
 init();
@@ -1004,10 +1010,10 @@ setContentsWidth();
 
 window.addEventListener ( 'hashchange', onHashChange, false );
 
-tagLine = document.head.querySelector( "[name=description]" ).content;
-mnuTitle.innerHTML = document.title;
+tagLine = user.tagLine ? user.tagLine : document.head.querySelector( "[name=description]" ).content;
+mnuTitle.innerHTML = user.title ? user.title : document.title;
 mnuTagline.innerHTML = '<small><p>' + tagLine + '</p></small>';
-mnuHelp.href = 'https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo/';
+mnuHelp.href = user.infoLink ? user.infoLink : 'https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo/';
 
 MNU.init();
 
@@ -1015,11 +1021,11 @@ CON.initContents();
 
 SEL.initSelectType();
 
-mnuUserTitle.innerHTML = '<h3>User: ' + user.user + '</h3>';
-mnuUserTagline.innerHTML = 'Repo: ' + user.repo + b +
-'Path: ' + path;
+//	mnuUserTitle.innerHTML = '<h3>User: ' + user.user + '</h3>';
+//	mnuUserTagline.innerHTML = 'Repo: ' + user.repo;
 
 SEL.selectMenuType();
+mnuTypeDetails.removeAttribute('open');
 
 }
 
@@ -1027,6 +1033,7 @@ SEL.selectMenuType();
 function onHashChange() {
 
 CON.getFileSetContents( location.hash.slice( 1 ) );
+//	CON.getFileSetContents( user.defaultFile );
 CON.setButtons( location.hash.slice( 1 ) );
 SEL.highlightMenuItem();
 
