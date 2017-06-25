@@ -56,7 +56,7 @@ National Security is an instrument of sovereignty and part of national wealth.
 * Like with national currency, a State exhibits good governance by limiting the supply and usage of national security practices, to preserve such tool from inflation and loss of intrinsic value. To that end, the State shall take a proactive approach to promote greater freedoms that increase interactive social practices in the public domain, in a manner that limits unrest or disruption and keeps state that require forceful intervention from the State.
 
 
-## Chapter: Bill of Rights: on-Negotiable, Inalienable
+## Bill of Rights: on-Negotiable, Inalienable
 
 Rights and Freedoms
 
@@ -144,12 +144,12 @@ No Egyptian can be banished from Egypt or prevented from returning to the countr
 
 The law governing the presence of non-Egyptians in Egypt will be drafted according to international conventions and norms. Individuals who do not enjoy the rights and freedoms laid out in this Constitution in their countries may seek refuge in Egypt.
 
-## Chapter 2: The State
+## The State
 
 Egypt is a nation with indivisible sovereignty, a republican form of government, and authority that is derived from its people.
 
 
-## Chapter 3: Legislative Power
+## Legislative Power
 
 ### :
 
@@ -171,7 +171,7 @@ The headquarters for the House of Representatives will be in the capital. In cas
 Meetings for the House of Representatives in other than the official meeting location
 will be prohibited. The decisions made during such meetings will be void.
 
-### : 17
+### :
 
 The Higher Council for Governorate Representatives:
 
@@ -182,7 +182,7 @@ The term for membership in the Higher Council for Governorate Representatives is
 
 If a seat in the Higher Council for Governorate Representatives becomes vacant, the local government for the governorate can make a temporary appointment until an election to fill the seat can be held.
 
-### : 18
+### :
 
 The following general guidelines apply to the Parliament:
 
@@ -230,7 +230,7 @@ Each house of Parliament has a right to create committees in order to conduct it
 
 Each house of Parliament will record its minutes and publish them accordingly. The results of votes, whether approvals or rejections, will also be recorded. Upon a majority vote, a house of Parliament may keep portions of reports confidential, if necessary, for a limited period of time that cannot exceed ten years, subject to a renewal vote upon expiration of this time period.
 
-### : 19
+### :
 
 The purview of the two houses of Parliament include:
 
@@ -254,13 +254,13 @@ Developing the rules governing the army’s implementation of laws and the prese
 
 Determine the necessary conditions and mechanisms that allow local governments to borrow, establishing periodic reports from local governments, and setting penalties for delays in payment or violations of law.
 
-### : 20
+### :
 
 The House of Representatives shall have the following functions:
 
 The discussion and approval of the state budget and final budgetary report. 36.2. The discussion and approval for loans and grants from foreign countries or donor entities. 36.3. Implementation of taxes to cover the expenses of the State. 36.4. The authority, with a two-thirds majority vote, to file parliamentary charges against an official or government employee, including but not limited to a Cabinet Minister, an Ambassador, or the President.
 
-### : 21
+### :
 
 The Higher Council for Governorate Representatives shall have the following functions:
 
@@ -270,13 +270,13 @@ The ratification of the appointment or selection of every employee or public off
 
 The authority to conduct trials for the accusations made by the House of Representatives against public officers. When the Supreme Council meets on this issue, all members will recite the oath or sign accordingly. If the trial is for the President of the Republic, then the head of the Supreme Constitutional Court will preside over the hearings. In all circumstances, no individual will be convicted without the approval of two-thirds of the members. In the case of accusation, the extent of judgment will be the removal of the officer from his position and disqualification from holding future honorary positions or positions that require confidence or generate a profit to the Egyptian republic. Despite this, the accused may be subject to indictment and trial before a judge and if necessary, a sentence and punishment governed by the law.
 
-## Chapter 4: Executive Power
+## Executive Power
 
-### : 22
+### :
 
 The executive Power laid out in this Constitution shall be vested in a President of Egypt.
 
-### : 23
+### :
 
 Whoever is nominated for the office of the President or the Vice President must be an Egyptian-born national who enjoys his civil and political rights and is at least 35 years old at the time of nomination. He must have signatures of approval from at least fifty members of Parliament or 2,000 citizens from each governorate, with a minimum of fifteen governorates. No two candidates can be endorsed simultaneously by the same person.
 
@@ -301,9 +301,9 @@ The role of the Vice President shall be determined by the law. It shall be permi
 President to assign certain powers to the Vice President for a limited period of time.
 
 
-## Chapter 5: Municipalities
+## Municipalities
 
-### : 24
+### :
 
 The State shall have municipalities that include governorates, cities, and villages.
 
@@ -311,19 +311,19 @@ Every inhabited area shall be incorporated into one of these entities. It shall 
 
 Legislatures shall work on the basis of independence of the governorates in the matters of public affairs, primary education, technical education, scientific research, medicine, transportation, local roads, the environment, markets, and various utilities and social services in a manner that does not violate the Constitution.
 
-### : 25: Governorate Legislative Councils
+### : Governorate Legislative Councils
 
 Each governorate shall be represented by a Legislative Council elected by a secret direct ballot. The Council will select its head and deputies from among the elected members. Each Council will have the right to set election laws specific to its district, as long as the number of districts in the Council does not fall short of the representation it has in the House of Representatives for the same governorate and so that the number of members in one Council is not less than five members in any circumstance.
 
 The right to vote for the members of the Legislative Council is guaranteed to those who have the right to vote for the House of Representatives. A voter may nominate himself for membership on the Council and the same candidacy rules for the House of Representatives will apply to him.
 
-### : 26
+### :
 
 Every Legislative Council will have the right to issue laws specific to the governorate in a manner that does not violate the general principles of the Constitution.
 
 Among governorate resources will be taxes and original or additional local duties, in the manner that is prescribed by the law. These duties and taxes should not be affected by the movement of persons or the passage of funds between administrative units; the rights of citizens and their ability to work in the territories of their land should not be restricted in the exercising of such taxing power. Among governorate resources will also be a property tax on buildings and agricultural lands, with the possibility of allocating a portion of these resources to local councils as per the law.
 
-### : 27: Governors
+### : Governors
 
 With the exception of age restrictions, the conditions for candidates for the presidency of the republic shall apply to all candidates for governorships and lieutenant governorships.
 
@@ -334,11 +334,11 @@ The Governor shall be responsible for developing a budget and presenting it to t
 The law in each governorate may provide additional powers and prerogatives to the Governor without prejudice to the provisions contained in this Constitution.
 
 
-### : 28: Governorate Council of Judges
+### : Governorate Council of Judges
 
 Every governorate shall have a council of judges, composed of the chief of the highest court in the governorate, the governorate Attorney General, a lawyer elected by the governorate’s local union, in addition to an elected number of judges and Prosecutors, and a proportionate number of lawyers. Each governorate’s general law will arrange this, and will define the mandate for these councils, appropriate to their level and under the supervision of the Supreme Judicial Council.
 
-### : 29: Other Local Councils
+### : Other Local Councils
 
 The following provisions shall apply to representative local councils in cities, villages, and other levels of local government.
 
@@ -356,7 +356,7 @@ Legislation shall serve the independence of these councils in matters of the pub
 
 Local council decisions issued within its jurisdiction are final, and the executive may not intervene, except to prevent the councils from overstepping their boundaries or harming the general interest or each other’s interests, as may be provided for by law. In the case of a dispute on the local organizations’ constitutional roles, the constitutional court shall decide.
 
-### : 29b
+### :
 
 The following provisions shall apply to all Municipalities:
 
@@ -383,7 +383,7 @@ Each transfer of jurisdiction between the state and local councils shall be acco
 
 The law shall establish tax distribution formulas in order to ensure equality betweenthe local councils.
 
-### : 30: Limitations on the Governorates
+### : Limitations on the Governorates
 
 No taxes, fees, or tariffs of any kind shall be levied upon the goods exported by any governorates. Fees and tariffs shall not be implemented upon imports or exports except when absolutely necessary in matters of inspection. These fees shall be subject to the control of Parliament and at the disposal of the public treasury of the Egyptian republic.
 
@@ -397,9 +397,9 @@ It shall not be permissible for any governorate to ratify treaties, enter into a
 
 It shall not be permissible for any governorate, without the approval of Parliament, to maintain a military force or warships at a time of peace, or to sign an agreement or convention with another governorate or foreign country, or to engage in war except in the case of invasion, imminent danger, or times of unbearable delay.
 
-## Chapter Six: Judicial Power
+## Judicial Power
 
-### : 31
+### :
 
 Judges may not be removed from their positions. They are independent and there is no authority above them other than the Constitution. It shall not be permissible for any authority to intervene in litigation or in the course of justice.
 
@@ -407,7 +407,7 @@ The judicial authority oversees the members of the Judiciary.
 
 A general law shall establish the guidelines governing the judiciary. This law shall govern the judicial bodies, determine their jurisdiction, and bring the various judicial bodies together according to the law.
 
-### : 32: The Supreme Judicial Council
+### : The Supreme Judicial Council
 
 The Supreme Judicial Council shall be established and the law shall determine its jurisdiction. It shall be made up of the head of the Court of Cessation, two State counselors, the General Prosecutor, a lawyer elected by the General Union of Lawyers, a lawyer from each governorate who is elected via the local unions, a prosecutor, and a judge from the judicial council of each governorate. Internal regulations and laws shall govern the Council.
 
@@ -427,7 +427,7 @@ Any litigant may resort to the Supreme Judicial Council in accordance with the c
 
 The death penalty shall be abolished and never re-introduced into law.
 
-### : 33: The Supreme Constitutional Court
+### : The Supreme Constitutional Court
 
 The Supreme Constitutional Court shall be made up of nine justices selected from among justices, professors of law, lawyers from the Court of Cessation, and those who graduated at least fifteen years ago. The judges shall be elected from the regular administrative and higher courts. The lawyers shall be selected by the Supreme Judicial Council after the opinions of their lawyers are considered. The term for the Supreme Constitutional Court will be twelve years with a renewal as laid out by the law. The convening of the Supreme Constitutional Court shall be valid when seven justices are present.
 
@@ -441,15 +441,15 @@ The Supreme Constitutional Court shall have the sole jurisdiction to adjudicate 
 
 During the review of a case, if a court determines that an issue relates to the constitutionality of a law or a decree having the force of law or if a party raises an issue that indicates this, the review shall stop and the issue shall be referred to the Constitutional Court for determination.
 
-## Chapter 7: Amending the Constitution and General Provisions
+## Amending the Constitution and General Provisions
 
-### : 34: Amending the Constitution
+### : Amending the Constitution
 
 There shall be no debate to amend the the Bill of Rights, except in accordance with Article 2 of the Bill of Rights, in Chapter 1, Section 1. No debate to amend the constitution shall be held in closed session; any amendment so debated shall be considered null and void. Parliament shall not debate any amendment or suggestion unless by attendance of at least two two-thirds of both houses and two-thirds of the governorate legislatures acting as representatives of those bodies, and that the debate and discussion are, in all cases, public.
 
 Parliament may suggest amendments to the Constitution whenever two thirds of the members of either house find it necessary to do so. No amendment shall become law without the approval of two-thirds of the governorate legislatures. If two-thirds of governorate legislative organizations demand or suggest an amendment to the constitution not contrary to Article 2 of the first chapter of the Bill of Rights, Parliament shall convene a conference to announce the amendments, which shall become legal in terms of the objectives and purposes as part of this constitution, after which conferences shall be held in every governorate in the republic for the governorate legislative bodies to endorse the amendment.
 
-Section 35: General Provisions
+### : General Provisions
 
 The Arabic language is an official language of the bureaucracy of the republic. Each governorate may select an official language or languages according to the choice of the individuals thereof. Governorate law shall determine this.
 
