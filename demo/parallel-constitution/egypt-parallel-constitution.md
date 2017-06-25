@@ -60,7 +60,7 @@ National Security is an instrument of sovereignty and part of national wealth.
 
 Rights and Freedoms
 
-###
+### :
 
 All people are born free, equal in dignity, rights, and responsibilities.
 
@@ -68,52 +68,52 @@ There may be no restraint or changing of any of the rights and freedoms in this 
 
 All people have the right to enjoy all rights and freedoms mentioned in this document, without regard to ethnicity, race color, sex, language, religion, social status, age, belief, creed, opinion, or political affiliation; or on the basis of national or social origin, property, birth, or special needs, or any other characteristic.
 
-###
+### :
 
 The Parliament shall make no law respecting the establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the government for a redress of grievances. Peaceable assembly includes the right to form trade unions, clubs, organizations, and parties without prior notice or permission.
 
-###
+### :
 
 Each individual has the right to life, freedom, and privacy in peace of mind and personal security. Each individual has control over his own body, and there may be no surveillance or investigation against anyone except by reasoned judicial order.
 
 At any time and under any circumstance, there may be no surveillance of homes or entry therein -- whether for inspection, arrest, or any other reason -- except by a reasoned order from a judge, who will determine the place to be inspected and the subject thereof. The place may only be entered with the permission of its resident.
 
-###
+### :
 
 Under no circumstances shall anyone be subject to to torture, degrading treatment, harsh
 punishment, or physical abuse.
 
-###
+### :
 
 Each individual has the right to appropriate, safe, and healthy housing.
 
-###
+### :
 
 Every person under the age of eighteen is a child. Every child has the right to necessary care to ensure physical, mental, and social growth in an atmosphere of freedom and dignity. Every child has the right to necessary conditions and appropriate circumstances for his care enjoyed by either or both his parents or guardian. Every child has the right to protection from the various forms of neglect, cruelty, exploitation, and discrimination.
 
 Child labor and the exploitation of children are forbidden.
 
-###
+### :
 
 Citizens have the right to monitor the distribution of state resources and its offering of services. Details shall be regulated by law. Every citizen has the right to information, including information about the activities of any branch of the Egyptian state, and information relating to responsibilities and decisions of authorities in public affairs. All of this stands without the need to prove the existence of a public interest in the obtaining of information or justification of its use. This right includes the obtaining of information on private parties as it relates to acts performed by a public authority, or to assets managed by or property of the state treasury. The law will provide for exceptions necessary to protect national security and citizens’ safety and privacy.
 
 Expropriation of private property is forbidden except in cases of public benefit and under a judicial ruling. The law will require the competent authority to consult with residents about the purpose of the expropriation and its impact on the development of the local environment, making clear and announcing the environmental effects of the intended project in its decision to expropriate the property. The state or governorate is required, in cases of appropriation, to pay reparations to the affected population, whether in cash or kind. The law will determine appropriate procedure to assess any other damages.
 
-###
+### :
 
 Each individual has an equal right to compete, and not be subjected to monopoly. Every individual has the right to social solidarity. All generations have the right to sustainable development.
 
-###
+### :
 
 Each individual has the right to health care and treatment.
 
-###
+### :
 
 Each individual has the right to education.
 
 Freedom of scientific research is guaranteed.
 
-###
+### :
 
 All people are equal under the law. Each individual has the right to litigate and appear before a judge, according to the entire and just law, and according to legal procedures. There may not be trials before special or exceptional courts, and civilians may not be tried before military courts. There is no way to void any of the preceding clause.
 
@@ -127,11 +127,11 @@ The accused and the accuser shall have the same litigation and defense rights, b
 
 No witness will be subject to harm upon testifying, including being not required to testify against himself. He has the right to remain silent or to refrain from speech in the absence of his lawyer.
 
-###
+### :
 
 Every individual has the right to raise a claim directly in a criminal court or in cooperation with others to the Supreme Constitutional Court in the case that there is a violation of the rights and freedoms laid out in this text.
 
-###
+### :
 
 A mandatory military draft will not be in place except during time of war and with the approval of a majority of the House of Representatives for a set period of time. Army conscripts shall not be used for private labor and their wages will be subject to the general labor law. 25. Slavery and serfdom will be prohibited; this includes the slave trade and any of its forms. No individual will be used as a commodity.
 
@@ -151,11 +151,11 @@ Egypt is a nation with indivisible sovereignty, a republican form of government,
 
 ## Chapter 3: Legislative Power
 
-###
+### :
 
 At the national level, legislative power shall be vested in the Parliament. The Parliament will be made up of a House of Representatives and a Higher Council for Governorate Representatives.
 
-###
+### :
 
 The House of Representatives:
 
@@ -171,7 +171,7 @@ The headquarters for the House of Representatives will be in the capital. In cas
 Meetings for the House of Representatives in other than the official meeting location
 will be prohibited. The decisions made during such meetings will be void.
 
-### 17
+### : 17
 
 The Higher Council for Governorate Representatives:
 
@@ -182,7 +182,7 @@ The term for membership in the Higher Council for Governorate Representatives is
 
 If a seat in the Higher Council for Governorate Representatives becomes vacant, the local government for the governorate can make a temporary appointment until an election to fill the seat can be held.
 
-### 18
+### : 18
 
 The following general guidelines apply to the Parliament:
 
@@ -230,7 +230,7 @@ Each house of Parliament has a right to create committees in order to conduct it
 
 Each house of Parliament will record its minutes and publish them accordingly. The results of votes, whether approvals or rejections, will also be recorded. Upon a majority vote, a house of Parliament may keep portions of reports confidential, if necessary, for a limited period of time that cannot exceed ten years, subject to a renewal vote upon expiration of this time period.
 
-### 19
+### : 19
 
 The purview of the two houses of Parliament include:
 
@@ -254,13 +254,13 @@ Developing the rules governing the army’s implementation of laws and the prese
 
 Determine the necessary conditions and mechanisms that allow local governments to borrow, establishing periodic reports from local governments, and setting penalties for delays in payment or violations of law.
 
-### 20
+### : 20
 
 The House of Representatives shall have the following functions:
 
 The discussion and approval of the state budget and final budgetary report. 36.2. The discussion and approval for loans and grants from foreign countries or donor entities. 36.3. Implementation of taxes to cover the expenses of the State. 36.4. The authority, with a two-thirds majority vote, to file parliamentary charges against an official or government employee, including but not limited to a Cabinet Minister, an Ambassador, or the President.
 
-### 21
+### : 21
 
 The Higher Council for Governorate Representatives shall have the following functions:
 
@@ -272,11 +272,11 @@ The authority to conduct trials for the accusations made by the House of Represe
 
 ## Chapter 4: Executive Power
 
-### 22
+### : 22
 
 The executive Power laid out in this Constitution shall be vested in a President of Egypt.
 
-### 23
+### : 23
 
 Whoever is nominated for the office of the President or the Vice President must be an Egyptian-born national who enjoys his civil and political rights and is at least 35 years old at the time of nomination. He must have signatures of approval from at least fifty members of Parliament or 2,000 citizens from each governorate, with a minimum of fifteen governorates. No two candidates can be endorsed simultaneously by the same person.
 
@@ -303,7 +303,7 @@ President to assign certain powers to the Vice President for a limited period of
 
 ## Chapter 5: Municipalities
 
-### 24
+### : 24
 
 The State shall have municipalities that include governorates, cities, and villages.
 
@@ -311,19 +311,19 @@ Every inhabited area shall be incorporated into one of these entities. It shall 
 
 Legislatures shall work on the basis of independence of the governorates in the matters of public affairs, primary education, technical education, scientific research, medicine, transportation, local roads, the environment, markets, and various utilities and social services in a manner that does not violate the Constitution.
 
-### 25: Governorate Legislative Councils
+### : 25: Governorate Legislative Councils
 
 Each governorate shall be represented by a Legislative Council elected by a secret direct ballot. The Council will select its head and deputies from among the elected members. Each Council will have the right to set election laws specific to its district, as long as the number of districts in the Council does not fall short of the representation it has in the House of Representatives for the same governorate and so that the number of members in one Council is not less than five members in any circumstance.
 
 The right to vote for the members of the Legislative Council is guaranteed to those who have the right to vote for the House of Representatives. A voter may nominate himself for membership on the Council and the same candidacy rules for the House of Representatives will apply to him.
 
-### 26
+### : 26
 
 Every Legislative Council will have the right to issue laws specific to the governorate in a manner that does not violate the general principles of the Constitution.
 
 Among governorate resources will be taxes and original or additional local duties, in the manner that is prescribed by the law. These duties and taxes should not be affected by the movement of persons or the passage of funds between administrative units; the rights of citizens and their ability to work in the territories of their land should not be restricted in the exercising of such taxing power. Among governorate resources will also be a property tax on buildings and agricultural lands, with the possibility of allocating a portion of these resources to local councils as per the law.
 
-### 27: Governors
+### : 27: Governors
 
 With the exception of age restrictions, the conditions for candidates for the presidency of the republic shall apply to all candidates for governorships and lieutenant governorships.
 
@@ -334,11 +334,11 @@ The Governor shall be responsible for developing a budget and presenting it to t
 The law in each governorate may provide additional powers and prerogatives to the Governor without prejudice to the provisions contained in this Constitution.
 
 
-### 28: Governorate Council of Judges
+### : 28: Governorate Council of Judges
 
 Every governorate shall have a council of judges, composed of the chief of the highest court in the governorate, the governorate Attorney General, a lawyer elected by the governorate’s local union, in addition to an elected number of judges and Prosecutors, and a proportionate number of lawyers. Each governorate’s general law will arrange this, and will define the mandate for these councils, appropriate to their level and under the supervision of the Supreme Judicial Council.
 
-### 29: Other Local Councils
+### : 29: Other Local Councils
 
 The following provisions shall apply to representative local councils in cities, villages, and other levels of local government.
 
@@ -356,7 +356,7 @@ Legislation shall serve the independence of these councils in matters of the pub
 
 Local council decisions issued within its jurisdiction are final, and the executive may not intervene, except to prevent the councils from overstepping their boundaries or harming the general interest or each other’s interests, as may be provided for by law. In the case of a dispute on the local organizations’ constitutional roles, the constitutional court shall decide.
 
-### 29b
+### : 29b
 
 The following provisions shall apply to all Municipalities:
 
@@ -383,7 +383,7 @@ Each transfer of jurisdiction between the state and local councils shall be acco
 
 The law shall establish tax distribution formulas in order to ensure equality betweenthe local councils.
 
-### 30: Limitations on the Governorates
+### : 30: Limitations on the Governorates
 
 No taxes, fees, or tariffs of any kind shall be levied upon the goods exported by any governorates. Fees and tariffs shall not be implemented upon imports or exports except when absolutely necessary in matters of inspection. These fees shall be subject to the control of Parliament and at the disposal of the public treasury of the Egyptian republic.
 
@@ -399,7 +399,7 @@ It shall not be permissible for any governorate, without the approval of Parliam
 
 ## Chapter Six: Judicial Power
 
-### 31
+### : 31
 
 Judges may not be removed from their positions. They are independent and there is no authority above them other than the Constitution. It shall not be permissible for any authority to intervene in litigation or in the course of justice.
 
@@ -407,7 +407,7 @@ The judicial authority oversees the members of the Judiciary.
 
 A general law shall establish the guidelines governing the judiciary. This law shall govern the judicial bodies, determine their jurisdiction, and bring the various judicial bodies together according to the law.
 
-### 32: The Supreme Judicial Council
+### : 32: The Supreme Judicial Council
 
 The Supreme Judicial Council shall be established and the law shall determine its jurisdiction. It shall be made up of the head of the Court of Cessation, two State counselors, the General Prosecutor, a lawyer elected by the General Union of Lawyers, a lawyer from each governorate who is elected via the local unions, a prosecutor, and a judge from the judicial council of each governorate. Internal regulations and laws shall govern the Council.
 
@@ -427,7 +427,7 @@ Any litigant may resort to the Supreme Judicial Council in accordance with the c
 
 The death penalty shall be abolished and never re-introduced into law.
 
-### 33: The Supreme Constitutional Court
+### : 33: The Supreme Constitutional Court
 
 The Supreme Constitutional Court shall be made up of nine justices selected from among justices, professors of law, lawyers from the Court of Cessation, and those who graduated at least fifteen years ago. The judges shall be elected from the regular administrative and higher courts. The lawyers shall be selected by the Supreme Judicial Council after the opinions of their lawyers are considered. The term for the Supreme Constitutional Court will be twelve years with a renewal as laid out by the law. The convening of the Supreme Constitutional Court shall be valid when seven justices are present.
 
@@ -443,7 +443,7 @@ During the review of a case, if a court determines that an issue relates to the 
 
 ## Chapter 7: Amending the Constitution and General Provisions
 
-### 34: Amending the Constitution
+### : 34: Amending the Constitution
 
 There shall be no debate to amend the the Bill of Rights, except in accordance with Article 2 of the Bill of Rights, in Chapter 1, Section 1. No debate to amend the constitution shall be held in closed session; any amendment so debated shall be considered null and void. Parliament shall not debate any amendment or suggestion unless by attendance of at least two two-thirds of both houses and two-thirds of the governorate legislatures acting as representatives of those bodies, and that the debate and discussion are, in all cases, public.
 
