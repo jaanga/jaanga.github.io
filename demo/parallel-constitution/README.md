@@ -7,15 +7,13 @@
 
 [Parallel Constitution Read Me]( https://jaanga.github.io/demo/parallel-constitution/index.html#README.md )
 ===
-_say something fun here_
+_Documenting the activities, resources and output of the effort to draft an alternative constitution for Egypt during the Arab Spring of 2013_
 
 <!--
 <img src="" style=display:none; width=800 >
 
-
 <iframe id=ifr src=https://jaanga.github.io/demo/parallel-constitution/index.html width=100% height=600px ></iframe>
 _Parallel Constitution_
-
 
 ## Full Screen: [ Parallel Constitution ]( https://jaanga.github.io/demo/parallel-constitution/index.html )
 -->
@@ -43,16 +41,21 @@ patterns are descriptions of common problems and proposal for the solutions that
 ### Vision
 <!--  a descriptive picture of a desired future state -->
 
-* TBD
+* To be an historic source for future groups building new constitutions
+
 
 
 ## Features
 
-* TBD
+* Created and updated using Markdown text format
+* Uses CSS to number chapter, sections and paragraphs automatically
+	* Parts of the document can be moved around in Markdown, Number update in HTML
+	* Menu supports internal links
 * Click three bars( 'hamburger' ) icon to slide menu in or out
 * Direct link to this read me file
 * Click on title to reload
 
+<!--
 
 ## Things you can do using this script
 
@@ -69,24 +72,37 @@ patterns are descriptions of common problems and proposal for the solutions that
 * Open the file with a text editor
 
 
-<!--
+
 ## Users
 _where used_
 
 Intended for xxx
 -->
 
-
 ## Links of Interest
+
+* https://parallelconstitution.wordpress.com
+
+
+## Issues
+
+* 2017-06-25 ~ left menu: internal links broken unless main doc is already loaded
+* 2017-06-25 ~ internal links not working in https
 
 
 ## To Do / Goals / Up Next
+
 
 
 ## Issues / Bugs / Things that need Work
 
 
 ## Change Log
+
+### 2017-06-25 ~ Theo
+
+* Many fixes
+* Generally working OK
 
 ### 2017-06-24
 
