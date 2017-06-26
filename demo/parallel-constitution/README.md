@@ -5,18 +5,20 @@
 <a href="https://jaanga.github.io/" >jaanga.github.io</a> &raquo;  <a href="https://jaanga.github.io/demo/" >demo</a> &raquo; </h3>
 -->
 
-[Parallel Constitution Read Me]( https://jaanga.github.io/demo/parallel-constitution/indexREADME.md )
+[Parallel Constitution Read Me]( https://jaanga.github.io/demo/parallel-constitution/index.html#README.md )
 ===
 _say something fun here_
 
 <!--
 <img src="" style=display:none; width=800 >
--->
+
 
 <iframe id=ifr src=https://jaanga.github.io/demo/parallel-constitution/index.html width=100% height=600px ></iframe>
 _Parallel Constitution_
 
+
 ## Full Screen: [ Parallel Constitution ]( https://jaanga.github.io/demo/parallel-constitution/index.html )
+-->
 
 ***
 
