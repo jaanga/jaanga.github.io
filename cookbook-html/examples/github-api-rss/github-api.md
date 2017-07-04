@@ -170,9 +170,9 @@ not
 
 * https://api.github.com/orgs/
 
-* https://api.github.com/orgs/ladybug-analysis-tools <<
-* https://api.github.com/orgs/ladybug-analysis-tools/repos
-* https://api.github.com/orgs/ladybug-analysis-tools/events <<
+* https://api.github.com/orgs/ladybug-tools <<
+* https://api.github.com/orgs/ladybug-tools/repos
+* https://api.github.com/orgs/ladybug-tools/events <<
 
 * https://api.github.com/orgs/jaanga
 * lists number of repos
@@ -180,7 +180,7 @@ not
 
 ### Issues
 
-* https://api.github.com/orgs/ladybug-analysis-tools/issues
+* https://api.github.com/orgs/ladybug-tools/issues
 
 
 
@@ -450,33 +450,44 @@ followers
 * https://github.com/search?q=3D+Printing+extension:stl&type=Code&s=indexed
 
 
+## RSS
+
+* Format : https://github.com/whatever/commits/master.atom
+* https://github.com/cloudera/flume/events/master.atom
+
+* https://github.com/cloudera.atom
+* https://github.com/theo-armour.atom
+* https://github.com/ladybug-tools.atom
+
+* https://github.com/ladybug-tools/honeybee/commits.atom
 
 
+https://api.github.com/feeds
 
 ## Ladybug Web
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web << main one
+* https://api.github.com/repos/ladybug-tools/ladybug-web << main one
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/collaborators/theo-armour << needs authentication
+* https://api.github.com/repos/ladybug-tools/ladybug-web/collaborators/theo-armour << needs authentication
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/commits <<
+* https://api.github.com/repos/ladybug-tools/ladybug-web/commits <<
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/events
+* https://api.github.com/repos/ladybug-tools/ladybug-web/events
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/readme << per file?
+* https://api.github.com/repos/ladybug-tools/ladybug-web/readme << per file?
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/pages/builds
+* https://api.github.com/repos/ladybug-tools/ladybug-web/pages/builds
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/contributors
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/commit_activity
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/code_frequency
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/participation
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats/punch_card
+* https://api.github.com/repos/ladybug-tools/ladybug-web/stats/contributors
+* https://api.github.com/repos/ladybug-tools/ladybug-web/stats/commit_activity
+* https://api.github.com/repos/ladybug-tools/ladybug-web/stats/code_frequency
+* https://api.github.com/repos/ladybug-tools/ladybug-web/stats/participation
+* https://api.github.com/repos/ladybug-tools/ladybug-web/stats/punch_card
 
-* https://api.github.com/repos/ladybug-analysis-tools/ladybug-web/stats
+* https://api.github.com/repos/ladybug-tools/ladybug-web/stats
 
-* https://api.github.com/repos/ladybug-analysis-tools/stats
+* https://api.github.com/repos/ladybug-tools/stats
 
-* https://api.github.com/users/ladybug-analysis-tools/received_events
-* https://api.github.com/users/ladybug-analysis-tools/repos
+* https://api.github.com/users/ladybug-tools/received_events
+* https://api.github.com/users/ladybug-tools/repos
 

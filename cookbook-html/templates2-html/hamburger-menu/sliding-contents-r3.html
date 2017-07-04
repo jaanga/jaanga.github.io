@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<style>
+
+body, html {
+	font: 12pt monospace;
+	height: 100%;
+	margin: 0;
+}
+
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #aaa;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+	z-index: 1;
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+#main {
+	background-image: url( 'http://lorempixel.com/400/200' );
+	height: 100%;
+	transition: margin-left .5s;
+	padding: 16px;
+	position: relative;
+}
+
+#hamburger {
+	background-color: #edd;
+	cursor: pointer;
+	font-size: 30px;
+	left: 0px;
+	line-height: 50px;
+	padding: 0 10px 0 0;
+	position: absolute;
+	top: 20px;
+	transition: left .5s;
+	z-index: 1;
+}
+
+#contents{
+	left: 0;
+	margin: 0 auto;
+	max-width: 600px;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}
+}
+
+</style>
+</head>
+<body>
+
+
+<div id=menu class=sidenav>
+
+	<a href=javascript:void(0) class=closebtn onclick=closeNav()>&times;</a>
+	<a href=#>About</a>
+	<a href=#>Services</a>
+	<a href=#>Clients</a>
+	<a href=#>Contact</a>
+
+</div>
+
+
+<div id=main >
+
+	<div id=contents >
+		<h2><a href='' >Sliding Contents R3 Example</a></h2>
+		<p>Click on the element below to open the side navigation menu, and push this content to the right.</p>
+		<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p></p>
+	</div>
+
+</div>
+
+<div id=hamburger onclick=openNav() >
+
+	&#9776; open
+
+</div>
+
+<script>
+
+// https://www.w3schools.com/howto/howto_js_off-canvas.asp
+
+
+	function openNav() {
+
+		menu.style.width = '250px';
+		hamburger.style.left = '250px';
+		main.style.marginLeft = '250px';
+
+	}
+
+
+	function closeNav() {
+
+		menu.style.width = '0';
+		hamburger.style.left = '0';
+		main.style.marginLeft= '0';
+
+	}
+
+</script>
+
+</body>
+</html>

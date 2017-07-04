@@ -2,23 +2,23 @@
 <html>
 <head>
 <style>
-
 body, html {
-	font: 12pt monospace;
+	font-family: "Lato", sans-serif;
+	color: white;
 	height: 100%;
 	margin: 0;
 }
 
-a { color: crimson; }
+a { color: lightgreen; }
 
 .sidenav {
     height: 100%;
-    width: 250px;
+    width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: lightgray;
+    background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -33,28 +33,30 @@ a { color: crimson; }
     transition: 0.3s;
 }
 
-.sidenav a:hover, a:focus{
+.sidenav a:hover, .offcanvas a:focus{
     color: #f1f1f1;
 }
 
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
 #hamburger {
-	background-color: #edd;
 	cursor:pointer;
 	font-size:30px;
-	left: 250px;
-	line-height: 30px;
-	margin: 0;
-	padding: 5px 15px 8px 10px;
+	left: 25px;
 	position: absolute;
-	top: 20px;
+	top: 0;
 	transition: left .5s;
-	z-index: 1;
 }
 
 #main {
-/*	background-image: url( 'http://lorempixel.com/400/200' ); */
+	background-image: url( 'http://lorempixel.com/400/200' );
 	height: 100%;
-	margin-left: 250px;
 	transition: margin-left .5s;
 	padding: 16px;
 	position: relative;
@@ -77,8 +79,9 @@ a { color: crimson; }
 </head>
 <body>
 
-<div id="menu" class="sidenav">
+<div id="mySidenav" class="sidenav">
 
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 	<a href="#">About</a>
 	<a href="#">Services</a>
 	<a href="#">Clients</a>
@@ -90,15 +93,14 @@ a { color: crimson; }
 <div id=main >
 
 	<div id=contents >
-		<h2 ><a href='' >Hamburger Slide Menu Example</a></h2>
+		<h2 ><a href='' >Sidenav Push Example</a></h2>
 		<p>Click on the element to open the side navigation menu, and push this content to the right.</p>
-		<p><a href=https://www.w3schools.com/howto/howto_js_off-canvas.asp>w3schools > off-canvas</a></p>
 	</div>
 
 </div>
 
-<div id=hamburger onclick=toggleNav(); >
-	&#9776; slide
+<div id=hamburger >
+	<span onclick=toggleNav(); >&#9776; open</span>
 </div>
 
 <script>
@@ -107,21 +109,33 @@ a { color: crimson; }
 
 	function toggleNav() {
 
-		if ( !menu.style.width || menu.style.width === '250px' ) {
+		if ( !mySidenav.style.width || mySidenav.style.width === '0px' ) {
 
-			menu.style.width = '0';
-			hamburger.style.left = '0';
-			main.style.marginLeft = '0';
+			mySidenav.style.width = '250px';
+			hamburger.style.left = '275px';
+			main.style.marginLeft = '250px';
 
 		} else {
 
-			menu.style.width = '250px';
-			hamburger.style.left = '250px';
-			main.style.marginLeft = '250px';
-
+			mySidenav.style.width = '0';
+			main.style.marginLeft = '0';
+			hamburger.style.left = '25px';
 		}
 
 	}
+
+
+function openNav() {
+
+console.log( '', 33 );
+	document.getElementById("mySidenav").style.width = "250px";
+	document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+	document.getElementById("mySidenav").style.width = "0";
+	document.getElementById("main").style.marginLeft= "0";
+}
 
 </script>
 </body>
