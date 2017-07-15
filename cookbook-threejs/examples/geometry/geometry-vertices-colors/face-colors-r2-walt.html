@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<title>Template Three.js Basic Basic</title>
+<style>
+body { font: 11pt monospace; margin: 0; overflow: hidden; text-align: center; }
+</style>
+</head>
+<body>
+<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js ></script>
+<script src=https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js ></script>
+
+	<h1><a href="" id="title" ></a></h1>
+
+<script>
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50, 3, 3, 3 );
+		material = new THREE.MeshNormalMaterial();
+
+		for ( let i = 0; i < geometry.faces.length; i ++ ) {
+
+			geometry.faces[ i ].color.setHex( Math.random() * 0xffffff );
+
+		}
+
+		material = new THREE.MeshBasicMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
+
+		mesh = new THREE.Mesh( geometry, material );
+//		scene.add( mesh );
+
+		loadWalt();
+
+	}
+
+	function loadWalt() {
+
+		loader = new THREE.JSONLoader();
+		loader.load( 'https://threejs.org/examples/obj/WaltHeadLo.js',
+
+			function ( geometry ) {
+
+				geometry.computeFaceNormals();
+				geometry.computeVertexNormals();
+
+//				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
+//				geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( Math.PI / 2 ) );
+				geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, 1 ) );
+				geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 20, 0 ) );
+
+				material = new THREE.MeshNormalMaterial();
+
+				for ( let i = 0; i < geometry.faces.length; i ++ ) {
+
+					geometry.faces[ i ].color.setHex( Math.random() * 0xffffff );
+
+				}
+
+
+				for ( let i = 0; i < geometry.faces.length; i ++ ) {
+
+					vertex = geometry.faces[ i ].a;
+					height = ( 46 + geometry.vertices[ vertex ].y ) / 100;
+					geometry.faces[ i ].color.setHex( height * 0xffffff );
+
+				}
+
+				material = new THREE.MeshBasicMaterial( { color: 0xffffff, vertexColors: THREE.FaceColors } );
+
+				mesh = new THREE.Mesh( geometry, material );
+				scene.add( mesh );
+
+				helper = new THREE.FaceNormalsHelper( mesh, 2, 0x00ff00, 1 );
+				scene.add( helper );
+
+			}
+
+		);
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>
