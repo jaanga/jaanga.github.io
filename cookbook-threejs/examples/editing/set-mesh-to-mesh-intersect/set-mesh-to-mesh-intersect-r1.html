@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<title></title>
+<style>
+body { font: 11pt monospace; margin: 0; overflow: hidden; }
+button { border-width: 1px; background-color: pink; }
+#menu { position: absolute; text-align: center; width: 100%; }
+</style>
+</head>
+<body>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id="menu" >
+	<div id = "title" ></div>
+
+	<p><button onclick="findIntersects();" >Find Intersects</button></p>
+	</div>
+
+<script>
+
+	let v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		let axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		drawCubes();
+
+		drawGround();
+
+	}
+
+
+	function drawGround() {
+
+		geometry = new THREE.PlaneGeometry( 100, 100, 100, 100 );
+
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		for ( var i = 0; i < geometry.vertices.length; i++ ) {
+
+			vertex = geometry.vertices[ i ];
+
+			vertex.y = 10 * Math.sin( vertex.x / 10 ) + 5 * Math.cos( vertex.z / 10 ) ;
+
+		}
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		ground = new THREE.Mesh( geometry, material );
+		scene.add( ground );
+
+
+	}
+
+
+
+	function drawCubes() {
+
+		cubes = [];
+
+		for ( var i = 0; i < 5000; i++ ) {
+
+			geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+			material = new THREE.MeshNormalMaterial();
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+			scene.add( mesh );
+			cubes.push( mesh );
+
+		}
+
+	}
+
+
+
+	function findIntersects() {
+
+console.time( 'timer 1' );
+
+		let count, vectorFarDown, vectorLookUp;
+		let position, raycaster, interesects;
+
+		count = 0;
+
+		vectorFarDown = new THREE.Vector3( 0, -1000, 0 );
+		vectorLookUp = new THREE.Vector3( 0, 1, 0 );
+
+		for ( let cube of cubes ) {
+
+			position = cube.position.clone().add( vectorFarDown );
+
+			raycaster = new THREE.Raycaster();
+
+			raycaster.set( position, vectorLookUp );
+
+			intersects = raycaster.intersectObject( ground );
+
+			if ( intersects.length > 0 ) {
+
+				count++;
+				cube.position.copy( intersects[ 0 ].point );
+
+//console.log( '', count, intersects[ 0 ].point );
+
+			}
+
+
+		}
+
+console.timeEnd( 'timer 1' );
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

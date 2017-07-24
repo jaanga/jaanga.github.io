@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; text-align: center; }
+	h2 { margin: 0 }
+	#menu { left: 0; margin: 0 auto; max-width: 500px; position: absolute; right: 0; }
+
+</style>
+</head>
+<body>
+<script src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC08xQ2xRy3k5IHkEuuSWasdViOkk489Y0" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id="menu" ></div>
+	<div id="title" ></div>
+
+	<p>Enter an address or location:<br>
+		<input id="inpAddress" value="Coit Tower, San Francisco CA" onclick="this.select();" onchange="geocoderAddress( geocoder );" title="Thank you Google!" size="50" >
+
+		<button onclick="goThere();" > go there </button>
+	</p>
+	<p>
+		Zoom
+		<input type="radio" name="zoom" onclick="zoom=15;" /> 15
+		<input type="radio" name="zoom" onclick="zoom=16;" checked /> 16
+<!--		<input type="radio" name="zoom" onclick="zoom=17;" /> 17
+		<input type="radio" name="zoom" onclick="zoom=18;" /> 18
+		<input type="radio" name="zoom" onclick="zoom=19;" /> 19
+		<input type="radio" name="zoom" onclick="zoom=20;" /> 20 -->
+	</p>
+	<div id="menuIntersect" ></div>
+	<div id="menuGeocoderMessage" ></div>
+
+
+<script>
+
+// San Francisco
+	var latitude = 37.796;
+	var longitude = -122.398;
+
+// Coit Tower
+	var latitude = 37.8024;
+	var longitude = -122.4058;
+
+	let geocoder, geocoderPlace;
+	let latDelta, lonDelta;
+	let country;
+
+	let scaleX;
+	let scaleZ;
+
+	country = 'United States';
+
+	let zoom = 16;
+	let scale = 0.2;
+
+	mbptoken='pk.eyJ1IjoidGhlb2EiLCJhIjoiY2o1YXFra3V2MGIzbzJxb2lneDUzaWhtZyJ9.7bYFAQabMXiYmcqW8NLfwg';
+	var data;
+
+	let canvas, context;
+	var parameters;
+
+	var object3D;
+	let structures;
+
+	var ground, geometryGround, materialGround;
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+	let axisHelper;
+
+	let countVertices = 0;
+	let v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	let v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+
+	init();
+	animate();
+
+
+	function init() {
+
+		title.innerHTML = '<h2><a href="terrain-tiles-structures-r1.html" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h2>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 0, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.target.set( 50, 0, 50 );
+
+		scene = new THREE.Scene();
+
+		addLights();
+
+		axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		let s = 100;
+		geometryGround = new THREE.PlaneGeometry( s, s );
+		geometryGround.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometryGround.applyMatrix( new THREE.Matrix4().makeTranslation( 0.5 * s , 0, 0.5 * s ) );
+		materialGround = new THREE.MeshNormalMaterial( { side: 2 } );
+
+//		ground = new THREE.Mesh( geometryGround, materialGround );
+//		ground.receiveShadow = true;
+//		scene.add( ground );
+
+		canvas = document.createElement( 'canvas' );
+//		document.body.appendChild( canvas );
+//		canvas.style.cssText = ' left: 0; margin: 20px; position: absolute; top: 0; z-index: 10; ';
+		canvas.width = 256;
+		canvas.height = 256;
+		context = canvas.getContext( '2d' );
+
+		initGeocoder();
+
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+		location.hash = '^latitude^:^' + latitude + '^,^longitude^:^' + longitude + '^,^zoom^:^' + zoom + '^';
+
+	}
+
+
+
+	function goThere(){
+
+console.log( '', geocoderPlace.geometry.location.lat(), geocoderPlace.geometry.location.lng() );
+
+			location.hash =
+			'^latitude^:^' + geocoderPlace.geometry.location.lat() + '^,' +
+			'^longitude^:^' + geocoderPlace.geometry.location.lng() + '^,' +
+			'^zoom^:^' + zoom + '^';
+
+	}
+
+
+
+	function onHashChange() {
+
+		let zoom, x, y, urlJSON, urlPNG, urlGED;
+		let imageLoader;
+
+		scene.remove( object3D, ground );
+		object3D = new THREE.Object3D();
+		scene.add( object3D );
+
+		structures = [];
+
+		parameters = getParametersFromHash();
+
+		zoom = parameters.zoom;
+		x = parameters.x;
+		y = parameters.y;
+
+		getCalcs( parameters.latitude, parameters.longitude, parameters.zoom );
+
+		urlPNG = 'https://tile.openstreetmap.org/' + zoom + '/' + x + '/' + y + '.png';
+
+//console.log( 'urlPNG', urlPNG );   // click to see raster tile
+
+		getTexture( urlPNG, ground );
+
+
+		urlGED = 'https://api.mapbox.com/v4/mapbox.terrain-rgb/' + zoom + '/' + x + '/' + y + '.pngraw?access_token=' + mbptoken;
+
+//console.log( '', urlGED ); // click to see terrain / global elevation data / GED
+
+			imageLoader = new THREE.ImageLoader();
+			imageLoader.crossOrigin = 'anonymous';
+			imageLoader.load( urlGED , getHeightMapData );
+
+
+		urlJSON = 'https://b.data.osmbuildings.org/0.2/anonymous/tile/' + zoom  + '/' + x + '/' + y + '.json';
+
+		//console.log( '', urlJSON );  // click to view 3D building data
+
+		requestFile( urlJSON, callbackGeoJSON );
+
+	}
+
+
+
+	function getParametersFromHash() {
+
+		let hashes, regex, str, params;
+
+		hashes = location.hash.split( '#' );
+
+		regex = new RegExp( "\\" + hashes[ 1 ].charAt( 0 ) + "", "gi" );
+		str = '{' + hashes[ 1 ].replace( regex, '"' )  + '}';
+
+// console.log( 'regex', regex, 'str', str );
+
+		params = JSON.parse( str );
+
+		parameters = parameters || {};
+		parameters.zoom = params.zoom ? parseInt( params.zoom, 10 ) : zoom;
+		parameters.latitude = params.latitude ? parseFloat( params.latitude ) : latitude;
+		parameters.longitude = params.longitude ? parseFloat( params.longitude ) : longitude;
+		parameters.side = 2;
+		parameters.transparent = true;
+
+		parameters.x = lon2tile( parameters.longitude, zoom );
+		parameters.y = lat2tile( parameters.latitude, zoom );
+
+//console.log( 'parameters', parameters );
+
+		return parameters;
+
+	}
+
+
+
+	function getTexture( url, target ) {
+
+		let loader;
+
+		loader = new THREE.TextureLoader();
+			loader.crossOrigin = 'anonymous';
+			loader.load( url, callback );
+
+			function callback ( texture ){
+
+			materialGround = new THREE.MeshPhongMaterial( { map: texture, side: 2 } );
+			object3D.remove( ground );
+			ground = new THREE.Mesh( geometryGround, materialGround );
+			ground.receiveShadow = true;
+			object3D.add( ground );
+			
+		}
+
+	}
+
+
+
+	function getHeightMapData( map ) {
+
+//	height = -10000 + ((R * 256 * 256 + G * 256 + B) * 0.1)
+
+		let scaleTerrain, data, vertices, r, g, b;
+
+		scaleTerrain = 0.2; //how to calculate this??;
+
+		context.drawImage( map, 0, 0, 256, 256, 0, 0, 256, 256 );
+
+		data = context.getImageData( 0, 0, 256, 256 ).data;
+
+		geometryGround = new THREE.PlaneBufferGeometry( 100, 100, 255, 255 );
+		geometryGround.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometryGround.applyMatrix( new THREE.Matrix4().makeTranslation( 50 , 0, 50 ) );
+		vertices = geometryGround.attributes.position.array;
+
+		for ( let i = 1, j = 0; i < vertices.length; i += 3 ) {
+
+			r = data[ j++ ];
+			g = data[ j++ ];
+			b = data[ j++ ];
+			j++;
+
+			vertices[ i ] = scaleTerrain * ( 0.1 * ( r * 65536 + g * 256 + b ) - 10000 );
+
+		}
+
+		geometryGround.computeFaceNormals();
+		geometryGround.computeVertexNormals();
+
+		object3D.remove( ground );
+		ground = new THREE.Mesh( geometryGround, materialGround );
+		ground.castShadow = true
+		ground.receiveShadow = true;
+		object3D.add( ground );
+
+		setCameraLights( );
+	}
+
+
+
+	function callbackGeoJSON( xhr ) {
+
+		let response, data ;
+		let vertices, polys, poly, height, coordinates, structure;
+
+		response = xhr.target.response;
+
+		try {
+
+			data = JSON.parse( response );
+
+		}
+
+		catch ( e ) {
+
+console.log( 'error', e );
+console.log( 'response', response );
+
+			setCameraLights( );
+			return;
+
+		}
+
+// much work needed here in order to capture all the available types of features in the data
+
+		for ( let i = 0; i < data.features.length; i++ ) {
+
+			polys = data.features[ i ].geometry.coordinates;
+			height = data.features[ i ].properties.height;
+			height = height ? height : 1;
+
+			for ( let j = 0; j < polys.length; j++ ) {
+
+				vertices = [];
+				poly = polys[ j ];
+
+				for ( let k = 0; k < poly.length; k++ ) {
+
+					coordinates = poly[ k ];
+
+					vertices.push( v2( coordinates[ 0 ], coordinates[ 1 ] ) );
+
+				}
+
+				countVertices += poly.length;
+
+				structure = drawShape( vertices, height );
+
+				if ( structure ) {
+
+					object3D.add( structure );
+					structures.push( structure );
+
+				}
+
+		  }
+
+		}
+
+console.log( 'countVertices', countVertices );
+//console.log( 'structure', structure );
+
+		findIntersects();
+
+
+	}
+
+
+  function drawShape( vertices, height ) {
+
+	let geometry, shape, material, mesh;
+
+	height = country === "United States" ? height / 5 : height;
+
+//console.log( 'shape height', height );
+
+	shape = new THREE.Shape( vertices );
+
+	try {
+
+		geometry = new THREE.ExtrudeBufferGeometry( shape, { steps: 1, amount: height, bevelEnabled: false } );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+
+		deltaX = tile2lon( parameters.x, parameters.zoom ) * -1;
+//console.log( 'deltaX', deltaX );
+
+		deltaY = tile2lat( parameters.y, parameters.zoom ) * 1;
+//console.log( 'deltaY', deltaY );
+
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( deltaX, 0, deltaY ) );
+
+		geometry.applyMatrix( new THREE.Matrix4().makeScale( scaleX, 1, scaleZ ) );
+//	geometry.center();
+
+		material = new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+//mesh.scale.set( s, 1, s );
+
+		mesh.updateMatrixWorld();
+		mesh.geometry.computeBoundingBox();
+		mesh.castShadow = true
+		mesh.receiveShadow = true;
+
+		return mesh;
+
+	}
+
+	catch (e) {
+
+//console.log( 'error', e, shape );
+
+		}
+
+	}
+
+
+
+	function findIntersects() {
+
+console.time( 'timer 1' );
+
+		let count, vectorFarDown, vectorLookUp;
+		let arr, position, raycaster, interesects;
+
+		count = 0;
+
+		vectorFarDown = new THREE.Vector3( 0, -100, 0 );
+		vectorLookUp = new THREE.Vector3( 0, 1, 0 );
+
+		for ( let structure of structures ) {
+
+		  arr = structure.geometry.attributes.position.array;
+		  position = v( arr[ 0 ], -100, arr[ 2 ] );
+
+			raycaster = new THREE.Raycaster();
+
+			raycaster.set( position, vectorLookUp );
+
+			intersects = raycaster.intersectObject( ground );
+
+			count++;
+
+//			if ( count < 100 ) {
+
+//console.log( '', count );
+//console.log( '', structure.position );
+
+//		}
+
+			if ( intersects.length ) {
+
+				structure.position.y = intersects[ 0 ].point.y;
+				menuIntersect.innerHTML = count + ' of ' + structures.length + ' structures calculated';
+
+			}
+
+		}
+
+		console.timeEnd( 'timer 1' );
+		setCameraLights( ground );
+	}
+
+
+
+
+// geocoder
+
+	function initGeocoder() {
+
+		let divMap, map, origin_autocomplete;
+
+		divMap = document.createElement( 'div' );  // unseen map
+		map = new google.maps.Map( divMap );
+
+		geocoder = new google.maps.Geocoder();
+
+		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
+
+		origin_autocomplete.addListener(
+
+			'place_changed',
+
+			function() {
+
+				geocoderPlace = origin_autocomplete.getPlace();
+
+				setGeocoderMessage( geocoderPlace );
+
+			}
+
+		);
+
+	}
+
+
+
+	function geocoderAddress( geocoder ) {
+
+		let address;
+
+		address = inpAddress.value;
+
+		geocoder.geocode( {
+
+			'address': address },
+
+			function( results, status ) {
+
+				if ( status === google.maps.GeocoderStatus.OK ) {
+
+				} else {
+
+					menuGeocoderMessage.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+
+				}
+
+			}
+
+		);
+
+	}
+
+
+
+	function setGeocoderMessage( place ) {
+
+		let latitude, longitude;
+		let tileX, tileY;
+		let latMin, latMax, lonMin, lonMax;
+		let latDelta, lonDelta;
+
+
+		if ( !place.geometry ) {
+
+			menuGeocoderMessage.innerHTML = 'Autocomplete\'s returned place contains no data';
+
+			return;
+
+		} else {
+
+			latitude = place.geometry.location.lat();
+			longitude = place.geometry.location.lng();
+
+			getCalcs( latitude, longitude, zoom )
+
+			components = place.address_components;
+
+			for ( component of components ) {
+
+				if ( component.types[ 0 ] === 'country' ) {
+
+					country = component.long_name;
+
+				}
+
+			}
+
+			menuGeocoderMessage.innerHTML +=
+
+			( place.vicinity ? '<p>Vicinity:<br>' + place.vicinity + '</p>' : '' ) +
+			'<p>Address:<br>' + place.adr_address + '</p>' +
+			'<p>Country: ' + country + '</p>';
+
+		}
+
+	}
+
+
+
+// utilities
+
+
+	function getCalcs( latitude, longitude, zoom ) {
+
+		mPixel = [ 156412, 78206, 39103, 19551, 9776, 4888, 2444, 1222, 610.984, 305.492, 152.746, 76.373, 38.187,
+			19.093, 9.547, 4.773, 2.387, 1.193, 0.596, 0.298 ]
+
+		let tileX, tileY;
+		let latMin, latMax, lonMin, lonMax;
+		let latDelta, lonDelta;
+
+		menuGeocoderMessage.innerHTML = '';
+
+		tileX = lon2tile( longitude, zoom );
+		tileY = lat2tile( latitude, zoom );
+
+		latMin =  tile2lat( tileY + 1, zoom );
+		latMax =  tile2lat( tileY, zoom );
+
+
+		lonMin = tile2lon( tileX, zoom );
+		lonMax = tile2lon( tileX + 1, zoom );
+
+		latDelta = ( latMax - latMin );
+		lonDelta = ( lonMax - lonMin );
+
+// tile pixels - not screen pixels
+
+		latDegreesPerPixel = latDelta / 256;
+		lonDegreesPerPixel = lonDelta / 256;
+
+		latPixelsPerDegree = 256 / latDelta;
+		lonPixelsPerDegree = 256 / lonDelta;
+
+		metersPerPixel = mPixel[ zoom ]
+		metersPerTile = metersPerPixel * 256;
+
+		scaleX = 100 / lonDelta;
+		scaleZ = 100 / latDelta;
+
+		menuGeocoderMessage.innerHTML +=
+
+			'<details>' +
+
+				'<summary>Geocoder Calculations</summary>' +
+				'<p>Latitude: ' + latitude.toFixed( 4 ) + '</p>' +
+				'<p>Longitude: ' + longitude.toFixed( 4 ) + '</p>' +
+
+				'<p>' +
+					'zoom: ' + zoom + ' - tile X: ' + tileX + ' - tile Y: ' + tileY +
+				'</p>' +
+
+				'<p>' +
+					'lat Min: ' + latMin.toFixed( 4 ) + ' - latMax: ' + latMax.toFixed( 4 ) +
+				'</p>' +
+
+				'<p>' +
+					'lon Min: ' + lonMin.toFixed( 4 ) + ' - lonMax: ' + lonMax.toFixed( 4 ) +
+				'</p>' +
+
+				'<p> latDelta: ' + latDelta.toFixed( 6 ) + ' lonDelta: ' + lonDelta.toFixed( 6 ) + '</p>' +
+
+				'<p> latDegreesPerPixel: ' + latDegreesPerPixel.toFixed( 6 ) + ' lonDegreesPerPixel: ' + lonDegreesPerPixel.toFixed( 6 ) + '</p>' +
+
+				'<p> latPixelsPerDegree: ' + latPixelsPerDegree.toFixed( 1 ) + ' lonPixelsPerDegree: ' + lonPixelsPerDegree.toFixed( 1 ) + '</p>' +
+
+				'<p>' +
+					'metersPerPixel: ' + metersPerPixel.toFixed( 4 ) +
+				'</p>' +
+
+				'<p>' +
+					'metersPerTile: ' + metersPerTile.toFixed( 4 ) +
+				'</p>' +
+
+			'</details>' +
+		'';
+
+	}
+
+
+  function lon2tile( lon, zoom ) {
+
+		return Math.floor( ( lon + 180 ) / 360 * Math.pow( 2, zoom ) );
+
+	}
+
+	function lat2tile( lat, zoom ) {
+
+		var pi = Math.PI;
+
+		return Math.floor( ( 1 - Math.log( Math.tan( lat * pi / 180 ) + 1 / Math.cos( lat * pi / 180 ) ) / pi ) / 2 * Math.pow( 2, zoom ) );
+
+	}
+
+
+
+  function tile2lon( x, zoom ) {
+
+		return ( x / Math.pow( 2, zoom ) * 360 - 180 );
+
+	}
+
+	function tile2lat( y, zoom ) {
+
+		var pi = Math.PI
+		var n = pi - 2 * pi * y / Math.pow( 2, zoom );
+		return 180 / pi * Math.atan( 0.5 * ( Math.exp( n ) - Math.exp( -n ) ));
+
+	}
+
+
+
+  function requestFile( fileName, callback ) {
+
+		let xhr, response, data ;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', fileName, true );
+		xhr.onerror = function( xhr ) { console.log( 'error', xhr  ); };
+//		xhr.onprogress = function( xhr ) { console.log( 'xhr progress/ bytes loaded', xhr.loaded, xhr  ); }; /// or something
+		xhr.onload = callback ? callback : function( xhr ) { console.log( 'load complete', xhr  ); };
+		xhr.send( null );
+
+	}
+
+
+// three.js
+
+	function addLights( size ) {
+
+// 2017-04-02 ~ http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r2.html
+
+		let lightAmbient, lightPoint;
+		size = size ? size : 100;
+
+		lightAmbient = new THREE.AmbientLight( 0xaaaaaa );
+		scene.add( lightAmbient );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.05 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+		lightDirectional = new THREE.DirectionalLight( 0xffffff, 0.5 );
+
+		lightDirectional.position.copy( v( 100, 100, 100 ) );
+
+		d = 100;
+		lightDirectional.shadow.camera.left = -d;
+		lightDirectional.shadow.camera.right = d;
+		lightDirectional.shadow.camera.top = d;
+		lightDirectional.shadow.camera.bottom = -d;
+
+		lightDirectional.shadow.camera.near = 0.1;       // default
+		lightDirectional.shadow.camera.far = 1000;      // default
+
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+
+		lightDirectional.castShadow = true;
+
+		scene.add( lightDirectional );
+
+		scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+	}
+
+
+	function setCameraLights() {
+
+		controls.target.copy( ground.geometry.boundingSphere.center );
+		camera.position.copy( controls.target.clone().add( v( 0, 100, 100 ) ) );
+		lightDirectional.position.copy( controls.target.clone().add( v( 100, 100, 100 ) ) );
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

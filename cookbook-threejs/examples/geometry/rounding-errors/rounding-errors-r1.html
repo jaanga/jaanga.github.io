@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<title></title>
+<style>
+body { font: 11pt monospace; margin: 0; overflow: hidden; }
+#title { position: absolute; text-align: center; width: 100%; }
+</style>
+</head>
+<body>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "title" ></div>
+
+<script>
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.000001, 1 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		var position = new THREE.Vector3( 100, 0, -50 )
+		let axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		geometry = new THREE.TorusKnotGeometry( 0.0001, 0.00003 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( position.clone().add( new THREE.Vector3( -0.0002, 0, 0 ) ) );
+		scene.add( mesh );
+
+		controls.target.copy( position ); 
+
+		geometry.computeBoundingSphere();
+		d = 2 * geometry.boundingSphere.radius;
+		camera.position.copy( position.clone().add( new THREE.Vector3( d, d, d ) ) );
+
+		axisHelper.position.copy( position );
+
+
+		geometry = new THREE.TorusKnotGeometry( 1, 0.3 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.copy( position.clone().add( new THREE.Vector3( 0.0002, 0, 0 ) ) );
+		s = 0.0001;
+		mesh.scale.set( s, s, s );
+		scene.add( mesh );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

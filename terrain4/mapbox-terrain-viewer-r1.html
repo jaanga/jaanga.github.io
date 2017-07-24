@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<title></title>
+<style>
+body { font: 11pt monospace; margin: 0; overflow: hidden; }
+#title { position: absolute; text-align: center; width: 100%; }
+</style>
+</head>
+<body>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src="https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "title" ></div>
+
+<script>
+
+	var data;
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		lightAmbient = new THREE.AmbientLight( 0xbbbbbb );
+		scene.add( lightAmbient );
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.15 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		scene.add( camera );
+
+		let axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+
+		canvas = document.createElement( 'canvas' );
+		document.body.appendChild( canvas );
+		canvas.style.cssText = ' left: 0; margin: 20px; position: absolute; top: 0; z-index: 10; ';
+		canvas.width = 256;
+		canvas.height = 256;
+		context = canvas.getContext( '2d' );
+
+
+		imageLoader = new THREE.ImageLoader();
+		imageLoader.crossOrigin = 'anonymous';
+		imageLoader.load( '49.png' , getHeightMapData );
+
+
+	}
+
+
+
+	function getHeightMapData( map ) {
+
+//	height = -10000 + ((R * 256 * 256 + G * 256 + B) * 0.1)
+
+		let scl, vertices, r, g, b;
+
+		scl = 0.002; 
+
+		context.drawImage( map, 0, 0, 256, 256, 0, 0, 256, 256 );
+
+		data = context.getImageData( 0, 0, 256, 256 ).data;
+
+		scene.remove( mesh );
+
+		geometry = new THREE.PlaneBufferGeometry( 50, 50, 255, 255 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		vertices = geometry.attributes.position.array;
+ 
+		for ( let i = 1, j = 0; i < vertices.length; i += 3 ) {
+
+			j++;
+			r = data[ j++];
+			g = data[ j++];
+			b = data[ j++];
+			vertices[ i ] = scl * ( -10000 + ( ( r * 256 * 256 + g * 256 + b ) * 0.001 ) );
+
+		}
+
+		geometry.attributes.position.needsUpdate = true;
+
+		geometry.computeVertexNormals();
+
+		material = new THREE.MeshNormalMaterial( { side: 2 } );
+		mesh = new THREE.Mesh( geometry, material );
+
+		scene.add( mesh );
+
+console.timeEnd( 'Timer0' );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

@@ -72,6 +72,7 @@
 ## [Scripps 3D Globe]( http://jaanga.github.io/terrain-srtm30-plus-viewers/png-tms7-viewer-3d-globe-low/latest/ )
 ## [Scripps 3D unFlatland]( http://jaanga.github.io/terrain-srtm30-plus-viewers/png-tms7-viewer-3d-unflatland-features/latest/ )
 
+D:\Dropbox\Public\git-repos\theo-armour.github.io\theo-armour.testing\png-tms7-viewer-3d-features\r1\template-png-tms7-viewer-3d.html
 
 # [FGX]( http://fgx.github.io/ )
 
