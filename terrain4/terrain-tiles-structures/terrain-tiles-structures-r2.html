@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<title>Terrain Tiles Structure R2</title>
+<title>Terrain Tiles Structure R2.1</title>
 <style>
 
 	body { font: 11pt monospace; margin: 0; overflow: hidden; text-align: center; }
@@ -35,9 +35,11 @@
 
 	let zoomDefault = 16;
 
-	let sfHyatt = '{"latitude":"37.796","longitude":"-122.398","zoom":"16"}';
+//	let sfHyatt = '{"latitude":"37.796","longitude":"-122.398","zoom":"16"}';
+	let sfHyatt = '^latitude^:^37.796^,^longitude^:^-122.398^,^zoom^:^16^';
+//	let alcatraz = '{"latitude":"37.8270","longitude":"-122.423","zoom":"16"}';
 	let alcatraz = '^latitude^:^37.8270^,^longitude^:^-122.423^,^zoom^:^16^';
-//	let sfHyatt = '^latitude^:^37.796^,^longitude^:^-122.398^,^zoom^:^16^';
+//	let coit = '{"latitude":"37.8024","longitude":"-122.4058","zoom":"16"}';
 	let coit = '^latitude^:^37.8024^,^longitude^:^-122.4058^,^zoom^:^16^';
 
 	let geocoder, geocoderPlace;
@@ -120,10 +122,10 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 		onWindowResize();
 		window.addEventListener( 'keyup', onKeyUp, false );
-		renderer.domElement.addEventListener( 'click', function() {  controls.autoRotate = false; }, false );
-
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
 
 		onHashChange();
+
 		window.addEventListener( 'hashchange', onHashChange, false );
 
 
@@ -138,12 +140,12 @@
 		if ( !location.hash ) {
 
 //			location.hash = '^latitude^:^' + latitude + '^,^longitude^:^' + longitude + '^,^zoom^:^' + zoomDefault + '^';
-			location.hash = sfHyatt;
+			location.hash = sfHyatt; // coit; // alcatraz;
 
 			return;
 		}
 
-console.log( '', location.hash  );
+//console.log( '', location.hash );
 
 		let imageLoader;
 
@@ -155,11 +157,11 @@ console.log( '', location.hash  );
 
 		parameters = getParametersFromHash();
 
+		getCalcs( parameters.latitude, parameters.longitude, parameters.zoom );
+
 		zoom = parameters.zoom;
 		x = parameters.x;
 		y = parameters.y;
-
-		getCalcs( parameters.latitude, parameters.longitude, parameters.zoom );
 
 		urlPNG = 'https://tile.openstreetmap.org/' + zoom + '/' + x + '/' + y + '.png';
 
@@ -197,11 +199,12 @@ console.log( '', location.hash  );
 		regex = new RegExp( "\\" + hashes[ 1 ].charAt( 0 ) + "", "gi" );
 		str = '{' + hashes[ 1 ].replace( regex, '"' )  + '}';
 
-// console.log( 'regex', regex, 'str', str );
+//console.log( 'hashes', hashes );
+//console.log( 'regex', regex, 'str', str );
 
-//		params = JSON.parse( str );
+		params = JSON.parse( str );
 
-		params = JSON.parse( hashes[ 1 ] );
+//		params = JSON.parse( hashes );  // chrome only
 
 		parameters = parameters || {};
 		parameters.zoom = params.zoom ? parseInt( params.zoom, 10 ) : zoomDefault;
@@ -210,7 +213,7 @@ console.log( '', location.hash  );
 		parameters.side = 2;
 		parameters.transparent = true;
 
-		parameters.x = lon2tile( parameters.longitude, parameters.zoom );
+//		parameters.x = lon2tile( parameters.longitude, parameters.zoom );
 		parameters.y = lat2tile( parameters.latitude, parameters.zoom );
 
 //console.log( 'parameters', parameters );
@@ -285,8 +288,17 @@ console.log( '', location.hash  );
 		urlJSON = 'https://b.data.osmbuildings.org/0.2/anonymous/tile/' + parameters.zoom  + '/' + parameters.x + '/' + parameters.y + '.json';
 
 //console.log( '', urlJSON );  // click to view 3D building data
+		try {
 
-		requestFile( urlJSON, callbackGeoJSON );
+			requestFile( urlJSON, callbackGeoJSON );
+
+		}
+
+		catch( error ) {
+
+alert( '', error );
+
+		}
 
 	}
 
@@ -351,7 +363,7 @@ console.log( 'response', response );
 
 		}
 
-console.log( 'countVertices', countVertices );
+//console.log( 'countVertices', countVertices );
 //console.log( 'structure', structure );
 
 		findIntersects();
@@ -472,8 +484,8 @@ console.time( 'timer 1' );
 
 		menuGeocoderMessage.innerHTML = '';
 
-		tileX = lon2tile( longitude, zoom );
-		tileY = lat2tile( latitude, zoom );
+		parameters.x = tileX = lon2tile( longitude, zoom );
+		parameters.y = tileY = lat2tile( latitude, zoom );
 
 		latMin =  tile2lat( tileY + 1, zoom );
 		latMax =  tile2lat( tileY, zoom );
@@ -498,6 +510,9 @@ console.time( 'timer 1' );
 
 		scaleX = 100 / lonDelta;
 		scaleZ = 100 / latDelta;
+
+		parameters.latDelta = latDelta;
+		parameters.lonDelta = lonDelta;
 
 		menuGeocoderMessage.innerHTML +=
 

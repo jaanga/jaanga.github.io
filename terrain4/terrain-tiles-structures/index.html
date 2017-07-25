@@ -33,7 +33,7 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 .menu a { text-decoration: none; }
 .menu a:hover, .menu a:focus{ color: #f1f1f1; }
 
-.menu h2, .menu h3, .menu h4, .menu p, .menu iframe { color: #aaa; }
+.menu h2, .menu h3, .menu h4, .menu p, .menu iframe { color: #444; }
 
 
 #butEditFile { background-color: #555; color: #fff; opacity: 0.5; padding: 8px; position: fixed; right: 20px; top: 20px; vertical-align: middle; z-index: 1; }
@@ -131,7 +131,7 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 
 
 	function onHashChange() {
-console.log( 'lllllllllllll', location.hash );
+
 		let url, target;
 
 		url = location.hash.slice( 1 );
@@ -220,10 +220,14 @@ console.log( 'lllllllllllll', location.hash );
 		converter = new showdown.Converter();
 
 		xhr = new XMLHttpRequest();
+
+//		xhr.responseType = "document";
+		xhr.overrideMimeType( "text/plain; charset=x-user-defined" );
 		xhr.open( 'get', url, true );
+
 		xhr.onload = function() {
 
-			target.innerHTML = converter.makeHtml( xhr.responseText );
+			target.innerHTML = converter.makeHtml( xhr.response );
 
 		};
 

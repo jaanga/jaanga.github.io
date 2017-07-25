@@ -2,7 +2,11 @@
 
 ***
 
-[<span class="button" style=background-color:#999; >Select</span>]( #menu.md ) [<span class="button">Set Options</span>]( #menu-geocoder.md )
+[<span class="button" style=background-color:#999; >Select</span>]( #menu.md ) [<span class="button">Locate</span>]( #menu-geocoder.md )
+
+<a href="javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='http://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()" title="Mr.doob's Stats.js" >Show statistics</a>
+
+
 
 ***
 
@@ -34,7 +38,8 @@
 
 ### [Christ Redeemer, Rio di Janeiro]( #terrain-tiles-structures-r2.html#^latitude^:^-22.951916^,^longitude^:^-43.21048719999999^,^zoom^:^15^ "7 structures" )
 
-
+### [Tenzing-Hillary Airport, Nepal]( #terrain-tiles-structures-r2.html#^latitude^:^27.68777799999999^,^longitude^:^86.73138360000007^,^zoom^:^15^ "77 structures" )
+ 
 
 [Full screen Terrain Tiles Structures R2]( terrain-tiles-structures-r2.html )
 

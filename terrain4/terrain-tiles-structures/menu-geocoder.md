@@ -3,14 +3,16 @@
 
 ***
 
-[<span class="button" style=background-color:#999; >Select</span>]( #menu.md ) [<span class="button">Set Options</span>]( #menu-geocoder.md )
+[<span class="button" >Select</span>]( #menu.md ) [<span style=background-color:#999; class="button">Locate</span>]( #menu-geocoder.md )
 
 ***
 
+<iframe id = "ifrGeocoder" src = "geocoder.html" width = "100%" height = "280" frameBorder = "0" ></iframe>
 
-### [Geocoder MD]( #menu-geocoder.md )
 
-<iframe id = "ifrGeocoder" src = "geocoder.html" width = "100%" height = "350" frameBorder = "0" ></iframe>
+<div id = "calculations" ></div>
+
+<iframe id = "ifrGoToNexTile" src = "go-to-next-tile-r1.html" width = "100%" height = "80" frameBorder = "0" ></iframe>
 
 
 ***

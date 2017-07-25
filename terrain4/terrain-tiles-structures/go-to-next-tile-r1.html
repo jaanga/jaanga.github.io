@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0; }
+
+
+</style>
+</head>
+<body>
+
+	<p>
+		Go: <button onclick=tileWest(); title="Go west" >&#8678;</button>
+		<button onclick=tileEast(); title="Go east"  >&#8680;</button>
+
+		<button onclick=tileNorth(); title="Go north" >&#8679;</button>
+		<button onclick=tileSouth(); title="Go south" >&#8681;</button>
+	</p>
+
+	<div id="contents" ></div>
+
+<script>
+
+	const b = '<br>';
+
+
+	function tileEast() {
+
+		let pp, newLon, hash;
+
+		if ( !parent.mainIframe ) { alert( 'please select a location' ); return }
+
+		pp = parent.mainIframe.contentWindow.parameters;
+		newLon = pp.longitude + pp.lonDelta;
+
+		hash = '^latitude^:^' + pp.latitude + '^,^longitude^:^' + newLon + '^';
+		parent.mainIframe.contentWindow.location.hash = hash;
+
+		parent.calculations.innerHTML += 'longitude: ' + newLon + b;
+
+	}
+
+
+	function tileWest() {
+
+		let pp, newLon, hash;
+
+		if ( !parent.mainIframe ) { alert( 'please select a location' ); return }
+
+		pp = parent.mainIframe.contentWindow.parameters;
+		newLon = pp.longitude - pp.lonDelta;
+
+		hash = '^latitude^:^' + pp.latitude + '^,^longitude^:^' + newLon + '^';
+		parent.mainIframe.contentWindow.location.hash = hash;
+
+		parent.calculations.innerHTML += 'longitude: ' + newLon + b;
+
+	}
+
+
+	function tileNorth() {
+
+		let pp, newLat, hash;
+
+		if ( !parent.mainIframe ) { alert( 'please select a location' ); return }
+
+		pp = parent.mainIframe.contentWindow.parameters;
+		newLat = pp.latitude + pp.latDelta;
+
+		hash = '^latitude^:^' + newLat + '^,^longitude^:^' + pp.longitude + '^';
+		parent.mainIframe.contentWindow.location.hash = hash;
+
+		parent.calculations.innerHTML += 'latitude: ' + newLat + '<br>';
+
+	}
+
+
+	function tileSouth() {
+
+		let pp, newLat, hash;
+
+		if ( !parent.mainIframe ) { alert( 'please select a location' ); return }
+
+		pp = parent.mainIframe.contentWindow.parameters;
+		newLat = pp.latitude - pp.latDelta;
+
+		hash = '^latitude^:^' + newLat + '^,^longitude^:^' + pp.longitude + '^';
+		parent.mainIframe.contentWindow.location.hash = hash;
+
+		parent.calculations.innerHTML += 'latitude: ' + newLat + '<br>';
+
+	}
+
+
+</script>
+</body>
+</html>

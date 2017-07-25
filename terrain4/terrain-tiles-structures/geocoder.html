@@ -95,14 +95,19 @@
 
 				'<p>Latitude: ' + place.geometry.location.lat() + '</p>' +
 				'<p>Longitude: ' + place.geometry.location.lng() + '</p>' +
-        '<p>Address:<br>' + place.adr_address + '</p>' +
+				'<p>Address:<br>' + place.adr_address + '</p>' +
 				( place.vicinity ? '<p>Vicinity:<br>' + place.vicinity + '</p>' : '' ) +
 
 			'';
 
-		  menuGeocoderMessage.innerHTML = txt;
+			hash = '^latitude^:^' + place.geometry.location.lat() + '^,^longitude^:^' + place.geometry.location.lng() + '^';
+//			menuGeocoderMessage.innerHTML = txt + '<p>' + hash + '</p>';
 
-		  parent.mainIframe.contentWindow.location.hash = '{ "latitude": "' + place.geometry.location.lat() + '", "longitude": "' + place.geometry.location.lng() + '" }';
+//			parent.mainIframe.contentWindow.location.hash = '{ "latitude": "' + place.geometry.location.lat() + '", "longitude": "' + place.geometry.location.lng() + '" }';
+			parent.mainIframe.contentWindow.location.hash = hash;
+
+			parent.calculations.innerHTML = txt + '<p>' + hash + '</p>';
+			parent.place = place;
 
 		}
 
