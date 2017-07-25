@@ -17,6 +17,8 @@ The **'Select'** menu takes you to pre-selected areas. The tooltips for each ite
 
 The **'Locate;** menu allows to to enter an address or location anywhere in the world. You can use the on=screen cursor keys to go to the next tiles.
 
+Wait for the model starts rotating before proceeding further
+
 ## Concept
 
 There are numerous outstanding mapping applications available these days. Many have sophisticated APIs. 
@@ -70,3 +72,6 @@ Not all tiles have 3D building data
 ### Source code
 
 * <https://glitch.com/edit/#!/jaanga-terrain4>
+* <http://jaanga.github.io/terrain4/terrain-tiles-structures/>
+* <https://github.com/jaanga/jaanga.github.io/tree/master/terrain4/terrain-tiles-structures>
+
