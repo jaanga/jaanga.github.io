@@ -8,14 +8,14 @@ This is a work in progress at an early stage.
 
 Click 'Downtown San Francisco / Hyatt Embarcadero' for a quick demo of what this app does.
 
-Click the title in the menu to return to this home page / read me file
+Click the title in the menu to return to this home page / read me file.
 
 
-The app has two menus
+The app has two menus:
 
 The **'Select'** menu takes you to pre-selected areas. The tooltips for each item show you the number of structures to be loaded. The greater the number of structures, the longer it takes to load.
 
-The **'Locate;** menu allows to to enter an address or location anywhere in the world
+The **'Locate;** menu allows to to enter an address or location anywhere in the world. You can use the on=screen cursor keys to go to the next tiles.
 
 ## Concept
 
@@ -52,7 +52,10 @@ We are here to provide you with mapping code you can tinker with and learn to ha
 
 * 2017-07-24 ~ heights of buildings are frequently incorrectly calculated
 * 2017-07-24 ~ Most [geoJson features]( https://en.wikipedia.org/wiki/GeoJSON ) are not yet implemented
-* 
+
+Not all tiles have 3D building data
+
+
 ## To-Do
 
 * 2017-07-25 ~ Sunlight by date, time and location
@@ -62,3 +65,8 @@ We are here to provide you with mapping code you can tinker with and learn to ha
 * 2017-07-25 ~ Select quality of raster tile display
 * 2017-07-25 ~ Support all zoom levels
 * 2017-07-25 ~ Use request animation frame to control the intersection gathering to stop the app from not responding
+
+
+### Source code
+
+* <https://glitch.com/edit/#!/jaanga-terrain4>
