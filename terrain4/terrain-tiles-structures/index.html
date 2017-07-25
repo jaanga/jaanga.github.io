@@ -9,7 +9,9 @@
 <!-- Mr.doob
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 -->
-
+<meta name=description content="File wrangler. Default index.html file. Opens HTML or Markdown files. Passes location.hash." >
+<meta name=keywords content="ShowDown,Markdown,AJAX,JavaScript,HTML,CSS,GitHub,FOSS" >
+<meta name=date content="2017-07-24" >
 <style>
 
 /* items mostly in tag/class/id then alphabetical order */
@@ -24,6 +26,8 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 .center { height: 100%; left: 0; margin: 0 auto; max-width: 600px; position: absolute; right: 0; }
 
 .ifr { border-width: 0; height: 100%; margin: 0; width: 100%; }
+
+.mainIframe { overflow: hidden; }
 
 .menu { height: 100%; overflow: hidden; }
 .menu a { text-decoration: none; }
@@ -47,12 +51,14 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 
 #main { height: 100%; margin-left: 250px; transition: margin-left .5s; position: relative; }
 
+
 #menu {
 	background-color: lightgray; box-sizing: border-box; height: 100%; left: 0; overflow: hidden;
 	position: fixed; top: 0; transition: 0.5s; width: 250px; z-index: 1;
 }
 
 #menuContents { border: 0px red solid; height: 100%; margin: 0; padding: 0 0 0 15px; overflow: auto; }
+
 
 
 @media screen and (max-height: 450px) {
@@ -66,7 +72,7 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 .breakout { background-repeat:no-repeat; background-size:100% 100%; text-align:center; margin-left:-100%; margin-right:-100%; }
 
 /*
-  <div class="breakout" style=background-image:url("https://lorempixel.com/1000/500");height:500px; >breakout image</div>
+	<div class="breakout" style=background-image:url("https://lorempixel.com/1000/500");height:500px; >breakout image</div>
 */
 
 .button { background-color: #bbb; border: 1px solid #eee; color: #fff; display: inline-block; padding: 8px; vertical-align: middle; }
@@ -100,7 +106,7 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 
 <script>
 
-	let projectName = 'jaanga-terrain4';
+  let projectName = 'ta-core';
 
 
 	init();
@@ -125,7 +131,7 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 
 
 	function onHashChange() {
-
+console.log( 'lllllllllllll', location.hash );
 		let url, target;
 
 		url = location.hash.slice( 1 );
@@ -152,16 +158,20 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 
 			main.innerHTML = '<div id=mainContents class=center ></div>';
 
+			main.style.overflow = 'auto';
+
 			requestFile( url, mainContents );
 
 		} else if ( url.includes( '.html' ) ) {
 
 			main.innerHTML = '<iframe id=mainIframe class=ifr src=' + url + ' ></iframe>';
 
+			main.style.overflow = 'hidden';
+
 		} else {
 
 			mainIframe.contentWindow.location.hash = url;
-//			menuIframe.contentWindow.location.hash = url
+			menuIframe.contentWindow.location.hash = url;
 
 		}
 
@@ -170,10 +180,9 @@ blockquote, pre { background-color: #eee; padding: 10px; }
 
 	function onWindowResize(){
 
-		if( window.innerWidth < 800 ) { butEditFile.style.display = 'none'; }
+		butEditFile.style.display = window.innerWidth < 900 ?  'none' : '';
 
 	}
-
 
 
 	function onclickEditButton(){

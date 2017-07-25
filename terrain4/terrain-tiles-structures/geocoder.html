@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 10px 0 0; }
+
+	input { width: 100%; }
+
+</style>
+
+</head>
+<body>
+
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyC08xQ2xRy3k5IHkEuuSWasdViOkk489Y0" ></script>
+
+	<p>Enter a location</p>
+
+	<p>
+		<input id = "inpAddress" placeholder="San Francisco CA" onchange = "geocoderAddress( geocoder );" onclick="this.select();" title="Thank you Google!" >
+	</p>
+
+	<div id="menuGeocoderMessage" ></div>
+
+<script>
+
+// https://developers.google.com/maps/documentation/javascript/examples/geocoding-simple
+
+  let geocoder;
+
+	initGeocoder();
+
+	function initGeocoder() {
+
+		let divMap, map, origin_autocomplete, place;
+
+		divMap = document.createElement( 'div' );
+		map = new google.maps.Map( divMap );
+
+		geocoder = new google.maps.Geocoder();
+
+		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
+
+		origin_autocomplete.addListener(
+
+			'place_changed',
+
+			function() { setGeocoderMessage( origin_autocomplete.getPlace() ); }
+
+		);
+
+		parent.main.innerHTML = '<iframe id=mainIframe class=ifr src="terrain-tiles-structures-r2.html" ></iframe>';
+
+	}
+
+
+
+	function geocoderAddress( geocoder ) {
+
+		geocoder.geocode( {
+
+			'address': inpAddress.value },
+
+			function( results, status ) {
+
+				if ( status === google.maps.GeocoderStatus.OK ) {
+
+				} else {
+
+					menuGeocoderMessage.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+
+				}
+
+			}
+
+		);
+
+	}
+
+
+
+	function setGeocoderMessage( place ) {
+
+    let txt;
+
+		if ( !place.geometry ) {
+
+			txt = 'Autocomplete\'s returned place contains no data';
+
+		} else {
+
+			txt =
+
+				'<p>Latitude: ' + place.geometry.location.lat() + '</p>' +
+				'<p>Longitude: ' + place.geometry.location.lng() + '</p>' +
+        '<p>Address:<br>' + place.adr_address + '</p>' +
+				( place.vicinity ? '<p>Vicinity:<br>' + place.vicinity + '</p>' : '' ) +
+
+			'';
+
+		  menuGeocoderMessage.innerHTML = txt;
+
+		  parent.mainIframe.contentWindow.location.hash = '{ "latitude": "' + place.geometry.location.lat() + '", "longitude": "' + place.geometry.location.lng() + '" }';
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

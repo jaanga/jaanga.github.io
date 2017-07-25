@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<title>Terrain Tiles Structure R2</title>
+<title>Terrain Tiles Structure R3</title>
 <style>
 
 	body { font: 11pt monospace; margin: 0; overflow: hidden; text-align: center; }
@@ -35,9 +35,8 @@
 
 	let zoomDefault = 16;
 
-	let sfHyatt = '{"latitude":"37.796","longitude":"-122.398","zoom":"16"}';
 	let alcatraz = '^latitude^:^37.8270^,^longitude^:^-122.423^,^zoom^:^16^';
-//	let sfHyatt = '^latitude^:^37.796^,^longitude^:^-122.398^,^zoom^:^16^';
+	let sfHyatt = '^latitude^:^37.796^,^longitude^:^-122.398^,^zoom^:^16^';
 	let coit = '^latitude^:^37.8024^,^longitude^:^-122.4058^,^zoom^:^16^';
 
 	let geocoder, geocoderPlace;
@@ -199,9 +198,7 @@ console.log( '', location.hash  );
 
 // console.log( 'regex', regex, 'str', str );
 
-//		params = JSON.parse( str );
-
-		params = JSON.parse( hashes[ 1 ] );
+		params = JSON.parse( str );
 
 		parameters = parameters || {};
 		parameters.zoom = params.zoom ? parseInt( params.zoom, 10 ) : zoomDefault;
