@@ -7,12 +7,11 @@
 
 ***
 
-<iframe id = "ifrGeocoder" src = "geocoder.html" width = "100%" height = "280" frameBorder = "0" ></iframe>
-
+<iframe id = "ifrGeocoder" src = "geocoder.html" width = "100%" height = "110" frameBorder = "0" ></iframe>
 
 <div id = "calculations" ></div>
 
-<iframe id = "ifrGoToNexTile" src = "go-to-next-tile-r1.html" width = "100%" height = "80" frameBorder = "0" ></iframe>
+<iframe id = "ifrGoToNexTile"  src = "go-to-next-tile-r1.html"  width = "100%" height = "60" frameBorder = "0" ></iframe>
 
 
 ***

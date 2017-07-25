@@ -19,7 +19,10 @@
 	<p>Enter a location</p>
 
 	<p>
-		<input id = "inpAddress" placeholder="San Francisco CA" onchange = "geocoderAddress( geocoder );" onclick="this.select();" title="Thank you Google!" >
+		<input id = "inpAddress" placeholder="San Francisco CA" onchange = "geocoderAddress( geocoder );"
+			onclick="onclickInput();" title="Thank you Google Maps API!" >
+		<br>
+		<small>geocoder courtesy of Google</small>
 	</p>
 
 	<div id="menuGeocoderMessage" ></div>
@@ -34,13 +37,11 @@
 
 	function initGeocoder() {
 
-		let divMap, map, origin_autocomplete, place;
 
 		divMap = document.createElement( 'div' );
 		map = new google.maps.Map( divMap );
 
 		geocoder = new google.maps.Geocoder();
-
 		origin_autocomplete = new google.maps.places.Autocomplete( inpAddress );
 
 		origin_autocomplete.addListener(
@@ -56,6 +57,13 @@
 	}
 
 
+	function onclickInput() {
+
+		inpAddress.select();
+
+		parent.ifrGeocoder.height = '280';
+
+	}
 
 	function geocoderAddress( geocoder ) {
 
@@ -69,13 +77,15 @@
 
 				} else {
 
-					menuGeocoderMessage.innerHTML = 'Geocode was not successful for the following reason: ' + status;
+					parent.calculations.innerHTML = 'Geocode was not successful for the following reason: ' + status;
 
 				}
 
 			}
 
 		);
+
+		parent.ifrGeocoder.height = '120';
 
 	}
 
@@ -93,8 +103,8 @@
 
 			txt =
 
-				'<p>Latitude: ' + place.geometry.location.lat() + '</p>' +
-				'<p>Longitude: ' + place.geometry.location.lng() + '</p>' +
+				'Latitude: ' + place.geometry.location.lat().toFixed( 4 ) + '<br>' +
+				'Longitude: ' + place.geometry.location.lng().toFixed( 4 ) + '<br>' +
 				'<p>Address:<br>' + place.adr_address + '</p>' +
 				( place.vicinity ? '<p>Vicinity:<br>' + place.vicinity + '</p>' : '' ) +
 
@@ -106,7 +116,7 @@
 //			parent.mainIframe.contentWindow.location.hash = '{ "latitude": "' + place.geometry.location.lat() + '", "longitude": "' + place.geometry.location.lng() + '" }';
 			parent.mainIframe.contentWindow.location.hash = hash;
 
-			parent.calculations.innerHTML = txt + '<p>' + hash + '</p>';
+			parent.calculations.innerHTML = txt + '<p>hash<br>' + hash + '</p>';
 			parent.place = place;
 
 		}

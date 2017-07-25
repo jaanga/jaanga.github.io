@@ -7,7 +7,6 @@
 
 	body { font: 12pt monospace; margin: 0; }
 
-
 </style>
 </head>
 <body>
@@ -20,11 +19,7 @@
 		<button onclick=tileSouth(); title="Go south" >&#8681;</button>
 	</p>
 
-	<div id="contents" ></div>
-
 <script>
-
-	const b = '<br>';
 
 
 	function tileEast() {
@@ -39,7 +34,7 @@
 		hash = '^latitude^:^' + pp.latitude + '^,^longitude^:^' + newLon + '^';
 		parent.mainIframe.contentWindow.location.hash = hash;
 
-		parent.calculations.innerHTML += 'longitude: ' + newLon + b;
+		parent.calculations.innerHTML += 'longitude: ' + newLon.toFixed( 4 ) + '<br>';
 
 	}
 
@@ -56,7 +51,7 @@
 		hash = '^latitude^:^' + pp.latitude + '^,^longitude^:^' + newLon + '^';
 		parent.mainIframe.contentWindow.location.hash = hash;
 
-		parent.calculations.innerHTML += 'longitude: ' + newLon + b;
+		parent.calculations.innerHTML += 'longitude: ' + newLon.toFixed( 4 ) + '<br>';
 
 	}
 
@@ -73,7 +68,7 @@
 		hash = '^latitude^:^' + newLat + '^,^longitude^:^' + pp.longitude + '^';
 		parent.mainIframe.contentWindow.location.hash = hash;
 
-		parent.calculations.innerHTML += 'latitude: ' + newLat + '<br>';
+		parent.calculations.innerHTML += 'latitude: ' + newLat.toFixed( 4 ) + '<br>';
 
 	}
 
@@ -90,7 +85,7 @@
 		hash = '^latitude^:^' + newLat + '^,^longitude^:^' + pp.longitude + '^';
 		parent.mainIframe.contentWindow.location.hash = hash;
 
-		parent.calculations.innerHTML += 'latitude: ' + newLat + '<br>';
+		parent.calculations.innerHTML += 'latitude: ' + newLat.toFixed( 4 ) + '<br>';
 
 	}
 
