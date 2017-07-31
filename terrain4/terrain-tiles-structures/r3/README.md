@@ -1,11 +1,12 @@
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/terrain4/terrain-tiles-structures/r2/index.html "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view the home page]
+( https://jaanga.github.io/jaanga/terrain4/terrain-tiles-structures/r3/ "View file as a web page." ) </span>
 
-Welcome to the Jaanga Terrain4 BETA
+Terrain Tiles Structures Read Me
 ====
 
-<iframe src=terrain-tiles-structures-r2.html width=600 height=500 ></iframe>
+<iframe src=terrain-tiles-structures-r3.html width=600 height=500 ></iframe>
 _Downtown San Francisco / Hyatt Embarcadero at center_
+
 
 This is a work in progress at an early stage.
 
@@ -16,7 +17,7 @@ Click the title in the menu to return to this home page / read me file.
 
 The app has two menus:
 
-The **'Select'** menu takes you to pre-selected areas. The tooltips for each item show you the number of structures to be loaded. The greater the number of structures, the longer it takes to load.
+The **'Select'** menu takes you to pre-selected areas. The tooltip for each item show you the number of structures to be loaded. The greater the number of structures, the longer the file takes to load.
 
 The **'Locate;** menu allows to to enter an address or location anywhere in the world. You can use the on=screen cursor keys to go to the next tiles.
 
@@ -40,13 +41,14 @@ We are here to provide you with mapping code you can tinker with and learn to ha
 
 ### Mission
 
-* 3D terrain, 2D raster maps and 3D structures all visible and manipulable in one app
+* 3D terrain, 2D raster maps and 3D structures all visible and manipulable in in a single app
 * Easy peasy, free open source entry level code
 * Simple dependencies
 	* Three.js for 3D
 	* ShowDown for Markdown Conversion
 	* Mapbox for the data tiles
 * Basic code is 700 lines / 17KB
+* Carry out simple Sun-related coding exercises 
 
 
 ### Vision
@@ -55,21 +57,18 @@ We are here to provide you with mapping code you can tinker with and learn to ha
 
 ## Issues
 
-* 2017-07-24 ~ heights of buildings are frequently incorrectly calculated
-* 2017-07-24 ~ Most [geoJson features]( https://en.wikipedia.org/wiki/GeoJSON ) are not yet implemented
 
-Not all tiles have 3D building data
+* Not all tiles have 3D building data
+* Many Tiles with building footprint data only
+
 
 
 ## To-Do
 
-* 2017-07-25 ~ Sunlight by date, time and location
-* 2017-07-25 ~ Sun ranges
+
 * 2017-07-25 ~ Solar access
-* 2017-07-25 ~ Select source of raster tiles
 * 2017-07-25 ~ Select quality of raster tile display
-* 2017-07-25 ~ Support all zoom levels
-* 2017-07-25 ~ Use request animation frame to control the intersection gathering to stop the app from not responding
+
 
 
 ### Source code
@@ -78,3 +77,28 @@ Not all tiles have 3D building data
 * <http://jaanga.github.io/terrain4/terrain-tiles-structures/>
 * <https://github.com/jaanga/jaanga.github.io/tree/master/terrain4/terrain-tiles-structures>
 
+### Change Log
+
+### 2017-07-28 ~ Theo
+
+Dealt with
+
+* 2017-07-24 ~ Most [geoJson features]( https://en.wikipedia.org/wiki/GeoJSON ) are not yet implemented
+* 2017-07-25 ~ Sunlight by date, time and location
+* 2017-07-25 ~ Support all zoom levels
+* 2017-07-25 ~ Select source of raster tiles
+* 2017-07-25 ~ Sun ranges
+
+### 2017-07-27 ~ Theo
+
+Dealt with
+
+* 2017-07-26 ~ Not removing geometry and lights properly
+* 2017-07-26 ~ some raster tiles incorrectly offset 
+* 2017-07-24 ~ heights of buildings are frequently incorrectly calculated
+
+
+### 2017-07-26 ~ Theo
+
+* 2017-07-25 ~ Use request animation frame to control the intersection gathering to stop the app from not responding
+	* Works nicely

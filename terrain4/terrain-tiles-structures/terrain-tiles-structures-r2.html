@@ -16,11 +16,11 @@
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
 
-	<div id="menu" ></div>
+	<div id="menu" >
 	<div id="title" ></div>
 	<div id="menuIntersect" ></div>
 	<div id="menuGeocoderMessage" ></div>
-
+	</div>
 
 <script>
 
@@ -53,7 +53,7 @@
 
 	let scale = 0.2;
 
-	mbptoken='pk.eyJ1IjoidGhlb2EiLCJhIjoiY2o1YXFra3V2MGIzbzJxb2lneDUzaWhtZyJ9.7bYFAQabMXiYmcqW8NLfwg';
+	var mbptoken='pk.eyJ1IjoidGhlb2EiLCJhIjoiY2o1YXFra3V2MGIzbzJxb2lneDUzaWhtZyJ9.7bYFAQabMXiYmcqW8NLfwg';
 	var data;
 
 	let canvas, context;
@@ -140,7 +140,7 @@
 		if ( !location.hash ) {
 
 //			location.hash = '^latitude^:^' + latitude + '^,^longitude^:^' + longitude + '^,^zoom^:^' + zoomDefault + '^';
-			location.hash = sfHyatt; // coit; // alcatraz;
+			location.hash = sfHyatt; //coit; // alcatraz;
 
 			return;
 		}
@@ -213,7 +213,7 @@
 		parameters.side = 2;
 		parameters.transparent = true;
 
-//		parameters.x = lon2tile( parameters.longitude, parameters.zoom );
+		parameters.x = lon2tile( parameters.longitude, parameters.zoom );
 		parameters.y = lat2tile( parameters.latitude, parameters.zoom );
 
 //console.log( 'parameters', parameters );
@@ -229,13 +229,14 @@
 		let loader;
 
 		loader = new THREE.TextureLoader();
-			loader.crossOrigin = 'anonymous';
-			loader.load( url, callback );
 
-			function callback ( texture ){
+		loader.crossOrigin = 'anonymous';
+		loader.load( url, callback );
+
+		function callback ( texture ){
 
 			materialGround = new THREE.MeshPhongMaterial( { map: texture, side: 2 } );
-			object3D.remove( ground );
+//			materialGround = new THREE.MeshPhongMaterial( { side: 2 } );
 			ground = new THREE.Mesh( geometryGround, materialGround );
 			ground.receiveShadow = true;
 			object3D.add( ground );
@@ -290,7 +291,7 @@
 //console.log( '', urlJSON );  // click to view 3D building data
 		try {
 
-//			requestFile( urlJSON, callbackGeoJSON );
+			requestFile( urlJSON, callbackGeoJSON );
 
 		}
 
@@ -367,7 +368,6 @@ console.log( 'response', response );
 //console.log( 'structure', structure );
 
 		findIntersects();
-
 
 	}
 

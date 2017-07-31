@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0; padding: 0 10px 0 0; } 
+
+	input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%;}
+	input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+</style>
+</head>
+<body>
+
+
+Map Overlay
+<select id=selMap size=10 onchange=setMapOverlay(); ></select>
+
+<script>
+
+
+	var mapTypes = [
+
+		['Google Maps','https://mt1.google.com/vt/x='],
+		['Google Maps Terrain','https://mt1.google.com/vt/lyrs=t&x='],
+		['Google Maps Satellite','https://mt1.google.com/vt/lyrs=s&x='],
+		['Google Maps Hybrid','https://mt1.google.com/vt/lyrs=y&x='],
+		['Open Street Map','http://tile.openstreetmap.org/'],
+		['Open Cycle Map', 'http://tile.opencyclemap.org/cycle/'],
+//		['MapQuest OSM', 'http://otile3.mqcdn.com/tiles/1.0.0/osm/'],
+//		['MapQuest Satellite', 'http://otile3.mqcdn.com/tiles/1.0.0/sat/'],
+		['Stamen terrain background','http://tile.stamen.com/terrain-background/'],
+		['Esri Satellite', 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/']
+
+	];
+
+
+
+	init()
+
+
+	function init() {
+
+
+		for ( var i = 0; i < mapTypes.length; i++ ) {
+
+			selMap.appendChild( document.createElement( 'option' ) );
+			selMap.children[ i ].text = mapTypes[ i ][ 0 ];
+
+		}
+
+	}
+
+
+
+
+	function setMapOverlay() {
+
+console.log( '', 23 );
+
+		parent.mainIframe.contentWindow.mapType = mapTypes[ selMap.selectedIndex ];
+		parent.mainIframe.contentWindow.selectedIndex = selMap.selectedIndex;
+		parent.mainIframe.contentWindow.drawMapOverlay();
+
+	}
+
+
+
+
+
+</script>
+</body>
+</html>

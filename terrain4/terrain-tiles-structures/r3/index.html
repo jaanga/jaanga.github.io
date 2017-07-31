@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+
+<!-- https://clicktorelease.com -->
+<meta name = "viewport" content = "width=device-width, initial-scale=1, shrink-to-fit=no" >
+
+<!-- Mr.doob
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+-->
+<meta name=description content="File wrangler. Default index.html file. Opens HTML or Markdown files. Passes location.hash." >
+<meta name=keywords content="ShowDown,Markdown,AJAX,JavaScript,HTML,CSS,GitHub,FOSS" >
+<meta name=date content="2017-07-24" >
+<style id="foo" >
+
+/* items mostly in tag/class/id then alphabetical order */
+
+body, html { font: 12pt monospace; height: 100%; margin: 0; /* overflow: hidden; */ }
+
+a { color: crimson; }
+
+blockquote, pre { background-color: #eee; padding: 10px; }
+
+
+.center { height: 100%; left: 0; margin: 0 auto; max-width: 600px; padding: 0 0 0 55px; position: absolute; right: 0; }
+
+.ifr { border-width: 0; height: 100%; margin: 0; width: 100%; }
+
+.mainIframe { overflow: hidden; }
+
+.menu { height: 100%; overflow: hidden; }
+.menu a { text-decoration: none; }
+.menu a:hover, .menu a:focus{ color: #f1f1f1; }
+
+.menu h2, .menu h3, .menu h4, .menu p, .menu iframe { color: #555; }
+
+
+#butEditFile { background-color: #555; color: #fff; opacity: 0.5; padding: 8px; position: fixed; right: 20px; top: 20px; vertical-align: middle; z-index: 1; }
+
+#butEditFile:hover { cursor: pointer; opacity: 1; }
+
+#butEditFile img { vertical-align: middle; width: 24px; }
+
+#hamburger {
+	background-color: #edd; cursor:pointer; font-size:30px;	left: 250px; line-height: 30px; margin: 0; opacity: 0.5;
+	padding: 5px 15px 8px 10px; position: fixed; top: 20px; transition: left .5s; z-index: 1;
+}
+
+#hamburger:hover { cursor: pointer; opacity: 1; }
+
+#main { height: 100%; margin-left: 250px; transition: margin-left .5s; position: relative; }
+
+
+#menu {
+	background-color: lightgray; box-sizing: border-box; height: 100%; left: 0; overflow: hidden;
+	position: fixed; top: 0; transition: 0.5s; width: 250px; z-index: 1;
+}
+
+#menuContents { border: 0px red solid; height: 100%; margin: 0; padding: 0 0 0 15px; overflow: auto; }
+
+
+
+@media screen and (max-height: 450px) {
+	.menu {padding-top: 15px;}
+	.menu a {font-size: 18px;}
+}
+
+
+/* specials for this project */
+
+.breakout { background-repeat:no-repeat; background-size:100% 100%; text-align:center; margin-left:-100%; margin-right:-100%; }
+
+/*
+
+// Put in Markdown file
+
+	<div class="breakout" style=background-image:url("https://lorempixel.com/1000/500");height:500px; >breakout image</div>
+*/
+
+.button { background-color: #bbb; border: 1px solid #eee; color: #fff; display: inline-block; padding: 8px; vertical-align: middle; }
+
+
+</style>
+
+</head>
+
+<script src = "https://cdn.rawgit.com/showdownjs/showdown/master/dist/showdown.min.js" ></script>
+
+<body>
+
+	<div id = "menu" >
+
+	<div id = "menuContents" class = "menu" ></div>
+
+	</div>
+
+	<div id = "main" >
+
+		<div id = "mainContents" class = "center" ></div>
+
+	</div>
+
+
+	<div id = "hamburger" onclick = "toggleNav();" > &#9776; slide</div>
+
+
+	<div id = "butEditFile" onclick = "onclickEditButton();" title = "Update this file on GitHub" ><img src = "https://status.github.com/images/invertocat.png" > Edit this file</div>
+
+<!--
+
+	<div id = "butEditFile" onclick = "onclickEditButton();" title = "Update this file on Glitch" ><img src = "https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Flogo-day.svg" > Edit this file</div>
+
+-->
+<script>
+
+  let projectName = 'theo-armour';
+
+
+	init();
+
+
+	function init() {
+
+		showdown.setFlavor( 'github' );
+
+		requestFile( 'menu.md', menuContents );
+
+		onHashChange();
+
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		onWindowResize();
+
+	}
+
+
+
+	function onHashChange() {
+
+		let url, target;
+
+		url = location.hash.slice( 1 );
+
+//		document.title = url.split( '/' ).pop();
+
+		title = url.split( '/' ).pop().replace( /-|.md|.html/g, ' ' );;
+
+		document.title = title ? title + ' - ' + projectName : 'README - ' + projectName;
+
+		if ( !url ) {
+
+			url = 'README.md';
+
+			requestFile( url, mainContents );
+
+		} else if ( url.startsWith( 'menu' ) ) {
+
+			menu.innerHTML = '<div id=menuContents class=menu ></div>';
+
+			requestFile( url, menuContents );
+
+		} else if ( url.startsWith( 'html' ) ) {
+
+			menu.innerHTML = '<iframe id=menuIframe class=ifr src=' + url + ' ></iframe>';
+
+		} else if ( url.endsWith( '.md' ) ) {
+
+			main.innerHTML = '<div id=mainContents class=center ></div>';
+
+			main.style.overflow = 'auto';
+
+			requestFile( url, mainContents );
+
+		} else if ( url.includes( '.html' ) ) {
+
+			main.innerHTML = '<iframe id=mainIframe class=ifr src=' + url + ' ></iframe>';
+
+			main.style.overflow = 'hidden';
+
+		} else {
+
+			mainIframe.contentWindow.location.hash = url;
+			menuIframe.contentWindow.location.hash = url;
+
+		}
+
+	}
+
+
+
+	function onWindowResize(){
+
+		if ( window.innerWidth < 1000 ) {
+
+			butEditFile.style.display = 'none';
+			hamburger.innerHTML = '&#9776;';
+
+		} else {
+
+			butEditFile.style.display = '';
+			hamburger.innerHTML = '&#9776; slide';
+
+		}
+
+	}
+
+
+
+	function onclickEditButton(){
+
+//		window.open( 'https://glitch.com/edit/#!/' + projectName + '?path=' + location.hash.slice( 1 ) );
+
+		let file = location.hash.slice( 1 ) ? location.hash.slice( 1 ) : 'README.md';
+
+ 		window.open( 'https://github.com/' + projectName + '/' + projectName + '.github.io/blob/master/' + file );
+
+	}
+
+
+
+	function toggleNav() {
+
+		if ( !menu.style.width || menu.style.width === '250px' ) {
+
+			menu.style.width = '0';
+			hamburger.style.left = '0';
+			main.style.marginLeft = '0';
+
+		} else {
+
+			menu.style.width = '250px';
+			hamburger.style.left = '250px';
+			main.style.marginLeft = '250px';
+
+		}
+
+	}
+
+
+
+	function requestFile( url, target ) {
+
+		let converter, xhr;
+
+		converter = new showdown.Converter();
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url, true );
+		xhr.onload = function() {
+
+			target.innerHTML = converter.makeHtml( xhr.responseText );
+
+		};
+
+		xhr.send( null );
+
+	}
+
+
+</script>
+</body>
+</html>
