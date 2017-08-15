@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = description content = 'Basic HTML template' >
+<meta name = keywords content='JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name = date content='2017-08-01' >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+
+/*	#menu { margin: 0 20px; max-width: 500px; position: absolute; } */
+	#contents { width: 800px; height: 500px; }
+	img( display: none; }
+</style>
+</head>
+<body>
+
+	<div id = "menu" >
+		<div id = "header" ><h1><a id = "title" href = "" ></a></h1></div>
+		<p><button onclick=saveFile(); >Save File</button></p>
+		<div id = "log" ></div><br>
+		<div id = "empty" ></div>
+		<hr>
+		<div id = "contents" ></div>
+	</div>
+
+<script>
+
+	let fileName;
+
+	let count = 1;
+
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		let txt;
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		title.innerHTML = location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' );
+		contents.innerHTML = '';
+
+		fileName = 'https://crossorigin.me/https://www.conftool.pro/bs2017/index.php?page=browseSessions&form_session=' + count;
+
+		requestFile( fileName );
+
+	}
+
+
+
+	function requestFile( fileName ) {
+
+		let xhr;
+
+		var broken = [ 
+
+			3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 50, 51, 52, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 74, 76, 77, 78, 79, 80, 81, 82, 84, 85, 86, 87, 88, 89, 91, 92, 93, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 111, 112, 113, 114, 115, 116, 118, 119, 120, 124, 126, 128, 131, 133, 134, 137, 139, 140, 142, 144, 145, 146, 147, 148, 152, 156, 159, 160, 162, 167, 169, 172, 175, 176, 178, 180, 182, 190, 223, 249, 256, 257, 261, 262, 263, 264, 265, 266, 267, 268, 272, 274, 277, 278, 279, 281, 282, 283, 284, 285, 286, 287, 289, 290,
+
+		];
+
+
+		if ( broken.indexOf( count ) !== -1 && count < 300 ) { 
+
+			empty.innerHTML += count + ', ';
+
+			count++;
+
+			fileName = 'https://crossorigin.me/https://www.conftool.pro/bs2017/index.php?page=browseSessions&form_session=' + count;
+
+			requestFile( fileName );
+
+		} else {
+ 
+			xhr = new XMLHttpRequest();
+			xhr.crossOrigin = 'anonymous';
+			xhr.open( 'GET', fileName, true );
+			xhr.onerror = function( xhr ) { console.log( 'error', xhr  ); };
+			xhr.onprogress = function( xhr ) { console.log( 'items', xhr.loaded  ); }; /// or something
+			xhr.onload = callback;
+			xhr.send( null );
+
+		}
+
+		function callback( xhr ) {
+
+			let response, dom, sizer ;
+
+			response = xhr.target.response;
+
+			let doc = new DOMParser().parseFromString( response, 'text/html');
+
+			dom = doc.getElementsByTagName( 'table' );
+
+			if ( dom[ 3 ].innerHTML !== '' ) {
+
+				sizer = doc.getElementById( 'sizer' );
+
+				if ( sizer ) { sizer.style.display = 'none'; }
+
+				log.innerHTML += count + ', ';
+
+				url = 'https://www.conftool.pro/bs2017/index.php?page=browseSessions&form_session=' + count;
+
+				contents.innerHTML += 
+					'<h3>' + ('link to session ID ' + count ).link( url )  + '</h3>' +
+					dom[ 3 ].innerHTML + '<hr><br>';
+
+console.log( 'have data', count, dom );
+
+			} else {
+
+console.log( 'no data', count, dom );
+
+			}
+
+			count++;
+
+			if ( count < 300 ) {
+
+				fileName = 'https://crossorigin.me/https://www.conftool.pro/bs2017/index.php?page=browseSessions&form_session=' + count;
+
+				try {
+				requestFile( fileName );
+
+				}
+				catch ( error ) {
+
+console.log( 'requestFile', error );
+
+				}
+
+			}
+
+		}
+
+
+
+
+		function callbackTemplate( xhr ) {
+
+// https://stackoverflow.com/questions/494143/creating-a-new-dom-element-from-an-html-string-using-built-in-dom-methods-or-pro
+// uses template tag
+
+			let response, text, lines;
+
+			response = xhr.target.response;
+
+			template = document.createElement('template');
+			template.innerHTML = response;
+
+			contents.innerHTML = template.content.childNodes;;
+
+//			text = JSON.parse( response );
+
+console.log( '', template, template.content.childNodes );
+/*
+// or
+//			lines = response.split(/\r\n|\n/);
+			lines = response.split( '\n' ).map( function( line ) { return line.split( ',' ); } );
+
+			console.log( 'line 8',lines[ 8 ] );
+			console.log( 'length', lines.length );
+
+//			lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
+			console.log( xhr.target.getResponseHeader ( "Last-Modified" ) );
+*/
+
+		}
+
+
+	}
+
+	function saveFile() {
+
+		var blob = new Blob( [ contents.innerHTML ] );
+		var a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = 'sessions-building-simulation-2017.html';
+		a.click();
+//		delete a;
+		a = null;
+
+	}
+
+</script>
+</body>
+</html>

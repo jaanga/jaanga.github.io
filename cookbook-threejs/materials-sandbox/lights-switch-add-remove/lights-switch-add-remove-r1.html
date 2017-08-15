@@ -11,6 +11,9 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script>
 
+
+// https://threejs.org/docs/
+
 	var css, menu, stats, renderer, scene, camera, controls;
 	var lightAmbient, lightDirectional, lightPoint;
 	var geometry, material, mesh, helper;
@@ -176,19 +179,49 @@
 
 	}
 
+
+
 	function listLights() {
 
 		var index = 0;
 
 		scene.traverse( function ( child ) {
 
-			if ( child instanceof THREE.AmbientLight || child instanceof THREE.AreaLight || child instanceof THREE.DirectionalLight ||
-				child instanceof THREE.HemisphereLight || child instanceof THREE.PointLight || child instanceof THREE.SpotLight ) {
+			if ( child instanceof THREE.AmbientLight || 
+//				child instanceof THREE.AreaLight || 
+				child instanceof THREE.DirectionalLight ||
+				child instanceof THREE.HemisphereLight || 
+				child instanceof THREE.PointLight || 
+				child instanceof THREE.SpotLight ) {
 
 				info.innerHTML += ++index + '. ' + child.type + ' id: ' + child.id + '<br>';
 
 			}
 		} );
+
+		if ( index === 0 ) { info.innerHTML += 'No lights'; }
+
+	}
+
+
+
+	function addShadows() {
+
+// 2017-01-02 ~ http://jaanga.github.io/cookbook-threejs/templates/add-lights/template-threejs-lights-r3.html
+
+		renderer.shadowMap.enabled = true;
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.castShadow = true
+				child.receiveShadow = true;
+
+			}
+
+		} );
+
 
 	}
 
@@ -225,12 +258,33 @@
 
 	}
 
+
+
 	function addAmbientLight() {
 
 		lightAmbient = new THREE.AmbientLight( 0x444444 );
 		scene.add( lightAmbient );
 
 	}
+
+
+	function addPointLight() {
+
+		lightPoint = new THREE.PointLight( 0xffffff, 0.25 );
+		camera.add( lightPoint );
+		lightPoint.position = new THREE.Vector3( 0, 0 , 1 );
+
+		scene.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Mesh ) {
+
+				child.material.needsUpdate = true;
+			}
+
+		} );
+
+	}
+
 
 
 	function addDirectionalLight() {
@@ -272,21 +326,7 @@
 
 	}
 
-	function addPointLight() {
 
-		lightPoint = new THREE.PointLight( 0xffffff, 0.25 );
-		camera.add( lightPoint );
-		lightPoint.position = new THREE.Vector3( 0, 0 , 1 );
-
-		scene.traverse( function ( child ) {
-
-			if ( child instanceof THREE.Mesh ) {
-
-				child.material.needsUpdate = true;
-			}
-
-		} );
-	}
 
 	function animate( timestamp ) {
 
