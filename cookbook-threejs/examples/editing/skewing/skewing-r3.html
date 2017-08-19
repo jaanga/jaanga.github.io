@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<title></title>
+<meta name = description content = 'Basic HTML template with basic slide in and slide out menu with three bar icon that adjusts for small screen size' >
+<meta name = keywords content='JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name = date content='2017-08-01' >
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	#menu { position: absolute; margin-left: 20px; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "menu" >
+		<div id = "title" ></div>
+		<div id = "contents" ></div>
+		<p><a href="javascript:(function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='https://rawgit.com/mrdoob/stats.js/master/build/stats.min.js';document.head.appendChild(script);})()" title="Mr.doob's Stats.js" >Show fps statistics</a></p>
+		<p>X <input type = "range" id = "inpX" min = "-1" max = "1" step = "0.0001" onclick = "updateCubeSkew();" ></p>
+		<p>Y <input type = "range" id = "inpY" min = "-1" max = "1" step = "0.0001" onclick = "updateCubeSkew();" ></p>
+		<p>Z <input type = "range" id = "inpZ" min = "-1" max = "1" step = "0.0001" onclick = "updateCubeSkew();" ></p>
+		<p><button onclick=skewing=!skewing; >toggle skewing</button></p>
+	</div>
+
+<script>
+
+	let skewing = false;
+
+	let X = 0;
+	let Y = 0;
+	let Z = 0;
+
+	let target;
+
+	let renderer, camera, controls, scene;
+	let geometryCube, geometryShape, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		let axisHelper = new THREE.AxisHelper( 100 );
+		scene.add( axisHelper );
+
+		material = new THREE.MeshNormalMaterial();
+
+		geometry = createCube();
+		target = new THREE.Mesh( geometry, material );
+		scene.add( target );
+
+
+		geometryCube = createCube( 50 );
+		cube = new THREE.Mesh( geometryCube.clone(), material );
+		scene.add( cube );
+
+		geometryShape = addShape();
+		shape = new THREE.Mesh( geometryShape.clone(), material );
+		scene.add( shape );
+
+	}
+
+
+	function createCube( size = 2 ) {
+
+		let geometry;
+
+		geometry = new THREE.BoxGeometry( size, size, size );
+
+		return geometry;
+
+	}
+
+	function addShape() {
+
+		let shape, hole;
+		let geometry, mesh;
+		let v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+//		shape = new THREE.Shape( [ v2( 0, 10), v2( 0, 50), v2( 30, 60), v2( 40, 10) ] );
+
+		shape = new THREE.Shape( [
+
+			v2( 0, 0 ), v2( 0, 50 ), v2( 10, 50 ), v2( 10, 30 ), v2( 50, 30 ), v2( 50, 20 ) , v2( 10, 20 ), v2( 10, 0 )
+
+		] );
+
+		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: 50 } );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( -30, 0, -30 ) );
+
+		return geometry;
+
+	}
+
+
+
+	function updateMeshSkewCenter() {
+
+		let geom, matrix;
+		let x, y, z;
+
+		x = parseFloat( inpX.value );
+		y = 0; //parseFloat( inpY.value );
+		z = parseFloat( inpZ.value );
+
+		let Syx = 0,
+			Szx = 0,
+			Sxy = 0,
+			Szy = 0,
+			Sxz = 0,
+			Syz = 0;
+
+
+		Syx = x;
+		Syz = z;
+
+		Tx = 0.5 * target.position.x;
+		Tz = 0.5 * target.position.z;
+
+		matrix = new THREE.Matrix4();
+
+		matrix.set(	  1,   Syx,  Szx,  Tx,
+					Sxy,     1,  Szy,  25,
+					Sxz,   Syz,   1,   Tz,
+					  0,     0,   0,   1  );
+
+//console.log( '', matrix.elements );
+
+		geom = geometryCube.clone(); // new THREE.BoxGeometry( 50, 50, 50 );
+		geom.applyMatrix( matrix );
+
+		scene.remove( cube );
+		cube.geometry.dispose();
+		cube = new THREE.Mesh( geom, material );
+		scene.add( cube );
+
+	}
+
+
+
+	function updateMeshSkewBottom() {
+
+		let geom, matrix;
+		let x, y, z;
+
+		x = parseFloat( inpX.value );
+		y = 0; //parseFloat( inpY.value );
+		z = parseFloat( inpZ.value );
+
+		let Syx = 0,
+			Szx = 0,
+			Sxy = 0,
+			Szy = 0,
+			Sxz = 0,
+			Syz = 0;
+
+
+		Syx = x;
+		Syz = z;
+
+		Tx = 0; //0.5 * target.position.x;
+		Tz = 0; ; 0.5 * target.position.z;
+
+		matrix = new THREE.Matrix4();
+
+		matrix.set(	  1,   Syx,  Szx,  Tx,
+					Sxy,     1,  Szy,  0,
+					Sxz,   Syz,   1,   Tz,
+					  0,     0,   0,   1  );
+
+//console.log( '', matrix.elements );
+
+		geom = geometryShape.clone(); // new THREE.BoxGeometry( 50, 50, 50 );
+		geom.applyMatrix( matrix );
+
+		scene.remove( shape );
+		shape.geometry.dispose();
+		shape = new THREE.Mesh( geom, material );
+		scene.add( shape );
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+
+		if ( !skewing ) { return; }
+
+		X += 0.01;
+		Z += 0.01;
+
+		target.position.x = 50 * Math.cos( X );
+		target.position.z = 50 * Math.sin( Z );
+
+		inpX.value = Math.cos( X );
+//		inpY.value = Math.sin( Y );
+		inpZ.value = Math.sin( Z );
+
+		updateMeshSkewBottom();
+		updateMeshSkewCenter();
+
+//contents.innerHTML = cube.position.x
+
+	}
+
+
+</script>
+</body>
+</html>
