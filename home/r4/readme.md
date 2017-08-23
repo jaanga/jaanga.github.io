@@ -209,7 +209,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 
 <center title='This is called a dingbat. It indicates the end of things. Bye for now...' >
 
-[GRE Question of the Day]( https://www.grequestionaday.com/ )
+[GRE Question of the Day]( http://www.grequestionaday.com/ )
 
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
