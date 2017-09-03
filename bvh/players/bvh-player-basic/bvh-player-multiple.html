@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="3D in your browser" >
+<meta name=description content="Dancing in the streets" >
 <meta name = "keywords" content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2017-08-01" >
 <title></title>
@@ -26,15 +26,11 @@
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/loaders/BVHLoader.js" ></script>
 <script>
 
-
+	let files = [];
 	let bvh;
 	let count = 0;
 	let frame = 0;
 	let framesLength;
-	let index = 0;
-
-	let bones;
-
 
 	let renderer, camera, controls, scene;
 	let geometry, material, mesh;
@@ -43,29 +39,25 @@
 	animate();
 
 
-
 	var loader = new THREE.BVHLoader();
 
-//	loader.load( "pirouette.bvh", function( result ) {
-//	loader.load( "../../data/perfume/aachan.bvh", function( result ) {
-//	loader.load( "../../data/perfume/kashiyuka.bvh", function( result ) {
-	loader.load( "../../data/perfume/nocchi.bvh", function( result ) {
+//	loader.load( "pirouette.bvh", callbackLoader );
+
+	loader.load( "../../data/perfume/aachan.bvh", callbackLoader );
+	loader.load( "../../data/perfume/kashiyuka.bvh",callbackLoader );
+	loader.load( "../../data/perfume/nocchi.bvh", callbackLoader );
+
+
+	function callbackLoader( result ) {
 
 console.log( 'result', result  );
 
 		bvh = result;
+		bvh.character = parseData( bvh );
+		scene.add ( bvh.character );
+		files.push( bvh );
 
-		parseData ( bvh.skeleton.bones );
-
-		bones = bvh.skeleton.bones;
-		tracks = bvh.clip.tracks;
-
-		framesLength = tracks[ 0 ].times.length;
-
-		setFrameBVH( 0 );
-
-	} );
-
+	}
 
 
 	function init() {
@@ -92,35 +84,32 @@ console.log( 'result', result  );
 		let axisHelper = new THREE.AxisHelper( 500 );
 		scene.add( axisHelper );
 
-//		geometry = new THREE.BoxGeometry( 50, 50, 50 );
-//		material = new THREE.MeshNormalMaterial();
-//		mesh = new THREE.Mesh( geometry, material );
-
-//		scene.add( mesh );
-
 	}
 
 
 
-	function parseData ( bones ) {
+	function parseData ( bvh ) {
 
-		const origin = new THREE.Vector3( 0, 0, 0 )
-		for ( var i = 0; i < bones.length; i++ ) {
+		const character = new THREE.Object3D();
+		const bones = bvh.skeleton.bones;
+		const origin = new THREE.Vector3( 0, 0, 0 );
+		const geometrySphere  = new THREE.SphereGeometry( 6 );
+		const material = new THREE.MeshNormalMaterial();
+		const materialLine = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		let geometry, line, midpoint, length, mesh;
 
-			var bone = bones[ i ];
+		for ( let bone of bones ) {
 
-			geometry = new THREE.SphereGeometry( 6 );
-			bone.mesh = new THREE.Mesh( geometry, material );
+			bone.mesh = new THREE.Mesh( geometrySphere, material );
 			bone.mesh.position.copy( bone.position );
 
 			if ( bone.parent ) {
 
 				bone.parent.mesh.add( bone.mesh );
 
-				var geometry = new THREE.Geometry();
+				geometry = new THREE.Geometry();
 				geometry.vertices = [ origin, bone.position ];
-				material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-				line = new THREE.Line( geometry, material );
+				line = new THREE.Line( geometry, materialLine );
 				bone.parent.mesh.add( line );
 
 				line.geometry.computeBoundingSphere();
@@ -129,7 +118,7 @@ console.log( 'result', result  );
 
 				geometry = new THREE.CylinderGeometry(6, 6, length );
 				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
-				material = new THREE.MeshNormalMaterial();
+
 				mesh = new THREE.Mesh( geometry, material );
 				mesh.position.copy( midpoint );
 				mesh.lookAt( origin );
@@ -137,34 +126,38 @@ console.log( 'result', result  );
 
 			} else {
 
-				scene.add( bone.mesh );
+				character.add( bone.mesh );
 
 			}
 
 		}
 
+		return character;
+
 	}
 
 
 
-	function setFrameBVH( frame ){
+	function setFrameBVH( bvh, frame ){
 
 		let track, bone, index;
+		const tracks = bvh.clip.tracks;
+		const bones = bvh.skeleton.bones;
+
+		bvh.framesLength = tracks[ 0 ].times.length;
+
 
 		for ( let i = 0; i < tracks.length; i++ ) {
 
 			track = tracks[ i ];
 
-			bone = bones.find(  function( bone ) { return bone.name === track.name.slice( 7 ).replace( /].(.*?)ion/, '' ); } );
+			bone = bones.find( function( bone ) { return bone.name === track.name.slice( 7 ).replace( /].(.*?)ion/, '' ); } );
 
 			if ( track.name.endsWith( 'quaternion' ) ) {
 
 				index = 4 * frame;
 				quaternion = new THREE.Quaternion( track.values[ index++ ], track.values[ index++ ], track.values[ index++ ], track.values[ index ] );
 				bone.mesh.setRotationFromQuaternion( quaternion );
-
-//console.log( '', bone.name, track.name );
-// console.log( '', bone.name, track );
 
 			} else if ( i === 0 ) {
 
@@ -175,9 +168,8 @@ console.log( 'result', result  );
 
 		}
 
-//console.log( '', track );
-
 	}
+
 
 
 	function onWindowResize() {
@@ -190,6 +182,7 @@ console.log( 'result', result  );
 	}
 
 
+
 	function animate() {
 
 		requestAnimationFrame( animate );
@@ -197,16 +190,21 @@ console.log( 'result', result  );
 
 		count++;
 
-		if ( bvh && count % 1 === 0 ) {
+		if ( files.length && count % 3 === 0 ) {
 
-			setFrameBVH( frame );
+			for ( let bvh of files ) {
 
-			frame++;
-			frame = frame < framesLength ? frame : 0;
+				setFrameBVH( bvh, frame );
+				frame++;
+				frame = frame < bvh.framesLength ? frame : 0;
+
+			}
 
 		}
 
 	}
+
+
 
 </script>
 </body>

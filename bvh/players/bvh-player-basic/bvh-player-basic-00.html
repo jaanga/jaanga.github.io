@@ -26,16 +26,12 @@
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/loaders/BVHLoader.js" ></script>
 <script>
 
-
 	let bvh;
 	let count = 0;
 	let frame = 0;
-	let framesLength;
+	let framesLength
 	let index = 0;
-
 	let bones;
-
-
 	let renderer, camera, controls, scene;
 	let geometry, material, mesh;
 
@@ -46,10 +42,11 @@
 
 	var loader = new THREE.BVHLoader();
 
-//	loader.load( "pirouette.bvh", function( result ) {
+	loader.load( "pirouette.bvh", function( result ) {
+
 //	loader.load( "../../data/perfume/aachan.bvh", function( result ) {
 //	loader.load( "../../data/perfume/kashiyuka.bvh", function( result ) {
-	loader.load( "../../data/perfume/nocchi.bvh", function( result ) {
+//	loader.load( "../../data/perfume/nocchi.bvh", function( result ) {
 
 console.log( 'result', result  );
 
@@ -109,35 +106,29 @@ console.log( 'result', result  );
 
 			var bone = bones[ i ];
 
-			geometry = new THREE.SphereGeometry( 6 );
+			length = bone.position.length();
+			geometry = new THREE.CubeGeometry( 2, 2, 2 );
+
+			material = new THREE.MeshNormalMaterial();
 			bone.mesh = new THREE.Mesh( geometry, material );
+			bone.mesh.position.copy( bone.position );
+
+			bone.obj = new THREE.Object3D();
 			bone.mesh.position.copy( bone.position );
 
 			if ( bone.parent ) {
 
-				bone.parent.mesh.add( bone.mesh );
+				bone.parent.mesh.add( bone.mesh ) 
 
 				var geometry = new THREE.Geometry();
-				geometry.vertices = [ origin, bone.position ];
+				geometry.vertices = [ bone.mesh.position, origin ];
 				material = new THREE.LineBasicMaterial( { color: 0x000000 } );
 				line = new THREE.Line( geometry, material );
 				bone.parent.mesh.add( line );
 
-				line.geometry.computeBoundingSphere();
-				midpoint = line.geometry.boundingSphere.center;
-				length = 2 * line.geometry.boundingSphere.radius
-
-				geometry = new THREE.CylinderGeometry(6, 6, length );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
-				material = new THREE.MeshNormalMaterial();
-				mesh = new THREE.Mesh( geometry, material );
-				mesh.position.copy( midpoint );
-				mesh.lookAt( origin );
-				bone.parent.mesh.add( mesh );
-
 			} else {
 
-				scene.add( bone.mesh );
+				scene.add( bone.mesh, bone.obj );
 
 			}
 
@@ -166,7 +157,7 @@ console.log( 'result', result  );
 //console.log( '', bone.name, track.name );
 // console.log( '', bone.name, track );
 
-			} else if ( i === 0 ) {
+			} else if ( track.name ===  ".bones[hip].position" ) {
 
 				index = 3 * frame;
 				bone.mesh.position.set( track.values[ index++ ], track.values[ index++ ], track.values[ index ] );
