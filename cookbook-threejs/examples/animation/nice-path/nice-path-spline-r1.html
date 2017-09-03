@@ -157,7 +157,11 @@
 
 		for ( var i = 0; i < 2 * segments * Math.PI; i++ ) {
 
-			vertices.push( v( Math.sin( i * 7 / segments ) * 30, Math.cos( i * 3 / segments  ) * 30, Math.sin( i * 2 / segments  ) * 30 ) );
+			vertices.push( v( 
+				Math.sin( i * 7 / segments ) * 30, 
+				Math.cos( i * 3 / segments  ) * 30, 
+				Math.sin( i * 2 / segments  ) * 30 ) 
+			);
 
 		}
 
