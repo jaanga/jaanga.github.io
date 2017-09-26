@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<statuses>
+	<status>
+		<id>1</id>
+		<text>Example message 1</text>
+		<created_at>Thu Sep 15 00:01:00 +0000 2011</created_at>
+	</status>
+	<status>
+		<id>2</id>
+		<text>Example message 2</text>
+		<created_at>Thu Sep 15 00:02:00 +0000 2011</created_at>
+	</status>
+	<status>
+		<id>3</id>
+		<text>Example message 3</text>
+		<created_at>Thu Sep 15 00:03:00 +0000 2011</created_at>
+	</status>
+</statuses>

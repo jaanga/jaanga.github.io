@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-09-17" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; height: 100%; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus{ color: #f1f1f1; }
+
+	#txtContents { height: 800px; width: 100%; }
+/*	#menu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "header" >
+		<div id = "title" ></div>
+		<div id = "divInfo" ></div>
+		<div id = "contents" ></div>
+		<textarea id = "txtContents" ></textarea>
+	</div>
+
+	<div id = "menu" ></div>
+
+<script>
+
+	const url = 'rectangular-20x50x4.xml';
+
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		let txt;
+
+		title.innerHTML = '<h2><a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a></h2>';
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+//		contents.innerHTML = txt;
+
+		requestFile( url, callbackGbXML );
+
+	}
+
+
+
+	function callbackGbXML( xhr ) {
+
+		let response, parser, xmldoc, json;
+
+		response = xhr.target.responseXML.documentElement;
+//console.log( 'response, response);
+
+		json = XML2jsobj( response );
+console.log( 'json', json );
+
+		txtContents.value = JSON.stringify( json, null, 4 );
+
+	}
+
+
+
+	function XML2jsobj( node ) {
+
+		var	data = {};
+
+// append a value
+		function Add( name, value ) {
+
+			if ( data[ name ] ) {
+
+				if ( data[ name ].constructor != Array ) {
+
+					data[ name ] = [ data[ name ] ];
+
+				}
+
+				data[ name ][ data[ name ].length ] = value;
+
+			} else {
+
+				data[ name ] = value;
+
+			}
+
+		};
+
+// element attributes
+		var c, cn;
+
+		for ( c = 0; cn = node.attributes[ c ]; c++ ) {
+
+			Add( cn.name, cn.value );
+
+		}
+
+// child elements
+		for ( c = 0; cn = node.childNodes[ c ]; c++ ) {
+
+			if ( cn.nodeType === 1 ) {
+
+				if ( cn.childNodes.length === 1 && cn.firstChild.nodeType === 3 ) {
+
+// text value
+					Add( cn.nodeName, cn.firstChild.nodeValue );
+
+				} else {
+// sub-object
+					Add( cn.nodeName, XML2jsobj( cn ) );
+
+				}
+
+			}
+
+		}
+
+		return data;
+
+	}
+
+
+
+	function requestFile( url, callback ) {
+
+		let xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+		xhr.onprogress = function( xhr ) { divInfo.innerHTML = 'bytes loaded: ' + xhr.loaded.toLocaleString(); }; /// or something
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+</script>
+</body>
+</html>

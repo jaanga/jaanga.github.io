@@ -14,15 +14,8 @@
 
 	var info, stats, renderer, scene, camera, controls;
 
-	var frequency1 = 0.05, 
-	frequency2 = 0.05, 
-	frequency3 = 0.05, 
-	phase1 = 0, 
-	phase2 = 2, // 2 * Math.PI / 3, 
-	phase3 = 4, // 4 * Math.PI / 3 , 
-	center = 128; //255 / 2, 
-	amplitude = 127; // / 2;
-	var sin = function( n ) { return Math.sin( n ); };
+	var v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); }
+
 
 	init();
 	animate();
@@ -69,26 +62,26 @@
 
 // ground box
 		var position, elevation, r, g, b
-		for (var i = 0; i < 300; i++) {
+
+		for (var i = 0; i < 800; i++) {
 
 			position = v( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
 
 			elevation = position.y; 
-			r = parseInt( sin( frequency1 * elevation + phase1 ) * amplitude + center, 10).toString(16);
-			g = parseInt( sin( frequency2 * elevation + phase2 ) * amplitude + center, 10).toString(16);
-			b = parseInt( sin( frequency3 * elevation + phase3 ) * amplitude + center, 10).toString(16);
 
-			geometry = new THREE.BoxGeometry( 2, 2, 2 );
-			material = new THREE.MeshLambertMaterial();
-			material.color.setHex( '0x' + r + g + b );
+			geometry = new THREE.SphereBufferGeometry( 2 );
+			color = new THREE.Color( 0xffffff );
+			color.setHSL( ( position.y + 50 ) / 100, 1, 0.5 );
+			material = new THREE.MeshPhongMaterial( { color: color } );
+
 
 			mesh = new THREE.Mesh( geometry, material );
-			mesh.position.set( position.x, position.y, position.z );
+			mesh.position.copy( position );
+
 			scene.add( mesh );
 		} 
 	}
 
-	function v( x, y, z ){ return new THREE.Vector3( x, y, z ); }
 
 	function animate() {
 		requestAnimationFrame( animate );
