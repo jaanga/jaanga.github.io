@@ -106,7 +106,7 @@ The value of an email mailing list includes:
 * Data including attachments - can last for a long time / forever
 * Users can choose how and when to receive messages
 * User fallibilities are mitigated
-* Admins can control access and stop spamming and trolling
+* Admins can control access. stop spamming and trolling
 
 
 Normal email traffic has *none* of these benefits
@@ -153,7 +153,7 @@ GitHub offers
 
 The average endeavor in 2013 uses email, transfers documents electronically and may even share a calendar.
 
-A fully-performing in terms of technology endeavor runs circles around the average endeavor in terms of speed, productivity and quality.
+A fully-performing in terms of technology endeavor runs circles around the average endeavor in terms of speed. manpower and quality.
 
 Trying to explain to one of the types the vagaries of the other type is beyond my skill set.
 
@@ -245,7 +245,7 @@ adding value is adding meaning
 ### Solutions/Tools
 
 * Meet-ups, get-togethers and wonderful parties
-* Make certain that work is resume-able
+* Make certain that eork is resume-able
 	* People can have assigned tasks
 	* Good works are recorded for posterity.
 	* Interesting work is lauded.
