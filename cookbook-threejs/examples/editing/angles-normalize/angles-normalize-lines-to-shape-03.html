@@ -40,7 +40,6 @@
 				<button onclick=drawShape() >2. draw shape</button>
 
 				<button onclick=drawShapeSinglePass(); >drawShapeSinglePass</button>
-				<button onclick=drawShapeSinglePassObjects(); >drawShapeSinglePass Objects</button>
 		</div>
 
 	</div>
@@ -311,39 +310,6 @@
 		scene.remove( line );
 
 		line = lineOriginal;
-
-	}
-
-
-	function drawShapeSinglePassObjects() {
-
-		vertices = verticesOne;
-
-		const plane = new THREE.Plane().setFromCoplanarPoints ( vertices[ 0 ], vertices[ 1 ], vertices[ 2 ] );
-
-		const obj = new THREE.Object3D();
-		obj.lookAt( plane.normal );
-
-		const obj2 = new THREE.Object3D();
-
-		obj2.quaternion.copy( obj.clone().quaternion.conjugate() );
-		obj2.updateMatrixWorld( true );
-
-		for ( let vertex of vertices ) {
-
-			obj2.localToWorld( vertex );
-
-		}
-
-		shape = new THREE.Shape( vertices );
-		const geometry = new THREE.ShapeGeometry( shape );
-		const material = new THREE.MeshNormalMaterial( { side: 2 } );
-		shape = new THREE.Mesh( geometry, material );
-
-		shape.quaternion.copy( obj.quaternion );
-		shape.position.copy( plane.normal.multiplyScalar( - plane.constant ) );
-
-		scene.add( shape );
 
 	}
 

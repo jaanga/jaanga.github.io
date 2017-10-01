@@ -70,14 +70,14 @@ console.log( 'json', json );
 
 	function XML2jsobj( node ) {
 
-		let	data = {};
+		var	data = {};
 
 // append a value
 		function Add( name, value ) {
 
 			if ( data[ name ] ) {
 
-				if ( data[ name ].constructor !== Array ) {
+				if ( data[ name ].constructor != Array ) {
 
 					data[ name ] = [ data[ name ] ];
 
@@ -94,27 +94,27 @@ console.log( 'json', json );
 		};
 
 // element attributes
-		let child, childNode;
+		var c, cn;
 
-		for ( child = 0; childNode = node.attributes[ child ]; child++ ) {
+		for ( c = 0; cn = node.attributes[ c ]; c++ ) {
 
-			Add( childNode.name, childNode.value );
+			Add( cn.name, cn.value );
 
 		}
 
 // child elements
-		for ( child = 0; childNode = node.childNodes[ child ]; child++ ) {
+		for ( c = 0; cn = node.childNodes[ c ]; c++ ) {
 
-			if ( childNode.nodeType === 1 ) {
+			if ( cn.nodeType === 1 ) {
 
-				if ( childNode.childNodes.length === 1 && childNode.firstChild.nodeType === 3 ) {
+				if ( cn.childNodes.length === 1 && cn.firstChild.nodeType === 3 ) {
 
 // text value
-					Add( childNode.nodeName, childNode.firstChild.nodeValue );
+					Add( cn.nodeName, cn.firstChild.nodeValue );
 
 				} else {
 // sub-object
-					Add( childNode.nodeName, XML2jsobj( childNode ) );
+					Add( cn.nodeName, XML2jsobj( cn ) );
 
 				}
 
