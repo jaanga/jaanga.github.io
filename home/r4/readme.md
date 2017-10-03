@@ -77,7 +77,7 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 </div>
 
 <div class=figure >
-<a href=http://jaanga.github.io/algesurf >
+<a href=http://webmath.github.io/algesurf >
 <img src=http://jaanga.github.io/home/images/2-Algesurf.png >
 <h2>algeSurf</h2></a> 2015
 <li>Mathematics with a 3D perspective
