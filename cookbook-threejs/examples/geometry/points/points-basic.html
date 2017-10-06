@@ -33,6 +33,7 @@
 // https://threejs.org/docs/#api/materials/PointsMaterial
 // points are alway square
 //https://github.com/mrdoob/three.js/issues/11157
+
 	var renderer, camera, controls, scene;
 	var geometry, material, mesh;
 
@@ -45,7 +46,6 @@
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-
 
 		document.body.appendChild( renderer.domElement );
 
@@ -80,7 +80,9 @@
 
 		scene.add( mesh );
 
+
 // example 1 images
+
 		textureLoader = new THREE.TextureLoader();
 
 		for ( var i = 1; i < 16; i++ ) {
@@ -95,6 +97,7 @@
 			scene.add( points );
 
 		}
+
 
 // example 2 text
 
