@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="3D in your browser" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-08-01" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	#menu { position: absolute; text-align: center; width: 100%; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "menu" >
+
+		<div id = "title" ></div>
+		<div id = "contents" >points are very very square</div>
+
+	</div>
+
+<script>
+// https://threejs.org/docs/#api/objects/Points
+// https://threejs.org/docs/#api/materials/PointsMaterial
+// points are alway square
+//https://github.com/mrdoob/three.js/issues/11157
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, 100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		const ambient = new THREE.AmbientLight( 0x444444 );
+		scene.add( ambient );
+
+		const directionalLight = new THREE.DirectionalLight( 0xffeedd );
+		directionalLight.position.set( 0, 0, 1 ).normalize();
+		scene.add( directionalLight );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		const axisHelper = new THREE.AxesHelper( 50 );
+		scene.add( axisHelper );
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+
+		scene.add( mesh );
+
+// example 1 images
+		textureLoader = new THREE.TextureLoader();
+
+		for ( var i = 1; i < 16; i++ ) {
+
+			sprite = textureLoader.load( '../../../textures/im' + i + '.jpg' );
+			geometry = new THREE.Geometry();
+			geometry.vertices = [ new THREE.Vector3( 50 * Math.cos( i * 0.5 ), 50 * Math.sin( i * 0.5 ), 20 ) ];
+			material = new THREE.PointsMaterial( { map: sprite } );
+			material.size = 200;
+			material.sizeAttenuation = false;
+			points = new THREE.Points( geometry, material );
+			scene.add( points );
+
+		}
+
+// example 2 text
+
+		var txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+		var array = txt.split( ' ' );
+
+		for ( var i = 1; i < 18; i++ ) {
+
+			sprite = canvasMultilineText( array[ i ], { backgroundColor: 120 } ) ;
+			geometry = new THREE.Geometry();
+			geometry.vertices = [ new THREE.Vector3( 80 * Math.cos( i * 0.5 ), 80 * Math.sin( i * 0.5 ), 0 ) ];
+			material = new THREE.PointsMaterial( { map: sprite } );
+			material.size = 200;
+			material.sizeAttenuation = false;
+			points = new THREE.Points( geometry, material );
+			scene.add( points );
+
+		}
+
+	}
+
+
+
+	function canvasMultilineText( textArray, parameters ) {
+
+		var parameters = parameters || {} ;
+
+		var canvas = document.createElement( 'canvas' );
+		var context = canvas.getContext( '2d' );
+		var width = parameters.width ? parameters.width : 0;
+		var font = parameters.font ? parameters.font : '48px monospace';
+		var color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
+
+		if ( typeof textArray === 'string' ) textArray = [ textArray ];
+
+		context.font = font;
+
+		for ( var i = 0; i < textArray.length; i++) {
+
+			width = context.measureText( textArray[ i ] ).width > width ? context.measureText( textArray[ i ] ).width : width;
+
+		}
+
+		canvas.width = width + 20;
+		canvas.height =  canvas.width; // parameters.height ? parameters.height : textArray.length * 60;
+
+		context.fillStyle = 'hsl( ' + color + ', 80%, 50% )' ;
+		context.fillRect( 0, 0, canvas.width, canvas.width);
+
+		context.lineWidth = 1 ;
+		context.strokeStyle = '#000';
+		context.strokeRect( 0, 0, canvas.width, canvas.width );
+
+		context.fillStyle = '#000' ;
+		context.font = font;
+
+		for ( i = 0; i < textArray.length; i++) {
+
+			context.fillText( textArray[ i ], 10, 48  + i * 60 );
+
+		}
+
+		var texture = new THREE.Texture( canvas );
+		texture.minFilter = texture.magFilter = THREE.NearestFilter;
+		texture.needsUpdate = true;
+
+		return texture;
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>
+

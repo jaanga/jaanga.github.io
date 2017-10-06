@@ -1,0 +1,188 @@
+
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="3D in your browser" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-10-02" >
+<title>Template Three.js Shade</title>
+<style>
+
+	body { font: 11pt monospace; margin: 0;}
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#context1, #context2{ border: 1px solid red; height: 400px; width: 500px;}
+	#menu { position: absolute; text-align: center; width: 100%; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/master/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "menu" >
+
+		<div id = "title" ></div>
+		<div id = "contents" >
+			<button onclick=controls.reset(); >reset view</button>
+			<button onclick=camera.position.set(0,0,300);camera.toOrthographic(); >plan view</button>
+			<button onclick=camera.position.set(0,-300,0);camera.toOrthographic(); >south elevation</button> 
+			<button onclick=camera.position.set(0,300,0); >north elevation</button> 
+			<button onclick=camera.position.set(300,0,0); >east elevation</button> 
+			<button onclick=camera.position.set(-300,0,0); >west elevation</button> 
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+		</div>
+
+	</div>
+
+
+<script>
+
+	const infoURI = 'https://github.com/ladybug-tools/spider/tree/master/sandbox/scatter-well/';
+
+	var renderer, camera, controls, scene;
+
+	var lightAmbient, lightDirectional, cameraHelper, axisHelper;
+
+	init();
+	animate();
+
+	function init() {
+
+		title.innerHTML = 
+			'<h3><a  href = "" >' + document.title + '</a> &nbsp; ' + 
+			'<a href=' + infoURI + ' target="top" >&#x24D8</a></h3>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( 800, 500 );
+		renderer.shadowMap.enabled = true;
+		renderer.autoClear = false;
+
+		scene = new THREE.Scene();
+		thing = document.body.appendChild( renderer.domElement );
+		thing.style.border = '1px solid red';
+		camera = new THREE.PerspectiveCamera( 20, 400 / 500, 1, 1000 );
+		camera.position.set( 100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 600;
+
+		camera2 = new THREE.PerspectiveCamera( 20, 400 / 500, 1, 1000 );
+		camera2.position.set( 100, -100, 100 );
+		camera2.up.set( 0, 0, 1 );
+		controls2 = new THREE.OrbitControls( camera2, renderer.domElement );
+		controls2.maxDistance = 600;
+
+//	controls.autoRotate = true;
+
+/*
+		renderer2 = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+		renderer2.setPixelRatio( window.devicePixelRatio );
+		renderer2.setSize( 800, 500 );
+
+var SCREEN_WIDTH = window.innerWidth;
+			var SCREEN_HEIGHT = window.innerHeight;
+			var aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
+		var frustumSize = 600;
+		thing2 = document.body.appendChild( renderer2.domElement );
+		thing2.style.border = '1px solid green';
+		camera2 = new THREE.OrthographicCamera(  0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 1, 1000 );
+		camera2.position.set( 100, -100, 100 );
+		camera2.up.set( 0, 0, 1 );
+
+		controls2 = new THREE.OrbitControls( camera2, renderer2.domElement );
+		controls2.maxDistance = 600;
+//	controls.autoRotate = true;
+*/
+
+
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		const size = 100
+		lightDirectional = new THREE.DirectionalLight( 0xffeedd );
+//		lightDirectional.position.set( 1, -1, 1 ).normalize();
+		lightDirectional.position.set( -size, size, size );
+		lightDirectional.shadow.camera.scale.set( 13, 15, 0.5 );
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera ) 
+		scene.add( cameraHelper );
+
+		axisHelper = new THREE.AxisHelper( 50 );
+		scene.add( axisHelper );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'keyup', function() { controls.autoRotate = false; }, false );
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
+
+		addAssets();
+
+	}
+
+
+	function addAssets() {
+
+		var geometry, material, mesh;
+
+		geometry = new THREE.SphereBufferGeometry( 25, 50, 50 );
+		material = new THREE.MeshPhongMaterial( { color: 0xff0000 });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		scene.add( mesh );
+
+		geometry = new THREE.BoxBufferGeometry( 50, 50, 50 );
+		material = new THREE.MeshPhongMaterial( { color: 0xfffff * Math.random() });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = -50;
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		scene.add( mesh );
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		renderer.clear();
+
+		renderer.setViewport( 0, 0, 400, 500 );
+		renderer.render( scene, camera );
+
+//		controls.update();
+
+		renderer.setViewport( 400, 0, 400, 500 );
+		renderer.render( scene, camera2 );
+//		controls2.update();
+	}
+
+</script>
+</body>
+</html>
