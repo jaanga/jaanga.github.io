@@ -54,6 +54,8 @@
 		camera.up.set( 0, 0, 1 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 600;
+		controls.autoRotate = true;
 
 		scene = new THREE.Scene();
 
@@ -65,8 +67,9 @@
 		scene.add( directionalLight );
 
 		window.addEventListener( 'resize', onWindowResize, false );
-
 		window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'keyup', function() { controls.autoRotate = false; }, false );
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
 
 		const axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
