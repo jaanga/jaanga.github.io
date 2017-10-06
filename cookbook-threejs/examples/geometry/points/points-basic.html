@@ -100,7 +100,7 @@
 
 		for ( var i = 1; i < 18; i++ ) {
 
-			sprite = canvasMultilineText( array[ i ], { backgroundColor: 120 } ) ;
+			sprite = canvasMultilineText( array.slice( i, i + 3), { backgroundColor: 120 } ) ;
 			geometry = new THREE.Geometry();
 			geometry.vertices = [ new THREE.Vector3( 80 * Math.cos( i * 0.5 ), 80 * Math.sin( i * 0.5 ), 0 ) ];
 			material = new THREE.PointsMaterial( { map: sprite } );
@@ -122,7 +122,7 @@
 		var canvas = document.createElement( 'canvas' );
 		var context = canvas.getContext( '2d' );
 		var width = parameters.width ? parameters.width : 0;
-		var font = parameters.font ? parameters.font : '48px monospace';
+		var font = parameters.font ? parameters.font : '144px monospace';
 		var color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
 
 		if ( typeof textArray === 'string' ) textArray = [ textArray ];
@@ -150,7 +150,7 @@
 
 		for ( i = 0; i < textArray.length; i++) {
 
-			context.fillText( textArray[ i ], 10, 48  + i * 60 );
+			context.fillText( textArray[ i ], 10, 144 + i * 120 );
 
 		}
 
