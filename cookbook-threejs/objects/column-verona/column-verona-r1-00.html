@@ -122,10 +122,7 @@
 */
 
 		verona = new THREE.Object3D();
-		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 
-
-//pedestal
 		geometry = new THREE.BoxGeometry( 46, 3, 46 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
@@ -138,156 +135,143 @@
 		mesh.position.set( 0, 4.5, 0 );
 		verona.add( mesh );
 
-
 		p = [];
 		segments = 10;
 		segments05 = Math.floor( 0.5 * segments );
 		x = 20
-		y = 8;
+		z = 8;
 
 		for ( var i = 0; i < segments + 1; i++ ) {
 			angle = -pi05 + pi * i / segments;
-			pt = v2( x + 2 * cos( angle ), y + 2 * sin( angle ) )
-//			p.push( pt );
-		}
-
-		pt = v2( pt.x - 1, pt.y )
-//		p.push( pt );
-
-		pt = v2( pt.x, 0, pt.y + 1 )
-		p.push( pt );
-		x = pt.x
-		y = pt.y + 2;
-
-		for ( var i = 0; i < segments05 + 1; i++ ) {
-			angle = -pi05 - pi05 * i / segments05;
-			pt = v2( x + 2 * cos( angle ), y + 2 * sin( angle ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 2 * sin( angle ) )
 			p.push( pt );
 		}
 
-		pt = v2( pt.x, pt.y );
+		pt = v( pt.x - 1, 0, pt.z )
+		p.push( pt );
+
+		pt = v( pt.x, 0, pt.z + 1 )
+		p.push( pt );
+		x = pt.x
+		z = pt.z + 2;
+
+		for ( var i = 0; i < segments05 + 1; i++ ) {
+			angle = -pi05 - pi05 * i / segments05;
+			pt = v( x + 2 * cos( angle ), 0, z + 2 * sin( angle ) )
+			p.push( pt );
+		}
+
+		pt = v( pt.x, 0, pt.z );
 		p.push( pt );
 		x = pt.x;
-		y = pt.y + 2;
+		z = pt.z + 2;
 
 		for ( var i = 0; i < segments + 1; i++ ) {
 			angle = -pi05 + pi * i / segments;
-			pt = v2( x + 2 * cos( angle ), y + 2 * sin( angle ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 2 * sin( angle ) )
 			p.push( pt );
 		}
 
-		pt = v2( pt.x - 1, pt.y );
+		pt = v( pt.x - 1, 0, pt.z );
 		p.push( pt );
 
-		pt = v2( pt.x, pt.y + 1 );
+		pt = v( pt.x, 0, pt.z + 1 );
 		p.push( pt );
 		x = pt.x;
-		y = pt.y + 2;
+		z = pt.z + 2;
 
 		for ( var i = 0; i < segments05 + 1; i++ ) {
 			angle = -pi05 - pi05 * i / segments05;
-			pt = v2( x + 2 * cos( angle ), y + 0.5 * ( 2 * sin( angle ) ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 0.5 * ( 2 * sin( angle ) ) )
 			p.push( pt );
 		}
 
-		pt = v2( pt.x - 1, pt.y );
+		pt = v( pt.x - 1, 0, pt.z );
 		p.push( pt );
 
-		pt = v2( pt.x - 1, pt.y + 80 );
+		pt = v( pt.x - 1, 0, pt.z + 80 );
 		p.push( pt );
 
 		x = pt.x
-		y = pt.y;
+		z = pt.z;
 		for ( var i = 0; i < 6; i++ ) {
 
-			pt = v2( x - 2 * sin ( i / 6 ), y + 15 * i );
+			pt = v( x - 2 * sin ( i / 6 ), 0, z + 15 * i );
 			p.push( pt );
 
 		}
 
-		pt = v2( pt.x + 1, pt.y );
+		pt = v( pt.x + 1, 0, pt.z );
 		p.push( pt );
 		x = pt.x + 2;
-		y = pt.y;
+		z = pt.z;
 
 		for ( var i = 0; i < segments05 + 1; i++ ) {
 
 			angle = pi - pi05 * i / segments05;
-			pt = v2( x + 2 * cos( angle ), y + 0.5 * ( 2 * sin( angle ) ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 0.5 * ( 2 * sin( angle ) ) )
 			p.push( pt );
 
 		}
 
-		pt = v2( pt.x, pt.y + 1);
+		pt = v( pt.x, 0, pt.z + 1);
 		p.push( pt );
 		x = pt.x;
-		y = pt.y + 2;
+		z = pt.z + 2;
 
 		for ( var i = 0; i < segments + 1; i++ ) {
 
 			angle = -pi05 + pi * i / segments;
-			pt = v2( x + 2 * cos( angle ), y + 2 * sin( angle ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 2 * sin( angle ) )
 			p.push( pt );
 
 		}
 
-		pt = v2( pt.x - 1, pt.y);
+		pt = v( pt.x - 1, 0, pt.z);
 		p.push( pt );
 		x = pt.x + 2 ;
-		y = pt.y + 2;
+		z = pt.z + 2;
 
 		for ( var i = 0; i < segments05 + 1; i++ ) {
 
 			angle = pi - pi05 * i / segments05;
-			pt = v2( x + 2 * cos( angle ), y + 2 * sin( angle ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 2 * sin( angle ) )
 			p.push( pt );
 
 		}
 
-		pt = v2( pt.x, pt.y + 1 );
+		pt = v( pt.x, 0, pt.z + 1 );
 		p.push( pt );
 		x = pt.x ;
-		y = pt.y + 2;
+		z = pt.z + 2;
 
 		for ( var i = 0; i < segments + 1; i++ ) {
 
 			angle = -pi05 + pi * i / segments;
-			pt = v2( x + 2 * cos( angle ), y + 2 * sin( angle ) )
+			pt = v( x + 2 * cos( angle ), 0, z + 2 * sin( angle ) )
 			p.push( pt );
 
 		}
 
-
-		geometry = new THREE.Geometry();
-		geometry.vertices = p
-		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-		line = new THREE.Line( geometry, material );
-
-		scene.add( line );
-
-
-
 		var geometry = new THREE.LatheGeometry( p, 30 );
-//		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
 		material = new THREE.MeshNormalMaterial(  { side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material ) ;
 		verona.add( mesh );
 
 		x = 2 * ( pt.x + 1 );
-		y = pt.y + 1.5;
-
-// capital
+		z = pt.z + 1.5;
 
 		geometry = new THREE.BoxGeometry( x, 3, x );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, y, 0 );
+		mesh.position.set( 0, z, 0 );
 		verona.add( mesh );
 
 		geometry = new THREE.BoxGeometry( x + 3, 3, x + 3 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, y + 3, 0 );
+		mesh.position.set( 0, z + 3, 0 );
 		verona.add( mesh );
 
 		return verona;

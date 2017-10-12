@@ -215,10 +215,14 @@
 
 			if ( intersected != intersects[ 0 ].object ) {
 
+				if ( intersected ) { intersected.material.emissive.setHex( intersected.currentHex ); }
 				if ( intersected ) { intersected.material.opacity = intersected.currentOpacity; }
 
 				intersected = intersects[ 0 ].object;
 				intersected.rotation.y += 0.1;
+				intersected.currentHex = intersected.material.emissive.getHex();
+				intersected.material.emissive.setHex( 0xff0000 );
+
 				intersected.currentOpacity = intersected.material.opacity;
 				intersected.material.opacity = 1;
 				log.innerHTML = 'Selected cube ID: ' + intersected.name ;
@@ -227,6 +231,7 @@
 
 		} else {
 
+			if ( intersected ) { intersected.material.emissive.setHex( intersected.currentHex ); }
 			if ( intersected ) { intersected.material.opacity = intersected.currentOpacity; }
 
 			intersected = undefined;

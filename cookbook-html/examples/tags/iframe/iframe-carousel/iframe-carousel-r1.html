@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-09-17" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#menu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "header" >
+		<div id = "title" ></div>
+		<div id = "contents" >
+			<button onclick=thing(); >button</button>
+		</div>
+	</div>
+
+	<div id = "menu" ></div>
+
+	<iframe id=ifr width=100% height=480px ></iframe>
+
+<script>
+
+	const sites = [
+
+		{ fileName: 'http://wikihouse.github.io/viewer-experiments/display-wikihouse-stepup1/display-wikihouse-stepup1-r2.html',
+			title: 'wikihouse' },
+		{ fileName: 'http://opendesk.github.io/design-playground/opendesk-half-sheet-table/opendesk-half-sheet-table-app-r3.html',
+			title: 'opendesk' },
+		{ fileName: 'http://jaanga.github.io/cookbook/rubiks-cube/rubiks-cube-r2-theo.html', title: 'rubiks' },
+		{ fileName: 'http://fgx.github.io/fgx-aircraft-overview/latest/', title: 'fgx' },
+
+	];
+
+	let index = Math.floor( Math.random() * sites.length );
+	let timer;
+
+	init();
+
+	function init() {
+
+		let txt;
+
+		title.innerHTML = '<h2><a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a></h2>';
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		contents.innerHTML = txt;
+
+		clearInterval( timer );
+
+		displayNext();
+
+		timer = setInterval( displayNext, 8000 );
+
+	}
+
+
+	function displayNext() {
+
+		index = index >= sites.length ? 0 : index;
+
+		if ( ! sites[ index ].fileName ) { return; }
+
+		ifr.src = sites[ index ].fileName;
+
+		index++;
+
+	}
+
+
+</script>
+</body>
+</html>
