@@ -30,7 +30,12 @@
 
 		<div id = "divTitle" ></div>
 
-		<p><input type=file id=inpFile onchange=openFile(this); ></p>
+		<p>
+			<input type=file id=inpFile onchange=openFile(this); >
+		<p>
+		<p>
+			<input type=checkbox id=inpExtrude checked >Create Extrusions
+		</p>
 
 		<div>DXF in JSON format</div>
 		<div id = "divContents" ></div>
@@ -304,7 +309,7 @@ console.log( 'dfx', dxf );
 
 			mesh = drawLine( entity, data );
 
-//			extrudeLine( mesh );
+			if ( inpExtrude.checked ) { extrudeLine( mesh ); }
 
 		} else if ( entity.type === 'TEXT' ) {
 

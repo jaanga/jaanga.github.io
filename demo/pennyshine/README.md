@@ -13,21 +13,30 @@ It would be nice to have a web app that allows you to open a DXF file and displa
 If you want to View DXF files easily and quickly, the you have come to the right place. Or it will be quite soon.
 
 
+<iframe class=iframeReadMe src=./parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html width=100% height=600px style="border: 1px solid #555;" ></iframe>
 
+_Parse DXF to Three.js - with experimental 'create extrusions' turned on_
 
 ## pennyShine Code
 
-### [Parse DXF to Three.js R1.html]( parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html )
+* Code we have written built upon GDS code
+* Click the 'Choose File' button to load a DXF file from a local drive and view it in 3D.
+* R1 is very much a work-in-progress
+* The goal is to be able to take a 2D DXF file and add thickness to it along with pockets and full-depth cut-outs and create a 3D version of that file
+* But for the moment it's just a work or art or a piece of crap or whatever
 
 
-### [Jochen Gross’ 50 Digital Wood Joints]( dxf-samples/2D_DXF10/dxf-viewer-github-api-samples.html )
+### Full screen: [Parse DXF to Three.js R1.html]( parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html )
 
+
+### Full screen: [Jochen Gross’ 50 Digital Wood Joints]( dxf-samples/2D_DXF10/dxf-viewer-github-api-samples.html )
 
 * From <http://www.flexiblestream.org/project/50-digital-wood-joints>
+* 5O different DXF files - many display with errors - and we don't know why yet
 
-## Code from GDS Estimating
+## Code from [GDS Estimating]( https://github.com/gdsestimating )
 
-* A few minor hacks added to GDS Estimating so it runs off a static hoat server such as GitHub Pages
+* A few minor hacks added to GDS Estimating so it runs off a static host server such as GitHub Pages
 
 ### [DXF Parser GDS Estimating]( three-dxf//parse-dxf-to-threejs-gdsestimating.html )
 
@@ -51,6 +60,7 @@ Online DXF Viewers
 
 ### 2017-11-12 ~ Theo
 
+* Added files and commited to GitHub
 
 
 ### 2017-11-11 ~ Theo
