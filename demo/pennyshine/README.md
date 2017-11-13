@@ -17,7 +17,7 @@ It would be nice to have a web app that allows you to open a DXF file and displa
 If you want to View DXF files easily and quickly, the you have come to the right place. Or it will be quite soon.
 
 
-<iframe class=iframeReadMe src=./parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html width=100% height=600px style="border: 1px solid #555;" ></iframe>
+<iframe class=iframeReadMe src=./parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html width=100% height=600px style="border: 1px solid #555;" >iframe does not appear when viewed on github.com</iframe>
 
 _Parse DXF to Three.js - with experimental 'create extrusions' turned on_
 
