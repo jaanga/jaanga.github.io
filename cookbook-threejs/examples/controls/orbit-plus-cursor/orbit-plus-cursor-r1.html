@@ -1,0 +1,299 @@
+
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="3D in your browser" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-10-02" >
+<title>Orbit plus Cursor Controld</title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; margin: 3px; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { position: absolute; text-align: center; width: 100%; }
+
+	#divControls { position: absolute; bottom: 20px; margin: auto; text-align: center; width: 100%; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+		<div id = "contents" >
+
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+
+			<button onclick=controls.reset(); >reset</button>
+
+		</div>
+
+	</div>
+
+	<div id=divControls >
+
+
+		<div>
+			<button onclick=turnLeft(); title='A or left cursor key' >&#9664;</button> &nbsp;
+			<button onmousedown=goForward(); title='W or up cursor key' >&#9650;</button> &nbsp;
+			<button onclick=goBack(); title='S or down cursor key' >&#9660;</button> &nbsp;
+			<button onclick=turnRight(); title='D or right cursor key' >&#9654;</button>
+		</div>
+		<div>
+			<button onclick=turnUp(); title='R or page up key' >&#9651;</button> &nbsp;
+			<button onclick=turnDown(); title='F or page down key' >&#9661;</button>
+			<button onclick=turnUp(); title='Plus key' >+</button> &nbsp;
+			<button onclick=turnUp(); title='Minus key' >-</button> &nbsp;
+		</div>
+
+	</div>
+
+<script>
+
+	let cube;
+	let relativeCameraOffset = new THREE.Vector3( 0, 200, 50 );
+
+	let v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	const infoURI = 'https://github.com/jaanga.github.io/cookbook-threejs/examples/controls/orbit-plus-cursor/';
+
+	var renderer, camera, controls, scene;
+
+	var lightAmbient, lightDirectional, cameraHelper, axisHelper;
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML = 
+			'<h3><a  href = "" >' + document.title + '</a> &nbsp; ' + 
+			'<a href=' + infoURI + ' target="top" >&#x24D8</a></h3>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 300, -300, 300 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.maxDistance = 600;
+		controls.autoRotate = true;
+
+		scene = new THREE.Scene();
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		const size = 200;
+		lightDirectional = new THREE.PointLight( 0xffeedd );
+//		lightDirectional.position.set( 1, -1, 1 ).normalize();
+		lightDirectional.position.set( -size, size, size );
+//		lightDirectional.shadow.camera.scale.set( 13, 15, 0.5 );
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'keyup', function() { controls.autoRotate = false; }, false );
+		window.addEventListener( 'keydown', onKeyDown, false );
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
+
+		addHelpers();
+		addAssets();
+
+		cube.add( camera );
+
+
+	}
+
+
+
+
+	function onKeyDown ( event ) {
+
+console.log( 'key', event.keyCode );
+
+		controls.enableKeys = false;
+		event.preventDefault();
+
+		switch( event.keyCode ) {
+
+			case 82: /* R  */
+			case 33: /* Page Up      */ turnUp();   break;
+			case 70: /* F */
+			case 34: /* Page Dn      */ turnDown(); break;
+			case 65: /* A */
+			case 37: /* cursor left  */ turnLeft();  break;
+			case 87: /* W */
+			case 38: /* cursor up    */ goForward(); break;
+			case 68: /* D */
+			case 39: /* cursor right */ turnRight();  break;
+			case 83: /* S */
+			case 40: /* cursor down  */ goBack(); break;
+			case 187:
+			case 107: /* plus */        goUp(); break;
+			case 189:
+			case 109: /* minus */       goDown(); break;
+
+		}
+
+	}
+
+
+	function goForward() {
+
+		cube.translateY( 10 );
+		updateCamera();
+
+	}
+
+	function goBack() {
+
+		cube.translateY( -10 );
+		updateCamera();
+
+	}
+
+	function goUp() {
+
+		cube.translateZ( 10 );
+		updateCamera();
+
+	}
+
+	function goDown() {
+
+		cube.translateZ( -10 );
+		updateCamera();
+
+	}
+
+	function turnRight() {
+
+		cube.rotation.z -= 0.1;
+		updateCamera();
+
+	}
+
+	function turnLeft() {
+
+		cube.rotation.z += 0.1;
+		updateCamera();
+
+	}
+
+
+	function turnUp() {
+
+		cube.rotation.x += 0.1;
+		updateCamera();
+
+	}
+
+
+	function turnDown() {
+
+		cube.rotation.x -= 0.1;
+		updateCamera();
+
+	}
+
+
+	function updateCamera() {
+
+		var cameraOffset = relativeCameraOffset.applyMatrix4( cube.matrixWorld );
+		cube.visible = true;
+
+	}
+
+
+
+
+	function addHelpers() {
+
+		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera ) 
+		scene.add( cameraHelper );
+
+		axesHelper = new THREE.AxesHelper( 500 );
+		scene.add( axesHelper );
+
+		gridHelper = new THREE.GridHelper( 500 );
+		gridHelper.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		scene.add( gridHelper );
+
+	}
+
+
+	function addAssets() {
+
+		var geometry, material, mesh;
+
+		geometry = new THREE.SphereBufferGeometry( 25, 50, 50 );
+		material = new THREE.MeshPhongMaterial( { color: 0xff0000 });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 50, 300, 25 );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		scene.add( mesh );
+
+
+		geometry = new THREE.BoxBufferGeometry( 50, 20, 50 );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random() });
+		cube = new THREE.Mesh( geometry, material );
+		cube.position.z = 25;
+		cube.castShadow = cube.receiveShadow = true;
+		cube.visible = false;
+		scene.add( cube );
+
+		geometry = new THREE.BoxBufferGeometry( 500, 500, 50 );
+		material = new THREE.MeshPhongMaterial( { color: 0xfffff * Math.random() });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		mesh.position.z = -25;
+		scene.add( mesh );
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+<script src = "https://cdn.rawgit.com/gdsestimating/dxf-parser/master/dist/dxf-parser.js"></script>
+<script src = "https://code.jquery.com/jquery.min.js"></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.rawgit.com/gdsestimating/three-dxf/master/dist/three-dxf.js"></script>
+</head>
+<body>
+<style>
+
+	#cad-view {
+		display: inline-block;
+		margin: 10px 0;
+		/*			border: 1px solid #666;*/
+	}
+	#cad-view > canvas {
+		border: 1px solid #666;
+	}
+
+	.progress {
+		opacity: 0;
+		-webkit-transition: opacity 1s linear;
+		-moz-transition: opacity 1s linear;
+		-ms-transition: opacity 1s linear;
+		-o-transition: opacity 1s linear;
+		transition: opacity 1s linear;
+	}
+
+	.progress.loading {
+		opacity: 1;
+	}
+</style>
+
+
+<div class="container">
+	<div role="form">
+		<div class="form-group">
+			<label for="exampleInputFile">Choose a DXF file</label>
+			<input type="file" accept=".dxf" id="dxf" name="file">
+			<div class="progress progress-striped" style="width: 300px;">
+				<div id="file-progress-bar" class="progress-bar progress-bar-success" role="progressbar" style="width: 0">
+				</div>
+			</div>
+			<div id="file-description" class="help-block"></div>
+		</div>
+
+		<p>While hovering over the canvas: Right click to pan. Mouse wheel to zoom in an out.</p>
+	</div>
+	<div id="cad-view">
+
+	</div>
+</div>
+
+<script src="https://cdn.rawgit.com/gdsestimating/three-dxf/master/sample/index.js"></script>
+</body>
+</html>

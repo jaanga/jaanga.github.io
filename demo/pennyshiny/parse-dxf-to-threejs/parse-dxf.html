@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-11-01" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/gdsestimating/dxf-parser/master/dist/dxf-parser.js"></script>
+
+	<div id = "divHeader" >
+
+		<div id = "divTitle" ></div>
+
+		<p><input type=file id=inpFile onchange=openFile(this); ></p>
+
+		<div id = "divContents" ></div>
+
+	</div>
+
+	<div id = "divMenu" ></div>
+
+<script>
+
+	urlDXF = './dxf-samples/Cabinet%20Box.dxf'
+
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		let txt;
+
+		divTitle.innerHTML = '<h2><a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a></h2>';
+
+		requestFile( urlDXF );
+
+	}
+
+
+	function openFile( files ) {
+
+		var fileData, reader, data;
+
+		reader = new FileReader();
+		reader.onload = function( event ) {
+
+			parseDXF( reader.result );
+
+
+/*
+			menuOpenFile.innerHTML =
+				'name: ' + files.files[0].name + '<br>' +
+				'size: ' + files.files[0].size.toLocaleString() + ' bytes<br>' +
+				'type: ' + files.files[0].type + '<br>' +
+				'modified: ' + files.files[0].lastModifiedDate.toLocaleDateString() +
+			'';
+
+console.log( '', files );
+*/
+
+		}
+
+		reader.readAsText( files.files[0] );
+
+	}
+
+
+
+	function requestFile( url ) {
+
+		let xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+		xhr.onprogress = function( xhr ) { console.log( 'bytes loaded:', xhr.loaded  ); }; /// or something
+		xhr.onload = function( xhr ){ parseDXF( xhr.target.response ); }
+		xhr.send( null );
+
+	}
+
+
+	function parseDXF( text ) {
+
+		parser = new window.DxfParser();
+
+		dxf = parser.parseSync( text );
+
+		divContents.innerHTML = '<textarea style=width:100%;height:800px; >' + JSON.stringify( dxf, null, ' ' ) + '</textarea>';
+
+console.log( 'dfx', dxf );
+
+	}
+
+</script>
+</body>
+</html>

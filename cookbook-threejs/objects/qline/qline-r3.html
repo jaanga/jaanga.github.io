@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html lang=en >
 <head>
-<title>Qline R2 </title>
+<title>Qline R3 </title>
 <meta charset=utf-8 />
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
@@ -29,7 +29,7 @@
 
 	<div id=divMenu >
 			<h2>
-				<a href="" >Qline R2</a>
+				<a href="" >Qline R3</a>
 				 <a href=http://jaanga.github.io/cookbook-threejs/objects/ >🛈</a>
 			</h2>
 
@@ -44,13 +44,18 @@
 			<p><button onclick=updateQline2IrregularPolygon(inpPoints.valueAsNumber,35); >Irregular Polygon Qline</button></p>
 
 			<p><button onclick=updateQline2HexKey(); >Hex Key</button></</p>
-			<p>Points: <input type=range id=inpPoints max=50 min=3 step=1 value=5 oninput=out.value=inpPoints.value; title="3 to 100: OK" > <output id=out >${ pointCount}</output></p>
+
+			<p>Points: <input type=range id=inpPoints max=50 min=3 step=1 value=5 oninput=outPoints.value=inpPoints.value; title="3 to 100: OK" > <output id=outPoints ></output></p>
+
 			<p><input type=checkbox id=inpWire onchange=toggleWireframe(scene.getObjectByName('qmesh'),this.checked); > wireframe</p>
+
+			<p><button onclick=getInfo(); >get info</button></p>
 			<div id=info ></div>
 	</div>
 <script>
-// see all mm/js/qline
+// see all moving-manuals/js/qline-r1.js
 
+	var qmesh, qline;
 	var pointCount = 5;
 	var width = 5;
 	var height = 8;
@@ -107,20 +112,20 @@
 		mesh.position.set( 0, -10, 0 );
 		scene.add( mesh );
 
-		mesh = new THREE.GridHelper( 50, 10 );
-		mesh.position.set( 0, -9, 0 );
-		scene.add( mesh );
+		gridHelper = new THREE.GridHelper( 100, 20 );
+		gridHelper.position.set( 0, -9, 0 );
+		scene.add( gridHelper );
 
 // axes
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		var axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
 
 
 		var pts = [], numPts = 8;
 
 		for ( var i = 0; i < numPts * 2 + 1; i ++ ) {
 
-			var l = i % 2 == 1 ? 10 : 20;
+			var l = i % 2 == 1 ? 3 : 5;
 
 			var a = i / numPts * Math.PI;
 
@@ -136,21 +141,44 @@
 
 			var a = i / numPts * 2 * Math.PI;
 
-			pts.push( new THREE.Vector2 ( Math.cos( a ) * 5, Math.sin( a ) * 5) );
+			pts.push( new THREE.Vector2 ( Math.cos( a ) * 5, Math.sin( a ) * 5 ) );
 
 		}
 
 		sections.push( pts );
 
-//		updateQline2Square();
+		updateQline2Square();
 //		updateQline2Path();
 //		updateQline2Random();
 //		updateQline2RegularPolygon();
-		updateQline2HexKey();
+//		updateQline2HexKey();
 
 	}
 
 
+	function getInfo() {
+
+		geometry = qline.geometry;
+
+		for ( let i = 0; i < geometry.faces.length; i ++ ) {
+
+			geometry.faces[ i ].color.setHex( 0xff0000 );
+
+		}
+
+		geometry.colorsNeedUpdate = true;
+
+		qmesh.material.needsUpdate = true;
+
+//		qmesh.geometry.computeFaceNormals();
+//		qmesh.geometry.computeVertexNormals();
+
+//		qmesh.geometry.verticesNeedUpdate = true;
+//		qmesh.geometry.normalsNeedUpdate = true;
+
+console.log( 'qmesh', qmesh,geometry.vertices );
+
+	}
 
 	function updateQline2Square() {
 
@@ -162,6 +190,7 @@
 		drawQlineFromPoints( section, points );
 
 	}
+
 
 	function updateQline2Path() {
 
@@ -196,6 +225,8 @@
 		drawQlineFromPoints( section, points );
 
 	}
+
+
 
 	function updateQline2PathSpline( count, spread ) {
 
@@ -342,7 +373,7 @@ console.log( '', path );
 		geometry = new THREE.CylinderGeometry( width, width, 10, 6, 1 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 		material = new THREE.MeshNormalMaterial();
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), shading: 1, side: 2, wireframe: false } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), flatShading: true, side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.z = -5;
 		qmesh.add( mesh );
@@ -350,7 +381,7 @@ console.log( '', path );
 		geometry = new THREE.CylinderGeometry( width, width, 10, 6, 1 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
 		material = new THREE.MeshNormalMaterial();
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), shading: 1, side: 2, wireframe: false } );
+		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), flatShading: true, side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 60, 0, 75 );
 		qmesh.add( mesh );
@@ -366,7 +397,8 @@ console.log( '', path );
 
 // 2016-02-10
 
-		var qline, mesh;
+
+		var mesh;
 
 		qline = scene.getObjectByName( 'qline' );
 
@@ -387,6 +419,7 @@ console.log( '', path );
 
 	}
 
+
 	function createQlineMesh( obj, section, path ) {
 
 // 2016-02-10
@@ -396,7 +429,9 @@ console.log( '', path );
 		vertices = [];
 		geometry = new THREE.PlaneGeometry( 10, 10, section.length - 1, path.length - 1 );
 //		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
-		material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), side: 2, wireframe: false } );
+
+
+		material = new THREE.MeshBasicMaterial( {  side: 2, wireframe: false, vertexColors: THREE.FaceColors } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.name = 'qmesh';
 

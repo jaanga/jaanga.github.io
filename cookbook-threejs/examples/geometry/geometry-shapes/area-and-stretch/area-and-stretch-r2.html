@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="3D in your browser" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-10-25" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; position: absolute; width: 300px; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<div id = "contents" >
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+		</div>
+		<p>
+			<button onclick=drawQuadGetArea(); >drawQuadGetArea</button>
+		</p>
+
+		<p>
+			<output id=outRange ></output><br>
+			<input type=range id=inpRange min=50 max=150 step=1 value=80 oninput=updateShapes(); />
+		</p>
+
+		<p id=pLogBox ></p>
+		<p id=pLogL ></p>
+		<p id=pLogT ></p>
+		<p id=pLogH ></p>
+		<p id=pLogU ></p>
+		<p id=pLogTrapezoid ></p>
+		<p id=pLogTriangle ></p>
+		<p id=pLogPlus ></p>
+		<p id=pLogO ></p>
+
+
+
+
+	</div>
+
+<script>
+// https://stackoverflow.com/questions/16285134/calculating-polygon-area
+// https://www.w3resource.com/javascript-exercises/javascript-basic-exercise-4.php
+// https://www.mathopenref.com/coordpolygonarea2.html
+
+	let shapeBox, shapeL, shapeT, shapeH, shapeU, shapeTrapezoid, shapeTriangle, shapePlus, shapeO;
+
+	const shapeArea = 3000;
+	length = 50;
+
+
+	const size = 350;
+	const sizeDelta = 0.3 * size;
+
+	const v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+	const b = '<br>';
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( size, -size, size );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		const ambient = new THREE.AmbientLight( 0x444444 );
+		scene.add( ambient );
+
+		const directionalLight = new THREE.DirectionalLight( 0xffeedd );
+		directionalLight.position.set( 0, 0, 1 ).normalize();
+		scene.add( directionalLight );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		const axesHelper = new THREE.AxesHelper( 250 );
+		scene.add( axesHelper );
+
+//		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+//		material = new THREE.MeshNormalMaterial( { side: 2, wireframe: true } );
+//		mesh = new THREE.Mesh( geometry, material );
+//		scene.add( mesh );
+
+
+		updateShapes();
+
+	}
+
+
+
+	function updateShapes() {
+
+		length = parseInt( inpRange.value, 10 );
+		outRange.value = length;
+
+		updatePaths( length, 50 );
+
+		shapeBox = drawShape( shapeBox, pathBox, pLogBox );
+		shapeBox.position.set( -sizeDelta, sizeDelta, 0 );
+
+		shapeL = drawShape( shapeL, pathL, pLogL );
+		shapeL.position.set( 0, sizeDelta, 0 );
+
+		shapeT = drawShape( shapeT, pathT, pLogT );
+		shapeT.position.set( sizeDelta, sizeDelta, 0 );
+
+		shapeH = drawShape( shapeH, pathH, pLogH );
+		shapeH.position.set( -sizeDelta, 0, 0 );
+
+		shapeU = drawShape( shapeU, pathU, pLogU );
+		shapeU.position.set( 0, 0, 0 );
+
+		shapeTrapezoid = drawShape( shapeTrapezoid, pathTrapezoid, pLogTrapezoid );
+		shapeTrapezoid.position.set( sizeDelta, 0, 0 );
+
+		shapeTriangle = drawShape( shapeTriangle, pathTriangle, pLogTriangle );
+		shapeTriangle.position.set( -sizeDelta, -sizeDelta, 0 );
+
+		shapePlus = drawShape( shapePlus, pathPlus, pLogPlus );
+		shapePlus.position.set( 0, -sizeDelta, 0 );
+
+		shapeO = drawShape( shapeO, pathO, pLogO );
+		shapeO.position.set( sizeDelta, -sizeDelta, 0 );
+
+	}
+
+
+	function drawShape( obj, vectors, target ) {
+
+		scene.remove( obj );
+
+		polygonArea2( vectors, target );
+
+		const shape = new THREE.Shape( vectors );
+		const geometry = new THREE.ShapeGeometry( shape );
+		const areaNow = THREE.ShapeUtils.area( vectors );
+		const ratio = ( shapeArea ) / ( areaNow );
+		geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, ratio, 1 ) );
+
+console.log( 'ShapeUtils', THREE.ShapeUtils.area( vectors ), 'ratio', ratio ); 
+
+		const mesh = new THREE.Mesh( geometry, material );
+//		mesh.scale.y = ratio;
+
+		scene.add( mesh );
+
+//		path = new THREE.Path( vectors );
+
+		getMeshArea( mesh, target );
+
+		return mesh;
+
+	}
+
+
+
+
+
+
+	function polygonArea2( vectors, target ) {
+
+//		vectors = [ v2( 0, 10 ), v2( 0, 60 ), v2( 50, 110 ), v2( 50, 10 ) ];
+
+		const numPoints = vectors.length;
+		let area = 0;
+		let j = numPoints - 1;
+
+		for ( let i = 0; i < numPoints; i++ ) {
+
+			area = area + ( vectors[ j ].x + vectors[ i ].x ) * ( vectors[ j ].y - vectors[ i ].y );
+			j = i;  //j is previous vertex to i
+
+		}
+
+		target.innerHTML = 
+
+			'Pre scale: ShapeUtils area: ' + THREE.ShapeUtils.area( vectors ).toLocaleString() + b +
+			'Pre scale: calculated area: ' + area / 2 + b +
+
+		'';
+
+		return area / 2;
+
+	}
+
+
+
+	function getMeshArea( mesh, target ) {
+
+		mesh.updateMatrixWorld();
+
+		let vertices = mesh.geometry.vertices;
+
+		let verts = [];
+
+		for ( var i = 0; i < vertices.length; i++ ) {
+
+			vert = vertices[ i ].clone();
+			vert.applyMatrix4( mesh.matrixWorld );
+			verts.push( vert );
+
+		}
+
+		target.innerHTML +=  'Scaled area: ' + THREE.ShapeUtils.area( verts.reverse() ); //.toLocaleString();
+
+//		getArea( verts );
+//		polygonArea2( verts );
+
+	}
+
+
+	function getArea( vertices ) {
+
+	 var total = 0;
+
+		for ( var i = 0, l = vertices.length; i < l; i++ ) {
+
+			var addX = vertices[ i ].x;
+			var addY = vertices[ i == vertices.length - 1 ? 0 : i + 1 ].y;
+
+			var subX = vertices[ i == vertices.length - 1 ? 0 : i + 1 ].x;
+			var subY = vertices[ i ].y;
+
+			total += ( addX * addY );
+			total -= ( subX * subY );
+
+		}
+
+console.log( 'tot', Math.abs( total ) );
+
+		pLog2.innerHTML = JSON.stringify( vertices );
+
+		return Math.abs( total );
+
+	}
+
+
+
+
+	function updatePaths( len, wid ) {
+
+//		const len = building.box.length1;
+		const len13 = len / 3;
+		const len23 = 2 * len / 3;
+
+//		const wid = building.box.width1;
+		const wid13 = wid / 3;
+		const wid23 = 2 * wid / 3;
+
+		pathBox = [ v2( 0, 0 ), v2( len, 0 ), v2( len, wid ), v2( 0, wid ), v2( 0, 0 ) ];
+
+		pathL = [
+			v2( 0, 0 ),
+			v2( len, 0 ),
+			v2( len, wid13 ),
+			v2( len13, wid13 ),
+			v2( len13, wid ),
+			v2( 0, wid ),
+			v2( 0, 0 )
+		];
+
+		pathT = [
+			v2( 0, wid23 ),
+			v2( len13, wid23 ),
+			v2( len13, 0 ),
+			v2( len23, 0 ),
+			v2( len23, wid23 ),
+			v2( len, wid23 ),
+			v2( len, wid ),
+			v2( 0, wid ),
+			v2( 0, wid23 )
+
+		];
+
+		pathH = [
+			v2( 0, 0 ),
+			v2( len13, 0 ),
+			v2( len13, wid13 ),
+			v2( len23, wid13 ),
+			v2( len23, 0 ),
+			v2( len, 0 ),
+			v2( len, wid ),
+			v2( len23, wid ),
+			v2( len23, wid23 ),
+			v2( len13, wid23 ),
+			v2( len13, wid ),
+			v2( 0, wid ),
+			v2( 0, 0 )
+		];
+
+
+		pathU = [
+			v2( 0, 0 ),
+			v2( len, 0 ),
+			v2( len, wid ),
+			v2( len23, wid ),
+			v2( len23, wid13 ),
+			v2( len13, wid13 ),
+			v2( len13, wid ),
+			v2( 0, wid ),
+			v2( 0, 0 )
+		];
+
+
+		pathTrapezoid = [
+			v2( 0, 0 ),
+			v2( len, 0 ),
+			v2( len23, wid ),
+			v2( len13, wid ),
+			v2( 0, 0 )
+		];
+
+		pathTriangle = [
+			v2( 0, 0 ),
+			v2( len, 0 ),
+			v2( len13, wid ),
+			v2( 0, 0 )
+		];
+
+
+		pathPlus = [
+			v2( len13, 0 ),
+			v2( len23, 0 ),
+			v2( len23, wid13 ),
+			v2( len, wid13 ),
+			v2( len, wid23 ),
+			v2( len23, wid23 ),
+			v2( len23, wid ),
+			v2( len13, wid ),
+			v2( len13, wid23 ),
+			v2( 0, wid23 ),
+			v2( 0, wid13 ),
+			v2( len13, wid13 ),
+			v2( len13, 0 )
+		];
+
+		pathO = [
+			v2( 0, 0 ),
+			v2( len, 0 ),
+			v2( len, wid ),
+			v2( 0, wid ),
+			v2( 0, wid13 ),
+			v2( len23, wid13 ),
+			v2( len23, wid23 ),
+			v2( len13, wid23 ),
+			v2( len13, wid13 ),
+			v2( 0, wid13 ),
+			v2( 0, 0 )
+		];
+
+	}
+
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

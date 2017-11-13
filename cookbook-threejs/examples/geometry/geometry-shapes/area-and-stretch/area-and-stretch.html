@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="3D in your browser" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-10-25" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; position: absolute; width: 300px; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/dev/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<div id = "contents" >
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+		</div>
+		<p>
+			<button onclick=drawQuadGetArea(); >drawQuadGetArea</button>
+		</p>
+
+		<p>
+			<output id=outRange >1</output><br>
+			<input type=range id=inpRange min=0 max=3 step=0.1 value=1 oninput=stretchQuad(); />
+		</p>
+
+		<p id=pLog ></p>
+		<p id=pLog2 ></p>
+	</div>
+
+<script>
+// https://stackoverflow.com/questions/16285134/calculating-polygon-area
+// https://www.w3resource.com/javascript-exercises/javascript-basic-exercise-4.php
+
+	v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +'</a></h1>';
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		const ambient = new THREE.AmbientLight( 0x444444 );
+		scene.add( ambient );
+
+		const directionalLight = new THREE.DirectionalLight( 0xffeedd );
+		directionalLight.position.set( 0, 0, 1 ).normalize();
+		scene.add( directionalLight );
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		const axesHelper = new THREE.AxesHelper( 250 );
+		scene.add( axesHelper );
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+
+//		scene.add( mesh );
+
+		vectors = [ v2( 0, 50 ), v2( 0, 100 ), v2( 50, 50 ), v2( 50, 0 ) ];
+
+		drawQuadGetArea( vectors );
+
+		polygonArea2( vectors );
+	}
+
+
+
+	function drawQuadGetArea( vectors ) {
+
+		scene.remove( mesh );
+
+//		vectors = [ v2( 0, 0 ), v2( 50, 0 ), v2( 50, 50 ), v2( 0, 50 ) ];
+//		vectors = [ v2( 0, 10 ), v2( 50, 10 ), v2( 50, 60 ), v2( 0, 110 ) ];
+//		vectors = [ v2( 0, 10 ), v2( 0, 60 ), v2( 50, 60 ), v2( 50, 10 ) ];
+//		vectors = [ v2( 0, 10 ), v2( 0, 60 ), v2( 50, 110 ), v2( 50, 10 ) ];
+
+
+		shape = new THREE.Shape( vectors );
+		geometry = new THREE.ShapeGeometry( shape );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+		path = new THREE.Path( vectors );
+
+		pLog.innerHTML =  'area: ' + THREE.ShapeUtils.area( vectors ).toLocaleString();
+
+		getArea( vectors );
+
+	}
+
+
+	function stretchQuad() {
+
+		outRange.value = inpRange.value;
+
+		mesh.scale.y = parseFloat( inpRange.value );
+
+		mesh.updateMatrixWorld();
+
+		let vertices = mesh.geometry.vertices;
+
+		verts = [];
+
+		for ( var i = 0; i < vertices.length - 1; i++ ) {
+
+			vert = vertices[ i ].clone();
+			vert.applyMatrix4( mesh.matrixWorld );
+			verts.push( vert );
+
+		}
+
+		pLog.innerHTML =  'area: ' + THREE.ShapeUtils.area( verts.reverse() );//.toLocaleString();
+
+
+		getArea( verts );
+		polygonArea2( verts );
+
+	}
+
+
+	function getArea( vertices ) {
+
+	 var total = 0;
+
+		for ( var i = 0, l = vertices.length; i < l; i++ ) {
+
+			var addX = vertices[ i ].x;
+			var addY = vertices[ i == vertices.length - 1 ? 0 : i + 1 ].y;
+
+			var subX = vertices[ i == vertices.length - 1 ? 0 : i + 1 ].x;
+			var subY = vertices[ i ].y;
+
+			total += ( addX * addY );
+			total -= ( subX * subY );
+
+		}
+
+console.log( 'tot', Math.abs( total ) );
+
+		pLog2.innerHTML = JSON.stringify( vertices );
+
+		return Math.abs( total );
+
+	}
+
+
+
+
+
+	function polygonArea( X, Y, numPoints ) {
+
+		var xPts = [ 3, 3, 2, 2, 3, 3, 6, 6, 9, 9, 4, 4 ];
+		var yPts = [ 2, 4, 4, 5, 5, 6, 6, 5, 5, 3, 3, 2 ];
+
+		numPoints = xPts.length;
+		area = 0;  // Accumulates area in the loop
+		j = numPoints - 1;  // The last vertex is the 'previous' one to the first
+
+		for ( i = 0; i < numPoints; i++ ) {
+
+			area = area + ( xPts[ j ] + xPts[ i ] ) * ( yPts[ j ] - yPts[ i ] );
+			j = i;  //j is previous vertex to i
+
+		}
+
+console.log("Area  = " + area/ 2 );
+
+	  return area/2;
+
+	}
+
+
+
+	function polygonArea2( vectors ) {
+
+//		vectors = [ v2( 0, 10 ), v2( 0, 60 ), v2( 50, 110 ), v2( 50, 10 ) ];
+
+		numPoints = vectors.length;
+		area = 0;
+		j = numPoints - 1;
+
+		for ( i = 0; i < numPoints; i++ ) {
+
+			area = area + ( vectors[j].x + vectors[i].x ) * ( vectors[j].y - vectors[i].y );
+			j = i;  //j is previous vertex to i
+
+		}
+
+console.log( "Area  = " + area  );
+
+	  return area/2;
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

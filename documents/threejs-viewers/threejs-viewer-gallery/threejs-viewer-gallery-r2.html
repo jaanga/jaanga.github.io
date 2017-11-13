@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-11-01" >
+<title>Three.js Examples Gallery</title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 900px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/* 	#divContents { left: 0; margin: 20px; max-width: 350px; position: absolute; top: 0; } */
+
+	iframe { border: 1px solid green; height: 100%; width: 100%; }
+
+	.example { border: 0px solid red; display: inline-block; height: 300px; margin: 0 20px 20px 0; position: relative; overflow: hidden; width: 240px; }
+	.container { border: 0px solid red; height: 240px; width: 240px; overflow: hidden; }
+	.divIframe { border: 0px solid red; height: 960px; width: 960px; transform: scale( 0.25 ); transform-origin: 0 0; }
+
+</style>
+</head>
+<body>
+
+	<div id = "divContents" >
+
+		<div><a id=topp href=http://jaanga.github.io >jaanga</a> » <a href=http://jaanga.github.io/documents/ >documents</a></div>
+
+		<h1 id = "divTitle" ><a href='' >Three.js Examples Gallery</a></h1>
+
+		<p>Scroll through a gallery of hundreds of WebGL files on a single web page.</p>
+
+		<p id=menuCount ></p>
+
+		<div id=divItems ></div>
+
+	</div>
+
+<script>
+
+
+	const urlGitHubAPIContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
+	const urlSourceCode = 'https://github.com/mrdoob/three.js/tree/dev/examples/';
+	const urlExamples = 'https://mrdoob.github.io/three.js/examples/';
+
+	var iframeContainers = [];
+	var iframesActive = [];
+	var iframesActiveLimit = 15;
+
+	init();
+	animate();
+
+
+	function init() {
+
+		requestFile( urlGitHubAPIContents, callbackGallery );
+
+	}
+
+
+
+	function callbackGallery( xhr ) {
+
+		let response, json, contentText;
+
+		response = xhr.target.response;
+
+		json = JSON.parse( response );
+		let files = [];
+		let categories = [];
+//console.log( 'files', files );
+
+		contentText = '';
+
+		for ( let file of json ) {
+
+			if ( !file.name.endsWith( '.html' ) ) { continue; }
+//console.log( '', file );
+				const id = file.name.slice( 0, -5 );
+				files.push( id );
+
+				let title = id.split( '_' );
+
+				const category = title.shift();
+				title = title.join().replace( /,/gi, ' ' );
+
+				if ( categories.indexOf( category ) === -1 ) {
+
+					categories.push( category );
+					contentText += '<h2>' + category + '</h2>';
+
+				}
+
+				contentText +=
+
+					'<div class=example >' +
+						'<div class=container >' +
+							'<div class=divIframe id=' + id + ' ></div>' +
+						'</div>' +
+						'<h3>' +
+							'<a href=' + urlExamples + file.name + 
+							' title="' + file.size.toLocaleString() + ' bytes"  >' + 
+							 title + '</a> ' +
+							'<a href=' + urlSourceCode + file.name +
+							' title="Edit me" >&#x1f589;</a>' +
+							'</div>' +
+						'</h3>' +
+					'</div>' +
+
+				'';
+		}
+
+		menuCount.innerHTML = files.length + ' files';
+		divItems.innerHTML = contentText;
+
+		iframeContainers = document.getElementsByClassName( 'divIframe' );
+
+	}
+
+
+
+	function updateIframe( activeContainer ) {
+
+		const iframes = document.getElementsByTagName( 'iframe' );
+
+		if ( iframes.length > iframesActiveLimit ) {
+
+			const frameTooMany = iframesActive.shift();
+			frameTooMany.innerHTML = '';
+
+		}
+
+		if ( activeContainer.innerHTML === '' ) {
+
+			activeContainer.innerHTML = '<iframe src=' + urlExamples + activeContainer.id + '.html' +' ></iframe>';
+			iframesActive.push( activeContainer );
+
+//			fileName = activeContainer.id;
+
+		}
+
+	}
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+
+		for ( let iframeContainer of iframeContainers ) {
+
+			const rect = iframeContainer.getBoundingClientRect();
+
+			if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+			updateIframe( iframeContainer );
+
+		}
+
+	}
+
+
+
+	function requestFile( url, callback ) {
+
+		const xhr = new XMLHttpRequest();
+//		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+//		xhr.onprogress = function( xhr ) { console.log(  'bytes loaded: ' + xhr.loaded.toLocaleString() ) }; /// or something
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+
+</script>
+</body>
+</html>
