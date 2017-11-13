@@ -1,3 +1,7 @@
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/pennyshine "View file as a web page." ) </span>
+
+
+
 
 # pennyShine Read Me
 
@@ -26,10 +30,10 @@ _Parse DXF to Three.js - with experimental 'create extrusions' turned on_
 * But for the moment it's just a work or art or a piece of crap or whatever
 
 
-### Full screen: [Parse DXF to Three.js R1.html]( parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html )
+### Full screen: [Parse DXF to Three.js R1.html]( https://jaanga.github.io/demo/pennyshine/parse-dxf-to-threejs/parse-dxf-to-threejs-r1.html )
 
 
-### Full screen: [Jochen Gross’ 50 Digital Wood Joints]( dxf-samples/2D_DXF10/dxf-viewer-github-api-samples.html )
+### Full screen: [Jochen Gross’ 50 Digital Wood Joints]( https://jaanga.github.io/demo/pennyshine/dxf-samples/2D_DXF10/dxf-viewer-github-api-samples.html )
 
 * From <http://www.flexiblestream.org/project/50-digital-wood-joints>
 * 5O different DXF files - many display with errors - and we don't know why yet
@@ -38,9 +42,9 @@ _Parse DXF to Three.js - with experimental 'create extrusions' turned on_
 
 * A few minor hacks added to GDS Estimating so it runs off a static host server such as GitHub Pages
 
-### [DXF Parser GDS Estimating]( three-dxf//parse-dxf-to-threejs-gdsestimating.html )
+### [DXF Parser GDS Estimating]( ttps://jaanga.github.io/demo/pennyshine/three-dxf/parse-dxf-to-threejs-gdsestimating.html )
 
-### [Three-DXF]( three-dxf/three-dxf.html )
+### [Three-DXF]( ttps://jaanga.github.io/demo/pennyshine/three-dxf/three-dxf.html )
 
 
 ## Links of Interest
