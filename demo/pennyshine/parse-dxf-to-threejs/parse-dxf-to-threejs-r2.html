@@ -6,7 +6,7 @@
 <meta name=description content="Read a DXF file and translate it into 3D" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2017-11-12" >
-<title></title>
+<title>Parse DXF to Three.js R2</title>
 <style>
 
 	body { font: 11pt monospace; margin: 0; overflow: hidden; }
@@ -28,14 +28,17 @@
 
 	<div id = "divMenu" >
 
-		<div id = "divTitle" ></div>
+		<h2>
+			<a id = "urlInfo" target="_top" ><img src="https://status.github.com/images/invertocat.png" height=18 ></a>
+			<a href="" ><script> document.write( document.title )</script></a>
+		</h2>
 
 		<p>
 			<input type=file id=inpFile onchange=openFile(this); >
 		<p>
 
 		<p>
-			<input type=checkbox id=inpExtrude checked >Create Extrusions
+			<input type=checkbox id=inpExtrude >Create Extrusions
 		</p>
 
 
@@ -135,9 +138,8 @@
 
 	function init() {
 
-		divTitle.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +'</a></h1>';
+		urlInfo.href = 'https://github.com/jaanga/jaanga.github.io/tree/master/demo/pennyshine'
 
-		divTitle.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +'</a></h1>';
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
@@ -152,7 +154,7 @@
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 //		controls.target.set( 0, 0, 20 );
-		controls.autoRotate = true;
+//		controls.autoRotate = true;
 
 		scene = new THREE.Scene();
 
@@ -184,17 +186,17 @@
 		scene.add( mesh );
 */
 
-		var loader = new THREE.FontLoader();
+		const loader = new THREE.FontLoader();
 
-		loader.load( 'https://cdn.rawgit.com/mrdoob/three.js/dev/examples/fonts/helvetiker_regular.typeface.json', function ( response ) {
+		loader.load( 'https://cdn.rawgit.com/mrdoob/three.js/dev/examples/fonts/helvetiker_regular.typeface.json', 
+			function ( response ) {
 			font = response;
-		});
-
-//		requestFile( urlDXF );
+		} );
 
 		onHashChange();
 
 	}
+
 
 
 	function onHashChange() {
@@ -202,21 +204,6 @@
 		const url = !location.hash ? urlDXF : location.hash.slice( 1 );
 
 		requestFile( url );
-
-	}
-
-	function openFile( files ) {
-
-		var fileData, reader, data;
-
-		reader = new FileReader();
-		reader.onload = function( event ) {
-
-			parseDXF( reader.result );
-
-		}
-
-		reader.readAsText( files.files[0] );
 
 	}
 
@@ -229,10 +216,27 @@
 		xhr.open( 'GET', url, true );
 		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
 		xhr.onprogress = function( xhr ) { console.log( 'bytes loaded:', xhr.loaded  ); }; /// or something
-		xhr.onload = function( xhr ){ parseDXF( xhr.target.response ); }
+		xhr.onload = function( xhr ){ parseDXF( xhr.target.response ); };
 		xhr.send( null );
 
 	}
+
+
+
+	function openFile( files ) {
+
+		const reader = new FileReader();
+		reader.onload = function( event ) {
+
+			parseDXF( reader.result );
+
+		}
+
+		reader.readAsText( files.files[0] );
+
+	}
+
+
 
 
 	function parseDXF( text ) {
@@ -244,12 +248,101 @@
 
 console.log( '', dxf );
 
+		drawDXF( dxf );
+
 		listLayers( dxf );
 
-		drawDXF( dxf );
+		selectPanels();
 
 	}
 
+
+	function selectPanels() {
+
+
+		layer = 'OUTSIDE__725';
+
+		panels = [];
+		notPanels = [];
+
+		objectDXF.traverse( function ( child ) {
+
+			if ( child instanceof THREE.Line ) {
+
+				if ( child.userData.entity.layer === layer ) {
+
+					panels.push( child );
+
+				} else {
+
+					notPanels.push( child );
+
+				}
+
+			}
+
+		} );
+
+
+
+		for ( let i = 0; i < panels.length; i++ ) {
+
+
+			vertices = panels[ i ].geometry.vertices;
+			const geometry = new THREE.Geometry().setFromPoints( vertices );
+			geometry.computeBoundingBox();
+
+			bboxPanel = new THREE.Box3( geometry.boundingBox.min, geometry.boundingBox.max )
+console.log( '', bboxPanel );
+
+			shape = new THREE.Shape( vertices );
+
+console.log( '', shape );
+
+			for ( let j = 0; j < notPanels.length; j++ ) {
+
+
+				verticesNotPanel = notPanels[ j ].geometry.vertices;
+				const geometryNotPanel = new THREE.Geometry().setFromPoints( verticesNotPanel );
+				geometryNotPanel.computeBoundingBox();
+				bboxNotPanel = new THREE.Box3( geometryNotPanel.boundingBox.min, geometryNotPanel.boundingBox.max );
+
+				if ( bboxNotPanel.intersectsBox( bboxPanel ) ) {
+
+console.log( '', bboxNotPanel );
+					const hole = new THREE.Path();
+
+					hole.setFromPoints( notPanels[ j ].geometry.vertices );
+
+					shape.holes.push( hole );
+
+				}
+
+			}
+
+
+			try {
+
+				geometryMesh = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: 2 } );
+
+			} catch ( e ) {
+
+console.log( '', e );
+
+			}
+
+			material = new THREE.MeshPhongMaterial( { color: panels[ 0 ].material.color } );
+			mesh = new THREE.Mesh( geometryMesh, material );
+			mesh.castShadow = mesh.receiveShadow = true;
+			mesh.position.z = 10;
+	//		mesh.userData = line.userData;
+			objectDXF.add( mesh );
+
+
+
+		}
+
+	}
 
 
 	function listLayers( dxf ) {
@@ -260,7 +353,8 @@ console.log( '', dxf );
 
 		for ( let layer in layers ) {
 
-			color = layers[ layer ].color.toString(16) 
+			color = layers[ layer ].color.toString( 16 );
+
 			txt += '<div ><button style=background-color:#' + color + ' onclick=toggleLayer(this) >' + layers[ layer ].name + '</button> ' + color + '</div>' +
 
 		'';
@@ -272,24 +366,24 @@ console.log( '', dxf );
 	}
 
 
-	function toggleLayer( that ){
 
-tt = that
-//console.log( '', that );
+	function toggleLayer( that ){
 
 		layer = that.innerText;
 
 		objectDXF.traverse( function ( child ) {
 
 			if ( child instanceof THREE.Mesh && child.userData.entity.layer === layer ) {
-//console.log( '',  child.userData )
+
 				child.visible = !child.visible;
 
-//				child.material.needsUpdate = true;
 			}
+
 		} );
 
 	}
+
+
 
 	function drawDXF( dxf ) {
 
@@ -486,9 +580,9 @@ console.log( '', e );
 		var geometry, material, text;
 
 
-		if( !font) 
+		if( !font)
 			return console.warn('Text is not supported without a Three.js font loaded with THREE.FontLoader! Load a font of your choice and pass this into the constructor. See the sample for this repository or Three.js examples at http://threejs.org/examples/?q=text#webgl_geometry_text for more details.');
-		
+
 		geometry = new THREE.TextGeometry(entity.text, { font: font, height: 0, size: entity.textHeight || 12 });
 
 		material = new THREE.MeshBasicMaterial({ color: getColor(entity, data) });
