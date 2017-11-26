@@ -36,12 +36,13 @@
 	<div id = "divXML" ></div>
 
 <script>
+// http://onwebdevelopment.blogspot.com/2008/05/converting-xml-to-json.html
+// scroll down
 
-	let txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
 	let json = {
 		gbXML: {
-			"@attributes": { id: "Facility" },
+			"@attributes": { xmlns: "http://www.gbxml.org/schema", xmlns_xsd: "http://www.w3.org/2001/XMLSchema" },
 			Campus: {
 				 "@attributes": { "id" : "Facility" },
 				DaylightSavings: true,
@@ -68,11 +69,16 @@
 
 	function init() {
 
-		divTitle.innerHTML = '<h2><a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a></h2>';
+		divTitle.innerHTML = 
+			'<h2>' +
+				'<a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a>' +
+			'</h2>';
 
 		updateXml();
 
 	}
+
+
 
 	function updateXml() {
 
@@ -105,14 +111,18 @@
 			}
 
 			if ( prop === '@attributes' ) { // attributes
-console.log( 'atttsss', prop );
+
+console.log( obj, 'has attributes', prop );
 
 				for ( var y in obj[ prop ] ) {
 
-					if ( obj[ prop ].hasOwnProperty( y ) ) {
+console.log( 'y', y ); 
 
-//					node.setAttribute(y, json[x][y]);
-console.log( 'att', y, obj[ prop ][ y ] );
+					if ( obj[ prop ].hasOwnProperty( y ) ) {
+console.log( 'obj[ prop ]', obj[ prop ] );
+//					obj[ prop ].setAttribute( y, obj[ prop ][y]);
+console.log( 'attHasProperty', y );
+console.log( 'prop', obj[ prop ][ y ] );
 
 					}
 
