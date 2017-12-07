@@ -37,7 +37,7 @@
 */
 
 	#divMenu { background-color: var( --mnu-back-color ); box-sizing: border-box; margin: 20px;
-		overflow-x: hidden; padding: 30px 10px 30px 10px; position: fixed; top: 0; width: var( --mnu-width ); z-index: 1; transition: 0.5s; }
+		overflow-x: hidden; padding: 10px 10px 30px 10px; position: fixed; top: 0; width: var( --mnu-width ); z-index: 1; transition: 0.5s; }
 
 	#hamburger { background-color: pink; box-sizing: border-box; cursor: pointer; font-size: 30px; left: calc( var( --mnu-width ) - 100px );
 		line-height: 30px; margin: 0; padding: 5px 15px 8px 10px; position: fixed; top: 0; transition: left .5s; z-index: 10; }
@@ -80,6 +80,17 @@
 
 
 		<div id = "divContents" >
+
+			<p>All still at a very early stage - with many errors</p>
+
+			<p>
+				Axis RGB = XYZ directions<br>
+				Use one/two/three fingers to rotate/zoom/pan the display in 3D<br>
+					Or left/scroll/right with your pointing device<br>
+				Click the three bars( 'hamburger menu icon' ) to slide the menu in and out<br>
+				Press Control-U/Command-Option-U to view the source code<br>
+				Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors<br>
+			</p>
 			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
 		</div>
 
@@ -137,7 +148,9 @@
 		camera.up.set( 0, 0, 1 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
-		controls.target.set( 40, 20, 0 )
+		controls.target.set( 40, 20, 0 );
+		controls.autoRotate = true;
+
 		scene = new THREE.Scene();
 
 		window.addEventListener( 'resize', onWindowResize, false );
