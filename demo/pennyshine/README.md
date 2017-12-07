@@ -73,6 +73,10 @@ SketchUp
 ## Change Log
 
 
+### 2017-12-07 ~ Theo
+
+* Finish Cabinet R2 stage 1
+
 ### 2017-11-17 ~ Theo
 
 * Add Sample Cabinet R1

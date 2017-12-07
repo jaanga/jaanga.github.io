@@ -5,7 +5,7 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Real-time 3D in your browser with menu sliding" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2017-11-17" >
+<meta name = "date" content = "2017-12-07" >
 <title></title>
 <style>
 /* Copyright 2017 pushMe pullYou authors. MIT License */
@@ -91,13 +91,14 @@
 <script>
 
 
-	let sheet1, sheet2, cabinet;
+	let sheet1, sheet2, cabinet, drawer;
 
 	let width = 30;
 	let height = 30;
 	let depth = 24;
 	let thickness = 1;
 	let thickness2 = 0.5;
+	let upstand = 6;
 
 
 	const drawerHeight = 6;
@@ -112,9 +113,11 @@
 	let drawerWidth;
 	let bottomDepth;
 
+	const radius = 1;
+	const pi = Math.PI;
+	const pi05 = Math.PI * 0.5;
 	const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
 	const v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
-
 
 	var renderer, camera, controls, scene;
 	var geometry, material, mesh;
@@ -163,6 +166,8 @@
 
 		cabinet = {};
 
+		drawer = {};
+
 		updateDimensions();
 
 	}
@@ -191,6 +196,8 @@
 
 		drawCabinet();
 
+		drawDrawer();
+
 	}
 
 
@@ -216,7 +223,7 @@
 */
 		cabinet.group.add( panelSide1 );
 
-		panelSide2 = drawSidePanel();
+		const panelSide2 = drawSidePanel();
 		panelSide2.rotation.y = - Math.PI / 2
 		panelSide2.position.x = width;
 		cabinet.group.add( panelSide2 );
@@ -224,13 +231,15 @@
 
 		doorLeft = drawDoor();
 		doorLeft.rotation.x = Math.PI / 2;
+		doorLeft.rotation.y = - Math.PI / 3.6;
 		doorLeft.position.x = thickness;
 		doorLeft.position.y = thickness;
 		cabinet.group.add( doorLeft );
 
-		doorRight = drawDoor();
+		const doorRight = drawDoor();
 		doorRight.rotation.x = Math.PI / 2;
-		doorRight.position.x = thickness + doorWidth;
+		doorRight.rotation.y = Math.PI;
+		doorRight.position.x = width- thickness;
 		doorRight.position.y = thickness;
 		cabinet.group.add( doorRight );
 
@@ -239,9 +248,98 @@
 		drawerFront.position.x = thickness;
 		drawerFront.position.y = thickness;
 		drawerFront.position.z = doorHeight;
-		cabinet.group.add( drawerFront );
+//		cabinet.group.add( drawerFront );
 
+		const bottom = drawBottom();
+		bottom.position.x = thickness;
+		bottom.position.y = thickness;
+		cabinet.group.add( bottom );
+
+		const shelf = drawShelf();
+		shelf.position.x = thickness;
+		shelf.position.y = 2 * thickness;
+		shelf.position.z = 0.5 * doorHeight;
+		cabinet.group.add( shelf );
+
+		back1 = drawBack();
+		back1.rotation.x = Math.PI / 2;
+		back1.position.x = thickness;
+		back1.position.y = depth;
+		cabinet.group.add( back1 );
+
+		const braceFront = drawBrace();
+		braceFront.rotation.z = + Math.PI / 2;
+		braceFront.position.x = width - thickness;
+		braceFront.position.y = thickness;
+		braceFront.position.z = height - thickness; //upstand;
+		cabinet.group.add( braceFront );
+
+		const braceBack = drawBrace();
+		braceBack.rotation.z = - Math.PI / 2;
+		braceBack.position.x = thickness;
+		braceBack.position.y = depth - thickness;
+		braceBack.position.z = height - thickness; //upstand;
+		cabinet.group.add( braceBack );
+
+		basePlate1 = drawBasePlate();
+		basePlate1.rotation.z = -Math.PI / 2;
+		basePlate1.rotation.x = Math.PI / 2;
+//		basePlate1.position.x = width - thickness + width - thickness + width - thickness;
+		basePlate1.position.y = 5 * thickness;
+		basePlate1.position.z = 0; //upstand;
+		cabinet.group.add( basePlate1 );
+
+		cabinet.group.position.set( 20, -20 , 0 );
 		scene.add( cabinet.group );
+
+	}
+
+
+	function drawDrawer() {
+
+		scene.remove( drawer.group );
+
+		drawer.group = new THREE.Group();
+
+		const drawerFront = drawDrawerFront();
+		drawerFront.rotation.x = Math.PI / 2;
+//		drawerFront.position.x = thickness;
+//		drawerFront.position.y = thickness;
+		drawerFront.position.z = doorHeight;
+		drawer.group.add( drawerFront );
+
+		drawerFrontInside1 = drawDrawerFrontInside();
+		drawerFrontInside1.rotation.x = Math.PI / 2;
+		drawerFrontInside1.position.x = 0
+		drawerFrontInside1.position.y = thickness;
+		drawerFront.position.z = 0
+		drawer.group.add( drawerFrontInside1 );
+
+
+		drawerSide1 = drawDrawerSide();
+		drawerSide1.rotation.x = Math.PI / 2;
+		drawerSide1.rotation.y = Math.PI / 2;
+		drawer.group.add( drawerSide1 );
+
+		drawerSide2 = drawDrawerSide();
+		drawerSide2.rotation.x = Math.PI / 2;
+		drawerSide2.rotation.y = Math.PI / 2;
+		drawerSide2.position.x = drawerWidth - thickness;
+		drawer.group.add( drawerSide2 );
+
+		drawerBack1 = drawDrawerBack();
+		drawerBack1.rotation.x = Math.PI / 2;
+
+		drawerBack1.position.x = 0;
+		drawerBack1.position.y = depth - thickness;
+		drawer.group.add( drawerBack1 );
+
+		drawerBottom = drawDrawerBottom();
+		drawerBottom.position.z = 0.5 * thickness;
+		drawer.group.add( drawerBottom );
+
+		drawer.group.position.set( thickness, thickness , height - drawerHeight );
+		cabinet.group.add( drawer.group );
 
 	}
 
@@ -256,24 +354,127 @@
 		sheet2.group.add( drawerSide1 );
 
 		drawerSide2 = drawDrawerSide();
-		sheet2.group.add( drawerSide2 );
 		drawerSide2.position.x = depth - 2 * thickness + thickness;
+		sheet2.group.add( drawerSide2 );
 
 		drawerSide3 = drawDrawerSide();
-		sheet2.group.add( drawerSide3 );
 		drawerSide3.position.x = 2 * ( depth - 2 * thickness + thickness );
+		sheet2.group.add( drawerSide3 );
 
 		drawerSide4 = drawDrawerSide();
-		sheet2.group.add( drawerSide4 );
 		drawerSide4.position.x = 3 * ( depth - 2 * thickness + thickness );
-
+		sheet2.group.add( drawerSide4 );
 
 		drawerBottom = drawDrawerBottom();
-		sheet2.group.add( drawerBottom );
 		drawerBottom.position.y = drawerHeight;
+		sheet2.group.add( drawerBottom );
 
+		drawerBottom = drawDrawerBottom();
+		drawerBottom.position.y = drawerHeight + depth - thickness;
+		sheet2.group.add( drawerBottom );
+
+		drawerFrontInside1 = drawDrawerFrontInside();
+		drawerFrontInside1.position.x = width - thickness;
+		drawerFrontInside1.position.y = drawerHeight + thickness;
+		sheet2.group.add( drawerFrontInside1 );
+
+		drawerFrontInside2 = drawDrawerFrontInside();
+		drawerFrontInside2.position.x = width + width - 2 * thickness;
+		drawerFrontInside2.position.y = drawerHeight + thickness;
+		sheet2.group.add( drawerFrontInside2 );
+
+
+		drawerBack1 = drawDrawerBack();
+		drawerBack1.position.x = width - thickness;
+		drawerBack1.position.y = drawerHeight + thickness + drawerHeight + thickness;
+		sheet2.group.add( drawerBack1 );
+
+		drawerBack2 = drawDrawerBack();
+		drawerBack2.position.x = width - thickness + drawerWidth + thickness;
+		drawerBack2.position.y = drawerHeight + thickness + drawerHeight + thickness;
+		sheet2.group.add( drawerBack2 );
+
+
+		back1 = drawBack();
+		back1.position.x = width - thickness;
+		back1.position.y = drawerHeight + thickness + drawerHeight + thickness + drawerHeight + thickness ;
+		sheet2.group.add( back1 );
+
+		back2 = drawBack();
+		back2.position.x = width - thickness + width - thickness;
+		back2.position.y = drawerHeight + thickness + drawerHeight + thickness + drawerHeight + thickness ;
+		sheet2.group.add( back2 );
+
+
+		basePlate1 = drawBasePlate();
+		basePlate1.position.x = width - thickness + width - thickness + width - thickness;
+		basePlate1.position.y = drawerHeight + thickness + drawerHeight + thickness + drawerHeight + thickness ;
+		sheet2.group.add( basePlate1 );
+
+		basePlate2 = drawBasePlate();
+		basePlate2.position.x = width - thickness + width - thickness + width - thickness + upstand + thickness;
+		basePlate2.position.y = drawerHeight + thickness + drawerHeight + thickness + drawerHeight + thickness ;
+		sheet2.group.add( basePlate2 );
 
 		scene.add( sheet2.group );
+
+	}
+
+
+
+	function drawBasePlate() {
+
+		let shape;
+		vectors = [ v2( 0, 0 ), v2( upstand, 0 ), v2( upstand, width ), v2( 0, width ) ];
+
+		shape = new THREE.Shape( vectors );
+		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
+		const mesh = new THREE.Mesh( geometry, material );
+
+		const edges = new THREE.EdgesGeometry( geometry );
+		const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		mesh.add( line );
+
+		return mesh;
+
+	}
+
+
+
+	function drawBack() {
+
+		let shape;
+		vectors = [ v2( 0, 0 ), v2( width - 2 * thickness, 0 ), v2( width - 2 * thickness, height ), v2( 0, height ) ];
+
+		shape = new THREE.Shape( vectors );
+		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
+		const mesh = new THREE.Mesh( geometry, material );
+
+		const edges = new THREE.EdgesGeometry( geometry );
+		const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		mesh.add( line );
+
+		return mesh;
+
+	}
+
+
+
+	function drawDrawerBack() {
+
+
+		let shape;
+		vectors = [ v2( 0, 0 ), v2( width - 2 * thickness, 0 ), v2( width - 2 * thickness, drawerHeight  - thickness ), v2( 0, drawerHeight - thickness ) ];
+
+		shape = new THREE.Shape( vectors );
+		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
+		const mesh = new THREE.Mesh( geometry, material );
+
+		const edges = new THREE.EdgesGeometry( geometry );
+		const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		mesh.add( line );
+
+		return mesh;
 
 	}
 
@@ -297,6 +498,7 @@
 	}
 
 
+
 	function drawDrawerBottom() {
 
 		let shape;
@@ -314,6 +516,28 @@
 
 	}
 
+
+
+	function drawDrawerFrontInside() {
+
+		let shape;
+		vectors = [ v2( 0, 0 ), v2( width - 2 * thickness, 0 ), v2( width - 2 * thickness, drawerHeight  - thickness ), v2( 0, drawerHeight - thickness ) ];
+
+		shape = new THREE.Shape( vectors );
+		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
+		const mesh = new THREE.Mesh( geometry, material );
+
+		const edges = new THREE.EdgesGeometry( geometry );
+		const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		mesh.add( line );
+
+		return mesh;
+
+	}
+
+
+
+////
 
 	function drawSheet1() {
 
@@ -334,7 +558,9 @@
 		sheet1.group.add( doorLeft );
 
 		const doorRight = drawDoor();
-		doorRight.position.x = height + thickness + height + thickness + doorWidth;
+		doorRight.rotation.y = pi;
+		doorRight.position.x = height + thickness + height + thickness + 2 * doorWidth;
+		doorRight.position.z = thickness;
 		sheet1.group.add( doorRight );
 
 		const drawerFront = drawDrawerFront();
@@ -342,21 +568,21 @@
 		drawerFront.position.y = doorHeight + thickness;
 		sheet1.group.add( drawerFront );
 
-		braceFront = drawBrace();
+		const braceFront = drawBrace();
 		braceFront.position.x = height + thickness + height + thickness + drawerWidth + thickness;
 		sheet1.group.add( braceFront );
 
-		bottom = drawBottom();
+		const bottom = drawBottom();
 		bottom.position.y = depth + thickness;
 		sheet1.group.add( bottom );
 
-		braceBack = drawBrace();
+		const braceBack = drawBrace();
 		braceBack.rotation.z = Math.PI / 2;
 		braceBack.position.x = drawerWidth + thickness + drawerWidth;
 		braceBack.position.y = depth + thickness;
 		sheet1.group.add( braceBack );
 
-		shelf = drawShelf()
+		const shelf = drawShelf()
 		shelf.position.x = drawerWidth + thickness;
 		shelf.position.y = depth + thickness + braceWidth + thickness;
 		sheet1.group.add( shelf );
@@ -388,10 +614,23 @@
 
 	function drawDoor() {
 
-		let shape;
-		vectors = [ v2( 0, 0 ), v2( doorWidth, 0 ), v2( doorWidth, doorHeight ), v2( 0, doorHeight ) ];
 
-		shape = new THREE.Shape( vectors );
+		let shape;
+
+//		vectors = [ v2( 0, 0 ), v2( doorWidth, 0 ), v2( doorWidth, doorHeight ), v2( 0, doorHeight ) ];
+
+		shape = new THREE.Shape();
+
+		shape.lineTo( doorWidth, 0 );
+		shape.arc( -radius, 10, radius, 0, pi05  );
+		shape.arc( -radius, radius, radius, 1.5 * pi,  pi, true  );
+
+		shape.arc( radius, 3, radius, pi, pi05, true  );
+		shape.arc( radius, radius, radius, 1.5 * pi,  0,  );
+		shape.lineTo( doorWidth, doorHeight );
+		shape.lineTo( 0, doorHeight);
+		shape.lineTo( 0, 0 );
+
 		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
 		const mesh = new THREE.Mesh( geometry, material );
 
@@ -517,12 +756,6 @@
 
 
 
-
-
-
-
-
-
 	function toggleNav() {
 
 		const width = getComputedStyle( document.documentElement ).getPropertyValue( '--mnu-width' );
@@ -556,13 +789,20 @@
 
 	}
 
-
+	var delta = 0;
+	var sign = +1;
 
 	function animate() {
 
 		requestAnimationFrame( animate );
 		renderer.render( scene, camera );
 		controls.update();
+
+		sign = Math.abs( delta ) > 5 ? -sign : sign;
+		delta += 0.05 * sign;
+		drawer.group.position.y = -10 + delta;
+
+		doorLeft.rotation.y = -1 - 0.15 * delta;
 
 	}
 
