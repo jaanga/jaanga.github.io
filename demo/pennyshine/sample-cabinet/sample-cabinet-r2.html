@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="Real-time 3D in your browser with menu sliding" >
+<meta name=description content="a sample cabinet in 3D with a bit of animation" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2017-12-07" >
-<title>sample cabinet r2.1</title>
+<meta name = "date" content = "2017-12-12" >
+<title>sample cabinet r2.2</title>
 <style>
 /* Copyright 2017 pushMe pullYou authors. MIT License */
 
@@ -123,8 +123,11 @@
 	let doorHeight;
 	let drawerFrontWidth;
 	let bottomDepth;
+	const insideHeight = drawerHeight - 2 * thickness;
 
 	const radius = 1;
+	const drillBitRad = 0.2;
+
 	const pi = Math.PI;
 	const pi05 = Math.PI * 0.5;
 	const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
@@ -320,7 +323,7 @@
 		drawer.group.add( drawerFront );
 
 		drawerFrontInside1 = drawDrawerFrontInside();
-		drawerFrontInside1.rotation.x = Math.PI / 2;
+		drawerFrontInside1.rotation.x = -Math.PI / 2;
 		drawerFrontInside1.position.x = thickness;
 		drawerFrontInside1.position.y = thickness;
 		drawerFront.position.z = 0
@@ -389,13 +392,14 @@
 		sheet2.group.add( drawerBottom );
 
 		drawerFrontInside1 = drawDrawerFrontInside();
+
 		drawerFrontInside1.position.x = width - thickness;
-		drawerFrontInside1.position.y = drawerHeight + thickness;
+		drawerFrontInside1.position.y = 2 * drawerHeight + thickness;
 		sheet2.group.add( drawerFrontInside1 );
 
 		drawerFrontInside2 = drawDrawerFrontInside();
 		drawerFrontInside2.position.x = width + width - 2 * thickness;
-		drawerFrontInside2.position.y = drawerHeight + thickness;
+		drawerFrontInside2.position.y = 2 * drawerHeight + thickness;
 		sheet2.group.add( drawerFrontInside2 );
 
 
@@ -497,9 +501,30 @@
 	function drawDrawerSide() {
 
 		let shape;
-		vectors = [ v2( 0, 0 ), v2( depthDrawer, 0 ), v2( depthDrawer, drawerHeight  - 2 * thickness ), v2( 0, drawerHeight - 2 * thickness ) ];
+//		vectors = [ v2( 0, 0 ), v2( depthDrawer, 0 ), v2( depthDrawer, drawerHeight  - 2 * thickness ), v2( 0, drawerHeight - 2 * thickness ) ];
 
-		shape = new THREE.Shape( vectors );
+
+		shape = new THREE.Shape();
+
+
+		shape.moveTo( thickness2, 0 );
+		shape.lineTo( depthDrawer - thickness2, 0 );
+		shape.arc( 0, 1 + drillBitRad, drillBitRad, -pi05, pi05, true );
+		shape.lineTo( depthDrawer, 1 + 2 * drillBitRad );
+		shape.lineTo( depthDrawer, insideHeight - 1 - 2 * drillBitRad );
+		shape.arc( - thickness2, drillBitRad, drillBitRad, -pi05, pi05, true );
+		shape.lineTo( depthDrawer - thickness2, insideHeight );
+		shape.lineTo( thickness2, insideHeight );
+		shape.arc( 0, -1 - drillBitRad, drillBitRad, pi05, -pi05, true );
+		shape.lineTo( 0, insideHeight -1 - 2 * drillBitRad );
+		shape.lineTo( 0, 1 + 2 * drillBitRad );
+		shape.arc( thickness2, - drillBitRad, drillBitRad, pi05, -pi05, true );
+		shape.lineTo( thickness2, 0 );
+
+		var hole = new THREE.Path();
+		hole.fromPoints( [ v2( 6, thickness2 ), v2( depthDrawer - 6, thickness2 ), v2( depthDrawer - 6, 2 * thickness2 ), v2( 6, 2 * thickness2 ) ] );
+		shape.holes.push( hole );
+
 		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
 		const mesh = new THREE.Mesh( geometry, material );
 
@@ -540,9 +565,15 @@
 
 		shape = new THREE.Shape();
 
-		shape.lineTo( widthDrawer, 0 );
+		shape.moveTo( widthDrawer - thickness2, 0 );
+		shape.lineTo( widthDrawer - thickness2, 1 );
+		shape.arc( 0, drillBitRad, drillBitRad, -pi05, pi05, true );
+		shape.lineTo( widthDrawer, 1 + 2 * drillBitRad );
+		shape.lineTo( widthDrawer, drawerHeight  - thickness - 1 - 2 * drillBitRad );
+		shape.arc( - thickness2, drillBitRad, drillBitRad, -pi05, pi05, true );
 
-		shape.lineTo( widthDrawer, drawerHeight - thickness);
+		shape.lineTo( widthDrawer - thickness2, drawerHeight - thickness );
+
 
 		shape.arc( -3, -radius, radius, pi05, pi );
 		shape.arc( -radius, -radius, radius, 0, -pi05, true );
@@ -550,11 +581,16 @@
 		shape.arc( -16, radius, radius, -pi05, pi, true );
 		shape.arc( -radius, radius, radius, 0, pi05 );
 
-		shape.lineTo( 0, drawerHeight - thickness);
-		shape.lineTo( 0, 0 );
+		shape.lineTo( thickness2, drawerHeight - thickness );
+		shape.arc( 0, -1 - drillBitRad, drillBitRad, pi05, -pi05, true );
+		shape.lineTo( 0, drawerHeight - thickness -1 - 2 * drillBitRad );
+		shape.lineTo( 0, 1 + 2 * drillBitRad );
+		shape.arc( thickness2, - drillBitRad, drillBitRad, pi05, -pi05, true );
+		shape.lineTo( thickness2, 0 );
 
 //		shape = new THREE.Shape( vectors );
 		geometry = new THREE.ExtrudeGeometry( shape, { bevelEnabled: false, amount: thickness } );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI ) );
 		const mesh = new THREE.Mesh( geometry, material );
 
 		const edges = new THREE.EdgesGeometry( geometry );
@@ -716,6 +752,7 @@
 	}
 
 
+
 	function drawBrace() {
 
 		let shape;
@@ -732,10 +769,6 @@
 		return mesh;
 
 	}
-
-
-
-
 
 
 
@@ -774,7 +807,6 @@
 		return mesh;
 
 	}
-
 
 
 
@@ -826,6 +858,8 @@
 		doorLeft.rotation.y = -1 - 0.15 * delta;
 
 	}
+
+
 
 </script>
 </body>
