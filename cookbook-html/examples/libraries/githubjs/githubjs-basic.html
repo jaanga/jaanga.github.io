@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2017-12-15" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+<script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
+
+	<div id = "divHeader" >
+
+		<div id = "divTitle" ></div>
+		<div id = "divContents" >
+
+			<p><button onclick=getOauth(); >getOauth</button></p>
+
+			<p><button onclick=getUser(); >getUser</button></p>
+
+			<p><button onclick=getRateLimit(); >getRateLimit</button></p>
+
+			<p><button onclick=getGists(); >getGists</button></p>
+
+			<p><button onclick=commitFile(); >commitFile</button></p>
+		</div>
+
+	</div>
+
+	<div id = "divMenu" ></div>
+
+<script>
+
+	let txt;
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		divTitle.innerHTML =
+			'<h2>' +
+				'<a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a>' +
+			'</h2>';
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divContents.innerHTML += b + txt;
+
+	}
+
+
+
+	function getOauth() {
+
+		var noAuth = new GitHub();
+
+		// you can authenticate with username and password
+		var passwordAuth = new GitHub({
+			username: 'theo-armour',
+			password: 'A8*r7e*RnjjF2%mQMHKN'
+		});
+		/*
+		// you can also provide an OAuth token to authenticate the requests
+		var oauthAuth = new GitHub({
+		token: 'MY_OAUTH_TOKEN'
+		});
+		*/
+
+		console.log( 'passwordAuth', passwordAuth );
+
+}
+
+
+
+	function getRateLimit() {
+
+		var gh = new GitHub();
+
+// check our rate-limit status
+// since we're unauthenticated the limit is 60 requests per hour
+		gh.getRateLimit().getRateLimit()
+
+		.then( function( resp ) {
+
+			divContents.innerHTML +=
+				'<h3>Rate limits</h3>' +
+				'Limit remaining: ' + resp.data.rate.remaining + b +
+				'Reset date: ' + new Date(resp.data.rate.reset * 1000) + b +
+			'';
+
+		}).catch(function(error) {
+
+			console.log('Error fetching rate limit', error.message);
+
+		});
+
+
+
+	}
+
+
+
+	function getUser() {
+
+		gh = new GitHub({
+			username: 'theo-armour',
+//			password: 'A8*r7e*RnjjF2%mQMHKN'
+			token: 'b69e8fa17222acfdc9879977dff1aa98125ee8d0'
+		});
+
+		me = gh.getUser();
+
+	//	me.listNotifications()
+		me.listGists()
+		.then( function( response, notificions) {
+		// do some stuff
+
+console.log( 'me', me );
+
+console.log( 'response', response );
+
+
+		});
+
+
+		const clayreimann = gh.getUser('clayreimann');
+		clayreimann.listStarredRepos()
+		.then(function({data: reposJson}) {
+	console.log(`clayreimann has ${reposJson.length} repos!`);
+		});
+
+
+
+
+	}
+
+	function getGists() {
+
+// unauthenticated client
+		var gh = new GitHub({
+//		username: 'theo-armour',
+//		password: 'A8*r7e*RnjjF2%mQMHKN',
+		token: 'b69e8fa17222acfdc9879977dff1aa98125ee8d0'
+		});
+
+		gist = gh.getGist(); // not a gist yet
+console.log( 'gist', gist );
+
+		data = {
+		public: true,
+		description: 'My 88th gist',
+		files: {
+			"file1.txt": {
+				contents: "Aren't gists great!"
+			}
+		}
+		};
+
+		gist.create(data)
+		.then( function( httpResponse ) {
+
+console.log( 'httpResponse', httpResponse );
+			var gistJson = httpResponse.data;
+/*
+			// Callbacks too
+			gist.read(function(err, gist, xhr) {
+				// if no error occurred then err == null
+				// gistJson == httpResponse.data
+				// xhr == httpResponse
+			});
+*/
+		});
+
+
+
+	}
+
+// https://www.audero.it/blog/2015/10/17/upload-files-on-github-using-github-js/
+
+	function commitFile() {
+
+		var github = new GitHub( {
+		username: 'theo-armour',
+		password: 'A8*r7e*RnjjF2%mQMHKN',
+
+		token: 'b69e8fa17222acfdc9879977dff1aa98125ee8d0',
+
+		auth: 'basic'
+		});
+
+		// Creates an object representing the repository you want to work with
+		repository = github.getRepo('theo-armour', 'cookbook');
+/*
+		// Creates a new file (or updates it if the file already exists)
+		// with the content provided
+		repository.write(
+		'BRANCH_NAME', // e.g. 'master'
+		'path/to/file', // e.g. 'blog/index.md'
+		'THE_CONTENT', // e.g. 'Hello world, this is my new content'
+		'YOUR_COMMIT_MESSAGE', // e.g. 'Created new index'
+		function(err) {}
+		);
+*/
+
+		repository.writeFile(
+			'gh-pages', // e.g. 'master'
+			'./test.txt', // e.g. 'blog/index.md'
+			'THE_CONTENT: Hello world, this is my new content - 123 ',
+			'created using github.js', // e.g. 'Created new index'
+			function(err) {
+
+console.log( 'err', err );
+
+			}
+		);
+
+	}
+
+</script>
+</body>
+</html>
