@@ -9,7 +9,8 @@
 <title></title>
 <style>
 
-	body { font: 12pt monospace; margin: 0 auto; }
+	body { font: 12pt monospace; }
+
 	a { color: crimson; text-decoration: none; }
 	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
@@ -25,22 +26,41 @@
 	<div id = "divHeader" >
 
 		<div id = "divTitle" ></div>
-		<div id = "divContents" >
 
-			<p><button onclick=thing(); >button</button></p>
+		<div id = "divMenu" >
+
+			<button onclick=getEntireSheet(); >getEntireSheet</button>
+
+			<input id=inpCell value='C5' >
+
+			<button onclick=getCell(); >getCell</button>
+
+			<button onclick=getJson(); >getJson</button>
+
+			<button onclick=getRef(); >getRef</button>
+
+			<button onclick=getColumn(); >getColumn</button>
 
 		</div>
 
-	</div>
 
-	<div id = "divMenu" ></div>
+		<div id = "divContents" ></div>
+
+
+
+	</div>
 
 <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 <script>
-var demo = 'xhr', book = 'xlsx';
+// https://github.com/SheetJS/js-xlsx
 
-	let url = 'Euronext_Equities_EU_2018-01-12.xls';
-	let txt;
+//	const url = 'Euronext_Equities_EU_2018-01-12.xls';
+//	const url = 'http://www.londonstockexchange.com/statistics/companies-and-issuers/sfs-instrument-list.xlsx';
+	const url = 'http://www.londonstockexchange.com/statistics/companies-and-issuers/instruments-defined-by-mifir-identifiers-list-on-lse.xlsx';
+//	const url = 'https://www.euronext.com/en/popup/data/download?ml=nyx_pd_stocks&cmd=default&formKey=nyx_pd_filter_values%3A1006ef55d4998cc0fad71db6a6f38530';
+
+
+	let workbook;
 	const b = '<br>';
 
 	init();
@@ -52,20 +72,16 @@ var demo = 'xhr', book = 'xlsx';
 				'<a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a>' +
 			'</h2>';
 
-		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
-//		divContents.innerHTML += b + txt;
+		const  urlCORS = 'https://cors-anywhere.herokuapp.com/';
 
-
-		requestFile( url );
+		requestFile( urlCORS + url, processWB );
 
 	}
 
-	function requestFile( url ) {
+	function requestFile( url, callback ) {
 
-//		let xhr;
-
-		xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest();
 		xhr.crossOrigin = 'anonymous';
 		xhr.open( 'GET', url, true );
 		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
@@ -74,46 +90,107 @@ var demo = 'xhr', book = 'xlsx';
 		xhr.onload = callback;
 		xhr.send();
 
-		function callback( e ) {
+	}
 
-			const data = new Uint8Array( xhr.response );
-			const wb = XLSX.read( data, { type: "array" } );
-			processWB( wb );
 
-		}
+	function processWB( xhr ) {
+
+		const data = new Uint8Array( xhr.target.response );
+		workbook = XLSX.read( data, { type: "array" } );
+//console.log( 'workbook',workbook );
 
 	}
 
 
-	function processWB( wb ) {
 
-console.log( 'wb', wb );
+	function getEntireSheet() {
 
-		divContents.innerHTML = XLSX.utils.sheet_to_html( wb.Sheets[wb.SheetNames[0]], {editable:true}).replace("<table", '<table id="table" border="1"');
+		const htm = XLSX.utils.sheet_to_html( workbook.Sheets[workbook.SheetNames[0]], {editable:true}).replace("<table", '<table id="table" border="1"');
+
+		divContents.innerHTML = htm;
+
 //txt = XLSX.utils.sheet_to_html( wb.Sheets[wb.SheetNames[0]] );
 
-console.log( 'txt', txt );
+//console.log( 'htm', htm );
 
-var first_sheet_name = wb.SheetNames[0];
-var address_of_cell = 'C5';
-
-/* Get worksheet */
-var worksheet = wb.Sheets[first_sheet_name];
-
-/* Find desired cell */
-var desired_cell = worksheet[address_of_cell];
-
-/* Get the value */
-var desired_value = (desired_cell ? desired_cell.v : undefined);
-
-console.log( 'desired_value', desired_value);
-
-		ws = wb.Sheets[first_sheet_name];
-
-		ccc = XLSX.utils.sheet_to_json(ws, {header:3});
-
-console.log( 'ccc', ccc );
 	}
+
+
+
+	function getCell() {
+
+		const firstSheetName = workbook.SheetNames[ 0 ];
+		const addressOfCell =  inpCell.value ? inpCell.value  : 'C5';
+
+		var worksheet = workbook.Sheets[ firstSheetName ];
+		var desiredCell = worksheet[ addressOfCell ];
+		var desiredValue = ( desiredCell ? desiredCell.v : undefined);
+
+//console.log( 'desiredValue', desiredValue);
+
+		divContents.innerHTML = 'symbol: ' + desiredValue;
+
+	}
+
+
+	function getJson() {
+
+		const firstSheetName = workbook.SheetNames[ 0 ];
+		worksheet = workbook.Sheets[ firstSheetName ];
+
+		json = XLSX.utils.sheet_to_json( worksheet );
+
+console.log( 'json', worksheet );
+
+		divContents.innerHTML = JSON.stringify( json );
+
+	}
+
+
+
+	function getRef() {
+
+		const firstSheetName = workbook.SheetNames[ 0 ];
+		ws = workbook.Sheets[ firstSheetName ];
+
+		const ref = XLSX.utils.decode_range( ws[ '!ref' ] );
+
+		divContents.innerHTML =
+
+			'ws ref: ' + ws[ '!ref' ] + b +
+
+			'ws last row: ' + ref.e.r  + b +
+
+			'ws cols: ' + ws[ '!cols' ] + b +
+
+			'ws rows: ' + ws[ '!rows' ] + b +
+
+			'ws C5: ' + ws[ 'C5' ].v + b +
+
+		'';
+
+	}
+
+
+	function getColumn() {
+
+		const firstSheetName = workbook.SheetNames[ 0 ];
+		const ws = workbook.Sheets[ firstSheetName ];
+
+		const ref = XLSX.utils.decode_range( ws[ '!ref' ] );
+		const lastRow = ref.e.r;
+
+		ws['!ref'] = 'C1:C' + lastRow;
+
+		const htm = XLSX.utils.sheet_to_html( ws );
+
+		divContents.innerHTML = htm;
+
+console.log( '',  );
+
+	}
+
+
 
 </script>
 </body>
