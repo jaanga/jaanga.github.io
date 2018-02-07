@@ -4,8 +4,8 @@
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1">
 <meta name = "description" content = "Basic HTML template" >
-<meta name = "keywords" content = "JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2017-12-15" >
+<meta name = "keywords" content = "JavaScript,HTML5,GitHub,FOSS" >
+<meta name = "date" content = "2018-02-03 ~ " >
 <title></title>
 <style>
 
@@ -26,10 +26,7 @@
 
 		<div id = "divTitle" ></div>
 			<p><input id=inpStoredValue onchange=setStorage(); ></p>
-			<p>
-				<button onclick=getStorage(); >getStorage</button>
-				<button onclick=getItems(); >getItems</button>
-		</p>
+			<p><button onclick=getStorage(); >getStorage</button></p>
 		<div id = "divContents" >
 
 
@@ -49,6 +46,8 @@
 
 	function init() {
 
+
+
 		divTitle.innerHTML =
 			'<h2>' +
 				'<a  href = "" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) + '</a>' +
@@ -64,45 +63,16 @@
 
 		const thing = inpStoredValue.value;
 
-		localStorage.setItem('thing', thing );
+		sessionStorage.thing = thing;
 
 	}
 
 	function getStorage() {
 
-		const thing = localStorage.getItem( 'thing' );
+		const thing = sessionStorage.thing;
 		divContents.innerHTML += thing + b;
 
 	}
-
-
-	function getItems() {
-
-		items = localStorage.getItems();
-		let j = JSON.stringify( items )
-		console.log( 'items', items, j );
-
-	}
-
-
-
-	Storage.prototype.getItems = function () {
-
-		let items = {};
-
-		for ( let i=0; i < this.length; i++) {
-
-			let itemKey = this.key(i);
-			let itemValue = this.getItem(itemKey);
-
-			Object.defineProperty( items, itemKey, {
-				value: itemValue
-			});
-		}
-
-		return items;
-
-	};
 
 </script>
 </body>

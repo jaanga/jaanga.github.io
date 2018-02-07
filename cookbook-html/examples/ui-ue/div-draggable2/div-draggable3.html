@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title>Draggable DIV Element3 </title>
+<style>
+
+html { --mnu-color: MediumSlateBlue; --mnu-back-color: cornsilk; --mnu-width:300px; height: 100%; }
+
+	body { font: 12pt monospace; margin: 0; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	summary {font-size: 18px; font-weight: 600; }
+
+	#divDraggable {
+		background-color: #f1f1f1;
+		border: 1px solid #d3d3d3;
+/*		left: calc( 100% - 300px ); */
+		left: 20px;
+		overflow: auto;
+		padding: 10px;
+		position: absolute;
+		resize: both;
+/*		text-align: center; */
+		top: 20px;
+		width: 300px;
+		z-index: 9;
+	}
+
+	#divHeader {
+		background-color: #2196F3;
+		color: #fff;
+		cursor: move;
+		padding: 3px 5px;
+		z-index: 10;
+	}
+
+	#divContents { margin: 0 auto; max-width: 800px; }
+
+	#hamburger { background-color: pink; box-sizing: border-box; cursor: pointer; font-size: 30px; left: calc( var( --mnu-width ) - 100px );
+		line-height: 30px; margin: 0; padding: 5px 15px 8px 10px; position: absolute; top: 0; transition: left 0.5s; z-index: 10; }
+
+</style>
+<body>
+
+	<div id=divContents >
+
+		<h1><a href="" >Draggable DIV Element3</a></h1>
+
+
+	</div>
+
+	<div id=divDraggable >
+
+		<div id=divHeader ><p>Click here to move</div>
+
+		<details open >
+
+			<summary>menu header</summary>
+
+			<h1 id = "divTitle" >
+
+					<a href="" ><script>
+						document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
+						//document.write( document.title );
+					</script></a>
+
+				</h1>
+
+				<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+
+			<p>Move</p>
+			<p>this</p>
+			<p>DIV</p>
+		</details>
+
+		<details open >
+
+			<summary>title 1</summary>
+
+			<div>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</div>
+
+		</details>
+
+		<details open >
+
+			<summary>title 2</summary>
+
+			<div>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</div>
+
+		</details>
+
+
+	</div>
+
+	<div id = "hamburger" onclick=toggleNav(); > slide &#9776; </div>
+
+<script>
+
+	let txt;
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divContents.innerHTML += b + txt;
+
+		dragElement( divDraggable );
+
+	}
+
+
+	function dragElement(elmnt) {
+
+		let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+		divHeader.onmousedown = dragMouseDown;
+//		divDraggable.onmousedown = toggleNav;
+
+		function dragMouseDown(e) {
+
+			e = e || window.event;
+
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+			document.onmouseup = closeDragElement;
+
+			document.onmousemove = elementDrag;
+
+		}
+
+		function elementDrag( e ) {
+
+			e = e || window.event;
+
+			pos1 = pos3 - e.clientX;
+			pos2 = pos4 - e.clientY;
+			pos3 = e.clientX;
+			pos4 = e.clientY;
+
+			elmnt.style.top = ( elmnt.offsetTop - pos2) + "px";
+			elmnt.style.left = ( elmnt.offsetLeft - pos1) + "px";
+			ee = elmnt
+console.log( 'elmnt', ee.offsetWidth );
+			hamburger.style.top =  ( elmnt.offsetTop - pos2 + 20 ) + "px";
+			hamburger.style.left = ( elmnt.offsetLeft - pos1 + elmnt.offsetWidth - 50 ) + "px";
+
+		}
+
+		function closeDragElement() {
+
+			// stop moving when mouse button is released:
+			document.onmouseup = null;
+			document.onmousemove = null;
+		}
+
+	}
+
+
+	function toggleNavvvv() {
+
+		const left = 'calc( var( --mnu-width ) - 100px )';
+
+		if ( hamburger.style.left === '' || hamburger.style.left === left ) {
+
+			divDraggable.style.left = 'calc( -1 * var( --mnu-width ) - 20px )';
+			hamburger.style.left = '-100px';
+
+		} else {
+
+			divDraggable.style.left = 0;
+			hamburger.style.left = left;
+
+		}
+
+	}
+
+
+	function toggleNav() {
+
+		const width = getComputedStyle(document.documentElement).getPropertyValue( '--mnu-width' );
+
+		if ( !divDraggable.style.width || divDraggable.style.width === width ) {
+
+			divDraggable.style.width = '0';
+			divDraggable.style.padding = '0';
+			hamburger.style.left = '-100px';
+//			divContainer.style.marginLeft = '0';
+
+		} else {
+
+			divDraggable.style.width = width;
+			divDraggable.style.padding = '30px 10px 0 10px';
+			hamburger.style.left = 'calc( var( --mnu-width ) - 100px )';
+//			divContainer.style.marginLeft = width;
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

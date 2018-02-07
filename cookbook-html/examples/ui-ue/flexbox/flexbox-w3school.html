@@ -18,29 +18,85 @@
 
 /*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
 
+	#divContainer { border: 1px solid red; resize: both; overflow: auto; }
+
+	.flex-container {
+	display: flex;
+	flex-wrap: nowrap;
+	background-color: DodgerBlue;
+
+	}
+
+	.flex-container>div {
+	background-color: #f1f1f1;
+	width: 100px;
+	margin: 10px;
+	text-align: center;
+	line-height: 75px;
+	font-size: 30px;
+	}
+
+
+	.flex-container2 {
+		display: flex;
+		flex-wrap: wrap;
+		background-color: DodgerBlue;
+	}
+
+	.flex-container2>div {
+		background-color: #f1f1f1;
+		width: 100px;
+		margin: 10px;
+		text-align: center;
+		line-height: 75px;
+		font-size: 30px;
+	}
+
 </style>
 </head>
 <body>
 
-	<div id = "divHeader" >
+	<div id = "divContainer" >
 
 		<div id = "divTitle" ></div>
-			<p><input id=inpStoredValue onchange=setStorage(); ></p>
-			<p>
-				<button onclick=getStorage(); >getStorage</button>
-				<button onclick=getItems(); >getItems</button>
-		</p>
 		<div id = "divContents" >
 
-
+			<p><button onclick=thing(); >button</button></p>
 
 		</div>
 
+		<hr>
+
+		<div class="flex-container">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+			<div>6</div>
+			<div>7</div>
+			<div>8</div>
+		</div>
+
+		<hr>
+
+		<div class="flex-container2">
+			<div>1</div>
+			<div>2</div>
+			<div>3</div>
+			<div>4</div>
+			<div>5</div>
+			<div>6</div>
+			<div>7</div>
+			<div>8</div>
+		</div>
+
+		<br>
+
 	</div>
 
-	<div id = "divMenu" ></div>
-
 <script>
+// https://www.w3schools.com/css/css3_flexbox.asp
 
 	let txt;
 	const b = '<br>';
@@ -56,53 +112,9 @@
 
 		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
-		divContents.innerHTML += b;
+		divContents.innerHTML += b + txt;
 
 	}
-
-	function setStorage() {
-
-		const thing = inpStoredValue.value;
-
-		localStorage.setItem('thing', thing );
-
-	}
-
-	function getStorage() {
-
-		const thing = localStorage.getItem( 'thing' );
-		divContents.innerHTML += thing + b;
-
-	}
-
-
-	function getItems() {
-
-		items = localStorage.getItems();
-		let j = JSON.stringify( items )
-		console.log( 'items', items, j );
-
-	}
-
-
-
-	Storage.prototype.getItems = function () {
-
-		let items = {};
-
-		for ( let i=0; i < this.length; i++) {
-
-			let itemKey = this.key(i);
-			let itemValue = this.getItem(itemKey);
-
-			Object.defineProperty( items, itemKey, {
-				value: itemValue
-			});
-		}
-
-		return items;
-
-	};
 
 </script>
 </body>
