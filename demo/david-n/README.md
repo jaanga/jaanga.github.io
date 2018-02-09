@@ -11,13 +11,50 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 
 ## [Elevation View R3]( https://jaanga.github.io/terrain3/elevations-core3/elevations-core3-r1.html )
 
-* View elevation data in 3D
+* View elevation data
+* Load and display interactive 3D maps
+* 2D maps applied as overlays on 3D meshes
+* Select source and resolution of overlays
+* Toggle or control display of various viewing and debugging aids
+
+Brief instructions
+* Click 'Choose File' button
+	* Open one of the JSON files in the shared Google Drive folder
+* Click 'Overlay settings'
+	* In 'Map overlay provider' scroll down to 'Mesh Normal Material
+* Click 'Terrain Settings'
+	* Increase 'vertical scale'
+	* Toggle 'Screen rotation'
 
 ## [Elevations Get R2]( https://jaanga.github.io/terrain3/elevations-get2/dev/elevations-get2-r1.html )
 
-* Obtain elevation data
+* Obtains elevation data via the Google Maps API Elevation service
+* Set latitude, longitude, zoom level, number of tiles and samples
+* Save data to text file
+
+Brief instructions
+
+* Type in a location in the 'Enter a location:' input box
+	* Select a location from the drop down and press enter
+	* Location must be selected from the list otherwise search not initiated
+* Use pointing device to move center of screen
+	* Or click anywhere on screen and click 'Set location as map center'
+* Proposed grid will update automatically
+* Select zoom level, number of tiles and samples per tile
+	* Samples over 128 per tile currently broken
+	* Ditto large tiles width
+* Once area selected is OK
+	* Click 'Get elevations'
+	* Click 'Save path to file'
+* Watch scan lines of data being collected
+* Once scan is complete a simple viewer will open
+	* Click hamburger menu icon to view menu and adjust rotation etc.
+* Saved data may be viewed quickly and easily using the Elevation View app
+
 
 ## [Undersea Data]( https://drive.google.com/drive/folders/1kj81Vr0yT8D1i9UVJmyGbj83ToBkzD9b?usp=sharing )
+
+* Shared Google Drive folder with undersea elevation data files
 
 <!--
 _<small>subtext</small>_
