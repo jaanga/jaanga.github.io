@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divDraggable {
+		background-color: yellow; border: 1px solid red; cursor: move;
+		left: calc( 100% - 300px );
+		overflow: auto;
+		position: absolute;
+		height: 300px;
+		margin: 20px;
+		max-width: 500px;
+		padding: 10px;
+		position: absolute; top: 200px;
+		resize: both;
+		z-index: 10;}
+
+</style>
+</head>
+<body>
+
+	<div id = "divHeader" >
+
+		<h1 id = "divTitle" >
+
+			<a href="" ><script>
+				document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
+				//document.write( document.title );
+			</script></a>
+
+		</h1>
+
+		<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+
+		<div id = "divContents" >
+
+			<p><button onclick=thing(); >button</button></p>
+
+		</div>
+
+	</div>
+
+	<div id = "divDraggable" >mmmm</div>
+
+<script>
+
+	var offX;
+	var offY;
+
+	var xDown = null;
+	var yDown = null;
+
+	let txt;
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divDraggable.innerHTML += b + txt;
+
+		divDraggable.addEventListener( 'mousedown', dragMouseDown, false );
+		window.addEventListener( 'mouseup', mouseUp, false );
+
+		divDraggable.addEventListener( 'touchstart', onTouchStart, false );
+		divDraggable.addEventListener( 'touchmove', onTouchMove, false );
+	}
+
+
+
+	function mouseUp() {
+
+		window.removeEventListener('mousemove', divMove, true);
+
+	}
+
+	function dragMouseDown(e) {
+
+		offY= e.clientY-parseInt( divDraggable.offsetTop);
+		offX= e.clientX-parseInt(divDraggable.offsetLeft);
+		window.addEventListener('mousemove', divMove, true );
+
+	}
+
+	function divMove( e ){
+
+		divDraggable.style.top = ( e.clientY-offY ) + 'px';
+		divDraggable.style.left = ( e.clientX-offX ) + 'px';
+
+	}
+
+
+	function onTouchStart( event ) {
+
+		event.preventDefault();
+		xDown = event.touches[ 0 ].clientX;
+		yDown = event.touches[ 0 ].clientY;
+
+	};
+
+
+	function onTouchMove(event) {
+
+		if ( ! xDown || ! yDown ) {
+
+			return;
+
+		}
+		event.preventDefault();
+
+		var xUp = event.touches[ 0 ].clientX;
+		var yUp = event.touches[ 0 ].clientY;
+
+		var xDiff = xDown - xUp;
+		var yDiff = yDown - yUp;
+		console.log( 'xDiff', xDiff);
+		console.log( 'event.clientX-xDiff', event.clientX-xDiff);
+
+		divDraggable.style.top = ( event.clientY - xDiff ) + 'px';
+
+//		divDraggable.style.left = ( event.clientX-yDiff ) + 'px';
+		divDraggable.style.left = ( xDown + xDiff ) + 'px';
+
+		if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {// most significant
+
+			if ( xDiff > 0 ) {
+
+		// left swipe
+		console.log( 'left swipe' );
+
+			} else {
+
+		// right swipe
+		console.log( 'right swipe' );
+
+			}
+
+		} else {
+
+			if ( yDiff > 0 ) {
+
+		//up swipe
+		console.log( 'up swipe' );
+
+			} else {
+
+		// down swipe
+		console.log( 'down swipe' );
+
+			}
+
+		}
+
+		xDown = null;
+		yDown = null;
+
+	}
+
+
+</script>
+</body>
+</html>
