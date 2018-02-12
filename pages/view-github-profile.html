@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = description content = "Basic HTML template" >
+<meta name = keywords content = "JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = date content = "2017-08-04" >
+<title></title>
+<style id = "foo" >
+
+
+/* Note: this script writes to parent menu */
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: green; text-decoration: none; }
+
+	button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; cursor: pointer; }
+
+	img { max-width: 150px; }
+	iframe { width: 100%; }
+
+	select { width: 100%; }
+	summary h2, summary h3, summary h4 { display: inline; }
+	summary { outline: none; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/showdownjs/showdown/1.8.5/dist/showdown.min.js" ></script>
+<script src= "../js/res-results.js" ></script>
+<script src= "../js/res-results-events.js" ></script>
+
+	<div id = "menu" >
+		<div id = "header" ><h1><a id = "title" href = "" ></a></h1></div>
+		<div id = "mnuContents" ></div>
+	</div>
+
+<script>
+
+
+//	var user = 'torvalds';
+//	var user = 'jaanga';
+//	var user ='jquery';
+//	var user = 'sagemath';
+//	var user = 'mrdoob';
+//	var user = 'ladybug-analysis-tools';
+//	var user = 'torvalds';
+//	var user = 'paulmasson';
+//	var user = 'theo-armour';
+	let user = 'Theo-Armour';
+
+//location.hash = 'paulmasson';
+
+	let DAT = {};
+
+	let get = {};
+	let userData = undefined; // will hold all the data for current user
+
+	let API = {};
+
+	let converter;
+
+	converter = new showdown.Converter();
+
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		parent.foo.innerHTML += 'button, input[type=button] { background-color: #ccc; border: 0px #fff solid; color: #322; cursor: pointer; }';
+
+		onHashChange();
+
+		window.addEventListener( 'hashchange', onHashChange, false );
+
+
+	}
+
+
+	function onHashChange() {
+
+//console.log( 'location.hash', location.hash );
+
+		let url;
+
+		user = location.hash ? location.hash.slice( 1 ) : user;
+
+		url = 'https://api.github.com/users/' +  user + '?' + ( /* API.token || */ '' );
+
+		requestFile( url, callback )
+
+
+	}
+
+
+	function requestFile( url, callback ) {
+
+		let xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'get', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+	}
+
+
+
+	function callback( xhr ) {
+
+		userData = JSON.parse( xhr.target.responseText );
+
+		typekeys = Object.keys( userData );
+		txt = '';
+
+		for ( var i = 0; i < typekeys.length; i++ ) {
+
+			txt += '<div>' + ( get[ typekeys[ i ] ]( userData[ typekeys[ i ] ], i ) || '' ) + '</div>';
+
+		}
+
+		parent.mnuContents.innerHTML = txt;
+
+		if ( userData.login !== 'theo-armour' ) {
+
+			RES.getRepos( userData.login );
+
+		}
+
+//		height = document.body.scrollHeight;
+
+//		parent.ifrMenu.style.height = height + 'px';
+
+//console.log( '', xhr );
+
+	}
+
+
+
+// in alphabetical order ~ see userData
+// IIRC, there appears to be no published list of the following user fields.
+// And thus the following have been gathered by observation of userData for a number of users?
+
+	get.avatar_url = function( item, index ) {
+
+		return '<a href=https://avatars.githubusercontent.com/u/' + userData.id + ' target=_blank ><img src=' + item + ' width=95%; ></a>';
+
+	};
+
+
+	get.bio = function( item, index ) {
+
+		if ( item ) { return 'Bio: ' + item; }
+
+	};
+
+
+	get.blog = function( item, index ) {
+
+		if ( item ) {
+
+			if ( item.includes( 'http' ) || item.includes( '.com' )  ) {
+
+				return 'Blog: '+ item.link( item );
+
+			} else {
+
+				return 'Blog: ' + item;
+
+			}
+
+		}
+
+	};
+
+
+	get.collaborators = function( item, index ) {
+
+		if ( item ) { return 'collaborators: ' + item( userData.collaborators ); }
+
+	};
+
+
+	get.company = function( item, index ) {
+
+		if ( item ) {
+
+			if ( item.includes( 'http' ) || item.includes( '.com' )  ) {
+
+				return 'Company: ' + item.link( item );
+
+			} else {
+
+				return 'Company: <a href=https://www.google.com/#q=' + item.replace( / /g, '+' ) + ' target=_blank > ' + item + ' </a>';
+
+			}
+
+		}
+
+	};
+
+
+	get.created_at = function( item, index ) {
+
+		return 'Joined: ' + ( new Date( item ) ).toLocaleDateString();
+
+	};
+
+
+	get.disk_usage = function( item, index ) {
+
+		if ( item ) { return 'disk_usage: ' + item( userData.disk_usage ); }
+
+	};
+
+
+	get.email = function( item, index ) {
+
+		if ( item ) { return 'Email: <a href=mailto:' + item + ' > ' + item + ' </a>'; }
+
+	};
+
+
+	get.events_url = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.getRawData("https://api.github.com/users/' + userData.login + '/events"); > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.RES.getEvents("' + userData.login + '",0); > events </button> ' +
+
+			'<a href=https://github.com/' + userData.login + '?tab=activity target=_blank >activity</a>' +
+
+		'';
+
+	};
+
+
+	get.followers = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("' + userData.followers_url + '"); > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.RES.getFollowers("' + userData.login + '",' + index + '); > followers </button> ' +
+
+			'<a href=https://github.com/' + userData.login + '/followers target=_blank >' + item.toLocaleString() + ' followers </a>' +
+
+		'';
+
+	};
+
+
+	get.followers_url = function( item, index ) {
+
+// covered in get.followers
+
+//		return 'Followers URL: ' + item;
+
+	};
+
+
+	get.following = function( item ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + userData.login + '/following"); > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.RES.getFollowing("' + userData.login + '"); > following </button> ' +
+
+			'<a href=https://github.com/' + userData.login + '/following target=_blank >' + item.toLocaleString() + ' following</a>'
+
+		'';
+
+	};
+
+
+	get.following_url = function( item, index ) {
+
+// see get.following
+
+//		return 'Following URL: ' + item;
+
+	};
+
+
+	get.gists_url = function( item, index ) {
+
+// see get.public_gists
+
+//		return 'Gists: ' + item;
+
+	};
+
+
+	get.gravatar_id = function( item, index ) {
+
+		if ( item ) { return 'Gravater ID: ' + item; }
+
+	};
+
+
+
+	get.hireable = function( item, index ) {
+
+		if ( item ) { return 'Hireable: ' + item; }
+
+	};
+
+
+	get.html_url = function( item, index ) {
+
+//		return 'html url: ' + item;
+
+	};
+
+
+	get.id = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/user/' + item + '");  title="unformatted API data results straight from GitHub" > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.typefetchEventsDrawTable("https://api.github.com/user/' + item + '",' + index + '); title="GitHub API data prettified" > id </button> ' +
+
+			'<a href=https://api.github.com/user/' + item + ' target=_blank >' + item.toLocaleString() + '</a>' +
+		'';
+
+	};
+
+
+	get.location = function( item, index ) {
+
+		if ( item ) {
+
+			return 'Location: <a href=https://www.google.com/#q=' + item.replace( / /g, '+' ) + '+' + userData.login + '&nfpr=1 target=_blank > ' + item + ' </a>';
+
+		}
+
+	};
+
+
+	get.login = function( item, index ) {
+
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + item + '"); title="unformatted API data results straight from GitHub" > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.typefetchEventsDrawTable("https://api.github.com/users/' + item + '",' + index + '); title="GitHub API data prettified" > login </button> ' +
+
+			'<a href=' + userData.html_url + ' title="Link to the data as rendered by GitHub" target=_blank >' + item + '</a>' +
+
+		'';
+	};
+
+
+	get.name = function( item, index ) {
+
+		if ( item ) {
+
+			return 'name: <a href=https://www.google.com/#q=' + item.replace( / /g, '+' ) + '+github target=_blank > ' + item + ' </a>';
+
+		}
+
+	};
+
+
+	get.organizations_url = function( item, index ) {
+
+		if ( userData.type === "Organization" ) { return; }
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + userData.login + '/orgs"); > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.RES.getOrgs("' + userData.login + '"); > organizations </button> ' +
+
+			'<a href=https://github.com/' + userData.login + '?tab=organizations target=_blank> orgs </a>' +
+
+		'';
+
+	};
+
+
+	get.owned_private_repos = function( item, index ) {
+
+		return 'Owned_private_repos: <a href=' + userData.owned_private_repos + ' >' + item + '</a>';
+
+	};
+
+
+	get.plan = function( item, index ) {
+
+		return 'plan: <a href=' + userData.plan + ' >' + item + '</a>';
+
+	};
+
+
+	get.private_gists = function( item, index ) {
+
+		return 'Private_gists: <a href=' + userData.private_gists + ' >' + item + '</a>';
+
+	};
+
+
+	get.public_repos = function( item, index ) {
+
+// see get.repos_url
+
+//		return 'Public repos: <a href=' + userData.repos_url + ' >' + item + '</a>';
+
+	};
+
+
+	get.public_gists = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + userData.login + '/gists"); > raw </button> ' +
+
+			'<button onclick=ifrMenu.contentWindow.RES.getGists("' + userData.login + '"); > gists </button> ' +
+
+			'<a href=https://gist.github.com/' + userData.login + ' target=_blank >' + item + ' gists </a>' +
+
+		'';
+
+	};
+
+
+	get.repos_url = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + userData.login + '/repos"); > raw </button> ' +
+
+			'<button  onclick=ifrMenu.contentWindow.RES.getRepos("' + userData.login + '"); > repos </button> ' +
+
+			'<a href=https://github.com/' + userData.login + '?tab=repositories target=_blank >' + userData.public_repos + ' repos</a>' +
+
+		'';
+	};
+
+
+	get.received_events_url = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("' + userData.received_events_url + '"); > raw </button> ' +
+
+			'<button  onclick=ifrMenu.contentWindow.RES.getReceivedEvents("' + userData.login + '"); > received events </button> ' +
+
+		'';
+
+	};
+
+
+	get.starred_url = function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + userData.login + '/starred"); > raw </button> ' +
+
+			'<button  onclick=ifrMenu.contentWindow.RES.getStarred("' + userData.login + '",' + index + '); > starred </button> ' +
+
+			'<a href=https://github.com/stars/' + userData.login + ' target=_blank >stars</a>' +
+
+		'';
+
+	};
+
+
+	get.subscriptions_url= function( item, index ) {
+
+		return '<button onclick=ifrMenu.contentWindow.typegetRawData("https://api.github.com/users/' + userData.login + '/subscriptions"); > raw </button> ' +
+
+			'<button  onclick=ifrMenu.contentWindow.RES.getSubscriptions("' + userData.login + '"); target=_blank > subscriptions </button> ' +
+
+		'';
+	};
+
+
+	get.site_admin = function( item, index ) {
+
+		if ( item ) { return 'Site admin: ' + item; }
+
+	};
+
+
+	get.total_private_repos = function( item, index ) {
+
+		return 'total_private_repos: <a href=' + userData.total_private_repos + ' >' + item + '</a>';
+
+	};
+
+
+	get.type = function( item, index ) {
+
+		return 'Type: ' + item;
+
+	};
+
+
+	get.updated_at = function( item, index ) {
+
+		var date = new Date( item );
+
+		return 'Updated: <a href=https://github.com/' + userData.login + '?tab=overview&from=' +
+			item.slice( 0, 10 ) + ' target=_blank > ' + date.toLocaleDateString() + ' </a>';
+
+	};
+
+
+	get.url = function( item, index ) {
+
+//console.log( 'item ', item );
+//
+		return 'url: ' + item.link( item );
+
+	};
+
+
+	get.watchers = function( item, index ) {
+
+		return 'url: ' + item;
+
+	};
+
+
+
+//==============================================================================
+
+
+// for all the 'raw' buttons in the left column
+
+	typegetRawData = function( url ) {
+
+		var xhr, urlToken;
+
+		urlToken = url + '?' + ( API.token || '' );
+
+		requestFile( urlToken, callback );
+
+		function callback( xhr ) {
+
+			parent.ifrMain.contentWindow.contents.innerText = '\nURL sent: ' + url + '\n\nGitHub API Response:\n\n' + xhr.target.response;
+
+			window.scrollTo( 0, 0 );
+
+		}
+
+	}
+
+
+// prettified data
+
+	function typefetchEventsDrawTable ( url, index ) {
+
+		var xhr, obj, keys, txt;
+
+		urlToken = url + '?' + ( API.token || '' );
+
+		requestFile( urlToken, callback );
+
+		function callback( xhr ) {
+
+			obj = JSON.parse( xhr.target.responseText );
+
+// error message ?
+
+			keys = Object.keys( obj );
+
+			txt =
+
+				'<h1>' +
+					userData.type + ': ' + userData.login.link( userData.html_url ) + ' ' + ( typekeys[ index ] || '' ) +
+				'</h1>' +
+
+				'raw url: <a href=' + url + ' target="_blank" >' + url + '</a>' + b +
+
+			b;
+
+			for ( var i = 0; i < keys.length; i++ ) {
+
+				txt += '<tr><td>' + keys[ i ] + ': </td><td> ' + obj[ keys[ i ] ] + '</td></tr>';
+
+			}
+
+			parent.ifrMain.contentWindow.contents.innerHTML = '<table>' + txt + '</table>' ; // + COR.getMenuFooter();
+
+			window.scrollTo( 0, 0 );
+
+		}
+
+	};
+
+</script>
+</body>
+</html>

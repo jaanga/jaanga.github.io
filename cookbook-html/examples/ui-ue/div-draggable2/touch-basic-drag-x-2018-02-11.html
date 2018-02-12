@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divBox {
+		background-color: yellow;
+		border: 1px solid red;
+		cursor: move;
+		left: calc( 100% - 300px );
+		height:200px;
+		overflow: auto;
+		padding: 20px;
+		position: absolute;
+		resize: both;
+		top: 200px;
+		z-index: 10;
+	}
+
+</style>
+</head>
+<body>
+
+	<div id = "divHeader" >
+
+		<h1 id = "divTitle" >
+
+			<a href="" ><script>
+				document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
+				//document.write( document.title );
+			</script></a>
+
+		</h1>
+
+		<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+
+		<div id = "divContents" >
+
+			<p><button onclick=thing(); >button</button></p>
+
+		</div>
+
+	</div>
+
+	<div id="divBox">
+		<h3> Touch Me! </h3>
+	</div>
+
+	<h3 id="divStatus">Status</h3>
+
+<script>
+
+	var startX = 0;
+	var boxLeft;
+
+	let txt;
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divContents.innerHTML += b + txt;
+
+		divBox.addEventListener('touchstart', onTouchStart, false);
+		divBox.addEventListener('touchmove', onTouchMove, false);
+		divBox.addEventListener('touchend', onTouchEnd, false);
+
+	}
+
+
+
+	function onTouchStart( event ){
+
+		boxLeft = divBox.offsetLeft;
+		startX = event.changedTouches[ 0 ].clientX;
+		event.preventDefault();
+
+		console.log ('Status: touchstart', 'ClientX: ' + startX + 'px' );
+
+	}
+
+
+
+	function onTouchMove( event ){
+
+		var dist = parseInt( event.changedTouches[ 0 ].clientX ) - startX;
+		left = boxLeft + dist > document.body.clientWidth - 100 ? document.body.clientWidth - 100 : boxLeft + dist;
+		left = boxLeft + dist < 0 ? 0 : left;
+		//console.log( 'left2', left  );
+		divBox.style.left = left + 'px';
+
+		event.preventDefault();
+
+		console.log ( 'Status: touchmove', 'Horizontal distance traveled: ' + dist + 'px' );
+
+	}
+
+
+
+	 function onTouchEnd( event ){
+
+		event.preventDefault();
+		console.log ('Status: touchend', 'Resting x coordinate: ' + event.changedTouches[0].clientX + 'px' );
+
+	}
+
+
+</script>
+</body>
+</html>
