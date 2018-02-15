@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1">
-<meta name = "description" content = "This script allows you to list, open view all the files in all the Jaanga folders" >
+<meta name = "description" content = "This menu script allows you to list, open and view the files in selected Jaanga folders" >
 <meta name = "keywords" content = "JavaScript,Markdown,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2018-02-12" >
 <title>Jaanga</title>
@@ -30,7 +30,15 @@
 	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
 	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
 
+
+	.figure { display: inline-block; margin: 0 20px 50px 0 ; vertical-align: top; width: 240px;}
+	.figure img { border: 1px solid black; }
+
 	td { vertical-align: top; }
+
+	.divMenuBar{ background-color: #000; }
+	.divMenuBar a{ color: #f00; margin: 5px; }
+	.divMenuBar a { display: inline-block; color: white; text-align: center; padding: 5px; text-decoration: none; }
 
 	#divContainer { height: 100%; margin: 0 0 0 var( --mnu-width ); transition: margin-left .5s; position: relative; }
 	#divContents { height: 100%; left: 0; margin: 0 auto; right: 0;}
@@ -49,20 +57,12 @@
 
 	<div id = "divMenu" >
 
-		<p>
-<!--
-			<a href="http://www.ladybug.tools/" target="_top" >Ladybug Tools</a> &raquo;
-			<a href="http://www.ladybug.tools/spider/" target="_top" >&#x1f578;</a> &raquo;
-			<a href="../index.html" target="_"top style=font-size:24px; >&#x2302;</a> &raquo;
--->
-		</p>
-
 		<h2>
 			<a id="urlInfo" target="_top" >info</a>
 			<a href="" ><script> document.write( document.title )</script></a>
 		</h2>
 
-		<p><script> document.write(document.head.querySelector( '[name=description]' ).content ); </script></p>
+		<p><script> document.write( document.head.querySelector( '[name=description]' ).content ); </script></p>
 
 		<div id = "divBreadcrumbs"></div>
 
