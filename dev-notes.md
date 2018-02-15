@@ -4,6 +4,15 @@
 # [jaanga dev notes]( index.html#dev-notes )
 
 
+## To Do
+
+* 2018-02-14 ~ list all repos in menu
+* 2018-02-14 ~ Link to TooToo?
+* 2018-02-14 ~ Make all Three.js archivable
+* 2018-02-14 ~ Add read me files wherever needed
+* 2018-02-14 ~ Links to related projects
+* 2018-02-14 ~ Carousel
+
 
 ## Note
 <!--
