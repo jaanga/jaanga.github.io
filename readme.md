@@ -10,7 +10,7 @@ _Your 3D happy place. And, btw, we're using [browserstack]( https://www.browsers
 
 <a href= http://jaanga.github.io/request-jaanga-blog-posts.html >Blog</a>
 ~ <a href= http://jaanga.github.io/documents >Documents</a>
-~ <a href= http://jaanga.github.io/#https://jaanga.github.io/readme-dev.md >Read Me</a>
+~ <a href= http://jaanga.github.io/#https://jaanga.github.io/dev-notes.md >Dev Notes</a>
 ~ <a href= http://jaanga.github.io/#https://jaanga.github.io/jaanga-copyright-and-mit-license.md >Copyright and License</a>
 ~ <a href= http://jaanga.github.io/#https://jaanga.github.io/jaanga-contacts-and-organization.md >Contacts and Organization</a>
 
@@ -212,6 +212,3 @@ Gigabytes of formerly quite difficult to access digital elevation data transform
 # <a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >❦</a>
 </center>
 
-<style>
-
-</style>
