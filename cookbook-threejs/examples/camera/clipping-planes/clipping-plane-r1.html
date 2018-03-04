@@ -108,24 +108,45 @@
 		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		var axesHelper = new THREE.AxesHelper( 50 );
+		scene.add( axesHelper );
+
+		const lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		const lightDirectional = new THREE.DirectionalLight( 0xffffff, 1 );
+		lightDirectional.shadow.mapSize.width = 2048;  // default 512
+		lightDirectional.shadow.mapSize.height = 2048;
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+		const lightPoint = new THREE.PointLight( 0xffffff, 0.5 );
+		lightPoint.position = new THREE.Vector3( 0, 0, 1 );
+		camera.add( lightPoint );
+		scene.add( camera );
 
 // assets
-		localPlane = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 10 );
+
 
 		geometry = new THREE.BoxGeometry( 1, 1, 1 );
-		material = new THREE.MeshNormalMaterial( { 
 
-				opacity: 0.5, side: 2, transparent: true,
-				clippingPlanes: [ localPlane ],
-				clipShadows: true
+		var localPlane = new THREE.Plane( new THREE.Vector3( 0, 1, 0 ), 0 );
+		var globalPlane = new THREE.Plane( new THREE.Vector3( -1, 0, 0 ), 0 );
 
-		} );
+		renderer.clippingPlanes = [ globalPlane ];
 
 		renderer.localClippingEnabled = true;
 
 		for ( var i = 1; i < 11; i++ ) {
+
+			var material = new THREE.MeshPhongMaterial( {  // must be phong
+				clippingPlanes: [ localPlane ],
+				clipShadows: true,
+				color: 0xffffff * Math.random(),
+				opacity: 0.85,
+				side: 2,
+				transparent: true
+			} );
 
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.scale.set( 5 * i , 5 * i, 5 * i );
