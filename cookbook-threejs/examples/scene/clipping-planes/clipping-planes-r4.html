@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-03-08" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }
+	input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r90/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r90/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<div id = "divContents" >
+
+			<p>
+				<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+			</p>
+
+			<div>
+					<button id=butSectionView onclick=toggleSectionView() >toggle section view</button>
+			</div>
+
+			<p>
+					plane.position.x <br>
+					<input type=range id=inpPlanePositionX min=-50 max=50 oninput=updatePlanePosition(); ><br>
+					plane.position.y <br>
+					<input type=range id=inpPlanePositionY min=-50 max=50 oninput=updatePlanePosition(); ><br>
+					plane.position.z <br>
+					<input type=range id=inpPlanePositionZ min=-50 max=50 oninput=updatePlanePosition(); >
+
+				</p>
+
+			</div>
+				rotate plane on z-axis: <output id=outRotate >0</output><br>
+				<input type=range id=inpRotate max=180 min=-180 step=1 value=0
+					oninput=outRotate.value=inpRotate.valueAsNumber;updateRotateAngle(); title="-180 to 180: OK" >
+			</div>
+		</div>
+
+	</div>
+
+<script>
+
+	var planeMesh, localClip1, localClip2;
+	const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var renderer, camera, controls, scene, axesHelper;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" >` + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +`</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( - 80, - 100, 90 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+		const size = 100;
+		lightDirectional = new THREE.DirectionalLight( 0xffeedd );
+		lightDirectional.position.set( -size, size, size );
+		lightDirectional.shadow.camera.scale.set( 0.1 * size, 0.1 * size, 0.5 );
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshPhongMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+		geometry = new THREE.PlaneGeometry( 100, 100 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+		material = new THREE.MeshPhongMaterial( { opacity: 0.5, side: 2, transparent: true } );
+		planeMesh = new THREE.Mesh( geometry, material );
+		scene.add( planeMesh );
+
+		localClip1 = new THREE.Plane( new THREE.Vector3( 0, -1, 0 ), 0 );
+		localClip2 = new THREE.Plane();
+		origin = v( 0, 0, 0 );
+	}
+
+
+
+	function updatePlanePosition() {
+
+		console.log( 'inpPlanePositionX', inpPlanePositionX.value );
+		planeMesh.position.x = parseInt( inpPlanePositionX.value, 10 );
+
+		console.log( 'inpPlanePositionY', inpPlanePositionY.value );
+		planeMesh.position.y = parseInt( inpPlanePositionY.value, 10 );
+
+		console.log( 'inpPlanePositionZ', inpPlanePositionZ.value );
+		planeMesh.position.z = parseInt( inpPlanePositionZ.value, 10 );
+
+		//planeMesh.updateMatrixWorld();
+
+		localClip1.constant = planeMesh.position.distanceTo( origin );
+		console.log( 'localClip1', localClip1 );
+
+	}
+
+
+	function updateRotateAngle() {
+
+		console.log( 'inpRotate', inpRotate.value );
+
+		const angle = ( +parseInt( inpRotate.value, 10 ) ) * Math.PI / 180;
+		planeMesh.rotation.z = - angle;
+
+		localClip1.normal = new THREE.Vector3( Math.cos( angle + 0.5 * Math.PI ), Math.sin( angle + 0.5 * Math.PI ), 0 );
+		localClip2.normal = new THREE.Vector3( Math.cos( angle + Math.PI ), Math.sin( angle + Math.PI ), 0 );
+
+	}
+
+
+	function toggleSectionView(){
+
+		if ( butSectionView.style.backgroundColor !== 'aqua' ) {
+
+
+			scene.traverse( function ( child ) {
+
+				if ( child instanceof THREE.Mesh ) {
+
+					child.material.clippingPlanes = [ localClip1 ],
+					child.material.clipShadows = true,
+					child.material.needsUpdate = true;
+
+				}
+
+			} );
+
+			renderer.localClippingEnabled = true;
+			butSectionView.style.backgroundColor = 'aqua';
+
+		} else {
+
+			renderer.localClippingEnabled = false;
+
+			butSectionView.style.backgroundColor = '';
+
+		}
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>
