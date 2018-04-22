@@ -1,15 +1,16 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/xxxxxx/#README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/examples/libraries/jszip/#README.md "View file as a web page." ) </span>
 <div><input type=button onclick=window.location.href='https://github.com/jaanga/000000/tree/master/documents/xxxxxx/';
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 [Jaanga]( https://jaanga.github.io ) &raquo; [ oooooo ]( http://jaanga.github.io/documents/  ) &raquo;
 
 
-[XXXXXX Read Me]( https://jaanga.github.io/xxxxxx/index.html#readme.md )
-===
-_say something fun_
+# [jsZip Read Me]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/index.html#readme.md )
 
-## Full Screen: [ XXXXXX ]( https://jaanga.github.io/xxxxxx/index.html )
+
+## [jszip-basic-3.html]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/jszip-basic-3.html )
+
+## Full Screen: [ jsZip ]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/index.html )
 
 ## Links of Interest
 
@@ -17,6 +18,17 @@ _say something fun_
 * <https://stuk.github.io/jszip/>
 * <https://github.com/Stuk/jszip>
 * <https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js>
+* <https://github.com/Stuk/jszip/issues/497>
+* <https://stackoverflow.com/questions/37876051/opening-zip-files-in-browser-with-filereader-and-jszip-js>
+* <https://news.ycombinator.com/item?id=7615471>
+
+
+This could do it
+* <https://gist.github.com/clinuxrulz/141f16865959a1802530870907e95f80>
+* <https://stackoverflow.com/questions/40828487/read-xml-file-from-extracted-zip>
+
+
+
 
 
 ## Concept

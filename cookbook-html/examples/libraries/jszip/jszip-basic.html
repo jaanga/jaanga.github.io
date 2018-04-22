@@ -22,6 +22,8 @@
 </head>
 <body>
 <script src=https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js ></script>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jszip-utils/0.0.2/jszip-utils.min.js ></script>
+
 
 
 	<div id = "divHeader" >
@@ -43,15 +45,35 @@
 
 		</div>
 
+		<div id = "divContents" >
+
+			<p><button onclick=getRemoteZip(); >get remote zip</button></p>
+
+		</div>
+
+		<div id = "divContents" >
+
+				<p><button onclick=getRemoteZip2(); >get remote zip 2</button></p>
+
+			</div>
+
+			<input type=file id=fileReader >
+
+			<input type=file id=unzipTest >
 	</div>
 
-	<div id = "divMenu" ></div>
+	<div id = "divLog" ></div>
+
+	<div id="fetch"></div>
 
 <script>
 
 
 	let txt;
 	const b = '<br>';
+
+
+
 
 	init();
 
@@ -60,6 +82,151 @@
 		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
 		divContents.innerHTML += b + txt;
+
+		fileReader.onchange = function() {
+
+			var zip = new JSZip();
+
+			zip.loadAsync( this.files[0] )
+
+			.then(function( zip ) {
+
+				zip.forEach(function (relativePath, zipEntry) {
+					console.log( 'file name: ', zipEntry.name);
+				});
+
+				console.log( 'zip', zip );
+				return zip;
+			} )
+
+			.then( function( data ) {
+				JSZip.loadAsync(data).then( function( cc ) { console.log( 'cc', cc  );} )
+				text =  data.files["TwoZoneModel.xml"].async("string");
+
+				var parser = new DOMParser();
+				gbxml = parser.parseFromString( text,"text/xml" );
+				//gbxml2 = gbxml.children[ 0 ];
+				console.log( 'gbxml', gbxml );
+				divLog.innerText = JSON.stringify( gbxml );
+			} )
+/*
+			.then( function success( text ) {
+
+				console.log( 'text', text );
+
+				var parser = new DOMParser();
+				gbxml = parser.parseFromString( text,"text/xml");
+
+				console.log( 'gbxml', gbxml );
+				divLog.innerText = JSON.stringify( gbxml );
+
+				return gbxml;
+
+			})
+
+			*/
+
+			.then( function(content) {
+
+				/*
+				var parser = new DOMParser();
+				var xmlDoc = parser.parseFromString(content,"text/xml");
+
+				gbxml = parser.parseFromString( content, "text/xml" );
+				console.log(
+					"text.xml: a->b = " +
+						xmlDoc
+
+						//.getElementsByTagName("Campus")[0]
+							//.getElementsByTagName("b")[0]
+						//	.childNodes[0].nodeValue
+				);
+
+				*/
+			} )
+
+		}, function (e) {
+					console.log(e.message);
+		};
+
+
+		document.getElementById( 'unzipTest' ).addEventListener( 'change', unzipFile );
+	}
+
+
+	function unzipFile( event ) {
+		var eTarget = event.target;
+		var file = eTarget.files[ 0 ];
+
+		var zip = new JSZip();
+		zip.loadAsync( file, { optimizedBinaryString: true } ).then( function( fileContent ) {
+			var key = Object.keys( fileContent.files )[ 0 ];
+			var data = fileContent.files[ key ];
+			var compressedContent = data[ '_data' ].compressedContent;
+
+			console.log( 'compressed content: ', compressedContent );
+
+			var blob = new Blob( [ compressedContent ] );
+
+			var reader = new FileReader();
+			reader.onload = function(){
+				var result = reader.result;
+				console.log( 'result: ', result );
+			};
+			reader.readAsArrayBuffer( blob );
+		});
+	}
+
+
+	function getRemoteZip(){
+
+		JSZipUtils.getBinaryContent('TwoZoneModel.zip', function(err, data) {
+
+			if(err) {
+
+				throw err; // or handle err
+			}
+
+			JSZip.loadAsync(data).then(function () {
+
+				read_zip.file("TwoZoneModel.xml").async("string");
+				console.log( 'data', data )
+
+			});
+		});
+
+
+	}
+
+
+	function  getRemoteZip2(){
+/*
+		var read_zip = new JSZip();
+		// Load zip content; you'd use fetch to get the content
+		read_zip.loadAsync('TwoZoneModel.zip')
+		.then(function(zip) {
+			console.log( 'zip', zip.files.name );
+			txt = read_zip.file("TwoZoneModel.xml").async("string"); // a promise of "Hello World\n"
+		});
+*/
+
+/*
+		fetch('http://www.ladybug.tools/spider/gbxml-sample-files/zip/TwoZoneModel.zip')       // 1) fetch the url
+		.then(function (response) {                       // 2) filter on 200 OK
+			if (response.status === 200 || response.status === 0) {
+				return Promise.resolve(response.blob());
+			} else {
+				return Promise.reject(new Error(response.statusText));
+			}
+		})
+		.then(JSZip.loadAsync)                            // 3) chain with the zip promise
+		.then(function (zip) {
+			return zip.file("TwoZoneModel.xml").async("string"); // 4) chain with the text content promise
+		})
+		.then(function success(text) {
+			fetch.innerHTML = 'loaded, content = ' + text;
+			});
+*/
 
 	}
 

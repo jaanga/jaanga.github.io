@@ -1,0 +1,16 @@
+body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+.titleBar { background-color: blue; color: yellow; padding: 1rem; }
+
+#divMenu { background-color: orange; color: blue }
+
+#divMenu { left: 3rem; width: 20rem; position: absolute; top: 10rem; resize: both; }
+#divMenu { border-radius: 2px; box-sizing: border-box;
+	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+#divMenu details { padding: 0 10px; }

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<link rel="stylesheet" id="stylesheet" type="text/css" href="style1.css">
+<style>
+
+
+</style>
+</head>
+<body>
+
+	<div id = "divHeader" >
+
+		<h1 id = "divTitle" >
+
+			<a href="" ><script>
+				document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
+				//document.write( document.title );
+			</script></a>
+
+		</h1>
+
+		<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+
+		<div id = "divContents" >
+
+			<p><button onclick=stylesheet.href="style1.css"; >style 1</button></p>
+
+			<p><button onclick=stylesheet.href="style2.css"; >style 2</button></p>
+
+		</div>
+
+	</div>
+
+	<div id = "divMenu" >
+
+		<div id=divMenuTitle class=titleBar >divMenuTitle</div>
+
+		<div id=divMenuHeader >
+
+			<details open>
+				<summary>sumMenuHeader</summary>
+				<p><a href="">breadcrumb</a> &raquo; </p>
+				<h2><a href="" >Title</a></h2>
+
+				<div id=divMenuHeader>
+					<p><i>111 222 333 444 555</i></p>
+					aaa bbb ccc ddd eee fff
+				</div>
+				<hr>
+			</details>
+
+		</div>
+
+		<div id=divMenuContent >
+
+			<details open>
+				<summary>sumMenuContent</summary>
+
+				<div id=divMenuContent >
+					<p><button>button 1</button></p>
+					<p><button>button 2</button></p>
+					lorem ipsum, <a href='' >quia dolor sit</a>, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</div>
+				<hr>
+			</details>
+
+		</div>
+
+		<div id=divMenuFooter >
+			<details>
+				<summary>sumMenuFooter</summary>
+				<div id=divMenuFooter>
+					lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</div>
+				<hr>
+			</details>
+
+		</div>
+		<h1><center>❦</center></h1>
+	</div>
+
+
+<script>
+
+	let txt;
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divContents.innerHTML += b + txt;
+
+	}
+
+
+</script>
+</body>
+</html>

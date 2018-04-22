@@ -79,11 +79,12 @@
 		for ( var i = 0; i < geometry.vertices.length; i++ ) {
 			point = geometry.vertices[ i ];
 			color = new THREE.Color( 0x0000ff );
-			color.setHSL( 0.7 * ( yMax - point.y) / yRange, 1, 0.5 );
+			color.setHSL( 0.7 * ( yMax - point.y ) / yRange, 1, 0.5 );
 			geometry.colors[i] = color; // use this array for convenience
 		}
 
 		var faceIndices = [ 'a', 'b', 'c' ];
+
 		for ( var i = 0; i < geometry.faces.length; i++ ) {
 			face = geometry.faces[ i ];
 			//numberOfSides = ( face instanceof THREE.Face3 ) ? 3 : 4;
@@ -94,9 +95,9 @@
 		}
 
 		var wireTexture = new THREE.ImageUtils.loadTexture( '../../../textures/square.png' );
-		wireTexture.wrapS = wireTexture.wrapT = THREE.RepeatWrapping; 
+		wireTexture.wrapS = wireTexture.wrapT = THREE.RepeatWrapping;
 		wireTexture.repeat.set( 60, 40 );
-		material = new THREE.MeshBasicMaterial( { ambient: 0xff0000, map: wireTexture, vertexColors: THREE.VertexColors } );
+		material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors } );
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, 0, 0 );
 		scene.add( mesh );

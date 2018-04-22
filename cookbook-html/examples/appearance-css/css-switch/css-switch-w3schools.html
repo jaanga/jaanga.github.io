@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-03-28" >
+<title></title>
+<link rel="stylesheet" id="stylesheet" type="text/css" href="css-switch-w3schools.css">
+<link rel="stylesheet" id="stylesheetW3schools" type="text/css" href="https://www.w3schools.com/lib/w3-theme-red.css">
+<style>
+
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" class=w3-theme-l5 >
+
+		<div id=divMenuTitle class="w3-theme-d2 w3-hover-theme" style=text-align:right; >divMenuTitle</div>
+
+		<div id=divMenuHeader >
+
+			<details open>
+				<summary class="w3-theme-l5 w3-hover-theme" >sumMenuHeader</summary>
+				<p><a href="" class="w3-theme-l5 w3-hover-theme" >breadcrumb</a> &raquo; </p>
+				<h2><a href="" class="w3-theme-l5 w3-hover-theme" >Title</a></h2>
+
+				<div id=divRowButtonsStyle ></div>
+
+				<div id=divMenuHeader>
+					<p><i>111 222 333 444 555</i></p>
+					aaa bbb ccc ddd eee fff
+				</div>
+				<hr>
+			</details>
+
+		</div>
+
+		<div id=divMenuContent >
+
+			<details open>
+				<summary class="w3-theme-l5 w3-hover-theme" >sumMenuContent</summary>
+
+				<div id=divMenuContent >
+					<p><button class="w3-theme-d1 w3-hover-theme w3-hover-border-theme" >button 1</button></p>
+					<p><button class="w3-theme-d1 w3-hover-theme w3-hover-border-theme" >button 2</button></p>
+					lorem ipsum, <a href='' class=w3-theme-l5 >quia dolor sit</a>, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</div>
+				<hr>
+			</details>
+
+		</div>
+
+		<div id=divMenuFooter >
+			<details>
+				<summary class="w3-theme-l5 w3-hover-theme">sumMenuFooter</summary>
+				<div id=divMenuFooter>
+					lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</div>
+				<hr>
+			</details>
+
+		</div>
+		<h1><center>❦</center></h1>
+
+	</div>
+
+	<div id = "divHamburger" class="w3-theme-l4 w3-hover-theme" onclick=toggleNav(); title="click to hide this menu" > slide &#9776; </div>
+
+	<div id = "divHeader" >
+
+		<h1 id = "divTitle" >
+
+			<a href="" ><script>
+				document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
+				//document.write( document.title );
+			</script></a>
+
+		</h1>
+
+		<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+
+		<div id = "divContents" >
+
+			<p><button onclick=stylesheetW3schools.href="https://www.w3schools.com/lib/w3-theme-blue.css"; >style blue</button></p>
+
+			<p><button onclick=stylesheetW3schools.href="https://www.w3schools.com/lib/w3-theme-amber.css"; >style amber</button></p>
+
+		</div>
+
+	</div>
+
+
+
+<script>
+
+	let txt;
+	const b = '<br>';
+
+	init();
+
+	function init() {
+
+		let color = localStorage.getItem( 'GbxmlViewerStyleColor' );
+		color = color ? color : 'khaki';
+		stylesheetW3schools.href = "https://www.w3schools.com/lib/w3-theme-" + color + ".css";
+
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divContents.innerHTML += b + txt;
+
+	}
+
+	const colors = [ 'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime', 'khaki', 'yellow',
+		'amber', 'orange', 'deep-orange', 'blue-grey', 'brown', 'grey', 'dark-grey', 'black', 'w3schools' ];
+
+	txt = '';
+
+	for ( let color of colors ){
+
+		txt += '<a href=JavaScript: onclick=setStyle("' + color + '"); style=font-size:2rem;line-height:1rem;color:' + color.replace( '-', '' ) +
+			' title="' + color + '" >&bull;</a> ';
+	}
+
+	divRowButtonsStyle.innerHTML = txt;
+
+	function setStyle( color ) {
+
+		stylesheetW3schools.href="https://www.w3schools.com/lib/w3-theme-" + color + ".css";
+
+		localStorage.setItem('GbxmlViewerStyleColor', color );
+
+	}
+
+	function toggleNav() {
+
+		if ( divHamburger.style.left === '' || divHamburger.style.left === '0px' ) {
+
+			divMenu.style.left = '-23rem';
+			divHamburger.style.left = '-6rem';
+
+		} else {
+
+			divMenu.style.left = '2rem';
+			divHamburger.style.left = 0;
+
+		}
+
+	}
+
+
+</script>
+</body>
+</html>

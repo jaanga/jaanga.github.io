@@ -1,0 +1,16 @@
+body { background-color: white; color: black; font: 12pt verdana; margin: 0 auto; max-width: 800px; }
+a { color: blue; text-decoration: none; }
+a:hover, a:focus { background-color: pink; color: #aaa; text-decoration: underline }
+
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background-color: #ccc; color: #fff }
+
+.titleBar { background-color: blue; color: yellow; padding: 1rem; }
+
+#divMenu { background-color: #ddd; color: blue; }
+
+#divMenu { left: 3rem; width: 20rem; position: absolute; top: 10rem; resize: both; z-index: 1; }
+#divMenu { border-radius: 2px; box-sizing: border-box;
+	box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+#divMenu details { margin: 0 10px; }
