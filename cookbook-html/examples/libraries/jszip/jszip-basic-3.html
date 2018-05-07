@@ -177,7 +177,7 @@
 			zip.forEach( function ( relativePath, zipEntry ) {
 
 				divFileNames.innerHTML += `<p><button onclick=setFile("${zipEntry.name}"); >file name: ${zipEntry.name}</button></p>`;
-				console.log( 'file name: ', zipEntry.name);
+				//console.log( 'file name: ', zipEntry.name);
 				names.push( zipEntry.name );
 			});
 
