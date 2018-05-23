@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="3D in your browser" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2017-09-25" >
+<meta name = "date" content = "2018-05-06" >
 <title></title>
 <style>
 
@@ -13,38 +13,36 @@
 	a { color: crimson; text-decoration: none; }
 	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
-	#menu { position: absolute; text-align: center; width: 100%; }
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; position: absolute; }
 
 </style>
 </head>
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r92/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r92/examples/js/controls/OrbitControls.js" ></script>
+<script src = "earcut.js" ></script>
 
-	<div id = "menu" >
+	<div id = "divMenu" >
 
-		<div id = "title" ></div>
-		<div id = "contents" >
+		<div id = "divTitle" ></div>
 
-			<p><button onclick=setQuaternion()>setQuaternion</button ></p>
+		<div id = "divContents" >
 
-			<p><button onclick=applyQuaternion()>applyQuaternion</button ></p>
-
-			<p><button onclick=applyQuaternionInverse()>applyQuaternionInverse</button ></p>
-
-
+			<p>
+				<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+			</p>
 
 		</div>
-
 
 	</div>
 
 <script>
 
-	var v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-
-
-	var renderer, camera, controls, scene;
+// "https://cdn.rawgit.com/mrdoob/three.js/master/src/extras/Earcut.js"
+	var renderer, camera, controls, scene, axesHelper;
 	var geometry, material, mesh;
 
 	init();
@@ -52,86 +50,37 @@
 
 	function init() {
 
-		title.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) +'</a></h1>';
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" >` + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +`</a>
+		</h1>`;
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		renderer.shadowMap.enabled = true;
 
 		document.body.appendChild( renderer.domElement );
 
 		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-		camera.position.set( 100, 100, 100 );
+		camera.position.set( -100, -100, 100 );
 		camera.up.set( 0, 0, 1 );
 
 		controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 		scene = new THREE.Scene();
 
-		const ambient = new THREE.AmbientLight( 0x444444 );
-		scene.add( ambient );
-
-		const directionalLight = new THREE.DirectionalLight( 0xffeedd );
-		directionalLight.position.set( 0, 0, 1 ).normalize();
-		scene.add( directionalLight );
-
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		window.addEventListener( 'orientationchange', onWindowResize, false );
 
-		const axesHelper = new THREE.AxesHelper( 50 );
+		axesHelper = new THREE.AxesHelper( 100 );
 		scene.add( axesHelper );
 
-		geometry = new THREE.BoxGeometry( 10, 30, 20 );
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-
 		scene.add( mesh );
 
 	}
-
-
-	function setQuaternion() {
-
-		var axis = new THREE.Vector3( 0, 1, 0 );
-		var vector = v( 1, 0, 0 );
-		mesh.quaternion.setFromUnitVectors( axis, vector );
-
-	}
-
-
-	function applyQuaternion() {
-
-		var quaternion = new THREE.Quaternion();
-		quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), Math.PI / 2 );
-
-		mesh.applyQuaternion( quaternion );
-
-	}
-
-
-	function applyQuaternionInverse() {
-
-		var quaternion = new THREE.Quaternion();
-
-			function setQuaternion() {
-
-			var axis = new THREE.Vector3( 0, 1, 0 );
-			var vector = v( 1, 0, 0 );
-			mesh.quaternion.setFromUnitVectors( axis, vector );
-
-}
-		quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), Math.PI / 2 );
-
-		mesh.applyQuaternion( quaternion );
-
-	}
-
-
-
-
-
-
 
 
 
@@ -159,3 +108,4 @@
 </script>
 </body>
 </html>
+

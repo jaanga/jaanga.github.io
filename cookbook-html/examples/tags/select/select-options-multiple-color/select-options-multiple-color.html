@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divHeader" >
+
+		<div id = "divTitle" ></div>
+
+		<div id = "divContents" >
+
+			<p>
+				<select id=selDemo size= 15 multiple oninput=console.log('val',this.value);>
+					<optgroup label='000 111 222' >
+						<option style=background-color:yellow; >aaa bbb ccc</option>
+						<option style=background-color:pink; selected >bbb ccc ddd</option>
+						<option style=background-color:lightgreen >ccc ddd eee</option>
+					</optgroup>
+					<optgroup label='111 222 333' style=background-color:lavender; >
+						<option selected >ddd eee fff</option>
+						<option>eee fff ggg</option>
+						<option>fff ggg hhh</option>
+					</optgroup>
+					<optgroup label = '222 333 444' disabled>
+						<option>ggg hhh iii</option>
+						<option>hhh iii jjj</option>
+						<option>iii jjj kkk</option>
+					</optgroup>
+				</select>
+			</p>
+
+			<p><button onclick=selDemo.selectedIndex=Math.floor(Math.random()*selDemo.length); >select random</button></p>
+
+		</div>
+
+	</div>
+
+	<div id = "divMenu" ></div>
+
+<script>
+
+	let txt;
+
+
+	init();
+
+	function init() {
+
+		const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+		//const title = document.title;
+
+		divTitle.innerHTML =
+		`
+			<h1><a href="" >${title}</a></h1>
+			<p>${document.head.querySelector( '[name=description]' ).content }</p>
+		`;
+
+		txt = 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+		divContents.innerHTML += txt;
+
+	}
+
+
+</script>
+</body>
+</html>
