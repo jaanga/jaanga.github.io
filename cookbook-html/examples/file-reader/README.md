@@ -17,7 +17,8 @@ _basic-html.html_
 
 ## Links of Interest
 
-
+fileReader Multiple docs
+* https://stackoverflow.com/questions/13975031/reading-multiple-files-with-javascript-filereader-api-one-at-a-time
 ## Change Log
 
 
