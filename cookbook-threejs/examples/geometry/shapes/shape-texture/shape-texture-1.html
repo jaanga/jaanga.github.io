@@ -9,7 +9,7 @@
 <title></title>
 <style>
 
-	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	body { font: 11pt monospace; margin: 0; /* overflow: hidden; */ }
 	a { color: crimson; text-decoration: none; }
 	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
@@ -28,17 +28,36 @@
 
 		<div id = "divTitle" ></div>
 
-		<div id = "divContents" >
-
 			<p>
 				<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
 			</p>
+			<p>
+				<button onclick=setShape1(); >setShape1</button>
+
+				<button onclick=setShapeWithHole(); >setShapeWithHole</button>
+
+				<button onclick=setTeeShape(); >setTeeShape</button>
+
+				<button onclick=setShapeWithHoleCanvas(); >setShapeWithHoleCanvas</button>
+
+			</p>
+
+			<p>
+				<button onclick=setShapeWithHoleCanvas2(); >setShapeWithHoleCanvas2</button>
+			</p>
+		<div id = "divContents" >
+
+
 
 		</div>
 
 	</div>
 
 <script>
+
+
+
+	const v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 
 	var renderer, camera, controls, scene, axesHelper;
 	var geometry, material, mesh;
@@ -88,36 +107,203 @@
 		mesh = new THREE.Mesh( geometry, material );
 		//scene.add( mesh );
 
-		setShape();
+		//setShape1();
 
 	}
 
 
 
-	function setShape() {
+	function setShape1() {
 
+		scene.remove( mesh );
 
-		const v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
 		const vectors = [ v2( 0, 0 ), v2( 500, 0 ), v2( 300, 600 ), v2( 0, 400 ) ];
 		const shape = new THREE.Shape( vectors );
 		const geometry = new THREE.ShapeGeometry( shape );
 
-		var texture = new THREE.TextureLoader().load( "../../../../textures/im6.jpg" );
+		texture = new THREE.TextureLoader().load( "../../../../textures/im11.jpg" );
 		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-		texture.repeat.set( 0.005, 0.005 );
+		texture.repeat.set( 0.01, 0.01 );
+		texture.offset.x = 0.5;
+		texture.offset.y = 0.5;
 
-		var frontMaterial = new THREE.MeshPhongMaterial( { map: texture, side: THREE.FrontSide } );
-		var backMaterial = new THREE.MeshPhongMaterial( { map: texture, side: THREE.BackSide } );
-
-		var materials = [ frontMaterial, backMaterial ];
 		const material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
 
-		//var mesh = THREE.SceneUtils.createMultiMaterialObject( geometry, materials );
-		const mesh = new THREE.Mesh( geometry, material );
+		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
+	}
+
+
+	function setShapeWithHole() {
+
+		scene.remove( mesh );
+
+		//const vectors = [ v2( -50, -50 ), v2( 50, -50 ), v2( 50, 50 ), v2( -50, 50 ) ];
+		const vectors = [ v2( -50, -50 ), v2( -50, 50 ), v2( 50, 50 ), v2( 50, -50 ) ];
+		const shape = new THREE.Shape( vectors );
+
+		var hole = new THREE.Path();
+		hole.fromPoints( [ v2( -10, -10 ), v2( 10, -10 ), v2( 10, 10 ), v2( -10, 10 ) ] );
+
+		shape.holes.push( hole );
+
+		const geometry = new THREE.ShapeGeometry( shape );
+
+		texture = new THREE.TextureLoader().load( "../../../../textures/im11.jpg" );
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set( 0.01, 0.01 );
+		texture.offset.x = 0.5;
+		texture.offset.y = 0.5;
+
+		const material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
 
 	}
+
+
+
+
+	function setTeeShape() {
+
+		scene.remove( mesh );
+
+		const vectors = [ v2( -20, -50 ), v2( 20, -50 ), v2( 20, 10 ), v2( 50, 10 ),
+			v2( 50, 50 ), v2( -50, 50 ), v2( -50, 10 ), v2( -20, 10 ) // , v2( 0, 0 )
+		];
+		const shape = new THREE.Shape( vectors );
+		const geometry = new THREE.ShapeGeometry( shape );
+
+		texture = new THREE.TextureLoader().load( "../../../../textures/im11.jpg" );
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set( 0.01, 0.01 );
+		texture.offset.x = 0.5; // // 0.125 * texture.repeat.x;
+		texture.offset.y = 0.5;
+
+		material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+
+
+	function setShapeWithHoleCanvas() {
+
+		scene.remove( mesh );
+
+		//const vectors = [ v2( -50, -50 ), v2( 50, -50 ), v2( 50, 50 ), v2( -50, 50 ) ];
+		const vectors = [ v2( -50, -50 ), v2( -50, 50 ), v2( 50, 50 ), v2( 50, -50 ) ];
+		const shape = new THREE.Shape( vectors );
+
+		var hole = new THREE.Path();
+		hole.setFromPoints( [ v2( -10, -10 ), v2( 10, -10 ), v2( 10, 10 ), v2( -10, 10 ) ] );
+
+		shape.holes.push( hole );
+
+		//const geometry = new THREE.ShapeGeometry( shape );
+
+
+		canvas = document.createElement('canvas');
+		canvas.height=100;
+		canvas.width= 100;
+
+		ctx = canvas.getContext('2d');
+
+		ctx.fillStyle = '#FF0000';
+		ctx.fillRect( 0, 0, 90, 90 );
+
+		ctx.fillStyle = '#0000ff';
+		ctx.fillRect( 0, 0, 10, 10 );
+
+		ctx.lineWidth = 0.09 ;
+		ctx.strokeStyle = '#007700';
+		ctx.strokeRect( 0, 0, canvas.width, canvas.height );
+
+		texture = new THREE.Texture( canvas );
+		//texture.minFilter = texture.magFilter = THREE.NearestFilter;
+
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set( 0.01, 0.01 );
+		texture.offset.x = 0.5; // // 0.125 * texture.repeat.x;
+		texture.offset.y = 0.5;
+
+		const material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+		texture.needsUpdate = true;
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+
+
+	function setShapeWithHoleCanvas2() {
+
+		scene.remove( mesh );
+
+		//const vectors = [ v2( -50, -50 ), v2( 50, -50 ), v2( 50, 50 ), v2( -50, 50 ) ];
+		const vectors = [ v2( -50, -50 ), v2( -50, 50 ), v2( 50, 50 ), v2( 50, -50 ) ];
+		const shape = new THREE.Shape( vectors );
+
+		var hole = new THREE.Path();
+		hole.setFromPoints( [ v2( -10, -10 ), v2( 10, -10 ), v2( 10, 10 ), v2( -10, 10 ) ] );
+
+		shape.holes.push( hole );
+
+		const geometry = new THREE.ShapeGeometry( shape );
+
+
+		var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas.width = canvas.height = 512;
+
+		var context = canvas.getContext("2d");
+
+		context.fillStyle =  '#ff0000';
+		context.strokeStyle =  '#ff00ff';
+		context.fillRect( 0, 0, canvas.width, canvas.height );
+
+		context.lineWidth = 5 ;
+		context.strokeRect( 20, 20, canvas.width - 40, canvas.height - 40);
+
+		var text = 'ABC DEF GHI';
+
+
+		context.fillStyle =  '#000000';
+		context.font = '20px sans-serif' ;
+
+		context.fillText( text, 100, 100);
+		width = context.measureText( text );
+
+		context.lineWidth = 2;
+		context.strokeStyle =  '#00ff00';
+		context.strokeRect( 95, 105, width.width + 10, -25 );
+
+
+		texture = new THREE.Texture( canvas );
+		//texture.minFilter = texture.magFilter = THREE.NearestFilter;
+
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set( 0.01, 0.01 );
+		texture.offset.x = 0.5; // // 0.125 * texture.repeat.x;
+		texture.offset.y = 0.5;
+
+		const material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+		texture.needsUpdate = true;
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+
+
 
 	function onWindowResize() {
 
