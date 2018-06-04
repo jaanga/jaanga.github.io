@@ -1,0 +1,18 @@
+[
+{ "vendor": "Artifice", "product": "Design Workshop", "position": [ -475, 25, -425 ] },
+{ "vendor": "Autodesk", "product": "AutoCAD Architecture", "position": [ -375, 25, -325 ] },
+{ "vendor": "Autodesk", "product": "AutoCAD MEP", "position": [ -275, 25, -325 ] },
+{ "vendor": "Autodesk", "product": "AutoCAD Revit Architecture & Autodesk Revit MEP", "position": [ -175, 25, -325 ] },
+{ "vendor": "Bentley", "product": "Bentley AECOsim Building Designer", "position": [ -75, 25, -425 ] },
+{ "vendor": "Bentley", "product": "Bentley Architecture", "position": [ 25, 25, -425 ] },
+{ "vendor": "Bentley", "product": "Bentley Building Mechanical Systems", "position": [ 125, 25, -425 ] },
+{ "vendor": "Bentley", "product": "Bentley Speedikon Architectural", "position": [ 225, 25, -425 ] },
+{ "vendor": "Cadsoft", "product": "Envisioneer", "position": [ -125, 25, -225 ] },
+{ "vendor": "Data Design System", "product": "DDS-CAD", "position": [ -25, 25, -225 ] },
+{ "vendor": "Digital Alchemy", "product": "Simergy / Building Model Creator", "position": [ 75, 25, -225 ] },
+{ "vendor": "Graphisoft", "product": "ArchiCAD", "position": [ 175, 25, -225 ] },
+{ "vendor": "Nemetschek Vectorworks", "product": "Vectorworks Architect 2013", "position": [ 275, 25, -225 ] },
+{ "vendor": "Onuma", "product": " Onuma BIMStorm", "position": [ 375, 25, -225 ] },
+{ "vendor": "Rhinoceros 3D", "product": "Rhino 3D and Grasshopper", "position": [ 425, 25, -375 ] },
+{ "vendor": "Trimble", "product": "SketchUp", "position": [ 325, 25, -375 ] }
+]

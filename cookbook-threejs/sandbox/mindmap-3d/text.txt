@@ -1,0 +1,802 @@
+
+	<div class="collapse" id="Design-Workshop">
+		<div class="well">A complete software power tool for creating 3D models, walkthroughs, and renderings, from initial sketches to polished presentations. <a href="http://www.artifice.com/dw_pro.html">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="AutoCAD-Architecture">
+		<div class="well">Designed for architects and built on AutoCAD software, AutoCAD Architecture offers the productivity of automated documentation, the efficiency of intelligent architectural objects, and the flexibility of file-based collaboration. <a href="http://www.autodesk.com/autocadarchitecture">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="AutoCAD-MEP">
+		<div class="well">The building engineering software application that connects the design, documentation, and analysis of complex building mechanical, electrical, plumbing, and fire protection systems. <a href="http://www.autodesk.com/autocadmep">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="AutoCAD-Revit">
+		<div class="well">Gain instant competitive advantage with the Autodesk Revit building design and documentation system, purpose-built for building information modeling (BIM). Change anything, anytime, anywhere, and Revit coordinates the change everywhere. <a href="http://www.autodesk.com/revitarchitecture">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="Bentley-AECOsim">
+		<div class="well">This single, integrated application includes tools for architectural, structural, mechanical systems, and electrical design and construction documentation. It fully supports large, complex, distributed models - enabling teams to deliver bigger and more finely detailed projects while taking advantage of the many benefits associated with BIM. Among these are an informed work environment that leads to better decisions and better-performing infrastructure, along with lower-cost and faster project execution. <a href="https://www.bentley.com/en/products/brands/aecosim">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="Bentley-Architecture">
+		<div class="well">Bentley Architecture is an advanced, yet intuitive and easy-to-use architectural building information modeling (BIM) application that empowers architects and designers to create with unlimited freedom. <a href="https://www.bentley.com/en/solutions/project-delivery/architecture-and-engineering">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="Bentley-Building">
+		<div class="well">An advanced, yet intuitive and easy-to-use building information modeling (BIM) application that empowers mechanical engineers with unlimited freedom to explore more design options, make better informed design decisions, and predict costs and performance. <a href="https://www.bentley.com/en/products/product-line/building-design-software">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="Bentley-speedikon">
+		<div class="well">Bentley speedikon Architectural is a fast, powerful, and integrated (BIM) application for MicroStation and AutoCAD building design and construction documentation of new and existing structures of any size and complexity, such as offices, airports, hospitals, and manufacturing plants. <a href="http://www.bentley.com/en-US/Products/Bentley+speedikon+Architectural/">Visit Website</a></div>
+
+	<div class="collapse" id="Envisioneer">
+		<div class="well">Envisioneer is a true, award winning Building Information Modeling (BIM) solution designed specifically for the residential and light commercial markets. Design in 2D and 3D concurrently, produce detailed construction documents, framing components, and accurate material and cut lists. Apply interior and exterior design elements to your designs from furniture, flooring and countertops to roofs, terrains, and hardscape features. The possibilities are only limited by your imagination. <a href="http://www.cadsoft.com/products/">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="DDSCAD">
+		<div class="well">DDS-CAD from Data Design System (A Nemetschek Company) is part of the <a href="http://www.dds-cad.net/open-bim/">Open BIM</a>
+			community that allows MEP engineers to perform mechanical, electrical, and plumbing design and layout for buildings.
+			DDS-CAD successfully imports gbXML geometry so you can start laying out your MEP systems.
+			<a href="http://www.dds-cad.net/">Visit Website</a></div>
+	</div>
+	<div class="collapse" id="SimergyBMC">
+		<div class="well">
+			Simergy was developed by Digital Alchemy in conjunction with
+			the Lawrence Berkeley National Laboratory (LBNL) and a number of other software
+			partners. It is a comprehensive graphical
+			user interface (GUI) for <a href="https://energyplus.net/">EnergyPlus</a>
+			that includes a complete workflow solution that
+			takes the user all the way through the building design and analysis process
+			starting from the early stages
+			to detailed design. Simergy includes the Building Model Creator™ which allows users to
+			building models and export to IFC, IDF, and gbXML.
+
+			<a href="http://www.digitalalchemypro.com/html/products/DAProducts_Simergy.html">Visit Website</a>
+		</div>
+	</div>
+
+	<div class="collapse" id="Graphisoft">
+		<div class="well">
+			ArchiCAD is an architectural BIM CAD software for Macintosh and Windows developed by
+			Graphisoft. ArchiCAD offers computer aided solutions for handling all common aspects
+			of aesthetics and engineering during the whole design process of the built environment —
+			buildings, interiors, urban areas, etc. The company, <a href="http://www.cadimage.com">Cadimage</a>,
+			develops a gbXML plug-in for ArchiCAD.
+			You can email their support <a href="mailto:support@cadimagegroup.com">here</a> to
+			request the plug-in.
+
+			<a href="http://www.graphisoft.com/archicad/">Visit ArchiCAD Website</a>
+		</div>
+	</div>
+
+	<div class="collapse" id="Vectorworks-Architect-2013">
+		<div class="well">
+			<p>With Vectorworks Architect software, you can create building information models without giving up the design freedom you need. Whether you're looking to streamline costs, analyze materials, increase your energy efficiency, or just create world- class designs, with the Vectorworks Architect solution, BIM just works. Enjoy the robust and flexible capabilities of BIM with the ease of design, great documentation, and intelligent tools that the software is known for - right from the start.</p>
+			<p>With direct support for gbXML, you can now easily export required information to communicate with a wide variety of energy modeling and analysis applications. <a href="http://www.vectorworks.net/architect/">Visit Website</a></p></div>
+	</div>
+	<div class="collapse" id="Onuma-BIMStorm">
+		<div class="well">BIMStorm allows realtime web-based collaberation of BIM. BIMStorm now exports BIM via gbXML. <a href="http://www.onuma.com/services/BimStorm.php">Visit Website</a></div>
+	</div>
+
+	<div class="collapse" id="Rhino"><div class="well">
+			<a href="https://www.rhino3d.com/">Rhinoceros 3d</a> (or Rhino 3d) is a 3d modeling software tool that
+			can create, edit, analyze, document, render, animate,
+			and translate nurbs* curves, surfaces, and solids, point clouds, and polygon meshes.
+			Rhino 3d has a very active ecosystem of software plug-ins including Grasshopper and Honeybee
+			that extend the functionality of the tool. These plug-ins were developed by
+			Mostapha Roudsari of the University of Pennsylvania and allow Rhino models to
+			export to gbXML.
+			<a href="http://core.thorntontomasetti.com/gbxml-meets-rhino-and-grasshopper/">Visit Website</a>
+		</div>
+	</div>
+<div class="col-xs-12 col-sm-4">
+	<h3><a class="" data-toggle="collapse" href="#OpenStudio-SketchUp-Plug-in" aria-expanded="false" aria-controls="OpenStudio-SketchUp-Plug-in">Trimble</a></h3>
+</div>
+
+	<div class="collapse" id="OpenStudio-SketchUp-Plug-in">
+		<div class="well">
+			<p>
+				Trimble <a href="http://www.sketchup.com">SketchUp</a> (formerly Google Sketchup) is a 3D modeling computer program for a wide
+				range of drawing applications such as architectural, interior design, civil and mechanical
+				engineering, film, and video game design.<br /><br />A gbXML plug-in is available for
+				SketchUp via the Legacy OpenStudio Plug-in from NREL.
+				This plug-in makes it easy to create and edit the
+				building geometry in your EnergyPlus input files. It also allows you to
+				launch EnergyPlus simulations and view the results without leaving the SketchUp
+				3D drawing program.<br /><br />
+				Note that active development has moved from the Legacy OpenStudio Plug-in to
+				the more comprehensive OpenStudio suite of tools and libraries.
+				Changes to the Legacy OpenStudio Plug-in will be limited to bug
+				fixes and compatibility updates for new versions of EnergyPlus.<br /><br />
+				The Legacy OpenStudio Plug-in was created by the National Renewable Energy Laboratory
+				for the U.S. Department of Energy as an interface to the EnergyPlus simulation engine.
+				Refer to the EnergyPlus webpage at energyplus.gov for an overview of the concept and features. <a href="https://github.com/NREL/legacy-openstudio">Visit Website</a>
+			</p>
+		</div>
+	</div>
+
+                    <h2>Building Analysis Software Tools</h2>
+
+							<div class="col-12">
+								<div class="collapse" id="EnergySave">
+									<div class="well">An easy to use intelligent interface to Arup's Energy2 building energy analysis program. <a href="http://www.arup.com">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#ASHRAE" aria-expanded="false" aria-controls="ASHRAE">ASHRAE</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">Building EQ</div>
+                            <div class="col-xs-12 col-sm-2">Energy Rating</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="ASHRAE">
+                                    <div class="well">
+                                        ASHRAE's Building EQ Portal provides a quick energy analysis that benchmarks a building's energy performance. Building EQ assists in the preparation of an ASHRAE Level 1 Energy Audit to identify means to improve a building's energy performance including low-cost, no-cost energy efficiency measures and an Indoor Environmental Quality survey with recorded measurements to provide additional information to assess a building's performance.
+                                        <br /><br />
+                                        Two different evaluations can be used independently to compare a candidate building to other similar buildings in the same climate zone or together for an assessment of a building's design potential compared to actual operation:
+                                       <ol>
+                                           <li><b>In Operation</b> compares actual building energy use based on metered energy information.
+
+                                           <li>
+                                               <b>As Designed</b> compares potential energy use based on the building's physical characteristics and systems with standardized energy use simulation.
+</ol>
+                                        The ASHRAE Building EQ portal is able to import a gbXML file to populate basic building information.<br />
+
+                                               <a href="http://buildingeq.ashrae.org/">Visit Website</a>
+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Green-Building-Studio" aria-expanded="false" aria-controls="Green-Building-Studio">Autodesk</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Green Building Studio (GBS)</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Green-Building-Studio">
+									<div class="well">
+										A building energy analysis web service designed for easy integration with existing 3D-CAD/BIM software tools. Below are files that are produced by the GBS:
+										<ul>
+											<li><strong><a href="http://www.doe2.com/">DOE-2.2</a></strong><br/>
+												One of the most advanced and widely used building energy analysis engines.</li>
+											<li><strong><a href="http://www.energyplus.gov/">EnergyPlus</a></strong><br/>
+												The successor to DOE-2 that has advanced building analysis capabilities.</li>
+											<li><strong><a href="http://www.doe2.com/">eQuest</a></strong><br/>
+												The most widely used graphical building energy analysis tool in the world.</li>
+											<li><strong><a href="http://www.web3d.org/x3d/vrml/">VRML &amp; X3D</a></strong><br/>
+												Virtual Reality Modeling Language and its XML version used for describing 3D environments.</li>
+										</ul>
+                                        <a href="http://www.autodesk.com/greenbuildingstudio">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Bentley-AECOsim1" aria-expanded="false" aria-controls="Bentley-AECOsim">Bentley</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Bentley-AECOsim</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Bentley-AECOsim1">
+									<div class="well">AECOsim Energy Simulator is a rigorous yet intuitive application for the design, simulation, and analysis of building mechanical systems, environmental conditions, and energy performance. Used in both design and retrofit work, the software contributes to better-performing, more sustainable buildings that consume less energy; provide greater occupant productivity, comfort, and safety; and control lifecycle operational energy costs for their owners. AECOsim fully supports gbXML. <a href="http://www.bentley.com/en-US/Promo/AECOsim/aecosim+energy+simulator.htm">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Bentley-Hevacomp" aria-expanded="false" aria-controls="Bentley-Hevacomp">Bentley</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Bentley-Hevacomp</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Bentley-Hevacomp">
+									<div class="well">Bentley Hevacomp offers software for building performance design, simulation, and energy certification based on the EnergyPlus analysis engine. Hevacomp is used worldwide to predict a building's real-world performance and provide compliance checking and documentation for international standards. <a href="https://www.bentley.com/en/products/brands/hevacomp">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#Bionova" aria-expanded="false" aria-controls="Bionova">Bionova Ltd.</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">One Click LCA</div>
+                            <div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="Bionova">
+                                    <div class="well">One Click LCA has ready-to-use tools for dealing with many of the most demanding green building analyses —
+                                    choose the ones you need and manage everything efficiently through one platform.
+                                    <ol>
+
+                                        <li> Life-cycle costing
+                                        <li>
+                                            Materials sourcing credits
+                                        <li>
+                                            Climate resiliency
+                                        <li>
+                                            Site impacts monitoring
+                                        <li>
+                                            Operational performance monitoring
+                                        <li>  … Any other of the 80 tools and templates in One Click LCA
+
+</ol>
+                                    </ol>
+
+                                     <a href="http://www.oneclicklca.com/">Visit Website</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#BlueCFD-AIR" aria-expanded="false" aria-controls="BlueCFD-AIR">blueCape</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">BlueCFD-AIR</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="BlueCFD-AIR">
+									<div class="well">blueCFD-AIR is a brand new Graphical User Interface that allows a more efficient application of CFD to problems in buildings and structures. AEC professionals thus gain access to an easy to use and highly precise tool, to aid in the analysis of one or several design alternatives. It can import gbXML (Green Building XML) files generated by CAD and BIM applications, as well as other LEED applications that use gbXML for building and energy information exchange. The CFD capabilities used by blueCFD-AIR are provided by blueCFD-Core, which is a high quality cross-compiled build version of OpenFOAM for Windows; the possibility to couple to other software like STAR-CCM+ is planned for future versions of blueCFD-AIR. <a href="http://bluecfd.com/AIR">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Cymap" aria-expanded="false" aria-controls="Cymap">CADLine</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Cymap</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Cymap">
+									<div class="well">An integrated building services design suite, covering both mechanical and electrical. Imports gbXML building data for use in services design, energy analysis and demonstrating compliance with Building Regulations. <a href="https://cadline.co.uk/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#HAP" aria-expanded="false" aria-controls="HAP">Carrier</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">HAP (Hourly Analysis Program)</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="HAP">
+									<div class="well">HAP is a dual function program - full-featured load estimating and system sizing for commercial buildings plus versatile hour-by-hour energy and operating cost analysis. <a href="https://www.carrier.com/commercial/en/us/software/hvac-system-design/hourly-analysis-program/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#Cype" aria-expanded="false" aria-controls="HAP">CYPE</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">CYPETHERM Loads, HVAC, EPlus, and CYPELUX</div>
+                            <div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="Cype">
+                                    <div class="well">CYPE is a firm that develops and distributes technical software for Architecture, Engineering and Construction professionals. CYPETHERM Suite is a group of CYPE programs for thermal and energy analysis of buildings in accordance with current national and international standards. The applications that work with the 3D model of the
+                                     building are integrated into the Open BIM workflow via the gbXML and IFC standards:
+                                        <ul>
+                                            <li>CYPETHERM Loads. Thermal load calculation of buildings according to the Radiant Time Series Method (RTSM), proposed by ASHRAE.
+                                            <li>
+                                                CYPETHERM HVAC. Design of HVAC installations (heating, ventilation and air conditioning).
+                                            <li>
+                                                CYPETHERM EPlus. Modelling and energy simulation of buildings with EnergyPlus™.
+                                            <li>CYPELUX. Design of normal and emergency lighting installations, as well as their evaluation.
+
+</ul>
+
+                                        <a href="http://cypetherm-suite.en.cype.com/">Visit Website</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#DesignBuilder" aria-expanded="false" aria-controls="DesignBuilder">DesignBuilder</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">DesignBuilder v2</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="DesignBuilder">
+									<div class="well">DesignBuilder is a state-of-the-art software tool for checking building energy, CO2, lighting and comfort performance. Developed to simplify the process of building simulation, DesignBuilder allows users to rapidly compare the function and performance of building designs and deliver results on time and on budget. <a href="http://www.designbuilder.com/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#DIALux" aria-expanded="false" aria-controls="DIALux">DIALux</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">DIALux 4.9</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="DIALux">
+									<div class="well">
+										<p>DIALux. The free and complete software developed for professional light planning is open to luminaires of all manufacturers. A software by planners for planners. Used by many hundreds of thousands of light planners and designers worldwide. And their number is growing from day to day.</p>
+										<p>Create your virtual worlds simply and intuitively with DIALux. Document your results in breath-taking, photorealistic visualizations. Delight your customers with daylight and artificial light scenarios through which they can glide with wild camera runs. Rely on the CAD data of other architecture programmes and re-export your files easily.</p>
+										<p>Receiving data from an architect is the normal start for the lighting designer. Supported formats are DXF, DWG and STF. The latest innovation is the gbXML interface to DIALux. All mayor CAD manufacturers support this interface. The Green Building XML (gbXML) open schema helps to facilitate the transfer of building geometry and properties stored in a 3D BIM database (e.g. Revit, ArchiCAD) to analysis tools like DIALux. <a href="http://www.formfollowsperformance.com/2011/05/dialux-4-9-now-supports-gbxml/">Visit Website</a></p></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#Simergy" aria-expanded="false" aria-controls="Simergy">Digital Alchemy</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">Simergy</div>
+                            <div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="Simergy">
+                                    <div class="well">
+                                        Simergy was developed by Digital Alchemy in conjunction with
+                                        the Lawrence Berkeley National Laboratory (LBNL) and a number of other software
+                                        partners. It is a comprehensive graphical
+                                        user interface (GUI) for <a href="https://energyplus.net/">EnergyPlus</a>
+                                        that includes a complete workflow solution that
+                                        takes the user all the way through the building design and analysis process
+                                        starting from the early stages
+                                        to detailed design. The workflows facilitate the cycles of analysis that
+                                        enable exploration of system types and enable innovative
+                                        HVAC system design.
+
+
+                                        <a href="http://simergy.lbl.gov/">Visit Website</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#E4-Tech" aria-expanded="false" aria-controls="E4-Tech">E4 Tech</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Lesosai</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="E4-Tech">
+									<div class="well">
+										<p>Lesosai from E4 Tech is a software for the certification, thermal balance calculation of buildings containing one or more heated or cooled zones.</p>
+										<p>Lesosai allow a building life cycle calculation. It is designed primarily for building engineers, HVAC engineers and architects. It's certified for Switzerland, Luxembourg and France. <a href="http://www.Lesosai.com/">Visit Website</a></p></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#CHVAC" aria-expanded="false" aria-controls="CHVAC">Elite Software</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Chvac - Commercial HVAC Load Calculations</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="CHVAC">
+									<div class="well">Chvac quickly and accurately calculates the maximum heating and cooling loads for commercial buildings. The cooling loads can be calculated with either the CLTD method or the new RTS (Radiant Time Series) method. The program allows an unlimited number of zones which can be grouped into as many as 100 air handling systems. CHVAC now imports/exports gbXML files and a video demonstration of that feature can be seen <a href="http://www.elitesoft.com/pub/videos/chvac/chvacgbxml.htm">here</a>. <a href="http://www.elitesoft.com/web/hvacr/chvacx.html">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#EnergyPro" aria-expanded="false" aria-controls="EnergyPro">EnergySoft, LLC</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">EnergyPro</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="EnergyPro">
+									<div class="well">EnergyPro is currently certified for use with the California Title 24 Standards. It is the only Windows based program certified for use with BOTH Residential and Nonresidential Buildings. EnergyPro imports gbXML schemas for true interop with BIM authoring software. <a href="http://www.energysoft.com/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Tas" aria-expanded="false" aria-controls="Tas">Environmental Design Solutions Limited</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Tas</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Tas">
+									<div class="well">Tas Building Designer simulation software from EDSL (www.edsl.net) is a new generation product, no old legacy code to slow you down. Try it for room load and plant component sizing, energy use and running costs, CO<sub>2</sub> emissions, natural ventilation and passive design with solar shading. <a href="http://www.edsl.net/main/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#greenspace" aria-expanded="false" aria-controls="greenspace">greenspace Live</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">greenspace Live Energy Design and Analysis Tools</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="greenspace">
+									<div class="well">
+										<p>Our on-line products work together to provide you with an easy-to-use rapid workflow. Design activities start in gWorkspace, where facility owners, architects and energy assessors can share key information including building documents, site photos and plans. gModeller is a greenspaceLive plug-in for Google SketchUp, one of the most popular 3D modelling tools in the world. It turns SketchUp models into Green Building XML (gbXML) models which can then be analyzed for energy purposes using downstream tools.</p>
+										<p>gEnergyEPC generates government accredited Energy Performance Certificates (EPC's) in line with the EU Energy Performance of Buildings Directive and building energy analysis reports. gDashboard presents rich information and reports about the full building portfolio managed by greenspaceLive. <a href="https://greenspacelive.com/site /">Visit Website</a></p></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#hvac-solution" aria-expanded="false" aria-controls="hvac-solution">HVAC Solution</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">HVAC Solution</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="hvac-solution">
+									<div class="well">HVAC Solution software is a 2D schematic software tool that helps users design air handing, airflow, hydronic and steam systems. It can import HVAC-related information from software tools such as Trane, Trace and Elite CHVAC using gbXML. <a href="http://www.hvacsolution.com/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#IES-Virtual-Environment" aria-expanded="false" aria-controls="IES-Virtual-Environment">IES Limited</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Virtual Environment (VE)<Virtual Environment></div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="IES-Virtual-Environment">
+									<div class="well">The Virtual Environment (VE) from IES is a unique, integrated system for building performance
+                                     assessment that brings productivity and excellence to every aspect of building design. <a href="http://www.iesve.com/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#izuba" aria-expanded="false" aria-controls="IZUBA">IZUBA énergies </a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Pleiades</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="izuba">
+									<div class="well">
+
+									IZUBA Energies is a cooperative French company dedicated to the energy transition in the building sector. IZUBA Energies develops and distributes Pleiades, a building eco-design software combining:<br><Br>
+- Dynamic energy simulation of buildings (STD COMFIE)<br><br>
+- French building regulation calculation (Pleiades RT 2012 and RT existant)<br><br>
+- Thermal loads (Radiant Time Series) and heat loss calculations (NF EN 12831)<br><br>
+- Life cycle analysis (Pleiades ACV)<br><br>
+With Pleiades, energy and environmental optimization of the building is part of an openBIM process. Pleiades imports IFC4 or gbXML models. <a href="http://www.izuba.fr/logiciels/">Visit Website</a>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				   <div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#ladybug-tools" aria-expanded="false" aria-controls="ladybug-tools">Ladybug Tools </a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Ladybug Tools gbXML Viewer</div>
+							<div class="col-xs-12 col-sm-2">Viewer</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="ladybug-tools">
+									<div class="well">This open-source web-based gbXML viewer allows you to upload any gbXML file and view, pan, zoom, and rotate the geometry within your favorite browser. <a href="http://www.ladybug.tools/spider/gbxml-viewer/r11/gv-app/gv-app.html">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#RaumGEO" aria-expanded="false" aria-controls="RaumGEO">mh-software GmbH</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">RaumGEO</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="RaumGEO">
+									<div class="well">RaumGEO is a german CAE application that has a gbXML-import-module for building data to calculate heating and cooling loads and energy requirements for buildings with mh-software. A 3D viewer lets you visually check and define the gbXML data before it is imported. Within RaumGEO the building data may be edited or completed before HVAC calculations are started. Calculated HVAC networks may be returned to any CAD system. <a href="http://www.mh-software.de/produkte/dxf-dwg-importieren.html">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Open-Studio" aria-expanded="false" aria-controls="Open-Studio">National Renewable Energy Laboratory</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Open Studio</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2"><a href="OpenStudioCertification_Latest">Level 2 Certification</a></div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Open-Studio">
+									<div class="well">
+										OpenStudio is a cross-platform (Windows, Mac, and Linux) collection of software tools to support whole building energy modeling using EnergyPlus and advanced daylight analysis using Radiance. OpenStudio is an open source (LGPL) project to facilitate community development, extension, and private sector adoption. OpenStudio includes graphical interfaces along with a Software Development Kit (SDK).<br /><br />
+										The graphical applications include the OpenStudio SketchUp Plug-in, OpenStudio Application, ResultsViewer and the Parametric Analysis Tool. The OpenStudio SketchUp Plug-in is an extension to Trimble's popular SketchUp 3D modeling tool that allows users to quickly create geometry needed for EnergyPlus. Additionally, OpenStudio supports import of gbXML and IFC for geometry creation. The OpenStudio Application is a fully featured graphical interface to OpenStudio models including envelope, loads, schedules, and HVAC. ResultsViewer enables browsing, plotting, and comparing simulation output data, especially time series. The Parametric Analysis Tool enables studying the impact of applying multiple combinations of OpenStudio Measures to a base model as well as export of the analysis results for EDAPT submission.<br /><br />
+										In addition to the graphical interface, OpenStudio allows building researchers and software developers to quickly get started through its multiple entry levels, including access through C++, Ruby, and C#. Users can leverage the Ruby interface to create OpenStudio Measures that can be easily shared and applied to OpenStudio Models. <a href="https://www.openstudio.net/">Visit Website</a>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Cylon-Controls" aria-expanded="false" aria-controls="Cylon-Controls">National University of Ireland, Cork</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Cylon Controls Ltd. &amp; Ace Controls ltd.</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Cylon-Controls">
+									<div class="well">Development of a generic web based software tool that integrates standard building management systems and third party auditing applications. <a href="http://www.cylon.com/">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Relux" aria-expanded="false" aria-controls="Relux">Relux Informatik AG</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">ReluxSuite</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Relux">
+									<div class="well">
+
+                                    Relux Informatik AG, located in Switzerland, is involved in the development, production and distribution of
+
+                                        ReluxSuite, the free lighting planning software tool for lighting and sensor planners.
+
+                                        This suite provides users with all the software
+                                     and data necessary for professional lighting planning.
+                                        <br /><br>
+                                        The ReluxSuite includes the following software tools:
+                                    <ol>
+                                        <li>ReluxPro
+                                        <li>ReluxSensor
+                                        <li>ReluxOffer
+                                        <li>ReluxEnergy
+</ol>
+
+                                     ReluxSuite imports geometric data from gbXML files produced by BIM authoring tools such as Autodesk Revit.
+                                    Click <a href="https://www.youtube.com/watch?v=M9d1wpdaUaw">here</a> for a short video tutorial on how that works.
+
+
+                                        <a href="http://bit.ly/1rc0vsY">Visit ReluxSuite Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#Sankom" aria-expanded="false" aria-controls="Sankom">Sankom Sp. z o.o.</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">Auditor OZC 6.9 Pro</div>
+                            <div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="Sankom">
+                                    <div class="well">
+
+                                        Sankom Sp. z o.o is a company out of Warsaw, Poland. It
+                                        develops and publishes software supporting the process of sanitary systems design.
+
+                                        <a href="http://en.sankom.net/programs/audytor-ozc">Auditor OZC 6.9 Pro</a>
+                                        is a desktop software tool and Autodesk Revit plug-in. The Revit plug-in extends the
+                                        capabilities of a standard Revit building block export to gbXML.
+                                       For example, Revit does not always export building materials that correctly define heat parameters.
+                                        In this case, the layers that are exported to gbXML are not defined in the material layer.
+
+                                        The gbXML Auditor plug-in eliminates this problem.
+
+
+
+
+                                        <a href="http://en.sankom.net/">Visit the Sankom Website</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#Haustechniker" aria-expanded="false" aria-controls="hvac-solution">Software fur Haustechniker</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">Win_Ht</div>
+                            <div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="Haustechniker">
+                                    <div class="well">
+                                        Win_Ht is a calculation program focused on calculations for Swiss standards
+                                        - e.g. SIA Norms.<br /><br />
+
+                                        Win_Ht Version 3.11 - release date September 30th, 2016 - will import versions 5.0 to 6.01 of gbXML.
+
+                                        Imported data can be used to calculate heating loads,
+                                        underfloor heating, radiators, system redundancy, thermal energy, heat transmission and more.
+
+
+
+                                        <a href="http://bke.p2wcatalog.com/2016/catalog/index.html?data=b9028/b902811&lang=d&chapter=8">Visit Website</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <h3><a class="" data-toggle="collapse" href="#Green-Building-Information-System" aria-expanded="false" aria-controls="Green-Building-Information-System">Solar-Computer</a></h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">Green-Building-Information-System (GBIS)</div>
+                            <div class="col-xs-12 col-sm-2">Analysis</div>
+                            <div class="col-xs-12 col-sm-2">Not Yet</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="collapse" id="Green-Building-Information-System">
+                                    <div class="well">GBIS is a CAD application that provides a bidirectional gbXML-based connection to the SOLAR-COMPUTER suite of calculation programs for buildings (energy analysis, heat load, and cooling load) and systems (radiators, heat piping, ventilation, and drinking water). GBIS enhances the gbXML file with internal CAD data. This allows for a very detailed building model and error checking. SOLAR-COMPUTER building programs can also import gbXML files directly. <a href="http://www.solar-computer.co.uk/index.php?seite=demonstration&sub=video">Visit Website</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+					<div class="item">
+						<div class="row">
+							<div class="col-xs-12 col-sm-4">
+								<h3><a class="" data-toggle="collapse" href="#Trace-700" aria-expanded="false" aria-controls="Trace-700">Trane</a></h3>
+							</div>
+							<div class="col-xs-12 col-sm-4">Trace 700</div>
+							<div class="col-xs-12 col-sm-2">Analysis</div>
+							<div class="col-xs-12 col-sm-2">Not Yet</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="collapse" id="Trace-700">
+									<div class="well">A comprehensive and widely used energy and economic analysis tool for mechanical engineers. <a href="http://www.trane.com/commercial/north-america/us/en/products-systems/design-and-analysis-tools/analysis-tools/trace-700.html">Visit Website</a></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</section>

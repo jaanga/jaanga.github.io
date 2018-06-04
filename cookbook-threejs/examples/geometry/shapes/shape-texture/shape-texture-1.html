@@ -13,10 +13,10 @@
 	a { color: crimson; text-decoration: none; }
 	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
-	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; margin: 3px; padding: 3px 5px; }
 	button:hover { background: #ccc; color: #fff }
 
-	#divMenu { margin: 0 20px; position: absolute; }
+	#divMenu { margin: 0 20px; max-width: 25rem; position: absolute; }
 
 </style>
 </head>
@@ -31,6 +31,7 @@
 			<p>
 				<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
 			</p>
+
 			<p>
 				<button onclick=setShape1(); >setShape1</button>
 
@@ -40,10 +41,19 @@
 
 				<button onclick=setShapeWithHoleCanvas(); >setShapeWithHoleCanvas</button>
 
-			</p>
-
-			<p>
 				<button onclick=setShapeWithHoleCanvas2(); >setShapeWithHoleCanvas2</button>
+
+				<button onclick=setShapeNarrow(); >setShapeNarrow</button>
+
+				<button onclick=setShapeWide(); >setShapeWide</button>
+
+				<button onclick=setShapeAnimated(); >setShapeAnimated : not</button>
+
+				<button onclick=setShapeVideo(); >setShapeVideo</button>
+				<button onclick=video.play(); >video.play</button>
+
+				<button onclick=video.stop(); >video.stop</button>
+
 			</p>
 		<div id = "divContents" >
 
@@ -304,6 +314,139 @@
 
 
 
+	function setShapeNarrow() {
+
+		scene.remove( mesh );
+
+		const vectors = [ v2( -20, -100 ), v2( 20, -100 ), v2( 20, 100 ), v2( -20, 100 ) ];
+		const shape = new THREE.Shape( vectors );
+		const box = new THREE.Box2().setFromPoints( vectors );
+		size = box.getSize()
+		const geometry = new THREE.ShapeGeometry( shape );
+		geometry.computeBoundingBox();
+		console.log( 'box', box );
+		console.log( 'size', size );
+
+		texture = new THREE.TextureLoader().load( "../../../../textures/im11.jpg" );
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set(  1 / size.x, 1 / size.y);
+		texture.offset.x = 0.5;
+		texture.offset.y = 0.5;
+
+		const material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+
+	function setShapeWide() {
+
+		scene.remove( mesh );
+
+		const vectors = [ v2( -100, -20 ), v2( 100, -20 ), v2( 100, 20 ), v2( -100, 20 ) ];
+		const shape = new THREE.Shape( vectors );
+		const box = new THREE.Box2().setFromPoints( vectors );
+		size = box.getSize()
+		const geometry = new THREE.ShapeGeometry( shape );
+		geometry.computeBoundingBox();
+		console.log( 'box', box );
+		console.log( 'size', size );
+
+		texture = new THREE.TextureLoader().load( "https://jaanga.github.io/cookbook-threejs/textures/im11.jpg" );
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set(  1 / size.x, 1 / size.y);
+		texture.offset.x = 0.5;
+		texture.offset.y = 0.5;
+
+		const material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+
+	function setShapeAnimated() {
+
+		// https://stackoverflow.com/questions/21710049/animated-gif-as-texture-in-three-js
+		// http://stemkoski.github.io/Three.js/Texture-Animation.html
+		scene.remove( mesh );
+
+		const vectors = [ v2( -100, -100 ), v2( 100, -100 ), v2( 100, 100 ), v2( -100, 100 ) ];
+		const shape = new THREE.Shape( vectors );
+		const box = new THREE.Box2().setFromPoints( vectors );
+		size = box.getSize()
+		const geometry = new THREE.ShapeGeometry( shape );
+		geometry.computeBoundingBox();
+		console.log( 'box', box );
+		console.log( 'size', size );
+
+		texture = new THREE.TextureLoader().load( "../../../../textures/new-york-flight-upside-down.gif" );
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.repeat.set(  1 / size.x, 1 / size.y);
+		texture.offset.x = 0.5;
+		texture.offset.y = 0.5;
+
+		material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+
+
+	function setShapeVideo() {
+
+		// https://stackoverflow.com/questions/21710049/animated-gif-as-texture-in-three-js
+		// http://stemkoski.github.io/Three.js/Texture-Animation.html
+		scene.remove( mesh );
+
+		const vectors = [ v2( -128, -128 ), v2( 128, -128 ), v2( 128, 128 ), v2( -128, 128 ) ];
+		const shape = new THREE.Shape( vectors );
+		const box = new THREE.Box2().setFromPoints( vectors );
+		size = box.getSize()
+		const geometry = new THREE.ShapeGeometry( shape );
+		geometry.computeBoundingBox();
+		console.log( 'box', box );
+		console.log( 'size', size );
+
+		video = document.createElement( 'video' );
+		//video.src = "../../../../textures/sintel.ogv";
+		video.src = "../../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
+
+		video.load(); // must call after setting/changing source
+		//video.height = video.width = 256;
+		video.loop = true;
+
+		window.addEventListener( 'mousedown', onWindowClick, false );
+		var texture = new THREE.VideoTexture( video );
+		//texture.minFilter = THREE.LinearFilter;
+		//texture.magFilter = THREE.LinearFilter;
+		texture.minFilter = THREE.NearestFilter;
+		texture.magFilter = THREE.NearestFilter;
+
+		texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
+		texture.repeat.set( 1 / size.x, 1 / size.y);
+		texture.offset.x = 0.5;
+		texture.offset.y = 0.5;
+		material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+	}
+
+
+	function onWindowClick() {
+		video.play();
+	}
 
 	function onWindowResize() {
 
