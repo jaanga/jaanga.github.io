@@ -72,7 +72,7 @@
 
 		const axesHelper = new THREE.AxesHelper( 50 );
 		scene.add( axesHelper );
- 
+
 		geometry = new THREE.PlaneBufferGeometry( 50, 50, 10, 10 );
 
 		var colors = [];
@@ -103,14 +103,17 @@
 		mesh = new THREE.Mesh( geometry, material );
 
 		scene.add( mesh );
-console.log( '', mesh );
+		console.log( '', mesh );
 
 		for ( var i = 0; i < 100; i++ ) {
 
-		geometry.attributes.color.array[ i ] = 0.6;
-		geometry.attributes.color.array[ 201 ] = 0.9;
+			geometry.attributes.color.array[ i ] = 0.6;
+
 		}
 
+		geometry.attributes.color.array[ 201 ] = 0.9;
+		geometry.attributes.color.array[ 260 ] = 0.9;
+		geometry.attributes.color.array[ 360 ] = 0.9;
 
 
 	}

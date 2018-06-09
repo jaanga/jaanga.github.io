@@ -77,6 +77,11 @@ jsCut
 * http://jscut.org/
 
 
+### gcode readers
+
+* https://github.com/nraynaud/webgcode
+* https://www.shapeoko.com/wiki/index.php/Previewing_G-Code
+
 ## Change Log
 
 

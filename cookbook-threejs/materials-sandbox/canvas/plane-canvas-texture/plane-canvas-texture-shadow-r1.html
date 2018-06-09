@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-05-06" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+<script>
+
+	const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	const vector = v( 20, -50, 60 );
+
+	var renderer, camera, controls, scene, axesHelper;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+		//const title = document.title;
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" >${title}</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		let geometry = new THREE.BoxGeometry( 20, 20, 10 );
+		material = new THREE.MeshNormalMaterial();
+		box1 = new THREE.Mesh( geometry, material );
+		box1.name = 'box1';
+		box1.position.z = 30
+		scene.add( box1 );
+
+		//drawSun();
+
+		setTimeout( drawPlane, 10 );
+
+
+	}
+
+
+
+	function drawSun() {
+
+		const vector = v( 20, -50, 60 );
+		const geometry = new THREE.SphereBufferGeometry( 5 );
+		const material = new THREE.MeshBasicMaterial( { color: 'yellow', side: 2 } );
+		sun = new THREE.Mesh( geometry, material );
+		sun.position.copy( vector );
+
+		scene.add( sun );
+
+	}
+
+
+
+	function drawPlane() {
+
+		const geometryPlane = new THREE.PlaneGeometry( 100, 100 );
+
+		//material = new THREE.MeshNormalMaterial( { side: 2 } );
+		const material = new THREE.MeshBasicMaterial( { map: buildShadow(), side: 2, transparent: true } );
+		const plane = new THREE.Mesh( geometryPlane, material );
+		scene.add( plane );
+
+	}
+
+
+
+	function buildTexture3() {
+
+			var noiseSize = 32;
+			var size = noiseSize * noiseSize;
+			var data = new Uint8Array( 4 * size );
+
+			//for ( var i = 0; i < size * 4; ) {
+			let i = 0;
+			for ( let y = 0; y < noiseSize; y++ ) {
+
+				const yy = y / noiseSize;
+
+				for ( let x = 0; x < noiseSize; x++ ) {
+
+					const xx = x / noiseSize;
+
+					const b = 255 - yy * 255*(1 + Math.sin(6.3*xx))/2;
+					const g = 255 - yy * 255*(1 + Math.cos(6.3*xx))/2;
+					const r = 255 - yy * 255*(1 - Math.sin(6.3*xx))/2;
+
+					data[ i ++ ] = r;
+					data[ i ++ ] = g;
+					data[ i ++ ] = b;
+					data[ i ++ ] = 255;
+
+				}
+
+			}
+
+			var dt = new THREE.DataTexture( data, noiseSize, noiseSize, THREE.RGBAFormat );
+
+			//dt.anisotropy = 4;
+			//		dt.bumpMap.repeat.set( 16, 16 );
+			//dt.wrapS = THREE.RepeatWrapping;
+			//dt.wrapT = THREE.RepeatWrapping;
+			dt.needsUpdate = true;
+
+			return dt;
+
+	}
+
+
+
+	function buildShadow() {
+
+		var raycaster = new THREE.Raycaster();
+		const vector = v( 1, 1, 1 );
+		vector.normalize();
+		console.log( 'vector', vector );
+
+		const noiseSize = 32;
+		var size = noiseSize * noiseSize;
+		var data = new Uint8Array( 4 * size );
+
+		let i = 0;
+		const startY = -50;
+		const startX = -50;
+
+		for ( let y = 0; y < noiseSize; y++ ) {
+
+			const yy = startY + 100 * y / (noiseSize );
+
+			for ( let x = 0; x < noiseSize; x++ ) {
+
+				const point = v( startX + 100 * x / (noiseSize ), yy, 0.1 );
+				//console.log( 'point', point );
+
+				const arrowHelper = new THREE.ArrowHelper( vector, point, 10 );
+				scene.add( arrowHelper );
+
+				raycaster.set( point, vector );
+				//console.log( 'raycaster', raycaster );
+
+				const intersects = raycaster.intersectObjects( [ box1 ] );
+
+				const shade = intersects.length > 0 ? 88 : 188;
+
+				data[ i ++ ] = shade;
+				data[ i ++ ] = shade;
+				data[ i ++ ] = shade;
+				data[ i ++ ] = 255;
+
+			}
+
+		}
+
+		const dt = new THREE.DataTexture( data, noiseSize, noiseSize, THREE.RGBAFormat );
+		dt.anisotropy = 4;
+		dt.needsUpdate = true;
+
+		return dt;
+
+	}
+
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>
