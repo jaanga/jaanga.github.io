@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name = "viewport" content= "width=device-width, initial-scale=1">
-<meta name = "description" content = "Basic HTML template" >
+<meta name = "description" content = "Fetch JavaScript function cookbook example" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
 <meta name = "date" content = "2018-01-19" >
 <title></title>
@@ -15,6 +15,8 @@
 
 	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 	button:hover { background: #ccc; color: #fff }
+
+	summary { font-weight: 800; }
 
 /*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
 
@@ -38,11 +40,11 @@
 
 			<button onclick=fetchMultipleUrlsPromise(); >fetchMultipleUrlsPromise</button>
 
+			<button onclick=fetchGitHubFolderContents(); >fetchGitHubFolderContents</button>
+
 		</p>
 
 		<div id = "divContents" >
-
-
 
 		</div>
 
@@ -74,6 +76,67 @@
 		divContents.innerHTML += txt;
 
 	}
+
+
+
+	function fetchGitHubFolderContents() {
+
+		url = 'https://api.github.com/repos/ladybug-tools/spider/contents/gbxml-sample-files';
+
+		//console.log(url );
+
+		divContents.innerHTML =
+
+		`<details id = detGallery class=app-menu open>
+
+			<summary>Gallery</summary>
+
+			<div id=divGallery ></div>
+
+			<hr>
+
+		</details>`;
+
+		var myRequest = new Request( url );
+
+		fetch( myRequest )
+			.then( response => response.json() )
+			.then( json => callbackGitHubMenu( json ) );
+
+	}
+
+
+	function callbackGitHubMenu ( files ) {
+
+		const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/gbxml-sample-files/';
+		const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/';
+		iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/gitHub-mark.png" >';
+
+		let txt = '';
+
+		for ( file of files) {
+
+			if ( file.name === 'README.md' || !file.name.endsWith( '.xml' ) ) { continue; }
+
+			const fileName = encodeURI( file.name );
+
+			txt +=
+
+			`<div style=margin:8px; >
+
+				<a href=${ urlGitHubSource + fileName } title="Edit me" >${ iconGitHubMark }</a>
+
+				<a href=#${ urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes"  >${ file.name }</a>
+
+				<a href=${ urlGitHubPage + fileName } title="Link to just this file" >&#x2750;</a>
+
+			</div>`;
+
+		}
+
+		divGallery.innerHTML = txt;
+
+	};
 
 
 
