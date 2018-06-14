@@ -87,7 +87,7 @@
 
 		divContents.innerHTML =
 
-		`<details id = detGallery class=app-menu open>
+		`<details id = detGallery  open >
 
 			<summary>Gallery</summary>
 
@@ -110,23 +110,23 @@
 
 		const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/gbxml-sample-files/';
 		const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/';
-		iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/gitHub-mark.png" >';
+		const iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/github-mark.png" height=14 style=vertical-align:middle>';
 
 		let txt = '';
 
-		for ( file of files) {
+		for ( let file of files) {
 
-			if ( file.name === 'README.md' || !file.name.endsWith( '.xml' ) ) { continue; }
+			if ( !file.name.endsWith( '.xml' ) ) { continue; }
 
 			const fileName = encodeURI( file.name );
 
 			txt +=
 
-			`<div style=margin:8px; >
+			`<div style=margin:10px; >
 
 				<a href=${ urlGitHubSource + fileName } title="Edit me" >${ iconGitHubMark }</a>
 
-				<a href=#${ urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes"  >${ file.name }</a>
+				<a href=#${ urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
 
 				<a href=${ urlGitHubPage + fileName } title="Link to just this file" >&#x2750;</a>
 
