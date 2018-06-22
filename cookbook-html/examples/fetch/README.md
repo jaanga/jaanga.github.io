@@ -30,6 +30,14 @@ Stackoverflow
 Google
 * https://developers.google.com/web/updates/2015/03/introduction-to-fetch
 
+Scrolling
+* https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+
+DOMParser
+* https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
+* https://alligator.io/js/domparser/
+* https://www.tutorialspoint.com/java_xml/java_dom_parser.htm
+* https://stackoverflow.com/questions/tagged/domparser
 
 
 ## Change Log

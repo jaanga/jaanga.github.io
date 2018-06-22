@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" >
+<html lang = "en" >
 <head>
-<meta charset="utf-8" >
-<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
-<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-05-06" >
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "fetch images and show" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-21" >
 <title></title>
 <style>
 
@@ -13,10 +13,10 @@
 	a { color: crimson; text-decoration: none; }
 	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
 
-	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 	button:hover { background: #ccc; color: #fff }
 
-	#divMenu { margin: 0 20px; position: absolute; }
+	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; }
 
 </style>
 </head>
@@ -28,102 +28,20 @@
 
 		<div id = "divTitle" ></div>
 
-		<p>
-			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
-		</p>
-
-		<p>
-				<button onclick=toggleBackgroundGradient(); >background</button>
-
-		</p>
-		<div id = "divLog" ></div>
-
 	</div>
+
+	<div id = "divContents" ></div>
 
 <script>
 
-	const images = [
-		"07-Cold-Drinks-Triptych.png",
-		"20-Three-Sisters-Triptych.jpg",
-		"DSCN0115.jpg",
-		"DSCN0117.jpg",
-		"DSCN0118.jpg",
-		"DSCN0119.jpg",
-		"DSCN0136.jpg",
-		"DSCN0137.jpg",
-		"DSCN1542.jpg",
-		"DSCN1543.jpg",
-		"DSCN1544.jpg",
-		"DSCN1545.jpg",
-		"DSCN1559.jpg",
-		"DSCN1561.jpg",
-		"DSCN1563.jpg",
-		"DSCN1564.jpg",
-		"DSCN3105.jpg",
-		"DSCN3107.jpg",
-		"DSCN4329.jpg",
-		"DSCN4330.jpg",
-		"DSCN4335.jpg",
-		"DSCN4336.jpg",
-		"DSCN4339.jpg",
-		"DSCN4340.jpg",
-		"DSCN4341.jpg",
-		"bath.png",
-		"circus-full.png",
-		"family-bbq.png",
-		"long-afternoon-01.jpg",
-		"long-afternoon-02.jpg",
-		"long-afternoon-03.jpg",
-		"long-afternoon-04.jpg",
-		"long-afternoon-05.jpg",
-		"long-afternoon-06.jpg",
-		"long-afternoon-07.jpg",
-		"long-afternoon-08.jpg",
-		"long-afternoon-09.jpg",
-		"long-afternoon-10.jpg",
-		"long-summer-01.jpg",
-		"long-summer-02.jpg",
-		"long-summer-03.jpg",
-		"long-summer-04.jpg",
-		"long-summer-05.jpg",
-		"long-summer-06.jpg",
-		"long-summer-07.jpg",
-		"long-summer-08.jpg",
-		"long-summer-09.jpg",
-		"long-summer-10.jpg",
-		"long-summer-11.jpg",
-		"long-summer-12.jpg",
-		"long-summer-13.jpg",
-		"long-summer-14.jpg",
-		"long-summer-15.jpg",
-		"long-summer-16.jpg",
-		"long-summer-17.jpg",
-		"long-summer-18.jpg",
-		"long-summer-19.jpg",
-		"long-summer-20.jpg",
-		"long-summer-21.jpg",
-		"long-summer-22.jpg",
-		"long-summer-23.jpg",
-		"long-summer-24.jpg",
-		"long-summer-25.jpg",
-		"long-summer-26.jpg",
-		"long-summer-27.jpg",
-		"long-summer-28.jpg",
-		"long-summer-29.jpg",
-		"long-summer-30.jpg",
-		"long-summer-31.jpg",
-		"long-summer-32.jpg",
-		"long-summer-33.jpg",
-		"olympic.png",
-		"pool-full.png",
-		"pool-smaller.png",
-		"sauna.png",
-		"wurm-keeping-score-06-copy.jpg",
-		"wurmsundaydessertsmall.jpg"
-	];
+	let images;
+	let objects = [];
+
+	const url = 'http://janwurm.com/images/sf2001/';
+	const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
 
 	var renderer, camera, controls, scene, axesHelper;
-	var geometry, material, mesh;
 
 	init();
 	animate();
@@ -160,16 +78,45 @@
 		axesHelper = new THREE.AxesHelper( 100 );
 		scene.add( axesHelper );
 
-		setImages();
+		 toggleBackgroundGradient();
 
-		toggleBackgroundGradient();
+		 fetchImageNames( url, divContents );
+
+	}
+
+
+
+	function fetchImageNames( url, target ){
+		//console.log (url );
+
+		const request = new Request( urlCORS + url );
+
+		fetch( request )
+			.then( function( response ) { return response.text() })
+			.then( function( text ) { parseText( text, divContents ) } );
+
+	}
+
+
+
+	function parseText( text, target ) {
+
+		const parser = new DOMParser();
+
+		const doc = parser.parseFromString( text, "text/html" );
+		//console.log( 'doc', doc );
+
+		images = Array.from( doc.links ).map( link=> link.innerText.trim() ).filter( link => link.endsWith( '.jpg') );
+		//console.log( 'images', images );
+
+		setImages()
 
 	}
 
 
 	function setImages() {
 
-		const url = 'http://janwurm.com/wp-content/uploads/2015/11/';
+		//const url = 'http://janwurm.com/wp-content/uploads/2015/11/';
 
 		const urlCORS = 'https://cors-anywhere.herokuapp.com/';
 
@@ -187,7 +134,11 @@
 			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
 			//mesh.rotation.y = 1.56 ;
 			mesh.rotation.z = 4 * Math.random() ;
+			mesh.deltaX = Math.random() - 0.5;
+			mesh.deltaY = Math.random() - 0.5;
+			mesh.deltaZ = Math.random() - 0.5;
 			scene.add( mesh );
+			objects.push( mesh );
 
 		}
 
@@ -197,7 +148,7 @@
 
 	function toggleBackgroundGradient() {
 
-// 2016-07-18
+		// 2016-07-18
 
 		const col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
 		const pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
@@ -228,6 +179,38 @@
 		requestAnimationFrame( animate );
 		renderer.render( scene, camera );
 		controls.update();
+
+		var o, p;
+		for (let i = 0; i < objects.length; i++) {
+
+			o = objects[i];
+
+			//if ( !o ) { continue; }
+			p = o.position;
+			p.x += o.deltaX;
+			if ( p.x > 50 || p.x < -50 ) { o.deltaX = -o.deltaX; }
+
+			p.y += o.deltaY;
+			if ( p.y > 100 || p.y < 0 ) { o.deltaY = -o.deltaY; }
+
+			p.z += o.deltaZ;
+			if ( p.z > 50 || p.z < 0 ) { o.deltaZ = -o.deltaZ; }
+
+			/* Turn it into a game
+			for (var j = 0, len = objects.length; j < len; j++) {
+				if ( p.distanceTo( objects[j].position ) < 1 && i !== j ) {
+					//hits++;
+					var s = o.scale;
+					o.scale.set(  s.x + 0.8, s.y + 0.8, s.z + 0.8 );
+					scene.remove( objects[j] );
+					objects.splice( j, 1);
+					//info.innerHTML = info.txt + 'Objects: ' + objects.length + ' - Hits: ' + hits + ' - time: ' + clock.getElapsedTime().toFixed() + ' seconds';
+					break;
+				}
+			}
+			*/
+
+		}
 
 	}
 
