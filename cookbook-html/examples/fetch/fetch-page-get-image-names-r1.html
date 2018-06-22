@@ -83,6 +83,8 @@
 
 		const images = Array.from( doc.links ).map( link=> link.innerText ).filter( link => link.endsWith( '.jpg') );
 
+		divContents.innerHTML = images.join( '<br>' );
+
 		console.log( 'images', images );
 
 	}

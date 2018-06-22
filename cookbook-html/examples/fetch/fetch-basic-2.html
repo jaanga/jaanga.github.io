@@ -29,24 +29,28 @@
 		<div id = "divTitle" ></div>
 
 		<p>
-
 			<button onclick=fetchImage(); >fetchImage</button>
+
+			<button onclick=fetchImageSimple(); >fetchImageSimple</button>
 
 			<button onclick=fetchText('https://mdn.github.io/fetch-examples/fetch-text/page1.txt',divContents); >fetchText</button>
 
-			<button onclick=fetchSelectedUrl(); >fetchSelectedUrl</button>
+			<button onclick=fetchSelectedUrl(); title='creates menu' >fetchSelectedUrl</button>
 
-			<button onclick=fetchMultipleUrls(); >fetchMultipleUrls</button>
-
-			<button onclick=fetchMultipleUrlsPromise(); >fetchMultipleUrlsPromise</button>
-
-			<button onclick=fetchGitHubFolderContents(); >fetchGitHubFolderContents</button>
-
+			<button onclick=fetchMultipleUrls(); >fetchMultipleImageUrls</button>
 		</p>
 
-		<div id = "divContents" >
 
-		</div>
+		</p>
+			<button onclick=fetchMultipleUrlsPromise(); >fetchMultipleImageUrlsPromise</button>
+
+			<button onclick=fetchGitHubFolderContents(); >fetchGitHubFolderContents</button>
+		<p>
+
+		<div id = "divLog" ></div>
+
+
+		<div id = "divContents" ></div>
 
 	</div>
 
@@ -79,67 +83,6 @@
 
 
 
-	function fetchGitHubFolderContents() {
-
-		url = 'https://api.github.com/repos/ladybug-tools/spider/contents/gbxml-sample-files';
-
-		//console.log(url );
-
-		divContents.innerHTML =
-
-		`<details id = detGallery  open >
-
-			<summary>Gallery</summary>
-
-			<div id=divGallery ></div>
-
-			<hr>
-
-		</details>`;
-
-		var myRequest = new Request( url );
-
-		fetch( myRequest )
-			.then( response => response.json() )
-			.then( json => callbackGitHubMenu( json ) );
-
-	}
-
-
-	function callbackGitHubMenu ( files ) {
-
-		const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/gbxml-sample-files/';
-		const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/';
-		const iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/github-mark.png" height=14 style=vertical-align:middle>';
-
-		let txt = '';
-
-		for ( let file of files) {
-
-			if ( !file.name.endsWith( '.xml' ) ) { continue; }
-
-			const fileName = encodeURI( file.name );
-
-			txt +=
-
-			`<div style=margin:10px; >
-
-				<a href=${ urlGitHubSource + fileName } title="Edit me" >${ iconGitHubMark }</a>
-
-				<a href=#${ urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
-
-				<a href=${ urlGitHubPage + fileName } title="Link to just this file" >&#x2750;</a>
-
-			</div>`;
-
-		}
-
-		divGallery.innerHTML = txt;
-
-	};
-
-
-
 	function fetchImage() {
 
 		const url = 'https://mdn.github.io/fetch-examples/basic-fetch/flowers.jpg';
@@ -166,6 +109,29 @@
 		})
 
 		.catch( function( err ) { console.log( err ); });
+
+	}
+
+
+
+	function fetchImageSimple(){
+
+		//const url = 'https://mdn.github.io/fetch-examples/basic-fetch/flowers.jpg';
+		const url="http://maps.googleapis.com/maps/api/staticmap?center=37,-122&maptype=roadmap&zoom=12&size=512x512&sensor=false";
+
+		divContents.innerHTML = '<img id=image >';
+
+		/*
+		var request = new Request( url );
+
+		fetch( request )
+			.then( function( response ) { return response.blob() })
+			.then( function( blob ) { image.src = URL.createObjectURL( blob ); } );
+		*/
+
+			fetch( new Request( url ) )
+				.then( function( response ) { return response.blob() })
+				.then( function( blob ) { image.src = URL.createObjectURL( blob ); } );
 
 	}
 
@@ -240,6 +206,7 @@
 	}
 
 
+
 	function fetchMultipleUrlsPromise() {
 		// https://stackoverflow.com/questions/29676408/html-fetch-multiple-files
 
@@ -267,10 +234,75 @@
 
 		Promise
 		.all( list )
-		.then(function() { alert('all requests finished!'); });
+		.then(function() { divContents += `<p>all requests finished</p>`; } )
 
 
 	}
+
+
+
+	function fetchGitHubFolderContents() {
+
+		url = 'https://api.github.com/repos/ladybug-tools/spider/contents/gbxml-sample-files';
+
+		//console.log(url );
+
+		divContents.innerHTML =
+
+		`<details id = detGallery  open >
+
+			<summary>Gallery</summary>
+
+			<div id=divGallery ></div>
+
+			<hr>
+
+		</details>`;
+
+		var myRequest = new Request( url );
+
+		fetch( myRequest )
+			.then( response => response.json() )
+			.then( json => callbackGitHubMenu( json ) );
+
+	}
+
+
+
+	function callbackGitHubMenu ( files ) {
+
+		const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/gbxml-sample-files/';
+		const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/';
+		const iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/github-mark.png" height=14 style=vertical-align:middle>';
+
+		let txt = '';
+
+		for ( let file of files) {
+
+			if ( !file.name.endsWith( '.xml' ) ) { continue; }
+
+			const fileName = encodeURI( file.name );
+
+			txt +=
+
+			`<div style=margin:10px; >
+
+				<a href=${ urlGitHubSource + fileName } title="Edit me" >${ iconGitHubMark }</a>
+
+				<a href=#${ urlGitHubPage + fileName } title="${ file.size.toLocaleString() } bytes" >${ file.name }</a>
+
+				<a href=${ urlGitHubPage + fileName } title="Link to just this file" >&#x2750;</a>
+
+			</div>`;
+
+		}
+
+		divGallery.innerHTML = txt;
+
+	}
+
+
+
 </script>
 </body>
 </html>
