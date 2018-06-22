@@ -38,6 +38,87 @@
 
 <script>
 
+	const images = [
+		"07-Cold-Drinks-Triptych.png",
+		"20-Three-Sisters-Triptych.jpg",
+		"DSCN0115.jpg",
+		"DSCN0117.jpg",
+		"DSCN0118.jpg",
+		"DSCN0119.jpg",
+		"DSCN0136.jpg",
+		"DSCN0137.jpg",
+		"DSCN1542.jpg",
+		"DSCN1543.jpg",
+		"DSCN1544.jpg",
+		"DSCN1545.jpg",
+		"DSCN1559.jpg",
+		"DSCN1561.jpg",
+		"DSCN1563.jpg",
+		"DSCN1564.jpg",
+		"DSCN3105.jpg",
+		"DSCN3107.jpg",
+		"DSCN4329.jpg",
+		"DSCN4330.jpg",
+		"DSCN4335.jpg",
+		"DSCN4336.jpg",
+		"DSCN4339.jpg",
+		"DSCN4340.jpg",
+		"DSCN4341.jpg",
+		"bath.png",
+		"circus-full.png",
+		"family-bbq.png",
+		"long-afternoon-01.jpg",
+		"long-afternoon-02.jpg",
+		"long-afternoon-03.jpg",
+		"long-afternoon-04.jpg",
+		"long-afternoon-05.jpg",
+		"long-afternoon-06.jpg",
+		"long-afternoon-07.jpg",
+		"long-afternoon-08.jpg",
+		"long-afternoon-09.jpg",
+		"long-afternoon-10.jpg",
+		"long-summer-01.jpg",
+		"long-summer-02.jpg",
+		"long-summer-03.jpg",
+		"long-summer-04.jpg",
+		"long-summer-05.jpg",
+		"long-summer-06.jpg",
+		"long-summer-07.jpg",
+		"long-summer-08.jpg",
+		"long-summer-09.jpg",
+		"long-summer-10.jpg",
+		"long-summer-11.jpg",
+		"long-summer-12.jpg",
+		"long-summer-13.jpg",
+		"long-summer-14.jpg",
+		"long-summer-15.jpg",
+		"long-summer-16.jpg",
+		"long-summer-17.jpg",
+		"long-summer-18.jpg",
+		"long-summer-19.jpg",
+		"long-summer-20.jpg",
+		"long-summer-21.jpg",
+		"long-summer-22.jpg",
+		"long-summer-23.jpg",
+		"long-summer-24.jpg",
+		"long-summer-25.jpg",
+		"long-summer-26.jpg",
+		"long-summer-27.jpg",
+		"long-summer-28.jpg",
+		"long-summer-29.jpg",
+		"long-summer-30.jpg",
+		"long-summer-31.jpg",
+		"long-summer-32.jpg",
+		"long-summer-33.jpg",
+		"olympic.png",
+		"pool-full.png",
+		"pool-smaller.png",
+		"sauna.png",
+		"wurm-keeping-score-06-copy.jpg",
+		"wurmsundaydessertsmall.jpg"
+
+	];
+
 	var renderer, camera, controls, scene, axesHelper;
 	var geometry, material, mesh;
 
@@ -74,122 +155,53 @@
 		axesHelper = new THREE.AxesHelper( 100 );
 		scene.add( axesHelper );
 
-		geometry = new THREE.BoxGeometry( 30, 30, 30 );
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.y = 30
 		//scene.add( mesh );
 
 
-		geometry = new THREE.PlaneGeometry( 50, 50 );
-		//material = new THREE.MeshNormalMaterial( { side: 2 } );
-
-		material = new THREE.MeshBasicMaterial( { map: buildTexture3(), side: 2, transparent: true } );
-		mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+		setImages()
 
 	}
 
 
+	function setImages() {
 
-	function buildTexture( rad, wid ) {
+		const url = 'http://janwurm.com/wp-content/uploads/2015/11/';
 
-		radius = rad ? rad : 512;
-		width = wid ? wid : 16;
+		const urlCORS = 'https://cors-anywhere.herokuapp.com/';
 
-		canvas = document.createElement( 'canvas' );
-		canvas.height = canvas.width = radius;
+		loader = new THREE.TextureLoader();
 
-		context = canvas.getContext( '2d' );
-		context.fillStyle = '#00ff00';
+		for ( image of images ) {
 
-		context.lineWidth = width;
-		context.strokeStyle = '#ff0000';
+			texture = loader.load ( urlCORS + url + image );
+			texture.minFilter = THREE.LinearFilter;
 
-		// context.arc( x, y, z, sAngle, eAngle );
-		context.arc( 0.5 * radius, 0.5 * radius, 0.5 * radius - 0.5 * width, 0, 2 * Math.PI );
-		context.fill();
-		context.stroke();
+			geometry = new THREE.PlaneBufferGeometry( 50, 50 );
+			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+			material = new THREE.MeshBasicMaterial( { map: texture, opacity: 0.8, side: 2, transparent: true } );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+			//mesh.rotation.y = 1.56 ;
+			mesh.rotation.z = 4 * Math.random() ;
+			scene.add( mesh );
 
-		texture = new THREE.Texture( canvas );
-		texture.needsUpdate = true;
-
-		return texture;
-
-	}
-
-
-
-
-	function buildTexture2() {
-
-		var noiseSize = 512;
-		var size = noiseSize * noiseSize;
-		var data = new Uint8Array( 4 * size );
-
-		for ( var i = 0; i < size * 4; ) {
-
-			n = 200 + Math.random() * 10 | 0;
-			data[ i ++ ] = n;
-			data[ i ++ ] = n;
-			data[ i ++ ] = n;
-			data[ i ++ ] = 255;
 		}
 
-		var dt = new THREE.DataTexture( data, noiseSize, noiseSize, THREE.RGBAFormat );
 
-		//dt.anisotropy = 4;
-		//		dt.bumpMap.repeat.set( 16, 16 );
-		//dt.wrapS = THREE.RepeatWrapping;
-		//dt.wrapT = THREE.RepeatWrapping;
-		dt.needsUpdate = true;
+	}
 
-		return dt;
+	function doIt( tex ) {
+
+
+		console.log( 'tex', tex );
 
 	}
 
 
 
-		function buildTexture3() {
-
-			var noiseSize = 32;
-			var size = noiseSize * noiseSize;
-			var data = new Uint8Array( 4 * size );
-
-			//for ( var i = 0; i < size * 4; ) {
-			let i = 0;
-			for ( let y = 0; y < noiseSize; y++ ) {
-
-				const yy = y / noiseSize;
-
-				for ( let x = 0; x < noiseSize; x++ ) {
-
-					const xx = x / noiseSize;
-
-					const b = 255 - yy * 255*(1 + Math.sin(6.3*xx))/2;
-					const g = 255 - yy * 255*(1 + Math.cos(6.3*xx))/2;
-					const r = 255 - yy * 255*(1 - Math.sin(6.3*xx))/2;
-
-					data[ i ++ ] = r;
-					data[ i ++ ] = g;
-					data[ i ++ ] = b;
-					data[ i ++ ] = 255;
-
-				}
-
-			}
-
-			var dt = new THREE.DataTexture( data, noiseSize, noiseSize, THREE.RGBAFormat );
-
-			//dt.anisotropy = 4;
-			//		dt.bumpMap.repeat.set( 16, 16 );
-			//dt.wrapS = THREE.RepeatWrapping;
-			//dt.wrapT = THREE.RepeatWrapping;
-			dt.needsUpdate = true;
-
-			return dt;
-
-		}
 
 	function onWindowResize() {
 
