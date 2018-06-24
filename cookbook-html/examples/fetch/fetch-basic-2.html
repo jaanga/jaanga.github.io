@@ -259,9 +259,9 @@
 
 		</details>`;
 
-		var myRequest = new Request( url );
+		const request = new Request( url );
 
-		fetch( myRequest )
+		fetch( request )
 			.then( response => response.json() )
 			.then( json => callbackGitHubMenu( json ) );
 

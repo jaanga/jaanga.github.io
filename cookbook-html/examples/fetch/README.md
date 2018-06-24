@@ -40,6 +40,13 @@ DOMParser
 * https://stackoverflow.com/questions/tagged/domparser
 
 
+GraphQL API
+
+* https://dev-blog.apollodata.com/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
+* https://gist.github.com/stubailo/8bd3b0ef9c1dcb1459bf0076e3d612af
+
+
+
 ## Change Log
 
 
