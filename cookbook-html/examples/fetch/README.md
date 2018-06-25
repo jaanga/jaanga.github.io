@@ -45,7 +45,11 @@ GraphQL API
 * https://dev-blog.apollodata.com/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
 * https://gist.github.com/stubailo/8bd3b0ef9c1dcb1459bf0076e3d612af
 
+### Promises
 
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises
+* https://stackoverflow.com/questions/30659437/sequential-loading-using-promises
 
 ## Change Log
 

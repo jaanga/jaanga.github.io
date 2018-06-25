@@ -217,6 +217,7 @@
 			urls.push( 'https://mdn.github.io/fetch-examples/object-fit-gallery-fetch/images/pic' + i + '.jpg' )
 
 		}
+
 		let results = [];
 
 		urls.forEach( function(url, i) {
@@ -234,7 +235,7 @@
 
 		Promise
 		.all( list )
-		.then(function() { divContents += `<p>all requests finished</p>`; } )
+		.then( function() { divContents += `<p>all requests finished</p>`; } )
 
 
 	}
