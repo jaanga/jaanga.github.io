@@ -114,26 +114,21 @@
 
 
 
-	function fetchImageSimple(){
+function fetchImageSimple(){
 
-		//const url = 'https://mdn.github.io/fetch-examples/basic-fetch/flowers.jpg';
-		const url="http://maps.googleapis.com/maps/api/staticmap?center=37,-122&maptype=roadmap&zoom=12&size=512x512&sensor=false";
+	//const url = 'https://mdn.github.io/fetch-examples/basic-fetch/flowers.jpg';
+	//const url="http://maps.googleapis.com/maps/api/staticmap?center=37,-122&maptype=roadmap&zoom=12&size=512x512&sensor=false";
+	const url = 'https://www.autodesk.com/favicon.ico';
 
-		divContents.innerHTML = '<img id=image >';
+	const urlCORS = 'https://cors-anywhere.herokuapp.com/';
 
-		/*
-		var request = new Request( url );
+	divContents.innerHTML = '<img id=image  >';
 
-		fetch( request )
-			.then( function( response ) { return response.blob() })
-			.then( function( blob ) { image.src = URL.createObjectURL( blob ); } );
-		*/
+	fetch( new Request( urlCORS + url ) )
+	.then( function( response ) { return response.blob() })
+	.then( function( blob ) { image.src = URL.createObjectURL( blob ); } );
 
-			fetch( new Request( url ) )
-				.then( function( response ) { return response.blob() })
-				.then( function( blob ) { image.src = URL.createObjectURL( blob ); } );
-
-	}
+}
 
 
 
@@ -144,8 +139,8 @@
 		var myRequest = new Request( url );
 
 		fetch( myRequest )
-			.then( function( response ) { return response.text() })
-			.then( function( text ) { target.innerHTML = text; } );
+		.then( function( response ) { return response.text() })
+		.then( function( text ) { target.innerHTML = text; } );
 
 	}
 
@@ -275,6 +270,7 @@
 		const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/gbxml-sample-files/';
 		const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/';
 		const iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/github-mark.png" height=14 style=vertical-align:middle>';
+
 
 		let txt = '';
 
