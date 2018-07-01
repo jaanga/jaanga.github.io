@@ -4,7 +4,11 @@
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 
-# [CSS Bootswatch Read Me]( #README.md )
+# [CSS Bootswatch Read Me]( #cookbook-html/examples/appearance-css/css-switch/css-bootswatch/README.md )
+
+* Bootswatch: Free themes for Bootstrap
+* Using the themes is as easy as downloading a CSS file and replacing the one that comes with Bootstrap.
+* You can also hotlink the themes via CDN at BootstrapCDN
 
 
 <iframe src=https://jaanga.github.io/cookbook-html/examples/appearance-css/css-switch/css-bootswatch/css-bootswatch.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
@@ -19,13 +23,15 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 * https://bootswatch.com/
 * CDN: https://www.bootstrapcdn.com/bootswatch/
+* https://stackoverflow.com/questions/tagged/bootswatch
+
 
 ## Change Log
-
 
 ### 2018-06-30 ~ Theo
 
 * First commit
+* Add and fix readme
 * fix menu width
 * Add classes throughout
 
