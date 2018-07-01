@@ -16,7 +16,7 @@
 	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 	button:hover { background: #ccc; color: #fff }
 
-/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+	/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
 
 </style>
 </head>
@@ -33,7 +33,11 @@
 
 <script>
 
+const url = 'http://www.gbxml.org/Software_Tools_that_Support_GreenBuildingXML_gbXML';
+
 const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+let orgsGbxml = {};
 
 init();
 
@@ -51,10 +55,6 @@ function init() {
 	divContents.innerHTML += 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
 
-	const url = 'http://www.gbxml.org/Software_Tools_that_Support_GreenBuildingXML_gbXML';
-
-	const urlCORS = 'http://cors-anywhere.herokuapp.com/';
-
 	fetchText( urlCORS + url, divContents );
 
 }
@@ -67,7 +67,121 @@ function fetchText( url, target ){
 
 	fetch( new Request( url ) )
 	.then( function( response ) { return response.text() } )
-	.then( function( text ) { parseText( text, target ) } );
+	.then( function( text ) { parseText3( text, target ) } );
+
+}
+
+
+
+function parseText3( text, target ) {
+
+	const parser = new DOMParser();
+
+	const doc = parser.parseFromString( text, "text/html" );
+	//console.log( 'doc', doc );
+
+	const items = Array.from( doc.getElementsByClassName( "item" ) );
+
+	items.shift(); // drop first item which is undefined
+	//console.log( 'items', items );
+
+	let rows1 = items.map( item => item.children[ 0 ] );
+
+	rows1 = rows1.filter( item => item.children[ 0 ].children[ 0 ].innerText !== 'Vendor' )
+	//console.log( 'r1', rows1 );
+
+	let rows2 = items.map( item => item.children[ 1 ] );
+
+	rows2 = rows2.filter( item => item )
+	//console.log( 'r2', rows2 );
+
+
+	for ( let i = 0; i < rows1.length; i++ ) {
+
+		const row1 = rows1[ i ];
+
+		const name = row1.children[ 0 ].children[ 0 ].innerText.trim();
+		//console.log( 'name', name );
+
+		const product = row1.children[ 1 ].innerHTML;
+		//console.log( 'product', product );
+
+		const type = row1.children[ 2 ].innerText;
+		//console.log( 'types', types );
+
+		const row2 = rows2[ i ];
+		//console.log( 'row2', row2 );
+
+		const id = row2.children[ 0 ].children[ 0 ].id;
+
+		const collapse = row2.children[ 0 ].children[ 0 ];
+
+		const well = Array.from( collapse.children )[ 0 ];
+
+		const text = well.innerHTML;
+		//console.log( 'text', name, text );
+
+		const links = Array.from( well.children ).filter( item => item.host )
+
+		const hosts = links.map( item => item.host );
+		//console.log( 'hosts', hosts );
+
+		const hrefs = links.map( item => item.href );
+		//console.log( 'hrefs', hrefs );
+
+		orgsGbxml[ name ] = { name, id, product, type, id, text, hosts, hrefs };
+
+
+	}
+
+	console.log( 'orgsGbxml', orgsGbxml );
+
+}
+
+
+function parseText2( text, target ) {
+
+const parser = new DOMParser();
+
+const doc = parser.parseFromString( text, "text/html" );
+//console.log( 'doc', doc );
+
+const items = Array.from( doc.getElementsByClassName( "item" ) );
+
+items.shift(); // drop first item which is undefined
+//console.log( 'items', items );
+
+let rows1 = items.map( item => item.children[ 0 ] );
+//console.log( 'r1', rows1 );
+
+names = rows1.map( item => item.children[ 0 ].children[ 0 ].innerText );
+//console.log( 'names', names );
+
+types = rows1.map( item => item.children[ 2 ].innerText );
+///console.log( 'types', types );
+
+rows2 = items.map( item => item.children[ 1 ] );
+
+rows2 = rows2.filter(item => item )
+//console.log( 'r2', rows2 );
+
+ids = rows2.map( item => item.children[ 0 ].children[ 0 ].id );
+//console.log( 'ids', ids );
+
+collapses = rows2.map( item => item.children[ 0 ].children[ 0 ] );
+//console.log( 'collapse', collapse );
+
+wells = collapses.map( item => Array.from( item.children )[ 0 ] );
+//console.log( 'wells', wells );
+
+texts = wells.map( item => item.innerHTML );
+//console.log( 'texts', texts );
+
+host = wells.map( item => Array.from( item.children )[ 0 ].host );
+//console.log( 'hosts', hosts );
+
+hrefs = wells.map( item => Array.from( item.children )[ 0 ].href );
+//console.log( 'href', hrefs );
 
 }
 
@@ -83,9 +197,11 @@ function parseText( text, target ) {
 	const items = Array.from( doc.getElementsByClassName( "collapse" ) );
 	//console.log( 'items', items );
 
-	const products = items.filter( item => item.id  );
+	products = items.filter( item => item.id  );
 	//console.log( 'products', products );
 
+	type = products.map( item => item.parentElement.innerHTML )
+	console.log( 'type', type );
 	const ids = products.map( item => item.id );
 	//console.log( 'ids', ids );
 
@@ -102,27 +218,22 @@ function parseText( text, target ) {
 		allLinks.push( ...[ ...item ] );
 
 	}
-
-
-	const hrefs = allLinks.map( item => item.href );
-	const hosts = allLinks.map( item => item.host + '/favicon.ico' );
-	//console.log( 'hosts', hosts );
-
 	//console.log( 'allLinks', allLinks );
 
-	divContents.innerHTML = allLinks.map( link => `<a href=${link} >${link}</a><br>` ).join('');
-
-
-	// remove duplicates
-
-
-	const hosts2 = hosts.filter( ( host, pos ) => hosts.indexOf( host ) == pos );
-	//console.log( 'hosts2', hosts2 );
+	target.innerHTML = allLinks.map( link => `<a href=${link} >${link}</a><br>` ).join('');
 
 	//
 
-	// hosts2[ hosts2.findIndex( item => item === '/favicon.ico' ) ] = '';
+	const hosts = allLinks.map( item => item.host + '/favicon.ico' );
+	//console.log( 'hosts', hosts );
 
+	// remove duplicates
+	const hosts2 = hosts.filter( ( host, pos ) => hosts.indexOf( host ) == pos );
+	//console.log( 'hosts2', hosts2 );
+
+	// fix bad links by hand
+
+	// hosts2[ hosts2.findIndex( item => item === '/favicon.ico' ) ] = '';
 	hosts2[ hosts2.findIndex( item => item === 'buildingeq.ashrae.org/favicon.ico' ) ] = 'https://www.ashrae.org/favicon.ico';
 	hosts2[ hosts2.findIndex( item => item === 'www.bentley.com/favicon.ico' ) ] = 'https://prod-bentleycdn.azureedge.net/-/media/bentley/bentley-site-images/cmsimages/favicon.png';
 	hosts2[ hosts2.findIndex( item => item === 'www.doe2.com/favicon.ico' ) ] = 'http://doe2.com/BldgDOE2.gif';
@@ -137,18 +248,17 @@ function parseText( text, target ) {
 	hosts2[ hosts2.findIndex( item => item === 'www.designbuilder.com/favicon.ico' ) ] = 'https://www.designbuilder.com/plugins/system/jat3/jat3/base-themes/default/images/favicon.ico';
 	hosts2[ hosts2.findIndex( item => item === 'www.solar-computer.co.uk/favicon.ico' ) ] = 'https://www.solar-computer.co.uk/Bilder/logo_sc.gif';
 
-	hosts2.forEach( host => fetchImageSimple( host ) );
+	hosts2.forEach( host => fetchImageSimple( host, divIcons ) );
 
 }
 
 
-function fetchImageSimple( url ){
+function fetchImageSimple( url, target ){
 
 	fetch( new Request( urlCORS + url ) )
 	.then( response => {
 
 		if ( !response.ok ) return new Error( response );
-
 		return response.blob();
 
 	} )
@@ -156,7 +266,7 @@ function fetchImageSimple( url ){
 
 			const objectURL = URL.createObjectURL( blob );
 			//console.log( 'blob', blob );
-			if ( blob.size && blob.type.startsWith( 'image') ) { divIcons.innerHTML += `<img src=${objectURL} >`; }
+			if ( blob.size && blob.type.startsWith( 'image') ) { target.innerHTML += `<img src=${objectURL} >`; }
 
 	} );
 
