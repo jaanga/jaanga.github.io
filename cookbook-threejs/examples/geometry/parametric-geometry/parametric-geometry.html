@@ -43,6 +43,14 @@
 			<button onclick=setSphere(); >setSphere</button>
 		</p>
 
+		<p>
+			<button onclick=setSphere2(); >setSphere 2</button>
+		</p>
+
+		<p>
+			<button onclick=setPlane(); >setPlane</button>
+		</p>
+
 		<div id = "divLog" ></div>
 
 	</div>
@@ -125,7 +133,7 @@ function setKlein() {
 
 function setSphere() {
 
-scene.remove( mesh );
+	scene.remove( mesh );
 
 	const geometry = new THREE.ParametricGeometries.SphereGeometry( 50, 20, 10 );
 	const material = new THREE.MeshNormalMaterial( { side: 2 } );
@@ -138,6 +146,69 @@ scene.remove( mesh );
 
 }
 
+
+
+
+function setSphere2() {
+
+	scene.remove( mesh );
+
+	const geometry = new THREE.ParametricGeometry( sphere, 25, 25 );
+	const material = new THREE.MeshNormalMaterial( { side: 2 } );
+	mesh = new THREE.Mesh( geometry, material );
+
+	scene.add( mesh );
+
+	var edges = new THREE.EdgesGeometry( geometry );
+	var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x888888 } ) );
+	mesh.add( line );
+
+	function sphere( u, v, target ) {
+
+		const size = 50
+		u *= Math.PI;
+		v *= 1 * Math.PI;
+
+		const x = size * Math.sin( u ) * Math.cos( v );
+		const y = size * Math.sin( u ) * Math.sin( v );
+		const z = size * Math.cos( u );
+
+		target.set( x, y, z );
+
+	}
+
+}
+
+
+
+function setPlane() {
+
+	scene.remove( mesh );
+
+	const width = 60
+	const depth = 40;
+
+	const geometry = new THREE.ParametricGeometry( plane, 25, 25 );
+	const material = new THREE.MeshNormalMaterial( { side: 2 } );
+	mesh = new THREE.Mesh( geometry, material );
+
+	scene.add( mesh );
+
+	const edges = new THREE.EdgesGeometry( geometry );
+	const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x888888 } ) );
+	mesh.add( line );
+
+		function plane( u, v, target ) {
+
+			var x = u * width;
+			var y = 0;
+			var z = v * depth;
+
+			target.set( x, y, z );
+
+		}
+
+}
 
 
 function onWindowResize() {
