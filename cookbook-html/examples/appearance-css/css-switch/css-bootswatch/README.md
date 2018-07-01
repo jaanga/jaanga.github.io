@@ -1,6 +1,6 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/#cookbook-html/examples/appearance-css/css-switch/css-bootswatch/README.md "View file as a web page." ) </span>
 
-<div><input type=button onclick="window.location.href='https://github.com/pushme-pullyou/pushme-pullyou.github.io/blob/master/tootoo-templates/README.md'";
+<div><input type=button onclick="window.location.href='https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-html/examples/appearance-css/css-switch/css-bootswatch/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 
@@ -27,6 +27,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 * First commit
 * fix menu width
+* Add classes throughout
 
 
 ***

@@ -45,7 +45,7 @@
 	*/
 
 </style>
-<link id=css rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/cyborg/bootstrap.min.css" >
+<link id=css rel="stylesheet" type="text/css" >
 </head>
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
@@ -54,8 +54,8 @@
 	<div id = "divMenu" class = "jumbotron" >
 
 		<div class = "" >
-			<a href = "../index.html" target="_top" >repo</a> &raquo;
-			<a href= "./index.html" target="_top" style=font-size:24px; >&#x2302;</a> &raquo;
+			<a href = "../index.html" target="_top" class="breadcrumb-item" >repo</a>
+			<a href= "./index.html" target="_top" style=font-size:24px; class="breadcrumb-item" >&#x2302;</a>
 		</div>
 
 		<div id=divTitle ></div>
@@ -63,10 +63,11 @@
 		<div id = "divMenuItems" class = "list-group"  >
 
 			<p>
-			<button title = "Toggle the scene spinning" onclick="controls.autoRotate=!controls.autoRotate;" style=width:100%; >rotation</button>
+			<button title = "Toggle the scene spinning" onclick="controls.autoRotate=!controls.autoRotate;"
+			class="btn" >rotation</button>
 			</p>
 
-			<select id=selTheme onchange=updateCss(this); >
+			<select id=selTheme onchange=updateCss(this); class="form-control" >
 				<option>Cerulean</option>
 				<option>Cosmo</option>
 				<option>Cyborg</option>
@@ -93,13 +94,13 @@
 
 		<div id = "divLog" ></div>
 
-		<hr>
+		<hr class="my-4" >
 
-		<center title="Hello, world!" onclick="divMenu.scrollTop=0;" style="color:#aaa;cursor:pointer;font-size:1.5rem;" > ❦ </center>
+		<p title="Hello, world!" onclick="divMenu.scrollTop=0;" class="btn btn-link" style="cursor:pointer;font-size:1.5rem;text-align:center;width:100%;" > ❦ </p>
 
 	</div>
 
-	<div id = "hamburger" onclick=toggleNav(); > slide &#9776; </div>
+	<div id = "hamburger" onclick=toggleNav(); class="btn btn-primary" > slide &#9776; </div>
 
 <script>
 
@@ -164,23 +165,31 @@ function init() {
 	const mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
 
+	const themeName = localStorage.getItem( 'themeName' );
+	selTheme.value = themeName ? themeName : 'Cerulean' ;
+	css.href = "https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/" + selTheme.value.toLowerCase() + "/bootstrap.min.css"
+
 }
 
 
 function updateCss( that ) {
 
 	css.href = "https://stackpath.bootstrapcdn.com/bootswatch/4.1.1/" + that.value.toLowerCase() + "/bootstrap.min.css"
+	const themeName = that.value;
+	localStorage.setItem('themeName', themeName );
 
 }
 
+
+
 function toggleNav() {
 
-	const left = 'calc( var( --mnu-width ) - 100px )';
+	const left = 'calc( var( --mnu-width ) - 5rem )';
 
 	if ( hamburger.style.left === '' || hamburger.style.left === left ) {
 
-		divMenu.style.left = 'calc( -1 * var( --mnu-width ) - 20px )';
-		hamburger.style.left = '-100px';
+		divMenu.style.left = 'calc( -1 * var( --mnu-width ) - 2rem )';
+		hamburger.style.left = '-5rem';
 
 	} else {
 
