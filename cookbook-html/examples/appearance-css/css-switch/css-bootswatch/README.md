@@ -6,11 +6,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 # [CSS Bootswatch Read Me]( #README.md )
 
-<!--
+
 <iframe src=https://jaanga.github.io/cookbook-html/examples/appearance-css/css-switch/css-bootswatch/css-bootswatch.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 
 ## Full Screen: [CSS Bootswatch]( https://jaanga.github.io/cookbook-html/examples/appearance-css/css-switch/css-bootswatch/css-bootswatch.html )
--->
 
 
 ## Concept
@@ -27,6 +26,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ### 2018-06-30 ~ Theo
 
 * First commit
+* fix menu width
+
 
 ***
 # <center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>
