@@ -23,6 +23,7 @@
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/BufferGeometryUtils.js" ></script>
 
 	<div id = "divMenu" >
 
@@ -47,6 +48,12 @@
 		<p>
 			<button onclick="drawMultipleTrianglesBufferGeometry( 100 );" >drawMultipleTrianglesBufferGeometry</button>
 		</p>
+
+		<p>
+			<button onclick="drawMultipleTrianglesBufferGeometryGroups( 100 );" >drawMultipleTrianglesBufferGeometryGroups</button>
+		</p>
+
+
 
 		<div id = "divLog" ></div>
 
@@ -100,11 +107,45 @@ function init() {
 	//const mesh = new THREE.Mesh( geometry, material );
 	//scene.add( mesh );
 
-	drawTriangle();
+	//drawTriangle();
 
+	drawFace();
 
 }
 
+// https://stackoverflow.com/questions/9252764/how-to-create-a-custom-mesh-on-three-js
+
+function drawFace() {
+
+	scene.remove( mesh );
+	// https://threejs.org/docs/#api/core/Face3
+
+	//var material = new THREE.MeshStandardMaterial( { color : 0x00cc00 } );
+	var material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+	//create a triangular geometry
+	var geometry = new THREE.Geometry();
+	geometry.vertices.push( new THREE.Vector3( -50, -50, 0 ) );
+	geometry.vertices.push( new THREE.Vector3(  50, -50, 0 ) );
+	geometry.vertices.push( new THREE.Vector3(  50,  50, 0 ) );
+
+	//create a new face using vertices 0, 1, 2
+	var normal = new THREE.Vector3( 0, 1, 0 ); //optional
+	var color = new THREE.Color( 0xffaa00 ); //optional
+	var materialIndex = 0; //optional
+	var face = new THREE.Face3( 0, 1, 2, normal, color, materialIndex );
+
+	//add the face to the geometry's faces array
+	geometry.faces.push( face );
+
+	//the face normals and vertex normals can be calculated automatically if not supplied above
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+}
 
 function drawTriangle() {
 
@@ -113,7 +154,10 @@ function drawTriangle() {
 	geometry = new THREE.Geometry();
 	geometry.vertices= [ new THREE.Vector3( 50, 10, 0 ), new THREE.Vector3( 10, 80, 0 ), new THREE.Vector3( 70, 40, 0 )];
 	geometry.faces = [ new THREE.Face3(1,0,2) ];
-	mesh= new THREE.Mesh( geometry, new THREE.MeshBasicMaterial({ color: 0xffff00 }) );
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+	//mesh= new THREE.Mesh( geometry, new THREE.MeshBasicMaterial({ color: 0xffff00 }) );
+	mesh= new THREE.Mesh( geometry, new THREE.MeshNormalMaterial({ side: 2 }) );
 	scene.add( mesh );
 
 }
@@ -130,7 +174,10 @@ function drawTriangles( count = 10 ) {
 		geometry = new THREE.Geometry();
 		geometry.vertices= [ new THREE.Vector3( 50, 10, i * 2 ), new THREE.Vector3( 10, 80, i * 2 ), new THREE.Vector3( 70, 40, i * 2 )];
 		geometry.faces = [ new THREE.Face3(1,0,2) ];
-		material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), side: 2 } )
+
+		geometry.computeFaceNormals();
+		geometry.computeVertexNormals();
+		material = new THREE.MeshNormalMaterial({ color: 0xffffff * Math.random(), side: 2 } )
 		thing= new THREE.Mesh( geometry, material );
 		mesh.add( thing );
 
@@ -139,6 +186,7 @@ function drawTriangles( count = 10 ) {
 	scene.add( mesh );
 
 }
+
 
 
 function drawTrianglesBufferGeometryNot( count = 10 ) {
@@ -159,7 +207,11 @@ function drawTrianglesBufferGeometryNot( count = 10 ) {
 
 	}
 
-	material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), side: 2 } )
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+	//material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), side: 2 } );
+	material = new THREE.MeshNormalMaterial({ side: 2 } );
+
 	thing= new THREE.Mesh( geometry, material );
 	mesh.add( thing );
 
@@ -188,7 +240,10 @@ function drawTwoTrianglesBufferGeometry() {
 
 	// itemSize = 3 because there are 3 values (components) per vertex
 	geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
-	var material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+	//var material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+	material = new THREE.MeshNormalMaterial({ side: 2 } );
 	mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
 
@@ -199,9 +254,9 @@ function drawTwoTrianglesBufferGeometry() {
 
 function drawMultipleTrianglesBufferGeometry( count = 10 ) {
 
-scene.remove( mesh );
+	scene.remove( mesh );
 
-	geometry = new THREE.BufferGeometry();
+	var geometry = new THREE.BufferGeometry();
 	// create a simple square shape. We duplicate the top left and bottom right
 	// vertices because each vertex needs to appear once per triangle.
 
@@ -221,8 +276,10 @@ scene.remove( mesh );
 
 	// itemSize = 3 because there are 3 values (components) per vertex
 	geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
 	console.log( 'geometry', geometry );
-	var material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } );
+	var material = new THREE.MeshNormalMaterial( { side: 2 } );
 	mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
 
@@ -230,12 +287,45 @@ scene.remove( mesh );
 
 
 
+function drawMultipleTrianglesBufferGeometryGroups( count = 10 ) {
 
+	// https://stackoverflow.com/questions/32921801/how-do-drawcalls-work-in-three-js
 
+	scene.remove( mesh );
 
+	points = [];
+	const materialsArray = [];
+	geometry = new THREE.BufferGeometry();
+	geometry.clearGroups();
 
+	for ( let i = 0; i < count; i++) {
 
+		const arr = [
+			50, 10, i * 3 - 150,
+			10, 80, i * 3 - 150 ,
+			70, 40, i * 3 - 150
+		];
 
+		points.push( ...arr );
+
+		geometry.addGroup( i * 3, i * 3 + 3, i ); // materialIndex 0
+		//var material1 = new THREE.MeshNormalMaterial( { side: 2 } );
+		materialsArray.push( new THREE.MeshBasicMaterial( { color: 0xffffff * Math.random(), side: 2 } ) );
+
+	}
+
+	const vertices = new Float32Array( points );
+
+	// itemSize = 3 because there are 3 values (components) per vertex
+	geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+
+	//const material = new THREE.MultiMaterial( materialsArray );
+	mesh = new THREE.Mesh( geometry, materialsArray );
+	scene.add( mesh );
+
+}
 
 
 function onWindowResize() {

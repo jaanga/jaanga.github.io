@@ -39,9 +39,9 @@
 		menu.innerHTML = '<h2 style=margin:0; >' +
 			'<a href="" >' + document.title + '</a> ' +
 			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
-			
+
 			'<p><button onclick=loadTexture(); >loadTexture</button></p>' +
-			
+
 			'<div id=msg1 ></div>' +
 		'';
 
@@ -64,8 +64,8 @@
 		window.addEventListener( 'resize', onWindowResize, false );
 
 // helpers
-		var axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		var axesHelper = new THREE.AxesHelper( 50 );
+		scene.add( axesHelper );
 
 		mesh = new THREE.GridHelper( 50, 10 );
 		mesh.position.set( 0, -9, 0 );
@@ -78,45 +78,47 @@
 		loader.load(
 
 //			'http://i.imgur.com/RPv6ofy.jpg',
-			'water.jpg',
+//			'water.jpg',
+			'../../textures/water.jpg',
+//			'../../textures/0.00_0.00_0.00_0.00_0.00_1.00_0.00_-93.95_0.00_93.95_93.95.tif',
 
 			function ( texture ) {
 
 //				geometry = new THREE.SphereGeometry( 50, 50, 25 );
 
-				sphere1.material = new THREE.MeshBasicMaterial( { map: texture } );
-				
+				material = new THREE.MeshBasicMaterial( { map: texture } );
+
+		geometry = new THREE.SphereGeometry( 50, 50, 25 );
+		//material = new THREE.MeshNormalMaterial();
+		sphere1 = new THREE.Mesh( geometry, material );
+		sphere1.position.set( -50, 30, 0 );
+		scene.add( sphere1 );
 			}
 
 		);
 
-		geometry = new THREE.SphereGeometry( 50, 50, 25 );
-		material = new THREE.MeshNormalMaterial();
-		sphere1 = new THREE.Mesh( geometry, material );
-		sphere1.position.set( -50, 30, 0 );
-		scene.add( sphere1 );
 
 	}
-	
-	
+
+
 	function loadTexture() {
-	
+
 		var url, loader;
-		
-//		url = 'water.jpg';
-		url = 'http://i.imgur.com/RPv6ofy.jpg';
+
+		url = 'water.jpg';
+//		url = 'http://i.imgur.com/RPv6ofy.jpg';
 //		url = 'http://lorempixel.com/400/200/'; // not
-				
+
 		loader = new THREE.TextureLoader();
 		loader.crossOrigin = 'anonymous';
 		loader.load( url, callback );
 
 	}
-	
+
 	function callback( texture ) {
 
 		sphere1.material = new THREE.MeshBasicMaterial( { map: texture } );
-					
+		sphere1.material.needsUpdate = true;
 	}
 
 
