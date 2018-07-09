@@ -45,6 +45,8 @@
 
 ## [cynthia-a]( https://cynthiaarmour.github.io ) [jaume-s]( http://jaanga.github.io/demo/jaume-s/ ) [kevin t]( http://jaanga.github.io/demo/kevin-t/half-dome-viewer/ ) [konstantineT]( http://jaanga.github.io/demo/konstantine-t/ )
 
+## [jan-w]( http://jaanga.github.io/demo/jan-wurm-3d-remix/ )
+
 # Fun
 
 ## [Equirec]( http://jaanga.github.io/equirec/ ) ~ [App]( http://jaanga.github.io/equirec/equirec-image-flickr/ )
