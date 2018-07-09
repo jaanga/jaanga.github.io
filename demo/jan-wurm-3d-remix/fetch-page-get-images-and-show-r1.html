@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "fetch images and show" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-21" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+	</div>
+
+	<div id = "divContents" ></div>
+
+<script>
+
+	let images;
+	let objects = [];
+
+	const url = 'http://janwurm.com/images/sf2001/';
+	const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+
+	var renderer, camera, controls, scene, axesHelper;
+
+	init();
+	animate();
+
+	function init() {
+
+		const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+		//const title = document.title;
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" title="Reload page" >${title}</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 0, -120, 30 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.autoRotate = true;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'keyup', function() { controls.autoRotate = false; }, false );
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		 toggleBackgroundGradient();
+
+		 fetchImageNames( url, divContents );
+
+	}
+
+
+
+	function fetchImageNames( url, target ){
+		//console.log (url );
+
+		const request = new Request( urlCORS + url );
+
+		fetch( request )
+			.then( function( response ) { return response.text() })
+			.then( function( text ) { parseText( text, divContents ) } );
+
+	}
+
+
+
+	function parseText( text, target ) {
+
+		const parser = new DOMParser();
+
+		const doc = parser.parseFromString( text, "text/html" );
+		//console.log( 'doc', doc );
+
+		images = Array.from( doc.links ).map( link=> link.innerText.trim() ).filter( link => link.endsWith( '.jpg') );
+		//console.log( 'images', images );
+
+		setImages()
+
+	}
+
+
+	function setImages() {
+
+		//const url = 'http://janwurm.com/wp-content/uploads/2015/11/';
+
+		const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+		loader = new THREE.TextureLoader();
+
+		for ( image of images ) {
+
+			texture = loader.load ( urlCORS + url + image );
+			texture.minFilter = THREE.LinearFilter;
+
+			geometry = new THREE.PlaneBufferGeometry( 50, 50 );
+			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+			material = new THREE.MeshBasicMaterial( { map: texture, opacity: 0.8, side: 2, transparent: true } );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+			//mesh.rotation.y = 1.56 ;
+			mesh.rotation.z = 4 * Math.random() ;
+			mesh.deltaX = Math.random() - 0.5;
+			mesh.deltaY = Math.random() - 0.5;
+			mesh.deltaZ = Math.random() - 0.5;
+			scene.add( mesh );
+			objects.push( mesh );
+
+		}
+
+	}
+
+
+
+	function toggleBackgroundGradient() {
+
+		// 2016-07-18
+
+		const col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		const pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+		const image = document.body.style.backgroundImage;
+
+		document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
+			pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+		var o, p;
+		for (let i = 0; i < objects.length; i++) {
+
+			o = objects[i];
+
+			//if ( !o ) { continue; }
+			p = o.position;
+			p.x += o.deltaX;
+			if ( p.x > 50 || p.x < -50 ) { o.deltaX = -o.deltaX; }
+
+			p.y += o.deltaY;
+			if ( p.y > 100 || p.y < 0 ) { o.deltaY = -o.deltaY; }
+
+			p.z += o.deltaZ;
+			if ( p.z > 50 || p.z < 0 ) { o.deltaZ = -o.deltaZ; }
+
+			/* Turn it into a game
+			for (var j = 0, len = objects.length; j < len; j++) {
+				if ( p.distanceTo( objects[j].position ) < 1 && i !== j ) {
+					//hits++;
+					var s = o.scale;
+					o.scale.set(  s.x + 0.8, s.y + 0.8, s.z + 0.8 );
+					scene.remove( objects[j] );
+					objects.splice( j, 1);
+					//info.innerHTML = info.txt + 'Objects: ' + objects.length + ' - Hits: ' + hits + ' - time: ' + clock.getElapsedTime().toFixed() + ' seconds';
+					break;
+				}
+			}
+			*/
+
+		}
+
+	}
+
+</script>
+</body>
+</html>

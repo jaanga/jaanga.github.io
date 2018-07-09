@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-05-06" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+		</p>
+
+		<p>
+				<button onclick=toggleBackgroundGradient(); >background</button>
+
+		</p>
+		<div id = "divLog" ></div>
+
+	</div>
+
+<script>
+
+	const images = [
+		"07-Cold-Drinks-Triptych.png",
+		"20-Three-Sisters-Triptych.jpg",
+		"DSCN0115.jpg",
+		"DSCN0117.jpg",
+		"DSCN0118.jpg",
+		"DSCN0119.jpg",
+		"DSCN0136.jpg",
+		"DSCN0137.jpg",
+		"DSCN1542.jpg",
+		"DSCN1543.jpg",
+		"DSCN1544.jpg",
+		"DSCN1545.jpg",
+		"DSCN1559.jpg",
+		"DSCN1561.jpg",
+		"DSCN1563.jpg",
+		"DSCN1564.jpg",
+		"DSCN3105.jpg",
+		"DSCN3107.jpg",
+		"DSCN4329.jpg",
+		"DSCN4330.jpg",
+		"DSCN4335.jpg",
+		"DSCN4336.jpg",
+		"DSCN4339.jpg",
+		"DSCN4340.jpg",
+		"DSCN4341.jpg",
+		"bath.png",
+		"circus-full.png",
+		"family-bbq.png",
+		"long-afternoon-01.jpg",
+		"long-afternoon-02.jpg",
+		"long-afternoon-03.jpg",
+		"long-afternoon-04.jpg",
+		"long-afternoon-05.jpg",
+		"long-afternoon-06.jpg",
+		"long-afternoon-07.jpg",
+		"long-afternoon-08.jpg",
+		"long-afternoon-09.jpg",
+		"long-afternoon-10.jpg",
+		"long-summer-01.jpg",
+		"long-summer-02.jpg",
+		"long-summer-03.jpg",
+		"long-summer-04.jpg",
+		"long-summer-05.jpg",
+		"long-summer-06.jpg",
+		"long-summer-07.jpg",
+		"long-summer-08.jpg",
+		"long-summer-09.jpg",
+		"long-summer-10.jpg",
+		"long-summer-11.jpg",
+		"long-summer-12.jpg",
+		"long-summer-13.jpg",
+		"long-summer-14.jpg",
+		"long-summer-15.jpg",
+		"long-summer-16.jpg",
+		"long-summer-17.jpg",
+		"long-summer-18.jpg",
+		"long-summer-19.jpg",
+		"long-summer-20.jpg",
+		"long-summer-21.jpg",
+		"long-summer-22.jpg",
+		"long-summer-23.jpg",
+		"long-summer-24.jpg",
+		"long-summer-25.jpg",
+		"long-summer-26.jpg",
+		"long-summer-27.jpg",
+		"long-summer-28.jpg",
+		"long-summer-29.jpg",
+		"long-summer-30.jpg",
+		"long-summer-31.jpg",
+		"long-summer-32.jpg",
+		"long-summer-33.jpg",
+		"olympic.png",
+		"pool-full.png",
+		"pool-smaller.png",
+		"sauna.png",
+		"wurm-keeping-score-06-copy.jpg",
+		"wurmsundaydessertsmall.jpg"
+	];
+
+	var renderer, camera, controls, scene, axesHelper;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+		//const title = document.title;
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" title="Reload page" >${title}</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 0, -120, 30 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.autoRotate = true;
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'keyup', function() { controls.autoRotate = false; }, false );
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		setImages();
+
+		toggleBackgroundGradient();
+
+	}
+
+
+	function setImages() {
+
+		const url = 'http://janwurm.com/wp-content/uploads/2015/11/';
+
+		const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+		loader = new THREE.TextureLoader();
+
+		for ( image of images ) {
+
+			texture = loader.load ( urlCORS + url + image );
+			texture.minFilter = THREE.LinearFilter;
+
+			geometry = new THREE.PlaneBufferGeometry( 50, 50 );
+			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+			material = new THREE.MeshBasicMaterial( { map: texture, opacity: 0.8, side: 2, transparent: true } );
+			mesh = new THREE.Mesh( geometry, material );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+			//mesh.rotation.y = 1.56 ;
+			mesh.rotation.z = 4 * Math.random() ;
+			scene.add( mesh );
+
+		}
+
+	}
+
+
+
+	function toggleBackgroundGradient() {
+
+// 2016-07-18
+
+		const col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		const pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+		const image = document.body.style.backgroundImage;
+
+		document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
+			pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>

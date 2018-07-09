@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "load multiple 2D images and recombine in 3D with movement and other effects" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-07-08" >
+<title>Jan Wurm 3D Remix</title>
+<link href="https://fonts.googleapis.com/css?family=Cabin+Sketch" rel="stylesheet">
+<style>
+
+	body {  font: 1rem "Cabin Sketch", cursive; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	h1 {
+		border-right: 3px solid  saddlebrown;
+		font-family: "Cabin Sketch", cursive;
+		font-weight: 200;
+		line-height: 1.2;
+		background-color: #ddd; font-size: 5rem; font-weight: regular; opacity: 0.5; padding: 0.5rem;
+		transform: rotate(4deg);
+	}
+
+	button, input[type=button] { background-color: #ddfffd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#container { background-color: white;
+	border-radius: 2px;
+	border-right: 5px solid yellow;
+	padding: 0 1rem; }
+
+	#wrapper{
+		border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
+
+		border-top-left-radius: 255px 25px;
+		border-top-right-radius: 25px 225px;
+		border-bottom-right-radius: 225px 45px;
+		border-bottom-left-radius: 35px 255px;
+
+		border:solid 10px #888;
+		border-width: 10px 15px 12px 8px;
+		border-color:rgb(42, 9, 80) rgb(44, 95, 44) rgb(19, 19, 80);
+		box-shadow: 1px 3px 4px 1px rgb(49, 4, 4);
+
+		left: 50px;
+		width:100%;
+		height:360px;
+		overflow:hidden;
+		position:relative;
+		top: -30px;
+		transform: rotate(-2deg);}
+
+		z-index:10;
+	}
+
+	iframe{
+		position:absolute;
+		z-index:9;
+		transform: rotate(-2deg);}
+	}
+
+</style>
+</head>
+<body>
+
+	<div id=container >
+
+		<div id = "divMenu" >
+
+			<h1><a href="" >Jan Wurm 3D Remix</a></h1>
+
+		</div>
+
+
+		<div id=wrapper >
+			<iframe src=https://theo-armour.github.io/explayrimental/jan-wurm/load-random-photos-r2.html
+				frameborder="0" allowfullscreen="1" width=100% height="360" ></iframe>
+		</div>
+
+
+		<p>
+
+			All images are sourced from: <a href="http://janwurm.com/" target="_blank">JanWurm.com</a>
+			One finger to rotate. Two fingers to zoom and pan.
+
+		</p>
+
+		<p>
+			The following are links to remixes of Jan's work overlaid over various 3D cookbook code samples.
+			The original file names are retained.
+		</p>
+
+		<h2><a href=./load-random-photos-r2.html >load-random-photos-r2.html</a></h2>
+
+		<h2 style="transform: rotate( 1.5deg);" ><a href=./fetch-page-get-images-and-show-r1.html >fetch-page-get-images-and-show-r1.html</a></h2>
+
+		<h2><a href=./2014-11-26-boilerplate-simple-lights.html ) >2014-11-26-boilerplate-simple-lights.html</a></h2>
+
+		<h2><a href=./2014-11-27-2d-array-cubes-sin-wave.html >2014-11-27-2d-array-cubes-sin-wave.html</a></h2>
+
+		<div id = "divContents" >All code here is free, open source software created with the help of the Three.js library for WebGL.</div>
+
+	</div>
+<script>
+
+	init();
+
+function init() {
+
+	toggleBackgroundGradient();
+
+}
+
+
+
+function toggleBackgroundGradient() {
+
+// 2018-06-23
+
+	const col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+	const pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+	const image = document.body.style.backgroundImage;
+
+	document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
+		pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
+
+}
+
+
+</script>
+</body>
+</html>
+

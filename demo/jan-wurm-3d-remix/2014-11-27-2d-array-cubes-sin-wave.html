@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Array Cubes 2D Sin Wave</title>
+<meta charset=utf-8 />
+<meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
+</head>
+<body>
+<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script>
+
+	const url = 'http://janwurm.com/wp-content/uploads/2017/09/';
+	const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+	var info, renderer, scene, camera, controls, stats, light;
+	let images;
+
+	var cubes = [];
+
+	init();
+	animate();
+
+	function init() {
+		var geometry, material, mesh, helper;
+
+		document.body.style.cssText = 'font: 600 12pt monospace; margin: 0; overflow: hidden' ;
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=divLog ></div>';
+
+		stats = new Stats();
+		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100; ';
+		document.body.appendChild( stats.domElement );
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMapSoft = true;
+		document.body.appendChild( renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+		camera.position.set( 100, 100, 100 );
+		scene.add( camera ); // for light to follow
+
+// controls
+		controls = new THREE.OrbitControls( camera );
+		controls.minDistance = 10;
+		controls.maxDistance = 1000;
+		controls.autoRotate = true;
+
+// Lights
+		//light = new THREE.AmbientLight( 0xffffff );
+		//scene.add( light );
+
+		let size = 250;
+		lightDirectional = new THREE.DirectionalLight( 0x888888 );
+		lightDirectional.position.set( -size, size, size );
+		lightDirectional.shadow.camera.scale.set( 0.1 * size, 0.1 * size, 0.5 );
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+		light = new THREE.PointLight( 0xffffff, 1 );
+		light.position = camera.position;
+		camera.add( light );
+
+// Ground Plane
+		geometry = new THREE.BoxGeometry( 200, 5, 200 );
+
+//		var material.color = 0x202099;
+//		var material = new THREE.MeshNormalMaterial();
+		var material = new THREE.MeshPhongMaterial( {
+			color: 0xffffff * Math.random(),
+			//ambient: 0xffffff * Math.random(),
+			specular: 0xffffff * Math.random(),
+			shininess: 50,
+			side: THREE.DoubleSide
+		} );
+
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, -10, 0 );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		scene.add( mesh );
+
+		helper = new THREE.BoxHelper( mesh );
+		helper.material.color.setRGB( 1, 0, 1 );
+		scene.add( helper );
+
+// Sphere
+		geometry = new THREE.SphereGeometry( 25, 50, 50 );
+
+//		material = new THREE.MeshNormalMaterial();
+		material = new THREE.MeshPhongMaterial( {
+			color: 0xffffff * Math.random(),
+			//ambient: 0xffffff * Math.random(),
+			specular: 0xffffff * Math.random(),
+			shininess: 50,
+			side: THREE.DoubleSide
+		} );
+//		material = new THREE.MeshBasicMaterial( { color: 0x888888, opacity: 0.7, side: THREE.DoubleSide, transparent: true });
+//		material = new THREE.MeshLambertMaterial( { ambient: 0xffffff, color: 0xffffff * Math.random() } );
+//		material = new THREE.MeshPhongMaterial( { ambient: 0x030303, color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } )
+		material = new THREE.MeshPhongMaterial( {
+			color: 0xffffff * Math.random(),
+			//ambient: 0xffffff * Math.random(),
+			specular: 0xffffff * Math.random(),
+//			shading: THREE.FlatShading,
+			shininess: 0.001
+		} );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -100, 10, 0 );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		scene.add( mesh );
+
+// Cubes
+
+		/*
+		geometry = new THREE.BoxGeometry( 2, 2, 2 );
+		for ( var x = 0; x < 50; x++ ) {
+			for ( var y = 0; y < 50; y++ ) {
+
+				material = new THREE.MeshPhongMaterial( {
+					color: 0xffffff * Math.random(),
+					//ambient: 0xffffff * Math.random(),
+					opacity: Math.random(),
+					specular: 0xffffff * Math.random(),
+					//shading: THREE.FlatShading,
+					shininess: 10,
+					transparent: true
+				} );
+
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.set( x * 3 - 75, 2 * Math.random(), y * 3 - 75 );
+//				mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+				mesh.castShadow = true;
+				mesh.receiveShadow = true;
+				scene.add( mesh );
+				cubes.push( mesh );
+
+				const edges = new THREE.EdgesGeometry( geometry );
+				const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+				line.material.color.setRGB( 1, 0, 0 );
+				mesh.add( line );
+
+			}
+		}
+		*/
+
+
+		toggleBackgroundGradient();
+
+		fetchImageNames( url, divLog );
+
+	}
+
+
+
+	function fetchImageNames( url, target ){
+		//console.log (url );
+
+		const request = new Request( urlCORS + url );
+
+		fetch( request )
+			.then( function( response ) { return response.text() })
+			.then( function( text ) { parseText( text, divLog ) } );
+
+	}
+
+
+
+	function parseText( text, target ) {
+
+		const parser = new DOMParser();
+
+		const doc = parser.parseFromString( text, "text/html" );
+		//console.log( 'doc', doc );
+
+		images = Array.from( doc.links ).map( link=> link.innerText.trim() ).filter( link => !link.includes( 'x') );
+		images.shift();
+		//console.log( 'images', images );
+
+		setImages()
+
+	}
+
+
+	function setImages() {
+
+		//const url = 'http://janwurm.com/wp-content/uploads/2015/11/';
+
+		const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+		loader = new THREE.TextureLoader();
+
+		//geometry = new THREE.BoxBufferGeometry( 20, 20, 20 );
+
+		for ( image of images ) {
+
+			texture = loader.load ( urlCORS + url + image );
+			texture.minFilter = THREE.LinearFilter;
+
+			geometry = new THREE.BoxBufferGeometry( 50, 50, 1);
+			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+			material = new THREE.MeshBasicMaterial( { map: texture, opacity: 0.8, side: 2, transparent: true } );
+			mesh = new THREE.Mesh( geometry, material );
+			//mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+			//mesh.rotation.y = 1.56 ;
+
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
+			mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+			mesh.castShadow = true;
+			mesh.receiveShadow = true;
+			mesh.rotation.z = 4 * Math.random() ;
+			mesh.deltaX = Math.random() - 0.5;
+			mesh.deltaY = Math.random() - 0.5;
+			mesh.deltaZ = Math.random() - 0.5;
+			scene.add( mesh );
+			cubes.push( mesh );
+
+		}
+
+		}
+
+
+
+
+
+
+	function cos(a){return Math.cos(a);}
+	function sin(a){return Math.sin(a);}
+
+	var delta = 0;
+
+	function updateGeometry( timestamp ) {
+		count = 0;
+		delta += 0.01;
+		for ( var x = 0; x < cubes.length; x++ ) {
+				cubes[ count ].position.y = 30 * sin( x * 0.07 + delta) * sin( x * 0.07 + delta);
+				cubes[ count ].rotation.y = cubes[ count ].rotation.z = timestamp * 0.0002;
+				cubes[ count++ ].scale.y = Math.abs( Math.sin( timestamp * 0.001 ) ) * 20;
+			}
+
+	}
+
+
+
+
+	function toggleBackgroundGradient() {
+
+// 2018-06-23
+
+		const col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+		const pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+		const image = document.body.style.backgroundImage;
+
+		document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
+			pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
+
+	}
+
+
+
+	function animate( timestamp ) {
+		updateGeometry( timestamp );
+		renderer.render( scene, camera );
+		controls.update();
+		stats.update();
+		requestAnimationFrame( animate );
+
+	}
+
+</script>
+</body>
+</html>
