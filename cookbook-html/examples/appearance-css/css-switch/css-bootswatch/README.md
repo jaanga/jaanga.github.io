@@ -21,12 +21,21 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## Links of Interest
 
+
 * https://bootswatch.com/
 * CDN: https://www.bootstrapcdn.com/bootswatch/
 * https://stackoverflow.com/questions/tagged/bootswatch
 
+Users
+* https://github.com/pushme-pullyou/pushme-pullyou.github.io/blob/master/tootoo-templates/hamburger-bootswatch/README.md
+
 
 ## Change Log
+
+
+### 2018-07-09 ~ Theo
+
+* Forked over to tootoo templates
 
 ### 2018-06-30 ~ Theo
 
