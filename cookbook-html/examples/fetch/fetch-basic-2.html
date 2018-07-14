@@ -83,34 +83,34 @@
 
 
 
-	function fetchImage() {
+function fetchImage() {
 
-		const url = 'https://mdn.github.io/fetch-examples/basic-fetch/flowers.jpg';
-		//const url = 'https://i.imgur.com/8yqJl.png';
+	const url = 'https://mdn.github.io/fetch-examples/basic-fetch/flowers.jpg';
+	//const url = 'https://i.imgur.com/8yqJl.png';
 
-		divContents.innerHTML = '<img id=myImage >';
+	divContents.innerHTML = '<img id=myImage >';
 
-		fetch( url )
+	fetch( url )
 
-		.then( function( response ) {
+	.then( function( response ) {
 
-			if ( !response.ok ) return new Error( response );
+		if ( !response.ok ) return new Error( response );
 
-			return response.blob();
+		return response.blob();
 
-		})
+	})
 
-		.then( function( myBlob ) {
+	.then( function( myBlob ) {
 
-			var objectURL = URL.createObjectURL( myBlob );
+		var objectURL = URL.createObjectURL( myBlob );
 
-			myImage.src = objectURL;
+		myImage.src = objectURL;
 
-		})
+	})
 
-		.catch( function( err ) { console.log( err ); });
+	.catch( function( err ) { console.log( err ); });
 
-	}
+}
 
 
 
@@ -132,73 +132,73 @@ function fetchImageSimple(){
 
 
 
-	function fetchText( url, target ){
+function fetchText( url, target ){
 
-		console.log(url );
+	console.log(url );
 
-		var myRequest = new Request( url );
+	var myRequest = new Request( url );
 
-		fetch( myRequest )
-		.then( function( response ) { return response.text() })
-		.then( function( text ) { target.innerHTML = text; } );
+	fetch( myRequest )
+	.then( function( response ) { return response.text() })
+	.then( function( text ) { target.innerHTML = text; } );
 
-	}
+}
 
 
 
-	function fetchSelectedUrl() {
+function fetchSelectedUrl() {
 
-		divContents.innerHTML =
-		`
-			<div id=buttons ></div>
-			<div id=text ></div>
-		`;
+	divContents.innerHTML =
+	`
+		<div id=buttons ></div>
+		<div id=text ></div>
+	`;
 
-		const urls = [
-			'https://mdn.github.io/fetch-examples/fetch-text/page1.txt',
-			'https://mdn.github.io/fetch-examples/fetch-text/page2.txt',
-			'https://mdn.github.io/fetch-examples/fetch-text/page3.txt'
+	const urls = [
+		'https://mdn.github.io/fetch-examples/fetch-text/page1.txt',
+		'https://mdn.github.io/fetch-examples/fetch-text/page2.txt',
+		'https://mdn.github.io/fetch-examples/fetch-text/page3.txt'
 
-		];
+	];
 
-		let butts = '';
+	let butts = '';
 
-		for ( let url of urls ){
+	for ( let url of urls ){
 
-			title = url.split('/').pop();
+		title = url.split('/').pop();
 
-			butts += `<button onclick=fetchText("${url}",text); >${title}</button> `;
-
-		}
-
-		buttons.innerHTML = butts;
+		butts += `<button onclick=fetchText("${url}",text); >${title}</button> `;
 
 	}
 
+	buttons.innerHTML = butts;
 
-
-	function fetchMultipleUrls() {
-
-		for ( let i = 1; i <= 15 ; i++) {
-
-			const requestObj = 'https://mdn.github.io/fetch-examples/object-fit-gallery-fetch/images/pic' + i + '.jpg';
-			retrieveImage( requestObj, i );
-
-		}
-
-	}
+}
 
 
 
-	function retrieveImage( url, imageNo ) {
-		fetch( url )
-		.then( response => response.blob() )
-		.then( blob => {
-			var objectURL = URL.createObjectURL( blob );
-			divContents.innerHTML += `<img src=${objectURL} >`;
-		} );
+function fetchMultipleUrls() {
+
+	for ( let i = 1; i <= 15 ; i++) {
+
+		const requestObj = 'https://mdn.github.io/fetch-examples/object-fit-gallery-fetch/images/pic' + i + '.jpg';
+		retrieveImage( requestObj, i );
 
 	}
+
+}
+
+
+
+function retrieveImage( url, imageNo ) {
+	fetch( url )
+	.then( response => response.blob() )
+	.then( blob => {
+		var objectURL = URL.createObjectURL( blob );
+		divContents.innerHTML += `<img src=${objectURL} >`;
+	} );
+
+}
 
 
 
