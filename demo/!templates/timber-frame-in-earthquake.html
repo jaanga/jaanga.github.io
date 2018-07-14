@@ -1,0 +1,253 @@
+
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-07-14" >
+<title>Timber Frame in Earthquake R1</title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { position: absolute; text-align: center; width: 100%; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r90/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r90/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+		<div id = "contents" >
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+		</div>
+
+	</div>
+
+<script>
+
+	let frame;
+	let delta = 0.01;
+	const infoURI = 'https://github.com/jaanga/jaanga.github.io/tree/master/demo/alexi-k/';
+
+	let renderer, camera, controls, scene;
+	let lightAmbient, lightDirectional
+	let cameraHelper, gridHelper, axesHelper;
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML =
+			'<h3><a  href = "" >' + document.title + '</a> &nbsp; ' +
+			'<a href=' + infoURI + ' target="top" >&#x24D8</a></h3>';
+
+		const size = 100;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer.shadowMap.enabled = true;
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 10 * size );
+		camera.position.set( 0.5 *size, 0.5 * size, 0.5 * size );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.target.set( 0, 0, 15 );
+		controls.maxDistance = 5 * size;
+		controls.autoRotate = true;
+
+		scene = new THREE.Scene();
+
+		lightAmbient = new THREE.AmbientLight( 0x444444 );
+		scene.add( lightAmbient );
+
+
+		lightDirectional = new THREE.DirectionalLight( 0xffeedd );
+		lightDirectional.position.set( -size, size, size );
+		lightDirectional.shadow.camera.scale.set( 0.1 * size, 0.1 * size, 0.5 );
+		lightDirectional.castShadow = true;
+		scene.add( lightDirectional );
+
+
+		window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'keyup', function() { controls.autoRotate = false; }, false );
+		renderer.domElement.addEventListener( 'click', function() { controls.autoRotate = false; }, false );
+
+		addHelpers();
+		addAssets();
+
+	}
+
+
+	function addHelpers( size = 100 ) {
+
+		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera )
+		scene.add( cameraHelper );
+
+		axesHelper = new THREE.AxesHelper( size );
+		scene.add( axesHelper );
+
+		gridHelper = new THREE.GridHelper( size );
+		gridHelper.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+
+		scene.add( gridHelper );
+
+		geometry = new THREE.BoxBufferGeometry( 100, 100, 1 );
+		material = new THREE.MeshPhongMaterial( { color: 'darkgreen' });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = -0.5;
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		scene.add( mesh );
+
+	}
+
+
+
+	function addAssets() {
+
+		earth = new THREE.Group();
+
+		const v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+		var geometry, material, mesh;
+
+		geometry = new THREE.BoxBufferGeometry( 20, 20, 1 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 0x888888 } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = 5;
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		earth.add( mesh );
+
+		geometry = new THREE.Geometry();
+		geometry.vertices = [ v( -10, -10, 5),  v( 0, -10, 50 ), v( 10, -10, 5 ), v( -10, 10, 5),  v( 0, 10, 50 ), v( 10, 10, 5 ) ];
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+
+		material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		line = new THREE.Line( geometry, material );
+		line.castShadow = line.receiveShadow = true;
+		earth.add( line );
+
+		scene.add( earth );
+		earth.position.z = 50;
+
+
+		frame = getFrame();
+		frame.position.y = 7;
+
+		earth.add( frame );
+
+		frame = getFrame();
+		frame.position.y = -7;
+		earth.add( frame );
+
+		geometry = new THREE.BoxBufferGeometry( 10, 20, 5 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 'blue' } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.z = 25;
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		earth.add( mesh );
+
+	}
+
+
+	function getFrame(){
+
+		const frame = new THREE.Group();
+
+		geometry = new THREE.BoxBufferGeometry( 2, 1, 16 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 'tan' } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 8, 0, 13 );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		frame.add( mesh );
+
+		geometry = new THREE.BoxBufferGeometry( 18, 1, 2 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 'tan' } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 0, 0, 22 );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		frame.add( mesh );
+
+		geometry = new THREE.BoxBufferGeometry( 2, 1, 16 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 'tan' } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -8, 0, 13 );
+		mesh.castShadow = mesh.receiveShadow = true;
+		frame.add( mesh );
+
+		geometry = new THREE.BoxBufferGeometry( 1, 0.4, 7 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( -0.25 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 'brown' } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 6, 0, 19 );
+		mesh.castShadow = mesh.receiveShadow = true;
+		frame.add( mesh );
+
+		geometry = new THREE.BoxBufferGeometry( 1, 0.4, 7 );
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationY( 0.25 * Math.PI ) );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		material = new THREE.MeshPhongMaterial( { color: 'brown' } );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( -6, 0, 19 );
+		mesh.castShadow = mesh.receiveShadow = true;
+		frame.add( mesh );
+
+		return frame;
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+		earth.rotation.y += delta;
+
+		delta = Math.abs( earth.rotation.y ) > 0.3 ? -delta : delta;
+
+	}
+
+</script>
+</body>
+</html>
