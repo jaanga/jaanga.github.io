@@ -14,7 +14,7 @@ _<small></small>_
 
 <iframe src=https://jaanga.github.io/demo/alexi-k/index.html width=100% height=500px >iframes not visible in source code view</iframe>
 
-_Timber Frame in Earthquake still at a very preliminary stage_
+_Timber Frame in Earthquake still at a very preliminary stage. Pegs not to scale._
 
 ***
 
@@ -30,7 +30,7 @@ Reading papers, viewing videos, listening to experts helps but does not convince
 You want to be able to see, touch and manipulate a working version of the technology for yourself.
 
 
-### Solution
+### A Possible Solution
 
 The technology in question is about the timber fasteners to help building structures survive earthquakes in simpler more reliable ways than current technology.
 
