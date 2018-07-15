@@ -91,13 +91,26 @@
 		addHelpers();
 		addAssets();
 
+		setTimer();
+
 	}
+
+
+
+	function setTimer() {
+
+		earth.rotation.y = 0.4;
+
+		setTimeout( setTimer, 3000 );
+
+	}
+
 
 
 	function addHelpers( size = 100 ) {
 
-		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera )
-		scene.add( cameraHelper );
+		//cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera )
+		//scene.add( cameraHelper );
 
 		axesHelper = new THREE.AxesHelper( size );
 		scene.add( axesHelper );
@@ -112,7 +125,6 @@
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.z = -0.5;
 		mesh.castShadow = mesh.receiveShadow = true;
-
 		scene.add( mesh );
 
 	}
@@ -148,6 +160,12 @@
 		scene.add( earth );
 		earth.position.z = 50;
 
+		geometry = new THREE.BoxBufferGeometry( 10, 10, 15 );
+		material = new THREE.MeshPhongMaterial( { color: 'red' });
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 15, 0, 5 );
+		mesh.castShadow = mesh.receiveShadow = true;
+		scene.add( mesh );
 
 		frame = getFrame();
 		frame.position.y = 7;
@@ -162,7 +180,7 @@
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
 		material = new THREE.MeshPhongMaterial( { color: 'blue' } );
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.z = 25;
+		mesh.position.z = 25.5;
 		mesh.castShadow = mesh.receiveShadow = true;
 
 		earth.add( mesh );
@@ -173,6 +191,8 @@
 	function getFrame(){
 
 		const frame = new THREE.Group();
+
+		let geometry, material, mesh;
 
 		geometry = new THREE.BoxBufferGeometry( 2, 1, 16 );
 		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
@@ -218,9 +238,46 @@
 		mesh.castShadow = mesh.receiveShadow = true;
 		frame.add( mesh );
 
+		positions = [
+			[ 8, 0, 17.5 ],
+			[-8, 0, 17.5 ],
+
+			[ 8, 0, 22 ],
+			[-8, 0, 22 ],
+
+			[ 3.5, 0, 22 ],
+			[-3.5, 0, 22 ]
+
+		];
+
+		for ( position of positions ) {
+
+			const dowel = getDowel( frame );
+			dowel.position.fromArray( position );
+			frame.add( dowel );
+			//console.log( 'dowel', dowel );
+
+		}
+
 		return frame;
 
 	}
+
+
+
+	function getDowel( frame ) {
+
+		const geometry = new THREE.CylinderBufferGeometry( 0.3, 0.3, 2 );
+		geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, -45 ) );
+		//geometry.applyMatrix( new THREE.Matrix4().makeRotationY( -0.25 * Math.PI ) );
+		const material = new THREE.MeshPhongMaterial( { color: 'magenta' } );
+		const mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = mesh.receiveShadow = true;
+
+		return mesh;
+
+	}
+
 
 
 	function onWindowResize() {
@@ -242,9 +299,11 @@
 		renderer.render( scene, camera );
 		controls.update();
 
-		earth.rotation.y += delta;
+		if ( earth.rotation.y > 0 ) {
 
-		delta = Math.abs( earth.rotation.y ) > 0.3 ? -delta : delta;
+			earth.rotation.y -= delta;
+
+		}
 
 	}
 
