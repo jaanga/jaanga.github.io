@@ -23,12 +23,28 @@ _Timber Frame in EarthQuake_
 
 ## Concept
 
-* TBD
+### The Problem
 
+Before they buy a new technology, people want to see the technology work for themselves. The want to be able to experiment, test and analyze what it's doing.
+
+Reading papers, viewing videos, listening to experts helps but does not convince.
+
+You want to be able to see, touch and manipulate a working version of the technology
+
+
+### Solution
+
+The technology in question is about the timber fasteners to help building structures survive earthquakes in simpler more reloable ways than current technology.
+
+Therefore any good demo of the technology will have to simulate the characteristics of an earthquake. The solution in this demo is based on the concept of placing a scaled - or even full size - model of the frame of a platform suspended by cables from a ceiling. This would be very similar to sitting on a child's swing. The demo would involve pulling the platform to a suitable height, letting go and having the platform strike a fixed object at the bottom of the swing while moving at maximum speed. It is like that a weight would be necessary to simulate the load places on the frame. The load could be simulated by a box full of jugs filled with water.
 
 ### Mission
 
-* TBD
+* A mathematically accurate demo
+* showing the platform being lifted to a selected height
+* hitting an obstruction
+* Deformation and breaking as appropriate
+
 
 
 ### Vision
