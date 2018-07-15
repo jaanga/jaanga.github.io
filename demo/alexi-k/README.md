@@ -98,9 +98,11 @@ value='Source code listing' >
 
 ## Links of Interest
 
+Three.js examples which may have useful code
 
 * https://threejs.org/examples/webgl_physics_rope.html
 * https://threejs.org/examples/webgl_physics_convex_break.html
+* https://threejs.org/examples/webgl_physics_volume.html
 
 ## Change Log
 
