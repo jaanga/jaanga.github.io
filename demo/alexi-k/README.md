@@ -1,4 +1,5 @@
-<span style=display:none; >[You are now in GitHub source code view. Click here to view README file in GitHub Pages view]( https://jaanga.github.io/demo/alexi-k/#README.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in GitHub source code view. Click here to view README file in GitHub Pages view]( https://jaanga.github.io/demo/alexi-k/readme.html#README.md "View file as a web page." ) </span>
+
 <div><input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/alexi-k/';
 value='You are now in a GitHub Pages view. Click here to view README file in GitHub source code view.' ></div>
 
@@ -6,17 +7,14 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 
 # [Timber Frame in EarthQuake Simulation Read Me]( index.html#README.md )
 
-_<small>subtext</small>_
+_<small></small>_
 
-## Full Screen: [ Timber Frame in EarthQuake ]( https://jaanga.github.io/demo/alexi-k/index.html )
-
-
-<img src="" style=display:none; width=800 >
+## Full Screen: [ Timber Frame in EarthQuake R1]( https://jaanga.github.io/demo/alexi-k/index.html )
 
 
-<iframe src=https://jaanga.github.io/demo/alexi-k/index.html width=100% height=500px ></iframe>
+<iframe src=https://jaanga.github.io/demo/alexi-k/index.html width=100% height=500px >iframes not visible in source code view</iframe>
 
-_Timber Frame in EarthQuake_
+_Timber Frame in Earthquake still at a very preliminary stage_
 
 ***
 
@@ -25,25 +23,29 @@ _Timber Frame in EarthQuake_
 
 ### The Problem
 
-Before they buy a new technology, people want to see the technology work for themselves. The want to be able to experiment, test and analyze what it's doing.
+Before you buy a new technology, you want to see the technology in operation. The want to be able to experiment, test and analyze what it's doing.
 
 Reading papers, viewing videos, listening to experts helps but does not convince.
 
-You want to be able to see, touch and manipulate a working version of the technology
+You want to be able to see, touch and manipulate a working version of the technology for yourself.
 
 
 ### Solution
 
-The technology in question is about the timber fasteners to help building structures survive earthquakes in simpler more reloable ways than current technology.
+The technology in question is about the timber fasteners to help building structures survive earthquakes in simpler more reliable ways than current technology.
 
 Therefore any good demo of the technology will have to simulate the characteristics of an earthquake. The solution in this demo is based on the concept of placing a scaled - or even full size - model of the frame of a platform suspended by cables from a ceiling. This would be very similar to sitting on a child's swing. The demo would involve pulling the platform to a suitable height, letting go and having the platform strike a fixed object at the bottom of the swing while moving at maximum speed. It is like that a weight would be necessary to simulate the load places on the frame. The load could be simulated by a box full of jugs filled with water.
 
 ### Mission
 
-* A mathematically accurate demo
-* showing the platform being lifted to a selected height
-* hitting an obstruction
-* Deformation and breaking as appropriate
+1. Create a mathematically accurate demo showing
+	* Platform being lifted to a selected height
+	* Being let go
+	* Hitting an obstruction
+	* Deforming and breaking as appropriate
+2. Once the onscreen demo is working, the parameters of the  demo can then be used to create a real-world physical demo
+3. Once a physical demo is working, the code of the onscreen demo may be updated to more closely match actual results
+
 
 
 
@@ -89,24 +91,22 @@ value='Source code listing' >
 
 ## To Do / Wish List
 
+* 2018-07-15 ~ Theo ~ source the code for accurate depiction of the motion of a pendulum
+* 2018-07-15 ~ Theo ~ start coding the deformation
 
-
-## Users
-
-Intended for general use
-
-
-## Goals
 
 
 ## Links of Interest
 
 
+* https://threejs.org/examples/webgl_physics_rope.html
+* https://threejs.org/examples/webgl_physics_convex_break.html
 
 ## Change Log
 
-###
+### 2018-07-15 ~ Theo
 
+R1
 * First commit
 * Add Read Me
 
