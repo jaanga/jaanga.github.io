@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="3D Quaternions in your browser" >
+<meta name=description content="3D in your browser" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-07-17" >
+<meta name = "date" content = "2017-09-25" >
 <title></title>
 <style>
 
@@ -19,7 +19,7 @@
 	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
 	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
 
-	#menu { position: absolute; left: 20px; max-width: 20rem; top: 20px; }
+	#menu { position: absolute; left: 20px; top: 20px; }
 
 </style>
 </head>
@@ -29,41 +29,26 @@
 
 	<div id = "menu" >
 
-		<a href="https://jaanga.github.io/index.html#cookbook-threejs/examples/editing/quaternions/README.md" target="_blank">gh</a>
 		<div id = "title" ></div>
 		<div id = "contents" >
 
-			<p></p>
+			<p><input type=range id=inpRange ></p>
 			<p>
-				Set quaternion from rotation specified by axis and angle.
-				Axis is assumed to be normalized, angle is in radians.<br>
-				<button onclick=setFromAxisAngle()>setFromAxisAngle: 0&deg;</button >
-					<button onclick=setFromAxisAngle(-Math.PI/4)>-45&deg;</button >
+				<button onclick=setFromAxisAngle()>setFromAxisAngle</button >
 				<button onclick=setFromAxisAngleInput()>setFromAxisAngleInput</button >
-					<input type=range id=inpRange >
 			</p>
 
-			<hr>
-
 			<p>
-				Sets quaternion to the rotation required to rotate direction vector vFrom to direction vector vTo.
-				vFrom and vTo are assumed to be normalized.<br>
 				<button onclick=setFromUnitVectors()>setFromUnitVectors</button >
 				<button onclick=setFromUnitVectors2()>setFromUnitVectors2</button >
 			</p>
 
 			<p>
-				<button onclick=setFromTwoVectors()>setFromTwoVectors</button ><br>
+				<button onclick=setFromTwoVectors()>setFromTwoVectors</button >
 
-				May have unexpected rotations
+
 			</p>
 			<hr>
-
-			<p>
-
-				<button onclick=setFromEuler() >setFromEuler</button>
-
-			</p>
 			<p>
 				<button onclick=applyQuaternion()>applyQuaternion</button >
 				<button onclick=applyQuaternionTwice()>applyQuaternionTwice</button >
@@ -141,130 +126,87 @@
 	}
 
 
-// https://threejs.org/docs/#api/math/Quaternion
+	// https://threejs.org/docs/#api/math/Quaternion
 
-function setFromAxisAngle( angle = 0 ) {
-	//.setFromAxisAngle ( axis : Vector3, angle : Float ) : Quaternion
+	function setFromAxisAngle() {
+		//.setFromAxisAngle ( axis : Vector3, angle : Float ) : Quaternion
 
-	const origin = v( -20, 20, 0 );
+		const origin = v( -20, 20, 0 );
+		const axis = v( 0, 1, 0 ).normalize();
+		const angle = 0;
 
-	const axis = v( 0, 1, 0 ).normalize();
+		setHelpers( origin, axis, axis );
 
-	//vectorAngle = axis.clone().applyAxisAngle( v( 1, 0, 0 ).normalize(), angle );
-	//console.log( 'vectorAngle', vectorAngle );
-	//setHelpers( origin, axis, vectorAngle );
+		mesh.quaternion.setFromAxisAngle( axis, angle );
+		mesh.position.copy( origin );
 
-	mesh.quaternion.setFromAxisAngle( axis, angle );
-	mesh.position.copy( origin );
-
-	vectorAngle = v( 0, 0, 1 );
-	vectorAngle.applyQuaternion( mesh.quaternion );
-		//console.log( 'vectorAngle', vectorAngle );
-	setHelpers( origin, axis, vectorAngle );
-
-}
+	}
 
 
 
-function setFromAxisAngleInput() {
+	function setFromAxisAngleInput() {
 
-	inpRange.oninput = setFromAxisAngleInput;
+		inpRange.oninput = setFromAxisAngleInput;
 
-	const origin = v( -20, 20, 0 );
-	const axis = new THREE.Vector3( 0, 1, 0 ).normalize();
-	let angle = 2 * Math.PI * parseFloat( inpRange.value ) / 100;
-	angle = isFinite( angle ) ? angle : 0;
+		const origin = v( -20, 20, 0 );
+		const axis = new THREE.Vector3( 0, 1, 0 ).normalize();
+		let angle = 2 * Math.PI * parseFloat( inpRange.value ) / 100;
+		angle = isFinite( angle ) ? angle : 0;
 
-	//vectorAngle = axis.clone().applyAxisAngle( v( 0, 0, 1 ).normalize(), angle );
-	//console.log( 'vectorAngle', vectorAngle );
-	//setHelpers( origin, axis, vectorAngle );
+		setHelpers( origin, axis, axis );
 
-	mesh.quaternion.setFromAxisAngle( axis, angle);
+		mesh.quaternion.setFromAxisAngle( axis, angle);
+		mesh.position.copy( origin );
 
-
-	mesh.position.copy( origin );
-	console.log( 'mesh.rotation', mesh.rotation );
-
-	vectorAngle = v( 0, 0, 1 );
-	vectorAngle.applyQuaternion( mesh.quaternion );
-	//console.log( 'vectorAngle', vectorAngle );
-	setHelpers( origin, axis, vectorAngle );
-
-}
+	}
 
 
+	function setFromUnitVectors() {
+		//.setFromAxisAngle ( axis : Vector3, angle : Float ) : Quaternion
 
-function setFromUnitVectors() {
-	//.setFromUnitVectors ( vFrom : Vector3, vTo : Vector3 ) : Quaternion
+		const origin = v( -20, 20, 0 );
+		const axis = v( 0, 1, 0 ).normalize();
+		const vector  = v( 1, 1, 0 ).normalize();
 
-	const origin = v( -20, 20, 0 );
-	const axis = v( 0, 1, 0 ).normalize();
-	const vector  = v( 1, 1, 0 ).normalize();
+		setHelpers( origin, axis, vector );
 
-	setHelpers( origin, axis, vector );
+		mesh.quaternion.setFromUnitVectors( axis, vector );
+		mesh.position.copy( origin );
 
-	mesh.quaternion.setFromUnitVectors( axis, vector );
-	mesh.position.copy( origin );
-
-}
-
+	}
 
 
-function setFromUnitVectors2() {
+	function setFromUnitVectors2() {
+		//.setFromAxisAngle ( axis : Vector3, angle : Float ) : Quaternion
 
-	const origin = v( -20, 20, 0 );
-	const axis = v( 0, 0, 1 ).normalize();
-	const vector  = v( 1, 1, 0 ).normalize();
+		const origin = v( -20, 20, 0 );
+		const axis = v( 0, 0, 1 ).normalize();
+		const vector  = v( 1, 1, 0 ).normalize();
 
-	setHelpers( origin, axis, vector );
+		setHelpers( origin, axis, vector );
 
-	mesh.quaternion.setFromUnitVectors( axis, vector );
-	mesh.position.copy( origin );
+		mesh.quaternion.setFromUnitVectors( axis, vector );
+		mesh.position.copy( origin );
 
-}
+	}
 
 
 
-function setFromTwoVectors() {
+	function setFromTwoVectors() {
 
-	const origin = v( -20, 20, 0 );
-	const normal = v( 1, 11, 1 ).normalize();
-	const vector = v( 0, 0, 1 ).normalize();
+		const origin = v( -20, 20, 0 );
+		const normal = v( 1, 11, 1 ).normalize();
+		const vector = v( 0, 0, 1 ).normalize();
 
-	let angle = 0;
+		let angle = 0;
 
-	setHelpers( origin, normal, vector );
+		setHelpers( origin, normal, vector );
 
-	mesh.quaternion.setFromAxisAngle( normal, angle );
-	mesh.position.copy( origin );
+		mesh.quaternion.setFromAxisAngle( normal, angle );
+		mesh.position.copy( origin );
 
-}
+	}
 
-
-
-
-function setFromEuler() {
-
-	euler = new THREE.Euler( 0, Math.PI / 4, 0 );
-
-	const origin = v( -20, 20, 0 );
-	const normal = v( 1, 11, 1 ).normalize();
-	const axis = v( 0, 0, 1 ).normalize();
-
-	let angle = 0;
-
-	mesh.quaternion.setFromEuler( euler );
-	mesh.position.copy( origin );
-
-	vectorAngle = v( 0, 0, 1 );
-	vectorAngle.applyQuaternion( mesh.quaternion );
-		//console.log( 'vectorAngle', vectorAngle );
-	setHelpers( origin, axis, vectorAngle );
-
-}
-
-
-//////////
 
 function applyQuaternion1() {
 
@@ -307,7 +249,6 @@ function applyQuaternion() {
 }
 
 
-
 function applyQuaternionTwice() {
 
 	const origin = v( -20, 20, 0 );
@@ -332,6 +273,7 @@ function applyQuaternionTwice() {
 
 
 
+
 function applyQuaternionInverse() {
 
 	const quaternion = new THREE.Quaternion();
@@ -351,14 +293,14 @@ function applyQuaternionInverse() {
 
 
 
-/////////
+
 
 function setHelpers( origin, vector1, vector2 ) {
 
 	scene.remove( window.helpers );
 	window.helpers = new THREE.Group(); // create new global
-	helpers.add( new THREE.ArrowHelper( vector1.normalize(), origin, 20, 0xff00ff , 2, 2 ) );
-	helpers.add( new THREE.ArrowHelper( vector2.normalize(), origin, 20, 0x00ff00 , 2, 2 ) );
+	helpers.add( new THREE.ArrowHelper( vector1, origin, 20, 0xff00ff , 2, 2 ) );
+	helpers.add( new THREE.ArrowHelper( vector2, origin, 20, 0x00ff00 , 2, 2 ) );
 	scene.add( helpers );
 
 }

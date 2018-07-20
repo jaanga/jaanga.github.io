@@ -7,11 +7,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 # [Template Short Read Me]( #README.md )
 
 <!--
-<iframe src=https://pushme-pullyou.github.io/tootoo-templates/basic-html.html width=100% height=500px ></iframe>
+<iframe src=https://jaanga.github.io/#cookbook-html/examples/editing/basic-html.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
-<span style="display: none" >Iframes are not viewable in GitHub source code view</span>
 
-## Full Screen: []( .html )
+## Full Screen: []( https://jaanga.github.io/#cookbook-html/examples/editing.html )
 -->
 
 

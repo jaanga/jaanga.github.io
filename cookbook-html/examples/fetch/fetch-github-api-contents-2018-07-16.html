@@ -51,20 +51,18 @@ function init() {
 	//divContents.innerHTML += 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
 
 	// <a href="https://api.github.com/rate_limit"
-
-	fetchGitHubFolderContents( divContents );
+	fetchGitHubFolderContents();
 
 }
 
 
-
-function fetchGitHubFolderContents( target ) {
+function fetchGitHubFolderContents() {
 
 	url = 'https://api.github.com/repos/ladybug-tools/spider/contents/gbxml-sample-files';
 
 	//console.log(url );
 
-	target.innerHTML =
+	divContents.innerHTML =
 
 	`<details id = detGallery  open >
 
@@ -77,7 +75,7 @@ function fetchGitHubFolderContents( target ) {
 
 			<p><i>Occasionally this script breaks if you go over the GitHub API rate limit.
 				You may increase your limits if you have a <a href="https://github.com/settings/tokens" target="_blank">GitHub API Key</a> and enter it here. The key is saved in between sessions in your local hard drive.</i></p>
-			GitHub personal access token <input id=inpGitHubPersonalAccessToken onchange=setGPATStorage(); size=50 ></p>
+			GitHub personal access token <input id=inpGitHubPersonalAccessToken onchange=setStorage(); size=50 ></p>
 
 		</details>
 
@@ -86,7 +84,8 @@ function fetchGitHubFolderContents( target ) {
 
 	</details>`;
 
-	const GitHubPersonalAccessToken = localStorage.getItem( 'GitHubPersonalAccessToken' ) || '';
+	let GitHubPersonalAccessToken = localStorage.getItem( 'GitHubPersonalAccessToken' );
+	GitHubPersonalAccessToken = GitHubPersonalAccessToken  ? GitHubPersonalAccessToken  : '' ;
 	inpGitHubPersonalAccessToken.value = GitHubPersonalAccessToken;
 
 	const key = GitHubPersonalAccessToken ? '?access_token=' + GitHubPersonalAccessToken : '';
@@ -135,13 +134,19 @@ function callbackGitHubMenu ( files ) {
 }
 
 
-function setGPATStorage() {
+function setStorage() {
 
 	const GitHubPersonalAccessToken = inpGitHubPersonalAccessToken.value;
 	localStorage.setItem('GitHubPersonalAccessToken', GitHubPersonalAccessToken );
 
 }
 
+function getStorage() {
+
+	const GitHubPersonalAccessToken = localStorage.getItem( 'GitHubPersonalAccessToken' );
+	divContents.innerHTML += GitHubPersonalAccessToken + b;
+
+}
 
 </script>
 </body>
