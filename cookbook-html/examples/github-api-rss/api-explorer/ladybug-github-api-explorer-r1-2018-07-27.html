@@ -32,24 +32,24 @@
 
 	var orgs = [
 
-		[ 'Orgs', 'https://api.github.com/orgs/ladybug-tools', 'getGitHubAPIRaw' ],
-		[ 'Repos', 'https://api.github.com/orgs/ladybug-tools/repos', 'getGitHubAPIRaw' ],
-		[ 'Repos Formatted*', 'https://api.github.com/orgs/ladybug-tools/repos', 'getGitHubAPIFormatted' ],
-		[ 'Events', 'https://api.github.com/orgs/ladybug-tools/events', 'getGitHubAPIRaw' ],
-		[ 'Hooks', 'https://api.github.com/orgs/ladybug-tools/hooks', 'getGitHubAPIRaw' ],
-		[ 'Issues', 'https://api.github.com/orgs/ladybug-tools/issues', 'getGitHubAPIRaw' ],
-		[ 'Members', 'https://api.github.com/orgs/ladybug-tools/members', 'getGitHubAPIRaw' ],
+		[ 'Orgs', 'https://api.github.com/orgs/ladybug-analysis-tools', 'getGitHubAPIRaw' ],
+		[ 'Repos', 'https://api.github.com/orgs/ladybug-analysis-tools/repos', 'getGitHubAPIRaw' ],
+		[ 'Repos Formatted*', 'https://api.github.com/orgs/ladybug-analysis-tools/repos', 'getGitHubAPIFormatted' ],
+		[ 'Events', 'https://api.github.com/orgs/ladybug-analysis-tools/events', 'getGitHubAPIRaw' ],
+		[ 'Hooks', 'https://api.github.com/orgs/ladybug-analysis-tools/hooks', 'getGitHubAPIRaw' ],
+		[ 'Issues', 'https://api.github.com/orgs/ladybug-analysis-tools/issues', 'getGitHubAPIRaw' ],
+		[ 'Members', 'https://api.github.com/orgs/ladybug-analysis-tools/members', 'getGitHubAPIRaw' ],
 		[ 'AvatarUrl Image', 'https://avatars.githubusercontent.com/u/14942270', 'getGitHubAPIImage' ]
 
 	]
 
 	var users = [
 
-		[ 'Repos', 'https://api.github.com/users/ladybug-tools/repos', 'getGitHubAPIRaw' ],
-		[ 'Repos Formatted*', 'https://api.github.com/users/ladybug-tools/repos', 'getGitHubAPIFormatted' ],
-		[ 'Recent Events', 'https://api.github.com/users/ladybug-tools/received_events', 'getGitHubAPIRaw' ],
-		[ 'Subscriptions', 'https://api.github.com/users/ladybug-tools/subscriptions', 'getGitHubAPIRaw' ],
-		[ 'Languages', 'https://api.github.com/repos/ladybug-tools/honeybee-core/languages', 'getGitHubAPIRaw' ]
+		[ 'Repos', 'https://api.github.com/users/ladybug-analysis-tools/repos', 'getGitHubAPIRaw' ],
+		[ 'Repos Formatted*', 'https://api.github.com/users/ladybug-analysis-tools/repos', 'getGitHubAPIFormatted' ],
+		[ 'Recent Events', 'https://api.github.com/users/ladybug-analysis-tools/received_events', 'getGitHubAPIRaw' ],
+		[ 'Subscriptions', 'https://api.github.com/users/ladybug-analysis-tools/subscriptions', 'getGitHubAPIRaw' ],
+		[ 'Languages', 'https://api.github.com/repos/ladybug-analysis-tools/honeybee-core/languages', 'getGitHubAPIRaw' ]
 
 	];
 
@@ -83,7 +83,7 @@
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a> ' +
-				'<a href=http://ladybug-tools.github.io/ladybug-web/ >&#x24D8;</a>' +
+				'<a href=http://ladybug-analysis-tools.github.io/ladybug-web/ >&#x24D8;</a>' +
 			'</h2>' +
 			'<p><a href="#readme.md"; >Read Me</a></p>' +
 			'<p><a href="#readme-cheat-sheet.md"; >Read Me Cheat Sheet</a></p>' +
@@ -208,7 +208,7 @@
 					hp +
 				b + '';
 
-			}
+			} 
 
 			contents.innerHTML = txt;
 
