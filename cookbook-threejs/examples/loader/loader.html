@@ -22,7 +22,7 @@
 </head>
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
-<script src = "https://rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js" ></script>
 
 	<div id = "divMenu" >
 
@@ -41,8 +41,6 @@
 /* globals THREE, divTitle, divMenu, hamburger  */
 // jshint esversion: 6
 
-let boxes;
-let material;
 
 let sceneRotation = 1;
 let renderer, camera, controls, scene;
@@ -84,101 +82,51 @@ function init() {
 	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
 	const material = new THREE.MeshNormalMaterial();
 	const mesh = new THREE.Mesh( geometry, material );
-	//scene.add( mesh );
+	scene.add( mesh );
 
-	boxes = [];
-	drawBoxesBig();
+	//loadFile();
 
-	drawBoxesSmall();
+	urls = [];
 
-	findInclusions();
+	for ( let i = 1; i <= 15 ; i++) {
 
-}
-
-
-function drawBoxesBig(){
-
-	const material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
-	const geometry = new THREE.BoxGeometry( 8, 8, 8 );
-
-	for ( let i = 0; i < 10; i++ ) {
-
-		for ( let j = 0; j < 10; j++ ) {
-
-			const box = new THREE.Mesh( geometry, material );
-			box.position.set( i * 10 - 50, j * 10 - 50, 0 );
-			scene.add( box );
-			boxes.push( box );
-
-		}
+		urls.push( 'https://mdn.github.io/fetch-examples/object-fit-gallery-fetch/images/pic' + i + '.jpg' );
 
 	}
 
+	loadFiles( urls)
 }
 
 
 
-function drawBoxesSmall() {
+function loadFile( url ) {
 
-	const material = new THREE.MeshNormalMaterial();
+	loader = new THREE.FileLoader();
+	loader.setResponseType( 'blob' );
 
-	for ( let i = 0; i < 20; i++ ) {
+	txt = loader.load( url, function( blob ) {
 
-	const geometry = new THREE.BoxGeometry( 5, 5, 5 );
-		const box = new THREE.Mesh( geometry, material );
-		/*
-		box.geometry.applyMatrix( new THREE.Matrix4().makeTranslation(
-			10 * Math.floor( Math.random() * 10 ) - 50 ,
-			10 * Math.floor( Math.random() * 10 ) - 50,
-			10 * Math.floor( Math.random() * 3 ),
-		) );
-		*/
+		var objectURL = URL.createObjectURL( blob );
+		divLog.innerHTML += `<img src=${objectURL} >`;
 
-		box.position.set(
-			10 * Math.floor( Math.random() * 10 ) - 50 ,
-			10 * Math.floor( Math.random() * 10 ) - 50,
-			10 * Math.floor( Math.random() * 3 ),
-		);
-
-		scene.add( box );
-		boxes.push( box );
-
-	}
+	} )
 
 }
 
 
+function loadFiles( urls) {
 
-function findInclusions() {
+	console.log( 'urls', urls );
+	//divContents.innerHTML += `<p>${ urls }</p>`;
 
-	let inclusions = 0;
+	list = [];
+	results = [];
 
-	for ( let box of boxes ) {
+	urls.forEach( url => list.push( loadFile( url ) ) );
 
-		box.geometry.computeBoundingBox();
-
-	}
-
-	for ( let box of boxes ) {
-
-		const box1 = new THREE.Box3().setFromObject ( box );
-
-		for ( let bbox of boxes ) {
-
-			const box2 = new THREE.Box3().setFromObject ( bbox );
-
-			if ( box1.containsBox( box2 ) && !box1.equals( box2 ) ) {
-
-				inclusions++;
-
-			}
-
-		}
-
-
-	}
-
-	divLog.innerHTML = 'inclusions: ' + inclusions
+	Promise
+	.all( list )
+	.then( () => divLog.innerHTML = `<p style=color:red; >all fetch requests finished</p>` + divLog.innerHTML );
 
 }
 

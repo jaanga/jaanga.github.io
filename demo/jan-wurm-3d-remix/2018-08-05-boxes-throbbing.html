@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Boxes Throbbing</title>
+<meta charset=utf-8 >
+<meta name=viewport content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Original source images copyright Jan Wurm." >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-08-05" >
+<style>
+
+	body { font-family: monospace; margin: 0; overflow: hidden; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	details { background-color: white; padding: 5px; }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; z-index:10;}
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; max-width: 12rem; position: absolute; z-index: 10; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/controls/OrbitControls.js" ></script>
+
+<div id = "divMenu" >
+
+	<div id = "divTitle" ></div>
+
+		<details>
+
+			<summary>settings</summary>
+
+			<p>
+				throbbing: <output id=outThrobbing >50</output>
+				<input type="range" oninput="speed=0.000002*this.value;outThrobbing.value=this.value;" >
+			</p>
+
+			<p>
+				rotation: <output id=outSpeed >50</output>
+				<input type="range" oninput="controls.autoRotateSpeed=0.01*this.value;outSpeed.value=this.value;" >
+			</p>
+
+			<p>
+				<button onclick=toggleBackgroundGradient() >background</button>
+			</p>
+
+			<div id = "divLog" ></div>
+
+		</details>
+
+		<details>
+
+			<summary>about</summary>
+
+			<p>
+				Rotate: One finger/left click.<br>
+				Zoom and pan: Two fingers/right click.
+			</p>
+
+			<p>
+				All the images here are sourced with permission from <a href="http://janwurm.com/drawn-in-the-seduction-of-line" title="Much interesting work here" target="_blank">JanWurm.com</a>.
+				Jan Wurm is the creator and copyright owner of all the images displayed. The collection shown here is titled "Drawn In: The Seduction of Line"
+			</p>
+
+			<p>The JavaScript software libraray for the 3D is <a href="https://threejs.org" title="Free open-source 3D in your browser" target="_blank">Three.js</a>.</p>
+
+			<p>The VPN used to scrape the images and overcome cross origin-resource sharing issues is <a href="https://cors-anywhere.herokuapp.com" title="Many thanks for this service" target="_blank">CORs Anywhere</a>.</p>
+
+			<p>Copyright &copy; jaanga authors. <a href="https://en.wikipedia.org/wiki/MIT_License" title="Do what you want" target="_blank">MIT license</a>.</p>
+
+			<p></p>2018-08-05</p>
+
+		</details>
+
+	</div>
+
+<script>
+/* Copyright 2018 Jaanga authors. MIT License */
+
+let images;
+let cubes = [];
+let speed = 0.0001;
+
+const url = 'http://janwurm.com/wp-content/uploads/2008/01/';
+const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+let info, renderer, scene, camera, controls, light;
+
+
+init();
+animate();
+
+function init() {
+
+	var geometry, material, mesh;
+
+	//info = document.body.appendChild( document.createElement( 'div' ) );
+	//info.style.cssText = 'left: 20px; position: absolute; top: 0px; width: 100% ';
+	//info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+	//	'<div id=divLog></div>';
+
+	const title = document.title;
+
+	divTitle.innerHTML =
+	`<h1>
+		<a href="" title="Click here to reload this work with fresh colors" >${title}</a>
+	</h1>`;
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true, clearColor: 0xffffff }  );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMapSoft = true;
+	document.body.appendChild( renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
+	camera.position.set( 80, 80, 80 );
+	scene.add( camera ); // for light to follow
+
+	// controls
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls.minDistance = 10;
+	controls.maxDistance = 500;
+	controls.autoRotate = true;
+	controls.autoRotateSpeed = 0.5;
+	controls.enableKeys = false;
+
+
+	// Lights
+	light = new THREE.AmbientLight( 0xffffff );
+	scene.add( light );
+
+	let size = 300;
+	lightDirectional = new THREE.DirectionalLight( 0xffeedd );
+	lightDirectional.position.set( -size, size, size );
+	lightDirectional.shadow.camera.scale.set( 0.1 * size, 0.1 * size, 1.5 );
+	lightDirectional.castShadow = true;
+	scene.add( lightDirectional );
+
+	light = new THREE.PointLight( 0x888888, 0.5 );
+	camera.add( light );
+
+	//scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+	// Ground Plane
+	geometry = new THREE.BoxGeometry( 200, 5, 200 );
+	material = new THREE.MeshPhongMaterial( {
+		color: 0xffffff * Math.random(),
+		specular: 0xffffff * Math.random(),
+		shininess: 50,
+		side: THREE.DoubleSide
+	} );
+
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.position.set( 0, -10, 0 );
+	mesh.castShadow = true;
+	mesh.receiveShadow = true;
+	scene.add( mesh );
+	scene.add( new THREE.BoxHelper( mesh ) );
+
+	// Sphere
+	geometry = new THREE.SphereGeometry( 25, 50, 50 );
+	material = new THREE.MeshPhongMaterial( {
+		color: 0xffffff * Math.random(),
+		specular: 0xffffff * Math.random(),
+		shininess: 0.001
+	} );
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.position.set( -100, 10, 0 );
+	mesh.castShadow = true;
+	mesh.receiveShadow = true;
+	scene.add( mesh );
+
+
+	toggleBackgroundGradient();
+
+	fetchImageNames( url, divLog );
+
+}
+
+
+
+function fetchImageNames( url, target ) {
+	//console.log (url );
+
+	const request = new Request( urlCORS + url );
+
+	fetch( request )
+		.then( function( response ) { return response.text() })
+		.then( function( text ) { parseText( text, divLog ) } );
+
+}
+
+
+
+function parseText( text, target ) {
+
+	const parser = new DOMParser();
+
+	const doc = parser.parseFromString( text, "text/html" );
+	//console.log( 'doc', doc );
+
+	images = Array.from( doc.links ).map( link=> link.innerText.trim() ).filter( link => !link.includes( 'thumb') );
+	images.shift();
+	//console.log( 'images', images );
+
+	setImages()
+
+}
+
+
+
+function setImages() {
+
+	const loader = new THREE.TextureLoader();
+
+	for ( let image of images ) {
+
+		const texture = loader.load ( urlCORS + url + image );
+		texture.minFilter = THREE.LinearFilter;
+
+		const geometry = new THREE.BoxBufferGeometry( 50, 50, 1);
+		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+		const material = new THREE.MeshBasicMaterial( { map: texture, opacity: 0.8, side: 2, transparent: true } );
+		const mesh = new THREE.Mesh( geometry, material );
+		//mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+		//mesh.rotation.y = 1.56 ;
+
+		mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
+		mesh.rotation.set( 6.3 * Math.random(), 1.57 * Math.random(), 3.14 * Math.random() );
+		mesh.castShadow = true;
+		mesh.receiveShadow = true;
+		mesh.rotation.z = 4 * Math.random() ;
+		mesh.deltaX = Math.random() - 0.5;
+		mesh.deltaY = Math.random() - 0.5;
+		mesh.deltaZ = Math.random() - 0.5;
+
+		scene.add( mesh );
+		cubes.push( mesh );
+
+	}
+
+}
+
+
+
+
+function toggleBackgroundGradient() {
+
+// 2018-06-23
+
+	const col = function() { return ( 0.5 + 0.5 * Math.random() ).toString( 16 ).slice( 2, 8 ); };
+	const pt = function() { return ( Math.random() * window.innerWidth ).toFixed( 0 ); }
+	const image = document.body.style.backgroundImage;
+
+	document.body.style.backgroundImage = image ? '' : 'radial-gradient( circle farthest-corner at ' +
+		pt() + 'px ' + pt() + 'px, #' + col() + ' 0%, #' + col() + ' 50%, #' + col() + ' 100% ) ';
+
+}
+
+
+
+function animate( timestamp ) {
+
+	for ( let cube of cubes ) {
+
+		cube.rotation.y = timestamp * speed;
+		cube.position.y = Math.abs( Math.sin( timestamp * speed ) ) * 20;
+		cube.scale.y = Math.abs( Math.sin( timestamp * speed ) ) * 20;
+
+	}
+
+	renderer.render( scene, camera );
+	controls.update();
+	requestAnimationFrame( animate );
+
+}
+
+</script>
+</body>
+</html>

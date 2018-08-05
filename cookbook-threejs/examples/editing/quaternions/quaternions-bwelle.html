@@ -22,7 +22,7 @@
 </head>
 <body>
 <script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
-<script src = "https://rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js" ></script>
 
 	<div id = "divMenu" >
 
@@ -30,6 +30,10 @@
 
 		<p>
 			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+		</p>
+
+		<p>
+				<button onclick=setPlaneLocation(); >setPlaneLocation</button>
 		</p>
 
 		<div id = "divLog" ></div>
@@ -41,8 +45,10 @@
 /* globals THREE, divTitle, divMenu, hamburger  */
 // jshint esversion: 6
 
-let boxes;
-let material;
+	//const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+
+	let mesh, helpers;
 
 let sceneRotation = 1;
 let renderer, camera, controls, scene;
@@ -81,108 +87,130 @@ function init() {
 	const axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
-	const material = new THREE.MeshNormalMaterial();
-	const mesh = new THREE.Mesh( geometry, material );
+	//const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	//const material = new THREE.MeshNormalMaterial();
+	//const mesh = new THREE.Mesh( geometry, material );
 	//scene.add( mesh );
 
-	boxes = [];
-	drawBoxesBig();
 
-	drawBoxesSmall();
-
-	findInclusions();
-
-}
+	source = getPlaneSource();
+	scene.add( source );
 
 
-function drawBoxesBig(){
-
-	const material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
-	const geometry = new THREE.BoxGeometry( 8, 8, 8 );
-
-	for ( let i = 0; i < 10; i++ ) {
-
-		for ( let j = 0; j < 10; j++ ) {
-
-			const box = new THREE.Mesh( geometry, material );
-			box.position.set( i * 10 - 50, j * 10 - 50, 0 );
-			scene.add( box );
-			boxes.push( box );
-
-		}
-
-	}
+	target = getPlaneTarget();
+	scene.add( target );
 
 }
 
 
 
-function drawBoxesSmall() {
+function getPlaneSource() {
 
-	const material = new THREE.MeshNormalMaterial();
+	const origin = v( 10, -20, 0 );
+	normal = v( 0, 0, 1).normalize();
+	direction = v( 0, 1, 0 ).normalize();
 
-	for ( let i = 0; i < 20; i++ ) {
+	geometry = new THREE.PlaneBufferGeometry( 30, 20 );
 
-	const geometry = new THREE.BoxGeometry( 5, 5, 5 );
-		const box = new THREE.Mesh( geometry, material );
-		/*
-		box.geometry.applyMatrix( new THREE.Matrix4().makeTranslation(
-			10 * Math.floor( Math.random() * 10 ) - 50 ,
-			10 * Math.floor( Math.random() * 10 ) - 50,
-			10 * Math.floor( Math.random() * 3 ),
-		) );
-		*/
+	loader = new THREE.TextureLoader();
+	texture = loader.load( '../../../textures/im11.jpg' );
 
-		box.position.set(
-			10 * Math.floor( Math.random() * 10 ) - 50 ,
-			10 * Math.floor( Math.random() * 10 ) - 50,
-			10 * Math.floor( Math.random() * 3 ),
-		);
+	material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.position.copy( origin );
 
-		scene.add( box );
-		boxes.push( box );
+	helpers = getHelpers( origin, normal, direction );
+	scene.add( helpers );
 
-	}
+	return mesh;
 
 }
 
 
 
-function findInclusions() {
+function bbbgetPlaneTarget() {
 
-	let inclusions = 0;
-
-	for ( let box of boxes ) {
-
-		box.geometry.computeBoundingBox();
-
-	}
-
-	for ( let box of boxes ) {
-
-		const box1 = new THREE.Box3().setFromObject ( box );
-
-		for ( let bbox of boxes ) {
-
-			const box2 = new THREE.Box3().setFromObject ( bbox );
-
-			if ( box1.containsBox( box2 ) && !box1.equals( box2 ) ) {
-
-				inclusions++;
-
-			}
-
-		}
+const origin = v( -10, 20, 0 );
+const v1 = v( 0, 0, 1 ).normalize();
+const v2= v( 1, 0, 0 ).normalize();
 
 
-	}
+const geometry = new THREE.PlaneBufferGeometry( 30, 20 );
+const material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 } );
+const mesh = new THREE.Mesh( geometry, material );
 
-	divLog.innerHTML = 'inclusions: ' + inclusions
+mesh.up = v1; //new THREE.Vector3(1, 0, 0);//Z axis up
+mesh.lookAt( v2 );
+
+mesh.position.copy( origin );
+scene.add( mesh )
+
+helpers = getHelpers( origin, v1, v2 )
+
+return helpers;
 
 }
 
 
+
+function getPlaneTarget() {
+
+	const origin = v( -10, 20, 0 );
+	const v1 = v( 0, 1, 0 ).normalize();
+	const v2= v( 0, 0, 1 ).normalize();
+
+	const quaternion = new THREE.Quaternion().setFromUnitVectors( v1, v2 );
+
+	const geometry = new THREE.PlaneBufferGeometry( 30, 20 );
+	const material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 } );
+	const mesh = new THREE.Mesh( geometry, material );
+
+	mesh.applyQuaternion( quaternion );
+
+	//mesh.position.copy( origin );
+
+
+	helpers = getHelpers( origin, v1, v2 );
+	scene.add( helpers )
+
+	return mesh;
+
+}
+
+
+function setPlaneLocation() {
+
+
+	const origin = v( -10, 20, 0 );
+	const v1 = v( 0, 1, 0 ).normalize();
+	const v2= v( 1, 0, 1 ).normalize();
+
+	const quaternion = new THREE.Quaternion().setFromUnitVectors( v1, v2 );
+
+
+	source.applyQuaternion( quaternion );
+	source.position.copy( origin );
+
+
+
+}
+
+
+
+function getHelpers( origin, vector1, vector2 ) {
+
+	//scene.remove( window.helpers );
+
+	const helpers = new THREE.Group();
+
+	window.helpers = new THREE.Group(); // create new global
+	helpers.add( new THREE.ArrowHelper( vector1.normalize(), origin, 20, 0xff00ff , 2, 2 ) );
+	helpers.add( new THREE.ArrowHelper( vector2.normalize(), origin, 20, 0x00ff00 , 2, 2 ) );
+
+	return helpers;
+
+
+}
 
 
 function onWindowResize() {

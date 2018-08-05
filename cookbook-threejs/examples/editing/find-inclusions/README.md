@@ -6,13 +6,13 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [ZZZZZ Read Me]( #xxxxxx/README.md )
+# [Find Inclusions Read Me]( #xxxxxx/README.md )
 
 <!--
 <iframe src=https://jaanga.github.io/#cookbook/examples/xxxxxx/xxxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
 
-## Full Screen: [ZZZZZ]( https://jaanga.github.io/cookbook/examples/xxxxxx/xxxxxx.html )
+## Full Screen: [Find Inclusions]( https://jaanga.github.io/cookbook/examples/xxxxxx/xxxxxx.html )
 -->
 
 
@@ -25,9 +25,15 @@ _basic-html.html_
 ## Links of Interest
 
 
+Point inside
+* https://stackoverflow.com/questions/22521982/js-check-if-point-inside-a-polygon
+* https://github.com/mrdoob/three.js/issues/5340
+
+
+
 ## Change Log
 
-###
+### 2018-07-31 ~ Theo
 
 * First commit
 

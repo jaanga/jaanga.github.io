@@ -230,7 +230,8 @@ function retrieveImage( url, imageNo ) {
 
 		Promise
 		.all( list )
-		.then( function() { divContents += `<p>all requests finished</p>`; } )
+		.then( function() { divContents.innerHTML = `<p style=color:red; >all requests finished</p>` + divContents.innerHTML;
+			console.log( '23', 23 ); } )
 
 
 	}
