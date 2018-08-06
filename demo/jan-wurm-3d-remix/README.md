@@ -14,13 +14,15 @@ Gallery
 
 Individually
 
-### [load-random-photos-r2.html]( ./explayrimental/jan-wurm/load-random-photos-r2.html )
+### [load-random-photos-r2.html]( ./demo/jan-wurm-3d-remix/load-random-photos-r2.html )
 
-### [fetch-page-get-images-and-show-r1.html]( ./explayrimental/jan-wurm/fetch-page-get-images-and-show-r1.html )
+### [fetch-page-get-images-and-show-r1.html]( ./demo/jan-wurm-3d-remix/fetch-page-get-images-and-show-r1.html )
 
-### [2014-11-26-boilerplate-simple-lights.html]( ./explayrimental/jan-wurm/2014-11-26-boilerplate-simple-lights.html )
+### [2018-08-05-boxes-throbbing.html]( ./demo/jan-wurm-3d-remix/2018-08-05-boxes-throbbing.html )
 
-### [2014-11-27-2d-array-cubes-sin-wave.html]( ./explayrimental/jan-wurm/2014-11-27-2d-array-cubes-sin-wave.html )
+### [2014-11-27-2d-array-cubes-sin-wave.html]( ./demo/jan-wurm-3d-remix/2014-11-27-2d-array-cubes-sin-wave.html )
 
-### [parametric-geometry.html]( ./explayrimental/jan-wurm/parametric-geometry.html )
+### [parametric-geometry.html]( ./demo/jan-wurm-3d-remix/parametric-geometry.html )
+
+
 

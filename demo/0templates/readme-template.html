@@ -5,9 +5,8 @@
 </head>
 <body>
 <script>
-	// 2018-08-01. Copyright 2018 PushMe-PullYou authors. MIT License.
-	// goal: drop this anywhere in any folder it will call the top level index.html and add the local read me file path as location hash
-	// works locally and in GitHub Pages
+	// 2018-08-03. Copyright 2018 PushMe-PullYou authors. MIT License.
+	// this file is just to help you edit the template file locally
 
 	const protocol = location.protocol;
 	console.log( 'protocol', protocol );
@@ -17,7 +16,7 @@
 
 	let path, pathFull;
 
-	const repo = 'jaanga.github.io/'; // rename to repo name
+	const repo = 'jaanga.github.io'; // rename to repo name
 
 	if ( protocol === 'file:' ) {
 
@@ -27,7 +26,7 @@
 		path = pathname.slice( sliceStart, pathname.lastIndexOf( '/' )  );
 		console.log( 'path', path );
 
-		pathFull = path.replace( /-/g, '' ).replace( /\w+/g, '..' ).slice( 0 ) + '/index.html#' + path + '/README.md';
+		pathFull = path.replace( /-/g, '' ).replace( /\w+/g, '..' ).slice( 0 ) + '/index.html#' + path + '/README-template.md';
 
 	} else if ( protocol.includes( 'http' ) ) {
 
@@ -35,10 +34,9 @@
 		console.log( 'hash', hash );
 		path = hash.replace( /-/g, '' ).replace( /\w+/g, '..' );
 
-		pathFull = path + '/index.html#' + hash + '/README.md';
+		pathFull = path + '/index.html#' + hash + '/README-template.md';
 
 	}
-
 
 	console.log( 'pathFull', pathFull );
 
