@@ -94,7 +94,7 @@
 		script.src='http://mrdoob.github.io/three.js/examples/js/loaders/STLLoader.js';
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/Female02_slim.js', function ( geometry ) { // scale 0.5 y 5
+		loader.load( 'http://rawgit.com/mrdoob/three.js/r89/examples/obj/female02/Female02_slim.js', function ( geometry ) { // scale 0.5 y 5
 
 			female = new THREE.Mesh( geometry, material );
 			female.position.set( 30, 10, -20 );
@@ -105,7 +105,7 @@
 		} );
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/Suzanne.js', function ( geometry ) { // scale 20 y 35
+		loader.load( 'http://rawgit.com/mrdoob/three.js/r89/examples/obj/Suzanne.js', function ( geometry ) { // scale 20 y 35
 
 			geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
 			geometry.computeFaceNormals();
@@ -123,8 +123,8 @@
 
 
 		loader = new THREE.JSONLoader();
-		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/WaltHeadLo.js', function ( geometry ) { //  scale 0.6 y 35
-//		loader.load( 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
+		loader.load( 'http://rawgit.com/mrdoob/three.js/r89/examples/obj/WaltHeadLo.js', function ( geometry ) { //  scale 0.6 y 35
+		//loader.load( 'http://rawgit.com/mrdoob/three.js/r60/examples/obj/tree/tree.js', function ( geometry ) { // scale 5 y 10
 
 			geometry.computeFaceNormals();
 			geometry.computeVertexNormals();
