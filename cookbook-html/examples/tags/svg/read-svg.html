@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>read svg</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<p><a href="http://www.drawsvg.org/" target="_blank">Draw SVG</a></p>' +
+		'<p><input type=file onchange=loadSVG(this); /></p>' +
+		'<textarea id=txt style=height:200px;overflow:scroll;width:100%; ></textarea>' +
+		'<div id=msg ></div>';
+
+//	var svg = document.body.appendChild( document.createElement( 'img' ) );
+//	svg.src = 'hello-world.svg';
+//	svg.src = 'download.svg';
+
+	function loadSVG( fileObj ) {
+
+console.log( fileObj );
+
+		var reader = new FileReader();
+		reader.onloadend = function( event ) {
+
+			data =  reader.result;
+			txt.innerHTML = data;
+
+			msg.innerHTML = fileObj + '<br>name: ' + fileObj.files[0].name + ' size: ' + fileObj.files[0].size + 
+			' type: ' + fileObj.files[0].type + ' modified: ' + fileObj.files[0].lastModifiedDate;
+
+/*
+			var svg = document.body.appendChild( document.createElement( 'img' ) );
+			svg.src = 'hello-world.svg';
+			svg.src = 'download.svg';
+			svg.src = fileObj.files[0].name
+*/
+
+			var svg = document.body.appendChild( document.createElement( 'div' ) );
+		//	svg.src = 'hello-world.svg';
+		//	svg.src = 'download.svg';
+			svg.innerHTML = data;
+
+		}
+		reader.readAsText( fileObj.files[0] );
+
+	}
+
+</script>
+</body>
+</html>

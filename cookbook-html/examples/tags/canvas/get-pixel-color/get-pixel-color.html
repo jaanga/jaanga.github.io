@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>getPixelColor</title>
+<meta charset=utf-8 />
+<body>
+<script>
+
+	var info;
+	var image;
+	var canvas, context;
+	var swatch;
+
+	info = document.body.appendChild( document.createElement( 'div' ) );
+	info.style.cssText = 'font: normal 12pt monospace;';
+	info.innerHTML = 'Move your cursor over the image...<br><br><br>';
+
+	image = document.createElement( 'img' );
+	image.src = '../img_the_scream.jpg';
+	image.onload = getPixelColor;
+
+	function getPixelColor(){
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas.width = image.width;
+		canvas.height =  image.height;
+		context = canvas.getContext( '2d' );
+		context.drawImage( image, 0, 0 );
+		canvas.onmousemove = onMMove;
+
+		swatch = document.body.appendChild( document.createElement( 'div' ) );
+		swatch.style.cssText = 'height: 50px; width: ' + canvas.width + 'px;';
+	}
+
+	function onMMove( e ) {
+		if ( e.pageX != undefined && e.pageY != undefined) {
+			var x = e.offsetX;
+			var y = e.offsetY;
+			var p = context.getImageData( x, y, 1, 1).data;
+			var hex = '#' + rgbToHex( p[0], p[1], p[2] ).toUpperCase();
+			info.innerHTML =  'x:' + x + ' y:' + y + '<br>rgb:' + p[0] + ' ' +  p[1] + ' ' + p[2]  + '<br>hex: ' + hex;
+			swatch.style.backgroundColor = hex;
+		}
+	}
+
+	function rgbToHex(r, g, b) {
+		if ( r > 255 || g > 255 || b > 255) throw "Invalid color component";
+		return ( (r << 16) | (g << 8) | b ).toString(16);
+	}
+
+</script>
+</body>
+</html>

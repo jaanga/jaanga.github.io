@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>iFrame Source Updates</title>
+<meta charset=utf-8 >
+</head>
+<body>
+<script>
+	var ifr;
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	init();
+
+	function init() {
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href=""><h1>' + document.title + '</h1></a>' +
+			'<p>' +
+				'<a href=JavaScript:changeSrcToCynthia(); >changeSrcToCynthia</a> ' +
+				'<a href=JavaScript:changeSrcToLocal(); >changeSrcToLocal</a> ' +
+
+	//			'<a href=JavaScript:toggleMarginWidth(); >toggleMarginWidth</a> ' + // not in HTML 5 use style
+	//			'<a href=JavaScript:toggleSeamless(); >toggleSeamless</a> ' +
+
+				'<a href=JavaScript:removeSource(); >removeSource</a> ' +
+				'<a href=JavaScript:addSource(); >addSource</a> ' +
+
+				'<a href=JavaScript:logWindow(); >logWindow</a> ' +
+				'<a href=JavaScript:logDocument(); >logDocument</a> ' +
+
+				'<a href=JavaScript:updateBackground(); >updateBackground</a> ' +
+				'<a href=JavaScript:addText(); >addText</a> ' +
+				'<a href=JavaScript:editText(); >editText</a> ' +
+				'<a href=JavaScript:srcToSrcdoc(); >srcToSrcDoc</a> ' +
+			'</p>';
+
+/*
+	info.innerHTML += '<h1>' + document.title + '</h1>' +
+		'<input type=file id=inpFile onchange=openFile(this); />' +
+		'<textarea id=txt style=height:200px;overflow:scroll;width:100%; ></textarea>' +
+		'<div id=msg></div>' +
+	'';
+*/
+		var container = document.body.appendChild( document.createElement( 'div' ) );
+		ifra = container.appendChild( document.createElement( 'iframe' ) );
+
+		ifra.height = 300
+		ifra.width = 800;
+		// not yet ifra.seamless = "seamless";
+		ifra.src = "subdir/local.html";
+	}
+
+
+	function changeSrcToCynthia( ) {
+		window.location.hash = "subdir";
+		window.title = "cynthia";
+		ifra.src="subdir/meta-refresh1.html"
+		ifra.style.cssText = 'left: 500px; position: absolute;';
+	}
+
+	function changeSrcToLocal( ) {
+		window.location.hash = "subdir";
+		window.title = "local";
+		ifra.src="subdir/local.html";
+
+		ifra.style.cssText = 'left: 0; position: relative;';
+//		ifra.marginWidth = 100;
+	}
+
+	function toggleMarginWidth() {  // not working so well
+console.log( ifra.marginWidth );
+		if ( ifra.marginWidth === 0 ) {
+			ifra.marginWidth = 100;
+		} else {
+			ifra.marginWidth = 0;
+		}
+	}
+
+
+	function removeSource() {
+		container.parentNode.removeChild( container );
+//		ifra.removeChild(ifra.childNodes[0]);
+//		document.body.removeChild( container );
+	}
+
+	function addSource() {
+		var ifr = document.body.appendChild( document.createElement( 'iframe' ) );
+		ifr.height = 600
+		ifr.width = 800;
+		ifr.style.borderWidth = '0px';
+		ifr.src = "subdir/local.html";
+	}
+
+	function logWindow() {
+		console.log( ifra.contentWindow.info );
+	}
+
+	function logDocument() {
+		console.log( ifra.contentDocument.title );
+	}
+
+
+	function addText() {
+		var text = ifra.contentDocument.body.appendChild( document.createElement('div') );
+		text.innerHTML = 'and for a bit more...';
+	}
+
+	function editText() {
+		var text = ifra.contentDocument.body.children[1];
+		text.innerHTML = text.innerHTML.replace( /qu/gi,'QQQ' );
+	}
+
+	function srcToSrcdoc() {
+		ifra.srcdoc = 'Hi there! I am srcdoc text';
+	}
+
+	function openFile( that ) {
+
+		var reader = new FileReader();
+		reader.onloadend = function( event ) {
+//			data = event.target.result;
+			data =  reader.result;
+//			txt.innerHTML = data;
+			ifra.src = that.files[0].name; // works if file is in same folder
+			ifra.srcdoc = data; // works if the file has no relative links
+
+			msg.innerHTML = that + '<br>name: ' + that.files[0].name + ' size: ' + that.files[0].size + 
+			' type: ' + that.files[0].type + ' modified: ' + that.files[0].lastModifiedDate;
+		}
+		reader.readAsText( that.files[0] );
+	}
+
+
+
+	function updateBackground() {
+	//	ifra.contentDocument.body.style.backgroundColor="red";
+
+		var cssBackround = ifra.contentDocument.body.appendChild( document.createElement('style') );
+		var col1 = "#" + Math.random().toString(16).slice(2, 8);
+		var col2 = "#" + Math.random().toString(16).slice(2, 8);
+		var col3 = "#" + Math.random().toString(16).slice(2, 8);
+		var X = ( Math.random() * window.innerWidth ).toFixed(0);
+		var Y = ( Math.random() * ifra.height ).toFixed(0);
+		var center =  20 + ( Math.random() * 60 ).toFixed(0);
+		cssBackround.innerHTML += 'body { ' +
+			'background: -webkit-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
+			'background: -moz-radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); ' +
+			'background: radial-gradient(' + X + 'px ' + Y + 'px, farthest-corner, ' + col1 + ' 0%, ' + col2 + ' 50%, ' + col3 + ' 100%); }' +
+		'';
+console.log( X, Y );
+	}
+
+</script>
+</body>
+</html>

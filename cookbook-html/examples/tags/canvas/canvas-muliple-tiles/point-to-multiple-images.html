@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Drawing multiple images to a canvas using image.onload</title>
+<meta charset=utf-8 >
+</head>
+<body>
+<script>
+// http://stackoverflow.com/questions/3258930/drawing-multiple-images-to-a-canvas-using-image-onload
+
+	var lat = 37.796, lon = -122.398;
+
+//	var lat = 37.6186742125, lon = -122.37500761;
+
+	var zoom = 10;
+	var deltaZoom = 3;
+	var tileWidth = 256;
+	var tilesPerSide = 3;
+	var start;
+
+	var pi = Math.PI, pi05 = pi * 0.5, pi2 = pi + pi;
+	var d2r = pi / 180, r2d = 180 / pi;  // degress / radians
+
+	var info;
+	var canvas, context;
+	var cropCanvas, cropContext;
+	var count = 0;
+	var imgCount = 0;
+
+// must be before the init...
+	var drawCanvasImage = function( images, idx, x, y, point ) {
+
+		return function() {
+			cropContext.drawImage( images[idx], x, y );
+
+			var imgCanvas = document.body.appendChild( document.createElement( 'canvas' ) );
+			imgCanvas.width = images[idx].width;
+			imgCanvas.height = images[idx].height;
+			var imgContext = imgCanvas.getContext('2d');
+
+			imgContext.drawImage( images[idx], 0, 0 );
+			imgContext.lineWidth = 2;
+			imgContext.strokeStyle =  '#00f';
+			imgContext.strokeRect( point.xPt - 3, point.yPt - 3, 6, 6 );
+
+			imgCount++;
+
+			if ( imgCount > 3 ) {
+				cropContext.lineWidth = 2;
+				cropContext.strokeStyle =  '#f0f';
+				cropContext.strokeRect( start * tileWidth + point.xPt - 2, start * tileWidth + point.yPt - 2, 6, 6 );
+			}
+		}
+	}
+
+	init();
+
+	function init() {
+		start = Math.floor( 0.5 * ( tilesPerSide - 1 )  );
+
+		document.body.style.cssText = ' font: 600 12pt monospace;  ' ; 
+
+		info = document.body.appendChild( document.createElement( 'div' ) );
+		info.style.cssText = 'background-color: #ccc; bottom: 20px; height: 500px; right: 20px; opacity: 0.8; overflow: auto; padding: 15px; position: absolute; width: 50%;';
+		info.innerHTML = '<h1>Cartography ~ Lat Lon Window</h1>' +
+			'<div id=msg></div>' ;
+
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas.width = canvas.height = 512;
+		canvas.style.cssText = 'border: 1px solid black';
+		context = canvas.getContext('2d');
+
+		var startPoint = getPoint(  lat, lon, zoom );
+		var images = [];
+		images[0] = document.createElement( 'img' );
+		images[0].onload = imageLoaded;
+		images[0].src = 'http://tile.openstreetmap.org/' + zoom + '/' + startPoint.xTile + '/' + startPoint.yTile + '.png' ; 
+		
+		function imageLoaded() {
+			context.drawImage( images[0], 0, 0, 256, 256, 0, 0, 512, 512 );
+			context.lineWidth = 2;
+			context.strokeStyle = '#0c0';
+			context.strokeRect( 0, 0, 256, 256 );
+			context.strokeRect( 256, 256, 256, 256 );
+
+			context.lineWidth = 2;
+			context.strokeStyle = '#f00';
+			context.strokeRect( 2 * startPoint.xPt - 3, 2 * startPoint.yPt, 6, 6 );
+		}
+
+		cropCanvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		cropCanvas.width = cropCanvas.height = tileWidth * tilesPerSide;
+		cropCanvas.style.cssText = 'border: 1px solid black; margin-left: 10px; ';
+		cropContext = cropCanvas.getContext('2d');
+
+		var zoomWin = zoom + deltaZoom;
+		var point = getPoint( lat, lon, zoomWin );
+		count++;
+		for (var i = 0; i < tilesPerSide; i++) {
+
+			for (var j = 0; j < tilesPerSide; j++) {
+				images[count] = document.createElement( 'img' );
+				images[count].onload = drawCanvasImage( images, count, i * tileWidth, j * tileWidth, point );
+				images[count].src = 'http://tile.openstreetmap.org/' + zoomWin + '/' + ( i + point.xTile - start) + '/' + ( j + point.yTile - start) + '.png' ; 
+				count++
+			}
+		} 
+	}
+
+	function getPoint( latP, lonP, zoom ) {
+		var xTile = lon2tile( lonP, zoom );
+		var yTile = lat2tile( latP, zoom );
+
+		var ulLatTile = tile2lat( yTile, zoom);
+		var lrLatTile = tile2lat( yTile + 1, zoom);
+
+		var ulLonTile = tile2lon( xTile, zoom );
+		var lrLonTile = tile2lon( xTile + 1, zoom );
+
+		var deltaLat = Math.abs( tile2lat( yTile, zoom ) - tile2lat( yTile + 1, zoom ));
+		var deltaLon = Math.abs( tile2lon( xTile, zoom ) - tile2lon( xTile + 1, zoom ))
+
+		var xScale = tileWidth / deltaLon;
+		var yScale = tileWidth / deltaLat;
+
+		var xPt = xScale * ( lonP - ulLonTile);
+		var yPt = yScale * ( ulLatTile - latP );
+
+		var b = '<br />';
+		var txt = 
+			'Count: ' + count + b +
+			b +
+			' zoom: ' + zoom + b +
+			'lat: ' + lat.toFixed(3) + ' lon; ' + lon.toFixed(3) +  b +
+			b +
+			'xTile: ' + xTile + ' yTile: ' + yTile + b +
+			'ulLatTile: ' + ulLatTile.toFixed(3) + ' ulLonTile: ' + ulLonTile.toFixed(3) + b + 
+			'lrLatTile: ' + lrLatTile.toFixed(3) + ' lrLonTile: ' + lrLonTile.toFixed(3) + b +
+			'xPt: ' + xPt.toFixed(3) + ' yPt: ' + yPt.toFixed(3) + b +
+			b +
+		'';
+
+		msg.innerHTML += txt;
+
+		return { 
+			xPt: xPt, yPt: yPt, 
+			xTile: xTile, yTile: yTile
+		};
+	}
+
+// The math
+// http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Tile_servers
+	function lon2tile( lon, zoom ) {
+		return Math.floor( ( lon + 180 ) / 360 * pow( 2, zoom ) );
+	}
+
+	function lat2tile( lat, zoom ) {
+		return Math.floor(( 1 - Math.log( Math.tan( lat * pi / 180) + 1 / cos( lat * pi / 180)) / pi )/2 * pow(2, zoom) );
+	}
+
+	function tile2lon( x, zoom ) {
+		return ( x / pow( 2, zoom ) * 360 - 180 );
+	}
+
+	function tile2lat( y, zoom ) {
+		var n = pi - 2 * pi * y / pow( 2, zoom );
+		return 180 / pi * Math.atan( 0.5 * ( Math.exp( n ) - Math.exp( -n ) ));
+	}
+
+	function cos( a ){ return Math.cos( a ); }
+	function sin( a ){ return Math.sin( a ); }
+	function pow( a, b ){ return Math.pow( a, b ); }
+	function ran(){ return Math.random(); }
+
+</script>
+</body>
+</html>

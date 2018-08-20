@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Drawing multiple images to a canvas using image.onload</title>
+<meta charset=utf-8>
+</head>
+<body>
+<script>
+// http://stackoverflow.com/questions/3258930/drawing-multiple-images-to-a-canvas-using-image-onload
+
+// must be before the init...
+	var drawCanvasImage = function( images, i) {
+		return function() {
+			var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+//			canvas.width = canvas.height = 300;
+			canvas.width = images[i].width;
+			canvas.height = images[i].height;
+			var context = canvas.getContext('2d');
+			context.drawImage( images[i], 0, 0 );
+
+console.log( images, i );
+		}
+	}
+
+
+	init();
+
+
+	function init() {
+		sources = [
+			"http://bits.wikimedia.org/images/wikimedia-button.png", 
+			"http://upload.wikimedia.org/wikipedia/commons/3/38/Icons_example.png",
+			'http://www.html5canvastutorials.com/demos/assets/darth-vader.jpg',
+			'http://www.html5canvastutorials.com/demos/assets/yoda.jpg',
+		];
+		var images = [];
+		for (var i = 0; i < sources.length; i++) {
+			images[i] = document.createElement( 'img' );
+			images[i].onload = drawCanvasImage( images, i );
+			images[i].src = sources[i];
+		}
+	}
+
+</script>
+</body>
+</html>

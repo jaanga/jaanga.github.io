@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>srcdoc-from-js-file</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<!--
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/TrackballControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+-->
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg ></div>';
+
+	var scr = document.body.appendChild( document.createElement( 'script' ) );
+
+	scr.src = 'child-script.js';
+
+
+</script>
+</body>
+</html>

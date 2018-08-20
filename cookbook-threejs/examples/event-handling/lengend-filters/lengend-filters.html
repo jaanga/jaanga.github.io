@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-08-11" >
+<title></title>
+<style>
+	/* Copyright 2018 pushMe pullYou authors. MIT License */
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/controls/TrackballControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+
+			<input type="range" id="inpSpeed" onclick="sceneRotation=0.04 * this.value;" />
+		</p>
+
+		<div id = "divLegend" ></div>
+
+	</div>
+
+<script>
+
+/* globals THREE, divTitle, divMenu, hamburger  */
+// jshint esversion: 6
+
+const urlSourceCode = "jaanga.github.io/cookbook-threejs/examples/event-handling/lengend-filters";
+
+const colors = [
+	'rgb( 49,54,149)','rgb(69,117,180)','rgb(116,173,209)','rgb(171,217,233)',
+	'rgb(224,243,248)','rgb(255,255,191)','rgb(254,224,144)',
+	'rgb(253,174,97)','rgb(244,109,67)','rgb(215,48,39)','rgb(165,0,38)'
+];
+
+let meshes;
+
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	setTitle( divTitle );
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	const material = new THREE.MeshNormalMaterial();
+	const mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+	setButtonsLegend();
+
+	addGeometry();
+}
+
+
+
+function setTitle( target ) {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	target.innerHTML =
+
+	`<h2>
+		<a href=${ urlSourceCode } target="_top" title = "Source code on GitHub" >
+			<img src="https://status.github.com/images/invertocat.png" height=18 >
+		</a>
+		<a href = "" title = "Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( '[name=description]' ).content }
+	</p>`;
+
+}
+
+
+function setButtonsLegend() {
+
+	let txt = '';
+
+	const delta = 500 / colors.length;
+
+	for ( let color of colors ) {
+
+		index = colors.indexOf( color );
+
+		txt += `<button onclick=toggleByButton(${ index }) style="background-color:${color };width:100%;" >${ index }</button>`;
+
+	}
+
+	divLegend.innerHTML = txt
+
+}
+
+
+function addGeometry() {
+
+	var geometries = [
+
+	new THREE.BoxGeometry( 10, 10, 10 ),
+	new THREE.CylinderGeometry( 5, 5, 1, 12 ),
+	new THREE.DodecahedronGeometry( 05 ),
+	new THREE.SphereGeometry( 5, 12, 8 ),
+	new THREE.TorusGeometry( 10, 5 ),
+
+	];
+
+	meshes = [];
+
+	for ( let j = 0; j < 250; j++ ) {
+
+		const geometry = geometries[ Math.floor( Math.random() * geometries.length ) ];
+		const material = new THREE.MeshBasicMaterial();
+		material.color = new THREE.Color( colors[ Math.floor( Math.random() * colors.length ) ] );
+		var mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( Math.random() * 100 - 50, Math.random() * 100 - 50,  Math.random() * 100 - 50);
+		mesh.rotation.set( Math.random() * 6, Math.random() * 6, Math.random() * 6  )
+		mesh.scale.set( Math.random() * 3, Math.random() * 3, Math.random() * 3 );
+		scene.add( mesh );
+
+		const edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+		const edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000, linewidth: 5 } );
+		const edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+		mesh.add( edges );
+
+		meshes.push( mesh );
+
+	}
+
+}
+
+
+function toggleByButton(index ) {
+
+	color = colors[ index ];
+
+	for ( mesh of meshes ) {
+
+
+		//console.log( 'colr', mesh.material.color, colors[ index ] );
+
+		mesh.visible = mesh.material.color.getStyle() === color ? true : false;
+
+	}
+
+}
+
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Draw Grid</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script src="Blob.js"></script>
+<script src="canvas-toBlob.js"></script>
+<script src="FileSaver.js"></script>
+<script>
+
+	var length = 1024;
+	var segments = 125;
+	var lineWidth = 0.01;
+	var color = '#000000';
+	var backgroundColor = '#ffffff';
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>' +
+		'<p><button onclick=saveIt() >Save...</button></p>';
+
+	var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+	canvas.width = canvas.height = length;
+
+	context = canvas.getContext("2d");
+
+	context.strokeStyle =  color;
+	context.fillStyle =  backgroundColor;
+	// context.lineWidth = lineWidth;
+
+	context.fillRect( 0, 0, length, length );
+
+	delta = canvas.width / segments;
+
+	for (var i = 0; i < segments + 1; i++) {
+		context.moveTo( i * delta, 0 );
+		context.lineTo( i * delta, canvas.height );
+		context.stroke();
+
+		context.moveTo( 0, i * delta );
+		context.lineTo( canvas.width, i * delta );
+		context.stroke();
+	}
+
+
+	function saveIt() {
+		canvas.toBlob( function( blob ) {
+			saveAs( blob, "howdy.png" );
+		});
+		console.log( 'saving ' ); 
+	}
+
+</script>
+</body>
+</html>

@@ -28,11 +28,13 @@
 
 	</div>
 
+	<div id = "divLog" ></div>
+
 	<div id = "divContents" ></div>
 
 <script>
 
-	url = 'https://api.github.com/repos/ladybug-tools/spider/git/trees/master?recursive=1';
+	const urlGitHubAPITree = 'https://api.github.com/repos/ladybug-tools/spider/git/trees/master?recursive=1';
 
 	const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/';
 	const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/';
@@ -57,38 +59,79 @@ function init() {
 
 	divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
-	fetchGitHUPApiTree();
+	fetchGitHubApiTree();
 
 }
 
 
-function fetchGitHUPApiTree() {
 
-	const request = new Request( url );
+function fetchGitHubApiTree() {
+
+	// https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/fetch/fetch-github-api-tree
+
+	const request = new Request( urlGitHubAPITree );
 
 	fetch( request )
 		.then( response => response.json() )
-		.then( json => callbackGitHubMenu( json ) );
+		.then( json => callbackGitHubApiTree( json ) );
 
 
 }
 
 
-
-function callbackGitHubMenu ( results ) {
+function callbackGitHubApiTree ( results ) {
 
 	//console.log( 'results', results.tree );
 
 	const files = [];
+	const folders = [];
 
 	let txt = '';
 
 	for ( let file of results.tree ) {
 
-		if ( !file.path.endsWith( '.rad' ) || file.path.includes( 'zip-files') || file.path.includes( 'rad-tutorial-files' ) ) { continue; }
+		if ( !file.path.endsWith( '.rad' ) || !file.path.includes( 'radiance-sample-files' ) || file.path.includes( 'zip-files') || file.path.includes( 'rad-tutorial-files' ) ) { continue; }
 
 		files.push( file );
-		const fileName = file.path.split( '/' ).pop();
+
+	}
+
+	files.sort( function(a, b) {
+
+		let nameA = a.path.toUpperCase();
+		let nameB = b.path.toUpperCase();
+
+		if (nameA < nameB) {
+
+			return -1;
+
+		}
+
+		if (nameA > nameB) {
+
+			return 1;
+
+		}
+
+		// names must be equal
+		return 0;
+
+	});
+
+
+	for ( let file of files ) {
+
+		const arrFile = file.path.split( '/' )
+		const fileName = arrFile.pop();
+		const folder = arrFile.pop();
+		//console.log( 'folder', folder );
+
+		if ( folders.indexOf( folder ) === -1 ) {
+
+			folders.push( folder );
+			txt += `<h4 style=margin:0; >${ folder }</h4>`;
+
+		}
 
 		txt +=
 
@@ -96,7 +139,7 @@ function callbackGitHubMenu ( results ) {
 
 			<a href=${ urlGitHubSource + file.path } title="Edit me" >${ iconGitHubMark }</a>
 
-			<a href=#${ urlGitHubPage + file.path } title="${ file.size.toLocaleString() } bytes" >${ fileName}</a>
+			<a href=#${ urlGitHubPage + file.path } onclick=setDivLog(this); title="${ file.size.toLocaleString() } bytes" >${ fileName}</a>
 
 			<a href=${ urlGitHubPage +  file.path  } title="Link to just this file" >&#x2750;</a>
 
@@ -104,10 +147,20 @@ function callbackGitHubMenu ( results ) {
 
 	}
 
-	console.log( 'files', files );
-	divContents.innerHTML = txt;
+	//console.log( 'files', files );
+	divContents.innerHTML = `<p>files: ${ files.length } </p> ${ txt } <hr>`;
+
+
+	setDivLog = function( that ) {
+
+		divLog.innerHTML = `loaded: ${that.innerText} <br> ${that.title}`;
+
+	}
 
 }
+
+
+
 
 </script>
 </body>

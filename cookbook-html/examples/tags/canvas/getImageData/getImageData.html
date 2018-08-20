@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>getImageData</title>
+<meta charset=utf-8 />
+<body>
+<!--
+<img id="scream" src="img_the_scream.jpg" alt="The Scream" width="220" height="277">
+<img id="scream" src="http://www.w3schools.com/tags/img_the_scream.jpg" alt="The Scream" width="220" height="277">
+
+<canvas id="myCanvas" width="220" height="277" style="border:5px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.
+</canvas>
+-->
+
+<script>
+// http://www.w3schools.com/tags/ref_canvas.asp
+// http://www.w3schools.com/tags/canvas_getimagedata.asp
+
+	var img = document.body.appendChild( document.createElement( 'img' ) );
+//	img.crossOrigin = "Anonymous"; 
+	img.src = 'img_the_scream.jpg';
+//	img.src = 'http://www.w3schools.com/tags/img_the_scream.jpg';
+//	img.src = 'https://raw.github.com/jaanga/terrain/gh-pages/0/0/0.png';
+
+
+//	var img = document.getElementById("scream");
+//	document.getElementById("scream").onload=function(){
+
+	img.onload = function(){
+
+		var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas.width = 200;
+		canvas.height = 300;
+		canvas.style.cssText = 'border:5px solid #d3d3d3; ';
+		var context = canvas.getContext("2d");
+
+		context.scale( 0.7, 0.7);
+		context.drawImage( img, 0, 0);
+
+		canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+		canvas.width = 200;
+		canvas.height = 300;
+		canvas.style.cssText = 'border:5px solid #d3d3d3; ';
+		context = canvas.getContext("2d");
+
+		canvas.width = 0.5 * img.width;
+		canvas.height = 0.5 * img.height;
+		context.scale( 0.5, 0.5 );
+		context.drawImage( img, 0, 0 );
+
+		image = context.getImageData( 0, 0, img.width, img.height);
+		imageData = image.data;
+
+		// invert colors
+		for ( var i = 0; i < imageData.length; i += 4 ) {
+			imageData[ i ] = 255 - imageData[ i];
+			imageData[ i + 1 ] = 255 - imageData[i + 1];
+			imageData[ i + 2 ] = 255 - imageData[i + 2];
+			imageData[ i + 3 ] = 255;
+		}
+
+		context.putImageData( image, 0, 0 );
+
+		for (var i = 0; i < 50 ; i++) {
+			console.log( imageData[i] )
+		}  
+
+	};
+	
+</script>
+</body>
+</html>

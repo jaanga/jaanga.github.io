@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>xmlhttprequest-to-srcdoc</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<div id=msg ></div>';
+
+		doc = requestFile( '../source-test.html' );
+
+		doc = doc.replace( /qu/gi, 'QQUU' );
+
+		addIframe( doc) ;
+	}
+
+	function addIframe( contents ) {
+
+		var ifr = document.body.appendChild( document.createElement( 'iframe' ) );
+		ifr.height = 600
+		ifr.width = 800;
+		ifr.style.borderWidth = '0px';
+		ifr.srcdoc = contents;
+
+	}
+
+
+	function requestFile( fname ) {
+
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.crossOrigin = "Anonymous"; 
+		xmlhttp.open( 'GET', fname, false );
+		xmlhttp.send( null );
+		return xmlhttp.responseText;
+
+	}
+
+</script>
+</body>
+</html>

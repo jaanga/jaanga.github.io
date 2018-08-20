@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>canvas callout</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var length = 1024;
+	var segments = 125;
+	var lineWidth = 0.01;
+	var color = '#000000';
+	var backgroundColor = '#ffffff';
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>' + document.title + '</h1>'
+		'';
+
+	var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+	canvas.width = canvas.height = length;
+
+	context = canvas.getContext("2d");
+
+	context.beginPath();
+	context.moveTo( 30, 10 );
+	context.lineTo( 130, 10 );
+	context.arcTo( 150, 10, 150, 30, 20);
+	context.lineTo( 150, 100 );
+	context.arcTo( 150, 120, 130, 120, 20);
+	context.lineTo( 100, 120 );
+	context.lineTo( 110, 170 );
+	context.lineTo( 80, 120 );
+	context.lineTo( 30, 120 );
+	context.arcTo( 10, 120, 10, 100, 20);
+	context.lineTo( 10, 30 );
+	context.arcTo( 10, 10, 30, 10, 20);
+	context.stroke();
+
+
+</script>
+</body>
+</html>

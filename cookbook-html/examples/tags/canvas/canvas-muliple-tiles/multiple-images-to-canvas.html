@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Drawing multiple images to a canvas using image.onload</title>
+    <script>
+// http://stackoverflow.com/questions/3258930/drawing-multiple-images-to-a-canvas-using-image-onload
+    var drawCanvasImage = function(ctx,grid,row,col,x,y) {
+        return function() {
+            /*window.alert('row:' + row + ' col:' + col);*/
+            ctx.drawImage( grid[row][col], x, y);
+        }
+    }
+    function init() {
+        var grid = new Array();
+        var totalRows = 2;
+        var totalCols = 3;
+        grid[0] = new Array();
+        grid[1] = new Array();
+        var pieceWidth = 100;
+        var pieceHeight = 100;
+        var canvas = document.getElementById('myCanvas');
+        if (canvas.getContext){
+            var ctx = canvas.getContext('2d');
+            for (var row = 0; row < totalRows; row++) {
+                for (var col = 0; col < totalCols; col++)
+                {
+                    grid[row][col] = new Image();
+                    var x = col * pieceWidth;
+                    var y = row * pieceHeight;
+                    grid[row][col].onload = drawCanvasImage(ctx,grid,row,col,x,y);
+                    if (row % col == 0) {
+                        grid[row][col].src = "http://bits.wikimedia.org/images/wikimedia-button.png";
+                    } else {
+                        grid[row][col].src = "http://upload.wikimedia.org/wikipedia/commons/3/38/Icons_example.png";
+                    }
+                }
+            }
+        }
+    }
+    </script>
+    <style>
+    footer {display:block;}
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="300" height="200">No canvas support.</canvas>
+    <button onclick="init();">Go</button>
+    <footer>
+        This is a derived work of code by <a
+        href="http://stackoverflow.com/users/393031/kaz">kaz</a> on <a
+        href="http://stackoverflow.com/questions/3258930/drawing-multiple-images-to-a-canvas-using-image-onload">StackOverflow</a>
+        licensed under <a href="http://creativecommons.org/licenses/by-sa/2.5/"
+        rel="license">cc-wiki</a> with <a
+        href="http://blog.stackoverflow.com/2009/06/attribution-required/"
+        rel="license">attribution required</a>
+    </footer>
+</body>
+</html>

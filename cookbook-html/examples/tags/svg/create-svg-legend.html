@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p><button onclick=setIt(); >set svg</button></p>
+
+		<p><button onclick=setSvgColors(); >setSvgColors</button></p>
+
+		setSvgColors
+
+	</div>
+
+	<div id = "divContents" ></div>
+
+	<svg id=svgTry width=100% height=auto ></svg>
+
+
+<script>
+
+init();
+
+function init() {
+
+	const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+	//const title = document.title;
+
+	divTitle.innerHTML =
+	`
+		<h1><a href="" >${title}</a></h1>
+		<p>${document.head.querySelector( '[name=description]' ).content }</p>
+	`;
+
+	divContents.innerHTML += 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+}
+
+
+function setIt() {
+
+	//svgTry.setAttribute("height", "500");
+	svgTry.style.width = '200px';
+	svgTry.style.height = '300px';
+	svgTry.innerHTML =
+	`
+		<rect x="25" y="25" width="200" height="200" fill="lime" stroke-width="4" stroke="pink" />
+		<circle cx="125" cy="125" r="75" fill="orange" />
+		<polyline points="50,150 50,200 200,200 200,100" stroke="red" stroke-width="4" fill="none" />
+		<line x1="50" y1="50" x2="200" y2="200" stroke="blue" stroke-width="4" />
+	`;
+
+}
+
+
+
+function setSvgColors() {
+
+	const colors = [
+		'rgb( 49, 54, 149 )', 'rgb( 69, 117, 180 )', 'rgb( 116, 173, 209 )', 'rgb( 171, 217, 233 )',
+		'rgb(224, 243, 248)', 'rgb(255, 255, 191)', 'rgb(254, 224, 144)',
+		'rgb( 253, 174, 97 )', 'rgb(244, 109, 67)', 'rgb(215, 48, 39)', 'rgb(165, 0, 38)'
+	];
+
+	let txt = '';
+
+	const delta = 500 / colors.length;
+
+	for ( let color of colors ) {
+
+		index = colors.indexOf( color );
+
+		txt += `<rect x="${ index * delta }" y="0" width="${ delta }" height="100%" fill="${ color }" stroke-width="1" stroke="black" />`;
+
+	}
+
+	//svgTry.setAttribute("height", "200");
+	svgTry.style.width = '500px';
+	svgTry.style.height = '500px';
+	svgTry.innerHTML = txt
+
+}
+
+</script>
+</body>
+</html>

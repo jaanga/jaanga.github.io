@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>SVG sandbox</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+// svg is 90 dpi
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+
+		'<p><button onclick=drawSteps(); >draw steps</button>' +
+		'<p><button onclick=drawSquareInches(); >drawSquareInches</button>' +
+
+		'<div id=msg1 ></div>' +
+	'';
+
+
+	function drawSteps() {
+
+		test = '<svg height="180" width="500">' +
+			'<polyline points="0,40 40,40 40,80 80,80 80,120 120,120 120,160" style="fill:white;stroke:red;stroke-width:4" />' +
+		'</svg>';
+
+		document.write( test);
+
+	}
+
+	function drawSquareInches() {
+
+		var data = '<p>This is "myWindow"</p>';
+
+		var data =
+			'<svg width=100 height=100 >' +
+				'<circle cx=50 cy=50 r=40 stroke=green stroke-width=4 fill=yellow />' +
+			'</svg>'
+
+		var data =
+			
+//			'<svg width="5in" height="5in" viewBox="0 0 500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" >' +
+			'<svg width="8in" height="8in" viewBox="0 0 8 8" version="1.1" xmlns="http://www.w3.org/2000/svg" >' +
+//				'<rect x=45 y=45 width=450 height=450 stroke=black stroke-width=0.5 fill=white />' +
+//				'<rect width=675 height=900 stroke=black stroke-width=0.5 fill=white fill-opacity=0.0 />' +
+
+//				'<rect x=0 y=0 width=384 height=384 stroke=black stroke-width=0.01 fill=white />' +
+				'<rect x="0" y="0" width="5" height="5" stroke="black" stroke-width="0.01" fill="white" />' +
+
+			'</svg>'
+
+		window.open( 'data:text/html,' + encodeURIComponent( data ) );
+
+	}
+
+	function drawSquareInches2() {
+/*
+		var data =
+			'<svg ' +
+				'xmlns:svg="http://www.w3.org/2000/svg" ' +
+				'xmlns="http://www.w3.org/2000/svg" ' +
+				'version="1.1" ' +
+				'width="8in" ' +
+				'height="4in" ' +
+				'viewBox="0 0 8 4" ' +
+			'>' +
+			'<g transform="translate(4,0.5)">' +
+				'<rect ' +
+					'width="2" ' +
+					'height="2" ' +
+					'x="0" ' +
+					'y="0"  stroke="black" stroke-width="0.01" fill="white" />' +
+	//				'<path d="M 0.1111,0.1111 l 1.111 1.111" style="stroke: #ff0000; stroke-width:0.01"  />' +
+			  '</g>' +
+
+			'</svg>' +
+			'';
+*/
+
+
+		var data =
+// ff 96 dpi
+		'<body width=2000 height=2000><canvas width=1728 height=1728 style="border: 1px solid black; position: absolute; " ></canvas></body>';
+
+//		window.open( 'http://www.w3schools.com' );
+		window.open( 'data:text/html,' + encodeURIComponent( data ) );
+
+	}
+
+</script>
+</body>
+</html> 

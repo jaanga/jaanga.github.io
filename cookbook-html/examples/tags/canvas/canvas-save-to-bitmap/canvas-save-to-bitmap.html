@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>canvas-save-to-bitmap.html</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+
+	var canvas;
+	var context;
+
+	init();
+
+	function init() {
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+			'<p><a id=download href=# onclick=downloadIt(); >Download as image</a></p>' +
+			'<img id=image src=../img_the_scream.jpg />' +
+		'';
+
+		image.onload = function() {
+
+			canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+			canvas.style.cssText = 'border: 2px #000 solid; margin: 0 10px;';
+			canvas.width = image.width;
+			canvas.height = image.height;
+			context = canvas.getContext( '2d' );
+
+			context.clearRect ( 0, 0, image.width, image.height);
+			context.drawImage( image, 0, 0 );
+		}
+
+	}
+
+	function downloadIt() {
+
+//		var name = file.name.replace(/\.html/,'-') + imageSize.replace( / /gi,'' ) + '.png';
+
+		var name = image.src;
+		name = name.substr( 1 + name.lastIndexOf( '/' ) );
+		name = name.replace(/\.jpg/,'-') + image.width + 'x'+ image.height + '.png';
+
+		var c2du = canvas.toDataURL(); 
+
+		download.download = name;
+
+		download.href = c2du;
+
+	}
+
+</script>
+</body>
+</html>

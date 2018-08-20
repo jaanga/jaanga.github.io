@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title></title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	var side = 750;
+	var s05 = side * 0.5;
+
+	var zoom = 7;
+	var x = 20;
+	var y = 49;
+
+	var zoom = 8;
+	var x = 40;
+	var y = 98;
+
+	var zoom = 9;
+	var x = 81;
+	var y = 197;
+
+	var zoom = 10;
+	var x = 163;
+	var y = 395;
+
+	var zoom = 11;
+	var x = 327;
+	var y = 791;
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>Multiple Image load</h1>';
+
+	var canvas0 = document.body.appendChild( document.createElement( 'canvas' ) );
+	canvas0.style.padding = '20px';
+	canvas0.width = canvas0.height = side;
+	var context0 = canvas0.getContext( '2d' );
+	
+	var img0 = new Image();
+	img0.onload = function() { context0.drawImage( img0, 0, 0, side, side ); };
+	img0.src = 'http://tile.openstreetmap.org/' + zoom + '/' + x + '/' + y + '.png';
+
+	var canvas = document.body.appendChild( document.createElement( 'canvas' ) );
+	canvas.style.padding = '20px';
+	canvas.width = canvas.height = side;
+	var context = canvas.getContext( '2d' );
+
+	var img1 = new Image(), img2 = new Image(), img3 = new Image(), img4 = new Image();
+
+	img1.onload = function() { context.drawImage( img1, 0, 0, s05, s05 ); };
+	img1.src = 'http://b.tile.openstreetmap.org/' + ( zoom  + 1) + '/' + ( 2 * x ) + '/' + ( 2 * y ) + '.png';
+
+	img2.onload = function() { context.drawImage( img2, s05, 0, s05, s05 ); };
+	img2.src = 'http://b.tile.openstreetmap.org/' + ( zoom  + 1) + '/' + ( 2 * x + 1) + '/' + ( 2 * y ) + '.png';
+
+	img3.onload = function() { context.drawImage( img3, 0, s05, s05, s05 ); };
+img3.src = 'http://b.tile.openstreetmap.org/' + ( zoom  + 1) + '/' + ( 2 * x)  + '/' + ( 2 * y + 1 ) + '.png';
+
+	img4.onload = function() { context.drawImage( img4, s05, s05, s05, s05 ); };
+	img4.src = 'http://b.tile.openstreetmap.org/' + ( zoom  + 1) + '/' + ( 2 * x +1) + '/' + ( 2 * y + 1) + '.png';
+
+
+/*
+
+var imageSrcs = ['../img_the_scream.jpg','../img_the_scream.jpg','../img_the_scream.jpg','../img_the_scream.jpg'];
+var images = [];
+var cnt = 0;
+for (var i = 0; i < 2; i++) {
+	for (var j = 0; j < 2; j++) {
+		var img = new Image(); 
+
+		img.onload = function() { placeImage( cnt ) };
+		img.src = imageSrcs[cnt++];
+		img.x = i;
+		img.y = j;
+
+		images.push(img);
+
+	}
+}
+
+	function placeImage( i ) {
+		var img = images[i];
+		context.drawImage( img, -100 + 100 * img.x, -100 + 100 * img.y  );
+console.log( img, image.x, y)
+	}
+*/
+
+</script>
+</body>
+</html>
