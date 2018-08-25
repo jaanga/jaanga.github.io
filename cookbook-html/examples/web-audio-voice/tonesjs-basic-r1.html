@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Tone.js Basic R1</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script src=tones.js ></script>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<button onclick=playNote(); >play note</button>' +
+		'<div id=msg1 ></div>' +
+
+	'';
+
+	function playNote() {
+
+
+		//tones.play( 'c' );
+
+		tones.play( 600 );
+
+	}
+
+
+</script>
+</body>
+</html>

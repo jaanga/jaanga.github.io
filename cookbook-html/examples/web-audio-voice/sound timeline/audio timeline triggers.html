@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!-- saved from http://devfiles.myopera.com/articles/2312/index.html and others -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Audio Timeline Triggers</title>
+</head>
+<body>
+<script>
+	document.body.style.font = '12pt monospace';
+	window.requestAnimFrame = (function(){
+		return window.requestAnimationFrame  ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		window.oRequestAnimationFrame  ||
+		window.msRequestAnimationFrame  ||
+		function(/* function */ callback, /* DOMElement */ element){
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();
+
+	
+
+	var splash = document.createElement( 'div' );
+	document.body.appendChild( splash );
+	splash.style.backgroundColor = '#ddd';
+	splash.style.borderRadius = '10px';
+	splash.style.boxShadow = '10px 10px 5px #888888';
+	splash.style.color = '#000';
+	splash.style.left = '10%';
+	splash.style.opacity = '0.85';
+	splash.style.padding = '15px';
+	splash.style.position = 'absolute';
+	splash.style.top = '10%';
+	splash.style.width = '300px';
+	var splashText = '<h2>Audio Timeline<\/h2><p id="status1">duration<\/p>';
+	splash.innerHTML = splashText;
+
+	var audioElement = document.createElement('audio');
+	splash.appendChild( audioElement );
+	audioElement.setAttribute('src', 'foreverautumn.mp3');
+	audioElement.controls = 'true';
+
+	var updates = document.createElement( 'div' );
+	splash.appendChild( updates );
+	updates.innerHTML = 'status';
+
+	var i = 20;
+
+	var MyLib = MyLib || {};
+	
+	MyLib = function () {
+		this.i = 23;
+		this.currentApp = 'stuff';
+	}
+	
+	MyLib.fun1 = function() {
+		if ( this.currentApp != 'fun1' ) {
+			this.i = 20;
+			this.currentApp = 'fun1';
+		}
+		updates.innerHTML='1. Hello world! ~ ' + new Date();
+		splash.style.left = 200 + this.i + 'px';
+		if (this.i > 80) { this.i = 10; }
+		this.i++;
+	}
+	
+	MyLib.fun2 = function() {
+		if ( this.currentApp != 'fun2' ) {
+			this.i = 10;
+			this.currentApp = 'fun2';
+		}
+		updates.innerHTML='2. Good morning world! ~ ' + new Date();
+		if (this.i > 20) { this.i = 10; }
+		splash.style.top = 0.5 * this.i + '%';
+		this.i++;
+	}
+	
+	MyLib.fun3 = function() {
+		if ( this.currentApp != 'fun3' ) {
+			this.i = 300;
+			this.currentApp = 'fun3';
+		}
+		updates.innerHTML='3. Howdy world! ~ ' + new Date();
+		splash.style.width = 300 + this.i  + 'px';
+		this.i++;
+		if (this.i > 320) { this.i = 300; }
+	}
+	
+	var m = new MyLib(0, 'bb');
+	
+	var whichApp;
+
+	
+	var THREO = THREO || { REVISION: '01' };
+
+	THREO.Person = function (first, last) {
+		this.first = first;
+		this.last = last;
+	}
+	THREO.Person.prototype.fullName = function() {
+		return this.first + ' ' + this.last;
+	}
+	THREO.Person.prototype.fullNameReversed = function() {
+		return this.last + ', ' + this.first;
+	}
+
+	var ss = new THREO.Person("Theo", "Armour");
+	
+	audioElement.addEventListener("timeupdate", function() {
+		var duration = document.getElementById('duration');
+		var s = parseInt(audioElement.currentTime % 60);
+		var m = parseInt((audioElement.currentTime / 60) % 60);
+		status1.innerHTML = m + ':' + s + 'sec ' + audioElement.currentTime + ' ' + audioElement.duration;
+		if (audioElement.currentTime < 5) {
+			//console.log(ss.fullName());
+			whichApp = MyLib.fun1();
+		} else if (audioElement.currentTime < 10) {
+			//console.log(ss.fullNameReversed());
+			whichApp = MyLib.fun2();
+		} else if (audioElement.currentTime < 15) {
+			whichApp = MyLib.fun3();
+		} else if (audioElement.currentTime < 20) {
+			whichApp = MyLib.fun2();
+		} else {
+			whichApp = MyLib.fun1();
+		}
+	}, false);
+
+	function animate() {
+		requestAnimFrame( animate );
+		whichApp;
+	}
+
+</script>
+</body>
+</html>

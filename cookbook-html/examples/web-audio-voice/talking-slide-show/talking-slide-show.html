@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Talking Slide Show</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+<link href='http://fonts.googleapis.com/css?family=Freckle+Face' rel='stylesheet' type='text/css'>
+<style>
+	body {
+		font-family: 'Freckle Face', cursive;
+	}
+
+	a {
+		text-decoration: none;
+	}
+	#header {
+		font-size: 72pt;
+		margin: 30pt auto;
+		width: 80%;
+	}
+
+	#content {
+		font-size: 72pt;
+		margin: auto;
+		width: 80%;
+	}
+
+	#next {
+		bottom: 0;
+		right: 2%;
+		font-size: 72pt;
+		position: fixed;
+		width: 10%;
+	}
+	#prev {
+		bottom: 0;
+		left: 2%;
+		font-size: 72pt;
+		position: fixed;
+		width: 10%;
+	}
+
+</style>
+</head>
+<body>
+<script>
+
+	var count = 0;
+
+	var text1 = 
+		'<img src=http://lorempixel.com/1200/300/ width=100% height=auto />' +
+		'<div id=t >1 Bullet #1 abc </div>' +
+		'<div id=t >1 Bullet #2 def</div>' +
+		'<div id=t >1 Bullet #3 ghi</div>' +
+		'';
+	var talk1 = 'This is slide number one. It\'s the first slide.';
+
+	var text2 = 
+		'<img src=http://lorempixel.com/1200/300/ width=100% height=auto />' +
+		'<div id=t >2 Bullet #1 jkl</div>' +
+		'<div id=t >2 Bullet #2 mno</div>' +
+		'<div id=t >2 Bullet #3 pqr</div>' +
+		'';
+	var talk2 = 'This is slide number two. This is the middle slide';
+
+	var text3 = 
+		'<img src=http://lorempixel.com/1200/300/ width=100% height=auto />' +
+		'<div id=t >3 Bullet #1 stu</div>' +
+		'<div id=t >3 Bullet #2 vwx</div>' +
+		'<div id=t >3 Bullet #3 yz</div>' +
+		'';	
+	var talk3 = 'This is slide number three. This is the last of the slides';
+
+	var slides = [ text1, text2, text3 ];
+	var talks = [ talk1, talk2, talk3 ];
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+
+	info.innerHTML = 
+			'<a href=# ><div id=header >' + document.title + '</div></a>' +
+			'<div id=content ></div>' +
+			'<a href=JavaScript:setPrev(); ><div id=prev >&lt;</div></a>' +
+			'<a href=JavaScript:setNext(); ><div id=next >&gt;</div></a>' +
+		'';
+
+	function setText( txt ) {
+		content.innerHTML = txt;
+	}
+
+	function setTalk( t ) {
+		speechSynthesis.cancel();
+		var talk = new SpeechSynthesisUtterance( t );
+		talk.onend = function( event ) { console.log('Finished in ' + event.timeStamp + ' seconds.' );  setNext(); };
+		window.speechSynthesis.speak( talk );
+	}
+
+	function setNext() {
+		count = ++count >= slides.length ? 0 : count;
+		setText( slides[ count ] );
+		setTalk( talks[ count ] );
+console.log( count );
+	}
+
+	function setPrev() {
+		count = --count <= 0 ? slides.length - 1 : count;
+		setText( slides[ count ] );
+		setTalk( talks[ count ] );
+	}  
+
+	function doKeydown( e ) {
+		console.log(  e.which, String.fromCharCode( e.which ) );
+		n = e.which
+		if ( n === 32 || n === 39 ) {
+			setNext();
+		} else if ( n === 37 ) {
+			setPrev();
+		}
+	}
+
+	function giveSpeech() {
+		for (var i = 0, len = texts.length; i < len; i++) {
+			selNext();
+		}
+	}
+
+
+	window.addEventListener("keydown", doKeydown, false);
+
+	setText( text1 );
+	setTalk( talk1 );
+
+</script>
+</body>
+</html>

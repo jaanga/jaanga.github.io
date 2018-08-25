@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title></title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>For In Loop</h1>' +
+			'<p id=msg ></p>';
+
+
+	var navdata = { 
+		type1: { name: "heli", src: "apt1000-heli.csv" },
+		type2: { name: 'icao', src: 'apt1000-icao.csv' },
+		type3: { name: 'ils', src: 'apt1000-ils.csv' },
+		type4: { name: 'nav', src: 'apt1000-nav.csv' },
+		type5: { name: 'sea', src: 'apt1000-sea.csv' },
+		type6: { name: 'clean', src: 'clean-nav.csv' },
+		type7: { name: 'awy', src: 'xp-awy.csv' },
+		type8: { name: 'fixes', src: 'xp-fixes.csv' }
+	};
+
+	var b = '<br>';
+
+	for ( var key in navdata ) {
+		if ( navdata.hasOwnProperty( key ) ) {
+			msg.innerHTML += key + ' ' + navdata[ key ].name + ' ' + navdata[ key ].src + b;
+		}
+	}
+
+</script>
+</body>
+</html>

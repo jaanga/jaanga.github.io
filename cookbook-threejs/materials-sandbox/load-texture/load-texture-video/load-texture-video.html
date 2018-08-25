@@ -21,8 +21,8 @@
 </style>
 </head>
 <body>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/controls/OrbitControls.js" ></script>
 
 	<div id = "divMenu" >
 
@@ -76,7 +76,6 @@
 
 		scene = new THREE.Scene();
 
-
 		window.addEventListener( 'resize', onWindowResize, false );
 
 		window.addEventListener( 'orientationchange', onWindowResize, false );
@@ -88,12 +87,13 @@
 		//var video = document.getElementById( 'video' );
 		video = document.createElement( 'video' );
 		video.src = "../../../../textures/sintel.ogv";
-		video.src = "../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
+		//video.src = "../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
 
 		video.load(); // must call after setting/changing source
 		video.loop = true;
 
 		window.addEventListener( 'mousedown', onWindowClick, false );
+
 		var texture = new THREE.VideoTexture( video );
 		texture.minFilter = THREE.LinearFilter;
 		texture.magFilter = THREE.LinearFilter;

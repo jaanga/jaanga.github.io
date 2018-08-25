@@ -1,0 +1,215 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Time Remote Given Lat Lon UTC R5</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='
+* Uses [Google Maps Time Zone API]( https://developers.google.com/maps/documentation/timezone/intro ) to determine time zone
+	* Handles daylight saving time and local time zone anomalies
+	* Ocean locations are timeless
+* Default latitude and longitude is San Francisco
+* Sliders update latitude and longitude and recalculates time in real-time
+* Sliders update UTC time
+* Buttons add selected cities
+* Permalinks support accepts latitude, longitude and UTC time input
+* Calculates and displays remote day and time - given UTC hours ans minutes
+	* Displays universal time
+	* Displays time zone and time zone ID
+' >
+<meta name=keywords content='time,Google Maps API,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-03-17' >
+</head>
+<body>
+<script>
+ 
+	var locations = [
+
+//		[ , , ''],
+		[ 21.3, -157.8167, 'Honolulu'],
+		[ 32.6333, 51.6500, 'Isfahan' ],
+		[ 51.5072, -0.1275, 'London' ],
+		[ 18.975, 72.8258, 'Mumbai'],
+		[ 40.712, -74.0059, 'New York' ],
+		[ -22.9068, -43.1729, 'Rio de Janeiro' ],
+		[ 37.796, -122.398, 'San Francisco' ],
+		[ 31.2, 121.5, 'Shanghai'],
+		[ -33.8650, 151.2094, 'Sydney' ]
+
+	];
+
+	var offset;
+
+	init();
+
+	function init() {
+
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; }' +
+			'h2 { margin: 0; }' +
+			'a { text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#menu { margin: 0 20px; max-width: 350px; position: absolute; }' +
+
+		'';
+
+		var menu = document.body.appendChild( document.createElement( 'div' ) );
+		menu.id = 'menu';
+		menu.innerHTML =
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	<a href=http://jaanga.github.io/cookbook-html/examples/ >&#x24D8;</a>' +
+			'</h2>' +
+
+			'<p>Latitude<br><input type=range id=inpLat max=90 min=-90 step=0.1 oninput=offset="";lat=this.valueAsNumber;getTime(); > ' +
+				'<output id=outLat ></output></p>' +
+			'<p>Longitude<br><input type=range id=inpLon max=180 min=-180 step=0.1 oninput=offset="";lon=this.valueAsNumber;getTime(); >' +
+				'<output id=outLon ></output></p>' +
+
+			'<p>UTC Hour<br><input type=range id=inpHour max=23 min=0 step=1 oninput=offset="";utcHour=this.valueAsNumber;getTime(); > ' +
+				'<output id=outHour ></output></p>' +
+			'<p>UTC Minute<br><input type=range id=inpMinute max=59 min=0 step=1 oninput=offset="";utcMinute=this.valueAsNumber;getTime(); title="0 to 59" > ' +
+				'<output id=outMinute ></output></p>' +
+
+			'<p>City<br><select id=selLocation size=10 ></select></p>' +
+
+			'<p id=info ></p>' +
+
+		'';
+
+		for ( var i = 0; i < locations.length; i++ ) {
+
+			item = locations[ i ];
+			selLocation.appendChild( document.createElement( 'option' ) );
+			selLocation.children[ i ].text = item[2];
+
+		}
+
+		selLocation.selectedIndex = 6;
+
+		selLocation.onchange = function() {
+
+			offset = '';
+			loc = locations[ selLocation.selectedIndex ];
+
+			outLat.value = loc[ 0 ];
+			outLon.value = loc[ 1 ];
+
+			getTime( loc );
+
+		}
+
+		selLocation.onchange();
+
+	}
+
+	function getTime( loc ) {
+
+		var timestamp, request;
+
+		dateHere = new Date();
+
+		offsetHere = dateHere.getTimezoneOffset();
+
+		utc = dateHere.getTime() + offsetHere * 60000;
+
+		dateUTC = new Date( utc );
+
+		timeStamp = dateUTC.getTime() / 1000;
+
+		request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + loc[ 0 ] + ',' + loc[ 1 ] + '&timestamp=' + timeStamp;
+
+		getTimezone( request, loc );
+
+	}
+
+	function getTimezone( fileName, locate ) {
+
+		var xhr 
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', fileName, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+			function callback() {
+
+				timeZonePlace = JSON.parse( xhr.responseText );
+
+				updateInfo( timeZonePlace, locate );
+
+// console.log( 'timeZonePlace ', timeZonePlace );
+
+			}
+
+	}
+
+	function updateInfo( timeZonePlace, locate ) {
+
+		if ( timeZonePlace.status === 'OK' ) {
+
+			offset = timeZonePlace.rawOffset + timeZonePlace.dstOffset;
+
+			remoteTime = calculateLocalTime( dateUTC.getTime(), offset );
+
+			info.innerHTML = 
+
+				'<h3>' + locate[ 2 ] + '</h3>' +
+				'<p>Given a place time of ' + dateUTC.getHours() + ':' + dateUTC.getMinutes() + '</p>' +
+				'<p>UTC time: ' + utc + '</p>' +
+				'<p> lat: ' + locate[ 0 ] + ' lon: ' + locate[ 1 ] + '</p>' +
+				'<p>Time ZoneID:' + timeZonePlace.timeZoneId + '</p>' +
+				'<p>Time zone: ' + timeZonePlace.timeZoneName + '</p>' +
+				'<p>Offset in hours: ' + offset / 3600 + '</p>' +
+				'<p>The local date and time is: ' + remoteTime.toLocaleString() + '</p>' +
+				'<p> The UTC is:' + remoteTime.getTime() + '</p>' +
+
+			'';
+
+		} else {
+
+			info.innerHTML += 'the location is timeless';
+
+		}
+
+	}
+
+	function calculateLocalTime( date, offset ) {
+
+		newDate = new Date( date + ( 1000 * offset ) );
+
+		return  newDate;
+
+	}
+
+	function requestCheck() {
+
+		var xhr = new XMLHttpRequest();
+		xhr.crossOrigin = "Anonymous";
+		xhr.open( 'GET', 'http://www.timeapi.org/utc/now' , true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+			function callback() {
+
+				time = JSON.parse( xhr.responseText );
+
+				info.innerHTML +=  xhr.responseText
+
+//console.log( 'time ', time );
+
+			}
+
+	}
+</script>
+</body>
+</html>

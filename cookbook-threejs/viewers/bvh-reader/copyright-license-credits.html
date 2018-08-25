@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang=en>
+<head>
+<meta name=viewport content=width=device-width>
+<meta charset=utf-8>
+</head>
+<body>
+<script src=http://jaanga.github.io/libs/md/showdown.js ></script>
+<script>
+
+	init();
+
+	function init() {
+		var converter = new Showdown.converter();
+
+		var css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML = 'body { font: normal 12pt sans-serif; margin: 0; overflow: hidden; }';
+
+		var basic = 'border: 3px double #eee; overflow-x: hidden; overflow-y: auto; padding: 10px; position: absolute; ';
+		var height = ' height: ' + ( window.innerHeight * 0.88 ) + 'px;';
+		var horizontal = ' left: 0; margin: auto; max-width: 900px; min-width: 700px; right: 0; width: 100%; ';
+		var top = ' top: 60px;';
+
+		var breadcrumbs = document.body.appendChild( document.createElement( 'div' ) );
+		breadcrumbs.style.cssText = 'padding: 1px; position: absolute; top: 0;' + horizontal;
+//		breadcrumbs.innerHTML = '<h1>' +
+//			'<a href="../index.html" >Jaanga</a> &raquo; ' +
+//			'<a href=./index.html >Terrain Viewer</a>' +
+//		'</h1>';
+
+		var readme = document.body.appendChild( document.createElement( 'div' ) );
+		readme.style.cssText = basic + height + horizontal + top ;
+
+		requestFile = function( fname ) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( 'GET', fname, false );
+			xmlHttp.send( null );
+			return xmlHttp.responseText;
+		};
+
+		var index = window.location.pathname.lastIndexOf("/") + 1;
+		var filename = window.location.pathname.substr( index).replace('.html','.md');
+
+		readme.innerHTML = converter.makeHtml( requestFile( filename ) );
+
+		document.title = readme.innerHTML.match( /<h1(.*?)>(.*?)<\/h1>/ )[2];
+	}
+</script>
+</body>
+</html>

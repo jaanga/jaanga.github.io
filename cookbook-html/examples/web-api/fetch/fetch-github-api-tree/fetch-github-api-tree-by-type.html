@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Track the changes for the current day in all the read me files of a project and display the selected text" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+	</div>
+
+	<div id = "divLog" ></div>
+
+	<div id = "divContents" ></div>
+
+<script>
+
+	const urlGitHubAPITree = 'https://api.github.com/repos/ladybug-tools/spider/git/trees/master?recursive=1';
+
+	const urlGitHubSource = 'https://github.com/ladybug-tools/spider/blob/master/';
+	const urlGitHubPage = 'https://rawgit.com/ladybug-tools/spider/master/';
+	const iconGitHubMark = '<img src="https://rawgit.com/ladybug-tools/spider/master/images/github-mark.png" height=14 style=vertical-align:middle>';
+
+
+	filePath = 'radiance-sample-files';
+	type = '.rad';
+
+init();
+
+function init() {
+
+	const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+	//const title = document.title;
+
+	divTitle.innerHTML =
+	`
+		<h1><a href="" >${title}</a></h1>
+		<p>${document.head.querySelector( '[name=description]' ).content }</p>
+	`;
+
+	divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+	fetchGitHubApiTree();
+
+}
+
+
+
+function fetchGitHubApiTree() {
+
+	// https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/fetch/fetch-github-api-tree
+
+	const request = new Request( urlGitHubAPITree );
+
+	fetch( request )
+		.then( response => response.json() )
+		.then( json => callbackGitHubApiTree( json ) );
+
+
+}
+
+
+function callbackGitHubApiTree ( results ) {
+
+	//console.log( 'results', results.tree );
+
+	const files = [];
+	const folders = [];
+
+	let txt = '';
+
+	for ( let file of results.tree ) {
+
+		if ( !file.path.endsWith( '.rad' ) || !file.path.includes( 'radiance-sample-files' ) || file.path.includes( 'zip-files') || file.path.includes( 'rad-tutorial-files' ) ) { continue; }
+
+		files.push( file );
+
+	}
+
+	files.sort( function(a, b) {
+
+		let nameA = a.path.toUpperCase();
+		let nameB = b.path.toUpperCase();
+
+		if (nameA < nameB) {
+
+			return -1;
+
+		}
+
+		if (nameA > nameB) {
+
+			return 1;
+
+		}
+
+		// names must be equal
+		return 0;
+
+	});
+
+
+	for ( let file of files ) {
+
+		const arrFile = file.path.split( '/' )
+		const fileName = arrFile.pop();
+		const folder = arrFile.pop();
+		//console.log( 'folder', folder );
+
+		if ( folders.indexOf( folder ) === -1 ) {
+
+			folders.push( folder );
+			txt += `<h4 style=margin:0; >${ folder }</h4>`;
+
+		}
+
+		txt +=
+
+		`<div style=margin:10px; >
+
+			<a href=${ urlGitHubSource + file.path } title="Edit me" >${ iconGitHubMark }</a>
+
+			<a href=#${ urlGitHubPage + file.path } onclick=setDivLog(this); title="${ file.size.toLocaleString() } bytes" >${ fileName}</a>
+
+			<a href=${ urlGitHubPage +  file.path  } title="Link to just this file" >&#x2750;</a>
+
+		</div>`;
+
+	}
+
+	//console.log( 'files', files );
+	divContents.innerHTML = `<p>files: ${ files.length } </p> ${ txt } <hr>`;
+
+
+	setDivLog = function( that ) {
+
+		divLog.innerHTML = `loaded: ${that.innerText} <br> ${that.title}`;
+
+	}
+
+}
+
+
+
+
+</script>
+</body>
+</html>

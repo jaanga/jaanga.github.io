@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Access the GitHub API with client-side JavaScript Fetch" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>GitHub personal access token <input id=inpGitHubPersonalAccessToken onchange=setStorage(); size=50 ></p>
+
+		<p>
+
+			<button onclick=setQueryRateLimits(); >get rate limits</button>
+
+			<button onclick=setQueryOctocatIssues(); >setQueryOctocatIssues</button>
+
+		</p>
+
+	</div>
+
+	<div id = "divContents" ></div>
+
+<script>
+
+	init();
+
+	function init() {
+
+		const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+		//const title = document.title;
+
+		divTitle.innerHTML =
+		`
+			<h1><a href="" >${title}</a></h1>
+			<p>${document.head.querySelector( '[name=description]' ).content }</p>
+		`;
+
+		const GitHubPersonalAccessToken = localStorage.getItem( 'GitHubPersonalAccessToken' );
+		inpGitHubPersonalAccessToken.value = GitHubPersonalAccessToken  ? GitHubPersonalAccessToken  : '' ;
+
+		setFetch();
+
+	}
+
+
+	function setQueryRateLimits() {
+
+		const query = { query: '{ viewer { login } rateLimit { limit cost remaining resetAt } }' };
+		setFetch( query );
+
+	}
+
+
+	function setQueryOctocatIssues() {
+
+		const query = { query: `{
+			repository(owner:"octocat", name:"Hello-World") {
+				issues(last:20, states:CLOSED) {
+					edges {
+						node {
+							title
+							url
+							labels( first:5 ) { edges { node { name } } }
+						}
+					}
+				}
+			}
+		}` };
+
+		setFetch( query );
+
+	}
+
+
+
+	function setFetch( query ) {
+
+		query = query || { query: '{ viewer { login } }' };
+
+		const token = inpGitHubPersonalAccessToken.value;
+
+		fetch( 'https://api.github.com/graphql', {
+			method: 'POST',
+			headers: {
+				'Authorization': 'Bearer ' + token,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify( query ),
+		})
+		.then( res => res.json() )
+		.then( res => { console.log( res.data ); return res.data; } )
+		//.then( text => divContents.innerHTML = 'text ' + JSON.stringify( text, null, '<br>' ) );
+		.then( text => divContents.innerHTML = 'text ' + JSON.stringify( text, null, '' ) );
+
+
+	}
+
+
+	function setFetchLaunchpad() {
+
+		const query = { query: '{ posts { title } }' }
+
+		fetch('https://1jzxrj179.lp.gql.zone/graphql', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify( query ),
+			})
+			.then( res => res.json() )
+			.then( res => console.log( res.data ) );
+
+	}
+
+
+
+	function setStorage() {
+
+		const GitHubPersonalAccessToken = inpGitHubPersonalAccessToken.value;
+		localStorage.setItem('GitHubPersonalAccessToken', GitHubPersonalAccessToken );
+
+	}
+
+	function getStorage() {
+
+		const GitHubPersonalAccessToken = localStorage.getItem( 'GitHubPersonalAccessToken' );
+		divContents.innerHTML += GitHubPersonalAccessToken + b;
+
+	}
+
+</script>
+</body>
+</html>
+

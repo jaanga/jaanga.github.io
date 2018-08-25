@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>try</title>
+<meta charset=utf-8 >
+</head>
+<body>
+<script>
+
+	document.body.style.font = 'bold 12pt monospace';
+
+	var info = document.createElement( 'div' );
+	document.body.appendChild( info );
+	info.innerHTML='arr:<br>';
+
+	arr = [];
+	length = 121;
+
+	for ( var i = 0; i < length; i++ ) {
+		arr[i] = [];
+		arr[i][0] = 'thing:' + i;
+		arr[i][1] = 'item:' + Math.random() * 100 + ' ' + new Date();
+	}
+
+	number = parseInt( Math.random() * arr.length );
+	info.innerHTML += arr[ number ][0] + ' - ' + arr[ number ][1];
+
+</script>
+</body>
+</html>

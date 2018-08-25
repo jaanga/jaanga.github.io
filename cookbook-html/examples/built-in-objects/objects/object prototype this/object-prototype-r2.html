@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Object Prototype R2</title>
+<!--
+<meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
+-->
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='' >
+</head>
+<body>
+<script>
+
+	var JA = JA || { r: 'r1' };
+
+	var NS = NS || {};
+
+
+	init();
+
+	function init() {
+
+		var css, contents;
+		var css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; left: 0; margin: 0 auto; position.absolute; right: 0; width: 800px; }' +
+//			'h2 { margin: 0; }' +
+			'h2 a { text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+//			'#contents { margin: 0 20px; max-width: 300px; position: absolute; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+				'<a href="" >' + document.title + '</a>' +
+				'<a href=http://jaanga.github.io/ > &#x24D8; </a>' +
+			'</h2>' +
+/*
+			'<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>' +
+			'<p>Zoom: <input type=range id=inp min=0 max=10 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >5</output></p>' +
+			'<p>Pretty colors: <input type=checkbox id=inpPretty checked ></p>' +
+			'<p>Overlay: <select id=selList title="Select the 2D overlay" >select option<select></p>' +
+			'<p><button onclick=saveIt(); value="Save as PNG" >Save</button></p>' +
+			'<p>' +
+				'<input type=radio name=field id=but1 />button 1' +
+				'<input type=radio name=field id=but2 checked />button 2' +
+				'<input type=radio name=field id=but3 />button 3' +
+			'</p>' +
+*/
+
+			'<p><button onclick=NS.foo(); >Named Space a++</button></p>' +
+			'<p><button onclick=NS.bar(); >Named Space a--</button></p>' +
+
+			'<p id=pNS >a:</p>' +
+			'<p id=info ></p>' +
+
+		'';
+
+/*
+
+Named spaces are quite powerful, but you can't 'new' them
+
+
+*/
+
+		NS.a = 23;
+
+		NS.foo = function() {
+
+			this.a++;
+			this.b = 23;
+
+			NS.setUI( this.a );
+
+		}
+
+
+		NS.bar = function() {
+
+			this.a--;
+
+console.log( 'b', this.b );
+
+			NS.setUI( this.a );
+
+		}
+
+		NS.setUI = function( text ) {
+
+			pNS.innerHTML = 'a:' + text;
+
+		};
+
+
+// prototype
+
+		info.innerHTML = JA.r + '<br>';
+
+		JA.Stuff = function() {
+
+			this.title = 'Object Prototype R2';
+			this.description = 'A fact-based journey through the JavaScript objects.';
+			this.link = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects';
+
+		};
+
+// redefines the normal toString();
+
+		JA.Stuff.prototype.toString = function() {
+
+			return 'Title: ' + this.title + '<br>' + this.description + '<br>' + this.link;
+
+		}
+
+		JA.Stuff.prototype.print = function () {
+
+			console.log( this.title, '\n', this.description );
+
+		}
+
+// Must new in order for all the pieces to be collected
+
+		p = new JA.Stuff();
+
+		info.innerHTML += p.toString();
+
+		p.print();
+
+
+
+	}
+
+</script>
+</body>
+</html>

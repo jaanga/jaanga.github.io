@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Array Map R1</title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + document.title + '</h1></a>' +
+		'<div id=msg1 ></div>' +
+
+	'';
+
+	forLoop();
+
+	arrMap();
+
+	function forLoop() {
+
+//		var arr;
+
+		arr = [];
+
+		for ( var i = 0; i < 1000; i++ ) {
+
+			arr.push( Math.random() );
+
+		}
+
+console.log( 'arr1', arr );
+
+
+	}
+
+
+	function arrMap() {
+
+		things = [];
+		things.length = 1000;
+
+		things = things.fill( Math.random() );
+
+
+		var arr2 = things.map( function( thing ) {
+
+			thing = Math.random();
+			return thing;
+
+		});
+
+
+console.log( 'arr2', arr2 );
+
+	}
+</script>
+</body>
+</html>

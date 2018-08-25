@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<title>timer example</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script type='text/javascript'>
+document.body.style.font = '12pt monospace';
+
+var info = document.createElement( 'div' );
+
+info.innerHTML = '<div><a href="#" onClick="startTimer()" >startTimer</a> ~ ' +
+'<a href="#" onClick="stopTimer()" >stop Timer</a></div>' +
+'<div id="status1">status1</div>' +
+'<div id="status2">status2</div>' +
+'</div><div id="status3">status3</div>';
+document.body.appendChild( info );		
+			
+var tim;
+var timer_is_on = 0;
+var startTime = new Date;
+
+function doIt() {
+	var timeDiff = new Date();
+	timeDiff = new Date() - startTime;
+	status1.innerHTML =  timeDiff
+}
+
+function timer() {
+	doIt();
+	tim=setTimeout("timer()",1000);
+}
+
+function startTimer() {
+	if (!timer_is_on) {
+	  timer_is_on = 1;
+	  timer();
+	  status2.innerHTML = 'timer is on: ' + new Date;
+	}
+}
+
+function stopTimer() {
+	clearTimeout(tim);
+	timer_is_on = 0;
+	status3.innerHTML = 'timer is off: ' + new Date;
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>objects</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="Theo Armour">
+</head>
+<body>
+<script>
+
+	document.body.style.font = 'bold 12pt monospace';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>objects</h1></a>' +
+		'<p id=msg1 ></p>' +
+		'<p id=msg2 ></p>' +
+	'';
+
+	var b = '<br>';
+
+	var THREO = THREO || { REVISION: '01' };
+
+	THREO.Person = function (first, last) {
+		this.first = first;
+		this.last = last;
+	}
+
+	THREO.Person.prototype.fullName = function() {
+		return this.first + ' ' + this.last;
+	}
+
+	THREO.Person.prototype.fullNameReversed = function() {
+		return this.last + ', ' + this.first;
+	}
+
+	var s = new THREO.Person("Theo", "Armour");
+	
+	var obj = {};
+	
+	obj['theo'] = new THREO.Person("Theo", "Armour");
+	obj['allison'] = new THREO.Person("Allson", "Armour");
+	obj['tania'] = new THREO.Person("Tania", "Armour");
+	
+	var keys = Object.keys( obj );
+
+	msg1.innerHTML += 's: ' + s.fullName() +' ~ ' + s.fullNameReversed() + b + b +
+		'obj[ "theo" ].first: ' + obj[ 'theo' ].first + b;
+		THREO.REVISION + b +  // does not output
+		'';
+
+console.log( 's', s, 'obj', obj, 'keys.sort', keys.sort() );
+
+
+
+// simpler
+// set up defaults
+
+	var proto = function() {
+		this.name = 'a';  // 'this' makes it work on all new objects
+		this.number = 123;
+		this.try = null;
+	};
+
+//	proto.prototype.thing = 20; // prototype forces the parent to update itself 
+
+	var a = new proto;
+	a.a = 1;
+	a.name = 'ttttt';
+	a.number = 88888;
+	a.try = 'thing';
+
+	c = new proto;
+	c.name = 'c';
+
+
+
+console.log( a );
+console.log( c );
+
+///////////////
+
+	var equations = function() { this.equations = {
+
+		'apple-surface-i' : {
+			'title' : 'Apple Surface I',
+			'link' : 'http://www.3d-meier.de/tut3/Seite54.html',
+			'scale' :  5,
+			'a' : 4,
+			'aMin' : -5,
+			'aMax' : 10,
+			'aStep' : 0.05,
+			'b' : 3.8,
+			'bMin' : -5,
+			'bMax' : 10,
+			'bStep' : 0.05,
+			'c' : 10,
+			'cMin' : -5,
+			'cMax' : 20,
+			'cStep' : 0.5,
+			'd' : 7.5,
+			'dMin' : -5,
+			'dMax' : 10,
+			'dStep' : 0.05,
+			'curve' : function( u, v ) {
+
+				u = 2 * pi * ( u - 0.5 );
+				v = 2 * pi * ( v - 0.5);
+
+				x = scale * ( cos( u ) * ( a + b * cos( v ) )  );
+				z = scale * ( sin( u ) * ( a + b * cos( v ) )  );
+				y = scale * 0.6 * ( ( cos( v ) + sin( v ) * -1 ) * ( 3 + sin( v ) ) * log( 1 - pi * v / c ) + d * sin( v ) );
+
+				return new THREE.Vector3( x, y, z );
+			}
+		},
+
+
+		'apple-surface-ii' : {
+			'title' : 'Apple II Surface',
+			'link' : 'http://www.3d-meier.de/tut3/Seite100.html',
+			'scale' :  5,
+			'a' : 20,
+			'aMin' : -10,
+			'aMax' : 30,
+			'aStep' : 1,
+			'b' : 0.25,
+			'bMin' : -1,
+			'bMax' : 2,
+			'bStep' : 0.01,
+			'c' : 5,
+			'cMin' : -10,
+			'cMax' : 20,
+			'cStep' : 0.1,
+			'd' : 2.3,
+			'dMin' : -5,
+			'dMax' : 8,
+			'dStep' : 0.1,
+			'e' : 6,
+			'eMin' : -10,
+			'eMax' : 10,
+			'eStep' : 0.1,
+			'f' : 2,
+			'fMin' : -10,
+			'fMax' : 5,
+			'fStep' : 0.1,
+			'R1' : 5,
+			'R1Min' : -5,
+			'R1Max' : 8,
+			'R1Step' : 0.1,
+			'R2' : 4.8,
+			'R2Min' : -5,
+			'R2Max' : 8,
+			'R2Step' : 0.1,
+			'curve' : function( u, v ) {
+				u = 2 * pi * ( u - 0.5 );
+				v = 2 * pi * ( v - 0.5 );
+
+				x = scale * ( cos( u ) * ( R1 + R2 * cos( v ) ) + pow( v / pi, a ) );
+				z = scale * ( sin( u ) * ( R1 + R2 * cos( v ) ) + b * cos( c * u ) );
+				y = scale * ( - d * log( 1 - v * 0.3157 ) + e * sin( v ) + f * cos( v ) );
+
+				return new THREE.Vector3( x, y, z );
+			}
+		},
+
+		};
+
+	}
+
+console.log( equations );
+
+	var cc = new equations;
+
+	msg2.innerHTML = 'proto <br> cc = ' + cc.equations['apple-surface-ii'].curve.toString();
+
+
+</script>
+</body>
+</html>

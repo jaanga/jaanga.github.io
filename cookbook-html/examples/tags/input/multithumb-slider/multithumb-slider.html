@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-01-19" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+
+/* CSS Document */
+
+div.aria-widget-slider {
+	clear: both;
+	padding-top: 0.5em;
+	padding-bottom: 1em;
+}
+
+
+div.rail-label {
+	padding-right: 0.5em;
+	text-align: right;
+	float: left;
+	width: 4em;
+	position: relative;
+	top: -0.5em;
+}
+
+div.rail-label.max {
+	padding-left: 0.5em;
+	text-align: left;
+}
+
+div.aria-widget-slider .rail {
+	background-color: #eee;
+	border: 1px solid #888;
+	position: relative;
+	height: 4px;
+	float: left;
+}
+
+div.aria-widget-slider img[role="slider"]  {
+	position: absolute;
+	padding: 0;
+	margin: 0;
+	top: -10px;
+}
+
+div.aria-widget-slider img[role="slider"].focus,
+div.aria-widget-slider img[role="slider"]:hover {
+	outline-color: rgb(140, 203, 242);
+	outline-style: solid;
+	outline-width: 2px;
+	outline-offset: 2px;
+}
+
+div.aria-widget-slider .rail.focus {
+	background-color: #aaa;
+}
+
+</style>
+</head>
+<body>
+<script src=multithumb-slider.js ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p><button onclick=setIt(); >howdybutton</button></p>
+
+	</div>
+
+	<div id = "divContents" ></div>
+
+
+	<h3>
+		Hotel Price Range
+	</h3>
+
+	<div class="aria-widget-slider">
+
+		<div class="rail-label min"> 0 </div>
+
+		<div class="rail" style="width: 300px;">
+
+		<img id="minPriceHotel"
+			src="min-arrow.png"
+			role="slider"
+			tabindex="0"
+			class="min thumb"
+			aria-valuemin="0"
+			aria-valuenow="100"
+			aria-valuetext="$100"
+			aria-valuemax="400"
+			aria-label="Hotel Minimum Price">
+
+		<img id="maxPriceHotel"
+			src="max-arrow.png"
+			role="slider"
+			tabindex="0"
+			class="max thumb"
+			aria-valuemin="0"
+			aria-valuenow="250"
+			aria-valuetext="$250"
+			aria-valuemax="400"
+			aria-label="Hotel Maximum Price">
+		</div>
+
+		<div class="rail-label max"> 0 </div>
+
+	</div>
+
+	<h3> Flight Price Range </h3>
+
+	<div class="aria-widget-slider">
+
+		<div class="rail-label min"> 0 </div>
+
+		<div class="rail" style="width: 300px;">
+
+			<img src="min-arrow.png"
+				role="slider"
+				tabindex="0"
+				class="min thumb"
+				aria-valuemin="0"
+				aria-valuenow="100"
+				aria-valuetext="$100"
+				aria-valuemax="250"
+				aria-label="Flight Minimum Price">
+
+			<img src="max-arrow.png"
+				role="slider"
+				tabindex="0"
+				class="max thumb"
+				aria-valuemin="0"
+				aria-valuenow="250"
+				aria-valuetext="$250"
+				aria-valuemax="1000"
+				aria-label="Flight Maximum Price">
+
+		</div>
+
+		<div class="rail-label max"> 0 </div>
+
+	</div>
+
+<script>
+
+init();
+
+function init() {
+
+	const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+	//const title = document.title;
+
+	divTitle.innerHTML =
+	`
+		<h1><a href="" >${title}</a></h1>
+		<p>${document.head.querySelector( '[name=description]' ).content }</p>
+	`;
+
+	divContents.innerHTML += 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
+
+}
+
+
+function setIt() {
+
+	divContents.innerHTML += `<p>Howdy!</p>`;
+
+}
+
+
+
+</script>
+</body>
+</html>

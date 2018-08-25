@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+http://stackoverflow.com/questions/1176668/how-to-use-yql-to-retrieve-web-results
+
+
+// encodedQuery = encodeURIComponent( ( www.google.com/finance/getprices?q=GOOG&i=86400' )
+
+//	var query = 'select * from rss where url="http://news.yahoo.com/rss/topstories"'
+
+//	var query = 'select * from html where url="http://www.google.com/finance/getprices?q=LHA&x=ETR&i=60&p=1d&f=d,c,h,l,o,v"';
+//	var query = 'select * from html where url="http://www.google.com/finance/getprices?q=GOOG&i=86400"';
+//	var query = 'select * from url="http://www.google.com/finance/getprices?q=GOOG&i=86400" where text= "DATA"'.
+//	var query = 'http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20rss%20where%20url%3D%22http%3A%2F%2Frss.news.yahoo.com%2Frss%2Ftopstories%22&format=json&diagnostics=false&callback=top_stories'
+
+//	var query = 'select * from html where url="http://chartapi.finance.yahoo.com/instrument/1.0/GOOG/chartdata;type=quote;range=1d/csv"';
+
+	var query = 'select * from html where url="https://www.linkedin.com/company-beta/1441/"';
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML =
+
+		'<a href="" ><h1>' + location.pathname.split( '/' ).pop() + '</h1></a>' +
+
+		'<div id=msg1 ></div>' +
+
+	'';
+
+	encodedQuery = encodeURIComponent( query );
+
+	scr = document.body.appendChild( document.createElement( 'script' ) );
+//	scr.src = 'http://query.yahooapis.com/v1/public/yql?q=' + encodedQuery + '&format=json&diagnostics=true&callback=top_stories';
+// 	scr.src = 'https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22http%3A%2F%2Fwww.google.com%2Ffinance%2Fgetprices%3Fq%3DGOOG%26i%3D60%22&format=csv&callback=top_stories';
+
+	scr.src = 'http://query.yahooapis.com/v1/public/yql?q=' + encodedQuery + '&format=json&callback=top_stories';
+
+
+
+	function top_stories( obj ) {
+
+o = obj;
+
+		var items, txt = '';
+
+		if ( obj.query.results.item ) {
+
+			items = obj.query.results.item;
+
+			for ( var i = 0; i < items.length; i++ ) {
+
+				txt += items[ i ].title + '\n';
+			}
+
+			msg1.innerText = txt;
+
+		} else {
+
+			bb = filterData( o.query.results.body )
+			msg1.innerText = bb; //obj.results[ 0 ];
+
+		}
+	}
+
+
+	function filterData(data){
+			// filter all the nasties out
+			// no body tags
+			data = data.replace(/<?\/body[^>]*>/g,'');
+			// no linebreaks
+//			data = data.replace(/[\r|\n]+/g,'');
+			// no comments
+			data = data.replace(/<--[\S\s]*?-->/g,'');
+			// no noscript blocks
+			data = data.replace(/<noscript[^>]*>[\S\s]*?<\/noscript>/g,'');
+			// no script blocks
+			data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
+			// no self closing scripts
+			data = data.replace(/<script.*\/>/,'');
+			// [... add as needed ...]
+			return data;
+	}
+</script>
+</body>
+</html>

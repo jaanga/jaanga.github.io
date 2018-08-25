@@ -1,0 +1,428 @@
+﻿<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Time Now R2.1</title>
+<!--
+<meta name = viewport content = 'width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+<meta name=viewport content='initial-scale=1, minimal-ui, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width' >
+-->
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
+<meta name=description content='Playing with and investigating the JavaScript Date object' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=date content='2016-05-26' >
+</head>
+<body>
+<script>
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+// https://developers.google.com/maps/documentation/timezone/intro
+// http://www.w3schools.com/jsref/jsref_obj_date.asp
+// http://www.ecma-international.org/ecma-262/6.0/#sec-date-objects
+
+	var timeZoneThere, offsetThere, utcZero;
+
+	var a = '<p>';
+	var b = '</p>';
+
+	var locations = [
+
+		[ 21.3, -157.8167, 'Honolulu'],
+		[ 32.6333, 51.6500, 'Isfahan' ],
+		[ 51.5072, -0.1275, 'London' ],
+		[ 18.975, 72.8258, 'Mumbai'],
+		[ 40.712, -74.0059, 'New York' ],
+		[ -22.9068, -43.1729, 'Rio de Janeiro' ],
+		[ 37.796, -122.398, 'San Francisco' ],
+		[ 31.2, 121.5, 'Shanghai'],
+		[ -33.8650, 151.2094, 'Sydney' ]
+
+//		[ , , ''],
+
+	];
+
+	init();
+
+	function init() {
+
+		var css, contents;
+
+		css = document.body.appendChild( document.createElement( 'style' ) );
+		css.innerHTML =
+
+			'body { font: 12pt monospace; margin: 0; }' +
+			'h2 { margin: 0; }' +
+			'a { color: crimson; text-decoration: none; }' +
+
+			'button, input[type=button] { background-color: #eee; border: 2px #eee solid; color: #888; }' +
+
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'#contents { margin: 0 20px; max-width: 800px; position: absolute; }' +
+
+		'';
+
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
+
+			'<h2>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	<a href=http://jaanga.github.io/cookbook-html/examples/ >&#x24D8; </a>' +
+			'</h2>' +
+			'<p id=links >' +
+				'<a href=https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date target="_blank" ' +
+					' title= "JavaScript Date instance that represents a single moment in time. Date objects based on number of milliseconds since 1 January, 1970 UTC." >JavaScript Date Object</a> - ' +
+				'<a href=https://en.wikipedia.org/wiki/Coordinated_Universal_Time target="_blank" title="Mean solar time at 0° longitude" >UTC</a> - ' +
+				'<a href=https://en.wikipedia.org/wiki/Julian_day target="_blank" ' +
+					'title="Number of days since noon GMT, January 1, 4713 BC" >Julian Day</a> - ' +
+				'<a href=https://en.wikipedia.org/wiki/Julian_year_(astronomy) target="_blank" title="365.25 days of 86400 SI seconds each" >Julian Year</a> ' +
+			'</p>' +
+
+			'<div id=dateMethods ></div>' +
+			'<div id=utcTime ></div>' +
+			'<div id=offsets ></div>' +
+			'<div id=remoteDate ></div>' +
+			'<div id=contentsDates ></div>' +
+
+		'';
+
+		getDate();
+		getUTCTime();
+		getOffsets();
+		getDateOffsetThere();
+
+	}
+
+	function getDate() {
+
+		var txt, date;
+
+		txt = '<h3>Date Methods</h3>' + '';
+
+		date = new Date();
+
+		txt += a + 'new Date() = ' + date + b;
+
+		txt += a + 'date.getTime() = ' + date.getTime() + b;
+
+		txt += a + 'Date.UTC( 1970, 0 ) = ' + Date.UTC( 1970, 0 ) + ' // time since 1970-01-01' + b;
+
+		txt += a + 'date.now() = ' + Date.now() + b;
+
+		txt += a + 'Date.parse( "Jan 28, 1947" ) = ' + Date.parse( "Jan 28, 1947" ) + b;
+
+		txt += a + 'date.getDate() = ' + date.getDate() + b;
+
+		txt += a + 'date.getDay() = ' + date.getDay() + b;
+
+		txt += a + 'date.getFullYear() = ' + date.getFullYear() + b;
+
+		txt += a + 'date.getHours() = ' + date.getHours() + b;
+
+		txt += a + 'date.getMilliseconds() = ' + date.getMilliseconds() + b;
+
+		txt += a + 'date.getMinutes() = ' + date.getMinutes() + b;
+
+		txt += a + 'date.getMonth() = ' + date.getMonth() + b;
+
+		txt += a + 'date.getSeconds() = ' + date.getSeconds() + b;
+
+		txt += a + 'date.getTime() = ' + date.getTime() + b;
+
+		txt += a + 'date.getTimezoneOffset() = ' + date.getTimezoneOffset() + b;
+
+		txt += a + 'date.getUTCDate() = ' + date.getUTCDate() + b;
+
+		txt += a + 'date.getUTCDay() = ' + date.getUTCDay() + b;
+
+		txt += a + 'date.getUTCFullYear() = ' + date.getUTCFullYear() + b;
+
+		txt += a + 'date.getUTCHours() = ' + date.getUTCHours() + b;
+
+		txt += a + 'date.getUTCMilliseconds() = ' + date.getUTCMilliseconds() + b;
+
+		txt += a + 'date.getUTCMinutes() = ' + date.getUTCMinutes() + b;
+
+		txt += a + 'date.getUTCMonth() = ' + date.getUTCMonth() + b;
+
+		txt += a + 'date.getUTCSeconds() = ' + date.getUTCSeconds() + b;
+
+		txt += a + 'date.getYear() = ' + date.getYear() + b;
+
+		txt += a + 'date.toDateString() = ' + date.toDateString() + b;
+
+		txt += a + 'date.toGMTString() = ' + date.toGMTString() + b;
+
+		txt += a + 'date.toISOString() = ' + date.toISOString() + b;
+
+		txt += a + 'date.toJSON() = ' + date.toJSON() + b;
+
+		txt += a + 'date.toLocaleDateString() = ' + date.toLocaleDateString() + b;
+
+//		txt += a + 'date.toLocaleFormat() = ' + date.toLocaleFormat() + b; // non-standard
+
+		txt += a + 'date.toLocaleString() = ' + date.toLocaleString() + b;
+
+		txt += a + 'date.toLocaleTimeString() = ' + date.toLocaleTimeString() + b;
+
+//		txt += a + 'date.toSource() = ' + date.toSource() + b; // non-standard
+
+		txt += a + 'date.toString() = ' + date.toString() + b;
+
+		txt += a + 'date.toTimeString() = ' + date.toTimeString() + b;
+
+		txt += a + 'date.toUTCString() = ' + date.toUTCString() + b;
+
+		txt += a + 'date.valueOf() = ' + date.valueOf() + b;
+
+		dateMethods.innerHTML = txt;
+
+	}
+
+	function getUTCTime() {
+// needs work
+
+		var date, txt;
+
+		date = new Date();
+
+		txt = '<h3>UTC Time </h3>';
+
+		txt += '<p>You may think the following should give you UTC time. It does not.</p>';
+
+		dateUTC = new Date( Date.UTC( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(),
+			date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds() ) );
+
+		txt += a + 'new Date( Date.UTC( date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), ' +
+			' date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds() ) ) = <br>' +
+			dateUTC + ' << gets converted to local time' + b;
+
+		txt += a + 'dateUTC.getTime() = ' + dateUTC.getTime() + ' << QED' + b;
+
+		utcTime.innerHTML = txt;
+
+	}
+
+
+	function getOffsets() {
+
+// is this still useful?
+
+		var date, txt, localOffset, utc, dateUTC;
+
+		date = new Date();
+
+		txt = '<h3>Offsets</h3>';
+
+		localOffset = date.getTimezoneOffset();
+
+		txt += a + 'date.getTimezoneOffset = ' + localOffset + ' << offset in minutes' + b;
+
+		txt += a + 'date.getTimezoneOffset / 60 = ' + localOffset / 60 + ' << offset in hours' + b;
+
+		txt += a + 'date.getTimezoneOffset() * 60000 = ' + localOffset * 60000 + ' << offset in milliseconds' + b;
+
+		utc = date.getTime() + localOffset * 60000;
+
+		txt += a + ' date.getTime + localOffset * 60000 = ' + utc + ' << UTC ' + b;
+
+// all this needs more explaining and greater insight
+
+		dateUTC = new Date( utc );
+
+		txt += a + 'dateUTC = new Date( utc ) = ' + dateUTC + ' << note automatic conversion to local time format. Ugh.' + b;
+
+		txt += a + 'dateUTC.getUTCHours() = ' + dateUTC.getUTCHours() + ' << watch out' + b;
+
+		txt += a + 'dateUTC.getHours() = ' + dateUTC.getHours() + ' << OK' + b;
+
+		txt += a + 'dateUTC.toISOString() = ' + dateUTC.toISOString() + ' << watch out' + b;
+
+		txt += a + 'dateUTC.toISOString() = ' + dateUTC.toUTCString() + ' << watch out' + b;
+
+		txt += a + 'dateUTC.toDateString() = ' + dateUTC.toDateString() + ' << OK' + b;
+
+		txt += a + 'dateUTC.toLocaleDateString() = ' + dateUTC.toLocaleDateString() + ' << OK' + b;
+
+		txt += a + 'dateUTC.toTimeString() = ' + dateUTC.toTimeString() + ' << watch out' + b;
+
+		txt += a + 'dateUTC.toLocaleTimeString() = ' + dateUTC.toLocaleTimeString() + ' << OK' + b;
+
+		offsets.innerHTML = txt;
+
+	}
+
+
+//
+
+	function getDateOffsetThere() {
+
+		var dateHere, offsetHere, dateUTCZero, timeStamp, locate;
+
+		dateHere = new Date();
+
+		offsetHere = dateHere.getTimezoneOffset();
+
+		utcZero = dateHere.getTime() + offsetHere * 60000; // number of milliseconds since 1 January 1970 at zero longitude
+
+		timeStamp = utcZero / 1000;
+
+		for ( var i = 0; i < locations.length; i++ ) {
+
+			locate = locations[ i ];  // note that 'location' is a JavaScript DOM object!
+
+			request = 'https://maps.googleapis.com/maps/api/timezone/json?location=' + locate[ 0 ] + ',' + locate[ 1 ] + '&timestamp=' + timeStamp;
+
+			requestTimeZoneThere( request, locate );
+
+		}
+
+		dateUTCZero = new Date( utcZero );
+
+		txt = '<h2>Remote Times Now Given Lat Lon Request</h2>' +
+
+			'<p>Given a UTC time at 0&deg; longitude of ' + dateUTCZero.getHours() + ':' + ( "0" + dateUTCZero.getMinutes() ).slice( - 2 ) + '</p>' +
+
+			'date: ' + dateHere + b +
+			'offsetHere: ' + offsetHere + b +
+			'utcZero: ' + utcZero + b +
+			'dateUTCZero: ' + dateUTCZero + b +
+			'timeStamp: ' + timeStamp + b +
+//			'date: ' + date + b +
+		'';
+
+		remoteDate.innerHTML = txt;
+
+	}
+
+	function requestTimeZoneThere( url, locate ) {
+
+		var xhr;
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', url, true );
+		xhr.onload = callback;
+		xhr.send( null );
+
+			function callback() {
+
+				timeZoneThere = JSON.parse( xhr.responseText );
+
+				if ( timeZoneThere.status === 'OK' ) {
+
+					offsetThere = ( timeZoneThere.rawOffset + timeZoneThere.dstOffset ) /  3600;
+
+//					dateThere = new Date( utcZero + 3600000 * offsetThere );
+
+//					setMenuDateParameters( dateThere, locate );
+
+					setDateThereNow( locate );
+
+				} else {
+
+					info.innerHTML = '<b>Ooops: ' + locate[ 2 ] + ': the location is timeless</b>';
+
+				}
+
+			}
+
+	}
+
+	function setDateThereNow( locate ) {
+
+		var dateThereNow;
+
+		dateThereNow = new Date( utcZero + 3600000 * offsetThere );
+
+//		inpHours.value = dateThereNow.getHours();
+//		inpMinutes.value = dateThereNow.getMinutes();
+
+		setContentsDates( dateThereNow, locate );
+
+	}
+
+
+	function setContentsDates( dateThere, locate ) {
+
+		contentsDates.innerHTML +=
+
+			'<h3>' + locate[ 2 ] + '</h3>' +
+
+//			'<p>Given a UTC time at 0&deg; longitude of ' + ( "0" + inpHours.value ).slice( - 2 ) + ':' + ( "0" + inpMinutes.value ).slice( - 2 ) + '</p>' +
+			'<p>At latitude: ' + locate[ 0 ] + ' longitude: ' + locate[ 1 ] + '</p>' +
+			'<p>Time Zone ID: ' + timeZoneThere.timeZoneId + '</p>' +
+			'<p>Time zone: ' + timeZoneThere.timeZoneName + '</p>' +
+			'<p>Offset in hours: ' + offsetThere + '</p>' +
+			'<p>Raw offset in minutes: ' + timeZoneThere.rawOffset + '</p>' +
+			'<p>Daylight saving offset in minutes: ' + timeZoneThere.dstOffset + '</p>' +
+			'<p>The ' + locate[ 2 ] + ' date and time is : ' + dateThere.toLocaleString() + '</p>' +
+			'<p>The ' + locate[ 2 ] + ' universal time is: ' + dateThere.getTime() + '</p>' +
+
+		'';
+
+	}
+
+
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
+/*
+
+Date.UTC()
+Date.now()
+Date.parse()
+Date.prototype.getDate()
+Date.prototype.getDay()
+Date.prototype.getFullYear()
+Date.prototype.getHours()
+Date.prototype.getMilliseconds()
+Date.prototype.getMinutes()
+Date.prototype.getMonth()
+Date.prototype.getSeconds()
+Date.prototype.getTime()
+Date.prototype.getTimezoneOffset()
+Date.prototype.getUTCDate()
+Date.prototype.getUTCDay()
+Date.prototype.getUTCFullYear()
+Date.prototype.getUTCHours()
+Date.prototype.getUTCMilliseconds()
+Date.prototype.getUTCMinutes()
+Date.prototype.getUTCMonth()
+Date.prototype.getUTCSeconds()
+Date.prototype.getYear()
+Date.prototype.setDate()
+Date.prototype.setFullYear()
+Date.prototype.setHours()
+Date.prototype.setMilliseconds()
+Date.prototype.setMinutes()
+Date.prototype.setMonth()
+Date.prototype.setSeconds()
+Date.prototype.setTime()
+Date.prototype.setUTCDate()
+Date.prototype.setUTCFullYear()
+Date.prototype.setUTCHours()
+Date.prototype.setUTCMilliseconds()
+Date.prototype.setUTCMinutes()
+Date.prototype.setUTCMonth()
+Date.prototype.setUTCSeconds()
+Date.prototype.setYear()
+Date.prototype.toDateString()
+Date.prototype.toGMTString()
+Date.prototype.toISOString()
+Date.prototype.toJSON()
+Date.prototype.toLocaleDateString()
+Date.prototype.toLocaleFormat()
+Date.prototype.toLocaleString()
+Date.prototype.toLocaleTimeString()
+Date.prototype.toSource()
+Date.prototype.toString()
+Date.prototype.toTimeString()
+Date.prototype.toUTCString()
+Date.prototype.valueOf()
+Date.prototype[@@toPrimitive]
+
+*/
+
+</script>
+</body>
+</html>

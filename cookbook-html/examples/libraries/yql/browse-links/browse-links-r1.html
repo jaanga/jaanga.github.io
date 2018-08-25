@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang=en >
+<head>
+<meta charset=utf-8 >
+<title>Links to Sponsors Building Simulation 2017 </title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<meta name=description content='Browse in a speedy way the web sites of sponsors of Building Simulation 2017.' >
+<meta name=keywords content='CSS,HTML,JavaScript,GitHub,FOSS' >
+<meta name=date content='2017-06-01' >
+</head>
+<body>
+<script>
+// Copyright 2017 Jaanga authors ~ MIT license
+		const b = '<br>';
+
+	init();
+
+	function init() {
+
+		let css, container, hamburger, menu;
+
+		css = document.body.appendChild( document.createElement('style') );
+		css.innerHTML =
+			'html, body { font: 12pt monospace; height: 100%; margin: 0; overflow: hidden; padding: 0 }' +
+			'a { color: crimson; text-decoration: none; }' +
+			'a:hover { text-decoration: underline; }' +
+
+			'button, input[type=button] { background-color: #ccc; border: 2px #fff solid; color: #322; }' +
+
+			'iframe { border-width: 0; }' +
+			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 160px; }' +
+			'input[type=range]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }' +
+			'input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
+
+			'summary { outline: none; }' +
+			'summary h3 { display: inline; }' +
+
+			'.popUp { background-color: white; left: 300px; border: 1px solid red; opacity: 1.0; padding: 5px; position: absolute; width: 120px; z-index: 10; }' +
+			'#bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }' +
+			'#container {  height: 100%; left: 0; position: absolute; transition: left 1s; width: 100%;}' +
+
+			'#contents { border: 1px #ccc solid; height: 100%; left: 325px; width: calc( 100% - 325px ); position: absolute; }' +
+
+			'#hamburger { background-color: #eee; left: 325px; position: absolute; top: 20px; }' +
+			'#hamburger h2 { margin: 0; }' +
+			'#menu { background-color: #eee; border: 1px #ccc solid; height: 100%; overflow: auto; padding: 0 10px; position: absolute; width: 300px; }' +
+			'#menu h2 { margin: 0; }' +
+		'';
+
+		container = document.body.appendChild( document.createElement( 'div' ) );
+		container.id = 'container';
+		container.innerHTML =
+			'<div id=menu >' +
+
+				'<h2>' +
+					'<a href=http://jaanga.github.io title="Jaanga - your 3D happy place" > &#x2766 </a><br>' +
+					'<a href="" title="Click here to refresh this page" >' + document.title + '</a>' +
+//					'<a href="" title="Click here to refresh this page" >' + location.pathname.split( '/' ).pop().slice( 0, -5).replace( /-/g, ' ' ) + '</a>' +
+					' ~ <a href=index.html#readme.md onmouseover=popHelp.style.display=""; onmouseout=popHelp.style.display="none"; > &#x24D8; </a>' +
+				'</h2>' +
+
+				'<div class=popUp id=popHelp style=display:none; ><p>Hi there!</p>Click the i-in-circle, info icon for latest updates.</div>' +
+
+				'<p><small>' + document.head.querySelector( "[name=description]" ).content  + '</small></p>' +
+
+					'<h3>' +
+						'&#x1F5D7;  <a href=http://www.buildingsimulation2017.org target=_blank >Building Simulation 2017</a>' +
+					'</h3>' +
+				'<details open>' +
+
+					'<summary><h3>Sponsors</h3></summary>' +
+
+
+					'<p>' +
+						'The &#x1F5D7; icon indicates that a web site will be opened in a separate tab. ' +
+						'All other other links will open in the panel to the right.' +
+					'</p>' +
+
+					'<div id=menuInfo ></div>' +
+
+			'<div id=logKeys ></div>' +
+			'<div id=logQuery ></div>' +
+			'<div id=log ></div>' +
+				'</details>' +
+
+			'</div>' +
+
+			'<div id=hamburger onclick=container.style.left=container.style.left===""?"-325px":""; >' +
+				'<div id=bars title="Click this hamburger to slide the menu" > &#9776 </div>' +
+			'</div>' +
+
+			'<div id=contents ><iframe id=ifr height=100% width=100% ></iframe></div>' +
+
+		'';
+
+		window.addEventListener ( 'hashchange', onHashChange, false );
+
+		url = 'http://www.buildingsimulation2017.org/sponsors.html';
+
+		setQueryBuildSim( url, 'callbackBS' );
+
+	}
+
+
+	function onHashChange() {
+
+		fileName = location.hash.slice( 1 );
+
+		contents.innerHTML = '<iframe id=ifr src=' + fileName + ' height=100% width=100%  ></iframe>';
+
+		history.replaceState( '', document.title, window.location.pathname );
+
+	}
+
+
+	function setQueryBuildSim( url, callback ) {
+
+// https://developer.yahoo.com/yql/guide/yql-select-xpath.html
+
+		var statement, encodedStatement, query, scr;
+
+		statement = 'select * from html where url="' + url + '" and compat="html5" and xpath="//a[@target=\'_blank\']"';
+		encodedStatement = encodeURIComponent( statement );
+
+		query =	'https://query.yahooapis.com/v1/public/yql?q=' + encodedStatement + '&callback=' + callback;
+
+		scr = document.body.appendChild( document.createElement( 'script' ) );
+		scr.src = query;
+
+	}
+
+
+	function callbackBS( response ){
+
+		let links, link, title, url, test, string, txt;
+
+		links = response.results;
+
+		for ( var i = 0; i < links.length; i++ ) {
+
+			link = links[ i ];
+
+			title = link.replace( /(.*?)alt=\"(.*)"\sclass(.*?)a>/gi, '$2' )
+			title = title.replace( /(.*?)alt=\"(.*)"\ssrc(.*?)a>/gi, '$2' )
+
+			url = link.replace( /<a href="(.*)"\starg(.*?)a>/i, '$1' );
+			url = url.replace( /http\/\/www.lolo.ac.uk\//i, 'www.lolo.ac.uk' );
+
+
+			test = title.split( ' ' ).shift().toLowerCase();
+			string = 'autodesk facebook google twitter doe comed pge taylor eyp bay ';
+
+			if ( test === 'london' ) { url = 'http://www.lolo.ac.uk' }
+
+			if ( string.includes( test ) ) {
+
+				log.innerHTML += '&#x1F5D7; <a href=' + url + ' >' + title + '</a>' + b;
+
+			} else {
+
+				log.innerHTML += '<a href=#' + url + ' >' + title + '</a>' + b;
+
+			}
+
+			links[ i ] = link.replace( /src="img/gi, 'src="http://www.buildingsimulation2017.org/img' );
+
+
+		}
+
+
+
+		txt = '<h1 style="font-family: monospace;">' + b + b +
+				'Click on the links in the  left side menu to view the web sites here' + b +
+			'</h1>';
+
+		ifr.srcdoc = txt + b + links;
+
+	}
+
+</script>
+</body>
+</html>

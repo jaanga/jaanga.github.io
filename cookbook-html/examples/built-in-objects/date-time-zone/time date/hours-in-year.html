@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang=en>
+<head>
+<title>Hours in Year</title>
+<meta charset=utf-8>
+<meta name=author content='Theo Armour'>
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+	
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<h1>Hours in Year</h1>' +
+		'<div id=data></div>' +
+	'';
+	
+	var daysInMonth = [31,28,31,30,31,30,31,31,30,31,30,31];
+	
+	var months = ['01 January','02 February','03 March','04 April','04 May','06 June','07 July','08 August','09 September','10 October','11 November','12 December'];
+	
+	var hoursInMonths = [];
+	var hoursInMonth;
+	
+	
+	for (var i = 0, len = 12; i < len; i++) {
+		hoursInMonth = daysInMonth[i] * 24;
+		hoursInMonths.push( hoursInMonth );
+	} 
+	data.innerHTML = 'Hours in months: ' + hoursInMonths + '<br>';
+	
+	var hoursInMonthsSummed = [];
+	var start = 0, hours;
+	for (var i = 0, len = 12; i < len; i++) {
+		hours = hoursInMonths[i];
+		hoursInMonthsSummed.push( start );
+		start += hours;
+	} 	
+	data.innerHTML += 'Hours in months summed: ' + hoursInMonthsSummed + '<br>';
+	
+	var hoursInDays = [];
+	var hoursInDay;	
+	for (var i = 0, len = 31; i < len; i++) {
+		hoursInDay = i * 24;
+		hoursInDays.push( hoursInDay );
+	} 	
+	
+	data.innerHTML += 'Hours in days summed: ' + hoursInDays + '<br>';
+	
+	var selectMonth = data.appendChild( document.createElement( 'select' ) );
+	
+	selectMonth.onchange = function(){
+		hoursMonth.innerHTML =' hours: ' + hoursInMonthsSummed[this.selectedIndex] + ' ';
+		total.innerHTML = ' selected hour: ' + ( hoursInMonthsSummed[ selectMonth.selectedIndex ] + hoursInDays[ selectDay.selectedIndex ] );
+	};
+	selectMonth.selectedIndex = 0;	
+	
+	for (var option, i = 0; i < months.length; i++) {
+		option = document.createElement( 'option' );
+		option.innerText = months[i];
+		selectMonth.appendChild( option );
+	}
+	
+	var hoursMonth = data.appendChild( document.createElement( 'scan' ) );
+	hoursMonth.innerHTML = ' hours: ' + hoursInMonthsSummed[ selectMonth.selectedIndex ] + ' ';
+	
+	var selectDay = data.appendChild( document.createElement( 'select' ) );
+	
+	selectDay.onchange = function(){hoursDay.innerHTML =' hours: ' + hoursInDays[this.selectedIndex]; };
+	selectDay.selectedIndex = 0;	
+	
+	for (var option, i = 0; i < 31; i++) {
+		option = document.createElement( 'option' );
+		option.innerText = ' Day ' + ( i + 1);
+		selectDay.appendChild( option );
+	}
+	
+	var hoursDay = data.appendChild( document.createElement( 'scan' ) );
+	hoursDay.innerHTML = ' hours: ' + hoursInDays[ selectDay.selectedIndex ];
+
+	var total = data.appendChild( document.createElement( 'scan' ) );
+	total.innerHTML = ' selected hour: ' + ( hoursInMonthsSummed[ selectMonth.selectedIndex ] + hoursInDays[ selectDay.selectedIndex ] );
+	
+</script>
+</body>
+</html>
