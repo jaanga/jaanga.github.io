@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-08-11" >
+<title></title>
+<style>
+	/* Copyright 2018 pushMe pullYou authors. MIT License */
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r95/examples/js/controls/TrackballControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<button onclick=video.play(); style=background-color:pink >video.play</button>
+		<button onclick=video.pause(); >video.pause</button>
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+<script>
+
+/* globals THREE, divTitle, divMenu, hamburger  */
+// jshint esversion: 6
+
+const urlSourceCode = "https://github.com/pushme-pullyou/pushme-pullyou.github.io/tree/master/tootoo-templates/threejs-basic.html";
+
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	setTitle( divTitle );
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	//const material = new THREE.MeshNormalMaterial();
+	//const mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+	video = document.createElement( 'video' );
+	//video.src = "../../../../textures/sintel.ogv";
+	//video.src = "../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
+	//video.src = "../../../textures/File_Structural_MRI_animation.ogv";
+	video.src = "../../../textures/Persistent.webm";
+
+	video.load(); // must call after setting/changing source
+		//video.height = video.width = 256;
+
+	video.loop = true;
+
+
+	mesh = getMesh();
+	mesh.position.set( -50, 50, 0 )
+	scene.add( mesh );
+
+	mesh = getMesh( 64, -0.5 );
+	mesh.geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 50, 0, 0 ) );
+	mesh.position.set( 50,50, 20 )
+	scene.add( mesh );
+
+}
+
+
+function getMesh( sideX = 128, offsetX ) {
+
+	texture = new THREE.VideoTexture( video );
+	//texture.minFilter = THREE.LinearFilter;
+	//texture.magFilter = THREE.LinearFilter;
+	texture.minFilter = THREE.NearestFilter;
+	texture.magFilter = THREE.NearestFilter;
+
+	//texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	texture.wrapS = texture.wrapT = THREE.ClampToEdgeWrapping;
+	//texture.repeat.set( 1 / 512, 1 / 512 );
+	texture.offset.x = offsetX || 0.5;
+	//texture.offset.y = 0.5;
+
+	material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+	const geometry = new THREE.PlaneBufferGeometry( sideX, 128 );
+
+	//const material = new THREE.MeshNormalMaterial( { side: 2 } );
+	const mesh = new THREE.Mesh( geometry, material );
+	return mesh;
+
+}
+
+
+
+function setTitle( target ) {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	target.innerHTML =
+
+	`<h2>
+		<a href=${ urlSourceCode } target="_top" title = "Source code on GitHub" >
+			<img src="https://status.github.com/images/invertocat.png" height=18 >
+		</a>
+		<a href = "" title = "Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( '[name=description]' ).content }
+	</p>`;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>
