@@ -4,7 +4,7 @@
 <div><input type=button onclick="window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/0-templates/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
-# [Template Short Read Me]( #README.md )
+# [Template Read Me]( #README.md )
 
 <!--
 <iframe src=https://pushme-pullyou.github.io/tootoo-templates/basic-html.html width=100% height=500px ></iframe>

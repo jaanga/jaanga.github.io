@@ -49,12 +49,11 @@
 
 		<script src="https://rawgit.com/mrdoob/three.js/r95/examples/js/Detector.js"></script>
 
-		<!--
+
 		<video id="video" autoplay loop crossOrigin="anonymous" webkit-playsinline style="display:none">
 			<source src="https://rawgit.com/mrdoob/three.js/r95/examples/textures/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
 			<source src="https://rawgit.com/mrdoob/three.js/r95/examples/textures/sintel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
-		-->
 
 		<script>
 
@@ -88,8 +87,8 @@
 			function init() {
 
 								//var video = document.getElementById( 'video' );
-								video = document.createElement( 'video' );
-				video.src = "../../../../textures/sintel.ogv";
+								//video = document.createElement( 'video' );
+				//video.src = "../../../../textures/sintel.ogv";
 				//video.src = "../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
 
 				container = document.createElement( 'div' );
@@ -110,10 +109,7 @@
 				container.appendChild( renderer.domElement );
 
 
-
-				video.load(); // must call after setting/changing source
-				video.loop = true;
-				//video = document.getElementById( 'video' );
+				video = document.getElementById( 'video' );
 
 				texture = new THREE.VideoTexture( video );
 				texture.minFilter = THREE.LinearFilter;

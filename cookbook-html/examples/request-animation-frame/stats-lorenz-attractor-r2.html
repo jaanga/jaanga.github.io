@@ -26,7 +26,7 @@
 	function init() {
 
 		css = document.body.appendChild( document.createElement( 'style' ) );
-		css.innerHTML = 
+		css.innerHTML =
 		`	body { font: 12pt monospace; margin: 0; overflow: hidden; }
 			h2, a { margin: 0; }
 			#aa { text-decoration: none; }
@@ -91,7 +91,6 @@
 			z += dz;
 
 			context.beginPath();
-
 			context.fillStyle = '#' + ( color ).toString( 16 );
 			context.arc( 30 * x + window.innerWidth * 0.5, 30 * y + window.innerHeight * 0.5, 10, 0, Math.PI * 2, true );
 			context.fill();

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang=en >
+	<head<title></title>
+	<meta charset=utf-8 />
+	</head>
+	<body>
+<!--
+
+	https://drive.google.com/drive/folders/0Bz2PwDvkjovJNjhxRkg4WXlNMTA/orientation,20_sill,3_overhang,10_roofAngle,10_ceilingHeight,10__CaptureView.png
+
+
+	https://support.awesome-table.com/hc/en-us/articles/115002196665-Display-images-from-Google-Drive
+
+	GET https://www.googleapis.com/drive/v2/files/0Bz2PwDvkjovJNjhxRkg4WXlNMTA/children
+
+	<img src="https://drive.google.com/file/d/0Bz2PwDvkjovJaXhXLVJzRVVlRXM/view?usp=sharing" >
+
+	// https://drive.google.com/thumbnail?id=1e_3TLlUhZDVxCIi0rdG_AJC7NibuLDum&sz=w1200-h360
+
+-->
+
+<img src="https://drive.google.com/thumbnail?id=0Bz2PwDvkjovJaXhXLVJzRVVlRXM&sz=w1200-h360" >
+		<script>
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>' + location.pathname.split( '/' ).pop() + '</h1></a>' +
+		'<div id=msg1 ></div>' +
+
+		'';
+
+</script>
+</body>
+</html>
