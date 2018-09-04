@@ -6,17 +6,19 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [ZZZZZ Read Me]( #xxxxx/README.md )
+# [Export Import Read Me]( #xxxxx/README.md )
 
 <!--
 <iframe src=https://jaanga.github.io/xxxxx/xxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
-_<small>ZZZZZ</small>_
+_<small>Export Import</small>_
 
-## Full Screen: [ZZZZZ]( https://jaanga.github.io/xxxxx/xxxxx.html )
+## Full Screen: [Export Import]( https://jaanga.github.io/xxxxx/xxxxx.html )
 -->
 
 
 ## Concept
+
+http://127.0.0.1:8080/import.html
 
 
 ## To Do / Wish List
@@ -24,6 +26,7 @@ _<small>ZZZZZ</small>_
 
 ## Issues
 
+Export Import only works on a server: bummer
 
 ## Things you can do using this script
 

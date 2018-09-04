@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "This script: Obtains list of sub-folders from a folder on GitHub using the GiyHub API. Creates iframes for each folder. Sets index.html as the source for every iframe." >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-08-30" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+
+	iframe { border: 0px solid green; height: 100%; width: 100%; }
+
+	div.ifr { border: 1px solid crimson; height:600px; margin: 100px 0 0px 0; width: 100%; }
+
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>Below are all the scripts currently in this cookbook viewable in interactive 3D.</p>
+
+	</div>
+
+	<div id = "divContents" ></div>
+
+	<div id = "divFolderContents" ></div>
+
+
+<script>
+
+const user = 'ladybug-tools';
+const repo = 'spider-rad-viewer';
+const folder = 'cookbook';
+
+let folders = [];
+let iframeContainers = [];
+let iframesActive = [];
+const iframesActiveLimit = 3;
+
+const iconGitHubMark = '<img src = "https://status.github.com/images/invertocat.png" height=14 style=vertical-align:middle>';
+
+const urlSourceCode = "https://github.com/jaanga.github.io/cookbook-threejs/viewers/multiple-iframes/cookbook-viewer-one-pager";
+
+init();
+animate();
+
+function init() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	divTitle.innerHTML =
+	`
+		<h1>
+			<a href=${ urlSourceCode } target="_top" title = "Source code on GitHub" >
+				<img src="https://status.github.com/images/invertocat.png" height=18 >
+			</a>
+			<a href="" title = "Click to reload this page" >${ document.title }</a>
+		</h1>
+
+		<p>${document.head.querySelector( '[name=description]' ).content }</p>
+	`;
+
+	//fetchGitHubApiFolderContents();
+	fetchGitHubApiFolderContents( user, repo, folder );
+
+}
+
+
+
+function fetchGitHubApiFolderContents( user = 'ladybug-tools', repo = 'spider-rad-viewer', folder = 'cookbook', target = divFolderContents ) {
+
+	const url = `https://api.github.com/repos/${ user }/${ repo }/contents/${ folder }/`;
+	//console.log(url );
+
+	const request = new Request( url );
+
+	fetch( request )
+		.then( response => response.json() )
+		.then( json => callbackGitHubApiFolderContent( json, user, repo, target ) );
+
+}
+
+
+function callbackGitHubApiFolderContent( results, user, repo, target ) {
+	//console.log( 'results', results );
+	//console.log( {user}, {repo} );
+
+	const urlBase = `https://${ user }.github.io/${ repo }/${ folder }`;
+	let txt = '';
+	let count = 0;
+
+	for ( let result of results ) {
+
+		if ( result.type !== 'dir' ) { continue; }
+
+		urlFolder = urlBase + `/${ result.name }/index.html`;
+
+		result.urlFolder = urlFolder;
+
+		folders.push( result );
+
+		txt += `<div class=ifr id=${ count++ } ></div>`;
+
+	}
+
+	target.innerHTML = txt;
+
+	iframeContainers = document.getElementsByClassName( 'ifr' ); // all possible iframe locations
+
+}
+
+
+
+
+function updateIframe( activeContainer ) {
+
+	const iframes = document.getElementsByTagName( 'iframe' ); //  iframes locations currently in use
+
+	if ( iframes.length > iframesActiveLimit ) {
+
+		var frameTooMany = iframesActive.shift();
+		frameTooMany.innerHTML = '';
+
+	}
+
+	if ( activeContainer.innerHTML === '' ) {
+
+		const id = activeContainer.id;
+		//console.log( 'id', id );
+
+		activeContainer.innerHTML =
+		`
+			<iframe src="${ folders[ id ].urlFolder }" scrolling="no" ></iframe>
+			<h3>full screen: <a href = "${ folders[ id ].urlFolder }" >${folders[ id ].name}</a></h3>
+
+		`;
+
+		iframesActive.push( activeContainer );
+
+	}
+
+}
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+
+	for ( iframeContainer of iframeContainers ) {
+
+		const rect = iframeContainer.getBoundingClientRect();
+
+		if ( rect.bottom < 0 || rect.top > window.innerHeight ) { continue; }
+
+		updateIframe( iframeContainer );
+
+	}
+
+}
+
+</script>
+</body>
+</html>
