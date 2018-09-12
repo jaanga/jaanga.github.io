@@ -46,6 +46,8 @@
 		torus.castShadow = torus.receiveShadow = true;
 		scene.add( torus );
 
+
+		
 		geometry = new THREE.PlaneBufferGeometry( 1, 1, 99, 99 );
 		vertices = geometry.attributes.position.array;
 
