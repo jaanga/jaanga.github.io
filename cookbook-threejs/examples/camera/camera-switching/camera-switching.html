@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="View and switch between two cameras - one with a visible and editable frustum - Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-09-24" >
+<title></title>
+<style>
+	/* Copyright 2018 pushMe pullYou authors. MIT License */
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	summary { font-weight: bold; }
+
+	.active { background-color: pink; }
+
+	#divMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r96/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r96/examples/js/controls/TrackballControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+		</p>
+
+		<p>
+			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+		</p>
+
+		<hr>
+
+		<details open>
+
+			<summary>Camera Frustum</summary>
+
+			<div id = "divCameraFrustum" ></div>
+
+		</details>
+
+
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+<script>
+
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/camera/camera-switching/";
+
+let sceneRotation = 1;
+let boxes;
+let cameraHelper1, cameraHelper2;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	divCameraFrustum.innerHTML = setDivCameraFrustum();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	//camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 2 );
+	var texture = new THREE.TextureLoader().load( "../../../../textures/system-map.gif" );
+	const material = new THREE.MeshBasicMaterial( { map: texture } );
+	const mesh = new THREE.Mesh( geometry, material );
+
+	scene.add( mesh );
+
+	setSomeBoxes();
+
+	zoomObjectBoundingSphere( boxes );
+
+	setTwoFrustumCameras();
+
+}
+
+
+
+function setDivCameraFrustum() {
+
+	htm =
+	`
+		<p>
+			<button id=btnCameraObserver onclick=setCamera1(); >camera observer</button>
+
+			<button id=btnCameraView onclick=setCamera2(); >camera view</button>
+		</p>
+
+		<p>
+			Camera view - near cut-off <output id=outCamera2Near >00</output>
+			<input type="range" id="inpCamera2Near" onclick=setCamera2Update(this,"near"); />
+		</p>
+
+		<p>
+			Camera view - far cut-off <output id=outCamera2Far >00</output>
+			<input type="range" id="inpCamera2Far" onclick=setCamera2Update(this,'far'); />
+		</p>
+
+
+		<p>
+			Camera view field of view <output id=outCamera2FOV >00</output>
+			<input type="range" id="inpCamera2FOV" onclick=setCamera2UpdateFOV(this); />
+		</p>
+
+		<p>
+			<button onclick=setObjectInFrustumHighlight(); >check inclusion</button>
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function setSomeBoxes( count = 50 ) {
+
+	const geometry = new THREE.BoxGeometry( 5, 5, 5 );
+
+	boxes = new THREE.Group();
+
+	for ( let i = 0; i < count; i++ ) {
+
+		const material = new THREE.MeshNormalMaterial( { transparent: true } );
+		const mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+		mesh.rotation.set( 2 * Math.random(), 2 * Math.random(), 2 * Math.random() );
+
+		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
+		const edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		const surfaceEdge = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+
+		mesh.add( surfaceEdge );
+
+		boxes.add( mesh );
+
+	}
+
+	scene.add( boxes );
+
+}
+
+
+
+function zoomObjectBoundingSphere( obj = scene ) {
+
+	const bbox = new THREE.Box3().setFromObject( obj );
+
+	if ( bbox.isEmpty() === true ) { return; }
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	const center = sphere.center;
+	const radius = sphere.radius;
+
+	//console.log( 'center', center );
+	//console.log( 'radius', radius );
+
+	controls.target.copy( center );
+	controls.maxDistance = 5 * radius;
+
+	camera.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
+	camera.near = 0.1 * radius;
+	camera.far = 10 * radius;
+	camera.updateProjectionMatrix();
+
+	scene.userData.objCenter = center;
+	scene.userData.objRadius = radius;
+
+}
+
+
+
+function setTwoFrustumCameras() {
+
+	camera1 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera1.position.set( - 100, - 100, 100 );
+	camera1.up.set( 0, 0, 1 );
+
+	controls1 = new THREE.TrackballControls( camera1, renderer.domElement );
+
+	camera2 = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera2.position.set( 0, - 100, 0 );
+	camera2.up.set( 0, 0, 1 );
+
+	camera2.userData.currentPosition = camera2.position;
+	camera2.userData.currentTarget = scene.userData.objCenter;
+	camera2.near = 1 + Math.floor( 0.1 * scene.userData.objRadius );
+	camera2.far = parseInt( 5 * scene.userData.objRadius, 10 );
+
+	camera2.updateProjectionMatrix();
+	camera2.updateMatrix(); // make sure camera's local matrix is updated
+	camera2.updateMatrixWorld(); // make sure camera's world matrix is updated
+
+	controls2 = new THREE.TrackballControls( camera2, renderer.domElement );
+	controls2.target.copy( scene.userData.objCenter );
+
+	camera2Helper = new THREE.CameraHelper( camera2 );
+	scene.add( camera2Helper );
+
+	setCamera1();
+
+	inpCamera2Far.max = inpCamera2Near.max = parseInt( camera2.far, 10 ) + 10;
+	outCamera2Near.value = inpCamera2Near.value = parseInt( camera2.near, 10 );
+	outCamera2Far.value = inpCamera2Far.value = parseInt( camera2.far, 10 );
+	outCamera2FOV.value = inpCamera2FOV.value = parseInt( camera2.fov, 10 );
+
+}
+
+
+
+function setCamera1() {
+
+	btnCameraObserver.classList.add( "active" );
+	btnCameraView.classList.remove( "active" );
+
+	camera2.userData.currentPosition = camera2.position;
+	camera2.userData.currentTarget = controls2.target;
+
+	camera2.updateProjectionMatrix();
+	camera2.updateMatrix(); // make sure camera's local matrix is updated
+	camera2.updateMatrixWorld(); // make sure camera's world matrix is updated
+
+	camera = camera1;
+	controls = controls1;
+
+}
+
+
+
+function setCamera2() {
+
+	btnCameraView.classList.add( "active" );
+	btnCameraObserver.classList.remove( "active" );
+
+	camera2.position.copy( camera2.userData.currentPosition );
+
+	camera2.updateProjectionMatrix();
+	camera2.updateMatrix(); // make sure camera's local matrix is updated
+	camera2.updateMatrixWorld(); // make sure camera's world matrix is updated
+
+	camera = camera2;
+
+	controls2.target.copy( camera2.userData.currentTarget );
+	controls = controls2;
+
+}
+
+
+
+
+function setCamera2Update( that, type ) {
+
+	camera2[ type ] = parseInt( that.value, 10 ) + 1;
+
+	camera2.updateMatrix(); // make sure camera's local matrix is updated
+	camera2.updateMatrixWorld(); // make sure camera's world matrix is updated
+	camera2.matrixWorldInverse.getInverse( camera.matrixWorld );
+
+	scene.remove( camera2Helper );
+	camera2Helper = new THREE.CameraHelper( camera2 );
+	scene.add( camera2Helper );
+
+	outCamera2Near.value = inpCamera2Near.value = camera2.near;
+	outCamera2Far.value = inpCamera2Far.value = camera2.far;
+
+}
+
+
+
+
+function setCamera2UpdateFOV( that ) {
+
+	camera2.fov = parseInt( that.value, 10 );
+	camera2.updateProjectionMatrix();
+
+	outCamera2FOV.value = camera2.fov;
+
+	camera2.updateMatrix(); // make sure camera's local matrix is updated
+	camera2.updateMatrixWorld(); // make sure camera's world matrix is updated
+	camera2.matrixWorldInverse.getInverse( camera.matrixWorld );
+
+	scene.remove( camera2Helper );
+	camera2Helper = new THREE.CameraHelper( camera2 );
+	scene.add( camera2Helper );
+}
+
+
+
+function setObjectInFrustumHighlight() {
+
+	// https://stackoverflow.com/questions/24877880/three-js-check-if-object-is-in-frustum
+	// https://stackoverflow.com/questions/10858599/how-to-determine-if-plane-is-in-three-js-camera-frustum
+	// https://github.com/mrdoob/three.js/issues/1209
+
+	camera2.updateProjectionMatrix();
+	camera2.updateMatrix(); // make sure camera's local matrix is updated
+	camera2.updateMatrixWorld(); // make sure camera's world matrix is updated
+	//camera2.matrixWorldInverse.getInverse( camera.matrixWorld );
+
+	//plane.updateMatrix(); // make sure plane's local matrix is updated
+	//plane.updateMatrixWorld(); // make sure plane's world matrix is updated
+
+	frustum = new THREE.Frustum();
+	frustum.setFromMatrix( new THREE.Matrix4().multiplyMatrices( camera2.projectionMatrix, camera2.matrixWorldInverse ) );
+
+	for ( let box of boxes.children ) {
+
+		box.material.opacity = frustum.intersectsObject( box ) === true ? 1 : 0.2;
+
+	}
+
+}
+
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`<h2>
+		<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+			<img src=https://status.github.com/images/invertocat.png height=18 >
+		</a>
+		<a href="" title="Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( "[ name=description ]" ).content }
+	</p>`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

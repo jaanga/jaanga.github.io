@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-09-06" >
+<title></title>
+<style>
+	/* Copyright 2018 pushMe pullYou authors. MIT License */
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#divMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+
+	#divPopUp { background-color: #eee; border-radius: 8px; display: block; max-width: 220px; padding: 0 5px 10px 5px; opacity: 0.95;
+		right: 1rem; position: absolute; top: 1rem; z-index: 10; };
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r96/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r96/examples/js/controls/TrackballControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+		</p>
+
+		<p>
+			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+	<div id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</div>
+
+<script>
+
+
+const urlSourceCode = "https://github.com/zzzzz/zzzzz.github.io/tree/master/xxxxx/";
+
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+let cubes;
+
+const POP = {};
+
+
+
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	const material = new THREE.MeshNormalMaterial();
+	const mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+	cubes = getSomeBoxes( 88 );
+
+	scene.add( cubes );
+
+	divPopUpData.innerHTML = POP.getPopUpHtml();
+
+}
+
+
+
+POP.getPopUpHtml = function( target = divPopUp ) {
+
+	POP.mouse = new THREE.Vector2();
+	POP.raycaster = new THREE.Raycaster();
+	POP.objects = cubes.children;
+	POP.intersected = undefined;
+	POP.divTarget = divPopUp;
+
+
+	const particleMaterial = new THREE.SpriteMaterial( { color: 0xff0000 } );
+	POP.particle = new THREE.Sprite( particleMaterial );
+	POP.particle.scale.x = POP.particle.scale.y = 1;
+	scene.add( POP.particle );
+
+	renderer.domElement.addEventListener( 'mousedown', POP.onDocumentMouseDown, false );
+	renderer.domElement.addEventListener( 'touchstart', POP.onDocumentTouchStart, false ); // for mobile
+
+
+	var geometry = new THREE.BufferGeometry();
+	geometry.addAttribute( 'position', new THREE.BufferAttribute( new Float32Array( 4 * 3 ), 3 ) );
+
+	var material = new THREE.LineBasicMaterial( { color: 0xffffff, linewidth: 2, transparent: true } );
+
+	line = new THREE.Line( geometry, material );
+	scene.add( line );
+
+
+	const htm =
+	`
+		<div id = "divPopUpLog" ></div>
+
+		<div id = "divPopUpData" >
+
+			<p>
+				Item data appears here when the pointer is over a data point
+			</p>
+
+			<p>Axis RGB = XYZ directions</p>
+
+			<p>Spacebar: click to stop spinning</p>
+
+			<p>Use one|two|three fingers to rotate|zoom|pan display in 3D. Or left|scroll|right with your pointing device</p>
+
+			<p>Press Control-Shift-J|Command-Option-J to see if the JavaScript console reports any errors</p>
+
+		</div>
+
+	`;
+
+	return htm;
+
+};
+
+
+
+POP.onDocumentTouchStart = function( event ) {
+
+	event.preventDefault();
+
+	event.clientX = event.touches[0].clientX;
+	event.clientY = event.touches[0].clientY;
+
+	POP.onDocumentMouseDown( event );
+
+};
+
+
+
+POP.onDocumentMouseDown = function( event ) {
+
+	event.preventDefault();
+
+	POP.mouse.x = ( event.clientX / renderer.domElement.width ) * 2 - 1;
+	POP.mouse.y = - ( event.clientY / renderer.domElement.height ) * 2 + 1;
+
+	POP.raycaster.setFromCamera( POP.mouse, camera );
+
+	const intersects = POP.raycaster.intersectObjects( POP.objects );
+
+	console.log( 'intersects', intersects );
+
+	if ( intersects.length > 0 ) {
+
+		intersected = intersects[ 0 ].object;
+		//intersected.material.color.setHex( Math.random() * 0xffffff );
+
+		POP.divTarget.style.display = '';
+
+		POP.getIntersectedVertexBufferGeometry( intersected, intersects );
+
+		POP.divTarget.innerHTML = POP.getIntersectedDataHtml( intersected, intersects );
+
+
+
+	} else {
+
+		intersected = null;
+
+		POP.divTarget.style.display = 'none';
+
+		line.visible = false;
+
+		document.body.style.cursor = 'auto';
+
+	}
+
+};
+
+
+
+POP.getIntersectedVertexBufferGeometry = function( intersected, intersects ) {
+
+	var face = intersects[ 0 ].face;
+
+	var linePosition = line.geometry.attributes.position;
+	meshPosition = intersected.geometry.attributes.position;
+
+	linePosition.copyAt( 0, meshPosition, face.a );
+	linePosition.copyAt( 1, meshPosition, face.b );
+	linePosition.copyAt( 2, meshPosition, face.c );
+	linePosition.copyAt( 3, meshPosition, face.a );
+
+	intersected.updateMatrix();
+
+	line.geometry.applyMatrix( intersected.matrix );
+
+	line.visible = true;
+
+	POP.particle.position.copy( intersects[ 0 ].point );
+
+}
+
+POP.getIntersectedVertexGeometry = function( intersected, intersects ) {
+
+	var vertices = intersected.geometry.vertices;
+	var dis = 1000000000;
+	var ip = intersects[ 0 ].point;
+	var pt, index;
+
+	for ( var i = 0; i < vertices.length; i++ ) {
+
+		var vertex = vertices[ i ].clone();
+		vertex.applyMatrix4( intersected.matrixWorld );
+		var d = vertex.distanceTo( ip );
+
+		if ( d < dis ) {
+
+			dis = d;
+			pt = vertex;
+			index = i
+
+		}
+
+	}
+
+	POP.particle.position.copy( intersects[ 0 ].point );
+
+	console.log( 'interested', pt, intersects[0] );
+
+};
+
+
+
+POP.getIntersectedDataHtml = function( intersected, intersects ) {
+
+	const htm =
+	'<h3 style="margin:0;" >Data Viewer</h3>' +
+
+		'Name: ' + intersected.name + '<br>' +
+		'type: ' + intersected.geometry.type + '<br>' +
+		'Three.js id:' + intersected.id + '<br>' +
+		'UUID:' + intersected.uuid + '<br>' +
+		'Layer: ' + intersected.layer + '<br>' +
+		'Point x: ' + intersects[ 0 ].point.x.toFixed(2) + ' y:' + intersects[ 0 ].point.y.toFixed(2) + ' z:' + intersects[ 0 ].point.z.toFixed(2) + '<br>' +
+		//'index: ' + index + '<br>' +
+		//'vertex x:' + pt.x.toFixed(2) + ' y:' + pt.y.toFixed(2) + ' z:' + pt.z.toFixed(2) + '<br>' +
+
+	'';
+
+	return htm;
+
+}
+
+//////////
+
+function getSomeBoxes( count = 50 ) {
+
+	//const geometry = new THREE.BoxGeometry( 5, 5, 5 );
+	const geometry = new THREE.BoxBufferGeometry( 5, 5, 5 );
+	const material = new THREE.MeshNormalMaterial();
+
+	const boxes = new THREE.Group();
+
+	for ( let i = 0; i < count; i++ ) {
+
+		const mesh = new THREE.Mesh( geometry, material );
+		mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+		mesh.rotation.set( 2 * Math.random(), 2 * Math.random(), 2 * Math.random() );
+
+		const edgesGeometry = new THREE.EdgesGeometry( mesh.geometry );
+		const edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		const surfaceEdge = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+
+		mesh.add( surfaceEdge );
+		boxes.add( mesh );
+
+	}
+
+	return boxes;
+
+};
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`<h2>
+		<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+			<img src=https://status.github.com/images/invertocat.png height=18 >
+		</a>
+		<a href="" title="Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( "[ name=description ]" ).content }
+	</p>`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+init();
+animate();
+
+</script>
+</body>
+</html>

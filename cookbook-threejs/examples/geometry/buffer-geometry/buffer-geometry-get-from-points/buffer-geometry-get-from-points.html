@@ -35,6 +35,9 @@
 
 			<p><button onclick=bufferGeoGetFromPoints(points2); >points 2</button></p>
 
+			<p><button onclick=bufferGeoGetFromRandomPoints(12); >points Random</button></p>
+
+			<p><button onclick=bufferGeoGetFromRandomPointsPosition(36); >points Random position</button></p>
 		</div>
 
 	</div>
@@ -100,93 +103,167 @@
 	}
 
 
-	
-
-	function planebBufferGeoGetFromPoints( points ) {
-
-// left to right
-		var vertices = [
-
-			v( -70, 70, 10 ),
-			v( 70, 70, 10 ),
-
-			v( -70, -70, 10 ),
-			v( 70, -70, 10 )
-
-		];
-
-		points = points ? points : vertices;
-
-		scene.remove( mesh );
-
-		geometry = new THREE.PlaneBufferGeometry();
-		geometry.setFromPoints( points );
-		geometry.computeVertexNormals();
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
-		mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
-
-	}
 
 
-
-	function bufferGeoGetFromPoints( points ) {
+function planebBufferGeoGetFromPoints( points ) {
 
 // left to right
-		var vertices = [
+	var vertices = [
 
-			v( -70, 70, 10 ),
-			v( 70, 70, 10 ),
-			v( -70, -70, 10 ),
+		v( -70, 70, 10 ),
+		v( 70, 70, 10 ),
 
-			v( 70, 70, -10 ),
-			v( -70, -70, 0 ),
-			v( 70, -70, -70 ),
+		v( -70, -70, 10 ),
+		v( 70, -70, 10 )
 
-			v( 70, 70, 80 ),
-			v( -70, -70, 30 ),
-			v( 70, -70, 30 )
+	];
 
-		];
+	points = points ? points : vertices;
+
+	scene.remove( mesh );
+
+	geometry = new THREE.PlaneBufferGeometry();
+	geometry.setFromPoints( points );
+	geometry.computeVertexNormals();
+	material = new THREE.MeshNormalMaterial( { side: 2 } );
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+}
 
 
 
-		points = points ? points : vertices;
+function bufferGeoGetFromPoints( points ) {
 
-		scene.remove( mesh );
+// left to right
+	var vertices = [
 
-		geometry = new THREE.BufferGeometry();
-		geometry.setFromPoints( vertices );
-		geometry.computeVertexNormals();
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
-		mesh = new THREE.Mesh( geometry, material );
-		scene.add( mesh );
+		v( -70, 70, 10 ),
+		v( 70, 70, 10 ),
+		v( -70, -70, 10 ),
+
+		v( 70, 70, -10 ),
+		v( -70, -70, 0 ),
+		v( 70, -70, -70 ),
+
+		v( 70, 70, 80 ),
+		v( -70, -70, 30 ),
+		v( 70, -70, 30 )
+
+	];
+
+
+
+	points = points ? points : vertices;
+
+	scene.remove( mesh );
+
+	geometry = new THREE.BufferGeometry();
+	geometry.setFromPoints( vertices );
+	geometry.computeVertexNormals();
+	material = new THREE.MeshNormalMaterial( { side: 2 } );
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
 
 console.log( 'geometry.toJSON', geometry.toJSON() );
 
-	}
-
-
-	function onWindowResize() {
-
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
-
-		renderer.setSize( window.innerWidth, window.innerHeight );
-
-//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
-
-	}
+}
 
 
 
-	function animate() {
 
-		requestAnimationFrame( animate );
-		renderer.render( scene, camera );
-		controls.update();
+function bufferGeoGetFromRandomPoints( points = 6 ) {
+
+	vertices = [];
+
+	for ( let i = 0; i < points; i++ ) {
+
+		const vertex = [];
+
+		for ( let j = 0; j < 3; j++ ) {
+
+			vertex.push( 100 * Math.random() - 50 );
+		}
+
+		vertices.push( new THREE.Vector3().fromArray( vertex ) );
 
 	}
+
+	console.log( 'vertices', vertices );
+
+	scene.remove( mesh );
+
+	geometry = new THREE.BufferGeometry();
+	geometry.setFromPoints( vertices );
+	geometry.computeVertexNormals();
+
+	material = new THREE.MeshNormalMaterial( { side: 2 } );
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+	//console.log( 'geometry.toJSON', geometry.toJSON() );
+
+}
+
+
+
+
+function bufferGeoGetFromRandomPointsPosition( points = 6 ) {
+
+	vertices = [];
+	colors = [];
+
+	const color = new THREE.Color();
+
+	for ( let i = 0; i < points; i++ ) {
+
+		vertices.push( 100 * Math.random() - 50  );
+
+		color.setRGB( Math.random(), Math.random(), Math.random() );
+
+		colors.push( color.r, color.g, color.b );
+		colors.push( color.r, color.g, color.b );
+		colors.push( color.r, color.g, color.b );
+	}
+
+	//console.log( 'vertices', vertices );
+
+	scene.remove( mesh );
+
+	geometry = new THREE.BufferGeometry();
+	geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+	geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+	geometry.computeVertexNormals();
+
+	material = new THREE.MeshBasicMaterial( { color: 0xaaaaaa, side: 2, vertexColors: THREE.VertexColors } );
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+	//console.log( 'geometry.toJSON', geometry.toJSON() );
+
+}
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+
+}
 
 </script>
 </body>
