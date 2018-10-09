@@ -16,7 +16,7 @@
 	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 	button:hover { background: #ccc; color: #fff }
 
-	#divMenu { margin: 0 20px; max-width: 20rem; position: absolute; }
+	#divMenu { margin: 0 20px; position: absolute; }
 
 </style>
 </head>
@@ -31,8 +31,6 @@
 		<div id = "divContents" >
 			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
 
-			<button onclick=mesh.material.wireframe=!mesh.material.wireframe; >wireframe</button>
-
 			<p><button onclick=planebBufferGeoGetFromPoints(); >points 1</button></p>
 
 			<p><button onclick=bufferGeoGetFromPoints(points2); >points 2</button></p>
@@ -40,11 +38,6 @@
 			<p><button onclick=bufferGeoGetFromRandomPoints(12); >points Random</button></p>
 
 			<p><button onclick=bufferGeoGetFromRandomPointsPosition(36); >points Random position</button></p>
-
-			<hr>
-
-			<p><button onclick=getPointsStar(36); >points star</button></p>
-
 		</div>
 
 	</div>
@@ -52,64 +45,64 @@
 <script>
 // see http://www.ladybug.tools/spider/cookbook/07-create-exportable-buildings/create-exportable-buildings.html
 
-//const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
-const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+	//const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
 
 
-const points2 = [
+	const points2 = [
 
-		v( -70, 70, 10 ),
-		v( 0, 70, 10 ),
-		v( 70, 70, 10 ),
+			v( -70, 70, 10 ),
+			v( 0, 70, 10 ),
+			v( 70, 70, 10 ),
 
-		v( -70, 0, 10 ),
-		v( 0, 0, 10 ),
-		v( 70, 0, 10 ),
+			v( -70, 0, 10 ),
+			v( 0, 0, 10 ),
+			v( 70, 0, 10 ),
 
-		v( -70, -70, 10 ),
-		v( 0, -70, 10 ),
-		v( 70, -70, 10 )
+			v( -70, -70, 10 ),
+			v( 0, -70, 10 ),
+			v( 70, -70, 10 )
 
-];
+	];
 
-var renderer, camera, controls, scene;
-var geometry, material, mesh, line, hole;
+	var renderer, camera, controls, scene;
+	var geometry, material, mesh;
 
-init();
-animate();
+	init();
+	animate();
 
-function init() {
+	function init() {
 
-	divTitle.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +'</a></h1>';
+		divTitle.innerHTML = '<h1><a href="" >' + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +'</a></h1>';
 
-	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
-	renderer.setSize( window.innerWidth, window.innerHeight );
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
 
-	document.body.appendChild( renderer.domElement );
+		document.body.appendChild( renderer.domElement );
 
-	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
-	camera.position.set( 100, -100, 100 );
-	camera.up.set( 0, 0, 1 );
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( 100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
 
-	controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
 
-	scene = new THREE.Scene();
+		scene = new THREE.Scene();
 
-	window.addEventListener( 'resize', onWindowResize, false );
+		window.addEventListener( 'resize', onWindowResize, false );
 
-	window.addEventListener( 'orientationchange', onWindowResize, false );
+		window.addEventListener( 'orientationchange', onWindowResize, false );
 
-	const axesHelper = new THREE.AxesHelper( 50 );
-	scene.add( axesHelper );
+		const axesHelper = new THREE.AxesHelper( 50 );
+		scene.add( axesHelper );
 
-	geometry = new THREE.BoxGeometry( 50, 50, 50 );
-	material = new THREE.MeshNormalMaterial();
-	mesh = new THREE.Mesh( geometry, material );
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
 //		scene.add( mesh );
 
-	getPointsStar();
+		planebBufferGeoGetFromPoints();
 
-}
+	}
 
 
 
@@ -180,6 +173,7 @@ console.log( 'geometry.toJSON', geometry.toJSON() );
 
 
 
+
 function bufferGeoGetFromRandomPoints( points = 6 ) {
 
 	vertices = [];
@@ -212,6 +206,7 @@ function bufferGeoGetFromRandomPoints( points = 6 ) {
 	//console.log( 'geometry.toJSON', geometry.toJSON() );
 
 }
+
 
 
 
@@ -253,107 +248,9 @@ function bufferGeoGetFromRandomPointsPosition( points = 6 ) {
 
 
 
-//////////
-
-function getPointsStar() {
-
-	scene.remove( mesh, line, hole );
-
-	const radius = 40;
-	const pointCount = 6;
-	points = [];
-	holes = [];
-	const delta = 2 * Math.PI / pointCount;
-
-	for ( let i = 0; i < pointCount; i++ ) {
-
-		let x = ( 30 * Math.random() + radius ) * Math.cos( i * delta );
-		let y = ( 30 * Math.random() + radius ) * Math.sin( i * delta );
-		let z = 40;
-		points.push( v( x, y, z ) );
-
-		x = ( 10 * Math.random() + 0.5 * radius ) * Math.cos( i * delta );
-		y = ( 10 * Math.random() + 0.5 * radius ) * Math.sin( i * delta );
-		z = 40;
-		holes.push( v( x, y, z ) );
-
-	}
-
-	points.push( points[ 0 ] );
-	holes.push( holes[ 0 ] );
-
-
-	geometryLine = new THREE.Geometry();
-	geometryLine.vertices = points;
-	//geometryLine.applyMatrix( new THREE.Matrix4().makeRotationX(  0.5 ) );
-	//scene.updateMatrixWorld();
-
-	const materialLine = new THREE.LineBasicMaterial( { color: 0x000000 } );
-	line = new THREE.Line( geometryLine, materialLine );
-	line.updateMatrixWorld()
-	scene.add( line );
-
-	geometryHole = new THREE.Geometry();
-	geometryHole.vertices = holes;
-	//geometryHole.applyMatrix( new THREE.Matrix4().makeRotationX(  0.5 ) );
-	//scene.updateMatrixWorld();
-
-	const materialHole = new THREE.LineBasicMaterial( { color: 0x000000 } );
-	hole = new THREE.Line( geometryHole, materialHole );
-	hole.updateMatrixWorld()
-	scene.add( hole );
-
-	const triangles = THREE.ShapeUtils.triangulateShape( points, [ holes ] );
-	//console.log( 'triangles', triangles );
-
-	const vertices = [];
-
-	allpoints = points.slice( 0 );
-	allpoints = allpoints.concat( holes );
-
-	for ( let triangle of triangles ) {
-
-		//console.log( 'tri', tri );
-
-		for ( var j = 0; j < 3; j++ ) {
-
-			const vertex = allpoints[ triangle[ j ] ];
-
-			//console.log( 'vv', vertex  );
-
-			vertices.push( vertex );
-
-		}
-
-	}
-
-	//console.log( 'vertices', vertices );
-
-	geometry = new THREE.BufferGeometry();
-	geometry.setFromPoints( vertices );
-	geometry.computeVertexNormals();
-
-	const material = new THREE.MeshNormalMaterial( { color: Math.random() * 0xffffff, side: 2 } );
-	mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
-
-}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-///////////
 
 function onWindowResize() {
 

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-05-06" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/OrbitControls.js" ></script>
+
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<div id = "divContents" >
+
+			<p>
+				<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+			</p>
+
+		</div>
+
+	</div>
+
+<script>
+
+// "https://cdn.rawgit.com/mrdoob/three.js/master/src/extras/Earcut.js"
+	var renderer, camera, controls, scene, axesHelper;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" >` + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +`</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+		//earcut = new THREE.Earcut;
+
+		//console.log( 'ec', earcut );
+
+
+		var v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+
+		contour = [ v2( 0, 0 ), v2( 0, 100 ), v2( 100, 100 ), v2( 100, 0 ), v2( 0, 0 ) ];
+		holes = [ [v2( 20, 20 ), v2( 80, 20 ), v2( 80, 80 ), v2( 20, 80 ), v2( 20, 20 )] ];
+		triangles = THREE.ShapeUtils.triangulateShape( contour, holes );
+
+		console.log( 'triangles', triangles );
+
+		doUseOnce();
+		
+		doUseAgain();
+
+
+	}
+
+
+function doUseOnce() {
+
+
+
+	tim = performance.now();
+
+
+	for ( i = 0; i < 1000000; i++ ) {
+
+		const referenceObject = new THREE.Object3D();
+
+		referenceObject.lookAt( scene.position ); // copy the rotation of the plane
+		referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
+		referenceObject.updateMatrixWorld();
+
+		if( i >= 999999) console.log( 'time once: ', performance.now() - tim );
+
+	}
+
+}
+
+	function doUseAgain() {
+
+
+
+		tim = performance.now();
+
+		const referenceObject = new THREE.Object3D();
+
+		for ( i = 0; i < 1000000; i++ ) {
+			referenceObject.lookAt( scene.position ); // copy the rotation of the plane
+			referenceObject.quaternion.conjugate(); // figure out the angle it takes to rotate the vertices so they lie on the XY plane
+			referenceObject.updateMatrixWorld();
+
+			if( i >= 999999) console.log( 'time again: ', performance.now() - tim );
+
+		}
+
+	}
+
+
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>
+
