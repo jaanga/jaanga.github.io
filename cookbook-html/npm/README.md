@@ -6,7 +6,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 <br>
 
-# [Template Short Read Me]( #/README.md )
+# [NPM Package Read Me]( #/README.md )
 
 <!--
 <iframe src=https://pushme-pullyou.github.io/tootoo-templates/basic-html.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
@@ -32,6 +32,17 @@ Getting started
 * https://docs.npmjs.com/getting-started/creating-node-modules
 * https://docs.npmjs.com/getting-started/publishing-npm-packages
 
+FreeCodeCamp
+* https://medium.freecodecamp.org/how-to-make-a-beautiful-tiny-npm-package-and-publish-it-2881d4307f78
+* npm publish --access=public
+
+HackerNoon
+* https://hackernoon.com/publish-your-own-npm-package-946b19df577e
+
+Tips
+https://docs.npmjs.com/getting-started/packages
+
+Alternatively, if you create a package which does not have an index.js or a "main" field in the package.json file, then it is not a module. Even if it's installed in node_modules, it can't be an argument to require().
 
 
 ## Change Log

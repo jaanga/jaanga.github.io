@@ -44,7 +44,7 @@
 	animate();
 
     function init() {
-		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+		//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
         scene = new THREE.Scene();
 		scene.position.set(0, 0, 0)
@@ -81,6 +81,7 @@
 		var j = 0,  delta = Math.PI * 20/ 314;
 
 		for (var i = 0; i < 315; i++ ) {
+			
 			mesh = new THREE.Mesh(geometry, material);
 			j += delta;
 			var rx = Math.sin(j * 0.7),
@@ -130,7 +131,7 @@
 		}
 
 		controls.update( clock.getDelta() );
-		camera.lookAt( scene.position);
+		//camera.lookAt( scene.position);
         renderer.render( scene, camera );
     }
 

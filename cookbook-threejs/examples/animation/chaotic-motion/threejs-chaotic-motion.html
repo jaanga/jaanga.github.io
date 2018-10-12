@@ -18,13 +18,13 @@
 </head>
 <body>
 <script>
-	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+	//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 	document.body.style.font = '12px monospace';
 	document.body.style.margin = '0';
 	document.body.style.overflow = 'hidden';
 	document.body.style.textAlign = 'center';
-	
+
 	var info = document.createElement( 'div' );
 	document.body.appendChild( info );
 	info.style.top = '0px';
@@ -42,10 +42,10 @@
 
     init();
 	animate();
-    
+
     function init() {
-		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-		
+		//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
         scene = new THREE.Scene();
 		scene.position.set(0, 0, 0)
 
@@ -54,26 +54,26 @@
 		controls = new THREE.TrackballControls( camera );
 		controls.dynamicDampingFactor = 0.2;
         scene.add( camera );
-		
+
 		light = new THREE.AmbientLight( 0xffffff );
 		scene.add( light );
 
 		light = new THREE.DirectionalLight( 0xffffff );
 		light.position.set( 100, 100, 100 ).normalize();
-		scene.add( light );	
-		
+		scene.add( light );
+
 		light = new THREE.PointLight( 0xff0040, 20, 100 );
 		light.position.set( -50, 50, 50);
-		scene.add( light );	
+		scene.add( light );
 
 		material = new THREE.MeshNormalMaterial( { wireframe: true } );
 		geometry = new THREE.PlaneGeometry( 100, 100, 10, 10 );
-		
+
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set(0, 0, 0);
 		mesh.rotation.x = 1.5708;
 		scene.add( mesh );
-		
+
 		geometry = new THREE.SphereGeometry( 25, 20, 20 );
 		material = new THREE.MeshNormalMaterial( {shading: THREE.SmoothShading } );
 		mesh = new THREE.Mesh( geometry, material );
@@ -91,7 +91,7 @@
 		});
 		var rx, ry, rz;
 
-		for (var i = 0; i < 10000; i++) {
+		for (var i = 0; i < 1000; i++) {
 			mesh = new THREE.Mesh(geometry, material);
 
 			rx = Math.sin(i * 0.7) * 30;
@@ -110,30 +110,30 @@
 		}
 
 		scene.add(group);
-	
-		
+
+
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
 		stats.domElement.style.zIndex = 100;
-		document.body.appendChild( stats.domElement );		
+		document.body.appendChild( stats.domElement );
 
         renderer = new THREE.WebGLRenderer( {antialias: true } );
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
     }
-	
+
     function animate() {
         requestAnimationFrame( animate );
         render();
 		stats.update();
     }
 
-    function render() {		
-	
+    function render() {
+
 	    var tim = new Date().getTime();
 
-		for ( var i = 0; i < 10000; i++) {
+		for ( var i = 0; i < 1000; i++) {
 //			group.children[i].rotation.x += Math.sin(tim * 0.0007) * 0.03;
 //			group.children[i].rotation.y += Math.sin(tim * 0.0003) * 0.03;
 //			group.children[i].rotation.z += Math.sin(tim * 0.0002) * 0.03;
@@ -147,7 +147,7 @@
 		camera.lookAt( scene.position);
         renderer.render( scene, camera );
     }
-	
+
 </script>
 </body>
 </html>

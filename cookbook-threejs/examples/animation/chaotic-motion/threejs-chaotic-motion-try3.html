@@ -8,7 +8,11 @@
 <script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
 <script src="http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js"></script>
 <script src="http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
+<!--
+
+	<script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
+
+-->
 <!--
 <script src="../../../three.js/build/three.min.js"></script>
 <script src="../../../three.js/examples/js/controls/TrackballControls.js"></script>
@@ -24,7 +28,7 @@
 	document.body.style.margin = '0';
 	document.body.style.overflow = 'hidden';
 	document.body.style.textAlign = 'center';
-	
+
 	var info = document.createElement( 'div' );
 	document.body.appendChild( info );
 	info.style.top = '0px';
@@ -40,7 +44,7 @@
 	var clock = new THREE.Clock();
 	var j = 0;
 
-	
+
 var container, info, scene, camera, geometry, material, mesh, renderer;
 
 infoHeader = '<b>Pan: left button / Zoom: scroll / Move: right button</b>';
@@ -60,13 +64,13 @@ var mouseX = 0,
     mouseY = 0;
 
 var leftMouseDown = false,
-rightMouseDown = false;	
+rightMouseDown = false;
     init();
 	animate();
-    
+
     function init() {
-		if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
-		
+		//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+
         scene = new THREE.Scene();
 		scene.position.set(0, 0, 0)
 
@@ -75,19 +79,19 @@ rightMouseDown = false;
 		controls = new THREE.TrackballControls( camera );
 		controls.dynamicDampingFactor = 0.2;
         scene.add( camera );
-		
+
 		light = new THREE.AmbientLight( 0xffffff );
 		scene.add( light );
 
 		light = new THREE.DirectionalLight( 0xffffff );
 		light.position.set( 100, 100, 100 ).normalize();
-		scene.add( light );	
-		
+		scene.add( light );
+
 		light = new THREE.PointLight( 0xff0040, 20, 100 );
 		light.position.set( -50, 50, 50);
-		scene.add( light );	
+		scene.add( light );
 
-		
+
     geometry = new THREE.PlaneGeometry(100, 400, 20, 80);
     material = new THREE.MeshBasicMaterial({
         wireframe: true
@@ -115,27 +119,27 @@ rightMouseDown = false;
         mesh.position.set(Math.random() * 100 - 50, Math.random() * 100, z * 0.5);
         scene.add(mesh);
         symbols.push(mesh);
-    }	
-		
+    }
+
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
 		stats.domElement.style.zIndex = 100;
-		document.body.appendChild( stats.domElement );		
+		document.body.appendChild( stats.domElement );
 
         renderer = new THREE.WebGLRenderer( {antialias: true } );
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
     }
-	
+
     function animate() {
         requestAnimationFrame( animate );
         render();
 		stats.update();
     }
 
-    function render() {		
-	
+    function render() {
+
 	    var tim = new Date().getTime();
 /*
 		for (var i = 0; i < 500; i++) {
@@ -149,7 +153,7 @@ rightMouseDown = false;
 			group.children[i].position.z = Math.sin(j + i * 0.2) * 30;
 		}
 		*/
-		
+
 		var minimumY = 1000;
 		var i, j, z, symbolPos;
 		for (i = 0; i < lengthSymbols; i++) {
@@ -172,7 +176,7 @@ rightMouseDown = false;
 		camera.lookAt( scene.position);
         renderer.render( scene, camera );
     }
-	
+
 </script>
 </body>
 </html>
