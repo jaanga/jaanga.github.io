@@ -1,0 +1,29 @@
+{
+  "name": "how-to-npm",
+  "version": "1.1.0",
+  "description": "this is a description",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "author": "TheoA",
+  "license": "MIT",
+  "dependencies": {
+    "@linclark/pkg": "^1.0.2"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theo-armour/theo-armour.github.io.git"
+  },
+  "keywords": [
+    "test",
+    "learn",
+    "npm",
+    "node"
+  ],
+  "bugs": {
+    "url": "https://github.com/theo-armour/theo-armour.github.io/issues"
+  },
+  "homepage": "https://github.com/theo-armour/theo-armour.github.io#readme"
+}

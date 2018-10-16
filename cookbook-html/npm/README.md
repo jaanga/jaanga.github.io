@@ -39,7 +39,16 @@ FreeCodeCamp
 HackerNoon
 * https://hackernoon.com/publish-your-own-npm-package-946b19df577e
 
-Tips
+nodeschool
+https://www.npmjs.com/package/how-to-npm
+
+
+## Tips
+
+Look at peeps package.json
+* https://github.com/mrdoob/three.js/blob/dev/package.json
+
+
 https://docs.npmjs.com/getting-started/packages
 
 Alternatively, if you create a package which does not have an index.js or a "main" field in the package.json file, then it is not a module. Even if it's installed in node_modules, it can't be an argument to require().

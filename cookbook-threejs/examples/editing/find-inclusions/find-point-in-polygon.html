@@ -5,7 +5,7 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-06-24" >
+<meta name = "date" content = "2018-10-13" >
 <title></title>
 <style>
 
@@ -21,8 +21,8 @@
 </style>
 </head>
 <body>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r93/build/three.min.js" ></script>
-<script src = "https://rawgit.com/mrdoob/three.js/r93/examples/js/controls/TrackballControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/TrackballControls.js" ></script>
 
 	<div id = "divMenu" >
 
@@ -41,8 +41,11 @@
 /* globals THREE, divTitle, divMenu, hamburger  */
 // jshint esversion: 6
 
-let boxes;
-let material;
+const v2 = function( x, y ){ return new THREE.Vector2( x, y ); };
+const shapes = [];
+let shapeL;
+const pointsL = [ v2( 0, 0 ), v2( 50, 0 ), v2( 50, 10 ), v2( 10, 10 ), v2( 10,50 ), v2( 0, 50 ) ];
+
 
 let sceneRotation = 1;
 let renderer, camera, controls, scene;
@@ -86,99 +89,76 @@ function init() {
 	const mesh = new THREE.Mesh( geometry, material );
 	//scene.add( mesh );
 
-	boxes = [];
-	drawBoxesBig();
+	shapeL = getShape( pointsL );
+	scene.add( shapeL );
 
-	drawBoxesSmall();
+	getShapes();
 
-	findInclusions();
-
-}
-
-
-function drawBoxesBig(){
-
-	const material = new THREE.MeshNormalMaterial( { opacity: 0.5, transparent: true } );
-	const geometry = new THREE.BoxGeometry( 8, 8, 8 );
-
-	for ( let i = 0; i < 10; i++ ) {
-
-		for ( let j = 0; j < 10; j++ ) {
-
-			const box = new THREE.Mesh( geometry, material );
-			box.position.set( i * 10 - 50, j * 10 - 50, 0 );
-			scene.add( box );
-			boxes.push( box );
-
-		}
-
-	}
+	setInclusionsRed();
 
 }
 
 
 
-function drawBoxesSmall() {
+function setInclusionsRed() {
 
-	const material = new THREE.MeshNormalMaterial();
+	scene.updateMatrixWorld();
 
-	for ( let i = 0; i < 20; i++ ) {
+	const raycaster = new THREE.Raycaster();
 
-	const geometry = new THREE.BoxGeometry( 5, 5, 5 );
-		const box = new THREE.Mesh( geometry, material );
-		/*
-		box.geometry.applyMatrix( new THREE.Matrix4().makeTranslation(
-			10 * Math.floor( Math.random() * 10 ) - 50 ,
-			10 * Math.floor( Math.random() * 10 ) - 50,
-			10 * Math.floor( Math.random() * 3 ),
-		) );
-		*/
+	const direction = new THREE.Vector3( 0, 0, 1 );
 
-		box.position.set(
-			10 * Math.floor( Math.random() * 10 ) - 50 ,
-			10 * Math.floor( Math.random() * 10 ) - 50,
-			10 * Math.floor( Math.random() * 3 ),
-		);
+	for ( let shape of shapes ) {
 
-		scene.add( box );
-		boxes.push( box );
+		for ( let vertex of shape.geometry.vertices ) {
 
-	}
+			const vertexWorld = shape.localToWorld( vertex.clone() );
+			//console.log( 'vertex', vv );
 
-}
+			raycaster.set( vertexWorld, direction );
 
+			const intersects = raycaster.intersectObject( shapeL );
 
+			if ( intersects.length > 0 ) {
 
-function findInclusions() {
-
-	let inclusions = 0;
-
-	for ( let box of boxes ) {
-
-		//box.geometry.computeBoundingBox();
-
-	}
-
-	for ( let box of boxes ) {
-
-		const box1 = new THREE.Box3().setFromObject ( box );
-
-		for ( let bbox of boxes ) {
-
-			const box2 = new THREE.Box3().setFromObject ( bbox );
-
-			if ( box1.containsBox( box2 ) && !box1.equals( box2 ) ) {
-
-				inclusions++;
+				shape.material = new THREE.MeshBasicMaterial( { color: 'red', side: 2 } );
+				console.log( '', intersects );
 
 			}
 
 		}
 
+	}
+}
+
+
+
+function getShapes(){
+
+	//raycaster = new THREE.Raycaster();
+
+	for ( let i = 0; i < 10; i++ ) {
+
+		let shape = getShape();
+		shape.position.set( Math.random() * 50, Math.random() * 50, 0 );
+		scene.add( shape );
+		shapes.push( shape );
 
 	}
 
-	divLog.innerHTML = 'inclusions: ' + inclusions
+}
+
+
+
+function getShape( points ) {
+
+		points = points || [ v2( 0, 0 ), v2( 10, 0 ), v2( 10, 10 ), v2( 0, 10 ) ];
+		const shape = new THREE.Shape( points );
+		const geometry = new THREE.ShapeGeometry( shape );
+
+		const material = new THREE.MeshNormalMaterial( { side: 2 } );
+		const mesh = new THREE.Mesh( geometry, material );
+		return mesh;
 
 }
 
@@ -203,7 +183,7 @@ function animate() {
 	requestAnimationFrame( animate );
 	renderer.render( scene, camera );
 	controls.update();
-	scene.rotation.z += sceneRotation / 1000;
+	//scene.rotation.z += sceneRotation / 1000;
 
 }
 
