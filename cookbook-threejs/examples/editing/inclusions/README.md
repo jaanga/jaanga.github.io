@@ -28,8 +28,16 @@ _basic-html.html_
 Point inside
 * https://stackoverflow.com/questions/22521982/js-check-if-point-inside-a-polygon
 * https://github.com/mrdoob/three.js/issues/5340
+* http://alienryderflex.com/polygon/
+* https://github.com/substack/point-in-polygon/blob/master/index.js
+* https://wrf.ecse.rpi.edu//Research/Short_Notes/pnpoly.html
+* https://gis.stackexchange.com/questions/190300/checking-if-point-is-inside-irregular-polygon
+* https://stackoverflow.com/questions/22521982/check-if-point-inside-a-polygon
+* https://blog.mapbox.com/a-new-algorithm-for-finding-a-visual-center-of-a-polygon-7c77e6492fbc
+* https://www.geeksforgeeks.org/how-to-check-if-a-given-point-lies-inside-a-polygon/
 
-
+Simple closed path: Given a set of points, find a nonintersecting polygon with vertices on the points
+* http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf
 
 ## Change Log
 
