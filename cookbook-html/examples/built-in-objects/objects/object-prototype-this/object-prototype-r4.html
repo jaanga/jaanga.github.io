@@ -26,7 +26,15 @@
 
 		<div id = "divTitle" ></div>
 
-		<p><button onclick=setIt(); >howdybutton</button></p>
+		<p>
+			<button onclick=person1.sayName(); >person1 sayName</button>
+
+			<button onclick=person1.sayAge(); >person1 sayAge</button>
+
+			<button onclick=person1.sayFriends(); >person1 sayFriends</button>
+
+			<button onclick=person2.sayName(); >person2 sayName</button>
+		</p>
 
 	</div>
 
@@ -58,8 +66,6 @@ function init() {
 		<p>${document.head.querySelector( '[name=description]' ).content }</p>
 	`;
 
-	divContents.innerHTML += 'lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?';
-
 }
 
 
@@ -73,31 +79,35 @@ function setIt() {
 // https://hackernoon.com/prototypes-in-javascript-5bba2990e04b
 
 //Define the object specific properties inside the constructor
-function Human(name, age){
+function Human( name, nameLast, age ){
 	this.name = name,
 	this.age = age,
-	this.friends = ["Jadeja", "Vijay"]
-}
-//Define the shared properties and methods using the prototype
-Human.prototype.sayName = function(){
-	console.log(this.name);
+	this.friends = [ "Jadeja", "Vijay" ]
 }
 
+//Define the shared properties and methods using the prototype
+Human.prototype.sayName = function(){ divContents.innerHTML += `${ this.name }<br>`; }
+Human.prototype.sayAge = function(){ divContents.innerHTML += `${ this.name } is ${this.age}<br>`; }
+Human.prototype.sayFriends = function(){ divContents.innerHTML += `${ this.name }'s friends: ${this.friends.join(  ', ' )}<br>`; }
 Human.prototype.prime = 23;
 
-//Create two objects using the Human constructor function
-var person1 = new Human("Virat", "Kohli");
-var person2 = new Human("Sachin", "Tendulkar");
 
-//Lets check if person1 and person2 have points to the same instance of the sayName function
-console.log(person1.sayName === person2.sayName) // true
+//Create two objects using the Human constructor function
+var person1 = new Human( "Virat", "Kohli", 31 );
+var person2 = new Human( "Sachin", "Tendulkar", 23 );
+
+//Lets check if person1 and person 2 have points to the same instance of the sayName function
+console.log( person1.sayName === person2.sayName ) // true
 
 //Let's modify friends property and check
-person1.friends.push("Amit");
+person1.friends.push( "Amit" );
 
-console.log(person1.friends)// Output: "Jadeja, Vijay, Amit"
-console.log(person2.friends)//Output: "Jadeja, Vijay"
+console.log( person1.friends.join( ', ' ) )// Output: "Jadeja, Vijay, Amit"
+console.log( person2.friends.join( ', ' ) )//Output: "Jadeja, Vijay"
 console.log( person2.prime )
+
+//person1.sayName();
+
 
 </script>
 </body>
