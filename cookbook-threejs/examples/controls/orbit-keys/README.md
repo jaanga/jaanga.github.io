@@ -36,11 +36,15 @@ _<small>Orbit Prototype</small>_
 
 ## Links of Interest
 
+* https://threejs.org/docs/#examples/controls/OrbitControls
+* https://github.com/mrdoob/three.js/blob/master/examples/js/controls/OrbitControls.js
+
+KeyCodes
+* https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
 
 ## Change Log
 
 ### 2018-10-31 ~ Theo
-
 
 * First commit
 

@@ -35,6 +35,8 @@
 
 		<p>
 			<button onclick="controls.autoRotate=!controls.autoRotate;" >rotation</button>
+
+			<button onclick="controls.screenSpacePanning=!controls.screenSpacePanning;" >cursor keys: front/back or up/down</button>
 		</p>
 
 		<p>
@@ -71,13 +73,15 @@ function init() {
 
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.autoRotate = true;
+	//controls.screenSpacePanning = true;
 
 	scene = new THREE.Scene();
 
 	window.addEventListener( 'resize', onWindowResize, false );
 	window.addEventListener( 'orientationchange', onWindowResize, false );
-	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
-	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+	window.addEventListener( 'keyup', () => controls.autoRotate = false, false );
+	renderer.domElement.addEventListener( 'click', () => controls.autoRotate = false, false );
+	//window.addEventListener( 'keydown', onKeyDown, false );
 
 	const axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
@@ -87,9 +91,66 @@ function init() {
 	const mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
 
-	THREE.OrbitControls.prototype.prime = 23;
+}
 
-	console.log( 'cc', controls.prime );
+
+
+function onKeyDown ( event ) {
+
+	//////console.log( 'key', event.keyCode );
+
+	controls.enableKeys = false;
+	event.preventDefault();
+
+	delta = 0.01 * ( new THREE.Box3().setFromObject( scene ).getBoundingSphere( new THREE.Sphere() ).radius )
+
+	//console.log( '', delta );
+
+	switch( event.keyCode ) {
+
+		case 82: /* R  */
+		case 33: /* Page Up      */ turnUp();   break;
+		case 70: /* F */
+		case 34: /* Page Dn      */ turnDown(); break;
+		case 65: /* A */
+		case 37: /* cursor left  */ turnLeft();  break;
+		case 87: /* W */
+		case 38: /* cursor up    */ //translateY( delta ); break;
+		case 68: /* D */
+		case 39: /* cursor right */ //translateY( delta );  break;
+		case 83: /* S */
+		case 40: /* cursor down */  //translateY( -delta ); break;
+		case 187:
+		case 107: /* plus */        translateZ( delta ); break;
+		case 189:
+		case 109: /* minus */       translateZ( -delta ); break;
+
+	}
+
+}
+
+
+function translateX( delta ) {
+
+camera.translateX = delta;
+controls.target.x += delta;
+controls.update();
+
+}
+
+function translateY( delta ) {
+
+	camera.translateY = delta;
+	controls.target.y += delta;
+	controls.update();
+
+}
+
+
+function translateZ( delta ) {
+
+	camera.translateZ = delta;
+	controls.target.z += delta;
 
 }
 
