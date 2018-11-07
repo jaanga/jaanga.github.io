@@ -14,6 +14,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 ## Links of Interest
 
+* https://stuk.github.io/jszip/documentation/api_zipobject/async.html
+* https://stuk.github.io/jszip/documentation/limitations.html
 * <https://davidwalsh.name/javascript-zip>
 * <https://stuk.github.io/jszip/>
 * <https://github.com/Stuk/jszip>
@@ -22,12 +24,20 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * <https://stackoverflow.com/questions/37876051/opening-zip-files-in-browser-with-filereader-and-jszip-js>
 * <https://news.ycombinator.com/item?id=7615471>
 
+More
+* https://github.com/gildas-lormeau/zip.js
+* https://stackoverflow.com/questions/2095697/unzipping-files
+* https://stackoverflow.com/questions/34439147/how-to-unzip-file-on-javascript/34439627
 
 This could do it
 * <https://gist.github.com/clinuxrulz/141f16865959a1802530870907e95f80>
 * <https://stackoverflow.com/questions/40828487/read-xml-file-from-extracted-zip>
 
-
+UTF16 decode
+* https://stackoverflow.com/questions/33781295/how-to-convert-a-utf16-file-into-a-utf8-file-in-nodejs?noredirect=1&lq=1
+* http://jonisalonen.com/2012/from-utf-16-to-utf-8-in-javascript/
+* https://kev.inburke.com/kevin/node-js-string-encoding/
+* https://stackoverflow.com/questions/14592364/utf-16-to-utf-8-conversion-in-javascript
 
 
 
