@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = ",dc " >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+		 padding: 2px 5px; min-width: 12rem; }
+	button:hover { background: #ccc; color: #fff }
+
+	.active { border-color: black; font-style: italic; font-weight: bold; margin-left: -1rem; box-shadow: 2px 2px red; }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+	</div>
+
+	<div id=divButtons ></div>
+
+	<div id = "divContents" ></div>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png"
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	divButtons.innerHTML = getButtons();
+
+	buttonIds = colors.map(  color => divButtons.querySelector( "#but" + color ) );
+
+	divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+
+}
+
+
+
+function getButtons(){
+
+	colors = [ "red", "orange", "yellow", "blue", "green", "indigo", "violet" ];
+
+	buttons = colors.map( color =>
+
+		`<button id=but${ color } onclick=butUpdate(this); style=background-color:${ color }; )>${ color }</button>`
+
+	);
+
+	htm =
+	`
+		Buttons<br>
+		${ buttons.join( '<br>' ) }
+	`;
+
+	return htm;
+};
+
+
+
+function butUpdate( button ) {
+
+	button.classList.toggle( "active" );
+
+	current = document.getElementsByClassName("active");
+
+	divContents.innerHTML = "Selected: " + Array.from( current ).map( button => button.innerText ).join( ', ' );
+
+};
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function setIt() {
+
+	divContents.innerHTML += `<p>Howdy!</p>`;
+
+}
+
+</script>
+</body>
+</html>

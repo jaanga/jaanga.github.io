@@ -33,6 +33,8 @@
 
 	<div id = "divFileNames" ></div>
 
+	<div id = "divFileLog" ></div>
+
 	<div id = "divFileContents" ></div>
 
 
@@ -94,35 +96,53 @@ function inpOpenFileZip( files ) {
 
 	.then( function( data ) {
 
-		text = data.files[ names[ 0 ] ].async( "string", function updateCallback( metadata ) {
-			console.log("progression: " + metadata.percent.toFixed(2) + " %");
+		text = data.files[ names[ 0 ] ].async( "uint8array", function updateCallback( metadata ) {
+			divFileLog.innerHTML =  `progression: ${ metadata.percent.toFixed(2) } %`;
 		} );
 		//console.log( 'data', data  );
-
-		divFileContents.innerHTML =
-		`
-			<p>We have not learned how to stream the read and decompress process yet.</p>
-			<p>So nothing will happen for a few seconds</p>
-		`
 
 		return text;
 
 	}, ( err ) =>  divFileContents.innerHTML += err.message )
 
-	.then( function( string ) {
+	.then( function( uint8array ) {
 
-		//str = string
-		//console.log( 'string', string );
+		//console.log( 'uint8array', uint8array[ 0 ] );
 
-		 txt = '';
+		let txt = '';
 
-		if ( string.includes( "gbXML") ) {
+		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
 
-			txt = string;
+			txt = new TextDecoder( "utf-8" ).decode( uint8array );
+			 //console.log( 'txt', txt );
 
 		} else {
 
-			for ( let i = 1; i < string.length; i++ ) { txt += string[ i++ ]; }
+			let arr = new Uint8Array( uint8array.length / 2 );
+			index = 0;
+
+			// console.log( 'uint8array', uint8array );
+
+			for ( let i = 0; i < uint8array.length; i++ ) {
+
+				if ( i % 2 === 0 ) {
+
+					arr[ index++ ] = uint8array[ i ];
+
+				}
+
+			}
+			console.log( 'arr', arr );
+
+			txt = new TextDecoder( "utf-8" ).decode( arr );
+
+/*
+			for( i = 0; i < arr.length; i ++ ) {
+
+				txt = txt + String.fromCharCode( arr[ i ] );
+
+			}
+*/
 
 		}
 
@@ -132,7 +152,7 @@ function inpOpenFileZip( files ) {
 			time: ${ ( performance.now() - timeStart ).toLocaleString() }
 		`;
 
-		console.log( 'fileData', txt );
+		console.log( 'txt', txt );
 
 	} )
 

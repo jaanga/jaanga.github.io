@@ -2,7 +2,7 @@
 [You are now in GitHub source code view - Click here to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/examples/index.html "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/'; value='You are now in GitHub web page view - Click here to view Read Me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) &raquo;
+[Jaanga]( http://jaanga.github.io ) &raquo; [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) &raquo;
 
 [Examples Read Me]( index.html#readme.md )
 ===
@@ -23,7 +23,7 @@ _Cookbook code useful in adding to bigger projects/ Places to start. Test cases.
 	* But many files here are old, broken or not just very useful. So it goes
 * Help you explore the GitHub API
 * Help you explore audio, graphics and animation techniques
- 
+
 
 ### Vision
 
@@ -129,7 +129,7 @@ _This read me is still missing many links_
 
 * Creates a Date Object with the current locat time
 * General utility to view all the [Date methods]( https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date )
-	* With some comments and link to Mozilla Data docs 
+	* With some comments and link to Mozilla Data docs
 * Calculates and creates a Date object with [UTC]( https://en.wikipedia.org/wiki/Coordinated_Universal_Time ) time
 	* Displays a number of characteristics pertaining to the format of the Date object when used to hold UTC time
 * Calculates and displays the current time for a number of cities given their latitude and longitude
@@ -137,14 +137,14 @@ _This read me is still missing many links_
 	* Obtains time offset for remote location using [Google Maps Timezone API]( https://developers.google.com/maps/documentation/timezone/intro )
 
 #### Latest update: 2016-03-17 ~ R4
- 
+
 * First commit
 
 
 ### [Time Remote Given Lat Lon UTC]( http://jaanga.github.io/cookbook-html/examples/time-zone/time-remote-given-lat-lon-utc/ )
 
 #### Features
- 
+
 * Uses [Google Maps Time Zone API]( https://developers.google.com/maps/documentation/timezone/intro ) to determine time zone
 	* Handles day light saving time and local time zone anomalies
 	* Ocean locations are timeless
@@ -165,7 +165,7 @@ _This read me is still missing many links_
 * Requests Google Date only as needed and not always
 * Adds UTC date and time to permalinks
 * Improve display mechanism
-* Add remote universal time display 
+* Add remote universal time display
 
 
 
