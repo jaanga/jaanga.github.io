@@ -26,8 +26,8 @@
 </style>
 </head>
 <body>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/TrackballControls.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/build/three.min.js" ></script>
+<script src = "https://cdn.rawgit.com/mrdoob/three.js/r98/examples/js/controls/TrackballControls.js" ></script>
 
 	<nav id = "navMenu" >
 
@@ -126,8 +126,6 @@ function addMeshes( timestamp ) {
 
 	if ( count < max ) {
 
-		//drawMultipleMeshes( step );
-
 		count += step;
 		const delta = timestamp - lastTimestamp2;
 		lastTimestamp2 = timestamp;
@@ -138,7 +136,15 @@ function addMeshes( timestamp ) {
 
 		} else {
 
-			misses2 ++;
+			misses ++;
+
+			if ( misses > 3 ) {
+
+				deltaLimit ++;
+
+				misses = 0
+
+			}
 
 		}
 
