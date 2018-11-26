@@ -56,7 +56,8 @@
 // jshint esversion: 6
 
 let meshes;
-let count= 0;
+const meshesCount = 5000;
+let count = 0;
 let start = 0;
 let st = 0;
 
@@ -111,7 +112,7 @@ function init() {
 
 function initDrawMeshesStagger() {
 
-	start=performance.now();
+	start = performance.now();
 
 	scene.remove( window.meshes )
 	meshes = new THREE.Group();
@@ -122,16 +123,46 @@ function initDrawMeshesStagger() {
 }
 
 
-function drawMeshesStagger( timestamp ) {
+function drawMeshesStagger() {
 
-	//console.log( 'timestamp', timestamp );
-	//console.log( 'start', start );
+	let i = 0;
 
-	//const elapsed = timestamp - st;
-	//st = timestamp;
-	//console.log( 'elapsed', elapsed );
+	const start = performance.now();
 
-	//console.log( 'elapsed', elapsed );
+	const delta = 25;
+
+	const tick = function() {
+
+		t = performance.now();
+
+		for ( ; i < meshesCount && ( performance.now() - t < 60 ); i++ ) {
+
+			drawMesh();
+			count++;
+
+		}
+
+		if ( i < meshesCount ) {
+
+			// Yield execution to rendering logic
+			setTimeout( tick, delta );
+
+		} else {
+
+			console.log( 'time to render ', ( performance.now() - start ).toLocaleString() );
+
+		}
+	};
+
+	setTimeout( tick, delta );
+
+}
+
+
+
+
+function xxdrawMeshesStagger( timestamp ) {
+
 	const t = performance.now();
 
 	for ( let i = 0; i < 200; i ++ ) {
@@ -220,9 +251,6 @@ function drawMultipleMeshes( count = 50 ) {
 
 	divLog.innerHTML +=
 	`drawMultipleMeshes - time: ${ performance.now() - start }`
-
-
-
 
 }
 

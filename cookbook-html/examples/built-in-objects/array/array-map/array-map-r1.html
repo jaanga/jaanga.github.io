@@ -17,43 +17,56 @@
 
 	forLoop();
 
-	arrMap();
 
 	function forLoop() {
 
-//		var arr;
+		count = 1000000;
+
+		timeStart = performance.now();
 
 		arr = [];
 
-		for ( var i = 0; i < 1000; i++ ) {
+		for ( var i = 0; i < count; i++ ) {
 
 			arr.push( Math.random() );
 
 		}
 
-console.log( 'arr1', arr );
+		console.log( 'for loop1 time', ( performance.now() - timeStart ).toLocaleString() );
 
 
-	}
+		timeStart = performance.now();
+
+		arr2 =  [];
+		arr2.length = count;
+
+		for ( var i = 0; i < count; i++ ) {
+
+			arr2[ i ] = Math.random();
+
+		}
+
+		console.log( 'for loop2 time', ( performance.now() - timeStart ).toLocaleString() );
+
+		timeStart = performance.now();
+
+		things1 = [];
+		things1.length = count;
+
+		things1 = things1.fill( Math.random() );
+
+		console.log( 'fill time', ( performance.now() - timeStart ).toLocaleString() );
+
+		timeStart = performance.now();
+
+		things2 = [];
+		things2.length = count;
+		var arr3 = things1.map( thing => Math.random() );
+
+		console.log( 'map time', ( performance.now() - timeStart ).toLocaleString() );
 
 
-	function arrMap() {
-
-		things = [];
-		things.length = 1000;
-
-		things = things.fill( Math.random() );
-
-
-		var arr2 = things.map( function( thing ) {
-
-			thing = Math.random();
-			return thing;
-
-		});
-
-
-console.log( 'arr2', arr2 );
+		console.log( 'arr3', arr3 );
 
 	}
 </script>
