@@ -9,6 +9,9 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 
 ## 2018-12-08 ~ Parsing a large corpora of data
 
+Load and ungzip dependency-parsed text corpus from Common Crawl
+
+See [pako ungzip depcc]( https://jaanga.github.io/demo/david-n/pako-ungzip-depcc.html )
 
 ## 2018-02-08 ~ Links of Interest
 

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Load and ungzip dependency-parsed text corpus from Common Crawl" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-12-08" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+		<script src="https://cdn.jsdelivr.net/npm/pako@1.0.7/dist/pako.min.js"></script>
+
+	<div id="divMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>
+
+			<a href="https://commoncrawl.s3.amazonaws.com/contrib/depcc/CC-MAIN-2016-07/index.html" >DepCC: A Dependency-Parsed Text Corpus from Common Crawl</a>
+		</p>
+
+		<p># <input id=inpNumber > &nbsp; search string <input id=inpString value="http" ></p>
+
+		<p><button onclick=requestFile(inpNumber.value); >open selected DepCC file</button></p>
+
+		<p id=pBytesLoaded></p>
+
+		<p id=pTimeProgress ></p>
+
+		<p id=pTimeParse ></p>
+
+		<p id=pUrl ></p>
+
+		<p id=pTimeLastModified ></p>
+
+		<p id=pSearchMatches ></p>
+
+		<p id=pString ></p>
+
+
+	</div>
+
+	<div id="divContents" ></div>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/david-n";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
+
+let timeStart;
+
+let urlPath = "https://commoncrawl.s3.amazonaws.com/contrib/depcc/CC-MAIN-2016-07/text/"
+const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	inpNumber.value = Math.floor( Math.random() * 19100 );
+
+}
+
+
+
+function requestFile( index ) {
+
+	// https://stackoverflow.com/questions/6965107/converting-between-strings-and-arraybuffers/20604561#20604561
+	// https://stackoverflow.com/questions/8936984/uint8array-to-string-in-javascript
+	// https://stackoverflow.com/questions/6965107/converting-between-strings-and-arraybuffers/20604561#20604561
+
+	url = urlCORS + urlPath + `part-${ ( "00000" + index ).slice( -5 ) }.gz`;
+	//console.log( 'url', url  );
+
+	let timeStart = performance.now();
+
+	xhr = new XMLHttpRequest();
+	//xhr.crossOrigin = 'anonymous';
+	xhr.responseType = 'arraybuffer';
+	xhr.open( 'GET', url, true );
+	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+	xhr.onprogress = function( xhr ) {
+		pBytesLoaded.innerHTML = `Bytes loaded: ${ xhr.loaded.toLocaleString() } `
+		pTimeProgress.innerHTML = `Time to load: ${ ( performance.now() - timeStart ).toLocaleString() }` ;
+	};
+	xhr.onload = callback;
+	xhr.send( null );
+
+		function callback( xhr ) {
+
+			const byteArray = new Uint8Array( xhr.target.response );
+			timeStart = performance.now();
+
+			const bytes = pako.inflate( byteArray );
+			//console.log( 'bytes', bytes );
+
+			const text = new TextDecoder( "utf-8" ).decode( bytes );
+
+			const regex = new RegExp( `${ inpString.value }`, "gim" );
+			const matches = text.match( regex );
+			//console.log( 'matches', matches );
+
+			pUrl.innerHTML = url.link( url );
+
+			pTimeLastModified.innerHTML = `Last modified: ${ xhr.target.getResponseHeader ( "Last-Modified" ) }`;
+
+			pTimeParse.innerHTML = `Time to parse: ${ ( performance.now() - timeStart ).toLocaleString() }`;
+
+			pSearchMatches.innerHTML = `Search matches for "${ inpString.value }": ${ matches.length.toLocaleString() }`;
+
+			pString.innerHTML = `<p>First 1,000 characters:</p> ${ text.slice( 0, 1000 ) }`;
+
+		}
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+</script>
+</body>
+</html>
