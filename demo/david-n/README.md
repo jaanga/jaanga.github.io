@@ -7,7 +7,15 @@ value='You are now in a GitHub Pages view. Click here to view README file in Git
 # [DavidN Read Me]( index.html#README.md )
 
 
-## Links of Interest
+## 2018-12-08 ~ Parsing a large corpora of data
+
+
+## 2018-02-08 ~ Links of Interest
+
+The following relate to conversations related to surveying the [Cordell Bank]( https://cordellbank.noaa.gov/ ) using a [remote operated vehicle( ROV) underwater camera system]( https://en.wikipedia.org/wiki/Remotely_operated_underwater_vehicle ).
+
+The objective was to be able to map the track of a number of shoots onto a 3D map.
+
 
 ## [Elevation View R3]( https://jaanga.github.io/terrain3/elevations-core3/elevations-core3-r1.html )
 
