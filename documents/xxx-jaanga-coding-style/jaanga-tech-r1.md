@@ -41,14 +41,14 @@ CDNs used:
 * [CDNJS]( https://cdnjs.com/ )
 	* <https://cdnjs.com/libraries/three.js>
 * [RawGit]( https://rawgit.com/ )
-	* Example: <https://rawgit.com/mrdoob/three.js/r70/examples/js/controls/OrbitControls.js>
+	* Example: <https://cdn.jsdelivr.net/gh/mrdoob/three.js@r70/examples/js/controls/OrbitControls.js>
 
 As in:
 
 ```
-<script src=http://rawgit.com/mrdoob/three.js/r71/build/three.min.js ></script>  
-<script src=http://rawgit.com/mrdoob/three.js/r71/examples/js/controls/OrbitControls.js ></script>
-<script src=http://rawgit.com/mrdoob/three.js/r71/examples/js/libs/stats.min.js ></script>  
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r71/build/three.min.js ></script>  
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r71/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r71/examples/js/libs/stats.min.js ></script>  
 ```
 
 ### PNG files are used to store the data

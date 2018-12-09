@@ -5,8 +5,8 @@
 ## NASA STL Examples
 The following files are made available via the [NASA presence]( https://github.com/nasa/NASA-3D-Resources ) on GitHub
 
-[Cassini]( #https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Printing/Cassini/cassini.stl#2 )  
-[DSN 34m]( #https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Printing//DSN%2034%20m/34M_17.stl )  
-[Dawn]( #https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Printing/Dawn/Dawn_19.stl )  
-[Eros]( #https://rawgit.com/nasa/NASA-3D-Resources/master/3D%20Printing/Eros/eros.STL#3 )  
+[Cassini]( #https://cdn.jsdelivr.net/gh/nasa/NASA-3D-Resources@master/3D%20Printing/Cassini/cassini.stl#2 )  
+[DSN 34m]( #https://cdn.jsdelivr.net/gh/nasa/NASA-3D-Resources@master/3D%20Printing//DSN%2034%20m/34M_17.stl )  
+[Dawn]( #https://cdn.jsdelivr.net/gh/nasa/NASA-3D-Resources@master/3D%20Printing/Dawn/Dawn_19.stl )  
+[Eros]( #https://cdn.jsdelivr.net/gh/nasa/NASA-3D-Resources@master/3D%20Printing/Eros/eros.STL#3 )  
 

@@ -31,14 +31,14 @@ A nice place to be
 [campfire]( #https://rawgit.com/mrdoob/three.js/dev/examples/models/campfire/campfire.mtl#cx=7#cy=7#cz=7)  
 
 A place not to be in front of  
-[cerberus]( #https://rawgit.com/mrdoob/three.js/dev/examples/models/obj/cerberus/Cerberus.obj#cx=1#cy=0#cz=-2 )  
+[cerberus]( #https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/models/obj/cerberus/Cerberus.obj#cx=1#cy=0#cz=-2 )  
 
 A place for climbing  
-[tree]( #https://rawgit.com/mrdoob/three.js/dev/examples/models/obj/tree.obj#cx=1#cy=0#cz=1 )  
+[tree]( #https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/models/obj/tree.obj#cx=1#cy=0#cz=1 )  
 
 A place to lean against  
-[lamp post]( #https://cdn.rawgit.com/tparisi/WebGLBook/master/models/LampPost/LampPost.obj#cx=-19#cy=4#cz=21#tx=3#ty=8 )
+[lamp post]( #https://cdn.jsdelivr.net/gh/tparisi/WebGLBook@master/models/LampPost/LampPost.obj#cx=-19#cy=4#cz=21#tx=3#ty=8 )
 
 A place to move away from  
-[shark]( #https://cdn.rawgit.com/josdirksen/threejs-cookbook/master/assets/models/shark/Shark.mtl#cx=-4#cy=-2#cz=13#tz=2 )
+[shark]( #https://cdn.jsdelivr.net/gh/josdirksen/threejs-cookbook@master/assets/models/shark/Shark.mtl#cx=-4#cy=-2#cz=13#tz=2 )
 
