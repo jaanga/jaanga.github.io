@@ -2,7 +2,7 @@
 
 The script that lists, opens and displays files in this menu is a basic [Content Management System (CMS)]( https://en.wikipedia.org/wiki/Content_management_system ).
 
-See [pushMe-pullYou]( https://pushme-pullyou.github.io/ ) and [ tooToo]( https://pushme-pullyou.github.io/#https://rawgit.com/pushme-pullyou/pushme-pullyou.github.io/master/tootoo-more/README.md )
+See [pushMe-pullYou]( https://pushme-pullyou.github.io/ ) and [ tooToo]( https://pushme-pullyou.github.io/#https://cdn.jsdelivr.net/gh/pushme-pullyou/pushme-pullyou.github.io@master/tootoo-more/README.md )
 
 * Browse and view repositories, folders and files on GitHub with remarkable ease
 * Traverse, select and display as many folders and files as possible in the shortest amount of time
