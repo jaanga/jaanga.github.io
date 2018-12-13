@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+
+	info.innerHTML = '<a href="" ><h1>' + location.pathname.split( '/' ).pop() + '</h1></a>' +
+		'<div id=msg1 ></div>' +
+	'';
+
+	var event = new Event( 'build' );
+
+// Listen for the event.
+	msg1.addEventListener('build', function (e) { console.log( 'event', e ); }, false);
+
+// Dispatch the event.
+	msg1.dispatchEvent( event );
+
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-08-29" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+
+	<div id="divMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p><button onclick=setEvent(); >set event</button></p>
+
+		<p><button onclick=setCustomEvent(); >set custom event</button></p>
+
+		<p><button onclick=setCustomEventKirupa(); >set kirupa event</button></p>
+
+		<p><button onclick=getFile(); >get File</button></p>
+
+	</div>
+
+	<div id="divContents" data-id="123" ></div>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	divContents.addEventListener( 'buttonClick', function (e) { console.log( 'e', e.timeStamp ); }, false);
+
+	divContents.addEventListener( 'buttonClickCustom',
+		function (e) { console.log( 'e', e.detail ); }, false);
+
+	document.body.addEventListener("myEventName", doSomething, false);
+
+}
+
+
+
+
+function setEvent() {
+
+	const event = new Event( 'buttonClick' );
+
+	divContents.dispatchEvent( event );
+
+}
+
+
+
+function setCustomEvent() {
+
+	const event = new CustomEvent( 'buttonClickCustom', { detail: divContents.dataset.id } );
+
+	divContents.dispatchEvent( event );
+
+}
+
+
+function setCustomEventKirupa() {
+
+	const myEvent = new CustomEvent( "myEventName",
+		{
+			'detail': {
+				first: "Chalupa",
+				last: "Batman",
+				random: Math.round( Math.random() * 1000 )
+			}
+		});
+
+	document.body.dispatchEvent(myEvent);
+
+}
+
+
+
+function doSomething(e) {
+
+	divContents.innerHTML +=
+		"<div>Event is called: " + e.type + "</div>" +
+		"<div>Event detail is: " + e.detail.first + " - " + e.detail.random +"</div>"
+
+}
+
+
+
+function getFile(){
+
+	let url = "https://rawgit.com/ladybug-tools/spider/master/gbxml-sample-files/bristol-clifton-downs-broken.xml"
+
+	window.xhr = new XMLHttpRequest();
+
+	xhr.addEventListener( 'load', function( e ) { console.log( 'e', e.type ); }, false );
+
+	xhr.addEventListener( 'load', function( e ) { console.log( 'e', performance.now() ); }, false );
+
+	requestFile( url );
+
+}
+
+
+
+function requestFile( url ) {
+
+	//		let xhr;
+
+	xhr.crossOrigin = 'anonymous';
+	xhr.open( 'GET', url, true );
+	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+	xhr.onprogress = function( xhr ) { console.log( 'bytes loaded:', xhr.loaded  ); }; /// or something
+	xhr.onload = callback;
+	xhr.send( null );
+
+	function callback( xhr ) {
+
+		let response, json, lines;
+
+		response = xhr.target.response;
+		//console.log( 'response', response );
+
+		divContents.innerHTML = response;
+
+		//			json = JSON.parse( response );
+		//console.log( 'json', json );
+		// JSON.stringify( dxf, null, ' ' )
+		// or
+		//			lines = response.split(/\r\n|\n/);
+		///			lines = response.split( '\n' ).map( function( line ) { return line.split( ',' ); } );
+
+		//			console.log( 'line 8',lines[ 8 ] );
+		//			console.log( 'length', lines.length );
+
+		//			lastMod = xhr.target.getResponseHeader ( "Last-Modified" );
+		console.log( xhr.target.getResponseHeader ( "Last-Modified" ) );
+
+	}
+
+}
+
+
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
