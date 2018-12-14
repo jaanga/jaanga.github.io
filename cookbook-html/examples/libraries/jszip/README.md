@@ -1,12 +1,13 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/cookbook-html/examples/libraries/jszip/#README.md "View file as a web page." ) </span>
-<div><input type=button onclick=window.location.href='https://github.com/jaanga/000000/tree/master/documents/xxxxxx/';
+<div><input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/libraries/jszip/';
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
-[Jaanga]( https://jaanga.github.io ) &raquo; [ oooooo ]( http://jaanga.github.io/documents/  ) &raquo;
 
 
 # [jsZip Read Me]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/index.html#readme.md )
 
+
+## [jszip-basic2.html]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/jszip-basic2/jszip-basic2.html )
 
 ## [jszip-basic-3.html]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/jszip-basic-3.html )
 
@@ -25,6 +26,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * <https://news.ycombinator.com/item?id=7615471>
 
 More
+* https://davidwalsh.name/javascript-zip
 * https://github.com/gildas-lormeau/zip.js
 * https://stackoverflow.com/questions/2095697/unzipping-files
 * https://stackoverflow.com/questions/34439147/how-to-unzip-file-on-javascript/34439627
@@ -63,52 +65,25 @@ UTF16 decode
 ## Issues / Bugs / Things that need Work
 
 
-## Features
 
-* TBD
-* Click three bars( 'hamburger' ) icon to slide menu in or out
-* Direct link to this read me file
-* Click on title to reload
-
-
-## Things you can do using this script
-
-
-* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
-* Press Control-U/Command-Option-U to view the source code
-* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
-
-
-
-## Things you can do by editing the code
-
-<iframe src='https://jaanga.github.io/cookbook-html/examples/libraries/ace-editor/ace-view-r1.html#
-	http://jaanga.github.io/documents/xxxxxx/xxxxxx-r1.html' width=100% height=600 ></iframe>
-
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/xxxxxx/xxxxxx-r1.html';
-value='Source code listing' >
-
-
-* Open this file: https://github.com/jaanga/jaanga.github.io/tree/master/documents/xxxxxx/xxxxxx-r1.html
-* Click the 'Raw' icon and save the raw file to your computer
-* Once you've downloaded the file, you can click it to run it.
-* Open the file with a text editor
-
-
-<!--
 ## Users
 _where used_
 
-Intended for xxx
--->
+* https://github.com/ladybug-tools/spider-gbxml-tools/tree/master/sandbox/spider-gbxml-text-parser
 
-
-
-## Links of Interest
 
 
 
 ## Change Log
+
+### 2018-12-13 ~ Theo
+
+jszip-basic2.html
+* add button 'getZipFromUrl'
+* Add button and code  'getZipFromUrlUtf16'
+* Add button and code 'sav data to zip file'
+* Generally cleanup code and embellish progress indicator
+
 
 ###
 

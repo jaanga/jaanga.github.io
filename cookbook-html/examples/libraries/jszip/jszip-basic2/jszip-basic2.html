@@ -5,7 +5,7 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "Basic zip file read and decompress" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2018-11-05" >
+<meta name = "date" content = "2018-12-13" >
 <title></title>
 <style>
 
@@ -27,7 +27,23 @@
 
 		<div id = "divTitle" ></div>
 
-		<p><input type=file id=inpOpenFile onchange=inpOpenFileZip(this); accept="application/zip" ></p>
+		<p>
+			<button onclick=getZipFromUrl(urlUtf8,callbackUrl); >getZipFromUrl</button>
+
+			<button onclick=getZipFromUrl(urlUtf16,callbackUrlUtf16); >getZipFromUrlUtf16</button>
+
+		</p>
+
+		<p>
+			<input type=file id=inpOpenFile onchange=inpOpenFileZip(this); accept="application/zip" >
+
+			Decode <input type=file id=inpOpenFile onchange=inpOpenFileZipDecode(this); accept="application/zip" >
+
+		</p>
+
+		<p>
+			<button onclick=fileSaveZip(); >save data to zip file</button>
+		</p>
 
 	</div>
 
@@ -37,33 +53,209 @@
 
 	<div id = "divFileContents" ></div>
 
+	<textarea id=txtArea style=height:300px;width:100%; ></textarea>
+
 
 <script>
 
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlUtf8 = "https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip";
+const urlUtf16 = "https://www.ladybug.tools/spider/gbxml-sample-files/zip/LargeCampus_SAM2017.zip"
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/libraries/jszip";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
 
 init();
 
 function init() {
 
-	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	divTitle.innerHTML = getTitle();
 
-	divTitle.innerHTML =
-	`
-		<h1>
-			<a href=${ urlSourceCode } target="_top" title = "Source code on GitHub" >
-				<img src="https://status.github.com/images/invertocat.png" height=18 >
-			</a>
-			<a href="" title = "Click to reload this page" >${ document.title }</a>
-		</h1>
-
-		<p>${document.head.querySelector( '[name=description]' ).content }</p>
-	`;
-
-	//divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
+	divFileContents.innerHTML += '<p>text will appear here</p>';
 
 }
 
+
+
+function getZipFromUrl( url, callback ) {
+
+	timeStart = performance.now();
+
+	let xhr = new XMLHttpRequest();
+	xhr.crossOrigin = 'anonymous';
+	xhr.responseType = 'blob';
+	xhr.open( 'GET', url, true );
+	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+	//xhr.onprogress = function( xhr ) { console.log( 'bytes loaded:', xhr.loaded  ); }; /// or something
+	xhr.onload = callback;
+	xhr.send( null );
+
+}
+
+
+function callbackUrlUtf16( xhr ) {
+
+	const response = xhr.target.response;
+	//console.log( 'response', response );
+
+	const zip = new JSZip();
+
+	zip.loadAsync( response )
+
+	.then( function( zip ) {
+		//console.log( 'zip', zip );
+
+		const names = [];
+		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
+
+		// Read from the zip file!
+		const array = zip.file( names[ 0 ] ).async( "uint8array" );
+
+		return array;
+
+	} )
+
+	.then( function( uint8array ) {
+
+		//console.log( 'uint8array', uint8array[ 0 ] );
+
+		let text = '';
+
+		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
+
+			text = new TextDecoder( "utf-8" ).decode( uint8array );
+			//console.log( 'text', text );
+
+		} else {
+
+			let arr = new Uint8Array( uint8array.length / 2 );
+			let index = 0;
+
+			// console.log( 'uint8array', uint8array );
+
+			for ( let i = 0; i < uint8array.length; i++ ) {
+
+				if ( i % 2 === 0 ) {
+
+					arr[ index++ ] = uint8array[ i ];
+
+				}
+
+			}
+			//console.log( 'arr', arr );
+
+			text = new TextDecoder( "utf-8" ).decode( arr );
+
+		}
+
+		return text;
+
+		//console.log( 'text', text );
+
+	} )
+
+	.then(
+
+		function success( text) {
+
+			divFileContents.innerHTML +=
+			`
+				<p>
+					length: ${ text.length.toLocaleString() } <br>
+					time: ${ ( performance.now() - timeStart ).toLocaleString() }<br>
+					last modified: ${ xhr.target.getResponseHeader ( "Last-Modified" ) }
+				</p>
+			`;
+
+			txtArea.value = text.slice( 0, 1000 );
+
+		},
+
+		function error( e ) { divFileContents.append(`error ${ e } `) }
+
+	);
+
+}
+
+
+
+function callbackUrl( xhr ) {
+
+	const response = xhr.target.response;
+	//console.log( 'response', response );
+
+	var zip = new JSZip();
+
+	zip.loadAsync( response )
+
+	.then( function( zip ) {
+		//console.log( 'zip', zip );
+
+		const names = [];
+		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
+
+		// Read from the zip file!
+		const text = zip.file( names[ 0 ] ).async("string");
+
+		return text;
+
+	} )
+
+	.then(
+
+		function success( text) {
+
+			divFileContents.innerHTML +=
+			`
+				<p>
+					length: ${ text.length.toLocaleString() } <br>
+					time: ${ ( performance.now() - timeStart ).toLocaleString() }<br>
+					last modified: ${ xhr.target.getResponseHeader ( "Last-Modified" ) }
+				</p>
+			`;
+
+			txtArea.value = text.slice( 0, 1000 );
+		},
+
+		function error( e ) { divFileContents.append(`error ${ e } `) }
+
+	);
+
+}
+
+
+
+function fetchZipFromUrl( url ) {
+
+	console.log( 'url', url );
+
+	fetch( url ) // 1) fetch the url
+
+	.then( function ( response ) {	// 2) filter on 200 OK
+
+		if ( response.status === 200 || response.status === 0) {
+
+			return Promise.resolve( response.blob() );
+
+		} else {
+
+			return Promise.reject(new Error(response.statusText));
+
+		}
+	})
+	.then( JSZip.loadAsync ) // 3) chain with the zip promise
+
+	.then(function ( zip ) {
+		//return zip.file("Hello.txt").async("string"); // 4) chain with the text content promise
+		return zip.async("string"); // 4) chain with the text content promise
+	})
+	.then( function success( text) {	// 5) display the result
+		divFileContents.append( `<p>${ text }</p>` )
+
+	}, function error(e) {
+		divFileContents.append(`error ${ e } `)
+	});
+
+}
 
 
 
@@ -71,13 +263,15 @@ function inpOpenFileZip( files ) {
 
 	timeStart = performance.now();
 
+	const names = [];
+
 	zip = new JSZip();
 
-	names = [];
 
-	zip.loadAsync( files.files[0] )
+	zip.loadAsync( files.files[ 0 ] )
 
 	.then( function( zip ) {
+
 
 		zip.forEach( function ( relativePath, zipEntry ) {
 
@@ -96,25 +290,95 @@ function inpOpenFileZip( files ) {
 
 	.then( function( data ) {
 
-		text = data.files[ names[ 0 ] ].async( "uint8array", function updateCallback( metadata ) {
-			divFileLog.innerHTML =  `progression: ${ metadata.percent.toFixed(2) } %`;
-		} );
+		//text = data.files[ names[ 0 ] ].async( "uint8array", function updateCallback( metadata ) {
+		//	divFileLog.innerHTML =  `progression: ${ metadata.percent.toFixed(2) } %`;
+		//} );
 		//console.log( 'data', data  );
+
+		text = data.file( names[ 0 ] ).async("string");
 
 		return text;
 
 	}, ( err ) =>  divFileContents.innerHTML += err.message )
 
+	.then( function( text ) {
+
+		//console.log( 'text', text );
+
+		divFileContents.innerHTML =
+		`
+			<p>
+			length: ${ text.length.toLocaleString() } <br>
+			time: ${ ( performance.now() - timeStart ).toLocaleString() }
+			</p>
+		`;
+
+		txtArea.value = text.slice( 0, 1000 );
+
+		//console.log( 'text', text );
+
+	} )
+
+}
+
+
+
+function inpOpenFileZipDecode( files ) {
+
+	timeStart = performance.now();
+
+	zip = new JSZip();
+
+	names = [];
+
+	zip.loadAsync( files.files[ 0 ] )
+
+	.then( function( zip ) {
+
+		zip.forEach( function ( relativePath, zipEntry ) {
+
+			names.push( zipEntry.name );
+
+			divFileNames.innerHTML += '<p>file name: ' + zipEntry.name + '</p>';
+			console.log( 'file name: ', zipEntry.name );
+
+		});
+
+		console.log( 'zip', zip );
+
+		return zip;
+
+	} )
+
+	.then(
+
+		function( data ) {
+
+			array = data.files[ names[ 0 ] ].async(
+				"uint8array",
+				function updateCallback( metadata ) {
+					divFileLog.innerHTML =  `progress: ${ metadata.percent.toFixed(2) } %`;
+				}
+			);
+			//console.log( 'data', data  );
+
+			return array;
+
+		},
+		( err ) =>  divFileContents.innerHTML += err.message
+
+	)
+
 	.then( function( uint8array ) {
 
 		//console.log( 'uint8array', uint8array[ 0 ] );
 
-		let txt = '';
+		let text = '';
 
 		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
 
-			txt = new TextDecoder( "utf-8" ).decode( uint8array );
-			 //console.log( 'txt', txt );
+			text = new TextDecoder( "utf-8" ).decode( uint8array );
+			 //console.log( 'text', text );
 
 		} else {
 
@@ -134,12 +398,12 @@ function inpOpenFileZip( files ) {
 			}
 			console.log( 'arr', arr );
 
-			txt = new TextDecoder( "utf-8" ).decode( arr );
+			text = new TextDecoder( "utf-8" ).decode( arr );
 
 /*
 			for( i = 0; i < arr.length; i ++ ) {
 
-				txt = txt + String.fromCharCode( arr[ i ] );
+				text = text + String.fromCharCode( arr[ i ] );
 
 			}
 */
@@ -148,17 +412,66 @@ function inpOpenFileZip( files ) {
 
 		divFileContents.innerHTML =
 		`
-			length: ${ txt.length.toLocaleString() } <br>
+			<p>
+			length: ${ text.length.toLocaleString() } <br>
 			time: ${ ( performance.now() - timeStart ).toLocaleString() }
+			</p>
 		`;
 
-		console.log( 'txt', txt );
+		txtArea.value = text.slice( 0, 1000 );
 
-	} )
+		//console.log( 'text', text );
+
+	} );
 
 }
 
 
+
+function fileSaveZip( name = 'hello-world') {
+
+	const zip = new JSZip();
+
+	zip.file( name, txtArea.value );
+
+	zip.generateAsync( {type:"blob"} )
+
+	.then( function( blob ) {
+
+		let a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = name + '.zip';
+		a.click();
+		a = null;
+
+	});
+
+}
+
+
+
+function getTitle() {
+
+document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+const htm =
+
+`
+	<h2>
+		<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+			<img src=${ urlSourceCodeIcon } height=18 >
+		</a>
+		<a href="" title="Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( "[ name=description ]" ).content }
+	</p>
+`;
+
+return htm;
+
+}
 
 </script>
 </body>

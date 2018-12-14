@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<gbXML xmlns="http://www.gbxml.org/schema" useSIUnitsForResults="true" temperatureUnit="C" lengthUnit="Meters" areaUnit="SquareMeters" volumeUnit="CubicMeters" version="0.37">
+  <Campus id="aim0002">
+    <Location>
+      <StationId IDType="WMO">142882_2006</StationId>
+      <ZipcodeOrPostalCode>00000</ZipcodeOrPostalCode>
+      <Longitude>-0.12721</Longitude>
+      <Latitude>51.50642</Latitude>
+      <Elevation>39.0144</Elevation>
+      <CADModelAzimuth>0</CADModelAzimuth>
+      <Name>London, London, United Kingdom</Name>
+    </Location>
+    <Building buildingType="Office" id="aim0013">
+      <StreetAddress>London, London, United Kingdom</StreetAddress>
+      <Area>6801.061</Area>
+      <Space zoneIdRef="aim0518" conditionType="HeatedAndCooled" buildingStoreyIdRef="aim0204" id="aim0521">
+        <Area>198.5025</Area>
+        <Volume>932.9617</Volume>
+        <PlanarGeometry>
+          <PolyLoop>
+            <CartesianPoint>
+ 
