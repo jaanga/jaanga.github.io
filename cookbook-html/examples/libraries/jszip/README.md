@@ -3,15 +3,14 @@
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 
-
 # [jsZip Read Me]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/index.html#readme.md )
 
 
-## [jszip-basic2.html]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/jszip-basic2/jszip-basic2.html )
+## [jszip-basic2.html]( https://jaanga.github.io/cookbook-html/examples/libraries/jszip/jszip-basic2/jszip-basic2.html )
 
-## [jszip-basic-3.html]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/jszip-basic-3.html )
+## [jszip-basic-3.html]( https://jaanga.github.io/cookbook-html/examples/libraries/jszip/jszip-basic-3.html )
 
-## Full Screen: [ jsZip ]( https://jaanga.github.io/master/cookbook-html/examples/libraries/jszip/index.html )
+## [ jsZip ]( https://jaanga.github.io/cookbook-html/examples/libraries/jszip/index.html )
 
 ## Links of Interest
 
@@ -26,6 +25,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * <https://news.ycombinator.com/item?id=7615471>
 
 More
+* https://stackoverflow.com/questions/41614221/why-the-compression-ration-is-0-using-jszip
+	* https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html
 * https://davidwalsh.name/javascript-zip
 * https://github.com/gildas-lormeau/zip.js
 * https://stackoverflow.com/questions/2095697/unzipping-files

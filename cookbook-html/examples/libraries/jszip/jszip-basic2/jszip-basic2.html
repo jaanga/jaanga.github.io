@@ -58,6 +58,8 @@
 
 <script>
 
+let zipText = '';
+
 const urlUtf8 = "https://www.ladybug.tools/spider/gbxml-sample-files/zip/UK_London_RoyalArsenalWoolwich.zip";
 const urlUtf16 = "https://www.ladybug.tools/spider/gbxml-sample-files/zip/LargeCampus_SAM2017.zip"
 
@@ -147,6 +149,8 @@ function callbackUrlUtf16( xhr ) {
 
 		}
 
+		zipText = text;
+		
 		return text;
 
 		//console.log( 'text', text );
@@ -313,6 +317,8 @@ function inpOpenFileZip( files ) {
 			</p>
 		`;
 
+		zipText = text;
+
 		txtArea.value = text.slice( 0, 1000 );
 
 		//console.log( 'text', text );
@@ -418,6 +424,8 @@ function inpOpenFileZipDecode( files ) {
 			</p>
 		`;
 
+		zipText = text;
+
 		txtArea.value = text.slice( 0, 1000 );
 
 		//console.log( 'text', text );
@@ -432,9 +440,9 @@ function fileSaveZip( name = 'hello-world') {
 
 	const zip = new JSZip();
 
-	zip.file( name, txtArea.value );
+	zip.file( name, zipText );
 
-	zip.generateAsync( {type:"blob"} )
+	zip.generateAsync( {type:"blob", compression: "DEFLATE" } )
 
 	.then( function( blob ) {
 

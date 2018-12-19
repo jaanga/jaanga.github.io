@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-12-18" >
+<title></title>
+<link rel="stylesheet" id="stylesheet" type="text/css" href="css-switch-w3schools.css">
+
+<link rel="stylesheet" type="text/css" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<link rel="stylesheet" id="stylesheetW3schools" type="text/css" href="https://www.w3schools.com/lib/w3-theme-red.css">
+
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 600px; }
+
+	#navMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; }
+
+	#divHamburger { cursor: pointer; font-size: 30px; left: 0;
+		line-height: 30px; margin: 0; padding: 5px 15px 8px 10px; position: fixed; top: 0; z-index: 10; transition: left .5s;
+	}
+	#divHamburger { box-sizing: border-box; border-radius: 2px;
+		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+	}
+
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<header id="divTitle" ></header>
+
+		<p>
+			<button id=but onclick=setIt(); accessKey= 'z' title='access key: z '>button button</button>
+		</p>
+
+		<div id=divMenuHeader ></div>
+
+		<details open>
+
+			<summary >sumMenuHeader</summary>
+
+			<div>
+
+			<p><a href="" >breadcrumb</a> &raquo; </p>
+			<h2><a href="" >Title</a></h2>
+
+			<div id=divRowButtonsStyle ></div>
+
+			<div id=divMenuHeader>
+				<p><i>111 222 333 444 555</i></p>
+				aaa bbb ccc ddd eee fff
+			</div>
+
+			</div>
+			<hr>
+
+		</details>
+
+
+		<details open>
+
+			<summary>sumMenuContent</summary>
+
+			<div id=divMenuContent >
+
+				<p>
+					<label><b>Last Name</b></label>
+					<input type="text" style=width:100px; >
+				</p>
+
+				<p><button >button 1</button></p>
+
+				<p><button >button 2</button></p>
+
+				<select size=3 >
+					<option value="" disabled selected>Choose your option</option>
+					<option value="1">Option 1</option>
+					<option value="2">Option 2</option>
+					<option value="3">Option 3</option>
+				</select>
+
+				<p>lorem ipsum, <a href='' class=w3-theme-l5 >quia dolor sit</a>, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+
+
+			</div>
+
+			<hr>
+
+		</details>
+
+
+		<footer>
+
+			<details>
+
+				<summary>sumMenuFooter</summary>
+
+				<div id=divMenuFooter>
+					lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</div>
+				<hr>
+
+			</details>
+
+		</footer>
+
+		<h1><center>❦</center></h1>
+
+	</nav>
+
+	<div id="divContents" >
+
+			<p id=pThemes ></p>
+
+			<p><button onclick=stylesheetW3schools.href="https://www.w3schools.com/lib/w3-theme-blue.css"; >style blue</button></p>
+
+			<p><button onclick=stylesheetW3schools.href="https://www.w3schools.com/lib/w3-theme-amber.css"; >style amber</button></p>
+
+	</div>
+
+
+
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
+
+init();
+
+function init() {
+
+	nav = document.body.querySelectorAll( 'nav' );
+	nav.forEach( item => item.classList.add( "w3-theme-l5" ) );
+
+	header = document.body.querySelectorAll( 'header' );
+	header.forEach( item => {
+		item.classList.add( "w3-bar-item" );
+		item.classList.add( "w3-theme" );
+		item.classList.add( "w3-padding");
+	} );
+
+	div = navMenu.querySelectorAll( 'div' );
+	div.forEach( item => item.classList.add( "w3-container" ) );
+
+	summary = document.body.querySelectorAll( 'summary' );
+	summary.forEach( item => {
+		item.classList.add( "w3-bar-item" );
+		item.classList.add( "w3-theme" );
+		item.classList.add( "w3-padding");
+	} );
+
+
+	button = document.body.querySelectorAll( 'button' );
+	button.forEach( item => {
+		item.classList.add( "w3-btn" );
+		item.classList.add( "w3-theme-l2" );
+		item.classList.add( "w3-round");
+
+	} );
+
+	input = document.body.querySelectorAll( 'input' );
+	input.forEach( item => {
+		item.classList.add( "w3-input" );
+		item.classList.add( "w3-theme-l4" );
+		item.classList.add( "w3-round" );
+		item.classList.add( "w3-border" );
+		item.classList.add( "w3-hover-theme" );
+
+
+	} );
+
+	select = document.body.querySelectorAll( 'select' );
+	select.forEach( item => {
+		item.classList.add( "w3-select" );
+		item.classList.add( "w3-theme-l2" );
+		item.classList.add( "w3-round");
+
+	} );
+
+	themes = [
+		"red",
+		"pink",
+		"purple",
+		"deep-purple",
+		"indigo",
+		"blue",
+		"light-blue",
+		"cyan",
+		"teal",
+		"green",
+		"light-green",
+		"lime",
+		"khaki",
+		"yellow",
+		"amber",
+		"orange",
+		"deep-orange",
+		"blue-grey",
+		"brown",
+		"grey",
+		"dark-grey",
+		"black",
+	];
+
+	pThemes.innerHTML =
+
+	themes.reduce( ( acc, item ) => acc + `<span class="w3-badge" style=background-color:${ item }; >${ item }</span>`, '' )
+	divTitle.innerHTML = getTitle();
+
+	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+
+}
+
+
+
+function setIt() {
+
+	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>

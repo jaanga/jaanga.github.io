@@ -33,7 +33,9 @@
 
 			<button onclick=fetchImageSimple(); >fetchImageSimple</button>
 
-			<button onclick=fetchText('https://mdn.github.io/fetch-examples/fetch-text/page1.txt',divContents); >fetchText</button>
+			<button onclick=fetchText(urlText1,divContents); >fetchText</button>
+
+			<button onclick=fetchTextSimple(urlText1,divContents); >fetchTextSimple</button>
 
 			<button onclick=fetchSelectedUrl(); title='creates menu' >fetchSelectedUrl</button>
 
@@ -60,6 +62,7 @@
 
 	let txt;
 
+	const urlText1 = 'https://mdn.github.io/fetch-examples/fetch-text/page1.txt';
 
 	init();
 
@@ -144,6 +147,14 @@ function fetchText( url, target ){
 
 }
 
+
+
+function fetchTextSimple( url, target ){
+
+	fetch( new Request( url ) )
+	.then( response => response.text() )
+	.then( text => target.innerHTML = text );
+}
 
 
 function fetchSelectedUrl() {

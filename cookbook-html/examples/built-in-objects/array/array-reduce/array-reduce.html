@@ -26,7 +26,11 @@
 
 		<div id="divTitle" ></div>
 
-		<p><button onclick=setIt(); >howdy button</button></p>
+		<p><button onclick=reduceArrayToString(); >reduceArrayToString</button></p>
+
+		<p><button onclick=filterArrayToArray(); >filterArrayToArray</button></p>
+
+		<p><button onclick=reduceArrayToArray(); >reduceArrayToArray</button></p>
 
 	</div>
 
@@ -46,18 +50,68 @@ function init() {
 
 	divTitle.innerHTML = getTitle();
 
-	divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
-
-
-	arr = [ "", "aaa", "bbb", "ccc", "ddd", "eee" ]
-
-
-	thing = arr.reduce( ( accum, item, index ) => accum + `${ index }. ${ item }<br>` )
-
-	divContents.innerHTML += thing;
+	//divContents.innerHTML += '<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>';
 
 }
 
+
+
+function reduceArrayToString() {
+
+	arr = [ "aaa", "bbb", "ccc", "ddd", "eee" ];
+
+	thing = arr.reduce( ( accum, item, index ) => accum + `${ index + 1 }. ${ item }<br>`, '' )
+
+	divContents.innerHTML =
+	`
+	Array: ${ arr }<br>
+	<br>
+	String:<br>
+	${ thing }
+	`;
+
+}
+
+
+function filterArrayToArray() {
+
+	// https://stackoverflow.com/questions/3746725/create-a-javascript-array-containing-1-n
+
+	arr = Array.from({length: 100 }, ( value, index ) => Math.floor( 9 * Math.random() ) );
+	//console.log( 'arr', arr );
+
+	arr2 = [];
+
+	arr.forEach( ( item, index ) => {
+
+		if ( item === 8 ) { arr2.push( index ) }
+
+	} );
+
+	console.log( 'forEach arr2', arr2 );
+
+}
+
+
+
+function reduceArrayToArray() {
+
+	// https://stackoverflow.com/questions/3746725/create-a-javascript-array-containing-1-n
+
+	arr = Array.from({length: 100 }, ( value, index ) => Math.floor( 9 * Math.random() ) );
+	//console.log( 'arr', arr );
+
+	reduce = arr.reduce( ( acc, value, index ) => {
+
+		if ( value === 8 ) { acc.push( index ); }
+
+		return acc;
+
+	}, [] );
+
+	console.log( 'reduce', reduce );
+
+}
 
 
 

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-12-15" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	#navMenu { background-color: #eee; left: 0; margin: 20px; max-width: 300px; padding: 0 10px; position: absolute; top: 0; }
+	*/
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>
+			<button id=but onclick=fetchXmlBristol(); accessKey= 'z' title='access key: z '>fetchBristol</button>
+
+			<button id=but onclick=fetchTextSimple(urlWarwick,divContents); accessKey= 'z' title='access key: z '>fetchWarwick</button>
+		</p>
+
+	</nav>
+
+	<div id="divContents" ></div>
+
+	<div id="divLog" ></div>
+
+
+<script>
+
+
+const urlBristol = 'https://www.ladybug.tools/spider/gbxml-sample-files/bristol-clifton-downs-broken.xml';
+const urlWarwick = 'https://www.ladybug.tools/spider/gbxml-sample-files/coventry-university-of-warwick-small.xml'
+
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	//divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+
+}
+
+
+
+function fetchXmlBristol() {
+
+	fetchTextSimple( urlBristol, divContents );
+
+}
+
+
+
+function fetchTextSimple( url, target ) {
+
+	fetch( new Request( url ) )
+	.then( response => response.text() )
+	.then( text => parseXml( text, target ) );
+
+}
+
+
+
+function parseXml( text, target ) {
+
+	//console.log( '', text );
+
+	const string = text.replace( /\r\n|\n/g, '' );
+
+	const reSurface = /<Surface(.*?)<\/Surface>/gi;
+	surfaces = string.match( reSurface );
+
+	//console.log( 'surfaces', surfaces[ 9 ] );
+
+	polyLoops = surfaces.map( loops => getPolyLoops( loops )[ 0 ] );
+
+	//console.log( 'polyLoops', polyLoops[ 9 ] );
+
+	//target.innerHTML = `<textarea style=height:300px;width:100%; >${ polyLoops[ 0 ] }</textarea>`;
+
+	arrayFindDuplicates( polyLoops );
+
+}
+
+
+
+
+function getPolyLoops( surface ) {
+
+	const re = /<polyloop(.*?)<\/polyloop>/gi;
+	const polyloopText = surface.match( re );
+	const polyloops = polyloopText.map( polyloop => polyloop.replace(/<\/?polyloop>/gi, '' ) );
+
+	return polyloops;
+
+};
+
+
+
+function arrayFindDuplicates( arrItems ) {
+
+	timeStart = performance.now();
+
+	const duplicates = [];
+
+	arrItems.forEach( ( item, index ) => {
+
+		const arrRemainder = arrItems.slice( index + 1 ); // why arrItems.shift() not work?
+
+		const arr = arrRemainder.some( itm => itm === item );
+
+		if ( arr ) { duplicates.push( index ); }
+
+	} );
+
+
+	divContents.innerHTML =
+	`
+		<p>number of items: ${ arrItems.length.toLocaleString() }</p>
+		<p>duplicates at: ${ duplicates }</p>
+		<p>time: ${ ( performance.now() - timeStart ).toLocaleString() }ms</p>
+	`;
+
+}
+
+
+
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
+
