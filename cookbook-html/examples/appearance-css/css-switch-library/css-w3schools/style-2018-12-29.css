@@ -1,0 +1,12 @@
+
+		body { font: 12pt monospace; margin: 0 auto; max-width: 600px; }
+
+		#navMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; }
+
+		#divHamburger { cursor: pointer; font-size: 30px; left: 0;
+			line-height: 30px; margin: 0; padding: 5px 15px 8px 10px; position: fixed; top: 0; z-index: 10; transition: left .5s;
+		}
+		#divHamburger { box-sizing: border-box; border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+		}
+		

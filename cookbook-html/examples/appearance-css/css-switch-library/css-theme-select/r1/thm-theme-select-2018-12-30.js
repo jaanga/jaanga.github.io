@@ -1,122 +1,7 @@
-<!doctype html>
-<html lang = "en" >
-<head>
-<meta charset = "utf-8" >
-<meta name = "viewport" content= "width=device-width, initial-scale=1" >
-<meta name = "description" content = "Switch themes on a basic TooToo HTML template" >
-<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2018-12-29" >
-<title></title>
-</head>
-<body>
-
-	<nav id="navMenu" >
-
-		<header>
-
-				<p id = "divTitle" ></p>
-
-		</header>
-
-		<div id=divMenuTheme ></div>
-
-		<details >
-
-			<summary >sumMenuHeader</summary>
-
-			<div>
-
-				<p><a href="" >breadcrumb</a> &raquo; </p>
-
-				<h2><a href="" >Title H2</a></h2>
-
-				<div id=divRowButtonsStyle ></div>
-
-				<div id=divMenuHeader>
-
-					<p><i>111 222 333 444 555</i></p>
-
-					aaa bbb ccc ddd eee fff
-				</div>
-
-			</div>
-
-			<hr>
-
-		</details>
+/* Copyright 2018 Ladybug Tools authors. MIT License */
 
 
-		<details >
-
-			<summary>sumMenuContent</summary>
-
-			<div id=divMenuContent >
-
-				<p>
-					<label><b>Last Name</b></label>
-					<input type="text" style=width:100px; >
-				</p>
-
-				<p><button >button 1</button></p>
-
-				<p><button >button 2</button></p>
-
-				<select size=3 >
-					<option value="" disabled selected>Choose your option</option>
-					<option value="1">Option 1</option>
-					<option value="2">Option 2</option>
-					<option value="3">Option 3</option>
-				</select>
-
-				<p>lorem ipsum, <a href='' class=w3-theme-l5 >quia dolor sit</a>, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
-
-			</div>
-
-			<hr>
-
-		</details>
-
-
-		<footer>
-
-			<details>
-
-				<summary>sumMenuFooter</summary>
-
-				<div id=divMenuFooter>
-					lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
-				</div>
-				<hr>
-
-			</details>
-
-		</footer>
-
-		<h1><center>❦</center></h1>
-
-	</nav>
-
-
-	<nav>
-		<button id="butHamburger" onclick=THM.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
-	</nav>
-
-
-	<div id="divPopUp" >
-
-		<div id="divPopUpData" ></div>
-
-		<div id="divMessage" ></div>
-
-	</div>
-
-
-	<div id="divContents" ></div>
-
-
-<script>
-
-const THM = { "release": "R1.0", "date": "2018-12-29" };
+const THM = { "release": "R2.0", "date": "2018-12-30" };
 
 THM.currentStatus =
 	`
@@ -129,30 +14,9 @@ THM.currentStatus =
 THM.description = THM.description || document.head.querySelector( "[ name=description ]" ).content;
 
 THM.stylesheet = "style.css";
-
-
 //let w3Themecss;
 
 let themeNameBootswatch = 'https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css';
-
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
-const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
-
-
-
-function init() { // called at bottom of file
-
-	divTitle.innerHTML = getTitle();
-
-	divMenuTheme.innerHTML = THM.getMenuTheme();
-
-
-	THM.loadCssBasic();
-
-	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
-
-}
-
 
 
 
@@ -160,27 +24,31 @@ THM.getMenuTheme = function() {
 
 	htm =
 	`
-		<details open>
+		<details open >
 
-			<summary>Switch Theme
+			<summary>Select Theme
 				<a class=helpItem href="JavaScript:THM.setPopupShowHide(THM.currentStatus);" >&nbsp; ? &nbsp;</a>
 			</summary>
 
-			<p>
-				<button id=but onclick=THM.loadCssBasic(); accessKey= 'z' title='access key: z '>load CSS Basic</button>
-			</p>
+			<div>
 
-			<p>
-				<button id=butW3 onclick=THM.loadCssW3school(); accessKey= 'w' title='access key: w '>load CSS W3schools</button>
-			</p>
+				<p>
+					<button id=but onclick=THM.loadCssBasic(); accessKey= 'z' title='access key: z '>load CSS Basic</button>
+				</p>
 
-			<p id=divW3Schools ></p>
+				<p>
+					<button id=butW3 onclick=THM.loadCssW3school(); accessKey= 'x' title='access key: x '>load CSS W3schools</button>
+				</p>
 
-			<p>
-				<button onclick=loadCssBootswatch() >load CSS Bootswatch</button>
-			</p>
+				<p id=divW3Schools ></p>
 
-			<div id=divBootswatch ></div>
+				<p>
+					<button onclick=loadCssBootswatch() >load CSS Bootswatch</button>
+				</p>
+
+				<div id=divBootswatch ></div>
+
+			</div>
 
 		</details>
 	`;
@@ -190,11 +58,7 @@ THM.getMenuTheme = function() {
 }
 
 
-THM.setPopupShowHide = function( text ) {
 
-	divPopUp.innerHTML = text;
-
-};
 
 
 THM.loadCssBasic = function() {
@@ -257,6 +121,7 @@ THM.loadCssW3school = function() {
 
 THM.tagsClassListAddW3schools= function() {
 
+	/*
 	nav = document.body.querySelectorAll( 'nav' )
 		.forEach( item => item.classList.add( "w3-theme-l5" ) );
 
@@ -278,23 +143,60 @@ THM.tagsClassListAddW3schools= function() {
 	select = document.body.querySelectorAll( 'select' )
 		.forEach( item => item.classList.add( "w3-select", "w3-theme-l2", "w3-round" ) );
 
-}
+*/
 
+nav = document.body.querySelectorAll( 'nav' )
+.forEach( item => item.classList.add( "w3-theme-l5" ) );
+
+a = document.body.querySelectorAll( 'a' )
+.forEach( item => item.classList.add( "w3-text-theme", "w3-hover-shadow" ) );
+
+h2s = document.body.querySelectorAll( 'h2' )
+.forEach( item => item.style.fontSize = '2rem' );
+
+h3s = document.body.querySelectorAll( 'h3' )
+.forEach( item => item.style.fontSize = '1.5rem' );
+
+div = navMenu.querySelectorAll( 'div' )
+.forEach( item => item.classList.add( "w3-container", "w3-text-theme" ) );
+
+summary = document.body.querySelectorAll( 'summary' )
+.forEach( item => item.classList.add( "w3-bar-item", "w3-theme", "w3-padding-small", "w3-hover-shadow"  ) );
+
+button = document.body.querySelectorAll( 'button' )
+.forEach( item => item.classList.add( "w3-btn", "w3-theme-l2", "w3-round" ) );
+
+input = document.body.querySelectorAll( 'input' )
+.forEach( item => item.classList.add( "w3-input", "w3-theme-l4", "w3-round", "w3-border", "w3-hover-theme" ) );
+
+select = document.body.querySelectorAll( 'select' )
+.forEach( item => item.classList.add( "w3-select", "w3-theme-l2", "w3-round" ) );
+
+}
 
 
 THM.tagsClassListRemoveW3schools = function() {
 
 	nav = document.body.querySelectorAll( 'nav' )
-		.forEach( item => item.classList.remove( "w3-theme-l5" ) );
+		.forEach( item => item.classList[ 'remove' ]( "w3-theme-l5" ) );
 
-	header = document.body.querySelectorAll( 'header' )
-		.forEach( item => item.classList.remove( "w3-bar-item", "w3-theme", "w3-padding" ) );
+	a = document.body.querySelectorAll( 'a' )
+		.forEach( item => item.classList.remove( "w3-text-theme", "w3-hover-shadow" ) );
+
+	h2s = document.body.querySelectorAll( 'h2' )
+		.forEach( item => item.style.fontSize = '' );
+
+	h3s = document.body.querySelectorAll( 'h3' )
+		.forEach( item => item.style.fontSize = '' );
+
+	//header = document.body.querySelectorAll( 'header' )
+	//	.forEach( item => item.classList.remove( "w3-bar-item", "w3-theme", "w3-padding" ) );
 
 	div = navMenu.querySelectorAll( 'div' )
-		.forEach( item => item.classList.remove( "w3-container" ) );
+		.forEach( item => item.classList.remove( "w3-container", "w3-text-theme" ) );
 
 	summary = document.body.querySelectorAll( 'summary' )
-		.forEach( item => item.classList.remove( "w3-bar-item", "w3-theme", "w3-padding" ) );
+		.forEach( item => item.classList.remove( "w3-bar-item", "w3-theme", "w3-padding-small", "w3-hover-shadow"  ) );
 
 	button = document.body.querySelectorAll( 'button' )
 		.forEach( item => item.classList.remove( "w3-btn", "w3-theme-l2", "w3-round" ) );
@@ -324,7 +226,7 @@ THM.setStyle = function( color ) {
 
 function loadCssBootswatch() {
 
-	tagsClassListRemoveW3schools();
+	THM.tagsClassListRemoveW3schools();
 
 	const themesBootswatch = [
 		{ 'Default': 'background-color: white; color: #007bff' },
@@ -366,8 +268,6 @@ function loadCssBootswatch() {
 	} );
 
 	divBootswatch.innerHTML = '<p>Themes from <a href="https://bootswatch.com/" target=_blank>Bootswatch</a><br>' + txt1.join( '' );
-
-
 
 	cssBootswatch = document.head.appendChild( document.createElement('link') );
 	cssBootswatch.rel = "stylesheet";
@@ -451,37 +351,3 @@ function tagsClassListRemoveBootswatch() {
 }
 
 
-
-//////////
-
-function getTitle() {
-
-	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
-
-	const htm =
-
-	`
-		<h2>
-			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
-				<img src=${ urlSourceCodeIcon } height=18 >
-			</a>
-			<a href="" title="Click to reload this page" >${ document.title }</a>
-		</h2>
-
-		<p>
-			${ document.head.querySelector( "[ name=description ]" ).content }
-		</p>
-	`;
-
-	return htm;
-
-}
-
-
-
-init();
-
-
-</script>
-</body>
-</html>

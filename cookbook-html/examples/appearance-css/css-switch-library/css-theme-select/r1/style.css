@@ -1,0 +1,77 @@
+/* Copyright 2018 Ladybug Tools authors. MIT License */
+
+:root { --mnu-width: 25rem; font-size: 0.8em; }
+
+/* body, html { font: 11pt monospace; height: 100%; margin: 0; overflow: hidden; } */
+
+
+body { font: 12pt monospace; }
+
+a { color: maroon; font-weight: bold; text-decoration: none; }
+a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
+
+button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #888 }
+
+div { padding: 0 1rem; }
+
+input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 90%; }
+input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+summary { cursor: pointer; font-weight: bold; }
+
+.attributeTitle { font-style: italic; }
+.attributeValue { color: blue; }
+.divMenuTitle { background-color: #ccc; color: #888; margin: 10px 0; text-align: center; }
+.dragDropArea { border: 1px dashed gray; box-sizing: border-box; margin: 10px; padding: 0 10px; }
+.helpItem { float: right; }
+.highlight {background-color: lightgreen }
+
+#divContents { margin: 0 auto; max-width: 600px; }
+
+#navMenu { background-color: #eee; max-height: 95%; left: 0; margin: 1rem; overflow: auto;
+	position: absolute; resize: both; top: 0; transition: left 0.5s; width: var( --mnu-width ); z-index: 10; }
+
+#navMenu button, #navMenu input[type=button] { background-color: #ddd; border: 2px solid white; color: white; cursor: pointer;
+	padding: 2px 5px; min-width: 13.5rem; }
+
+#navMenu button:hover { background: #ccc; color: #888 }
+
+#navMenu button.active { border-color: black; font-style: italic; font-weight: bold; margin-left: 1rem;
+	box-shadow: 2px 2px re#888; }
+
+#butHamburger {
+	font-size: 2rem; left: calc( var( --mnu-width ) + 3rem ); position: fixed; top: 5px; transition: left 0.5s; z-index: 20;
+	box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); }
+
+
+#navPopUp, #divPopUp { background-color: #eee; border-radius: 8px; display: block; max-width: 25%; padding: 0 5px 10px 5px;
+	max-height: 95%; overflow: auto; resize: both;
+	opacity: 0.95; right: 1rem; position: absolute; top: 1rem; z-index: 10; };
+
+
+
+@media screen and (max-width: 900px; ) {
+
+	#navMenu, #butHamburger { left: -23rem; }
+
+}
+
+
+
+@media screen and ( max-width: 600px ) {
+
+	#navMenu { left: calc( -2rem - var( --mnu-width ) ); }
+	#butHamburger { left: 10px; }
+
+}
+
+
+
+
+
+
+

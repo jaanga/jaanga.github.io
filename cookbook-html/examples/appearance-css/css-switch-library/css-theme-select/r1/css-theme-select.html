@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Select a stylesheet theme from menus with several publicly available industry-standard frameworks - all running on a basic TooToo sliding menu HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2018-12-30" >
+<title></title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="thm-theme-select.js" ></script>
+
+	<nav id="navMenu" >
+
+		<header>
+
+				<div id = "divTitle" ></div>
+
+		</header>
+
+
+		<section id=divMenuTheme ></section>
+
+
+		<details open >
+
+			<summary >sumMenuHeader</summary>
+
+			<div>
+
+				<p><a href="" >breadcrumb</a> &raquo; </p>
+
+				<h2><a href="" >Title H2</a></h2>
+
+				<div id=divRowButtonsStyle ></div>
+
+				<div id=divMenuHeader>
+
+					<p><i>111 222 333 444 555</i></p>
+
+					aaa bbb ccc ddd eee fff
+				</div>
+
+			</div>
+
+			<hr>
+
+		</details>
+
+
+		<details open >
+
+			<summary>sumMenuContent</summary>
+
+			<div id=divMenuContent >
+
+				<p>
+					<label><b>Last Name</b></label>
+					<input type="text" style=width:100px; >
+				</p>
+
+				<p><button >button 1</button></p>
+
+				<p><button >button 2</button></p>
+
+				<select size=3 >
+					<option value="" disabled selected>Choose your option</option>
+					<option value="1">Option 1</option>
+					<option value="2">Option 2</option>
+					<option value="3">Option 3</option>
+				</select>
+
+				<p>lorem ipsum, <a href='' class=w3-theme-l5 >quia dolor sit</a>, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>
+
+			</div>
+
+			<hr>
+
+		</details>
+
+
+		<footer>
+
+			<details>
+
+				<summary>sumMenuFooter</summary>
+
+				<div id=divMenuFooter>
+					lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</div>
+				<hr>
+
+			</details>
+
+		</footer>
+
+		<h1><center>❦</center></h1>
+
+	</nav>
+
+
+	<nav>
+		<button id="butHamburger" onclick=toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+	</nav>
+
+
+	<nav id="divPopUp" >
+
+		<div id="divPopUpData" ></div>
+
+		<div id="divMessage" ></div>
+
+	</nav>
+
+
+	<div id="divContents" ></div>
+
+
+<script>
+
+
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/appearance-css/css-switch-library/";
+const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
+
+
+init();
+
+
+function init() { // called at bottom of file
+
+	divTitle.innerHTML = getTitle();
+
+	divMenuTheme.innerHTML = THM.getMenuTheme();
+
+	THM.init();
+
+	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+
+}
+
+
+
+//////////
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+	`
+		<h3>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h3>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function toggleNavLeft() {
+
+	const width = navMenu.getBoundingClientRect().width;
+
+	if ( navMenu.style.left === '' || navMenu.style.left === '0px' ) {
+
+		navMenu.style.left = '-' + width + 'px';
+		butHamburger.style.left = '10px';
+
+	} else {
+
+		navMenu.style.left = '0px';
+		butHamburger.style.left = width + 'px';
+
+	}
+
+}
+
+
+
+setPopupShowHide = function( text ) {
+
+	divPopUp.innerHTML = text;
+
+};
+
+</script>
+</body>
+</html>

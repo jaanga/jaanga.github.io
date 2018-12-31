@@ -15,16 +15,41 @@ _<small>CSS Switch</small>_
 ## Full Screen: [CSS Switch]( https://jaanga.github.io/cookbook-html/examples/appearance-css/css-switch-library/cookbook-html/examples/appearance-css/css-switch-library.html )
 -->
 
+# Deprecated / Forked to Tootoo /
 
 ## Concept
+
+### css-theme-select
+
+With whatever you build, you will please more users if the style of your content fits in with the needs and requirements of the organization the script is designed to help.
+
+The easier it is your you to add, edit and remove style elements from your script, the more widely your script can be used.
+
+Objectives
+
+* Add and remove style classes from tags in HTML documents with ease
+* Apply classes based in the parameters needed to support industry-standard style sheets
+* Access, load and display any style-sheets available via a URL
+* Enable changing styles in the course of a session with simple user clicks
+* Store user preferences locally between sessions
+* Provide an extensive range of sample styles
+
+
+Style sheets currently supported
+
+* Simple homegrown style sheet
+* https://bootswatch.com/ - 20 themes
+* https://www.w3schools.com/w3css/ - 22 color themes
+
 
 
 ## To Do / Wish List
 
+// https://stackoverflow.com/questions/5033650/how-to-dynamically-remove-a-stylesheet-from-the-current-page
 
 ## Issues
 
-
+* 2018-12-31 ~ Dark bootswatch backgrounds do not always reset nicely
 
 
 ## Links of Interest
@@ -32,7 +57,13 @@ _<small>CSS Switch</small>_
 
 ## Change Log
 
-###
+### 2018-12-30 ~ Theo
+
+css-theme-select.html etc
+* first commit
+
+
+### 2018-12-16 ~ Theo
 
 * First commit
 

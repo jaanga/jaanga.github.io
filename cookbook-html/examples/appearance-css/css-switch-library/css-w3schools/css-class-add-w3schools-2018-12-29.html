@@ -12,15 +12,11 @@
 
 	<nav id="navMenu" >
 
-		<header>
+		<header id="divTitle" ></header>
 
-				<p id = "divTitle" ></p>
+		<p id=divMenuTheme ></p>
 
-		</header>
-
-		<div id=divMenuTheme ></div>
-
-		<details >
+		<details open>
 
 			<summary >sumMenuHeader</summary>
 
@@ -46,7 +42,7 @@
 		</details>
 
 
-		<details >
+		<details open>
 
 			<summary>sumMenuContent</summary>
 
@@ -98,7 +94,7 @@
 
 
 	<nav>
-		<button id="butHamburger" onclick=THM.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
+		<button id="butHamburger" onclick=MNU.toggleNavLeft(); title="click here to hide this menu"> slide &#9776; </button>
 	</nav>
 
 
@@ -116,62 +112,46 @@
 
 <script>
 
-const THM = { "release": "R1.0", "date": "2018-12-29" };
-
-THM.currentStatus =
-	`
-		<h3>THM ${ THM.release} status ${ THM.date }</h3>
-
-		<p>Jaanga Switch Theme</p>
-
-`;
-
-THM.description = THM.description || document.head.querySelector( "[ name=description ]" ).content;
-
-THM.stylesheet = "style.css";
-
-
-//let w3Themecss;
+let w3Themecss;
 
 let themeNameBootswatch = 'https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.css';
 
 const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
 const urlSourceCodeIcon = "https://status.github.com/images/invertocat.png";
 
+init();
 
 
-function init() { // called at bottom of file
+
+function init() {
+
 
 	divTitle.innerHTML = getTitle();
 
-	divMenuTheme.innerHTML = THM.getMenuTheme();
+	divMenuTheme.innerHTML = getMenuTheme();
 
 
-	THM.loadCssBasic();
+	loadCssBasic();
 
 	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
 
 }
 
 
-
-
-THM.getMenuTheme = function() {
+function getMenuTheme() {
 
 	htm =
 	`
 		<details open>
 
-			<summary>Switch Theme
-				<a class=helpItem href="JavaScript:THM.setPopupShowHide(THM.currentStatus);" >&nbsp; ? &nbsp;</a>
-			</summary>
+			<summary>Change Themes</summary>
 
 			<p>
-				<button id=but onclick=THM.loadCssBasic(); accessKey= 'z' title='access key: z '>load CSS Basic</button>
+				<button id=but onclick=loadCss(); accessKey= 'z' title='access key: z '>load CSS Basic</button>
 			</p>
 
 			<p>
-				<button id=butW3 onclick=THM.loadCssW3school(); accessKey= 'w' title='access key: w '>load CSS W3schools</button>
+				<button id=butW3 onclick=loadCssW3school(); accessKey= 'w' title='access key: z '>load CSS W3schools</button>
 			</p>
 
 			<p id=divW3Schools ></p>
@@ -190,29 +170,21 @@ THM.getMenuTheme = function() {
 }
 
 
-THM.setPopupShowHide = function( text ) {
+function loadCssBasic() {
 
-	divPopUp.innerHTML = text;
-
-};
-
-
-THM.loadCssBasic = function() {
-
-	const css = document.head.appendChild( document.createElement('link') );
+	css = document.head.appendChild( document.createElement('link') );
 	css.rel = "stylesheet";
-	css.href = THM.stylesheet;
+	css.href = "style.css";
 	//console.log( 'css', css );
 
-	THM.tagsClassListRemoveW3schools();
+	tagsClassListRemoveW3schools();
 
 	tagsClassListRemoveBootswatch();
 
-};
+}
 
 
-
-THM.loadCssW3school = function() {
+function loadCssW3school() {
 
 	tagsClassListRemoveBootswatch();
 
@@ -220,23 +192,23 @@ THM.loadCssW3school = function() {
 	w3css.rel = "stylesheet";
 	w3css.href = "https://www.w3schools.com/w3css/4/w3.css";
 
-	if ( !THM.w3Themecss ) {
+	if ( !w3Themecss ) {
 
-		THM.w3Themecss = document.head.appendChild( document.createElement('link') );
-		THM.w3Themecss.rel = "stylesheet";
-		THM.w3Themecss.id = "stylesheetW3schools";
-		THM.w3Themecss.href = "https://www.w3schools.com/lib/w3-theme-red.css";
+		w3Themecss = document.head.appendChild( document.createElement('link') );
+		w3Themecss.rel = "stylesheet";
+		w3Themecss.id = "stylesheetW3schools";
+		w3Themecss.href = "https://www.w3schools.com/lib/w3-theme-red.css";
 
 	}
 
 
-	THM.tagsClassListAddW3schools();
+	tagsClassListAddW3schools();
 
 	const themes = [ 'red', 'pink', 'purple', 'deep-purple', 'indigo', 'blue', 'light-blue', 'cyan', 'teal', 'green', 'light-green', 'lime', 'khaki', 'yellow',
 			'amber', 'orange', 'deep-orange', 'blue-grey', 'brown', 'grey', 'dark-grey', 'black', 'w3schools' ];
 
 	pThemes = themes.reduce( ( acc, theme ) =>
-		acc + `<a href=JavaScript: onclick=THM.setStyle("${ theme }"); style=font-size:3rem;line-height:0.5rem;text-decoration:none;color:${ theme.replace( '-', '' ) }
+		acc + `<a href=JavaScript: onclick=setStyle("${ theme }"); style=font-size:3rem;line-height:0.5rem;text-decoration:none;color:${ theme.replace( '-', '' ) }
 		title="${ theme }" >&bull;</a> `, '' );
 
 	divW3Schools.innerHTML =
@@ -249,13 +221,13 @@ THM.loadCssW3school = function() {
 
 	const css = document.head.appendChild( document.createElement('link') );
 	css.rel = "stylesheet";
-	css.href = THM.stylesheet;
+	css.href = "style.css";
 	//console.log( 'css', css );
 
 }
 
 
-THM.tagsClassListAddW3schools= function() {
+function tagsClassListAddW3schools() {
 
 	nav = document.body.querySelectorAll( 'nav' )
 		.forEach( item => item.classList.add( "w3-theme-l5" ) );
@@ -282,7 +254,7 @@ THM.tagsClassListAddW3schools= function() {
 
 
 
-THM.tagsClassListRemoveW3schools = function() {
+function tagsClassListRemoveW3schools() {
 
 	nav = document.body.querySelectorAll( 'nav' )
 		.forEach( item => item.classList.remove( "w3-theme-l5" ) );
@@ -311,7 +283,7 @@ THM.tagsClassListRemoveW3schools = function() {
 
 
 
-THM.setStyle = function( color ) {
+function setStyle( color ) {
 
 	console.log( 'color', color );
 	stylesheetW3schools.href="https://www.w3schools.com/lib/w3-theme-" + color + ".css";
@@ -435,7 +407,7 @@ function tagsClassListRemoveBootswatch() {
 
 	summary = document.body.querySelectorAll( 'summary' )
 		.forEach( item => item.classList.remove( "nav-link", "btn", "btn-primary" ) );
-	//console.log( 'summary', summary );
+	console.log( 'summary', summary );
 
 	button = document.body.querySelectorAll( 'button' )
 		.forEach( item => item.classList.remove( "btn", "btn-primary", "btn-sm" ) );
@@ -450,9 +422,6 @@ function tagsClassListRemoveBootswatch() {
 
 }
 
-
-
-//////////
 
 function getTitle() {
 
@@ -476,11 +445,6 @@ function getTitle() {
 	return htm;
 
 }
-
-
-
-init();
-
 
 </script>
 </body>
