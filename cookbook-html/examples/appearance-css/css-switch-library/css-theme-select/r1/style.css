@@ -12,7 +12,7 @@ a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: under
 
 aside { border: 1px solid lightgray; margin-top:15px; padding: 2px; }
 
-button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button, input[ type=button ] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 button:hover { background: #ccc; color: #888 }
 
 div { padding: 0 1rem; }
