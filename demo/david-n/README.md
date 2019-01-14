@@ -25,13 +25,13 @@ The following are screen captures of views from Elevation View R3. For our proje
 
 Maps would display way points of known position and depth. The way points would be connected by colored lines. Each way point marker could display relevant data as well as camera images near the way points. Many more features could be added once the project is underway.
 
-<img src=https://jaanga.github.io/index.html#demo/david-n/hawaii.png width=800 >
+<img src=https://jaanga.github.io/demo/david-n/hawaii.png width=800 >
 _Hawaii_
 
-<img src=https://jaanga.github.io/index.html#demo/david-n/honolulu.png width=800 >
+<img src=https://jaanga.github.io/demo/david-n/honolulu.png width=800 >
 _Honolulu_
 
-<img src=https://jaanga.github.io/index.html#demo/david-n/amorgos.png width=800 >
+<img src=https://jaanga.github.io/demo/david-n/amorgos.png width=800 >
 _Amorgos_
 
 ## [Elevation View R3]( https://jaanga.github.io/terrain3/elevations-core3/elevations-core3-r1.html )
