@@ -23,7 +23,7 @@ The objective is to be able to map the track of a number of shoots onto a 3D map
 
 The following are screen captures of views from Elevation View R3. For our project the maps would be of much smaller areas.
 
-Maps would display way points of known position and depth. The way points would be connected by colored lines. Each way point marker could display relevant data as well as camera images near the way points. Manu more features could be added once the project is underway.
+Maps would display way points of known position and depth. The way points would be connected by colored lines. Each way point marker could display relevant data as well as camera images near the way points. Many more features could be added once the project is underway.
 
 <img src=hawaii.png width=800 >
 _Hawaii_
