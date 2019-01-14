@@ -15,10 +15,24 @@ See [pako ungzip depcc]( https://jaanga.github.io/demo/david-n/pako-ungzip-depcc
 
 ## 2018-02-08 ~ Links of Interest
 
+Updated 2019-01-13 ~ Add images and text
+
 The following relate to conversations related to surveying the [Cordell Bank]( https://cordellbank.noaa.gov/ ) using a [remote operated vehicle( ROV) underwater camera system]( https://en.wikipedia.org/wiki/Remotely_operated_underwater_vehicle ).
 
-The objective was to be able to map the track of a number of shoots onto a 3D map.
+The objective is to be able to map the track of a number of shoots onto a 3D map.
 
+The following are screen captures of views from Elevation View R3. For our project the maps would be of much smaller areas.
+
+Maps would display way points of known position and depth. The way points would be connected by colored lines. Each way point marker could display relevant data as well as camera images near the way points. Manu more features could be added once the project is underway.
+
+<img src=hawaii.png width=800 >
+_Hawaii_
+
+<img src=honolulu.png width=800 >
+_Honolulu_
+
+<img src=amorgos.png width=800 >
+_Amorgos_
 
 ## [Elevation View R3]( https://jaanga.github.io/terrain3/elevations-core3/elevations-core3-r1.html )
 
