@@ -196,6 +196,7 @@
 		function callbackCF( xhr ) {
 
 			txt = xhr.target.response;
+			console.log( 'txt', txt );
 			text = JSON.parse( txt );
 
 			contents.innerHTML =
@@ -228,7 +229,7 @@
 
 
 
-	function createFile() {
+	function createFile2() {
 
 
 // https://api.github.com/gists/18b626fb181552c4cdac6c1789066e13

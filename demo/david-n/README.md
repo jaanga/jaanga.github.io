@@ -34,6 +34,8 @@ _Honolulu_
 <img src=https://jaanga.github.io/demo/david-n/amorgos.png width=800 >
 _Amorgos_
 
+Click images to see full size
+
 ## [Elevation View R3]( https://jaanga.github.io/terrain3/elevations-core3/elevations-core3-r1.html )
 
 * View elevation data

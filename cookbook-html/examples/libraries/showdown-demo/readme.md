@@ -8,11 +8,15 @@ lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non num
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view this read me file as a web page]( http://jaanga.github.io/cookbook-html/templates/reader-iframes/ "View file as a web page." ) </span>
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/templates/reader-iframes'; type=button value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/  ) » 
-[Templates]( http://jaanga.github.io/cookbook-html/templates/  ) »
+[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/cookbook-html/ ) » [Templates]( http://jaanga.github.io/cookbook-html/templates/ ) »
 
-[Reader Iframes Read Me]( ./index.html )
-===
+# [Reader Iframes Read Me]( ./index.html )
+
+
+[markdown.md]( #cookbook-html/examples/libraries/showdown-demo/markdown-in-table/markdown.md )
+
+[markdown-testing.md]( #cookbook-html/examples/libraries/showdown-demo/markdown-in-table/markdown-testing.md )
+
 
 [Template Three.js Draw Things - Full Screen]( http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
@@ -21,7 +25,7 @@ lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non num
 [Read Me Template]( ./index.html#readme-template.md )
 
 ## <center> Web Page / Source Code </center>
-<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>  
+<iframe class=ifr src="http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html" width=100% height=600px ></iframe>
 ###### _Template Three.js Draw Things - Dev revision - Code Edit View_ /  [Edit full screen]( http://jaanga.github.io/cookbook-html/templates/code-edit-view/code-edit-view-r2.html#http://jaanga.github.io/cookbook-threejs/templates/template-threejs-draw-things-r1.html )
 
 
@@ -41,7 +45,7 @@ patterns are descriptions of common problems and proposal for the solutions that
 Arthur C Clarke's Three Laws number three states: Any sufficiently advanced technology is indistinguishable from magic.
 
 Web pages are a good example of this phenomenon. Most people have not a clue as to how what they see on the screen has been created, stored and transmitted.
- 
+
 ### Mission
 <!-- a statement of a rationale, applicable now as well as in the future -->
 
@@ -56,6 +60,12 @@ Web pages are a good example of this phenomenon. Most people have not a clue as 
 
 
 ## Features
+
+
+## Links of interest
+
+* https://github.com/showdownjs/showdown
+* http://showdownjs.com/
 
 
 
