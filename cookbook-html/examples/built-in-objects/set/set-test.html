@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title></title>
+<meta charset=utf-8 />
+</head>
+<body>
+<script>
+
+	document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+	var info = document.body.appendChild( document.createElement( 'div' ) );
+	info.innerHTML = '<a href="" ><h1>' + location.pathname.split( '/' ).pop() + '</h1></a>' +
+	'<div id=msg1 ></div>' +
+
+	'';
+
+	let arr = [];
+	set = new Set();
+	n = 1000000;
+
+	for (let i = 0; i < n; i++) {
+		arr.push(i);
+		set.add(i);
+	}
+
+
+
+	const checkArr = (arr, item) => {
+		let index = arr.indexOf(item);
+		return index;
+	};
+
+	const checkSet = ( set, item) => {
+		let index = set[item];
+		return index;
+	};
+
+	console.time('Array');
+	result = checkArr(arr, 123123);
+	console.timeEnd('Array');
+
+	console.time('Set');
+	result = checkSet(set, 123123);
+	console.timeEnd('Set');
+
+	console.time('Array');
+	arr.push(n);
+	console.timeEnd('Array');
+
+	console.time('Set');
+	set.add(n);
+	console.timeEnd('Set')
+
+	const deleteFromArr = (arr, item) => {
+		let index = arr.indexOf(item);
+		return index !== -1 && arr.splice(index, 1);
+	};
+
+	console.time('Array');
+	deleteFromArr(arr, n);
+	console.timeEnd('Array');
+
+	console.time('Set');
+	set.delete(n);
+	console.timeEnd('Set');
+
+</script>
+</body>
+</html>
