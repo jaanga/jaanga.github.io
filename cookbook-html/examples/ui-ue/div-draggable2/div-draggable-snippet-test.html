@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-03-02" >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	#navMenu { background-color: #eee; left: 0; margin: 20px; max-width: 300px; padding: 0 10px; position: absolute; top: 0; }
+	*/
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>
+			<button id=but onclick=setIt(); accessKey= 'z' title='access key: z '>button button</button>
+		</p>
+
+	</nav>
+
+	<main>
+
+		<div id="divContents" ></div>
+
+	</main>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+var menu, info;
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+
+	addCSS();
+	addMenu();
+	addInfo();
+
+}
+
+
+
+
+
+
+function addCSS() {
+	var css = document.body.appendChild( document.createElement('style') );
+	css.innerHTML = 'body { font: 600 12pt monospace; margin: 0; overflow: hidden; }' +
+		'h1 { margin: 0; }' +
+		'h1 a {text-decoration: none; }' +
+		'#closer { /* position: absolute; right: 5px; top: 5px; */}' +
+		'#movable { left: 20px; overflow: auto; padding: 10px; position: absolute; top: 20px; }' +
+	'';
+}
+
+function addMenu() {
+	menu = document.body.appendChild( document.createElement( 'div' ) );
+	menu.id = 'movable';
+	menu.style.cssText = ' background-color: #ccc; opacity: 0.8; ';
+	menu.addEventListener( 'mousedown', mouseMove, false );
+	menu.innerHTML = '<a href=# id=closer style=text-decoration:none; >[x]</a>' +
+		'<h1>' +
+			'<a href="" >' + document.title + '</a> ' +
+			'<a href=# id=infoIcon onclick=info.style.display="block"; >&#x24D8;</a>' +
+		'</h1>' +
+		'<p>' +
+			'Zoom: &nbsp;  &nbsp;<input id=setZoom title="0 to 18: OK" type=number min=0 max=18 step=1 ><br>' +
+			'Pretty colors: <input id=inpPretty type=checkbox ><br>' +
+			'Overlay: <select id=selList title="Select the 2D overlay" >select option<select><br>' +
+			'<input type=button onclick=saveIt(); value="Save as PNG" >' +
+		'</p>' +
+		'<hr>' +
+		'<p>' +
+			'More...' +
+		'</p>' +
+		'<div id=messages></div>' +
+	'';
+
+	closer.onclick = function() { movable.style.height = movable.style.height ==="12px" ? "" : "12px"; };
+
+//		var data = requestFile( sourceDir + fileList );
+//		files = data.split(/\r\n|\n/);
+
+	var list = [ 'aaa','bbb','ccc','ddd','eee' ];
+	for (var option, i = 0; i < list.length; i++) {
+		option = document.createElement( 'option' );
+		option.innerText = list[i];
+		selList.appendChild( option );
+	}
+
+	selList.onchange = function() { requestHGTFile( sourceDir + files[ selHGT.selectedIndex ] ); };
+	selList.selectedIndex = 1;
+
+	window.addEventListener('mouseup', mouseUp, false);
+}
+
+
+function addInfo() {
+	info = document.body.appendChild( document.createElement( 'div' ) );
+	info.style.cssText = 'display: none; background-color: #ccc; left: 50px; opacity: 0.9; padding: 20px; ' +
+		'bottom: 0; left: 0; height: 370px; margin: auto; position: absolute; right: 0; top: 0; width: 500px; zIndex:10; ';
+	info.innerHTML =
+		'<div onclick=info.style.display="none"; >' +
+			'<h3>' + document.title + '</h3>' +
+			'<h4>Features include the following:</h4>' +
+			'<ul>' +
+				'<li>xxx</li>' +
+				'<li>xxx</li>' +
+			'</ul>' +
+			'<a href="https://github.com/jaanga/xxxxxxxxxxxxxx" target="_blank">Source code</a><br>' +
+			'<small>' +
+				'credits: <a href="http://threejs.org" target="_blank">three.js</a> - ' +
+				'<a href="http://khronos.org/webgl/" target="_blank">webgl</a> - ' +
+				'<a href="http://jaanga.github.io" target="_blank">jaanga</a><br>' +
+				'copyright &copy; 2014 Jaanga authors ~ MIT license' +
+			'</small><br><br>' +
+			'<i>Click anywhere in this message to hide...</i>' +
+	'</div>';
+	infoIcon.style.cssText += 'text-decoration: none; ';
+	infoIcon.title = 'Get information';
+	//infoIcon.onclick = 'info.style.display="block";';  // not work
+}
+
+// events
+function mouseUp() {
+	window.removeEventListener('mousemove', divMove, true);
+}
+
+function mouseMove( event ){
+	if ( event.target.id === 'movable' ) {
+		event.preventDefault();
+
+		offsetX = event.clientX - event.target.offsetLeft;
+		offsetY = event.clientY - event.target.offsetTop;
+		window.addEventListener('mousemove', divMove, true);
+	}
+}
+
+function divMove( event ){
+	event.target.style.left = ( event.clientX - offsetX ) + 'px';
+	event.target.style.top = ( event.clientY - offsetY ) + 'px';
+}
+
+
+
+function setIt() {
+
+	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
