@@ -31,37 +31,20 @@ main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0; /* overfl
 
 #divContents { border: 1px solid red; margin: 0 auto; max-width: 40rem; }
 
-
 #expandButton { height: 32px; position: absolute; left: var( --mnu-width ); top: 0px; width: 32px; transition: left 0.5s; z-index: 1; }
 
-#navMenu { background-color: #eee; left: 0; margin: 20px; max-width: 300px; padding: 0 10px; position: absolute; top: 0; }
-
-#navPanel { background: #fafafa; height: 100%; left: 0px; overflow: auto; padding: 0 0.5rem; position: fixed;
+#navPanel { background: #fafafa; height: 100%; left: 0px; max-width: 80%; overflow: auto; padding: 0 0.5rem; position: fixed;
 	transition: left 0.5s; width: var( --mnu-width ); z-index: 1; }
 
 
 #main.collapsed { left: 0; width: 100%; }
-#divContents.collapsed {  margin: 0 auto; width: 100%; }
-#navPanel.collapsed { left: calc( var( --mnu-width ) * -1 ); padding: 0; }
+#navPanel.collapsed { left: calc( -1 * var( --mnu-width ) );  }
 #expandButton.collapsed { left: 0; }
 
 
 @media all and ( max-width: 640px ) {
 
-
-main { left: 0; top: 0; width: 100%; }
-
-/*
-#navPanel { border-bottom: 1px solid #dedede; height: 480px; left: 0; /* overflow: hidden; */
-	position: absolute; right: 0; top: 0; width: 100%; }
-
-#navPanel.collapsed { height: var( --headerHeight ); overflow: hidden; }
-
-*/
-
-/* 	#secContent { position: absolute; left: 0; top: 90px; right: 0; bottom: 0; font-size: 17px;
-	line-height: 22px; overflow: auto; }
-*/
+	main { left: 0; width: 100%; }
 
 }
 
@@ -69,7 +52,7 @@ main { left: 0; top: 0; width: 100%; }
 </head>
 <body>
 
-	<button id="expandButton" onclick=setIt(); >☰</button>
+	<button id="expandButton" onclick=toggleNavPanel(); >☰</button>
 
 
 	<nav id="navPanel" >
@@ -77,7 +60,7 @@ main { left: 0; top: 0; width: 100%; }
 		<div id="divTitle" ></div>
 
 		<p>
-			<button id=but onclick=setIt(); accessKey= 'z' title='access key: z '>button button</button>
+			<button id=but onclick=toggleNavPanel(); accessKey= 'z' title='access key: z '>button button</button>
 		</p>
 
 	</nav>
@@ -106,14 +89,11 @@ function init() {
 
 
 
-function setIt() {
+function toggleNavPanel() {
 
-	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
-
-	main.classList.toggle( 'collapsed' );
-	divContents.classList.toggle( 'collapsed' );
-	navPanel.classList.toggle( 'collapsed' );
 	expandButton.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
 
 }
 
