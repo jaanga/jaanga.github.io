@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1">
+<meta name = "description" content = "Given an array of URLs, fetch the contents of each site and obtain data that can be used to help create a bibliography" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-06-09" >
+<meta name = "version" content = "0.1.0" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p><input id=inpUrl size=50></p>
+
+		<p>
+			<button onclick=divContents.innerHTML="";fetchText(inpUrl.value,divContents); >fetchText</button>
+
+			<button onclick=fetchLinks(companies,divContents); >fetch companies</button>
+
+			<button onclick=fetchLinks(experiments,divContents); >fetch experiments</button>
+
+			<button onclick=fetchLinks(others,divContents); >fetch others</button>
+
+		</p>
+
+	</nav>
+
+	<main>
+
+		<div id="divContents" ></div>
+
+	</main>
+
+
+<script>
+
+	experiments = [
+
+		"https://ablersite.org/projects/",
+		"https://www.dezeen.com/2016/08/10/avava-britespace-tiny-house-flat-pack-micro-dwelling-easy-transportation-assembly/",
+		"https://web.archive.org/web/20120709034513/http://ulab.cca.edu/2011/06/opspace/",
+		"http://intrastructures.net/Intrastructures/Concepts_-_Herbus_Habilis.html",
+		"https://www.wired.com/2008/09/sl-joachim/",
+		"https://n-e-r-v-o-u-s.com/labs/",
+		"http://www.openobject.org/",
+		"https://www.shareable.net/blog/6-stunning-open-source-house-designs-from-paperhouses",
+		"https://www.plethora-project.com/",
+		"http://projectfrog.com/",
+		"https://www.smartgeometry.org/",
+		"https://systemic-design.net/",
+		"http://uvs.propositions.org.uk/uvslongver.html",
+		"https://www.telegraph.co.uk/technology/2016/04/23/the-water-purifier-that-also-generates-electricity-and-creates-w/",
+		"http://wikihouse.github.io/viewer-experiments/",
+	];
+
+	const companies = [
+
+		"http://aetypic.com",
+		"http://blokable.com",
+		"http://bluhomes.com",
+		"http://bonestructure.ca",
+		"http://collectiveworks.net",
+		"http://factoryos.com",
+		"http://ideabox.us",
+		"http://intellistructures.com",
+		"http://metsawood.com",
+		"http://studioweave.com",
+		"http://weehouse.com",
+		"http://wikihouse.cc",
+		"http://wikkelhouse.com",
+		"http://unityhomes.com",
+
+	];
+
+	const others = [
+
+		"https://www.ted.com/talks/skylar_tibbits_the_emergence_of_4d_printing",
+		"https://dk-media.s3.amazonaws.com/AA/AL/diapraxis/downloads/294630/Empathy_in_Collaborative_Meaning-Making.pdf",
+		"http://zeta.math.utsa.edu/~yxk833/InfoCities.html",
+		"http://www.habraken.com/",
+		"https://selfassemblylab.mit.edu/",
+		"https://s3-us-west-1.amazonaws.com/opentecture/resources/Modular_Coordination.pdf",
+		"http://nailo.media.mit.edu/",
+		"http://www.open-building.org/ob/concepts.html",
+		"https://en.wikipedia.org/wiki/Sears_Catalog_Home",
+		"https://www.bluhomes.com/design_studio/",
+		"https://www.configura.com/",
+		"http://www.floored.com/homepage/",
+		"http://www.spacegoo.com/lignum/index.php?constructor=Demo1",
+		"http://www.math.ubc.ca/~cass/graphics/manual/",
+		"https://3d.io/",
+		"https://spaces.archilogic.com/explore",
+		"https://www.autodesk.com/products/autocad/overview",
+		"http://componance.com/",
+		"https://www.fabhub.io/",
+		"http://ladybug.tools/",
+		"https://octopart.com/common-parts-library",
+		"http://www.openplan.com/",
+		"http://openstructures.net/",
+		"http://www.partandwhole.com/",
+		"https://www.sketchup.com/",
+		"https://tylko.com/",
+		"http://kwambio.com/",
+		"https://www.sculpteo.com/en/",
+		"https://www.shapeways.com/",
+		"https://campsyte.com/",
+		"https://legacy.gitbook.com/book/harryknight/wikihouse-slack/details",
+		"https://www.openbuildinginstitute.org/",
+		"http://www.metal-building-homes.com/",
+		"http://www.architectsmart.com/",
+		"http://www.metal-building-homes.com/steel-metal-home-building-kit-of-3500-sq-ft-for-36995/#",
+		"http://beta.openstructures.net/pages/9#deel5a",
+		"https://wikihouse.cc/library",
+
+
+	];
+
+
+//const url = 'http://janwurm.com/images/sf2001/';
+const urlCORS = 'https://cors-anywhere.herokuapp.com/';
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/web-api/fetch";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	inpUrl.value = companies.slice().pop();
+
+	//fetchText( inpUrl.value, divContents) ;
+
+	fetchLinks( companies );
+
+}
+
+
+
+function fetchLinks( links ){
+
+	divContents.innerHTML = '';
+
+	for ( let link of links ) {
+
+		fetchText( link, divContents )
+
+	}
+
+}
+
+
+
+function fetchText( url, target ){
+	//console.log (url );
+
+	const request = new Request( urlCORS + url );
+
+	fetch( request )
+
+		.then( response => response.text() )
+		.then( text => parseText( text, target, url ) );
+
+}
+
+
+
+function parseText( text, target, url ) {
+	//console.log( 'url', url );
+
+	const parser = new DOMParser();
+
+	const doc = parser.parseFromString( text, "text/html" );
+	//console.log( 'doc', doc );
+
+	const descriptionMeta = doc ? doc.head.querySelector( '[name=description]' ) : "" ;
+	description = descriptionMeta ? descriptionMeta.content : "No description element found in HTML file";
+
+	const iconLink = doc ? doc.head.querySelector( '[rel=icon]' ) : "";
+	//console.log( 'iconLink', iconLink );
+
+	let iconHref = iconLink ? iconLink.href : "https://www.google.com/s2/favicons?domain=" + url;
+	//console.log( 'iconHref', iconHref );
+
+	iconHref = iconHref.toLowerCase().startsWith( "http" ) ? iconHref : url + iconLink;
+
+	htm =
+	`
+		<h3>
+			<img src="${ iconHref }" height=24 >
+			<a href=${ url } >${ url.replace( /http(.*):\/\//i, "" ) }: ${ doc.title }</a>
+		</h3>
+
+		<p>Description:<br>${ description }</p>
+	`;
+
+	target.innerHTML += htm;
+
+	//console.log( 'target', target );
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>

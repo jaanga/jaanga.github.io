@@ -18,6 +18,13 @@ The Fetch API provides an interface for fetching resources (including across the
 
 ## Links of Interest
 
+Fetch
+
+* https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+* https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data
+* https://davidwalsh.name/fetch
+* https://github.github.io/fetch/
+
 MDN
 
 * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
@@ -45,6 +52,13 @@ GraphQL API
 * https://dev-blog.apollodata.com/4-simple-ways-to-call-a-graphql-api-a6807bcdb355
 * https://gist.github.com/stubailo/8bd3b0ef9c1dcb1459bf0076e3d612af
 
+Get favicon
+
+* https://stackoverflow.com/questions/1990475/how-can-i-retrieve-the-favicon-of-a-website
+* https://www.google.com/s2/favicons?domain=www.google.com
+* https://news.ycombinator.com/item?id=17188973
+* http://faviconkit.com/
+
 ### Promises
 
 * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
@@ -53,6 +67,10 @@ GraphQL API
 
 ## Change Log
 
+
+### 2019-06-09 ~ Thro
+
+* F - Add: fetch-link-get-dom-0-1.html
 
 ### 2018-05-27 ~ Theo
 
