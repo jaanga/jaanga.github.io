@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>Drag/Drop/Bounce</title>
+
+<style>
+
+* { box-sizing: border-box; }
+
+
+body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+a { color: crimson; text-decoration: none; }
+
+#divPopup { background-color: #baa; border: 1px solid #888; border-radius: 5%; height: 8rem;
+	overflow: hidden; position: relative; resize: both; width: 8rem; }
+
+#divPopupHeader {
+	background-color: rgb(245, 230, 99);
+	border: 2px solid rgba(136, 136, 136, .5);
+	border-radius: 5%;
+	nnheight: 1rem;
+	padding: 0.5rem;
+	touch-action: none;
+	user-select: none;
+
+}
+
+#divPopupHeader:active { background-color: rgba( 168, 218, 220, 1.00 ); }
+
+#divPopupHeader:hover { cursor: pointer; border-width: 5px; }
+
+#divPopupMain { margin: 0.5rem; }
+
+#divPopupFooter { border-top: 1px solid #555; bottom: 0; font-style: italic; margin: 0.5rem; position: absolute;
+	 text-align: right; width: 95%; }
+
+</style>
+</head>
+
+<body>
+
+<h1><button onclick=divPopup.hidden=!divPopup.hidden; >?</button></h1>
+
+<div id="container">
+
+	<div id=divPopup >
+
+		<div id="divPopupHeader">? <button onclick=divPopup.hidden=true; style=float:right; >&times;</button></div>
+		<div id="divPopupMain">abc</div>
+		<div id="divPopupFooter">123 555 666</div>
+
+	</div>
+
+</div>
+
+
+<script>
+
+// https://www.kirupa.com/html5/drag.htm
+
+const DMV = {
+
+	active: false,
+	xOffset: 0,
+	yOffset: 0
+
+}
+
+
+
+
+DMV.dragStart = function ( e ) {
+
+	if ( e.type === "touchstart" ) {
+
+		DMV.initialX = e.touches[0].clientX - DMV.xOffset;
+		DMV.initialY = e.touches[0].clientY - DMV.yOffset;
+
+	} else {
+
+		DMV.initialX = e.clientX - DMV.xOffset;
+		DMV.initialY = e.clientY - DMV.yOffset;
+
+	}
+
+	if ( e.target === divPopupHeader ) { DMV.active = true; }
+
+};
+
+
+DMV.dragEnd = function( e ) {
+
+	DMV.initialX = DMV.currentX;
+	DMV.initialY = DMV.currentY;
+
+	DMV.active = false;
+
+};
+
+
+DMV.drag = function( e ) {
+
+	if ( DMV.active ) {
+
+		e.preventDefault();
+
+		if ( e.type === "touchmove" ) {
+
+			DMV.currentX = e.touches[0].clientX - DMV.initialX;
+			DMV.currentY = e.touches[0].clientY - DMV.initialY;
+
+		} else {
+
+			DMV.currentX = e.clientX - DMV.initialX;
+			DMV.currentY = e.clientY - DMV.initialY;
+
+		}
+
+		DMV.xOffset = DMV.currentX;
+		DMV.yOffset = DMV.currentY;
+
+		DMV.setTranslate( divPopup, DMV.currentX, DMV.currentY,  );
+
+	}
+
+};
+
+
+DMV.setTranslate = function( element, xPos, yPos ) {
+
+	element.style.transform = `translate3d( ${xPos }px, ${ yPos }px, 0 )`;
+
+};
+
+
+container.addEventListener( "touchstart", DMV.dragStart, false );
+container.addEventListener( "touchend", DMV.dragEnd, false );
+container.addEventListener( "touchmove", DMV.drag, false );
+
+container.addEventListener( "mousedown", DMV.dragStart, false );
+container.addEventListener( "mouseup", DMV.dragEnd, false );
+container.addEventListener( "mousemove", DMV.drag, false );
+
+</script>
+</body>
+</html>

@@ -73,6 +73,9 @@
 
 <script>
 
+
+// see also https://www.kirupa.com/html5/drag.htm
+
 	var draggableLeft;
 	var draggableTop;
 
@@ -156,6 +159,7 @@
 
 		const distY = event.changedTouches[ 0 ].clientY - draggableStartY;
 		// top is a reserved word
+		
 		let ttop = draggableTop + distY > window.innerHeight - 100 ? window.innerHeight - 100 : draggableTop + distY;
 		ttop = draggableTop + distY < 0 ? 0 : ttop;
 		//console.log( 'ttop', ttop  );

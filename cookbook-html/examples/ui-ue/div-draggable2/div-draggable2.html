@@ -9,7 +9,7 @@
 	#divDraggable {
 		background-color: #f1f1f1;
 		border: 1px solid #d3d3d3;
-		left: calc( 100% - 300px );
+		left: calc( 100vw - 300px );
 		overflow: auto;
 		position: absolute;
 		resize: both;
@@ -32,7 +32,7 @@
 	<div id=divContents>
 		<h1><a href="" >Draggable DIV Element</a></h1>
 		<p>Click and hold the mouse button down while moving the DIV element</p>
-		</div>
+	</div>
 
 	<div id=divDraggable >
 		<div id=divHeader >Click here to move</div>
@@ -56,13 +56,12 @@
 
 		divContents.innerHTML += b + txt;
 
-
-		dragElement( divDraggable );
+		dragElement( divDraggable ); // Make the DIV element draggagle:
 
 	}
 
 
-//Make the DIV element draggagle:
+
 // https://www.w3schools.com/howto/howto_js_draggable.asp
 
 	function dragElement( element ) {
@@ -70,6 +69,7 @@
 		let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
 		divHeader.onmousedown = dragMouseDown;
+
 
 		function dragMouseDown( event ) {
 
