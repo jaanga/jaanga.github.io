@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang=en >
+<head>
+<title>Fantastic Play</title>
+<meta charset=utf-8 />
+<meta name=author content='Theo Armour' />
+</head>
+<body>
+<script>
+// http://stackoverflow.com/questions/22812303/why-is-my-speech-synthesis-api-voice-changing-when-function-run-more-than-1-time
+
+// http://stackoverflow.com/questions/21513706/getting-the-list-of-voices-in-speechsynthesis-of-chrome-web-speech-api
+
+	var utterance, voices;
+	var count = 0;
+
+	names = [ 'SILVIA','SOLE','EMILIA','RAMON','WALTER' ];
+
+	actorVoices = [];
+
+	var SILVIA = 0;
+	var SOLE = 1;
+	var EMILIA = 2;
+	var RAMON = 3;
+	var WALTER = 4;
+
+	lines = [
+
+		[ SILVIA, 'Today was slow, eh Ramon?' ],
+		[ SOLE, 'That it was. That Balmart is taking your business, you know.' ],
+		[ EMILIA, 'Sole, you fool, it’s Walmart. Ramon, listen, the young kids don’t come here no more, business is slow.'],
+		[ RAMON, 'I know, tias, I know. But there still some customers. The families needing cereal on Sunday morning, the kids hungry, late at night after a party, couples who need condoms , cousins visiting who forgot toothbrushes... People still need us. And slow days are okay. I’m old. We’re old. Slow is good.' ],
+		[ SILVIA, 'People forget, you know, they forget what we can do for them.' ],
+		[ SOLE, 'The services we can do for them.' ],
+		[ EMILIA, 'The young ones, they don’t know.'],
+		[ SILVIA, 'They don’t understand what we can do for them. What we’re capable of doing.' ], 
+		[ SOLE, 'Eh, si, that Balmart can’t do shit compared to us, eh!' ],
+		[ EMILIA, 'Sole, you fool, it’s Walmart.' ],
+		[ WALTER, 'RAMON! YOU SON OF A BITCH! RAMON, YOU FILTHY LIAR, I’M COMING FOR YOU, YOU CHARLATAN!' ],
+		[ SILVIA, 'Uh oh.' ],
+		[ EMILIA, 'Uh oh.' ],
+		[ SOLE, 'Uh oh.' ],
+		[ WALTER, 'You filthy lying, stealing son of a whore! You said it would work! You said the coffee beans would work for Ruth, that she would love me! You dirty old man, she’s leaving me! RUTH! SHE’S GONE!' ],
+		[ SILVIA, 'Looks like he’s in trouble.' ],
+		[ SOLE, 'Seems like the coffee beans weren’t enough to keep Ruth around that oaf of a man.' ],
+		[ EMILIA, 'Sole, you fool, be quiet.' ], 
+		[ RAMON, 'Hey, calm down, Walter, what is this? The coffee beans don’t work anymore? Ruth has left?' ],
+		[ SILVIA, 'Maybe he should have treated Ruth better. That poor angel, she slaved away for him.' ], 
+		[ SOLE, 'Walter’s a puta. None of our coffee could fix that, no matter how strong; Ruth was bound to leave him.' ], 
+		[ EMILIA, 'Sole, be quiet. Don’t speak like that of our coffee.' ],
+		[ WALTER, 'She was supposed to love me! She says it’s over. She’s leaving me, that we’re done! This is your doing, your stupid coffee didn’t work. You said it would make her fall in love, that we would be together! You said, you said it had powers, old powers.'],
+		[ SOLE, 'The power of Cuba, mano! The strongest voodoo of the Caribbean! Strong enough to make anyone fall in love with an oaf like Walter, but not strong enough to make them stay in love...' ], 
+		[ EMILIA, 'SOLE! You’ll get us in trouble! Shush now. '],
+		[ WALTER, 'What did you say!? '],
+		[ RAMON, 'My friend, don’t listen to them, they’re old, they lose track of reality... They don’t know what they’re saying! Listen, about the coffee beans... Ruth... I don’t know what to say. There’s always a limit to what the beans can do for you, I explained that to you that when you bought them last year. They only have so much power. '],
+		[ WALTER, 'Goddammit, well gimme more! I can’t have her leaving me, Ruth is mine! Give me more coffee Ramon!'],
+		[ RAMON, 'Well, you see, I don’t have anymore... My sisters, they make it, and well, they’re getting old, they are forgetting the secrets of old Cuban voodoo. They mix up the recipes, so instead of coffee beans that’ll make Ruth love you, you’ll end up with coffee beans that’ll make her grow a mermaid tail, or make her speak only Swedish. '],
+		[ SOLE, 'Eh, Ramon, have some respect! You’re calling us old now?! '],
+		[ EMILIA, 'Sole, shush! He says this for your own good! Now be quiet, be quiet you fool. '],
+		[ WALTER, 'Listen here, I know you have stuff that can help me, I know there’s more here for me. Didn’t you say this stuff could cure hangovers, or this pasta make someone go mute?'],
+		[ SILVIA, 'You watch out now young man, those things aren’t for you. There’s some dark magic in there that I don’t want to see you touch. '],
+		[ WALTER, 'Go mute, huh? That wouldn’t be so bad... What else do you have, old ladies?'],
+		[ RAMON, 'Ohhh no, no, Walter, don’t listen to them, they’re losing their sense of reality, uhh, they don’t know what they’re talking about. Really, that’s just pasta. Goes well with some basil and tomatoes. '],
+		[ SOLE, 'Listen here, tonto, we’re not doing anything to help you. The whole neighborhood hears you yelling at poor Ruth. We all see the bruises that mark her body. It was a mistake selling you that coffee in the first place. '],
+		[ WALTER, 'You know what, Ramon’s probably right, you old hags don’t know whatcha talking about. I bet that coffee was bullshit. (Raising up his hands to make quotation marks) I bet its “magic” was so weak it became decaf.'],
+		[ EMILIA, 'Oye, nino, shame on you for talking like that of our traditions. You have no idea what we have done for people around here. '],
+		[ SILVIA, 'And you have no idea what we could do to you if you don’t watch yourself. '],
+		[ SOLE, 'Eh si, Silvia, you tell that idiot of a man how it is! '],
+		[ EMILIA, 'Sole, for the love of god, be quiet. '],
+		[ WALTER, 'Are you threatening me? Really? You think some little old twigs like yourself are gonna scare me? '],
+		[ RAMON, 'This is getting out of hand! Walter, tias, enough! Enough! Look, there’s not much I can do. We told you, the coffee will make her fall in love with you, but that’s it. Cuban voodoo, just like love, is a fickle beast. The coffee may make her fall in love with you, but not stay in love. And Ruth followed the true nature of her heart. There’s nothing my aunts could do about that. I’m sorry this happened my friend, but we also know you should have treated her better. '],
+		[ SOLE, 'You know, we make some stuff for heartburn, maybe that could help you Balter.'],
+		[ EMILIA, 'Sole, you are truly losing your mind. '],
+		[ WALTER, 'I don’t even know what to say. I tried so hard to make this work, I did everything I could.'],
+		[ SOLE, 'Clearly you didn’t. '],
+		[ SILVIA, 'Did you really try to make her fall in love with you?'],
+		[ WALTER, 'Yes! I put coffee everywhere! Coffee in her cereal, coffee in her soup, coffee in her toothpaste, I even put extra coffee in her coffee...'],
+		[ RAMON, 'Ah but Walter, that’s not enough to make someone fall in love with you. You need to be their friend, take care of them, cherish them, make them feel special. '],
+		[ WALTER, 'Well shit, you told me the coffee would do that part! What the heck am I supposed to do, be romantic?!'],
+		[ SOLE, 'Are you even hearing yourself right now?! I say we give him some of those candy bars that nice Mr Jenkins brought in the other day, and get rid of this oaf once and for all!'],
+		[ EMILIA, 'SOLE! Enough!'],
+		[ SILVIA, 'Listen, maybe it’s not more coffee you need... Maybe it’s tea. '],
+		[ EMILIA, 'Eh but Silvia, that tea isn’t...'],
+		[ SOLE, 'Emilia, now you be quiet! Silvia’s right. Listen here, my little Walter, maybe you should have some of our tea. It’s sweet and fresh, and always helps take your mind off of certai things.'],
+		[ RAMON, 'Oye, tias, I don’t know if that’s a good idea.'],
+		[ WALTER, 'Shut up Ramon, you ain’t go no right to tell me what to do after selling me those fake coffee beans! What’s this tea? Will it make me strong enough to crush anyone Ruth prefers to me? Or will it maybe make me irresistible?! I wouldn’t mind hitting that new cashier at Von’s...'],
+		[ EMILIA, 'You pig...'],
+		[ SOLE, 'Now now, Emilia, be quiet, let us help poor Walter.'],
+		[ WALTER, 'You’re finally seeing I deserve help! Maybe you ain’t so unreasonable after all... Where’s this tea? I already want it! I know it’ll fix what you’ve broken here with your stupid beans!'],
+		[ SILVIA, 'Oh right here, just this box of tea. Make yourself a cup, drink it quickly, and things should be smooth sailing for you and Ruth from now on. '],
+		[ SOLE, 'Just... Don’t forget what’s most important for you. '],
+		[ RAMON, 'You know what, this tea may be good for you. Here, Walter, it’s on the house. Go ahead and drink up. I know this will be good for you and Ruth. '],
+		[ WALTER, 'Screw you, I’m not paying, you owe me this after those shitty beans. This better work or I’ll come back for you! '],
+		[ SILVIA, 'Good riddance. '],
+		[ EMILIA, 'Was that really a good idea? '],
+		[ SOLE, 'Emilia, you truly are the now. I know you are going deaf, but you hear how he yells at that poor woman.'],
+		[ SOLE, 'We all see the bruises he leaves on her pretty face. It was a mistake selling him those coffee beans, and this was just a way of fixing that mistake.'],
+		[ RAMON , 'You ladies were right, people forget... They forget what we can do for them. They forget the services we can do for them.'],
+		[ SILVIA, 'The young ones, they don’t know.'],
+		[ SOLE, 'They don’t understand what we can do for them. What we’re capable of doing. '],
+		[ SILVIA, 'Listen Emilia, the tea will make him forget about Ruth, that’s it. He’ll move on, unaware that he even had a wife. And she will escape, finally. She’ll move on, unscathed. '],
+		[ SOLE, 'Eh Ramon, maybe it’s your time to shine with that pretty little Ruth... She could use a kind man like you. '],
+		[ RAMON, 'Sole, you fool, be quiet.']
+
+	];
+
+	init();
+
+	function init() {
+
+		document.body.style.cssText = ' font: bold 12pt monospace; ';
+
+		var info = document.body.appendChild( document.createElement( 'div' ) );
+		info.innerHTML = '<a href="" ><h1>Fantastic Play</h1></a>' +
+
+			'<button onclick=window.speechSynthesis.pause(); >pause</button> ' +
+			'<button onclick=window.speechSynthesis.resume(); >resume</button> ' +
+			'<button onclick=window.speechSynthesis.cancel();>Cancel / Mute</button>' +
+			'<div id=msg1 ></div>' +
+
+		'';
+
+		var talk = new SpeechSynthesisUtterance();
+
+// Workaround for a Chrome issue (#340160 - https://code.google.com/p/chromium/issues/detail?id=340160)
+
+		var watch = setInterval( function() {
+
+			// Load all voices available
+			voices = speechSynthesis.getVoices();
+
+			if ( voices.length !== 0 ) {
+
+				for ( var i = 0; i < voices.length; i++ ) {
+
+					var name = voices[i].name;
+					var lang = voices[i].lang;
+
+					if ( name === 'native' ) {
+						actorVoices[ RAMON ] = i;
+					} else if ( lang === "Google Español" ) {
+						actorVoices[ SILVIA ] = i;
+					} else if ( name === "Google Français" ) {
+						actorVoices[ SOLE ] = i;
+					} else if ( name === "Google Italiano" ) {
+						actorVoices[ EMILIA ] = i;
+					} else if ( name === "Google UK English Male" ) {
+						actorVoices[ WALTER ] = i;
+					}
+
+				}
+
+				clearInterval( watch );
+				sayIt();
+
+			}
+
+		}, 1 );
+
+	}
+
+	function sayIt() {
+
+console.log( count, lines[ count ][ 0 ] );
+
+		window.speechSynthesis.cancel(); 
+		utterance = new window.SpeechSynthesisUtterance();
+
+		utterance.voice = voices[ actorVoices[ lines[count ][ 0 ] ] ];
+		utterance.text = lines[ count ][ 1 ];
+		window.speechSynthesis.speak( utterance );
+
+		msg1.innerHTML = '<h2>Line:' + count + '<br>' + names[ lines[ count ][ 0 ] ] + '</h2>' +
+			'<h2>' + lines[ count ][ 1 ] + '</h2>' +
+		'';
+
+//console.log('voices', speechSynthesis.pending );
+
+		utterance.onend = function( e ) {
+
+//console.log('Finished in ' + event.elapsedTime + ' seconds.');
+
+			count++;
+
+			if ( count < lines.length ) {
+
+				sayIt();
+
+			}
+		};
+
+
+	}
+
+</script>
+</body>
+</html>

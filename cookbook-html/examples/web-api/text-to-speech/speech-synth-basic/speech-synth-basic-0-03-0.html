@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-06-30" >
+<meta name = "version" content = "0" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>instant speak:
+			<button onclick="speechSynthesis.speak( new SpeechSynthesisUtterance( 'hello, world!' ) );" >hello, world</button>
+		</p>
+
+		<p>
+			<button onclick=TTS.getVoices(selVoice); >get voices</button> pink = local service<br>
+		</p>
+
+		<p>
+			<select id=selVoice size=5 ></select>
+		</p>
+
+		<p><button onclick=TTS.sayThis(); >Say a random phrase</button></p>
+
+		<p><button onclick="TTS.sayThis('testing, testing 1 2 3');" >Say "testing, testing 123"</button></p>
+
+		<p>
+			<button onclick= TTS.synth.pause(); >pause</button>
+			<button onclick= TTS.synth.resume(); >resume</button>
+			<button onclick= TTS.synth.cancel(); >cancel</button>
+
+			<button onclick="const w=TTS.synth;w.paused?w.resume():w.pause();"" >toggle</button>
+		</p>
+
+
+	</nav>
+
+	<main>
+
+		<div id="divContents" ></div>
+
+	</main>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+
+
+
+const TTS = {
+
+	"synth": window.speechSynthesis,
+	"voices": [],
+	"utterances": [
+		"Hello, World!",
+		"Do not worry if you have built your castles in the air. They are where they should be. Now put the foundations under them.",
+		// http://randomphrase.tripod.com/
+		"Eat your foot.",
+		"I hate the green flashing light.",
+		"Hello. I have the urge to kill.",
+		"Oh no! You’re going to speak again, aren’t you?",
+		"DO NOT DISTURB, evil genius at work.",
+		"I’m with stupid------àJ",
+		"Rubber ducks are planning world domination!",
+		"But my tree only hit the car in self-defence!",
+		"I know kung fu and 50 other dangerous words.",
+		"Did my sarcasm hurt your feels? Get over it.",
+		"Love your enemies, it makes them angry.",
+		"Fat kids are harder to kidnap.",
+		"Shut up voices! Or I will poke you with my pen again!",
+		"Save water, drink beer.",
+		"Save a tree, eat a beaver.",
+		"Get high, climb a tree.",
+		"Save a horse, ride a cowboy.",
+		"Don’t mess with me! I have a stick!",
+		"Go away, evil Mr Scissors!",
+		"Think of gingerbread men: are they delicious holiday treats or just another way for children to show off their cannibalism?",
+		"Oak is strong and also gives shade.",
+		"Cats and dogs each hate the other.",
+		"The pipe began to rust while new.",
+		"Open the crate but don't break the glass.",
+		"Add the sum to the product of these three.",
+		"Thieves who rob friends deserve jail.",
+		"The ripe taste of cheese improves with age.",
+		"Act on these orders with great speed.",
+		"The hog crawled under the high fence.",
+		"Move the vat over the hot fire."
+	]
+
+}
+
+
+TTS.getVoices = function( target = selVoice ) {
+
+	TTS.voices = TTS.synth.getVoices();
+
+	//console.log( 'TTS.voices', TTS.voices );
+
+	selVoice.innerHTML = TTS.voices.map( voice =>
+		`<option style=background-color:${ voice.localService ? 'pink' : "" } >${ voice.lang } - ${ voice.name }</option>` );
+
+	//target.innerHTML =  htm;
+
+};
+
+
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	divContents.innerHTML = ( 'speechSynthesis' in window ) ?
+		'Speech synthesis is supported and good to go!'
+		:
+		'Sorry, speech synthesis isn\'t supported in this browser.';
+
+	//TTS.getVoices();
+
+	if ( TTS.synth.onvoiceschanged !== undefined ) {
+
+		TTS.synth.onvoiceschanged = TTS.getVoices;
+
+	}
+
+
+}
+
+
+
+
+TTS.sayThis = function( text = TTS.utterances[ Math.floor( TTS.utterances.length * Math.random() ) ] ) {
+
+	TTS.synth.cancel();
+
+	TTS.voices = TTS.voices.length ? TTS.voices : window.speechSynthesis.getVoices();
+
+	TTS.utterThis = new SpeechSynthesisUtterance( text );
+
+	TTS.utterThis.volume = 0.5; // 0 to 1
+	TTS.utterThis.rate = 0.5; // 0.1 to 10
+	TTS.utterThis.pitch = 1; //0.5 to 2 - default -1
+
+	if ( TTS.voices.length > 0 ) {
+
+		TTS.utterThis.voice = TTS.voices[ selVoice.selectedIndex > -1 ? selVoice.selectedIndex : Math.floor( TTS.voices.length * Math.random() ) ];
+
+		divContents.innerHTML += `<p>${ TTS.utterThis.voice.name } - ${ TTS.utterThis.voice.lang }<br>${ text }</p>`;
+
+	}
+
+	TTS.utterThis.onpause = function(){
+		console.log("Synthesis Paused");
+	}
+
+	//fired when synthesizer is resumed after pause
+	TTS.utterThis.onresume = function(){
+		console.log("Synthesis Resumed after Pause");
+	}
+
+	//fired when synthesizer is stopped
+	TTS.utterThis.onend = function(){
+		console.log("Synthesis Stopped");
+	}
+
+	TTS.synth.speak( TTS.utterThis );
+
+};
+
+
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>
