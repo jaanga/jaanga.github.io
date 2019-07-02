@@ -71,7 +71,7 @@
 				<button onclick=TTS.index=1;TTS.playSlides(); style=background:pink; title="Click me!" >show slides</button> /
 				<button onclick=TTS.synth.pause(); >pause</button>
 				<button onclick=TTS.synth.resume(); >resume</button>
-				<button onclick=TTS.index=999;TTS.synth.cancel(); >stop</button> /
+				<button onclick=TTS.index=999;TTS.playing=false;TTS.synth.cancel(); >stop</button> /
 				<button onclick="TTS.index=TTS.index===999?9:TTS.index;TTS.showSlide(--TTS.index);" >previous</button>
 				<button onclick="TTS.index=TTS.index===999?0:TTS.index;TTS.showSlide(++TTS.index);" >next</button>
 
@@ -85,7 +85,7 @@
 
 <script>
 
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCode = "";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
 
 
@@ -125,11 +125,12 @@ const TTS = {
 };
 
 
+
 TTS.playSlides = function() {
 
 	console.log( 'TTS.index', TTS.index );
 
-	if ( TTS.index < TTS.slides.length - 2 ) {
+	if ( TTS.index < TTS.slides.length - 1 ) {
 
 		TTS.playing = true;
 
@@ -139,9 +140,10 @@ TTS.playSlides = function() {
 
 	} else {
 
-		TTS.showSlide( TTS.slides.length - 1 );
 		TTS.index = 999;
 		TTS.playing = false;
+
+		TTS.showSlide( TTS.slides.length - 1 );
 	}
 
 }
@@ -169,11 +171,11 @@ TTS.sayThis = function( text ) {
 
 	if ( TTS.voices.length > 0 ) {
 
-		voice = TTS.voices.find( item => item.name === "Google UK English Femalemm" );
+		voice = TTS.voices.find( item => item.name === "Google UK English Female" );
 
 		theDefault =  TTS.voices.find( item => item.default === true );
 
-		console.log( '', voice );
+		//console.log( '', voice );
 
 		divMessages.innerHTML =
 		`default: ${ theDefault.name }<br> ${ TTS.voices.map( item => item.name ).join("<br>") } `;
@@ -181,16 +183,16 @@ TTS.sayThis = function( text ) {
 
 		TTS.utterThis.voice = voice ? voice : theDefault;
 
-
-		//TTS.utterThis.voice = TTS.voices[ Math.floor( TTS.voices.length * Math.random() ) ];
-
 	}
 
-	if ( TTS.playing === true ) { TTS.utterThis.onend = TTS.playSlides; }
+	if ( TTS.playing === true || TTS.index < 999 ) { TTS.utterThis.onend = TTS.playSlides; }
 
 	TTS.synth.speak( TTS.utterThis );
 
 };
+
+
+
 
 </script>
 </body>
