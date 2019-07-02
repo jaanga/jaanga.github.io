@@ -62,24 +62,25 @@
 
 	<div id = "divHeader" >
 
+		<h1 id = "divTitle" >
 
+			<a href="" ><script>
+				document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
+				//document.write( document.title );
+				</script>
+			</a>
 
-			<h1 id = "divTitle" >
+		</h1>
 
-				<a href="" ><script>
-					document.write( location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) );
-					//document.write( document.title );
-					</script></a>
+		<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
 
-			</h1>
+		<div id = "divContents" >
 
-			<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+			<p>
+				<button onclick=navDraggable.hidden=!navDraggable.hidden >toggle draggable div</button>
+			</p>
 
-			<div id = "divContents" >
-				<p>
-					<button onclick=navDraggable.hidden=!navDraggable.hidden >toggle draggable div</button>
-				</p>
-			</div>
+		</div>
 
 
 	</div>
@@ -97,7 +98,8 @@
 			<div id = "divDraggableFooter" >
 
 				<button onclick='divDraggableContent.innerHTML +="23"'; >🔥</button>
-				<button onclick='divDraggableContent.innerHTML = "abc 123"'' >😃</button> <button >💡</button>
+				<button onclick='divDraggableContent.innerHTML = "abc 123"'' >😃</button>
+				<button onclick="divDraggableContent.innerHTML = `<p>${ new Date() }</p>`;">💡</button>
 
 			</div>
 
