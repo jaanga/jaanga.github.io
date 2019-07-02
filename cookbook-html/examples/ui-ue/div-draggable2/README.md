@@ -23,6 +23,15 @@ touch
 * <https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events>
 * <https://www.codicode.com/art/easy_way_to_add_touch_support_to_your_website.aspx>
 
+resize with touch
+
+* https://stackoverflow.com/questions/8258232/resize-an-html-element-using-touches
+
+
+text resize
+
+* https://css-tricks.com/almanac/properties/f/font-size/
+
 
 ## Change Log
 

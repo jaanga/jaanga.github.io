@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-05-25" >
+<meta name = "version" content = "0.0.0" >
+<title>basic-html</title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 50%; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	main { height: 300px; overflow: hidden; resize: both; width: 100%; }
+
+	iframe { background-color:#ebb; height:98%; width:100%; }
+
+	#divContents { border: 1px solid red; height: 100%; width:100%; z-index: -2; }
+
+	/*
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>
+			<button id=but onclick=setIt(); accessKey= 'z' title='access key: z '>buttonbutton</button>
+		</p>
+
+	</nav>
+
+	<main>
+
+		<iframe id=ifr frameborder=0 ></iframe>
+
+	</main>
+
+	<hr>
+
+	<main>
+
+		<iframe id=ifr2 frameborder=0 ></iframe>
+
+	</main>
+
+	<hr>
+
+	<svg viewBox="0 0 56 18" >
+
+		<rect stroke=black fill="none" x="0" y="0" width="56" height="18" />
+		<text textLength="56" x="0" y="15" >Fit Me</text>
+
+	</svg>
+
+	<hr>
+
+	<svg width="436" height="180" style="border:solid 6px;text-align:center" xmlns="http://www.w3.org/2000/svg">
+		<text x="0%" y="50%" textLength="100%">ABC</text>
+	</svg>
+
+	<hr>
+
+	<svg viewBox="0 0 100 12" style="border:solid 6px" >
+		<text y=100% textLength=100 lengthAdjust="spacingAndGlyphs" >UGLY TEXT abc 123</text>
+	</svg>
+
+	<hr>
+
+	https://stackoverflow.com/questions/15430189/pure-svg-way-to-fit-text-to-a-box
+
+	<br>
+
+
+	<svg viewBox="0 0 1000 1000">
+		<text id="t1" y="50" >MY UGLY TEXT</text>
+		<script>
+
+			var width=500, height=500;
+
+			var textNode = document.getElementById("t1");
+			var bb = textNode.getBBox();
+			var widthTransform = width / bb.width;
+			var heightTransform = height / bb.height;
+			var value = widthTransform < heightTransform ? widthTransform : heightTransform;
+			textNode.setAttribute("transform",  "scale( "+value+" )" );
+
+		</script>
+	</svg>
+
+<script>
+
+const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	ifr.srcdoc =
+	`<html style=height:100%; ><body style="font:15vw monospace; height:100%; margin: 0; overflow:hidden;" ><table style='height:100%;width:100%;' >
+		<td style='font-size:15vw;text-align:center;vertical-align:middle;' >abc 123</td>
+	</table></body></html>`;
+
+
+	htm = `abc<br>123 456<br><span style=color:red >bbb nnnn mmmm</span>`;
+
+	ifr2.srcdoc =
+	`<html style="height: 100%;" ><body style="font:15vw monospace; height: 100%; margin: 0; overflow: hidden;" >
+
+		<div style="position: relative; text-align: center; top: 50%; transform: translateY( -50% );" >
+
+			${ htm }
+
+		</div>
+
+	</body></html>`;
+
+}
+
+
+
+function setIt() {
+
+	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>

@@ -5,8 +5,8 @@
 <meta name = "viewport" content= "width=device-width, initial-scale=1" >
 <meta name = "description" content = "Basic TooToo HTML template" >
 <meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
-<meta name = "date" content = "2019-06-30" >
-<meta name = "version" content = "01" >
+<meta name = "date" content = "2019-07-01 ~ " >
+<meta name = "version" content = "02" >
 <title></title>
 <style>
 
@@ -16,7 +16,7 @@
 
 	html { height: 100%; }
 
-	body { font: 12pt monospace; margin: 0 auto; height: 100%; max-width: 800px; padding: 0 0.5rem; }
+	body { font: 12pt monospace; margin: 0 auto; height: 100%; max-width: 800px}
 
 	a { color: crimson; text-decoration: none; }
 	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
@@ -24,9 +24,9 @@
 	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
 	button:hover { background: #ccc; color: #fff }
 
-	main { height: 30rem; overflow: hidden; resize: both; }
+	main { border: 1px solid maroon; height: 30rem; overflow: hidden; position: relative; resize: both; }
 
-	#divContents { border: 1px solid maroon; height: 100%; position: relative; width: 100% }
+	#divContents { height: 100%;  width: 100%; }
 
 	#divGraphics { border: 0px solid maroon; bottom: 0; position: relative;
 	 text-align: center; top: 50%; transform: translateY( -50% );}
@@ -37,12 +37,11 @@
 	.green { color: green; }
 	.blue { color: blue; }
 
-	.rem1 { font-size: 3rem }
-	.rem2 { font-size: 4rem; }
-	.rem3 { font-size: 5rem; }
+	.rem1 { font-size: 5vw; }
+	.rem2 { font-size: 8vw; }
+	.rem3 { font-size: 8vw; }
 
 	/*
-
 	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
 		position: absolute; top: 0; width: var( --mnu-width ); }
 	*/
@@ -56,7 +55,7 @@
 		<div id="divTitle" ></div>
 
 		<p>
-			<button onclick=TTS.index=0;TTS.showSlide(); >show slide</button>
+			<button onclick=TTS.showSlide(0); >show slide</button>
 		</p>
 
 	</nav>
@@ -65,21 +64,24 @@
 
 		<div id="divContents" >
 
-			<div id=divGraphics class="blue rem3" >Enjoy the show!</div>
+			<div id=divGraphics ></div>
 
 			<div id=divButtons >
 
-				<button onclick=TTS.index=0;TTS.showSlide(); >show slides</button>
-
+				<button onclick=TTS.index=1;TTS.playSlides(); style=background:pink; title="Click me!" >show slides</button> /
 				<button onclick=TTS.synth.pause(); >pause</button>
 				<button onclick=TTS.synth.resume(); >resume</button>
-				<button onclick=TTS.index=999;TTS.synth.cancel(); >stop</button>
-			</div>
-		</div>
+				<button onclick=TTS.index=999;TTS.synth.cancel(); >stop</button> /
+				<button onclick="TTS.index=TTS.index===999?9:TTS.index;TTS.showSlide(--TTS.index);" >previous</button>
+				<button onclick="TTS.index=TTS.index===999?0:TTS.index;TTS.showSlide(++TTS.index);" >next</button>
 
+			</div>
+
+		</div>
 
 	</main>
 
+	<div id=divMessages ></div>
 
 <script>
 
@@ -91,54 +93,70 @@ const TTS = {
 
 	"synth": window.speechSynthesis,
 	"voices": [],
-	"index": 1000,
+	"index": 999,
+	"playing": false,
 	"slides": [
+		{ "utterance": "",
+			"text": "Enjoy the show!", "classes": "red rem2" },
 		{ "utterance": "Oak is strong and also gives shade.",
-			"text": "Oak is strong and also gives shade", "classes": "red rem1"},
-		{ "utterance": "Cats and dogs each hate the other.", "text": "Cats and dogs each hate the other.", "classes": "green rem2"},
-		{ "utterance": "The pipe began to rust while new.", "text": "The pipe began to rust while new.", "classes": "blue rem3"},
-		{ "utterance": "Open the crate but don't break the glass.", "text": "Open the crate but don't break the glass.", "classes": "red rem1"},
+			"text": "Oak is strong and also gives shade", "classes": "red rem3"},
+		{ "utterance": "Cats and dogs each hate the other.",
+			"text": "Cats and dogs each hate the other.", "classes": "green rem2"},
+		{ "utterance": "The pipe began to rust while new.",
+			"text": "The pipe began to rust while new.", "classes": "blue rem3"},
+		{ "utterance": "Open the crate but don't break the glass.",
+			"text": "Open the crate but don't break the glass.", "classes": "red rem1"},
 		{ "utterance": "Add the sum to the product of these three.", "text": "Add the sum to the product of these three.", "classes": "green rem3"},
-		{ "utterance": "Thieves who rob friends deserve jail.", "text": "Thieves who rob friends deserve jail.", "classes": "blue rem2"},
-		{ "utterance": "The ripe taste of cheese improves with age.", "text": "The ripe taste of cheese improves with age.", "classes": "red rem3"},
-		{ "utterance": "Act on these orders with great speed.", "text": "Act on these orders with great speed.", "classes": "green rem1"},
-		{ "utterance": "The hog crawled under the high fence.", "text": "The hog crawled under the high fence.", "classes": "blue rem2"},
-		{ "utterance": "Move the vat over the hot fire.", "text": "Move the vat over the hot fire.", "classes": "red rem2"},
+		{ "utterance": "Thieves who rob friends deserve jail.",
+			"text": "Thieves who rob friends deserve jail.", "classes": "blue rem2"},
+		{ "utterance": "The ripe taste of cheese improves with age.",
+			"text": "The ripe taste of cheese improves with age.", "classes": "red rem3"},
+		{ "utterance": "Act on these orders with great speed.",
+			"text": "Act on these orders with great speed.", "classes": "green rem1"},
+		{ "utterance": "The hog crawled under the high fence.",
+			"text": "The hog crawled under the high fence.", "classes": "blue rem2"},
+		{ "utterance": "Move the vat over the hot fire.",
+			"text": "Move the vat over the hot fire.", "classes": "red rem2"},
+		{ "utterance": "Thank you",
+			"text": "the end<br><span style=font-size:3vw;color:gray; >& a new beginning?</span>", "classes": "red rem2"},
+
 	]
 
 };
 
-init();
 
-function init() {
-
-	divTitle.innerHTML = getTitle();
-
-}
-
-
-TTS.showSlide = function() {
+TTS.playSlides = function() {
 
 	console.log( 'TTS.index', TTS.index );
-	
-	if ( TTS.index < TTS.slides.length ) {
 
-		const slide = TTS.slides[ TTS.index ];
+	if ( TTS.index < TTS.slides.length - 2 ) {
 
-		TTS.sayThis( slide.utterance );
-		divGraphics.innerHTML = slide.text;
-		divGraphics.className = slide.classes;
+		TTS.playing = true;
+
+		TTS.showSlide( TTS.index);
 
 		TTS.index++;
 
 	} else {
 
-		divGraphics.className = "blue rem3";
-		divGraphics.innerHTML = "the end";
+		TTS.showSlide( TTS.slides.length - 1 );
 		TTS.index = 999;
+		TTS.playing = false;
 	}
 
 }
+
+
+TTS.showSlide = function( index = 1 ) {
+
+	const slide = TTS.slides[ index ];
+
+	TTS.sayThis( slide.utterance );
+	divGraphics.innerHTML = slide.text;
+	divGraphics.className = slide.classes;
+
+};
+
 
 
 TTS.sayThis = function( text ) {
@@ -151,39 +169,28 @@ TTS.sayThis = function( text ) {
 
 	if ( TTS.voices.length > 0 ) {
 
-		TTS.utterThis.voice = TTS.voices[ Math.floor( TTS.voices.length * Math.random() ) ];
+		voice = TTS.voices.find( item => item.name === "Google UK English Femalemm" );
+
+		theDefault =  TTS.voices.find( item => item.default === true );
+
+		console.log( '', voice );
+
+		divMessages.innerHTML =
+		`default: ${ theDefault.name }<br> ${ TTS.voices.map( item => item.name ).join("<br>") } `;
+
+
+		TTS.utterThis.voice = voice ? voice : theDefault;
+
+
+		//TTS.utterThis.voice = TTS.voices[ Math.floor( TTS.voices.length * Math.random() ) ];
 
 	}
 
-	TTS.utterThis.onend = TTS.showSlide;
+	if ( TTS.playing === true ) { TTS.utterThis.onend = TTS.playSlides; }
 
 	TTS.synth.speak( TTS.utterThis );
 
 };
-
-
-function getTitle() {
-
-	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
-	const version = document.head.querySelector( "[ name=version ]" ).content;
-
-	const htm =
-	`
-		<h2>
-			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
-				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
-			</a>
-			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
-		</h2>
-
-		<p>
-			${ document.head.querySelector( "[ name=description ]" ).content }
-		</p>
-	`;
-
-	return htm;
-
-}
 
 </script>
 </body>
