@@ -115,7 +115,6 @@
 
 // see also https://www.kirupa.com/html5/drag.htm
 
-
 	var draggableLeft;
 	var draggableTop;
 
@@ -135,80 +134,97 @@
 
 		divDraggableContent.innerHTML += txt;
 
-		divDraggableHeader.addEventListener( 'mousedown', onMouseDown, false );
-		window.addEventListener( 'mouseup', onMouseUp, false );
 
-		divDraggableHeader.addEventListener( 'touchstart', onTouchStart, false );
-		divDraggableHeader.addEventListener( 'touchmove', onTouchMove, false );
+
 
 	}
 
 
 
-	function onMouseDown( event ) {
+// https://www.kirupa.com/html5/drag.htm
 
-		draggableTop = event.clientY - navDraggable.offsetTop;
-		draggableLeft = event.clientX - navDraggable.offsetLeft;
+const DMV = {
 
-		window.addEventListener('mousemove', onMouseMove, true );
+	active: false,
+	xOffset: 0,
+	yOffset: 0
 
-	}
-
-
-
-	function onMouseMove( event ){
-
-		navDraggable.style.top = ( event.clientY - draggableTop ) + 'px';
-		navDraggable.style.left = ( event.clientX - draggableLeft ) + 'px';
-
-	}
+}
 
 
 
-	function onMouseUp() {
 
-		window.removeEventListener( 'mousemove', onMouseMove, true );
+DMV.dragStart = function ( e ) {
 
-	}
+if ( e.type === "touchstart" ) {
 
+	DMV.initialX = e.touches[0].clientX - DMV.xOffset;
+	DMV.initialY = e.touches[0].clientY - DMV.yOffset;
 
+} else {
 
-	function onTouchStart( event ){
+	DMV.initialX = e.clientX - DMV.xOffset;
+	DMV.initialY = e.clientY - DMV.yOffset;
 
-		draggableLeft = navDraggable.offsetLeft;
-		draggableStartX = event.changedTouches[ 0 ].clientX;
-		draggableTop = navDraggable.offsetTop;
-		draggableStartY = event.changedTouches[ 0 ].clientY;
-		//console.log( 'draggableTop', draggableTop, draggableStartY );
-		event.preventDefault();
+}
 
-		//console.log ('Status: touchstart', 'ClientX: ' + draggableStartX + 'px' );
+if ( e.target === divDraggableHeader ) { DMV.active = true; }
 
-	}
+};
 
 
+DMV.dragEnd = function( e ) {
 
-	function onTouchMove( event ){
+	DMV.initialX = DMV.currentX;
+	DMV.initialY = DMV.currentY;
 
-		const distX = event.changedTouches[ 0 ].clientX - draggableStartX;
-		let left = draggableLeft + distX > document.body.clientWidth - 100 ? document.body.clientWidth - 100 : draggableLeft + distX;
-		left = draggableLeft + distX < 0 ? 0 : left;
-		//console.log( 'left2', left  );
-		navDraggable.style.left = left + 'px';
+	DMV.active = false;
 
-		const distY = event.changedTouches[ 0 ].clientY - draggableStartY;
-		// top is a reserved word
+};
 
-		let ttop = draggableTop + distY > window.innerHeight - 100 ? window.innerHeight - 100 : draggableTop + distY;
-		ttop = draggableTop + distY < 0 ? 0 : ttop;
-		//console.log( 'ttop', ttop  );
-		navDraggable.style.top = ttop + 'px';
 
-		event.preventDefault();
+DMV.drag = function( e ) {
 
-		//console.log ( 'Status: touchmove', 'Horizontal distance traveled: ' + distY + 'px' );
+if ( DMV.active ) {
+
+	e.preventDefault();
+
+	if ( e.type === "touchmove" ) {
+
+		DMV.currentX = e.touches[0].clientX - DMV.initialX;
+		DMV.currentY = e.touches[0].clientY - DMV.initialY;
+
+	} else {
+
+		DMV.currentX = e.clientX - DMV.initialX;
+		DMV.currentY = e.clientY - DMV.initialY;
 
 	}
+
+	DMV.xOffset = DMV.currentX;
+	DMV.yOffset = DMV.currentY;
+
+	DMV.setTranslate( navDraggable, DMV.currentX, DMV.currentY,  );
+
+}
+
+};
+
+
+DMV.setTranslate = function( element, xPos, yPos ) {
+
+	element.style.transform = `translate3d( ${xPos }px, ${ yPos }px, 0 )`;
+
+};
+
+
+	document.body.addEventListener( "touchstart", DMV.dragStart, false );
+	document.body.addEventListener( "touchend", DMV.dragEnd, false );
+	document.body.addEventListener( "touchmove", DMV.drag, false );
+
+	document.body.addEventListener( "mousedown", DMV.dragStart, false );
+	document.body.addEventListener( "mouseup", DMV.dragEnd, false );
+	document.body.addEventListener( "mousemove", DMV.drag, false );
 
 </script>
 </body>
