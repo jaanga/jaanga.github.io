@@ -23,6 +23,8 @@ button:hover { background: #ccc; color: #fff }
 
 main { margin: 0 auto; max-width: 800px; }
 
+
+
 #navDragMove {
 	background-color: #f1f1f1;
 	border: 1px solid #aaa;
@@ -126,7 +128,7 @@ main { margin: 0 auto; max-width: 800px; }
 
 				<button onclick="divDragMoveContent.innerHTML +=`<p>${ txt }`;"; >🔥</button>
 				<button onclick='divDragMoveContent.innerHTML = "abc 123"'' >😃</button>
-				<button onclick="divDragMoveContent.innerHTML = `<p>${ new Date() }</p>`;">💡</button>
+				<button onclick="divDragMoveContent.innerHTML = `<p>${ new Date() }<br>${ txt} ${txt}</p>`;">💡</button>
 
 			</div>
 
@@ -150,15 +152,13 @@ const DMV = {
 }
 
 
-
 	let txt;
-
 
 
 
 	DMV.onMouseDown = function( event ) {
 
-		console.log( '', 23 );
+
 		DMV.draggableTop = event.clientY - navDragMove.offsetTop;
 		DMV.draggableLeft = event.clientX - navDragMove.offsetLeft;
 
