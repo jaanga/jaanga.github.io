@@ -104,13 +104,13 @@
 		gridHelper.position.set( 0, -60, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
 
 
-		keys = Object.keys( THREE.ColorKeywords );
+		//keys = Object.keys( THREE.ColorKeywords );
 
 		addBoxes();
 
@@ -132,8 +132,8 @@
 		for ( var i = 0; i < 147; i++ ) {
 
 			pt = latLonToXYZ( radius, lat + i * deltaLat, lon + i * deltaLon );
-			material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
-			material.color = new THREE.Color(  THREE.ColorKeywords[ keys[ i ] ] );
+			material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+		//	material.color = new THREE.Color(  THREE.ColorKeywords[ keys[ i ] ] );
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.position.copy( pt );
 			scene.add( mesh );

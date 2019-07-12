@@ -59,11 +59,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 
@@ -122,8 +122,12 @@
 		meshU.position.set( 0, 50, 0 );
 		scene.add( meshU );
 
-		var edgesHelper = new THREE.EdgesHelper( meshU );
-		scene.add( edgesHelper );
+		//var edgesHelper = new THREE.EdgesHelper( meshU );
+		//scene.add( edgesHelper );
+
+		const geometryEdges = new THREE.EdgesGeometry( geometry );
+		let meshEdges = new THREE.LineSegments( geometryEdges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		meshU.add( meshEdges );
 
 		geometry = new THREE.BoxGeometry( 20, 20, 20 );
 		material = new THREE.MeshNormalMaterial( { wireframe: true } );
@@ -229,8 +233,12 @@
 //		mesh.scale.set( -1, -1, -1 );
 		scene.add( meshZ );
 
-		var edgesHelper = new THREE.EdgesHelper( meshZ );
-		scene.add( edgesHelper );
+		//var edgesHelper = new THREE.EdgesHelper( meshZ );
+		//scene.add( edgesHelper );
+
+		const geometryEdges = new THREE.EdgesGeometry( geometry );
+		let meshEdges = new THREE.LineSegments( geometryEdges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		meshZ.add( meshEdges );
 
 	}
 
@@ -281,8 +289,12 @@
 		meshY.scale.set( -1, -1, -1 );
 		scene.add( meshY );
 
-		var edgesHelper = new THREE.EdgesHelper( meshY );
-		scene.add( edgesHelper );
+		//var edgesHelper = new THREE.EdgesHelper( meshY );
+		//scene.add( edgesHelper );
+
+		const geometryEdges = new THREE.EdgesGeometry( geometry );
+		let meshEdges = new THREE.LineSegments( geometryEdges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+		meshY.add( meshEdges );
 
 	}
 

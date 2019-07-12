@@ -5,10 +5,10 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2018-10-07" >
+<meta name = "date" content = "2019-06-03" >
 <title></title>
 <style>
-	/* Copyright 2018 pushMe pullYou authors. MIT License */
+	/* Copyright 2019 pushMe pullYou authors. MIT License */
 
 	body { font: 11pt monospace; margin: 0; overflow: hidden; }
 	a { color: crimson; text-decoration: none; }
@@ -26,21 +26,20 @@
 </style>
 </head>
 <body>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/build/three.min.js" ></script>
-<script src = "https://cdn.rawgit.com/mrdoob/three.js/r97/examples/js/controls/TrackballControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/TrackballControls.js" ></script>
 
 	<nav id = "navMenu" >
 
 		<div id = "divTitle" ></div>
 
-		<p><button onclick=triangleFromCircle() >triangleFromCircle</button></p>
-
+		<p>
+			<button onclick=createCylinder(); >create cylinder</button>
+		</p>
 
 		<p>
 			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
 		</p>
-
-		<p><button onclick=mesh.material.wireframe=!mesh.material.wireframe >wirframe</button></p>
 
 		<p>
 			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
@@ -75,6 +74,7 @@ function init() {
 	camera.up.set( 0, 0, 1 );
 
 	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
 
 	scene = new THREE.Scene();
 
@@ -86,25 +86,19 @@ function init() {
 	const axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
-	const material = new THREE.MeshNormalMaterial();
+	// const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	// const material = new THREE.MeshNormalMaterial();
+	// const mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+
+	geometry = createCylinder();
+
+	//material = new THREE.MeshNormalMaterial( { side: 2, wireframe: false } );
+
+	material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, side: 2 } );
 	mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
-
-	drawPolygon( );
-
-}
-
-
-
-function triangleFromCircle() {
-
-	scene.remove( mesh );
-	const geometry = new THREE.CircleGeometry( 50, 3 );
-	vertices = geometry.vertices;
-	vertices[ 0 ].set( 100, 100, 10)
-	const material = new THREE.MeshNormalMaterial( { side: 2 } );
-	mesh = new THREE.Mesh( geometry, material );
+	mesh.position.x = -100;
 	scene.add( mesh );
 
 
@@ -114,26 +108,55 @@ function triangleFromCircle() {
 
 
 
-function drawPolygon( sides = 8, radius = 50 ) {
+function createCylinder( radius, height, columns, rows ) {
 
-	scene.remove( mesh );
-	delta = 2 * Math.PI / sides;
-	geometry = new THREE.CircleGeometry( radius, sides);
-	vertices = geometry.vertices;
-	material = new THREE.MeshNormalMaterial( { side: 2 } );
+	var radius = radius ? radius : 20;
+	var height = height ? height : 200;
+	var columns = columns ? columns : 24;
+	var rows = rows ? rows : 364;
 
-	vertices[ 0 ].z = 20;
-	for ( var i = 1; i <= sides; i++ ) {
+	geometry = new THREE.PlaneBufferGeometry(  1, 1, columns, rows );
 
-		x = ( radius + 20 * Math.random() - 10 ) * Math.cos( i * delta );
-		y = ( radius + 20 * Math.random() - 10 ) * Math.sin( i * delta );
-		z = 20;
-		vertices[ i ].copy( new THREE.Vector3( x, y, z ) );
+
+	vertices = geometry.attributes.position.array;
+
+
+
+	var count = 0;
+
+	var colors = [];
+	var color = new THREE.Color();
+	for ( var i = 0; i <= rows; i++ ) {
+
+		var theta = 2 * Math.PI / columns;
+
+		for ( var j = 0; j <= columns; j++ ) {
+
+			bit = 10 * Math.random();
+			vertices[ count++ ] = i * height / rows;
+			vertices[ count++ ] = ( radius + bit ) * Math.cos( theta * j );
+			vertices[ count++ ] = ( radius + bit ) * Math.sin( theta * j );
+
+			//console.log( '', count);
+
+			// https://github.com/mrdoob/three.js/blob/master/examples/webgl_buffergeometry_points.html
+			// https://github.com/mrdoob/three.js/blob/master/examples/webgl_buffergeometry_instancing2.html
+			var vx = Math.random();
+			var vy = Math.random();
+			var vz = Math.random();
+			color.setRGB( vx, vy, vz );
+			colors.push( color.r, color.g, color.b );
+
+		}
 
 	}
 
-	mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
+	geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+
+	geometry.computeFaceNormals();
+	geometry.computeVertexNormals();
+
+	return geometry;
 
 }
 
@@ -144,11 +167,10 @@ function getTitle() {
 	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
 
 	const htm =
-
 	`
 		<h2>
 			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
-				<img src=https://pushme-pullyou.github.io/github-mark-64.png height=18 >
+				<img src=https://github.com/fluidicon.png height=18 >
 			</a>
 			<a href="" title="Click to reload this page" >${ document.title }</a>
 		</h2>
@@ -161,6 +183,9 @@ function getTitle() {
 	return htm;
 
 }
+
+
+
 
 
 

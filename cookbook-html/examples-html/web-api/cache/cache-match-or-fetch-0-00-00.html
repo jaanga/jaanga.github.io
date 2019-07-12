@@ -41,30 +41,20 @@
 		<div id="divTitle" ></div>
 
 		<p>
-			<button id=but onclick=addAll(); >addAll</button>
+			<button id=but onclick=CMF.getCachesKeys(); >getCachesKeys</button>
 		</p>
 
 		<p>
-			<button id=but onclick=getCache(); >get cache </button>
+			<button id=but onclick=CMF.getCacheRequests(); >getCacheRequests</button>
 		</p>
 
 		<p>
-			<button id=but onclick=getRequests(); >getRequests</button>
-
+			<button id=but onclick=CMF.deleteAllCaches(); >deleteAllCaches</button>
 		</p>
 
 		<p>
-			<button id=but onclick=deleteAllCaches(); >deleteAllCaches</button>
+			<button id=but onclick=CMF.matchOrFetch(); >matchOrFetch</button>
 		</p>
-
-		<p>
-			<button id=but onclick=fetchAndPutItem(); >fetchAndPutItem</button>
-		</p>
-
-		<p>
-			<button id=but onclick=retrieveItem(); >retrieveItem</button>
-		</p>
-
 
 	</nav>
 
@@ -77,11 +67,19 @@
 
 <script>
 
-const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples-html/web-api/cache";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
 
-//file = "https://pushme-pullyou.github.io/github-mark-64.png"
-file = "https://jaanga.github.io/README.md"
+
+CMF = {
+
+	description: "Cache match or fetch"
+
+}
+
+CMF:cacheName = "testCache";
+const url = 'https://unpkg.com/underscore@1.8.3/underscore-min.js';
+
 
 init();
 
@@ -94,111 +92,111 @@ function init() {
 }
 
 
-let URL;
-
-function addAll() {
 
 
-	if ('caches' in window) {
-		// The Cache API is supported
+CMF.getCachesKeys = function() {
 
-		const cacheName = 'test-cache';
-
-		caches.open( cacheName ).then(cache => {
-			// you can start using the cache
-
-			cache.addAll([ file ])
-
-			.then(function() {
-				// Cached!
-			});
-
-		} )
-
-	  }
-}
-
-
-function getCache() {
-
-	caches.keys().then(function(cacheKeys) {
-
-		console.log(cacheKeys); // ex: ["test-cache"]
-
-	});
+	caches.keys().then( cacheKeys => divContents.innerHTML += `<p>cache keys: ${ cacheKeys }</p>` );
 
 }
 
-function getRequests() {
 
-	caches.open('test-cache').then(function(cache) {
-		cache.keys().then(function(cachedRequests) {
-			console.log( cachedRequests ); // [Request, Request]
-		});
-	});
+
+CMF.getCacheRequests = function( cacheName = CMF.cacheName ) {
+
+	caches.open( cacheName ).then( cache => {
+
+		cache.keys().then( cachedRequests => {
+
+			console.log( 'cachedRequests', cachedRequests );
+
+			const requests = cachedRequests.map( item => item.url ); //.join( "<br>" );
+
+			divContents.innerHTML += `<p>cashed requests:<br>${ requests }</p>`;
+
+		} );
+
+	} );
 }
 
 
 
-function deleteAllCaches() {
+CMF.deleteAllCaches = function () {
 
 	var CACHE_NAME = 'version-8';
 
-	caches.keys().then( function(cacheNames) {
+	caches.keys().then( cacheNames => {
 
 		return Promise.all(
-			cacheNames.map(function(cacheName) {
 
-				if( cacheName != CACHE_NAME) {
+			cacheNames.map( cacheName => {
 
-					return caches.delete(cacheName);
+				if ( cacheName !== CACHE_NAME ) {
+
+					return caches.delete( cacheName ).then( response =>
+
+						divContents.innerHTML += `<p>delete: <br>${ cacheName }</p>`
+
+					);
+
 				}
-			})
+
+			} )
+
 		);
-	});
 
-
-}
-
-function fetchAndPutItem() {
-
-	fetch( file ).then(function(response) {
-
-  		return caches.open('test-cache').then(function(cache) {
-
-			console.log( 'response', response );
-
-			return cache.put( file, response );
-
-		});
-	});
-
+	} );
 
 }
 
 
-function retrieveItem() {
 
-	const cacheName = "test-cache";
-	const url = file;
+CMF.matchOrFetch = function () {
 
-	caches.open(cacheName).then(cache => {
-		cache.match(url).then( response => response.text() )
-			.then( text => console.log( 'text', text ) )
+	timeStart = performance.now();
 
-			//.then(blob => URL.createObjectURL(blob))
-			//.then(url => console.log(image.src = url))
-			.catch(err => console.error(err));
+	caches.match( url ).then( response => {
 
+		if ( response ) {
 
-			//console.log( response, response.body )
+			response.source = cacheName;
+			return response;
 
-			//const image = document.body.appendChild( document.createElement( 'img' ) );
+		} else {
 
-			//image.src = response.url.createObjectURL(response);
+			return fetch( url ).then( res => {
+
+				res.source = "server";
+
+				return caches.open( CMF.cacheName ).then( cache => {
+
+					cache.put( url, res.clone() );
+					//console.log(res.clone());
+
+					return res;
+
+				} );
+
+			} );
+
+		}
 
 	} )
+	.then( response => {
+		console.log( response );
+
+		response.text().then( text => {
+
+			tim = performance.now() - timeStart;
+			divContents.innerHTML += `<p>text from "${ response.source }"in ${ tim }ms<br>${ text } </p>`;
+
+		} );
+
+	} );
+
 }
+
+
 
 function getTitle() {
 

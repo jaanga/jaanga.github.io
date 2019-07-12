@@ -45,12 +45,11 @@
 		</p>
 
 		<p>
-			<button id=but onclick=getCache(); >get cache </button>
+			<button id=but onclick=getCachesKeys(); >getCachesKeys</button>
 		</p>
 
 		<p>
-			<button id=but onclick=getRequests(); >getRequests</button>
-
+			<button id=but onclick=getCacheRequests(); >getCacheRequests</button>
 		</p>
 
 		<p>
@@ -58,7 +57,7 @@
 		</p>
 
 		<p>
-			<button id=but onclick=fetchAndPutItem(); >fetchAndPutItem</button>
+			<button id=but onclick=fetchAndPutItem(files); >fetchAndPutItem</button>
 		</p>
 
 		<p>
@@ -81,7 +80,19 @@ const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
 
 //file = "https://pushme-pullyou.github.io/github-mark-64.png"
-file = "https://jaanga.github.io/README.md"
+const file = "https://jaanga.github.io/README.md";
+
+const files = [
+
+	"https://jaanga.github.io/README.md",
+	"https://jaanga.github.io/jaanga-copyright-and-mit-license.md",
+	"https://jaanga.github.io/j.png",
+	"https://jaanga.github.io/j.gif"
+
+];
+
+
+const cacheName = 'test-cache';
 
 init();
 
@@ -98,44 +109,50 @@ let URL;
 
 function addAll() {
 
+	if ( 'caches' in window ) {
 
-	if ('caches' in window) {
-		// The Cache API is supported
+		divContents.innerHTML += "<p>The Cache API is supported</p>";
 
-		const cacheName = 'test-cache';
+		caches.open( cacheName ).then( cache => {
 
-		caches.open( cacheName ).then(cache => {
-			// you can start using the cache
+			divContents.innerHTML += `<p>You may start using the cache "${ cacheName }"</p>`;
 
-			cache.addAll([ file ])
+			cache.addAll( files ).then( () => {
 
-			.then(function() {
-				// Cached!
-			});
+				divContents.innerHTML += `<p>cached:<br>${ files.join( "<br>" ) }</p>`;
 
-		})
+			} );
+
+		} );
 
 	  }
 }
 
 
-function getCache() {
 
-	caches.keys().then(function(cacheKeys) {
+function getCachesKeys() {
 
-		console.log(cacheKeys); // ex: ["test-cache"]
-
-	});
+	caches.keys().then( cacheKeys => divContents.innerHTML += `<p>cache keys: ${ cacheKeys }</p>` );
 
 }
 
-function getRequests() {
 
-	caches.open('test-cache').then(function(cache) {
-		cache.keys().then(function(cachedRequests) {
-			console.log( cachedRequests ); // [Request, Request]
-		});
-	});
+
+function getCacheRequests( cashName = "test-cache" ) {
+
+	caches.open( cashName ).then( cache => {
+
+		cache.keys().then( cachedRequests => {
+
+			console.log( 'cachedRequests', cachedRequests );
+
+			const requests = cachedRequests.map( item => item.url ); //.join( "23<br>" );
+
+			divContents.innerHTML += `<p>cashed requests:<br>${ requests }</p>`;
+
+		} );
+
+	} );
 }
 
 
@@ -144,35 +161,57 @@ function deleteAllCaches() {
 
 	var CACHE_NAME = 'version-8';
 
-	caches.keys().then( function(cacheNames) {
+	caches.keys().then( cacheNames => {
 
 		return Promise.all(
-			cacheNames.map(function(cacheName) {
 
-				if( cacheName != CACHE_NAME) {
+			cacheNames.map( cacheName => {
 
-					return caches.delete(cacheName);
+				if ( cacheName !== CACHE_NAME ) {
+
+					return caches.delete( cacheName ).then( response =>
+
+						divContents.innerHTML += `<p>delete: <br>${ cacheName }</p>`
+
+					);
+
 				}
-			})
-		);
-	});
 
+			} )
+
+		);
+
+	} );
 
 }
 
-function fetchAndPutItem() {
 
-	fetch( file ).then(function(response) {
 
-  		return caches.open('test-cache').then(function(cache) {
+function fetchAndPutItem( files = [] ) {
 
-			console.log( 'response', response );
+	//files = Array.isArray( files ) ? files : [ files ];
 
-			return cache.put( file, response );
+	//for ( let file of files ) {
 
-		});
-	});
+		url = file;
 
+		fetch( url ).then( response => {
+
+			if (!response.ok) {
+				throw new TypeError('Bad response status');
+			}
+
+			return caches.open( 'test-cache' ).then( cache => {
+
+				console.log( 'response', response );
+
+				return cache.put( url, response );
+
+			} );
+
+		} );
+
+	//}
 
 }
 
@@ -182,23 +221,19 @@ function retrieveItem() {
 	const cacheName = "test-cache";
 	const url = file;
 
-	caches.open(cacheName).then(cache => {
-		cache.match(url).then( response => response.text() )
-			.then( text => console.log( 'text', text ) )
+	caches.open( cacheName ).then( cache => {
 
-			//.then(blob => URL.createObjectURL(blob))
-			//.then(url => console.log(image.src = url))
-			.catch(err => console.error(err));
+		console.log( 'cache', cache );
+		cache.match( url )
+		.then( response => response.text() )
+		.then( text => console.log( 'text', text ) )
 
+	} );
 
-			//console.log( response, response.body )
-
-			//const image = document.body.appendChild( document.createElement( 'img' ) );
-
-			//image.src = response.url.createObjectURL(response);
-
-	} )
 }
+
+
+
 
 function getTitle() {
 

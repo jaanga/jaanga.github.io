@@ -45,7 +45,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 			'	<a href="" >' + document.title + '</a>' +
@@ -90,7 +90,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 
@@ -99,7 +99,7 @@
 
 		var loader = new THREE.FontLoader();
 		loader.crossOrigin = 'anonymous';
-		loader.load( 'http://rawgit.com/mrdoob/three.js/examples/fonts/gentilis_regular.typeface.js', function ( font ) {
+		loader.load( 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/fonts/gentilis_regular.typeface.js', function ( font ) {
 
 			addLabel( "+roughness", new THREE.Vector3( -95, 10, 0 ), font );
 			addLabel( "-roughness", new THREE.Vector3( 45, 0, 0 ), font );
