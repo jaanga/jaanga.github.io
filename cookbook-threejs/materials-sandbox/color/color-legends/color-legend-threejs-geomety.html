@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2019-06-03" >
+<title></title>
+<style>
+	/* Copyright 2019 pushMe pullYou authors. MIT License */
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 20px; width: 10px; }
+
+	#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r106/examples/js/controls/TrackballControls.js" ></script>
+
+	<nav id = "navMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick=setLegendPlane(); >setLegendPlane</button>
+
+
+		</p>
+
+		<p>
+			<button onclick=setLegendPlaneBuffer(); >setLegendPlaneBuffer</button>
+		</p>
+
+		<p>
+			<button onclick=setLegendBoxBuffer(); >setLegendBoxBuffer</button>
+		</p>
+
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+		</p>
+
+		<p>
+			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</nav>
+
+<script>
+
+legendColors = [
+
+[ 94, 79, 162 ],
+[ 74, 108, 174 ],
+[ 66, 136, 181 ],
+[ 78, 164, 176 ],
+[ 105, 189, 169 ],
+[ 137, 207, 165 ],
+[ 169, 221, 162 ],
+[ 200, 233, 159 ],
+[ 224, 243, 161 ],
+[ 241, 249, 171 ],
+[ 251, 248, 176 ],
+[ 254, 238, 163 ],
+[ 254, 221, 141 ],
+[ 253, 198, 118 ],
+[ 252, 172, 99 ],
+[ 248, 142, 83 ],
+[ 240, 112, 74 ],
+[ 228, 86, 73 ],
+[ 209, 60, 75 ],
+[ 185, 31, 72 ],
+[ 158, 1, 66 ],
+
+];
+
+legendColorsHex = [
+
+0x5e4fa2,
+0x4a6cae,
+0x4288b5,
+0x4ea4b0,
+0x69bda9,
+0x89cfa5,
+0xa9dda2,
+0xc8e99f,
+0xe0f3a1,
+0xf1f9ab,
+0xfbf8b0,
+0xfeeea3,
+0xfedd8d,
+0xfdc676,
+0xfcac63,
+0xf88e53,
+0xf0704a,
+0xe45649,
+0xd13c4b,
+0xb91f48,
+0x9e0142,
+
+];
+
+legendColorsHash = [
+
+"#5e4fa2",
+"#4a6cae",
+"#4288b5",
+"#4ea4b0",
+"#69bda9",
+"#89cfa5",
+"#a9dda2",
+"#c8e99f",
+"#e0f3a1",
+"#f1f9ab",
+"#fbf8b0",
+"#feeea3",
+"#fedd8d",
+"#fdc676",
+"#fcac63",
+"#f88e53",
+"#f0704a",
+"#e45649",
+"#d13c4b",
+"#b91f48",
+"#9e0142",
+
+];
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook/";
+
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 5, 5, 5 );
+	const material = new THREE.MeshNormalMaterial();
+	const mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+	//setLegendBoxBuffer();
+	setLegendPlacard()
+}
+
+
+
+
+function setLegendPlane() {
+
+	const geometry = new THREE.PlaneGeometry( 100, 30, legendColorsHex.length , 1 );
+	geometry.applyMatrix( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
+
+	const materialArray = legendColorsHex.map( colorHex => new THREE.MeshBasicMaterial({ color: colorHex, side: 2  } ) );
+	let index = 0;
+
+	geometry.faces.forEach( ( face, i ) => face.materialIndex = ( i % 2 ) ? index++ : index );
+
+	const mesh = new THREE.Mesh( geometry, materialArray );
+	mesh.position.x = 50;
+
+	scene.add( mesh );
+
+}
+
+
+
+function setLegendPlaneBuffer() {
+
+	geometry = new THREE.PlaneBufferGeometry( 100, 30, legendColorsHex.length , 1 );
+	geometry.applyMatrix( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
+
+	let index = 0;
+
+	legendColorsHex.forEach( ( color, i ) => {
+
+		geometry.addGroup( index, 6, i );
+
+		index += 6;
+
+	} );
+
+	const materialArray = legendColorsHex.map( colorHex => new THREE.MeshBasicMaterial( { color: colorHex, side: 2  } ) );
+
+	const mesh = new THREE.Mesh( geometry, materialArray );
+	mesh.position.x = 100;
+
+	edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+	edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+	edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+	mesh.add( edges );
+
+	scene.add( mesh );
+
+}
+
+
+
+function setLegendBoxBuffer() {
+
+	geometry = new THREE.BoxBufferGeometry( 5, 30, 5 );
+	const materialArray = legendColorsHex.map( colorHex => new THREE.MeshBasicMaterial( { color: colorHex, side: 2  } ) );
+
+	let index = 0;
+
+	legend = new THREE.Object3D();
+
+	legendColorsHex.forEach( ( color, i ) => {
+
+		const mesh = new THREE.Mesh( geometry, materialArray[ i ] );
+
+		factor =  color / 10000000;
+		mesh.position.x = 100;
+		mesh.position.y = 100 - 0.5 * factor * 30;
+		mesh.position.z = i * 7 - 100;
+
+		mesh.scale.y = factor;
+
+		console.log( '', color );
+
+		edgesGeometry = new THREE.EdgesGeometry( geometry ); // or WireframeGeometry
+		edgesMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
+		edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
+		mesh.add( edges );
+
+		legend.add( mesh )
+
+	} );
+
+	scene.add( legend );
+
+}
+
+
+
+function setLegendPlacard() {
+
+	legendColors.forEach( ( color, i ) => {
+
+		placard = drawPlacard( color.toString(), 0.05, color );
+
+		placard.position.x = 50;
+		placard.position.z = i * 5 - 70;
+
+		scene.add( placard )
+	} );
+
+}
+
+
+
+
+function drawPlacard( text = 'abc', scale = 0.05, color = [ 250, 88, 88 ], x = 0, y = 0, z = 10 ) {
+
+	// add update
+	// 2019-07-12 ~ https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/examples/placards
+
+	const placard = new THREE.Object3D();
+
+	const texture = canvasMultilineText( text, { backgroundColor: color }   );
+	const spriteMaterial = new THREE.SpriteMaterial( { map: texture, opacity: 0.9, transparent: true } );
+	const sprite = new THREE.Sprite( spriteMaterial );
+	sprite.position.set( x, scale * -0.5 * texture.image.width, z ) ;
+	sprite.scale.set( scale * texture.image.width, scale * texture.image.height );
+
+	//const geometry = new THREE.Geometry();
+	//const v = function( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+	//geometry.vertices = [ v( 0, 0, 0 ),  v( x, y, z ) ];
+	//const material = new THREE.LineBasicMaterial( { color: 0xaaaaaa } );
+	//const line = new THREE.Line( geometry, material );
+	//placard.add( sprite, line );
+
+	placard.add( sprite );
+
+	return placard;
+
+
+	function canvasMultilineText( textArray, parameters ) {
+
+		parameters = parameters || {} ;
+
+		const canvas = document.createElement( 'canvas' );
+		const context = canvas.getContext( '2d' );
+		let width = parameters.width ? parameters.width : 0;
+		const font = parameters.font ? parameters.font : '48px monospace';
+		const color = parameters.backgroundColor ? parameters.backgroundColor : 120 ;
+
+		if ( typeof textArray === 'string' ) textArray = [ textArray ];
+
+		context.font = font;
+
+		for ( let i = 0; i < textArray.length; i++) {
+
+			width = context.measureText( textArray[ i ] ).width > width ? context.measureText( textArray[ i ] ).width : width;
+
+		}
+
+		canvas.width = width + 20;
+		canvas.height =  parameters.height ? parameters.height : textArray.length * 60;
+
+		context.fillStyle = `rgb( ${ color[ 0 ] }, ${ color[ 1 ] }, ${ color[ 2 ] } )`;
+		context.fillRect( 0, 0, canvas.width, canvas.height);
+
+		context.lineWidth = 1 ;
+		context.strokeStyle = '#000';
+		context.strokeRect( 0, 0, canvas.width, canvas.height );
+
+		context.fillStyle = '#000' ;
+		context.font = font;
+
+		for ( let i = 0; i < textArray.length; i++) {
+
+			context.fillText( textArray[ i ], 10, 48 + i * 60 );
+
+		}
+
+		const texture = new THREE.Texture( canvas );
+		texture.minFilter = texture.magFilter = THREE.NearestFilter;
+		texture.needsUpdate = true;
+
+		return texture;
+
+	}
+
+};
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=https://github.com/fluidicon.png height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>
