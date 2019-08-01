@@ -10,45 +10,45 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 Remix of some files I built in 2016
 
-[Plane to cylinder elliptic trajectories R2]( http://jaanga.github.io/demo/paul-m/plane-donuts/plane-to-cylinder-elliptic-trajectories-r2.html )
+[Plane to cylinder elliptic trajectories R2]( https://jaanga.github.io/demo/paul-m/plane-donuts/plane-to-cylinder-elliptic-trajectories-r2.html )
 
-[Plane to cylinder involute trajectories R2]( http://jaanga.github.io/demo/paul-m/plane-donuts/plane-to-cylinder-involute-trajectories-r2.html )
+[Plane to cylinder involute trajectories R2]( https://jaanga.github.io/demo/paul-m/plane-donuts/plane-to-cylinder-involute-trajectories-r2.html )
 
 
 ## 2016-10-28
 
-* [GubGub PM]( http://jaanga.github.io/demo/paul-m/gubgub-pm/index.html )
+* [GubGub PM]( https://jaanga.github.io/demo/paul-m/gubgub-pm/index.html )
 
 
 ## 2016-05-23
 
-[SageMath Documentation GitHub API Files in Repo for R1]( http://jaanga.github.io/demo/paul-m/github-api-files-in-repo/github-api-files-in-repo-r1.html )
+[SageMath Documentation GitHub API Files in Repo for R1]( https://jaanga.github.io/demo/paul-m/github-api-files-in-repo/github-api-files-in-repo-r1.html )
 
 * No hierarchy yet. Just straight file dump
 
-[SageMath Documentation Absolute Links R1]( http://jaanga.github.io/demo/paul-m/sage-documentation-home-page/sage-documentation-home-page-r1.html )
+[SageMath Documentation Absolute Links R1]( https://jaanga.github.io/demo/paul-m/sage-documentation-home-page/sage-documentation-home-page-r1.html )
 
 * SageMath Documentation home page edited to have absolute links
 
-[Sage Documentation Site Map Maker R1]( http://jaanga.github.io/demo/paul-m/sage-documentation-home-page/sage-documentation-site-map-maker-r1.html )
+[Sage Documentation Site Map Maker R1]( https://jaanga.github.io/demo/paul-m/sage-documentation-home-page/sage-documentation-site-map-maker-r1.html )
 
 * Reads the SageMath Documentation home page file and creates a savable site map
 
-[Site Map]( http://jaanga.github.io/demo/paul-m/sage-documentation-home-page/site-map.html )
+[Site Map]( https://jaanga.github.io/demo/paul-m/sage-documentation-home-page/site-map.html )
 
 * A site map produced using Sage Documentation Site Map Maker
 
 
 ## 2016-05-19
 
-[sugihara-folded-plate-r1.html]( http://jaanga.github.io/demo/paul-m/sugihara/sugihara-folded-plate-r1.html )
+[sugihara-folded-plate-r1.html]( https://jaanga.github.io/demo/paul-m/sugihara/sugihara-folded-plate-r1.html )
 
-* see http://home.mims.meiji.ac.jp/~sugihara/ambiguousc/ambiguouscylindere.html
+* see https://home.mims.meiji.ac.jp/~sugihara/ambiguousc/ambiguouscylindere.html
 
 
 ## _2016-04-18_
 
-[Plane Donuts R2]( http://jaanga.github.io/demo/paul-m/plane-donuts/plane-donuts-r2.html )
+[Plane Donuts R2]( https://jaanga.github.io/demo/paul-m/plane-donuts/plane-donuts-r2.html )
 
 * Gently slide the lerp slider from left to right
 * Works only once. Reload to do it again
@@ -56,13 +56,13 @@ Remix of some files I built in 2016
 
 ## _2016-02-21_
 
-[Marching Cubes R1]( http://jaanga.github.io/demo/paul-m/marching-cubes/marching-cubes-r1.html )
+[Marching Cubes R1]( https://jaanga.github.io/demo/paul-m/marching-cubes/marching-cubes-r1.html )
 
 
 
 ## _2016-02-03_
 
-[Sage Docs Browser R1]( http://jaanga.github.io/demo/paul-m/sage-docs-browser/sage-docs-browser-r1-@.html )
+[Sage Docs Browser R1]( https://jaanga.github.io/demo/paul-m/sage-docs-browser/sage-docs-browser-r1-@.html )
 
 * Uses GitHub API to read names of all files in https://api.github.com/repositories/49542267/contents/functions and recursively through the sub-folders
 * Displays the list of all folder and file names found in left menu column
@@ -72,7 +72,7 @@ Remix of some files I built in 2016
 
 ## _2016-01-12_
 
-[Sage Snooper R1]( http://jaanga.github.io/demo/paul-m/get-sage-names/sage-snooper-r1.html )
+[Sage Snooper R1]( https://jaanga.github.io/demo/paul-m/get-sage-names/sage-snooper-r1.html )
 
 * Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively through the sub-folders
 * Displays the list of all folder and file names found in left menu column
@@ -86,7 +86,7 @@ Remix of some files I built in 2016
 
 ## _2016-01-11_
 
-[Get Sage Names R1]( http://jaanga.github.io/demo/paul-m/get-sage-names/get-sage-names-r1.html )
+[Get Sage Names R1]( https://jaanga.github.io/demo/paul-m/get-sage-names/get-sage-names-r1.html )
 
 * Uses GitHub API to read names of all files in https://github.com/sagemath/sage/tree/master/src/sage and recursively through the sub-folders
 * Displays the list of all folder and file names found in left menu column
@@ -105,7 +105,7 @@ Remix of some files I built in 2016
 
 ## _2016-01-10_
 
-[Get Sage Function Names R2]( http://jaanga.github.io/demo/paul-m/get-sage-function-names/get-sage-function-names-r2.html )
+[Get Sage Function Names R2]( https://jaanga.github.io/demo/paul-m/get-sage-function-names/get-sage-function-names-r2.html )
 
 * Reads both 'master' and 'develop' branches and displays results from both side-by-side
 * links to both source files in there respective branches
@@ -118,7 +118,7 @@ Remix of some files I built in 2016
 
 ## _2016-01-09_
 
-[Get Sage Function Names R1]( http://jaanga.github.io/demo/paul-m/get-sage-function-names/get-sage-function-names-r1.html )
+[Get Sage Function Names R1]( https://jaanga.github.io/demo/paul-m/get-sage-function-names/get-sage-function-names-r1.html )
 
 * See <https://github.com/sagemath/sage/tree/master/src/sage/functions>
 * Displays results with link to source file
@@ -127,18 +127,18 @@ Remix of some files I built in 2016
 
 ## _2015-12-30_
 
-[Multiple Views R1]( http://jaanga.github.io/demo/paul-m/multiple-views/multiple-views-r1.html )
+[Multiple Views R1]( https://jaanga.github.io/demo/paul-m/multiple-views/multiple-views-r1.html )
 
 ## _2015-12-13_
 
-[Vista Lights URL Hash Reader R2]( http://jaanga.github.io/demo/paul-m/url-hash-reader-r2.html )
+[Vista Lights URL Hash Reader R2]( https://jaanga.github.io/demo/paul-m/url-hash-reader-r2.html )
 
-[Vista Lights Random Image Resize R2]( http://jaanga.github.io/demo/paul-m/vista-lights-random-image-resize-r2.html )
+[Vista Lights Random Image Resize R2]( https://jaanga.github.io/demo/paul-m/vista-lights-random-image-resize-r2.html )
 
 ## _2015-12-12_
 
-[Vista Lights Receiver R1]( http://jaanga.github.io/demo/paul-m/vista-lights-receiver-r1.html )
+[Vista Lights Receiver R1]( https://jaanga.github.io/demo/paul-m/vista-lights-receiver-r1.html )
 
-[Vista Lights Image Resize R1]( http://jaanga.github.io/demo/paul-m/vista-lights-image-resize-r1.html )
+[Vista Lights Image Resize R1]( https://jaanga.github.io/demo/paul-m/vista-lights-image-resize-r1.html )
 
-[PM Lights R1]( http://jaanga.github.io/demo/paul-m/pm-lights-r1.html )
+[PM Lights R1]( https://jaanga.github.io/demo/paul-m/pm-lights-r1.html )
