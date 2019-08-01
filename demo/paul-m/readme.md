@@ -4,8 +4,16 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 [Jaanga]( https://jaanga.github.io ) » [Demo]( https://jaanga.github.io/demo/  ) »
 
-[Paul M Read Me]( ./index.html )
-===============================================================================
+# [Paul M Read Me]( ./index.html )
+
+## 2019-08-01
+
+Remix of some files I built in 2016
+
+[Plane to cylinder elliptic trajectories R2]( http://jaanga.github.io/demo/paul-m/plane-donuts/plane-to-cylinder-elliptic-trajectories-r2.html )
+
+[Plane to cylinder involute trajectories R2]( http://jaanga.github.io/demo/paul-m/plane-donuts/plane-to-cylinder-involute-trajectories-r2.html )
+
 
 ## 2016-10-28
 
@@ -90,6 +98,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 	* Search results are listed under
 
 ### Issues
+
 	* Takes over five minutes to complete
 	* Needs save output to file button
 	* Tries to read folders, opens empty files, etc, etc
