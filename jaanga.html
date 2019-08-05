@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8" >
+<meta name = "copyright" content ="Jaanga authors" >
+<meta name = "date" content = "2019-08-04" >
+<meta name = "description" content = "Very simple JavaScript files to help you explore and build new tools on GitHub." >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "version" content = "0.14.06" >
+<meta name = "viewport" content = "width=device-width, initial-scale=1" >
+
+<title>Jaanga</title>
+
+<base href = "" >
+
+<link rel = "canonical" href = "https://jaanga.github.io" >
+<link rel = "license" href = "https://creativecommons.org/licenses/by/4.0/" >
+<link rel = "license" href = "https://opensource.org/licenses/MIT" >
+<link rel = "stylesheet" href = "https://pushme-pullyou.github.io/tootoo14/js-14-06/style.css" >
+
+
+</head>
+
+<body>
+
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js" ></script>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js" ></script>
+
+<!-- Menus generally -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/mnu-menu/mnu-menu.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/pop-popup/pop-popup.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/gat-github-access-token/gat-github-access-token.js" ></script>
+
+<!-- File menu panel -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fga-files-github-api/fga-files-github-api.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/fob-file-open-basic/fob-file-open-basic.js" ></script>
+
+<!-- Edit Menu -->
+
+
+<!-- Settings menu -->
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/thm-theme/thm-theme.js" ></script>
+<script src = "https://pushme-pullyou.github.io/tootoo14/js-14-06/tmp-template/tmp-template.js" ></script>
+
+<script src = "" ></script>
+
+
+	<button id="expandButton" onclick="toggleNavPanel();" >☰</button>
+
+	<nav id="navPanel" >
+
+		<section class="secContent" >
+
+			<details open>
+
+			<summary class="sumMenuTitle" >Menu bar header</summary>
+
+				<header>
+
+					<div id="MNUdivHeader" ></div>
+
+				</header>
+
+			</details>
+
+			<details open>
+
+				<summary class="sumMenuTitle" >GitHub folders & files</summary>
+
+				<div id="FGAdivMenuRepoFilesFolders" ></div>
+
+				<div id="GATdivGithubAccessToken" ></div>
+
+			</details>
+
+			<details>
+
+				<summary class="sumMenuTitle" >File menu</summary>
+
+				<div id=FOBdivFileOpenBasic ></div>
+
+				<div id=FOBdivFileSaveBasic ></div>
+
+			</details>
+
+
+			<details>
+
+				<summary class=sumMenuTitle >Settings menu</summary>
+
+				<div id=THMdivMenuThemeSelect ></div>
+
+				<div id=TMPdivTemplate ></div>
+
+			</details>
+
+
+			<footer>
+
+				<details>
+
+					<summary class=sumMenuTitle >Help menu</summary>
+
+					<div id="MNUdivFooterPopup" ></div>
+
+				</details>
+
+				<h1 onclick="navPanel.scrollTop=0;" style="cursor:pointer;text-align:center;" title="go to top of menu" >
+					❦
+				</h1>
+
+			</footer>
+
+		</section>
+
+	</nav>
+
+
+	<main id="main" >
+
+		<div id="divContents" ></div>
+
+	</main>
+
+
+	<nav id="navDragMove"  hidden >
+
+		<section id="secDragMove" >
+
+			<div id=divDragMoveHeader >
+
+				<span title="Move and resize me" >&#x2766;</span>
+
+				<div style=float:right; >
+					<button id=butPopupClose onclick="POP.onClickClose(butPopupClose);" >
+						&times;
+					</button>
+				</div>
+
+			</div>
+
+			<div id="divDragMoveContent" ></div>
+
+			<div id="divDragMoveFooter" ></div>
+
+		</section>
+
+	</nav>
+
+
+	<nav>
+
+		<a href="" id="aViewSource" target="_blank" >view source</a>
+
+	</nav>
+
+
+<script>
+
+
+POP.version = MNU.version = document.head.querySelector( '[ name=version ]' ).content || "";
+POP.date = MNU.date = document.head.querySelector( '[ name=date ]' ).content || "";
+
+POP.popup = "https://pushme-pullyou.github.io/pages/popup.md";
+POP.license = "https://pushme-pullyou.github.io/pages/license.md";
+
+FOB.urlDefaultFile = "https://jaanga.github.io/README.md";
+
+FGA.branch = '/master/';
+FGA.user = 'jaanga';
+FGA.repo = 'jaanga.github.io';
+FGA.pathRepo = '';
+
+//FGA.urlGitHubPage = "../../";
+FGA.urlGitHubPage = "https://jaanga.github.io/";
+
+THM.themeUrlStorage = 'jaanga-theme-url';
+THM.cssBasic = "https://pushme-pullyou.github.io/tootoo14/js-14-06/style.css";
+
+// For main menu header
+MNU.urlSourceCode ="https://jaanga.github.io/";
+
+MNU.homeText = "";
+MNU.homeTitle = "";
+MNU.homeUrl = "";
+
+MNU.repoText= "";
+MNU.repoTitle="";
+MNU.repoUrl="";
+
+MNU.appText= ""; //"gbXML Tools";
+MNU.appTitle = ""; //"Tools to help you find, load, examine and edit gbXML files - in large numbers and sizes";
+MNU.appUrl = ""; //"https://www.ladybug.tools/spider-gbxml-tools/";
+
+MNU.footerPopupUrl = "https://pushme-pullyou.github.io/";
+MNU.footerTarget = ""; //"target=_blank";
+MNU.footerIssues = "https://github.com/pushme-pullyou/tootoo14//issues";
+
+
+
+init();
+
+
+function init() {
+
+	if ( /(iPad|iPhone|iPod)/g.test( navigator.userAgent ) ) { /* I hate having to add this */
+
+		divContents.style.width = getComputedStyle( divContents ).width;
+		divContents.style.height = getComputedStyle( divContents ).height;
+		divContents.setAttribute( 'scrolling', 'no' );
+
+	}
+
+	THMdivMenuThemeSelect.innerHTML = THM.getMenuThemeSelect();
+
+	THM.init();
+
+	MNUdivHeader.innerHTML = MNU.getNavHeader();
+
+	FGAdivMenuRepoFilesFolders.innerHTML = FGA.getMenuFilesGithubApi();
+
+	FGA.getFiles(); // move to js?
+
+	GATdivGithubAccessToken.innerHTML = GAT.getMenuGitHubAccessToken();
+
+	FOBdivFileOpenBasic.innerHTML = FOB.getMenuFileOpenBasic();
+
+	//FOBdivFileSaveBasic.innerHTML = FOB.getMenuFileSaveBasic();
+
+	TMPdivTemplate.innerHTML = TMP.getMenuTemplate();
+
+	MNUdivFooterPopup.innerHTML = MNU.getNavFooterPopup();
+
+	POP.init();
+
+	//COR.init();
+
+	// let's go / FOB to load default and fire onload events
+	if ( !location.hash ) { location.hash = FOB.urlDefaultFile; } else { FOB.onHashChange(); }
+
+	aViewSource.href = MNU.urlSourceCode;
+
+	//POP.setPopupShowHide();
+	POP.popupId = butPopupClose;
+
+	if ( window.innerWidth < 640 || window.innerHeight < 640 ) { toggleNavPanel(); }
+
+}
+
+
+
+function toggleNavPanel() {// move to COR??
+
+	expandButton.classList.toggle( 'collapsed' );
+	navPanel.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+}
+
+</script>
+</body>
+</html>
