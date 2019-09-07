@@ -20,6 +20,10 @@ _quaternions-basic.html_
 
 ## Links of Interest
 
+* https://en.wikipedia.org/wiki/Quaternion
+* http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/index.htm
+* https://plus.maths.org/content/os/issue32/features/baez/index
+
 ### Three.js Docs
 
 * https://threejs.org/docs/#api/math/Quaternion
@@ -34,10 +38,14 @@ _quaternions-basic.html_
 
 ### StackOverflow
 
+* https://stackoverflow.com/search?q=quaternion+three.js
 * https://stackoverflow.com/questions/37780086/three-js-quaternions-for-rotation-matrix-of-a-mesh-in-relation-to-the-camera-w
 * https://stackoverflow.com/questions/14167962/how-to-derive-standard-rotations-from-three-js-when-using-quaternions
 * https://stackoverflow.com/questions/43345191/three-js-quaternion-to-lat-lon
 * https://stackoverflow.com/questions/13281093/threejs-translate-object-based-on-quaternion-rotation
+	* http://jsfiddle.net/Lc8gH/20/
+	* http://jsfiddle.net/Lc8gH/21/
+	* these look useful ***
 * https://stackoverflow.com/questions/50265225/threejs-object-quaternion-rotation-not-following-axis
 * https://stackoverflow.com/questions/36695768/moving-cannonjs-object-in-3d-according-to-its-quaternion
 * https://stackoverflow.com/questions/25227121/convert-pan-tilt-angles-to-xyz-in-three-js-using-quaternion
