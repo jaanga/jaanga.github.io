@@ -1,0 +1,31 @@
+<script src="https://cdn.jsdelivr.net/gh/paulmasson/mathcell@1.3.0/build/mathcell.js"></script>
+
+	<div class="mathcell" style="height: 5in" >
+
+		<script>
+
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+			var id = generateId();
+
+			parent.id = id;
+
+			MathCell( id, [] );
+
+			parent.update = function( id ) {
+
+				var data = [ box( 1, 1, 1 ) ];
+
+				var config = { type: 'threejs' };
+
+				evaluate( id, data, config );
+
+			}
+
+			parent.update( id );
+
+		</script>
+
+	</div>
+
+<script>

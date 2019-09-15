@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-05-25" >
+<meta name = "version" content = "0.0.0" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/gh/paulmasson/mathcell@1.3.0/build/mathcell.js"></script>
+
+	<div class="mathcell" style="width: 6in; height: 5in">
+
+		<script>
+
+			var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+
+			var id = generateId();
+			parent.id = id;
+
+			MathCell( id, [] );
+
+			parent.update = function( id ) {
+
+				function sinc( x, y ) {
+
+					var r = Math.sqrt( x*x + y*y );
+
+					if ( r === 0 ) return 1;
+
+					return Math.sin(r) / r;
+
+				}
+
+				var s = parametric( (x,y) => [ x, y, sinc(x,y) ], [-10,10,150], [-10,10,150],
+					{ colormap: (x,y) => sinc(x,y)
+				} );
+
+				var data = [ s ];
+
+				var config = { type: 'threejs', frame: false, aspectRatio: [1,1,10] };
+
+				evaluate( id, data, config );
+
+			}
+
+			parent.update( id );
+
+		</script>
+
+	</div>
+
+
+<script>
+
+</script>
+</body>
+</html>
+
