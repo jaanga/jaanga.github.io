@@ -136,6 +136,12 @@ function parseText3( text, target ) {
 
 	console.log( 'orgsGbxml', orgsGbxml );
 
+	htm = JSON.stringify( orgsGbxml, null, "  " )
+
+	divContents.innerHTML = `<textarea style=height:800px;width:100%; >${ htm }</textarea>`;
+
+	//divContents.innerText = htm
+
 }
 
 

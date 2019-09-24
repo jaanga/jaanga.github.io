@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic zip file read and decompress" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = 2019-09-22 >
+<title></title>
+<style>
+
+	body { font: 12pt monospace; margin: 0 auto; max-width: 800px; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+/*	#divMenu { left: 0; margin: 20px; max-width: 300px; position: absolute; top: 0; } */
+
+</style>
+</head>
+<body>
+<script src=https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick=getZipFromUrl(urlUtf8,callbackUrl); >getZipFromUrl</button>
+
+			<button onclick=getZipFromUrl(urlUtf16,callbackUrlUtf16); >getZipFromUrlUtf16</button>
+
+		</p>
+
+		<p>
+			<input type=file id=inpOpenFile onchange=inpOpenFileZip(this); accept="application/zip" >
+
+			Decode UTF-16 <input type=file id=inpOpenFile onchange=inpOpenFileZipDecode(this); accept="application/zip" >
+
+		</p>
+
+		<p>
+			<button onclick=fileSaveZip(); >save data to zip file</button>
+		</p>
+
+	</div>
+
+	<div id = "divFileNames" ></div>
+
+	<div id = "divFileLog" ></div>
+
+	<div id = "divFileContents" ></div>
+
+	<textarea id=txtArea style=height:300px;width:100%; ></textarea>
+
+
+<script>
+
+let zipText = '';
+
+const urlUtf8 = "https://www.ladybug.tools/spider/gbxml-sample-files/zip/NewBuilding.zip";
+const urlUtf16 = "https://www.ladybug.tools/spider/gbxml-sample-files/zip/LargeCampus_SAM2017.zip"
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/libraries/jszip";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-64.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	divFileContents.innerHTML += '<p>text will appear here</p>';
+
+}
+
+
+
+function getZipFromUrl( url, callback ) {
+
+	timeStart = performance.now();
+
+	let xhr = new XMLHttpRequest();
+	xhr.crossOrigin = 'anonymous';
+	xhr.responseType = 'blob';
+	xhr.open( 'GET', url, true );
+	xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+	//xhr.onprogress = function( xhr ) { console.log( 'bytes loaded:', xhr.loaded  ); }; /// or something
+	xhr.onload = callback;
+	xhr.send( null );
+
+}
+
+
+function callbackUrlUtf16( xhr ) {
+
+	const response = xhr.target.response;
+	//console.log( 'response', response );
+
+	const zip = new JSZip();
+
+	zip.loadAsync( response )
+
+	.then( function( zip ) {
+		//console.log( 'zip', zip );
+
+		const names = [];
+		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
+
+		// Read from the zip file!
+		const array = zip.file( names[ 0 ] ).async( "uint8array" );
+
+		return array;
+
+	} )
+
+	.then( function( uint8array ) {
+
+		//console.log( 'uint8array', uint8array[ 0 ] );
+
+		let text = '';
+
+		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
+
+			text = new TextDecoder( "utf-8" ).decode( uint8array );
+			//console.log( 'text', text );
+
+		} else {
+
+			let arr = new Uint8Array( uint8array.length / 2 );
+			let index = 0;
+
+			// console.log( 'uint8array', uint8array );
+
+			for ( let i = 0; i < uint8array.length; i++ ) {
+
+				if ( i % 2 === 0 ) {
+
+					arr[ index++ ] = uint8array[ i ];
+
+				}
+
+			}
+			//console.log( 'arr', arr );
+
+			text = new TextDecoder( "utf-8" ).decode( arr );
+
+		}
+
+		zipText = text;
+
+		return text;
+
+		//console.log( 'text', text );
+
+	} )
+
+	.then(
+
+		function success( text) {
+
+			divFileContents.innerHTML +=
+			`
+				<p>
+					length: ${ text.length.toLocaleString() } <br>
+					time: ${ ( performance.now() - timeStart ).toLocaleString() }<br>
+					last modified: ${ xhr.target.getResponseHeader ( "Last-Modified" ) }
+				</p>
+			`;
+
+			txtArea.value = text.slice( 0, 1000 );
+
+		},
+
+		function error( e ) { divFileContents.append(`error ${ e } `) }
+
+	);
+
+}
+
+
+
+function callbackUrl( xhr ) {
+
+	const response = xhr.target.response;
+	//console.log( 'response', response );
+
+	var zip = new JSZip();
+
+	zip.loadAsync( response )
+
+	.then( function( zip ) {
+		//console.log( 'zip', zip );
+
+		const names = [];
+		zip.forEach( ( relativePath, zipEntry ) => names.push( zipEntry.name ) );
+
+		// Read from the zip file!
+		const text = zip.file( names[ 0 ] ).async("string");
+
+		return text;
+
+	} )
+
+	.then(
+
+		function success( text) {
+
+			divFileContents.innerHTML +=
+			`
+				<p>
+					length: ${ text.length.toLocaleString() } <br>
+					time: ${ ( performance.now() - timeStart ).toLocaleString() }<br>
+					last modified: ${ xhr.target.getResponseHeader ( "Last-Modified" ) }
+				</p>
+			`;
+
+			txtArea.value = text.slice( 0, 1000 );
+		},
+
+		function error( e ) { divFileContents.append(`error ${ e } `) }
+
+	);
+
+}
+
+
+
+function fetchZipFromUrl( url ) {
+
+	console.log( 'url', url );
+
+	fetch( url ) // 1) fetch the url
+
+	.then( function ( response ) {	// 2) filter on 200 OK
+
+		if ( response.status === 200 || response.status === 0) {
+
+			return Promise.resolve( response.blob() );
+
+		} else {
+
+			return Promise.reject(new Error(response.statusText));
+
+		}
+	})
+	.then( JSZip.loadAsync ) // 3) chain with the zip promise
+
+	.then(function ( zip ) {
+		//return zip.file("Hello.txt").async("string"); // 4) chain with the text content promise
+		return zip.async("string"); // 4) chain with the text content promise
+	})
+	.then( function success( text) {	// 5) display the result
+		divFileContents.append( `<p>${ text }</p>` )
+
+	}, function error(e) {
+		divFileContents.append(`error ${ e } `)
+	});
+
+}
+
+
+
+function inpOpenFileZip( files ) {
+
+	timeStart = performance.now();
+
+	const names = [];
+
+	zip = new JSZip();
+
+
+	zip.loadAsync( files.files[ 0 ] )
+
+	.then( function( zip ) {
+
+
+		zip.forEach( function ( relativePath, zipEntry ) {
+
+			names.push( zipEntry.name );
+
+			divFileNames.innerHTML += '<p>file name: ' + zipEntry.name + '</p>';
+			console.log( 'file name: ', zipEntry.name );
+
+		});
+
+		console.log( 'zip', zip );
+
+		return zip;
+
+	} )
+
+	.then( function( data ) {
+
+		//text = data.files[ names[ 0 ] ].async( "uint8array", function updateCallback( metadata ) {
+		//	divFileLog.innerHTML =  `progression: ${ metadata.percent.toFixed(2) } %`;
+		//} );
+		//console.log( 'data', data  );
+
+		text = data.file( names[ 0 ] ).async("string");
+
+		return text;
+
+	}, ( err ) =>  divFileContents.innerHTML += err.message )
+
+	.then( function( text ) {
+
+		//console.log( 'text', text );
+
+		divFileContents.innerHTML =
+		`
+			<p>
+			length: ${ text.length.toLocaleString() } <br>
+			time: ${ ( performance.now() - timeStart ).toLocaleString() }
+			</p>
+		`;
+
+		zipText = text;
+
+		txtArea.value = text.slice( 0, 1000 );
+
+		//console.log( 'text', text );
+
+	} )
+
+}
+
+
+
+function inpOpenFileZipDecode( files ) {
+
+	timeStart = performance.now();
+
+	zip = new JSZip();
+
+	names = [];
+
+	zip.loadAsync( files.files[ 0 ] )
+
+	.then( function( zip ) {
+
+		zip.forEach( function ( relativePath, zipEntry ) {
+
+			names.push( zipEntry.name );
+
+			divFileNames.innerHTML += '<p>file name: ' + zipEntry.name + '</p>';
+			console.log( 'file name: ', zipEntry.name );
+
+		});
+
+		console.log( 'zip', zip );
+
+		return zip;
+
+	} )
+
+	.then(
+
+		function( data ) {
+
+			array = data.files[ names[ 0 ] ].async(
+				"uint8array",
+				function updateCallback( metadata ) {
+					divFileLog.innerHTML =  `progress: ${ metadata.percent.toFixed(2) } %`;
+				}
+			);
+			//console.log( 'data', data  );
+
+			return array;
+
+		},
+		( err ) =>  divFileContents.innerHTML += err.message
+
+	)
+
+	.then( function( uint8array ) {
+
+		//console.log( 'uint8array', uint8array[ 0 ] );
+
+		let text = '';
+
+		if ( uint8array[ 0 ] !== 255 ||  uint8array[ 0 ] === 239 || uint8array[ 0 ] === 60 ) {
+
+			text = new TextDecoder( "utf-8" ).decode( uint8array );
+			 //console.log( 'text', text );
+
+		} else {
+
+			let arr = new Uint8Array( uint8array.length / 2 );
+			index = 0;
+
+			// console.log( 'uint8array', uint8array );
+
+			for ( let i = 0; i < uint8array.length; i++ ) {
+
+				if ( i % 2 === 0 ) {
+
+					arr[ index++ ] = uint8array[ i ];
+
+				}
+
+			}
+			console.log( 'arr', arr );
+
+			text = new TextDecoder( "utf-8" ).decode( arr );
+
+/*
+			for( i = 0; i < arr.length; i ++ ) {
+
+				text = text + String.fromCharCode( arr[ i ] );
+
+			}
+*/
+
+		}
+
+		divFileContents.innerHTML =
+		`
+			<p>
+			length: ${ text.length.toLocaleString() } <br>
+			time: ${ ( performance.now() - timeStart ).toLocaleString() }
+			</p>
+		`;
+
+		zipText = text;
+
+		txtArea.value = text.slice( 0, 1000 );
+
+		//console.log( 'text', text );
+
+	} );
+
+}
+
+
+
+function fileSaveZip( name = 'hello-world') {
+
+	const zip = new JSZip();
+
+	zip.file( name, zipText );
+
+	zip.generateAsync( {type:"blob", compression: "DEFLATE" } )
+
+	.then( function( blob ) {
+
+		let a = document.body.appendChild( document.createElement( 'a' ) );
+		a.href = window.URL.createObjectURL( blob );
+		a.download = name + '.zip';
+		a.click();
+		a = null;
+
+	});
+
+}
+
+
+
+function getTitle() {
+
+document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+const htm =
+
+`
+	<h2>
+		<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+			<img src=${ urlSourceCodeIcon } height=18 >
+		</a>
+		<a href="" title="Click to reload this page" >${ document.title }</a>
+	</h2>
+
+	<p>
+		${ document.head.querySelector( "[ name=description ]" ).content }
+	</p>
+`;
+
+return htm;
+
+}
+
+</script>
+</body>
+</html>

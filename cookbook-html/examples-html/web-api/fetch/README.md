@@ -21,9 +21,15 @@ The Fetch API provides an interface for fetching resources (including across the
 Fetch
 
 * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+	* POST/PUT - Note Body: JSONstringify( )
 * https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data
 * https://davidwalsh.name/fetch
 * https://github.github.io/fetch/
+
+* https://jsonplaceholder.typicode.com/
+Ferdinandi
+
+* https://gomakethings.com/how-to-use-the-fetch-api-with-vanilla-js/
 
 MDN
 
@@ -32,15 +38,20 @@ MDN
 * https://github.com/mdn/fetch-examples/
 
 Stackoverflow
+
+* https://stackoverflow.com/questions/29775797/fetch-post-json-data
 * https://stackoverflow.com/questions/29676408/html-fetch-multiple-files
 
 Google
+
 * https://developers.google.com/web/updates/2015/03/introduction-to-fetch
 
 Scrolling
+
 * https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
 
 DOMParser
+
 * https://developer.mozilla.org/en-US/docs/Web/API/DOMParser
 * https://alligator.io/js/domparser/
 * https://www.tutorialspoint.com/java_xml/java_dom_parser.htm
@@ -58,6 +69,8 @@ Get favicon
 * https://www.google.com/s2/favicons?domain=www.google.com
 * https://news.ycombinator.com/item?id=17188973
 * http://faviconkit.com/
+
+
 
 ### Promises
 
