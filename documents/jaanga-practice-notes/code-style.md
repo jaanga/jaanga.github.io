@@ -3,18 +3,20 @@
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/jaanga-practice-notes/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 
-Code Style
-===
+# Code Style
 
-_update 2016-05-31_
 
 ## Standing on shoulders of giants
 
-The coding style of an app should follow the style of the most-used library of the app.
-* The style of an app built with jQuery should follow the style of, say, the [jQuery API Documentation]( http://api.jquery.com/ ). 
+The coding style of a script should follow the style of the most-used library of the script.
+* The style of an app built with jQuery should follow the style of, say, the [jQuery API Documentation]( http://api.jquery.com/ ) .
 * The style of an app built using Three.js should follow the style of, say, the [Three.js Examples]( http://mrdoob.github.io/three.js/examples/ ).
 * The styles in both the above examples do tend to be fairly simple coding styles - which is great for our kinds of uses.
 * On occasion a greater degree of complexity is required In that case then the source code of each library should be used as it respective style to follow.
+
+To be added
+
+* Prettifier
 
 
 ## JavaScript
@@ -22,7 +24,7 @@ The coding style of an app should follow the style of the most-used library of t
 _What the following needs, more than anything, is links to sources that justify the following statement._
 
 This documents should not be the ideas popping out of an individuals head, but the result of a number of long term investigations.
-In other words, this document is not anecdotal but based on clinical studies. 
+In other words, this document is not anecdotal but based on clinical studies.
 The following should a demonstration based on the [scientific method]( https://en.wikipedia.org/wiki/Scientific_method ).
 
 * Code generally follows the [Three.js examples]( http://mrdoob.github.io/three.js/examples/ ) coding style
@@ -47,8 +49,8 @@ The following should a demonstration based on the [scientific method]( https://e
 * All lower case
 	* Even !DOCTYPE
 * Everything in one file
-	* No need to have multiple files open 
-	* No need to keep looking all over the place 
+	* No need to have multiple files open
+	* No need to keep looking all over the place
 * Emphasis on the use of one tool: JavaScript
 	* The Document Object Model(DOM) is your friend
 	* Use the DOM to add HTML and CSS to the document on the fly
@@ -76,9 +78,9 @@ No black boxes. Nothing hidden away in remote places.
 * HTML is created as and when needed
 	* Example
 
-		contents = document.body.appendChild( document.createElement( 'div' ) );  
-		contents.id = 'contents';  
-		contents.innerHTML =  
+		contents = document.body.appendChild( document.createElement( 'div' ) );
+		contents.id = 'contents';
+		contents.innerHTML =
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
@@ -95,7 +97,7 @@ No black boxes. Nothing hidden away in remote places.
 	* IDs
 * Within each of these sections the CSS items are listed in alphabetical order
 * CSS parameters are listed in alphabetical order
-	* Example: #bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; } 
+	* Example: #bars { color: crimson; cursor: pointer; font-size: 24pt; text-decoration: none; }
 
 ### Various Other Coding Quirks
 
@@ -107,7 +109,7 @@ No black boxes. Nothing hidden away in remote places.
 	* Example: Double quotes only used when absolutely necessary
 		* The world: <html lang="en">
 		* Us: <html lang=en >
-	* Example: plays happily, willfully with untyped variables 
+	* Example: plays happily, willfully with untyped variables
 	* Example: see above / no support for elderly browsers
 * Code is designed to load or render on demand
 	* In other words to load and display something ASAP
@@ -144,7 +146,7 @@ No black boxes. Nothing hidden away in remote places.
 * X and y are always specified in this order
 	* x = lon - 10;
 	* y = lat + 5;
-* Width and height are always specified in this order 
+* Width and height are always specified in this order
 	* width = lon / 2
 	* height = lat / 3
 

@@ -3,22 +3,22 @@
 <input onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/jaanga-practice-notes/'; type=button  value='You are now in a GitHub web page view - Click this button to view this read me file as source code' />
 
 
-Code Mission and Vision
-===
+# Code Mission and Vision
+
 
 
 ## Mission
 
 <!--
 
-The general format is an adaptation of the ideas developed in Alexander's _et al_ 
+The general format is an adaptation of the ideas developed in Alexander's _et al_
 [A Pattern Language]( https://books.google.com/books?id=hwAHmktpk5IC&pg=PR10#v=onepage&q&f=false ) - as summarized on page 10.
 
-Each pattern describes a problem which occurs over and over again in our environment, 
-and then describes the core of the solution to that problem, 
+Each pattern describes a problem which occurs over and over again in our environment,
+and then describes the core of the solution to that problem,
 in such a way that you can use this solution a million times over, without ever doing it the same way twice.
 
-Patterns are descriptions of common problems and proposal for the solutions that 
+Patterns are descriptions of common problems and proposal for the solutions that
 can be used repeatedly every time the problem is encountered and producing an different outcome.
 
 -->
@@ -83,9 +83,9 @@ The code should be as close as possible to readable - or even spoken - English
 * Fabricate free, fast and fun fantasies
 * Write code you can fork, edit and share
 * Build engineering tools you can understand
-* Become a STEM guru 
+* Become a STEM guru
 * Develop skills you can use everywhere
-* If the mundane engineering tasks become easy, inexpensive and swift to carry out, 
+* If the mundane engineering tasks become easy, inexpensive and swift to carry out,
 then possibilities arise for the more complex, sophisticated and even extravagant ideas to turn into realities
 * So much of what people do is informed by the tradition of paper. Let's disrupt some of those notions
 * Let's make magic happen - and also know what's happening behind the curtain << AC Clarke tech = magic
@@ -94,9 +94,9 @@ then possibilities arise for the more complex, sophisticated and even extravagan
 	* Works - eventually - on devices normally used by general populations - ie tablets and phones
 	* Enables ordinary people not just to view but to interact with 3D models in new ways
 	* FOSS benefits
-* Help STEM professionals communicate their specialist skills to a broader population 
+* Help STEM professionals communicate their specialist skills to a broader population
 	* No attempt to compete with the tools professionals use to tackle sophisticated and complex designs
-	* Very much attempting to bring engineering and design _savoire faire_ - both high end levels and plain old common sense levels - to a broader swathe of humanity 
+	* Very much attempting to bring engineering and design _savoire faire_ - both high end levels and plain old common sense levels - to a broader swathe of humanity
 * Perhaps a 'turntable' or mixing studio for 3D DJs
 * Follow Mr.doobs' manifesto: 'to create a lightweight 3D library with a very low level of complexity — in other words, for dummies'
 	* Code is designed to be very fast to read
@@ -115,7 +115,7 @@ Generally the scripts are:
 
 * Free and open source
 * Built using entry level JavaScript with no dependencies other than the [Three.js]( https://threejs.org) JavaScript library
-* 3D views enable you to rotate and pan using one three fingers or left button, scroll wheel and right button on a mouse. 
+* 3D views enable you to rotate and pan using one three fingers or left button, scroll wheel and right button on a mouse.
 
 ***
 ## Things you can do
@@ -148,7 +148,7 @@ Instead of a huge file of opaque CSS rules that are mostly never invoked, there'
 ## Cookbook Meaning
 
 * http://english.stackexchange.com/questions/70799/meaning-of-cookbook-in-title-of-instructional-book
-* https://en.wikipedia.org/wiki/Cookbook#Usage_outside_the_world_of_food 
+* https://en.wikipedia.org/wiki/Cookbook#Usage_outside_the_world_of_food
 * https://en.wikibooks.org/wiki/Coding_Cookbook
 * https://www.quora.com/Computer-Programming-How-should-I-study-the-OReilly-cookbook-books-I-dont-feel-I-internalize-much-just-by-reading-them-as-Im-a-very-hands-on-learner
 

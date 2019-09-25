@@ -1,0 +1,1 @@
+{"url":"http://beta.openstructures.net/pages/9","name":"Page > Guidelines. > show","dateAdd":"2018-07-29T09:41:08.521Z","dateUpdate":"2019-08-12T01:54:04.439Z","id":"84387a67-1514-4a7a-8e58-fd0378fdd5c4","type":"url","images":[],"favicon":"https://www.google.com/s2/favicons?domain=beta.openstructures.net","tags":["service","openstructures","open-source"],"description":""}

@@ -1,0 +1,1 @@
+{"url":"http://studies.bc-as.org/","name":"studies","dateAdd":"2018-07-07T07:09:15.528Z","dateUpdate":"2019-06-10T07:32:29.418Z","id":"bb9a4b0b-1c41-4c78-8539-ab46f88e519c","type":"url","tags":["designers","wikihouse","redirect-error"],"images":[],"favicon":"","description":""}

@@ -80,9 +80,7 @@
 		<p>
 			<button id=but onclick=fileSaveZip();>save to zip</button>
 		</p>
-		<p>
-			<button id=but onclick=fileSaveZipWalsh();>save to zip - walsh demo</button>
-		</p>
+
 		<p>
 			<button id=but onclick=fileSaveZipFileDaysOfYear();>save to zip - days of year</button>
 		</p>
@@ -96,7 +94,10 @@
 	</main>
 
 
+
 	<script>
+
+		url = "https://opentecture.github.io/mindmapping/sandbox/opentecture-bookmarks/bookmarks.json"
 
 		const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/blob/master/cookbook-html/examples-html/libraries/jszip/";
 		const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
@@ -107,10 +108,85 @@
 
 			divTitle.innerHTML = getTitle();
 
-			divContents.innerHTML += `${( new Date )}<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+			//divContents.innerHTML += `${( new Date )}<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+
+			requestFile( url )
+		}
+
+
+		function requestFile( url ) {
+
+			xhr = new XMLHttpRequest();
+			xhr.open( 'GET', url, true );
+			xhr.onerror = ( xhr ) => console.log( 'error:', xhr  );
+			xhr.onprogress = ( xhr ) => console.log( 'bytes loaded:', xhr.loaded );
+			xhr.onload = onLoad;
+			xhr.send( null );
 
 		}
 
+
+		function onLoad( xhr ) {
+			//console.log( 'response', xhr.target.response );
+
+			lines = xhr.target.response.split( /\r\n|\n/ );
+
+			links = lines.filter( line => line.includes( "url" ) )
+
+
+			const zip = new JSZip();
+
+			names = [];
+			zip.file( "README.md", "A file for every day of the year\n" );
+
+			links.forEach( ( link, index ) => {
+				//console.log( 'link', link );
+
+				const a = document.createElement( 'a' );
+				const urlArr = link.match ( /url":"(.*?)",/i );
+				//console.log( '', urlArr );
+				let url;
+
+				if ( urlArr ) url = urlArr[ 1 ];
+				//console.log( 'url', url );
+				a.href = url;
+				let host = a.hostname;
+				host = host.replace( /www\./i, "").replace( /en\./i, "")
+
+
+				// if ( names.includes( host ) ===  false ) {
+
+				// 	names.push( host );
+
+				// 	name = host;
+
+				// } else {
+
+					const name = host + "-" + index;
+
+				//}
+
+				console.log( '', host );
+
+				zip.file( host + "-" + index + ".txt", link );
+
+			} );
+
+
+			zip.generateAsync( { type: "blob", compression: "DEFLATE" } )
+
+			.then( function ( blob ) {
+
+				let a = document.body.appendChild( document.createElement( 'a' ) );
+				a.href = window.URL.createObjectURL( blob );
+				a.download = 'add-a-line.zip';
+				a.click();
+				a = null;
+
+			} );
+
+
+		}
 
 
 
@@ -134,41 +210,6 @@
 
 		}
 
-
-
-		// https://davidwalsh.name/javascript-zip
-
-		function fileSaveZipWalsh( zipName = 'hello-world' ) {
-
-			var zip = new JSZip();
-
-			zip.file( "Hello.txt", "Hello World\n" );
-
-			// Generate a directory within the Zip file structure
-			var img = zip.folder( "images" );
-
-			// Add a file to the directory, in this case an image with data URI as contents
-			img.file( "smile.txt", "aaa bbb ccc\n123\n" );
-
-			// Generate the zip file asynchronously
-			zip.generateAsync( { type: "blob" } )
-
-				// .then(function(content) {
-				// 	// Force down of the Zip file
-				// 	saveAs(content, "archive.zip");
-				// });
-
-				.then( function ( blob ) {
-
-					let a = document.body.appendChild( document.createElement( 'a' ) );
-					a.href = window.URL.createObjectURL( blob );
-					a.download = zipName + '.zip';
-					a.click();
-					a = null;
-
-				} );
-
-		}
 
 
 		function fileSaveZipFileDaysOfYear( zipName = 'days-of-year' ) {

@@ -1,0 +1,1 @@
+{"url":"https://en.wikipedia.org/wiki/3DLT","name":"3DLT - Wikipedia","dateAdd":"2018-07-24T05:55:06.030Z","dateUpdate":"2019-08-12T01:45:10.711Z","id":"365d4498-3fc3-40a7-badf-7b41be4225c3","type":"url","images":[],"favicon":"https://www.google.com/s2/favicons?domain=en.wikipedia.org","tags":["reference","wikipedia"],"description":"No description element found in HTML file"}

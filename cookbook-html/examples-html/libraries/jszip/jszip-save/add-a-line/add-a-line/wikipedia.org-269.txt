@@ -1,0 +1,1 @@
+{"url":"https://en.wikipedia.org/wiki/Tetris","name":"Tetris - Wikipedia","dateAdd":"2018-07-30T06:54:46.951Z","dateUpdate":"2019-08-12T01:50:35.709Z","id":"d35a1b49-f01d-4ab1-9006-bafcbcbf5f97","type":"url","images":[],"favicon":"https://www.google.com/s2/favicons?domain=en.wikipedia.org","tags":["services","wikipedia"],"description":"No description element found in HTML file"}

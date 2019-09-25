@@ -1,0 +1,1 @@
+{"url":"http://bimwiki.com/","name":"BIM Wiki - BIM Wiki","dateAdd":"2017-12-31T07:13:31.000Z","dateUpdate":"2019-08-12T01:20:31.062Z","id":"121d1208-dbcd-4bc6-8a5a-e3f47a3d63ba","type":"url","images":[],"favicon":"https://www.google.com/s2/favicons?domain=bimwiki.com","tags":["bim","dead"],"description":"No description element found in HTML file"}

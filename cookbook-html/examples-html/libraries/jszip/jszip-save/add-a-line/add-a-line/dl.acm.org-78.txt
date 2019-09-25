@@ -1,0 +1,1 @@
+{"url":"https://dl.acm.org/citation.cfm?id=3026016","name":"TrussFab","dateAdd":"2018-07-24T04:01:56.196Z","dateUpdate":"2019-04-14T08:39:10.333Z","id":"a8bad442-a461-4a56-8fff-39f9504d09e8","type":"url","tags":["design tools","trussfab"],"images":[],"favicon":"https://www.google.com/s2/favicons?domain=dl.acm.org","description":"No description element found in HTML file"}

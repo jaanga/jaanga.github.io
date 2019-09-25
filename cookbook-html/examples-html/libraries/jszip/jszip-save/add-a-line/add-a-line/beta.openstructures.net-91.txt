@@ -1,0 +1,1 @@
+{"url":"http://beta.openstructures.net/","name":"OS - openstructures - beta","dateAdd":"2018-07-21T20:03:01.746Z","dateUpdate":"2019-08-11T22:28:41.880Z","id":"adeb0f1b-3359-4825-8941-7cb3a0244677","type":"url","images":[],"favicon":"https://www.google.com/s2/favicons?domain=beta.openstructures.net","tags":["designers","openstructures"],"description":"aap"}

@@ -1,0 +1,1 @@
+{"url":"https://hpi.de/en/baudisch/projects/trussfab.html","name":"TrussFab","dateAdd":"2018-07-24T04:04:15.262Z","dateUpdate":"2019-08-11T22:04:06.348Z","id":"1c85c301-283a-4c6e-9baf-8ba90c4d925f","type":"url","images":[],"favicon":"https://www.google.com/s2/favicons?domain=hpi.de","tags":["article","2017","duplicate"],"description":"No description element found in HTML file"}

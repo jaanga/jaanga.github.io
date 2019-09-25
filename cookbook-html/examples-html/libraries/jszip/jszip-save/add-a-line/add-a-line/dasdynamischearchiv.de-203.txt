@@ -1,0 +1,1 @@
+{"url":"http://dasdynamischearchiv.de/thomas-lommee/","name":"Thomas Lommée - Das Dynamische Archiv","dateAdd":"2018-07-24T06:01:20.100Z","dateUpdate":"2018-07-24T06:01:20.100Z","id":"9c28c760-8043-44e9-83b2-dbc3a7c6a880","type":"url","tags":["people","thomas-lomee"],"images":[],"favicon":"https://www.google.com/s2/favicons?domain=dasdynamischearchiv.de","description":""}

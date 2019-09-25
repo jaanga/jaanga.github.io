@@ -1,0 +1,1 @@
+{"url":"https://www.smartgeometry.org/","name":"smartgeometry","dateAdd":"2018-07-24T04:48:41.802Z","dateUpdate":"2018-07-24T04:48:41.802Z","id":"eedc8688-c4f0-4a99-bb38-d86dfa48a73b","type":"url","tags":["organizations","open-source-ecology"],"images":[],"favicon":"https://www.google.com/s2/favicons?domain=www.smartgeometry.org","description":""}
