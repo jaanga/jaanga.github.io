@@ -20,16 +20,21 @@ The Fetch API provides an interface for fetching resources (including across the
 
 Fetch
 
+* https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
 * https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 	* POST/PUT - Note Body: JSONstringify( )
+* https://github.com/mdn/fetch-examples/
 * https://scotch.io/tutorials/how-to-use-the-javascript-fetch-api-to-get-data
 * https://davidwalsh.name/fetch
 * https://github.github.io/fetch/
-
 * https://jsonplaceholder.typicode.com/
+
 Ferdinandi
 
+* https://vanillajstoolkit.com/reference/ajax/fetch/
 * https://gomakethings.com/how-to-use-the-fetch-api-with-vanilla-js/
+* https://gomakethings.com/using-oauth-with-fetch-in-vanilla-js/
+
 
 MDN
 
