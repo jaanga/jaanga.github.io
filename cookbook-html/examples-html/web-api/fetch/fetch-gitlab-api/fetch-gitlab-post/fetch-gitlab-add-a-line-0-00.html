@@ -41,7 +41,11 @@
 		<div id="divTitle" ></div>
 
 		<p>
-			<button id=but onclick=fetchFile(); >fetchFile</button>
+			<button id=but onclick=getaLine(); >getaLine</button>
+		</p>
+
+		<p>
+			<button id=but onclick=addaLine("PUT",decodedData); >addaLine</button>
 		</p>
 
 	</nav>
@@ -55,6 +59,8 @@
 
 <script>
 
+let decodedData;
+
 const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
 
@@ -66,119 +72,85 @@ function init() {
 
 	divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
 
-}
-
-
-
-function fetchFile() {
-
-	url = "https://cdn.jsdelivr.net/gh/ladybug-tools/spider@master/gbxml-sample-files/bristol-clifton-down-road-utf16.xml";
-
-	fetchTextSimple( url, divContents );
+	//addaLine( "GET", "things\n" );
 
 }
 
 
 
-function fetchTextSimple( url, target ){
+function getaLine() {
 
-	fetch( new Request( url ) )
-	.then( response => {
+	const url = "https://api.github.com/repos/theo-armour/theo-armour.github.io/contents/highlights.md";
 
-		//console.log( 'response', response);
-		return response.text()
-	} )
-	.then( text => {
+	const request = new Request( url )
 
-		const arr = simpleUTF8( text )
+	fetch( request ).then( ( response ) => {
 
-		consy str = utf16to8( arr );
+		if ( response.ok ) {
 
-		console.log( 'string', str );
+			return response.json();
 
+		} else {
+
+			return Promise.reject( response );
+
+		}
+
+	} ).then( ( data ) => {
+
+		console.log( data );
+		divContents.innerHTML += (JSON.stringify( data ) );
+
+		console.log( 'dc', data.content );
+
+		decodedData = window.atob( data.content ); // decode the string
+
+		divContents.innerHTML += '<br><br>decodedData: ' + decodedData;
+
+
+	} ).catch( ( err ) => {
+
+		console.warn( 'Something went wrong.', err );
 	} );
 
+
+
 }
 
 
-function vvutf16to8(str) {
-	var out, i, len, c;
+function addaLine( method = "PUT", content = "" ) {
 
-	out = "";
-	len = str.length;
-	for(i = 0; i < len; i++) {
-	c = str.charCodeAt(i);
-	if ((c >= 0x0001) && (c <= 0x007F)) {
-		out += str.charAt(i);
-	} else if (c > 0x07FF) {
-		out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-		out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));
-		out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-	} else {
-		out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));
-		out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));
-	}
-	}
-	return out;
+	const url = "https://gitlab.com/api/v4/projects/13175347/repository/files/first-post%2Emd";
+
+	const request = new Request( url );
+
+	content +=`${ new Date() }\n`
+
+	fetch( request, {
+		method: method,
+		headers: { "private-token": "PgzPsmy9LkUqkgiC5WqZ", 'Content-Type': 'application/json' },
+		body: JSON.stringify( {
+			"branch": "master",
+			"content": content,
+			"commit_message": "create a new file" } )
+
+	} )
+	.then( response => response.json() )
+	.then( data => {
+
+		divContents.innerHTML += (JSON.stringify( data ) );
+
+	} )
+	.catch(  err => console.warn( 'Something went wrong.', err ) );
+
 }
 
+function setIt() {
 
-function bbbutf16to8(input) {
+	divContents.innerHTML += `<p>${ ( performance.now() ) } - Howdy! </p>`;
 
-	var _unescape = function(s) {
-		function d(x, n) {
-			return String.fromCharCode(parseInt(n, 16));
-		}
-		return s.replace(/%([0-9A-F]{2})/ig, d);
-	};
-
-	try{
-		return _unescape(encodeURIComponent(input));
-	}catch (URIError) {
-		//include invalid character, cannot convert
-		return input;
-	}
 }
 
-
-function utf16to8( uint8array ) {
-	//console.log( 'uint8array', uint8array );
-
-	const arr = new Uint8Array( uint8array.length / 2 );
-	let index = 0;
-
-	for ( let i = 0; i < uint8array.length; i++ ) {
-
-		if ( i % 2 === 0 ) {
-
-			arr[ index++ ] = uint8array[ i ];
-
-		}
-
-	}
-	//console.log( 'arr', arr );
-
-	const text = new TextDecoder( "utf-8" ).decode( arr );
-
-	return text
-}
-
-
-function simpleUTF8(str) {
-
-	// https://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array/46241050
-
-	let utf8 = decodeURI( encodeURIComponent( str ));
-
-	let arr = [];
-
-	for ( let i = 0; i < utf8.length; i++ ) {
-
-		arr.push( utf8.charCodeAt( i ) );
-	}
-
-	return arr;
-}
 
 
 function getTitle() {

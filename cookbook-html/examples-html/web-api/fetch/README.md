@@ -16,6 +16,11 @@ _basic-html.html_
 
 The Fetch API provides an interface for fetching resources (including across the network). It will seem familiar to anyone who has used XMLHttpRequest, but it provides a more powerful and flexible feature set. This article explains some of the basic concepts of the Fetch API.
 
+## To Do
+
+* Play here with Fetch: https://jsonbox.io/?mc_cid=0314b6a25c&mc_eid=2f5082f8eb
+
+
 ## Links of Interest
 
 Fetch
@@ -28,6 +33,9 @@ Fetch
 * https://davidwalsh.name/fetch
 * https://github.github.io/fetch/
 * https://jsonplaceholder.typicode.com/
+* https://css-tricks.com/using-fetch/
+* https://gist.github.com/tanaikech/bd53b366aedef70e35a35f449c51eced
+	* xmlhttprequest example
 
 Ferdinandi
 
@@ -46,6 +54,14 @@ Stackoverflow
 
 * https://stackoverflow.com/questions/29775797/fetch-post-json-data
 * https://stackoverflow.com/questions/29676408/html-fetch-multiple-files
+* https://stackoverflow.com/questions/36067767/how-do-i-upload-a-file-with-the-js-fetch-api
+
+utf-16
+
+* https://stackoverflow.com/questions/55282444/javascript-fetch-characters-with-encoding-issues
+* https://stackoverflow.com/questions/46753212/fetching-non-utf8-data-with-xmlhttprequest
+* https://www.google.com/search?q=fetch+utf-8
+
 
 Google
 

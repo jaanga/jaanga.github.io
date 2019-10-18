@@ -8,7 +8,7 @@
 
 * https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
 * Easy peasy
-* no expiry date needed
+* No expiry date needed
 
 
 
