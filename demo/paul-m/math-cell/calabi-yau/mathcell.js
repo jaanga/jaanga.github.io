@@ -1551,6 +1551,7 @@ function template( config, lights, texts, points, lines, surfaces ) {
 
 var config = ${config};
 var scene = new THREE.Scene();
+scene.background = null;
 
 var renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
 renderer.setPixelRatio( window.devicePixelRatio );

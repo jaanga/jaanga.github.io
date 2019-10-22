@@ -2,7 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Visualizing Calabi-Yau Manifolds</title>
+<title>MathCell with a transparent background</title>
+<meta name = "description" content = "Allows OS display mode to pass through. Click buttons to update background" >
+<meta name = "keywords" content = "MathCell,Three.js,WebGL,JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-09-21" >
+<meta name = "version" content = "0.00.0" >
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
@@ -12,7 +16,11 @@
 <script src="math.js"></script>
 <script src="mathcell.js"></script>
 
-<p>from <a href="http://analyticphysics.com/Higher%20Dimensions/Visualizing%20Calabi-Yau%20Manifolds.htm" target="_blank">Visualizing Calabi-YauManifolds</a></p>
+<div id="divTitle" ></div>
+
+
+<p>Cell from <a href="http://analyticphysics.com/Higher%20Dimensions/Visualizing%20Calabi-Yau%20Manifolds.htm" target="_blank">Visualizing Calabi-YauManifolds</a></p>
+
 <button onclick=setBackgroundColor("#f7f6ee","#333333") >light</button>
 
 <button onclick=setBackgroundColor("#1e1f23","#c4c5c9") >dark</button>
@@ -21,6 +29,11 @@
 
 
 <script>
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/paul-m/math-cell/calabi-yau";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+divTitle.innerHTML = getTitle();
 
 
 var parent = document.currentScript.parentNode;
@@ -97,6 +110,30 @@ parent.id = id;
 		const iframes = Array.from( document.body.getElementsByTagName( "iframe" ) );
 
 		iframes.forEach( iframe => iframe.style.borderColor = color );
+
+	}
+
+
+
+	function getTitle() {
+
+		document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+		const version = document.head.querySelector( "[ name=version ]" ).content;
+		const description = document.head.querySelector( "[ name=description ]" ).content;
+
+		const htm =
+		`
+			<h2>
+				<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+					<img src=${ urlSourceCodeIcon } height=18 style=background-color:#eee;opacity:0.5; >
+				</a>
+				<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+			</h2>
+
+			<p>${ description }</p>
+		`;
+
+		return htm;
 
 	}
 
