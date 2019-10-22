@@ -1,0 +1,58 @@
+:root {
+	--background-color: #f7f6ee;
+	--secondary-color: #fbfefb;
+	--text-dark: #101010;
+	--text: #333333;
+	--text-light: #7b7b85;
+}
+
+body {
+	margin: auto;
+	padding: 0.5in;
+	max-width: 7in;
+	text-align: justify;
+	counter-reset: equation;
+	background: var(--background-color);
+	color: var(--text);
+}
+
+p.math:after {
+	content: "(" counter(equation) ")";
+	counter-increment: equation;
+	float: right;
+}
+
+a:link,
+a:visited {
+	color: rgb(255, 45, 85);
+	text-decoration: none;
+}
+
+.fullscreen {
+	color: rgb(255, 45, 85);
+	cursor: pointer;
+}
+
+h1 {
+	font-size: medium;
+	font-weight: bold;
+	text-decoration: none;
+	color: rgb(0, 127, 255);
+}
+
+button {
+	border: 1px solid black;
+	border-radius: 5px;
+	background-color: rgb(250, 250, 250);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background-color: #1e1f23;
+		--secondary-color: #232428;
+		--text-dark: #efefef;
+		--text: #c4c5c9;
+		--text-light: #6c6d71;
+		--text-lighter: #8e8f93;
+	}
+}

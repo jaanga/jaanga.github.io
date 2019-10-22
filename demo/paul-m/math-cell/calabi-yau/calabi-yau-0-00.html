@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Visualizing Calabi-Yau Manifolds</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+<script src="http://analyticphysics.com/www/checkMathML.js"></script>
+<script src="http://analyticphysics.com/www/math/math.js"></script>
+<script src="mathcell.js"></script>
+
+<p>from <a href="http://analyticphysics.com/Higher%20Dimensions/Visualizing%20Calabi-Yau%20Manifolds.htm" target="_blank">Visualizing Calabi-YauManifolds</a></p>
+<button onclick=setBackgroundColor("#f7f6ee","#333333") >light</button>
+
+<button onclick=setBackgroundColor("#1e1f23","#c4c5c9") >dark</button>
+
+<div class="mathcell" style="width: 6in; height: 7in">
+
+
+<script>
+
+
+var parent = document.currentScript.parentNode;
+
+var id = generateId();
+
+parent.id = id;
+
+	MathCell( id, [ { type: 'buttons', values: [2,3,4,5,6,7,8], default: 5,
+									name: 'n', label: 'n' },
+					{ type: 'slider', min: 0, max: 2*pi, default: .785,
+									name: 'a', label: 'a' },
+					{ type: 'checkbox', name: 'code', label: 'Color code surface:' } ] );
+
+	parent.update = function( id ) {
+
+		var n = getVariable( id, 'n' );
+		var a = getVariable( id, 'a' );
+		var code = getVariable( id, 'code' );
+
+		function f( x, y ) {
+
+			var z1 = mul( exp( complex(0,2*pi*k1/n) ), pow( cos( complex(x,y) ), 2/n ) );
+			var z2 = mul( exp( complex(0,2*pi*k2/n) ), pow( sin( complex(x,y) ), 2/n ) );
+
+			return [ z1.re, z2.re, z1.im*cos(a) + z2.im*sin(a) ];
+
+		}
+
+		var patches = [];
+
+		for ( var k1 = 0 ; k1 < n ; k1++ )
+			for ( var k2 = 0 ; k2 < n ; k2++ ) {
+
+			var color = 'hsl(' + 360*(k1+k2)/n % 360 + ',100%,50%)';
+
+			if ( code )
+				patches.push( parametric( f, [0,Math.PI/2,10], [-1,1,10], { color: color } ) );
+			else
+				patches.push( parametric( f, [0,Math.PI/2,10], [-1,1,10], { material: 'normal' } ) );
+
+		}
+
+		var config = { type: 'threejs', frame: false, viewpoint: [3.2,2.8,-1.5] };
+
+		evaluate( id, patches, config );
+
+	}
+
+	parent.update( id );
+
+
+
+
+	function setBackgroundColor( backgroundColor = "red", color = "yellow" ) {
+
+		document.body.style.backgroundColor = backgroundColor;
+
+		document.body.style.color = color;
+
+		const mathcells = Array.from( document.body.getElementsByClassName( "mathcell" ) );
+
+		mathcells.forEach( cell => {
+
+			cell.style.backgroundColor = backgroundColor;
+
+			cell.style.color = color;
+
+			cell.style.borderColor = color;
+
+		} );
+
+		const iframes = Array.from( document.body.getElementsByTagName( "iframe" ) );
+
+		iframes.forEach( iframe => iframe.style.borderColor = color );
+
+	}
+
+</script>
+</div>
+
+
+</body>
+</html>
