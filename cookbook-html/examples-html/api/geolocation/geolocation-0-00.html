@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name = "viewport" content= "width=device-width, initial-scale=1" >
+<meta name = "description" content = "Basic TooToo HTML template" >
+<meta name = "keywords" content = "JavaScript,GitHub,FOSS" >
+<meta name = "date" content = "2019-09-21" >
+<meta name = "version" content = "0.00.0" >
+<title></title>
+<style>
+
+	* { box-sizing: border-box; }
+
+	:root { font: 12pt monospace; --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+	html { height: 100%; }
+
+	body { margin: 0 auto; max-width: 800px; padding: 0 0.5rem; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	/*
+	main { border: 0px; height: 100%; left: var( --mnu-width ); margin: 0;
+		padding: 0 1rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+	#navMenu { background-color: #eee; left: 0; margin: 0; padding: 0 1rem;
+		position: absolute; top: 0; width: var( --mnu-width ); }
+	*/
+
+</style>
+</head>
+<body>
+
+	<nav id="navMenu" >
+
+		<div id="divTitle" ></div>
+
+		<p>latitude <input id=inpLat value=37 > - longitude <input id=inpLon value=-122 ></p>
+
+		<p>
+			<button id=but onclick=fetchGeo(); >fetchGeo</button>
+		</p>
+
+		<p>
+			<button id=but onclick=timeZoneDb(); >timeZoneDb</button>
+		</p>
+
+
+
+	</nav>
+
+	<main>
+
+		<div id=divUrl ></div>
+		<br>
+		<div id="divContents" ></div>
+
+	</main>
+
+
+<script>
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples-html/api";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+init();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	//divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+
+}
+
+
+
+function fetchGeo() {
+
+	// no https://
+
+	url= `http://api.geonames.org/timezoneJSON?lat=${ inpLat.value }&lng=${ inpLon.value }&username=raf`;
+	divUrl.innerHTML = url;
+
+	fetch( url )
+	.then( response => response.json() )
+	.then( json => {
+
+		console.log( 'js', json.rawOffset );
+		divContents.innerHTML = JSON.stringify( json )
+
+	});
+
+}
+
+
+function timeZoneDb() {
+
+	//Username : theoa
+	//API Key  : W86UC7GWBCGX
+
+	url= `http://api.timezonedb.com/v2.1/get-time-zone?key=W86UC7GWBCGX&format=json&by=position&lat=${ inpLat.value }&lng=${ inpLon.value }`;
+	divUrl.innerHTML = url;
+
+	fetch( url )
+	.then( response => response.json() )
+	.then( json => {
+
+		console.log( 'json', json );
+		divContents.innerHTML = JSON.stringify( json )
+
+	});
+
+}
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+	const description = document.head.querySelector( "[ name=description ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=${ urlSourceCodeIcon } height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>${ description }</p>
+	`;
+
+	return htm;
+
+}
+
+</script>
+</body>
+</html>

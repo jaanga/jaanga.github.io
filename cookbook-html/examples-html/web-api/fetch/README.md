@@ -61,7 +61,8 @@ utf-16
 * https://stackoverflow.com/questions/55282444/javascript-fetch-characters-with-encoding-issues
 * https://stackoverflow.com/questions/46753212/fetching-non-utf8-data-with-xmlhttprequest
 * https://www.google.com/search?q=fetch+utf-8
-
+* https://schneide.blog/2018/08/08/decoding-non-utf8-server-responses-using-the-fetch-api/
+* https://stackoverflow.com/questions/55282444/javascript-fetch-characters-with-encoding-issues
 
 Google
 
