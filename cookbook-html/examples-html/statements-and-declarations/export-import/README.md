@@ -39,6 +39,11 @@ Export Import only works on a server: bummer
 
 ## Links of Interest
 
+* https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import
+* https://developer.mozilla.org/en-US/docs/web/javascript/reference/statements/export
+* https://jakearchibald.com/2017/es-modules-in-browsers/
+* https://ponyfoo.com/articles/es6-modules-in-depth
+
 
 ## Change Log
 
