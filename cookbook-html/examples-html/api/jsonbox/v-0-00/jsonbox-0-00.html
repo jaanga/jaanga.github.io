@@ -32,39 +32,42 @@
 		position: absolute; top: 0; width: var( --mnu-width ); }
 	*/
 
+	#divContent { border: 1px solid blue; padding: 1rem; }
 </style>
 </head>
 <body>
+<script src="jsonbox-0-00.js" ></script>
 
 	<nav id="navMenu" >
 
 		<div id="divTitle" ></div>
 
-		<p>
-			<button id=but onclick=getJson(); >getJson</button>
-
-			<button id=but onclick=putJson(); >putJson</button>
-
-			<button id=but onclick=deleteJson(); >deleteJson</button>
-		</p>
-
-
 	</nav>
 
 	<main>
 
-		<div id="divContents" ></div>
+		<div id="divContent" contentEditable ></div>
+
+		<div id="divResponse" ></div>
+
+		<p>
+			<button id=but onclick=JB.getJson(); >getJson</button>
+
+			<button id=but onclick=JB.putJson(); >putJson</button>
+
+			<button id=but onclick=JB.getJsonAll(); >JB.getJsonAll</button>
+
+			<button id=but onclick=JB.deleteJson(); >deleteJson</button>
+
+
+		</p>
+
 
 	</main>
 
 
 <script>
-// https://jsonbox.io/ - Free HTTP based JSON Storage
 
-
-let url = "https://jsonbox.io/box_b89a6b17fbef17980b5c";
-
-let json;
 
 const urlSourceCode = "https://github.com/zzzzz/xxxxx.html";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
@@ -75,69 +78,9 @@ function init() {
 
 	divTitle.innerHTML = getTitle();
 
-	//divContents.innerHTML += `${ ( new Date ) }<p>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?</p>`;
+	JB.getJson();
 
 }
-
-
-
-function getJson() {
-
-	fetch( url )
-	.then( response => response.json() )
-	.then( data => {
-		json = data;
-		console.log( 'json', json );
-		divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
-	} );
-
-
-}
-
-
-function putJson() {
-
-
-	//console.log( '', text );
-
-	content = { "date": new Date().toISOString() };
-	fetch( url, {
-		method: "POST",
-		headers: { "content-type": "application/json" },
-		body: JSON.stringify( {
-			"content": content,
-			"message": "add to file",
-		} ),
-
-	} )
-	.then( response => response.json() )
-	.then( data => {
-
-		divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
-
-	} )
-
-}
-
-
-function deleteJson( index = 0 ) {
-
-	id = json[ 0 ]._id;
-
-	fetch( url + "/" + id, {
-		method: "DELETE",
-		headers: { "content-type": "application/json" }
-
-	} )
-	.then( response => response.json() )
-	.then( data => {
-
-		divContents.innerText += `${ JSON.stringify( data ) }\n\n`;
-
-	} )
-
-}
-
 
 
 
