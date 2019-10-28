@@ -32,11 +32,13 @@
 		position: absolute; top: 0; width: var( --mnu-width ); }
 	*/
 
-	#divContent { border: 1px solid blue; padding: 1rem; }
+	#divJsonBox { border: 1px solid blue; padding: 1rem; }
 </style>
 </head>
 <body>
 <script src="jsonbox-0-00.js" ></script>
+
+// see ta-bml-dashboard
 
 	<nav id="navMenu" >
 
@@ -46,9 +48,9 @@
 
 	<main>
 
-		<div id="divContent" contentEditable ></div>
+		<div id="divJsonBox" contentEditable ></div>
 
-		<div id="divResponse" ></div>
+		<div id="divJsonBoxResponse" ></div>
 
 		<p>
 			<button id=but onclick=JB.getJson(); >getJson</button>

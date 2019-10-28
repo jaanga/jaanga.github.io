@@ -86,7 +86,11 @@
 		<p>
 			<button id=but onclick=fileSaveZipFileDaysOfYear();>save to zip - days of year</button>
 		</p>
-		fileSaveZipTheo01
+		<p>
+			<button id=but onclick=fileSaveZipFileDaysOfYearHtml();>save to zip - days of year html</button>
+		</p>
+
+
 	</nav>
 
 	<main>
@@ -171,6 +175,7 @@
 		}
 
 
+
 		function fileSaveZipFileDaysOfYear( zipName = 'days-of-year' ) {
 
 			var zip = new JSZip();
@@ -222,6 +227,60 @@
 		}
 
 
+
+		function fileSaveZipFileDaysOfYearHtml( zipName = 'days-of-year-html' ) {
+
+			var zip = new JSZip();
+
+			zip.file( "README.md", "A file for every day of the year\n/jaanga.github.io/cookbook-html/examples-html/libraries/jszip/jszip-save/days-of-year-html/README.md" );
+
+			const jan = zip.folder( "01" );
+			const feb = zip.folder( "02" );
+			const mar = zip.folder( "03" );
+			const apr = zip.folder( "04" );
+			const may = zip.folder( "05" );
+			const jun = zip.folder( "06" );
+			const jul = zip.folder( "07" );
+			const aug = zip.folder( "08" );
+			const sep = zip.folder( "09" );
+			const oct = zip.folder( "10" );
+			const nov = zip.folder( "11" );
+			const dec = zip.folder( "12" );
+
+			const months = [ jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec ];
+
+			const days = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+
+
+			months.forEach( ( month, index ) => {
+
+				const mo = ( "0" + ( index + 1 ) ).slice( -2 );
+
+				for ( let j = 0; j < days[ index ]; j++ ) {
+
+					const day = ( "0" + ( j + 1 ) ).slice( -2 );
+
+					const content = `<h1>${ mo }-${ day }</h1>\n\n<h2>2019</h2>`;
+
+					month.file( mo + "-" + day + ".html", content );
+
+				}
+
+			} );
+
+			zip.generateAsync( { type: "blob" } )
+				.then( function ( blob ) {
+
+				let a = document.body.appendChild( document.createElement( 'a' ) );
+				a.href = window.URL.createObjectURL( blob );
+				a.download = zipName + '.zip';
+				a.click();
+				a = null;
+
+			} );
+
+		}
 
 
 

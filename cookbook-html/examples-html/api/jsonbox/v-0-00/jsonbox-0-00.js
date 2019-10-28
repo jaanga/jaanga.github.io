@@ -19,7 +19,7 @@ JB.getJson = function () {
 	.then( response => response.json() )
 	.then( data => {
 		JB.json = data;
-		JB.contentPrevious = divContent.innerHTML = JB.json.content;
+		JB.contentPrevious = divJsonBox.innerHTML = JB.json.content;
 		console.log( 'JB.json', JB.json);
 
 	} );
@@ -29,7 +29,7 @@ JB.getJson = function () {
 
 JB.putJson = function( previous = JB.contentPrevious ) {
 
-	const content = divContent.innerHTML;
+	const content = divJsonBox.innerHTML;
 
 	if ( content === previous ) { return; }
 
@@ -44,8 +44,7 @@ JB.putJson = function( previous = JB.contentPrevious ) {
 	.then( response => response.json() )
 	.then( data => {
 
-		divResponse.innerHTML = `<p>${ new Date().toLocaleTimeString() }</p>${ content }`;
-		//divResponse.innerHTML = JSON.stringify( data );
+		divJsonBoxResponse.innerHTML = `<p>${ new Date().toLocaleTimeString() }</p>${ content }`;
 
 	} )
 
@@ -62,7 +61,7 @@ JB.getJsonAll = function () {
 		.then( data => {
 			JB.json = data;
 			console.log( 'JB.json', JB.json );
-			//divContent.innerHTML = JB.json;
+			//divJsonBoxContent.innerHTML = JB.json;
 		} );
 
 };
@@ -80,7 +79,7 @@ JB.deleteJson = function ( index = 1 ) {
 		.then( response => response.json() )
 		.then( data => {
 
-			divResponse.innerText += `${ JSON.stringify( data ) }\n\n`;
+			divJsonBoxResponse.innerText += `${ JSON.stringify( data ) }\n\n`;
 
 		} )
 
