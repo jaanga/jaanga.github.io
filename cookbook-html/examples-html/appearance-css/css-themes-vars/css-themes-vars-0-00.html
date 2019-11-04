@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="description" content="Basic TooToo HTML template" />
+		<meta name="keywords" content="JavaScript,GitHub,FOSS" />
+		<meta name="date" content="2019-10-28" />
+		<meta name="version" content="0.00.0" />
+		<title></title>
+		<style>
+			:root {
+				--red-hue: 360;
+				--blue-hue: 240;
+				--green-hue: 120;
+				--main-hue: var(--red-hue);
+				--saturation: 50%;
+				--theme-darkness: 1;
+				--mnu-width: 22rem;
+				filter: brightness(var(--theme-darkness));
+
+				font: 12pt monospace;
+			}
+
+			* {
+				margin: 0;
+				box-sizing: border-box;
+			}
+			html {
+				height: 100%;
+			}
+			body {
+				color: hsl(var(--main-hue), 50%, 50%);
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+			}
+			a {
+				color: hsl(var(--main-hue), 50%, 20%);
+				text-decoration: none;
+			}
+			a:hover,
+			a:focus,
+			a:active {
+				background-color: yellow;
+				color: hsl(var(--main-hue), 50%, 50%);
+				text-decoration: underline;
+			}
+			header {
+				color: hsl(var(--main-hue), 50%, 10%);
+				background: hsl(var(--main-hue), var(--saturation), 50%);
+				padding: 1.3rem;
+			}
+			button {
+				color: hsl(var(--main-hue), 50%, 20%);
+				padding: 0.3rem;
+				font-size: 1rem;
+			}
+			button {
+				background-color: hsl(var(--main-hue), 93%, 88%);
+				border: none;
+				cursor: pointer;
+				padding: 0.5rem 1rem;
+			}
+			button:hover {
+				background: #ccc;
+				color: #fff;
+			}
+			footer {
+				background: hsl(var(--main-hue), 93%, 88%);
+				padding: 1rem;
+			}
+			h2 {
+				color: hsl(var(--main-hue), 50%, 20%);
+			}
+			input[type="range"] {
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				background: hsl(var(--main-hue), 93%, 88%);
+				width: 100%;
+			}
+			input[type="range"]::-moz-range-thumb {
+				background-color: hsl(var(--main-hue), var(--saturation), 50%);
+				height: 20px;
+				width: 10px;
+			}
+			input[type="range"]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				background-color: hsl(var(--main-hue), var(--saturation), 50%);
+				height: 20px;
+				width: 10px;
+			}
+			main {
+				border: 0px;
+				height: 100%;
+				margin-left: var(--mnu-width);
+				padding: 0 1rem;
+			}
+			nav {
+				background: hsl(var(--main-hue), var(--saturation), 95%);
+				height: 100vh;
+				left: 0;
+				margin: 0;
+				position: absolute;
+				top: 0;
+				width: var(--mnu-width);
+			}
+			nav p {
+				margin: 1rem;
+			}
+		</style>
+	</head>
+	<body>
+		<nav>
+			<header class="navbar">
+				<h1><a href="">Title ABC 123</a></h1>
+			</header>
+
+			<section>
+				<p>
+					<button id="btnRed">red</button>
+					<button id="btnBlue">blue</button>
+					<button id="btnGreen">green</button>
+				</p>
+
+				<p>
+					hue
+					<input type="range" id="inpHue" value="90" />
+				</p>
+				<p>
+					saturation
+					<input type="range" id="inpSaturation" value="50" />
+				</p>
+				<p>
+					brightness
+					<input type="range" id="inpBrightness" value="50" />
+				</p>
+				<p>
+					lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non
+					numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat
+					voluptatem. ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+					suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis autem vel
+					eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae
+					consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+				</p>
+			</section>
+
+			<footer>
+				Copyright 2018
+			</footer>
+		</nav>
+
+		<main>
+			<h2>What is Lorem Ipsum?</h2>
+
+			<p>
+				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+				Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+				unknown printer took a galley of type and scrambled it to make a type specimen book.
+				It has survived not only five centuries, but also the leap into electronic
+				typesetting, remaining essentially unchanged. It was popularised in the 1960s with
+				the release of Letraset sheets containing Lorem Ipsum passages, and more recently
+				with desktop publishing software like Aldus PageMaker including versions of Lorem
+				Ipsum.
+			</p>
+		</main>
+
+		<script>
+			// https://www.sitepoint.com/css-theming-custom-properties-javascript/
+
+			const urlSourceCode =
+				"https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples-html/appearance-css";
+			const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+			btnRed.onclick = () => document.documentElement.style.setProperty("--main-hue", 360);
+
+			btnBlue.onclick = () => document.documentElement.style.setProperty("--main-hue", 240);
+
+			btnGreen.onclick = () => document.documentElement.style.setProperty("--main-hue", 120);
+
+			inpHue.oninput = () =>
+				document.documentElement.style.setProperty(
+					"--main-hue",
+					3.6 * parseFloat(inpHue.value)
+				);
+
+			inpSaturation.oninput = () =>
+				document.documentElement.style.setProperty(
+					"--saturation",
+					inpSaturation.value + "%"
+				);
+
+			inpBrightness.oninput = () =>
+				document.documentElement.style.setProperty(
+					"--theme-darkness",
+					0.5 + inpBrightness.value / 100
+				);
+				
+		</script>
+	</body>
+</html>
