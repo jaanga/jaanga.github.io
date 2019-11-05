@@ -16,3 +16,7 @@
 * https://alligator.io/html/dialog-element/
 * https://keithjgrant.com/posts/2018/01/meet-the-new-dialog-element/
 * https://html.com/tags/dialog/
+
+### polyfill
+
+* https://github.com/GoogleChrome/dialog-polyfill

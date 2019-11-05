@@ -1,0 +1,55 @@
+
+
+#navDragMove {
+	background-color: #f1f1f1;
+	border: 1px solid #aaa;
+	left: 75%;
+	overflow: auto;
+	height: 60%;
+	max-width: 40%;
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	resize: both;
+}
+
+#secDragMove {
+	border: 1px solid green;
+	height: calc( 100% - 1rem );
+	overflow: hidden;
+}
+
+#divDragMoveHeader {
+	background-color: #2196F3;
+	color: #fff;
+	cursor: move;
+	padding: 0.5rem;
+}
+
+#divDragMoveContent {
+	border: 1px solid red;
+	height: calc( 100% - 4rem );
+	overflow: auto;
+	padding: 0.5rem;
+	width: 100%;
+}
+
+#divDragMoveFooter {
+	text-align: right;
+	position: absolute;
+	bottom: 1rem;
+	right: 0;
+}
+
+
+
+@media all and ( max-width: 640px ) {
+
+	#disDragMove {
+		left: 60%;
+		height: 80%;
+		max-width: 55%;
+		right: 0.2rem;
+	}
+
+}

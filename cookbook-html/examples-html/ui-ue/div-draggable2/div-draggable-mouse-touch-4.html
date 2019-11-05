@@ -85,7 +85,6 @@ main { margin: 0 auto; max-width: 800px; }
 
 	<main>
 
-
 		<div id = "  " >
 
 			<h1 id = "divTitle" >
@@ -96,20 +95,19 @@ main { margin: 0 auto; max-width: 800px; }
 					</script>
 			</a>
 
-		</h1>
+			</h1>
 
-		<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
+			<div><script> document.write( document.head.querySelector( '[name=description]' ).content )</script></div>
 
-		<div id = "divContents" >
+			<div id = "divContents" >
 
-			<p>
-				<button onclick=navDragMove.hidden=!navDragMove.hidden >toggle draggable div</button>
-			</p>
+				<p>
+					<button onclick=navDragMove.hidden=!navDragMove.hidden >toggle draggable div</button>
+				</p>
+
+			</div>
 
 		</div>
-
-
-	</div>
 
 	</main>
 
@@ -151,13 +149,9 @@ const DMV = {
 
 }
 
-
 	let txt;
 
-
-
 	DMV.onMouseDown = function( event ) {
-
 
 		DMV.draggableTop = event.clientY - navDragMove.offsetTop;
 		DMV.draggableLeft = event.clientX - navDragMove.offsetLeft;
@@ -165,7 +159,6 @@ const DMV = {
 		window.addEventListener('mousemove', DMV.onMouseMove, true );
 
 	}
-
 
 
 	DMV.onMouseMove = function( event ){
