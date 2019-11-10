@@ -53,3 +53,7 @@ Further iterations
 * Close any holes
 * Add shade and shadow
 * And much more
+
+There is an interesting bug. The rotation of the screen is for some reason affecting the update of the cylinder causing the new figure to be at a different rotation angle than the original figure.
+
+
