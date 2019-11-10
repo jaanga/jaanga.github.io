@@ -49,11 +49,6 @@
 			<button onclick=walt.visible=!walt.visible >toggle walt visible</button>
 		</p>
 
-
-		<p>
-			<button onclick=drawRays() >draw rays</button>
-		</p>
-
 		<p>
 			<button onclick=updateCylinder() >3. update cylinder</button>
 		</p>
@@ -232,6 +227,7 @@ function addTexture() {
 }
 
 
+
 function addTextureRandom() {
 
 	const texture= new THREE.TextureLoader().load( "https://picsum.photos/512" );
@@ -239,21 +235,6 @@ function addTextureRandom() {
 	texture.flipY = false;
 
 	cylinder.material = new THREE.MeshBasicMaterial( { map: texture } );
-}
-
-
-function addLine( vertices ) {
-
-	let geometry, material, line;
-
-	geometry = new THREE.Geometry();
-	geometry.vertices = vertices;
-	material = new THREE.LineBasicMaterial( { color: 0x000000 } );
-	line = new THREE.Line( geometry, material );
-
-	//		scene.add( line );
-	return line;
-
 }
 
 
