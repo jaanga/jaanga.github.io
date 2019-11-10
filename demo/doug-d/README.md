@@ -36,7 +36,7 @@ My goal
 
 ### The response
 
-#### [cylinder-to-figure-with-map-0-01.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-00.html )
+### [cylinder-to-figure-with-map-0-01.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-00.html )
 
 * Click the buttons in the numbered order
 * Click title in menu in order to reload
