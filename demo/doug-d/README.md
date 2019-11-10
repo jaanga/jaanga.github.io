@@ -34,7 +34,16 @@ My goal
 
 
 
-### The response
+### The response: Cylinder to figure with map
+
+### [cylinder-to-figure-with-map-0-02.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-02.html )
+
+* Feature: Add 'load venus
+* Refactor: LoadWalt to loadFigure
+	* Deletes any existing figure or cylinder
+	* Loads OBJ from any URL
+* Big fix: Centers the geometry and scales the figure to fit in cylinder more accurately
+
 
 ### [cylinder-to-figure-with-map-0-01.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-01.html )
 
@@ -56,4 +65,11 @@ Further iterations
 
 There is an interesting bug. The rotation of the screen is for some reason affecting the update of the cylinder causing the new figure to be at a different rotation angle than the original figure.
 
+#### Chang log
 
+* Cleanup
+* Unneeded code delected
+
+### [cylinder-to-figure-with-map-0-00.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-00.html )
+
+* First working vesion
