@@ -1,4 +1,7 @@
-# Doud D Read Me
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/doug-d/ "View file as a web page." ) </span>
+
+
+# Doug D Read Me
 
 
 ## Cylinder to figure with map
@@ -44,7 +47,7 @@ This first hack is a bare-bones response. I had not played with this type of ver
 Further iterations
 
 * Could very much speed up the process
-	* Perhaps sllowing for real time updates controlled by a slider bar
+	* Perhaps allowing for real time updates controlled by a slider bar
 * Allow for any bitmap to be loaded as the texture
 * Allow for user controlled numbers of segments
 * Close any holes
