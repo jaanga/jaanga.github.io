@@ -1,7 +1,7 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/doug-d/ "View file as a web page." ) </span>
 
 
-# Doug D Read Me
+# Doug D || -..-.. Read Me
 
 
 ## Cylinder to figure with map
@@ -34,11 +34,11 @@ My goal
 
 
 
-### The response: Cylinder to figure with map
+### The response
 
 ### [cylinder-to-figure-with-map-0-02.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-02.html )
 
-* Feature: Add 'load venus
+* Feature: Add 'load venus'
 * Refactor: LoadWalt to loadFigure
 	* Deletes any existing figure or cylinder
 	* Loads OBJ from any URL
