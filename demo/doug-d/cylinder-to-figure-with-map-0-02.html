@@ -132,7 +132,7 @@ function init() {
 function drawCylinder( segments = 32 ) {
 
 	scene.remove( cylinder );
-	
+
 	const pi2 = Math.PI * 2;
 	const geometry = new THREE.CylinderGeometry( radiusTop = pi2, radiusBottom = pi2, height = pi2, radiusSegments = segments, heightSegments = segments, openEnded=true )
 	geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
@@ -228,6 +228,8 @@ function updateCylinder() {
 	});
 
 	cylinder.geometry.verticesNeedUpdate = true;
+
+	sceneRotation = 1;
 
 }
 

@@ -72,4 +72,5 @@ There is an interesting bug. The rotation of the screen is for some reason affec
 
 ### [cylinder-to-figure-with-map-0-00.html]( https://jaanga.github.io/demo/doug-d/cylinder-to-figure-with-map-0-00.html )
 
-* First working vesion
+* First working version
+* Has 'draw rays' function - dropped in later versions
