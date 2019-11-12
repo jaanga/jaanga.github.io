@@ -114,7 +114,7 @@ summary { font-weight: bold; }
 
 				<button onclick=start=0;end=16000;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv",0,16000); >fetch venus verticals</button>
 
-				<button onclick=start=16000;end=31476;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv",0,16000); >fetch venus verticals</button>
+				<button onclick=start=16000;end=31476;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv",0,16000); >fetch venus horizontals</button>
 
 			</p>
 
@@ -228,7 +228,7 @@ function getContours( csv ) {
 	//for ( let line of lines ) {
 
 	for ( let i = start; i <= end; i++ ) {
-		
+
 		const line = lines[ i ];
 
 		//console.log( '', line );
@@ -308,7 +308,7 @@ function addHighLine( vertices ) {
 
 	const geometry = new THREE.PlaneGeometry( 100, 1, vertices.length - 1, 1 );
 	geometry.vertices = verticesBoth;
-	const material = new THREE.MeshNormalMaterial( { wireframe: false, side: 0 } );
+	const material = new THREE.MeshNormalMaterial( { wireframe: false, side: 0, transparent: true } );
 	const mesh = new THREE.Mesh( geometry, material );
 
 	return mesh;
