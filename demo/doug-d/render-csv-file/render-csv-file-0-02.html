@@ -5,9 +5,9 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2019-11-11" >
+<meta name = "date" content = "2019-11-12" >
 <meta name = "version" content = "0.00.0" >
-<title>render csv file 0.01</title>
+<title>render csv file 0.02</title>
 <style>
 /* copyright 2019 Theo Armour. MIT license. */
 
@@ -155,8 +155,8 @@ summary { font-weight: bold; }
 <script>
 
 let figure;
-start = 0
-end = 1600;
+start = 16000;
+end = 31476;
 
 const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
@@ -194,17 +194,17 @@ function init() {
 	const axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	// const geometry = new THREE.BoxGeometry( 50, 50, 50 );
-	// const material = new THREE.MeshNormalMaterial();
-	// const mesh = new THREE.Mesh( geometry, material );
-	// scene.add( mesh );
+	// const geometry = new THREE.PlaneGeometry( 60, 20, 10, 1 );
+	// const material = new THREE.MeshNormalMaterial( { wireframe: true } );
+	// mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+	//console.log( '', mesh.geometry.vertices );
 
-	const url = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/dove.csv";
+	const url = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
 
 	fetchCsv( url );
 
 }
-
 
 
 
@@ -228,6 +228,7 @@ function getContours( csv ) {
 	//for ( let line of lines ) {
 
 	for ( let i = start; i <= end; i++ ) {
+		
 		const line = lines[ i ];
 
 		//console.log( '', line );
@@ -268,7 +269,9 @@ function renderLines( contours ) {
 
 		}
 
-		figure.add( addLine( vertices ) );
+		//figure.add( addLine( vertices ) );
+
+		figure.add( addHighLine( vertices ) );
 
 	}
 
@@ -292,6 +295,26 @@ function addLine( vertices ) {
 	return line;
 
 }
+
+
+
+function addHighLine( vertices ) {
+
+	const verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, parseFloat( vertex.y ) + 0.01, vertex.z ) );
+
+	const verticesBoth = vertices.concat( verticesHigh );
+
+	//console.log( '', verticesBoth );
+
+	const geometry = new THREE.PlaneGeometry( 100, 1, vertices.length - 1, 1 );
+	geometry.vertices = verticesBoth;
+	const material = new THREE.MeshNormalMaterial( { wireframe: false, side: 0 } );
+	const mesh = new THREE.Mesh( geometry, material );
+
+	return mesh;
+
+}
+
 
 
 

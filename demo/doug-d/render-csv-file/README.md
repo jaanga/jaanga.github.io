@@ -1,6 +1,14 @@
 # render csv file
 
 
+## [render-csv-file-0-02.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-02.html )
+
+* Refactor from Three.js lines to Three.js meshes
+	* Allows for geometry with width and height
+	* Allows for single sided materials
+	* Will work better with shade and shadow and other features
+
+
 ## [render-csv-file-0-01.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-01.html )
 
 From Doug
