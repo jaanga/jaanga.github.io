@@ -7,7 +7,7 @@
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2019-11-12" >
 <meta name = "version" content = "0.00.0" >
-<title>render csv file 0.02</title>
+<title>render csv file 0.03</title>
 <style>
 /* copyright 2019 Theo Armour. MIT license. */
 
@@ -109,6 +109,10 @@ summary { font-weight: bold; }
 			</p>
 
 			<p>
+				<button onclick=start=1;end=999999;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/helga_half.csv")>fetch helga</button>
+			</p>
+
+			<p>
 
 				<button onclick=start=0;end=31476;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv"); >fetch venus</button>
 
@@ -118,8 +122,25 @@ summary { font-weight: bold; }
 
 			</p>
 
+			<hr>
+
 			<p>
-				opacity:<br>
+				line rendering<br>
+				<select id=selSide onchange=start=0;end=999999;fetchCsv(url); size=3 >
+					<option selected >front side</option>
+					<option>back side</option>
+					<option>both sides</option>
+				</select>
+			</p>
+
+			<p>
+				line width<br>
+				<input type="range" id=inpLineWidth value=50 oninput=console.log(parseFloat(this.value)/500);start=0;end=999999;fetchCsv(url); />
+			</p>
+
+
+			<p>
+				opacity<br>
 				<input type="range" value=100 oninput="figure.children.forEach(child => child.material.opacity=0.01 * this.value )" />
 			</p>
 
@@ -129,6 +150,10 @@ summary { font-weight: bold; }
 
 			<p>
 				<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+			</p>
+
+			<p>
+				<input type=checkbox onchange=axesHelper.visible=!axesHelper.visible > axes helper
 			</p>
 
 
@@ -155,14 +180,16 @@ summary { font-weight: bold; }
 <script>
 
 let figure;
-start = 16000;
-end = 31476;
+let start = 16000;
+let end = 31476;
+let lineWidth = 0.01;
 
 const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
 
 
 let sceneRotation = 1;
+let axesHelper;
 let renderer, camera, controls, scene;
 
 init();
@@ -191,7 +218,7 @@ function init() {
 	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
 	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
 
-	const axesHelper = new THREE.AxesHelper( 100 );
+	axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
 	// const geometry = new THREE.PlaneGeometry( 60, 20, 10, 1 );
@@ -208,7 +235,9 @@ function init() {
 
 
 
-function fetchCsv( url ) {
+function fetchCsv( u ) {
+
+	url = u
 
 	fetch( new Request( url ) )
 	.then( response => response.text() )
@@ -225,7 +254,11 @@ function getContours( csv ) {
 	const contours = [];
 	let contour = [];
 
+	end = end === 999999 ? lines.length - 1 : end;
+
 	//for ( let line of lines ) {
+
+	//const lineStart = lines[ start ];
 
 	for ( let i = start; i <= end; i++ ) {
 
@@ -237,10 +270,13 @@ function getContours( csv ) {
 
 		if ( elevation !== elevationPrevious ) {
 
+			//contour.push( lineStart );
+
 			contours.push( contour );
 			elevationPrevious = elevation;
 			contour = [];
 		}
+
 
 	}
 
@@ -300,7 +336,8 @@ function addLine( vertices ) {
 
 function addHighLine( vertices ) {
 
-	const verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, parseFloat( vertex.y ) + 0.01, vertex.z ) );
+	width = parseFloat( inpLineWidth.value / 5000 );
+	const verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, parseFloat( vertex.y ) + width, vertex.z ) );
 
 	const verticesBoth = vertices.concat( verticesHigh );
 
@@ -308,7 +345,7 @@ function addHighLine( vertices ) {
 
 	const geometry = new THREE.PlaneGeometry( 100, 1, vertices.length - 1, 1 );
 	geometry.vertices = verticesBoth;
-	const material = new THREE.MeshNormalMaterial( { wireframe: false, side: 0, transparent: true } );
+	const material = new THREE.MeshNormalMaterial( { wireframe: false, side: selSide.selectedIndex, transparent: true } );
 	const mesh = new THREE.Mesh( geometry, material );
 
 	return mesh;

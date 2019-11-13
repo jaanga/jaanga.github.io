@@ -1,5 +1,18 @@
 # render csv file
 
+CSV files from https://github.com/dashdotdotdashdotdot/Lines
+
+
+
+## [render-csv-file-0-03.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-03.html )
+
+* Add helga_half.csv
+* Add toggle axes helper checkbox - off by default
+* Add select line rendering sides: front, back or both
+* Add line width slider
+
+Interaction between all the controls is not well tested - so reload frequently
+
 
 ## [render-csv-file-0-02.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-02.html )
 
