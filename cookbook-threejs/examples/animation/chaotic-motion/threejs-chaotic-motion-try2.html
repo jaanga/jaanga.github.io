@@ -5,10 +5,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-<script src="http://mrdoob.github.com/three.js/build/three.min.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/controls/TrackballControls.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/libs/stats.min.js"></script>
-<script src="http://mrdoob.github.com/three.js/examples/js/Detector.js"></script>
+<script src = "https://raw.githack.com/mrdoob/three.js/r110/build/three.min.js" ></script>
+<script src = "https://raw.githack.com/mrdoob/three.js/r110/examples/js/controls/TrackballControls.js" ></script>
+
+
 <!--
 <script src="../../../three.js/build/three.min.js"></script>
 <script src="../../../three.js/examples/js/controls/TrackballControls.js"></script>
@@ -46,12 +46,17 @@
     function init() {
 		//if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
+
+        renderer = new THREE.WebGLRenderer( {antialias: true } );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+
         scene = new THREE.Scene();
 		scene.position.set(0, 0, 0)
 
         camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 500 );
         camera.position.set(-5, -5, 5);
-		controls = new THREE.TrackballControls( camera );
+		controls = new THREE.TrackballControls( camera, renderer.domElement );
 		controls.dynamicDampingFactor = 0.2;
         scene.add( camera );
 
@@ -81,7 +86,7 @@
 		var j = 0,  delta = Math.PI * 20/ 314;
 
 		for (var i = 0; i < 315; i++ ) {
-			
+
 			mesh = new THREE.Mesh(geometry, material);
 			j += delta;
 			var rx = Math.sin(j * 0.7),
@@ -98,21 +103,18 @@
 		}
 		scene.add( group);
 
-		stats = new Stats();
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.top = '0px';
-		stats.domElement.style.zIndex = 100;
-		document.body.appendChild( stats.domElement );
+		// stats = new Stats();
+		// stats.domElement.style.position = 'absolute';
+		// stats.domElement.style.top = '0px';
+		// stats.domElement.style.zIndex = 100;
+		// document.body.appendChild( stats.domElement );
 
-        renderer = new THREE.WebGLRenderer( {antialias: true } );
-        renderer.setSize( window.innerWidth, window.innerHeight );
-        document.body.appendChild( renderer.domElement );
     }
 
     function animate() {
         requestAnimationFrame( animate );
         render();
-		stats.update();
+		//stats.update();
     }
 
     function render() {
