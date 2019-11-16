@@ -21,6 +21,10 @@
 <script>
 
 
+const url = "http://i.imgur.com/RPv6ofy.jpg";
+
+const spheres = new THREE.Group();
+
 	var css, info, stats, renderer, scene, camera, controls;
 	var geometry, material, mesh;
 
@@ -36,12 +40,9 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = 'margin: 0 20px; position: absolute; ';
-		menu.innerHTML = '<h2 style=margin:0; >' +
-			'<a href="" >' + document.title + '</a> ' +
+		menu.innerHTML = '<h2 style=margin:0; ><a href="" >' + document.title + '</a> ' +
 			'<a id=i href=http://jaanga.github.io/ >&#x24D8;</a></h2>' +
-
-			'<p><button onclick=loadTexture(); >loadTexture</button></p>' +
-
+			'<div id=msg0 ></div>' +
 			'<div id=msg1 ></div>' +
 		'';
 
@@ -71,53 +72,69 @@
 		mesh.position.set( 0, -9, 0 );
 		scene.add( mesh );
 
-// assets
 
-		loader = new THREE.TextureLoader();
-		loader.crossOrigin = 'anonymous';
-		loader.load(
+// resource URL
+//			'http://mrdoob.github.io/three.js/examples/textures/land_ocean_ice_cloud_2048.jpg',
+//			'http://mrdoob.github.io/three.js/examples/textures/water.jpg',
+//			'http://i.imgur.com/RPv6ofy.jpg',
+//		image.src = 'http://mrdoob.github.io/three.js/examples/textures/land_ocean_ice_cloud_2048.jpg';
 
-			'http://i.imgur.com/RPv6ofy.jpg',
-//			'water.jpg',
-//			'../../textures/water.jpg',
-//			'../../textures/0.00_0.00_0.00_0.00_0.00_1.00_0.00_-93.95_0.00_93.95_93.95.tif',
 
-			function ( texture ) {
+	for( let i = 0; i < 50; i++ ) {
 
-				material = new THREE.MeshBasicMaterial( { map: texture } );
+		drawSphere();
 
-				geometry = new THREE.SphereGeometry( 50, 50, 25 );
-				//material = new THREE.MeshNormalMaterial();
-				sphere1 = new THREE.Mesh( geometry, material );
-				sphere1.position.set( -50, 30, 0 );
-				scene.add( sphere1 );
-			}
+	}
 
-		);
+	scene.add( spheres );
 
+		loadTexture( url );
 
 	}
 
 
-	function loadTexture() {
+function loadTexture( url ) {
 
-		var url, loader;
+	loader = new THREE.TextureLoader();
+	loader.crossOrigin = 'anonymous';
+	loader.load( url, callback );
 
-		url = 'water.jpg';
-//		url = 'http://i.imgur.com/RPv6ofy.jpg';
-//		url = 'http://lorempixel.com/400/200/'; // not
 
-		loader = new THREE.TextureLoader();
-		loader.crossOrigin = 'anonymous';
-		loader.load( url, callback );
 
-	}
 
-	function callback( texture ) {
+}
 
-		sphere1.material = new THREE.MeshBasicMaterial( { map: texture } );
-		sphere1.material.needsUpdate = true;
-	}
+
+
+function callback( txt ) {
+
+	texture = txt;
+
+	console.log( 'texture', texture );
+
+	spheres.children.forEach(surface => {
+
+		surface.material = new THREE.MeshBasicMaterial({
+			side: 2,
+			map: texture
+		});
+
+	} )
+
+}
+
+
+function drawSphere() {
+
+	geometry = new THREE.SphereBufferGeometry( 5, 50, 25 );
+	var material = new THREE.MeshBasicMaterial( { color: 0x888888 } );
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+	spheres.add( mesh );
+
+}
+
+
 
 
 	function onWindowResize() {

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-05-06" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r95/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r95/examples/js/controls/OrbitControls.js" ></script>
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick=loadVideo(url) >load video url</button>
+			<button onclick=loadVideo(url2) >load video url2</button>
+			<button onclick=loadVideo(bear) >load video bear</button>
+			<button onclick=loadVideo(pano) >load video pano</button>
+
+
+			<button onclick=onPlay() >video.play();</button>
+			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</div>
+
+	<!--
+	<video id="video" autoplay loop crossOrigin="anonymous" webkit-playsinline style="display:none">
+			<source src="../../../../textures/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'>
+			<source src="../../../../textures/sintel.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+	</video>
+	-->
+
+<script>
+
+	let texture, video;
+	const url = "https://jaanga.github.io/cookbook-threejs/textures/Polar_orbit.ogv.360p.webm";
+	//url = "../../../../textures/sintel.ogv";
+	const url2 = "https://jaanga.github.io/cookbook-threejs/textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
+	const bear = "https://jaanga.github.io/cookbook-threejs/textures/textures/movie.mp4";
+	const pano = "https://threejs.org/examples/textures/pano.mp4";
+
+	var renderer, camera, controls, scene, axesHelper;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		const title = location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' );
+		//const title = document.title;
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" >${title}</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+		renderer.setPixelRatio( window.devicePixelRatio );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		geometry = new THREE.PlaneBufferGeometry( 50, 50, 50 );
+		material = new THREE.MeshBasicMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		scene.add( mesh );
+
+		mesh2 = new THREE.Mesh( geometry, material );
+		mesh.position.set( 60, 0, 8 )
+		scene.add( mesh2 );
+
+		loadVideo( url );
+
+	}
+
+
+	function loadVideo( url ) {
+
+		if ( !video ) {
+			video = document.createElement( 'video' );
+		}
+
+		video.crossOrigin = "anonymous";
+		video.pause = true;
+
+		mesh.material.map = "";
+		mesh.material.needsUpdate = true;
+
+		video.src = url;
+		video.load(); // must call after setting/changing source
+		video.volume = 0;
+		video.loop = true;
+
+		video.oncanplaythrough = (event) => {
+
+			console.log('Video can start, but not sure it will play through.');
+
+			if ( texture ) { texture.dispose(); }
+
+			texture = new THREE.VideoTexture( video );
+			//texture.minFilter = THREE.LinearFilter;
+			//texture.magFilter = THREE.LinearFilter;
+			//texture.wrapS = THREE.RepeatWrapping;
+			//texture.wrapT = THREE.RepeatWrapping;
+			//texture.format = THREE.RGBFormat;
+			//texture.repeat.set( 2, 2 ); // not
+			//texture.offset = new THREE.Vector2( - 0.5, - 0.5 );// works but kind of useless without repeat or loop
+			//texture.transformUv = new THREE.Vector2( -2, 0.5 );
+			//texture.needsUpdate = true;
+
+		};
+
+		video.onerror = () => console.log("Error " + video.error.code + "; details: " + video.error.message);
+
+	}
+
+
+	function onPlay() {
+
+		if ( video.playing  ) { video.pause() }
+
+		mesh.material.map = texture;
+
+		mesh.material.needsUpdate = true
+
+		video.play();
+
+	}
+
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+		video.play();
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+
+	}
+
+</script>
+</body>
+</html>

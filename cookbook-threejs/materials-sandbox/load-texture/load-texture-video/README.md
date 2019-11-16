@@ -23,11 +23,13 @@ Three.js shapes and meshes display quite different behaviors when video textures
 With meshes
 
 * All meshes display the entire video
+* texture.repeat( 4,4) does not repeat
 * Videos are scaled to fit edge to edge
 
 With shapes
+
 * Life seems to be more interesting
-* The origing of th video is in global space not entity local coordinates
+* The origin of the video is in global space not entity local coordinates
 * Shade and wholes do not change the scale
 
 
@@ -36,10 +38,15 @@ With shapes
 
 ## Links of Interest
 
+* http://bl.ocks.org/user01/65cbe8f15fe6f338f709dbc1b311575f  - how to transform UVs
+* https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Media_events
+* https://threejsfundamentals.org/threejs/lessons/threejs-custom-buffergeometry.html
+* https://gist.github.com/duhaime/c8375f1c313587ac629e04e0253481f9
+* https://codeburst.io/improve-your-threejs-performances-with-buffergeometryutils-8f97c072c14b
 
 ## Change Log
 
-###
+### 2018
 
 * First commit
 

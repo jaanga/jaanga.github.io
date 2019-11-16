@@ -3,7 +3,7 @@
 <head>
 <meta charset = "utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="" >
+<meta name=description content="Fetch a CSV file of verices from a GitHub repo. Render the data in interactive 3D" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name = "date" content = "2019-11-13" >
 <meta name = "version" content = "0.03.0" >
@@ -219,6 +219,7 @@ function init() {
 	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
 
 	axesHelper = new THREE.AxesHelper( 100 );
+	axesHelper.visible = false;
 	scene.add( axesHelper );
 
 	// const geometry = new THREE.PlaneGeometry( 60, 20, 10, 1 );
@@ -293,13 +294,15 @@ function renderLines( contours ) {
 
 	figure = new THREE.Group();
 
+	width = parseFloat( inpLineWidth.value / 5000 );
+
 	for ( let contour of contours ) {
 
-		//contour = contours[ 10 ];
+		const vertices = [];
 
-		const vertices = []
+		contour.pop();
 
-		for ( let vertex of contour.slice( 0, -1 ) ) {
+		for ( let vertex of contour ) {
 
 			vertices.push( new THREE.Vector3().fromArray( vertex ) );
 
@@ -336,7 +339,7 @@ function addLine( vertices ) {
 
 function addHighLine( vertices ) {
 
-	width = parseFloat( inpLineWidth.value / 5000 );
+
 	const verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, parseFloat( vertex.y ) + width, vertex.z ) );
 
 	const verticesBoth = vertices.concat( verticesHigh );

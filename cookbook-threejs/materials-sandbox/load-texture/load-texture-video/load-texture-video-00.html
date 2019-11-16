@@ -29,8 +29,9 @@
 		<div id = "divTitle" ></div>
 
 		<p>
+			<button onclick=loadVideo(url2) >load video url2</button>
+			<button onclick=onPlay() >video.play();</button>
 			<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
-			<button onclick=video.play(); >video.play();</button>
 
 		</p>
 
@@ -46,6 +47,11 @@
 	-->
 
 <script>
+
+	let video;
+	const url = "../../../textures/Polar_orbit.ogv.360p.webm";
+	//url = "../../../../textures/sintel.ogv";
+	const url2 = "../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
 
 	var renderer, camera, controls, scene, axesHelper;
 	var geometry, material, mesh;
@@ -80,37 +86,62 @@
 
 		window.addEventListener( 'orientationchange', onWindowResize, false );
 
-
 		axesHelper = new THREE.AxesHelper( 100 );
 		scene.add( axesHelper );
 
-		//var video = document.getElementById( 'video' );
-		video = document.createElement( 'video' );
-		video.src = "../../../../textures/sintel.ogv";
-		//video.src = "../../../textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
 
-		video.load(); // must call after setting/changing source
-		video.loop = true;
-
-		window.addEventListener( 'mousedown', onWindowClick, false );
-
-		var texture = new THREE.VideoTexture( video );
-		texture.minFilter = THREE.LinearFilter;
-		texture.magFilter = THREE.LinearFilter;
-		texture.format = THREE.RGBFormat;
 
 		geometry = new THREE.BoxGeometry( 50, 50, 50 );
-		material = new THREE.MeshBasicMaterial( { map: texture } );
+		material = new THREE.MeshBasicMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
-		//video.load();
-
+		loadVideo( url )
 
 	}
 
-	function onWindowClick() {
+
+	function loadVideo( url ) {
+
+		if ( !video ) {
+			video = document.createElement( 'video' );
+		}
+
+		video.pause = true;
+
+		mesh.material.map = "";
+
+		mesh.material.needsUpdate = true;
+
+		video.src = url;
+		video.load(); // must call after setting/changing source
+		video.loop = true;
+
+		//window.addEventListener( 'mousedown', onWindowClick, false );
+
+		video.oncanplay = (event) => {
+
+			console.log('Video can start, but not sure it will play through.');
+
+			texture = new THREE.VideoTexture( video );
+			texture.minFilter = THREE.LinearFilter;
+			texture.magFilter = THREE.LinearFilter;
+			//texture.format = THREE.RGBFormat;
+			//texture.needsUpdate = true;
+
+		};
+
+	}
+
+
+	function onPlay() {
+
+		mesh.material.map = texture;
+
+		mesh.material.needsUpdate = true
+
 		video.play();
+
 	}
 
 	function onWindowResize() {
