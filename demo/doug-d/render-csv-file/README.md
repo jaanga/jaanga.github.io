@@ -2,6 +2,16 @@
 
 CSV files from https://github.com/dashdotdotdashdotdot/Lines
 
+## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
+
+* Bug fix: Hide menu on small screens
+* Refactor: Y axis is the new 'up'
+* Refactor: Rotation is around y axis
+* Feature: Add 'reset view' button
+* Feature: Add camera x,y,z input
+* Feature: Add target x,y,z input
+* Feature: Add set camera and target via location.hash
+
 
 
 ## [render-csv-file-0-03.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-03.html )

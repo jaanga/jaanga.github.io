@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Fetch a CSV file of verices from a GitHub repo. Render the data in interactive 3D" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2019-11-17" >
+<meta name = "version" content = "0.04.0" >
+<title>render csv file 0.04</title>
+<style>
+/* copyright 2019 Theo Armour. MIT license. */
+
+:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+* { box-sizing: border-box; }
+
+body { font: 12pt monospace; margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; height: 2ch; width: 100%; }
+input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; height: 3ch; width: 10px; }
+input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 3ch; width: 10px; }
+input[ type = number ] { width: 10ch; }
+
+center { font-size: 3ch; }
+
+summary { font-weight: bold; }
+
+#main { border: 0px; left: var( --mnu-width ); margin: 0;
+	padding: 0 3rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+#divContent { border: 0px solid red; margin: 0 auto; max-width: 40rem; }
+
+#navMenu { background-color: #eee; height: 100%; left: 0; margin: 0;opacity: 0.9; overflow: auto;
+	padding: 0 1rem; position: fixed; transition: left 0.5s; top: 0; width: var( --mnu-width ); z-index: 1; }
+
+#expandButton { height: 32px; position: fixed; left: var( --mnu-width ); top: 2ch;
+	transition: left 0.5s; width: 32px; z-index: 1; }
+
+
+#expandButton.collapsed { left: 0; }
+#navMenu.collapsed { left: calc( var( --mnu-width ) * -1 ); padding: 0; }
+#main.collapsed { left: 0; width: 100%; }
+
+
+
+/* media */
+
+@media all and (max-width: 640px) {
+#main {
+	left: 0;
+	padding: 0 1rem;
+	width: 100%;
+}
+
+#expandButton {
+	top: 90vh
+}
+}
+
+@media all and (max-height: 640px) {
+#main {
+	left: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#expandButton {
+	top: 90vh;
+}
+}
+
+@media (prefers-color-scheme: dark) {
+:root {
+	background-color: #1e1f23;
+	color: #aaa;
+}
+#navMenu { background-color: #555; }
+}
+</style>
+
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
+
+
+
+	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
+
+	<nav id="navMenu" >
+
+		<header id="hdrTitle" ></header>
+
+		<details open>
+
+			<summary class="sumMenuTitle" >details</summary>
+
+			<p>
+				<button onclick=start=1;end=1600;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/dove.csv")>fetch dove</button>
+			</p>
+
+			<p>
+				<button onclick=start=1;end=999999;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/helga_half.csv")>fetch helga</button>
+			</p>
+
+			<p>
+
+				<button onclick=start=0;end=31476;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv"); >fetch venus</button>
+
+				<button onclick=start=0;end=16000;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv",0,16000); >fetch venus verticals</button>
+
+				<button onclick=start=16000;end=31476;fetchCsv("https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv",0,16000); >fetch venus horizontals</button>
+
+			</p>
+
+			<hr>
+
+			<p>
+				camera<br>
+				x <input id=inpCamX onchange=updateView() type="number"> y <input id=inpCamY onchange=updateView() type="number"> z <input id=inpCamZ onchange=updateView() type="number" >
+			</p>
+
+			<p>
+				target<br>
+				x <input id=inpTarX onchange=updateView() type="number"> y <input id=inpTarY onchange=updateView() type="number"> z <input id=inpTarZ onchange=updateView() type="number" >
+			</p>
+
+			<p>
+				<button onclick=controls.reset(); >reset view</button>
+			</p>
+
+			<hr>
+
+			<p>
+				line rendering<br>
+				<select id=selSide onchange=start=0;end=999999;fetchCsv(url); size=3 >
+					<option selected >front side</option>
+					<option>back side</option>
+					<option>both sides</option>
+				</select>
+			</p>
+
+			<p>
+				line width<br>
+				<input type="range" id=inpLineWidth value=50 oninput=console.log(parseFloat(this.value)/500);start=0;end=999999;fetchCsv(url); />
+			</p>
+
+
+			<p>
+				opacity<br>
+				<input type="range" value=100 oninput="figure.children.forEach(child => child.material.opacity=0.01 * this.value )" />
+			</p>
+
+			<p>
+				<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+			</p>
+
+			<p>
+				<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+			</p>
+
+			<p>
+				<input type=checkbox onchange=axesHelper.visible=!axesHelper.visible > axes helper
+			</p>
+
+		</details>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>
+
+		</footer>
+
+
+	</nav>
+
+	<main id=main >
+
+		<div id="divContent" ></div>
+
+	</main>
+
+
+<script>
+
+let figure;
+let start = 16000;
+let end = 31476;
+let lineWidth = 0.01;
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file";
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+
+let sceneRotation = 1;
+let axesHelper;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	hdrTitle.innerHTML = getTitle();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 0, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, 100, 100 );
+	//camera.up.set( 0, 0, 1 );
+
+	camRot = camera.rotation.clone();
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	axesHelper = new THREE.AxesHelper( 100 );
+	axesHelper.visible = false;
+	scene.add( axesHelper );
+
+	// const geometry = new THREE.PlaneGeometry( 60, 20, 10, 1 );
+	// const material = new THREE.MeshNormalMaterial( { wireframe: true } );
+	// mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+	//console.log( '', mesh.geometry.vertices );
+
+	// inpCamX.value = -100;
+	// inpCamY.value = 100;
+	// inpCamZ.value = 100;
+
+	// inpTarX.value = 0;
+	// inpTarY.value = 0;
+	// inpTarZ.value = 0;
+
+	window.addEventListener( 'hashchange', onHashChange, false );
+
+	const url = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
+
+	fetchCsv( url );
+
+	onHashChange()
+
+
+	if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
+		toggleNavMenu();
+	}
+
+}
+
+
+function updateView() {
+
+
+	const camX = inpCamX.value !== "-100" ? `camX=${ inpCamX.value }&` : "";
+	const camY = inpCamY.value !== "100" ? `camY=${ inpCamY.value }&` : "";
+	const camZ = inpCamZ.value !== "100" ? `camZ=${ inpCamZ.value }&` : "";
+
+	const tarX = inpTarX.value !== "0" ? `tarX=${ inpTarX.value }&` : "";
+	const tarY = inpTarY.value !== "0" ? `tarY=${ inpTarY.value }&` : "";
+	const tarZ = inpTarZ.value !== "0" ? `tarZ=${ inpTarZ.value }&` : "";
+
+	location.hash = camX + camY + camZ + tarX + tarY + tarZ ;
+
+}
+
+
+
+function onHashChange() {
+
+	 lh = location.hash || "";
+
+	let camX = lh.match( /camX=(.*?)&/i );
+	camX = camX ? camX[ 1 ] : -100;
+	inpCamX.value = camX;
+
+	let camY = lh.match( /camY=(.*?)&/i )
+	camY = camY ? camY[ 1 ] : 100;
+	inpCamY.value = camY;
+
+	let camZ= lh.match( /camZ=(.*?)&/i )
+	camZ = camZ ? camZ[ 1 ] : 100;
+	inpCamZ.value = camZ;
+
+	//console.log( '', camX, camY, camZ );
+
+	camera.position.set( camX, camY, camZ );
+
+	let tarX = lh.match( /tarX=(.*?)&/i )
+	tarX = tarX ? tarX[ 1 ] : 0;
+	inpTarX.value = tarX;
+
+	let tarY = lh.match( /tarY=(.*?)&/i )
+	tarY = tarY ? tarY[ 1 ] : 0;
+	inpTarY.value = tarY;
+
+	let tarZ= lh.match( /tarZ=(.*?)&/i )
+	tarZ = tarZ ? tarZ[ 1 ] : 0;
+	inpTarZ.value = tarZ;
+
+	console.log( '', tarX, tarY, tarZ );
+
+	//camera.position.set( camX, camY, camZ );
+
+	controls.target.set( Number( tarX ), Number( tarY ), Number( tarZ ) );
+
+}
+
+
+function fetchCsv( u ) {
+
+	url = u
+
+	fetch( new Request( url ) )
+	.then( response => response.text() )
+	.then( csv => getContours( csv ) );
+
+}
+
+
+
+function getContours( csv ) {
+
+	const lines = csv.split( /\n/g ).map( line => line.split( ',' ) ).slice( 1 );
+	let elevationPrevious = -1;
+	const contours = [];
+	let contour = [];
+
+	end = end === 999999 ? lines.length - 1 : end;
+
+	//for ( let line of lines ) {
+
+	//const lineStart = lines[ start ];
+
+	for ( let i = start; i <= end; i++ ) {
+
+		const line = lines[ i ];
+
+		//console.log( '', line );
+		elevation = line[ 3 ];
+		contour.push( line );
+
+		if ( elevation !== elevationPrevious ) {
+
+			//contour.push( lineStart );
+
+			contours.push( contour );
+			elevationPrevious = elevation;
+			contour = [];
+
+		}
+
+	}
+
+	renderLines( contours );
+
+}
+
+
+
+function renderLines( contours ) {
+
+	scene.remove( figure );
+
+	figure = new THREE.Group();
+
+	width = parseFloat( inpLineWidth.value / 5000 );
+
+	for ( let contour of contours ) {
+
+		const vertices = [];
+
+		contour.pop();
+
+		for ( let vertex of contour ) {
+
+			vertices.push( new THREE.Vector3().fromArray( vertex ) );
+
+		}
+
+		//figure.add( addLine( vertices ) );
+
+		figure.add( addHighLine( vertices ) );
+
+	}
+
+	//figure.rotation.x = Math.PI / 2;
+	figure.scale.set( 50, 50, 50 );
+
+	scene.add( figure );
+
+}
+
+
+function addLine( vertices ) {
+
+	let geometry, material, line;
+
+	geometry = new THREE.Geometry();
+	geometry.vertices = vertices;
+	material = new THREE.LineBasicMaterial( { color: 0xffffff * Math.random(), linewidth: 3, transparent: true } );
+	line = new THREE.Line( geometry, material );
+
+	return line;
+
+}
+
+
+
+function addHighLine( vertices ) {
+
+
+	const verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, parseFloat( vertex.y ) + width, vertex.z ) );
+
+	const verticesBoth = vertices.concat( verticesHigh );
+
+	//console.log( '', verticesBoth );
+
+	const geometry = new THREE.PlaneGeometry( 100, 1, vertices.length - 1, 1 );
+	geometry.vertices = verticesBoth;
+	const material = new THREE.MeshNormalMaterial( { wireframe: false, side: selSide.selectedIndex, transparent: true } );
+	const mesh = new THREE.Mesh( geometry, material );
+
+	return mesh;
+
+}
+
+
+
+function toggleNavMenu() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navMenu.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+}
+
+
+
+function getTitle() {
+
+	//document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src="${ urlSourceCodeIcon }" alt="GitHub logo" height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	//scene.rotation.y -= sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>
