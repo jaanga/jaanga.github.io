@@ -2,6 +2,10 @@
 
 CSV files from https://github.com/dashdotdotdashdotdot/Lines
 
+## Wishlist
+
+* 2019-11-17 ~ Theo ~ save csv file url in location hash. ditto other useful options
+
 ## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
 
 * Bug fix: Hide menu on small screens
@@ -15,6 +19,10 @@ CSV files from https://github.com/dashdotdotdashdotdot/Lines
 
 
 ## [render-csv-file-0-03.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-03.html )
+
+<img src="https://jaanga.github.io/demo/doug-d/images/helga-by-dougd-01.jpg" style=width:50% >
+
+[dashdotdotdashdotdot]( https://www.instagram.com/dashdotdotdashdotdot/) >> [https://www.instagram.com/p/B48SJ7Vnowb/]( https://www.instagram.com/p/B48SJ7Vnowb/ )
 
 * Add helga_half.csv
 * Add toggle axes helper checkbox - off by default
