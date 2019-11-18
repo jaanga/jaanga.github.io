@@ -5,6 +5,8 @@ CSV files from https://github.com/dashdotdotdashdotdot/Lines
 ## Wishlist
 
 * 2019-11-17 ~ Theo ~ save csv file url in location hash. ditto other useful options
+* 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input
+
 
 ## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
 
