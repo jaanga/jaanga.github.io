@@ -5,7 +5,7 @@ CSV files from https://github.com/dashdotdotdashdotdot/Lines
 ## Wishlist
 
 * 2019-11-17 ~ Theo ~ save csv file url in location hash. ditto other useful options
-* 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input
+* 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
 
 
 ## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
@@ -18,6 +18,7 @@ CSV files from https://github.com/dashdotdotdashdotdot/Lines
 * Feature: Add target x,y,z input
 * Feature: Add set camera and target via location.hash
 
+Click menu title to clear location.hash. Edit numbers directly in URL and press enter to update
 
 
 ## [render-csv-file-0-03.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-03.html )
