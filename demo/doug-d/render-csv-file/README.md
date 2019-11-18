@@ -10,6 +10,8 @@ CSV files from https://github.com/dashdotdotdashdotdot/Lines
 
 ## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
 
+<img src="https://jaanga.github.io/demo/doug-d/images/dove-01.jpg" style=width:50% >
+
 * Bug fix: Hide menu on small screens
 * Refactor: Y axis is the new 'up'
 * Refactor: Rotation is around y axis
