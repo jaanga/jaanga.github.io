@@ -11,7 +11,7 @@ Read me link: https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d
 
 ## Wishlist
 
-* 2019-11-17 ~ Theo ~ save csv file url in location hash. ditto other useful options
+* 2019-11-17 ~ Theo ~ save useful optionsin location hash
 * 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
 
 
@@ -20,7 +20,7 @@ Read me link: https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d
 * Bug: Narrower menu means menu can be toggled on iPhone5
 * Feature: Canonical link established
 * Feature: URL, start and end lines of CSV now part of the REST API. Menus updated to comply.
-
+	* Done: * 2019-11-17 ~ Theo ~ save csv file url in location hash.
 
 
 ## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
