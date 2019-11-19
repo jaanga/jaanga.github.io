@@ -2,6 +2,13 @@
 
 CSV files from https://github.com/dashdotdotdashdotdot/Lines
 
+Canonical link: https://jaanga.github.io/demo/doug-d/render-csv-file/
+
+* link that should always take you to latest version
+
+Read me link: https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file
+
+
 ## Wishlist
 
 * 2019-11-17 ~ Theo ~ save csv file url in location hash. ditto other useful options
