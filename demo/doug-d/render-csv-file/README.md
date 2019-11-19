@@ -8,6 +8,14 @@ CSV files from https://github.com/dashdotdotdashdotdot/Lines
 * 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
 
 
+## [render-csv-file-0-05.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-05.html )
+
+* Bug: Narrower menu means menu can be toggled on iPhone5
+* Feature: Canonical link established
+* Feature: URL, start and end lines of CSV now part of the REST API. Menus updated to comply.
+
+
+
 ## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
 
 <img src="https://jaanga.github.io/demo/doug-d/images/dove-01.jpg" style=width:50% >
@@ -55,5 +63,5 @@ From Doug
 
 From Doug
 
-> It works [the OBJ file renderer], but  but can you work with “line files”.  I think they have a more ”different “ look then the object files.
+> It works [the OBJ file renderer], but can you work with “line files”.  I think they have a more ”different “ look then the object files.
 

@@ -40,13 +40,11 @@
 
 		<div id="divTitle" ></div>
 
-
 		<div>Access token</div>
 
 		<p>
 			<input id=GATinpGitHubApiKey onclick=this.select(); onblur=GAT.setGitHubAccessToken(); title="Obtain API Access Token" style=width:100%; >
 		</p>
-
 
 		<p>
 			<button id=but onclick=getHtmlFile(); >getHtmlFile</button>
@@ -60,21 +58,20 @@
 
 		<div id=divUrl > </div>
 
-		<div id="divContent" contentEditable ></div>
+		<div id="divContent" contentEditable style="border: 1px solid blue; margin: 1ch 0;"></div>
 
-		<div id=divToSend ></div>
+		<div id=divResponseGet style="border: 1px solid green; margin: 1ch 0; overflow: hidden;" ></div>
 
-		<div id=divResponse></div>
+		<div id=divResponsePost style="border: 1px solid pink; margin: 1ch 0; overflow: hidden;" ></div>
+
 
 	</main>
 
 
 <script>
 
-//const url = "https://api.github.com/repos/theo-armour/theo-armour.github.io/contents/first-post.jsonl";
-//const url = "https://api.github.com/repos/theo-armour/qdata/contents/docs/days-of-year-html/10/10-30.html";
-const url = "https://theo-armour.github.io/data/days-of-year-html/10/10-30.html";
-const urlApi = "https://api.github.com/repos/theo-armour/theo-armour.github.io/contents/data/days-of-year-html/10/10-30.html";
+const urlApi = "https://api.github.com/repos/jaanga/jaanga.github.io/contents/cookbook-html/examples-html/web-api/fetch/fetch-github-api-tree/fetch-github-post/test.md";
+const url = "https://jaanga.github.io/cookbook-html/examples-html/web-api/fetch/fetch-github-api-tree/fetch-github-post/test.md";
 
 const GAT = {};
 
@@ -83,7 +80,7 @@ let logFileContent;
 let logFileSha;
 let decodedData;
 
-const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples-html/web-api/fetch/fetch-gitlab-api";
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples-html/web-api/fetch/fetch-github-api-tree/fetch-github-post/";
 const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
 
 init();
@@ -102,18 +99,29 @@ function init() {
 
 function getHtmlFile() {
 
-	const request = new Request( url )
 
-	fetch( request, { cache: "no-store" } ).then( response => response.text() )
-		.then( text => divContent.innerHTML = text );
+	fetch( new Request( urlApi ) )
+	.then( response => response.json() )
+	.then( data => {
 
-	fetch( new Request( urlApi ) ).then( response => response.json() )
-		.then( data => logFileSha = data.sha )
-		.then( txt => console.log( 'txt', txt ) ) ;
+		//console.log( data );
+
+		divResponseGet.innerText = (JSON.stringify( data, null, "\t"  ) );
+
+		//console.log( 'dc', data.content );
+
+		decodedData = window.atob( data.content );
+
+		divContent.innerHTML = decodedData;
+
+		logFileSha = data.sha;
+
+	} ).catch( ( err ) => {
+
+		console.warn( 'Something went wrong.', err );
+	} );
 
 }
-
-
 
 
 
@@ -125,7 +133,7 @@ function putHtmlFile() {
 
 	content = divContent.innerHTML
 
-	divToSend.innerHTML = content;
+	//divToSend.innerHTML = content;
 
 	codedData = window.btoa( content ); // encode the string
 
@@ -147,23 +155,12 @@ function putHtmlFile() {
 	.then( response => response.json() )
 	.then( data => {
 
-		divResponse.innerText += (JSON.stringify( data.content ) );
+		divResponsePost.innerText += (JSON.stringify( data.content, null, "\t" ) );
 
 	} )
 	.catch(  err => console.warn( 'Something went wrong.', err ) );
 
 }
-
-
-
-function getUuidv4() {
-
-	return ( [ 1e7 ] + -1e3 + -4e3 + -8e3 + -1e11 ).replace( /[018]/g, c =>
-		( c ^ crypto.getRandomValues( new Uint8Array( 1 )  )[ 0 ] & 15 >> c / 4 ).toString( 16 )
-	);
-
-}
-
 
 
 GAT.setGitHubAccessToken = function () {
@@ -175,6 +172,7 @@ GAT.setGitHubAccessToken = function () {
 	//GAT.accessToken = accessToken;
 
 };
+
 
 
 function getTitle() {

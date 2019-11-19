@@ -1,0 +1,50 @@
+<script>
+
+
+	//url = "https://jsonplaceholder.typicode.com/posts";
+	url = "https://gitlab.com/api/v4/projects/13175347/repository/files/first-post3%2Emd";
+
+
+	const request = new Request( url );
+
+	content =
+	`${ new Date() } \n \n lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit,
+	sed quia non numquam eius modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem.
+	ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid
+	ex ea commodi consequatur? quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse,
+	quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+	\n23
+	`;
+
+
+	fetch( request, {
+		method: 'PUT',
+		headers: { "private-token": "PgzPsmy9LkUqkgiC5WqZ", 'Content-Type': 'application/json' },
+		body: JSON.stringify( {
+			"branch": "master",
+			"content": content,
+			"commit_message": "create a new file" } )
+
+	} ).then( ( response ) => {
+
+		if ( response.ok ) {
+
+			return response.json();
+
+		} else {
+
+			return Promise.reject( response );
+		}
+
+	} ).then( ( data ) => {
+
+		console.log( data );
+		document.write (JSON.stringify( data ) );
+
+	} ).catch( ( err ) => {
+
+		console.warn( 'Something went wrong.', err );
+
+	} );
+
+</script>
