@@ -209,6 +209,7 @@ Basic slide in and slide out menu with three bar icon that adjusts for small scr
 
 			var converter = new showdown.Converter( { strikethrough: true, literalMidWordUnderscores: true, simplifiedAutoLink: true, tables: true });
 			var xhr = new XMLHttpRequest();
+			xhr.crossOrigin = "anonymous";
 			xhr.open( 'GET', fileName, true );
 			xhr.onload = function() {
 

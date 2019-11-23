@@ -22,9 +22,9 @@
 
 //	var fileName = '../models/tree.obj';
 	var fileName = '../models/female02.obj';
-	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/female02/female02.obj';
+	var fileName = 'https://rawcdn.githack.com/mrdoob/three.js/dev/examples/models/obj/female02/female02.obj';
 //	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/leeperrysmith/LeePerrySmith.obj';
-	var fileName = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';
+//	var fileName = 'http://rawgit.com/mrdoob/three.js/dev/examples/obj/female02/female02.obj';//
 //	var fileName = 'http://mrdoob.github.io/three.js/examples/obj/walt/WaltHead.obj';
 
 	var object;
@@ -109,7 +109,7 @@
 		scene = new THREE.Scene();
 
 // axes
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 		window.addEventListener( 'resize', onWindowResize, false );

@@ -26,7 +26,7 @@
 //	var fileName1 = '../../../../../three.js/examples/models/fbx/xsi_man_skinning.fbx';
 //	var fileName1 = '../../../../../three.js/examples/models/fbx/xsi_man.fbx';
 
-	var fileName1 = 'http://mrdoob.github.io/three.js/examples/models/fbx/xsi_man_skinning.fbx';
+	var fileName1 = 'https://rawcdn.githack.com/mrdoob/three.js/dev/examples/models/fbx/stanford-bunny.fbx';
 
 	var object, groundPlane;
 
@@ -100,7 +100,7 @@
 		gridHelper.position.set( 0, 1, 0 );
 		groundPlane.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		groundPlane.add( axisHelper );
 
 // assets
@@ -132,7 +132,7 @@
 
 		object = obj;
 
-		bbh = new THREE.BoundingBoxHelper( object );
+		bbh = new THREE.BoxHelper( object );
 		bbh.update();
 
 //console.log( '\nbbh', bbh );
@@ -148,7 +148,7 @@
 		scene.add( object );
 
 		object.position.sub( bbh.position.clone() );
-		bbh = new THREE.BoundingBoxHelper( object );
+		bbh = new THREE.BoxHelper( object );
 		bbh.update();
 		scene.add( bbh );
 		groundPlane.position.y = bbh.box.min.y - 1;

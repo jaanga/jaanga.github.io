@@ -66,7 +66,7 @@
 */
 
 // axes
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 		window.addEventListener( 'resize', onWindowResize, false );
@@ -88,7 +88,7 @@
 
 	function drop( event ) {
 
-		event.preventDefault(); 
+		event.preventDefault();
 
 		fileName = event.dataTransfer.getData( 'URL' );
 

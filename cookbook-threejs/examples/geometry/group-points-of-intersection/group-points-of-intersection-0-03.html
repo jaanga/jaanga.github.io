@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+<meta charset = "utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Cut sections through 3D objects and draw the contours" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2019-11-11" >
+<meta name = "version" content = "0.02.0" >
+<title></title>
+<style>
+/* copyright 2019 Theo Armour. MIT license. */
+
+:root { --mnu-width: 22rem; --screen-width: calc( 100vw ); --headerHeight: 6rem; }
+
+* { box-sizing: border-box; }
+
+body { font: 12pt monospace; margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline }
+
+button, input[type=button] { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; height: 2ch; width: 100%; }
+input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; height: 3ch; width: 10px; }
+input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 3ch; width: 10px; }
+
+center { font-size: 2ch; }
+
+summary { font-weight: bold; }
+
+#main { border: 0px; left: var( --mnu-width ); margin: 0;
+	padding: 0 3rem; position: absolute; width: calc( 100% - var( --mnu-width ) );  }
+
+#divContent { border: 0px solid red; margin: 0 auto; max-width: 40rem; }
+
+#navMenu { background-color: #eee; height: 100%; left: 0; margin: 0;opacity: 0.9; overflow: auto;
+	padding: 0 1rem; position: fixed; transition: left 0.5s; top: 0; width: var( --mnu-width ); z-index: 1; }
+
+#expandButton { height: 32px; position: fixed; left: var( --mnu-width ); top: 2ch;
+	transition: left 0.5s; width: 32px; z-index: 1; }
+
+
+#expandButton.collapsed { left: 0; }
+#navMenu.collapsed { left: calc( var( --mnu-width ) * -1 ); padding: 0; }
+#main.collapsed { left: 0; width: 100%; }
+
+
+
+/* media */
+
+@media all and (max-width: 640px) {
+	#main {
+		left: 0;
+		padding: 0 1rem;
+		width: 100%;
+}
+
+#expandButton {
+	top: 90vh
+}
+}
+
+@media all and (max-height: 640px) {
+	#main {
+		left: 0;
+		padding: 0;
+		width: 100%;
+	}
+
+	#expandButton {
+		top: 90vh;
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		background-color: #1e1f23;
+		color: #aaa;
+	}
+	#navMenu { background-color: #555; }
+}
+</style>
+
+</head>
+<body>
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/loaders/OBJLoader.js" ></script>
+
+
+	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
+
+	<nav id="navMenu" >
+
+		<header id="hdrTitle" ></header>
+
+		<div id=divGeometries ></div>
+
+
+		<p>
+			<button onclick=loadFigure("https://rawcdn.githack.com/mrdoob/three.js/master/examples/models/obj/walt/WaltHead.obj") >load walt</button>
+		</p>
+
+		<p>
+
+			<button onclick=loadFigure("https://raw.githubusercontent.com/dashdotdotdashdotdot/Lines/master/venus.obj"); >load venus</button>
+		<p>
+
+		<p>
+			<br>
+
+			<button id="pressMe" onclick=drawIntersectionPoints(); ><b>draw contour line</b></button>
+		</p>
+
+		<details open>
+
+			<summary class="sumMenuTitle" >settings</summary>
+
+			<p>
+				<button onclick=controls.reset() >reset view</button>
+			</p>
+			<p>
+					opacity
+				<input type="range" id="inpOpacity" value=100 oninput="mesh.material.opacity=0.01 * this.value;" />
+			</p>
+
+			<p>
+				<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+			</p>
+
+			<p>
+				<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+			</p>
+
+
+		</details>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>
+
+		</footer>
+
+
+	</nav>
+
+	<main id=main >
+
+		<div id="divContent" ></div>
+
+	</main>
+
+
+<script>
+
+const geometries = [
+
+	["Box", 50, 50, 50 ],
+	["Cone", 30, 60, 30],
+	["Cylinder", 15, 30, 60, 20 ],
+	["Sphere", 50, 50, 20 ],
+	["Tetrahedron", 50],
+	["Dodecahedron", 50, 0],
+	["Icosahedron", 50, 0],
+	["Octahedron", 50, 0],
+	["Torus", 40, 10, 12, 32 ],
+	["TorusKnot", 50, 10 ]
+];
+
+let mesh;
+let plane;
+let points;
+let contour;
+let contours;
+let contourGroup;
+
+
+const urlSourceCode = `https://github.com/`;
+const urlSourceCodeIcon = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+
+let sceneRotation = 0;
+let renderer, camera, controls, scene;
+
+var tolerance = 0.001;
+
+THREE.Vector3.prototype.equals = function(v, tolerance) {
+
+	if (tolerance === undefined) {
+		return v.x === this.x && v.y === this.y && v.z === this.z;
+	} else {
+		return (
+			Math.abs(v.x - this.x) < tolerance &&
+			Math.abs(v.y - this.y) < tolerance &&
+			Math.abs(v.z - this.z) < tolerance
+		);
+	}
+};
+
+var pointOfIntersection = new THREE.Vector3();
+var pointsOfIntersection = new THREE.Geometry();
+
+
+
+var a = new THREE.Vector3(),
+	b = new THREE.Vector3(),
+	c = new THREE.Vector3();
+
+var planePointA = new THREE.Vector3(),
+	planePointB = new THREE.Vector3(),
+	planePointC = new THREE.Vector3();
+
+var lineAB = new THREE.Line3(),
+	lineBC = new THREE.Line3(),
+	lineCA = new THREE.Line3();
+
+
+
+init();
+animate();
+
+function init() {
+
+	hdrTitle.innerHTML = getTitle();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	const geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	const material = new THREE.MeshNormalMaterial();
+	//mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+	var planeGeom = new THREE.PlaneGeometry( 100, 100);
+	planeGeom.rotateX(-Math.PI / 2);
+	plane = new THREE.Mesh(
+		planeGeom,
+		new THREE.MeshBasicMaterial({
+			color: "lightgray",
+			transparent: true,
+			opacity: 0.125,
+			side: THREE.DoubleSide
+		})
+	);
+	plane.position.y = -3.14;
+	plane.rotation.x = Math.PI / 5;
+	scene.add(plane);
+
+	divGeometries.innerHTML = getButtonsGeometries();
+
+}
+
+
+
+function getButtonsGeometries() {
+
+	const htm = geometries.map( ( geometry, index ) =>
+		`<p><button onclick="drawGeometries(${ index });" >${ geometry[ 0 ] }</button></p>`
+	).join( "" );
+
+	return htm;
+
+}
+
+
+function drawGeometries( index ) {
+
+	scene.remove( mesh, points, contourGroup );
+
+	pointOfIntersection = new THREE.Vector3();
+	pointsOfIntersection = new THREE.Geometry();
+
+
+	const items = geometries[ index ];
+	const geometry = new THREE[ items.shift() + "Geometry" ]( ...items );
+	const material = new THREE.MeshNormalMaterial( { transparent: true, wireframe: true });
+	mesh = new THREE.Mesh( geometry, material );
+
+	scene.add( mesh );
+
+}
+
+//////////
+
+
+function loadFigure( url ) {
+
+	const loader = new THREE.OBJLoader();
+
+	loader.crossOrigin = "anonymous";
+
+	loader.load(
+
+		url,
+
+		function ( object ) {
+
+			scene.remove( mesh );
+
+			mesh = object.children[ 0 ];
+
+			mesh.geometry = new THREE.Geometry().fromBufferGeometry( mesh.geometry );
+
+			mesh.geometry.applyMatrix( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+
+			mesh.geometry.center()
+			mesh.geometry.computeBoundingBox();
+
+			bBox = new THREE.Box3().setFromObject( mesh )
+
+			//console.log( 'bb', bBox );
+
+			const scale = 1.1 * ( 100 / ( bBox.max.z - bBox.min.z ) );
+
+			mesh.geometry.applyMatrix( new THREE.Matrix4().makeScale( scale, scale, scale ) );
+
+			mesh.material = new THREE.MeshNormalMaterial( { side: THREE.DoubleSide } );
+
+			//console.log( "mesh", mesh );
+
+			scene.add( mesh );
+
+			//updateCylinder();
+
+		},
+
+		// called when loading is in progresses
+		function ( xhr ) {
+
+			//console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+
+		},
+
+		// called when loading has errors
+		function ( error ) {
+
+			console.log( 'An error happened' );
+
+		}
+	);
+}
+
+//////////
+
+
+
+
+
+function drawIntersectionPoints() {
+
+	var mathPlane = new THREE.Plane();
+
+	plane.localToWorld(
+		planePointA.copy(plane.geometry.vertices[plane.geometry.faces[0].a])
+	);
+	plane.localToWorld(
+		planePointB.copy(plane.geometry.vertices[plane.geometry.faces[0].b])
+	);
+	plane.localToWorld(
+		planePointC.copy(plane.geometry.vertices[plane.geometry.faces[0].c])
+	);
+
+	mathPlane.setFromCoplanarPoints(planePointA, planePointB, planePointC);
+
+	mesh.geometry.faces.forEach(function(face, idx) {
+
+		mesh.localToWorld(a.copy(mesh.geometry.vertices[face.a]));
+		mesh.localToWorld(b.copy(mesh.geometry.vertices[face.b]));
+		mesh.localToWorld(c.copy(mesh.geometry.vertices[face.c]));
+
+		lineAB = new THREE.Line3(a, b);
+		lineBC = new THREE.Line3(b, c);
+		lineCA = new THREE.Line3(c, a);
+
+		setPointOfIntersection(lineAB, mathPlane, idx);
+		setPointOfIntersection(lineBC, mathPlane, idx);
+		setPointOfIntersection(lineCA, mathPlane, idx);
+
+	});
+
+	var pointsMaterial = new THREE.PointsMaterial({
+		size: 3,
+		color: 0x00ff00
+	});
+
+	points = new THREE.Points(pointsOfIntersection, pointsMaterial);
+	scene.add(points);
+
+	//var pairs = splitPairs(pointsOfIntersection.vertices);
+
+	contours = getContours(pointsOfIntersection.vertices, [], true);
+	console.log("contours", contours);
+
+	contourGroup = new THREE.Group();
+
+	contours.forEach(cntr => {
+		let cntrGeom = new THREE.Geometry();
+		cntrGeom.vertices = cntr;
+		contour = new THREE.Line(
+			cntrGeom,
+			new THREE.LineBasicMaterial({
+				color: "magenta" //Math.random() * 0xffffff //0x777777 + 0x777777
+			})
+		);
+		contourGroup.add(contour);
+	});
+
+	scene.add( contourGroup )
+
+}
+
+function setPointOfIntersection(line, plane, faceIdx) {
+
+//console.log("line", line);
+
+	pointOfIntersection = plane.intersectLine(line, new THREE.Vector3() );
+
+	if (pointOfIntersection) {
+		let p = pointOfIntersection.clone();
+		p.faceIndex = faceIdx;
+		p.checked = false;
+		pointsOfIntersection.vertices.push(p);
+	}
+}
+
+function getContours(points, contours, firstRun) {
+
+	console.log("firstRun:", firstRun);
+
+	let contour = [];
+
+	// find first line for the contour
+	let firstPointIndex = 0;
+	let secondPointIndex = 0;
+	let firsPoint, secondPoint;
+
+	for (let i = 0; i < points.length; i++) {
+		if (points[i].checked == true) continue;
+		firstPointIndex = i;
+		firstPoint = points[firstPointIndex];
+		firstPoint.checked = true;
+		secondPointIndex = getPairIndex(firstPoint, firstPointIndex, points);
+		secondPoint = points[secondPointIndex];
+		secondPoint.checked = true;
+		contour.push(firstPoint.clone());
+		contour.push(secondPoint.clone());
+		break;
+	}
+
+	contour = getContour(secondPoint, points, contour);
+	contours.push(contour);
+	let allChecked = 0;
+	points.forEach(p => {
+		allChecked += p.checked == true ? 1 : 0;
+	});
+	console.log("allChecked: ", allChecked == points.length);
+	if (allChecked != points.length) {
+		return getContours(points, contours, false);
+	}
+	return contours;
+}
+
+function getContour(currentPoint, points, contour) {
+
+	let p1Index = getNearestPointIndex(currentPoint, points);
+	let p1 = points[p1Index];
+	p1.checked = true;
+	let p2Index = getPairIndex(p1, p1Index, points);
+	let p2 = points[p2Index];
+	p2.checked = true;
+	let isClosed = p2.equals(contour[0], tolerance);
+	if (!isClosed) {
+		contour.push(p2.clone());
+		return getContour(p2, points, contour);
+	} else {
+		contour.push(contour[0].clone());
+		return contour;
+	}
+}
+
+function getNearestPointIndex(point, points) {
+
+	let index = 0;
+	for (let i = 0; i < points.length; i++) {
+		let p = points[i];
+		if (p.checked == false && p.equals(point, tolerance)) {
+			index = i;
+			break;
+		}
+	}
+	return index;
+
+}
+
+function getPairIndex(point, pointIndex, points) {
+
+	let index = 0;
+	for (let i = 0; i < points.length; i++) {
+		let p = points[i];
+		if (i != pointIndex && p.checked == false && p.faceIndex == point.faceIndex) {
+			index = i;
+			break;
+		}
+	}
+	return index;
+
+}
+
+
+
+function toggleNavMenu() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navMenu.classList.toggle( 'collapsed' );
+	main.classList.toggle( 'collapsed' );
+
+}
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+	const description = document.head.querySelector( "[ name=description ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src="${ urlSourceCodeIcon }" alt="GitHub logo" height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

@@ -24,6 +24,9 @@ _basic-html.html_
 
 ## Links of Interest
 
+OBJ files
+
+* https://github.com/assimp/assimp/tree/master/test/models/OBJ
 
 ## Change Log
 
