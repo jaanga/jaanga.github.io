@@ -417,7 +417,6 @@ function getCsv() {
 
 		tt = ll.map( line => {
 
-
 			txt =
 			`${ line.geometry.vertices[ 0 ].toArray() },${ index }\n${ line.geometry.vertices[ 1 ].toArray() },${ index }\n`
 
@@ -618,7 +617,7 @@ function getContour(currentPoint, points, contour) {
 
 		//ctr = getContour(p2, points, contour);
 		//console.log( 'ctr', ctr );
-
+		contour.shift();
 		return contour; //ctr; // getContour(p2, points, contour);
 	} else {
 		contour.push(contour[0].clone());
