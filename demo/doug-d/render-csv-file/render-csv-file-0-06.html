@@ -405,7 +405,7 @@ function getContours( csv ) {
 
 		const line = lines[ i ];
 
-		console.log( 'll', i, line );
+		//console.log( 'll', i, line );
 		elevation = line[ 3 ];
 		contour.push( line );
 
@@ -443,7 +443,7 @@ function renderLines( contours ) {
 
 		for ( let vertex of contour ) {
 
-			vertices.push( new THREE.Vector3().fromArray( vertex ) );
+			vertices.push( new THREE.Vector3().fromArray( vertex.map( coor => parseFloat( coor ) ) ) );
 
 		}
 
@@ -454,7 +454,7 @@ function renderLines( contours ) {
 	}
 
 	//figure.rotation.x = Math.PI / 2;
-	figure.scale.set( 50, 50, 50 );
+	//figure.scale.set( 50, 50, 50 );
 
 	scene.add( figure );
 
@@ -478,12 +478,12 @@ function addLine( vertices ) {
 
 function addHighLine( vertices ) {
 
-
 	const verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, parseFloat( vertex.y ) + width, vertex.z ) );
 
 	const verticesBoth = vertices.concat( verticesHigh );
 
 	//console.log( '', verticesBoth );
+	width = 1;
 
 	const geometry = new THREE.PlaneGeometry( 100, 1, vertices.length - 1, 1 );
 	geometry.vertices = verticesBoth;

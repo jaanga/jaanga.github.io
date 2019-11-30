@@ -80,7 +80,10 @@
 	function randomizeVertices() {
 
 		geometry = new THREE.PlaneGeometry( 50, 50, 100, 100 );
-		material = new THREE.MeshNormalMaterial( { side: 2 } );
+
+		const texture = new THREE.TextureLoader().load( 'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg' )
+
+		material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
 
 		for ( var i = 0; i < geometry.vertices.length; i++ ) {
 

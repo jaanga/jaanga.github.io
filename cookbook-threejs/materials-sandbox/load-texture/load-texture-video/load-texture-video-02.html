@@ -21,8 +21,8 @@
 </style>
 </head>
 <body>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r95/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r95/examples/js/controls/OrbitControls.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/OrbitControls.js" ></script>
 
 	<div id = "divMenu" >
 
@@ -54,8 +54,9 @@
 <script>
 
 	let texture, video;
-	const url = "https://jaanga.github.io/cookbook-threejs/textures/Polar_orbit.ogv.360p.webm";
+	let url = "https://jaanga.github.io/cookbook-threejs/textures/Polar_orbit.ogv.360p.webm";
 	//url = "../../../../textures/sintel.ogv";
+	url = "../../../textures/Persistent.webm";
 	const url2 = "https://jaanga.github.io/cookbook-threejs/textures/The-Pull-Heatmap-Follow-the-Pumpkin.webm";
 	const bear = "https://jaanga.github.io/cookbook-threejs/textures/textures/movie.mp4";
 	const pano = "https://threejs.org/examples/textures/pano.mp4";
@@ -111,40 +112,42 @@
 
 
 	function loadVideo( url ) {
-
+console.log( '', url );
 		if ( !video ) {
 			video = document.createElement( 'video' );
 		}
 
 		video.crossOrigin = "anonymous";
-		video.pause = true;
+		//video.pause = true;
 
 		mesh.material.map = "";
 		mesh.material.needsUpdate = true;
 
 		video.src = url;
+
+		video.onload = (event) => {
+
+			console.log('Video can start, but not sure it will play through.');
+
+		// 	if ( texture ) { texture.dispose(); }
+
+		// 	texture = new THREE.VideoTexture( video );
+		// 	texture.minFilter = THREE.LinearFilter;
+		// 	texture.magFilter = THREE.LinearFilter;
+		// 	//texture.wrapS = THREE.RepeatWrapping;
+		// 	//texture.wrapT = THREE.RepeatWrapping;
+		// 	//texture.format = THREE.RGBFormat;
+		// 	//texture.repeat.set( 2, 2 ); // not
+		// 	//texture.offset = new THREE.Vector2( - 0.5, - 0.5 );// works but kind of useless without repeat or loop
+		// 	//texture.transformUv = new THREE.Vector2( -2, 0.5 );
+		// 	//texture.needsUpdate = true;
+
+		};
 		video.load(); // must call after setting/changing source
 		video.volume = 0;
 		video.loop = true;
 
-		video.oncanplaythrough = (event) => {
-
-			console.log('Video can start, but not sure it will play through.');
-
-			if ( texture ) { texture.dispose(); }
-
-			texture = new THREE.VideoTexture( video );
-			//texture.minFilter = THREE.LinearFilter;
-			//texture.magFilter = THREE.LinearFilter;
-			//texture.wrapS = THREE.RepeatWrapping;
-			//texture.wrapT = THREE.RepeatWrapping;
-			//texture.format = THREE.RGBFormat;
-			//texture.repeat.set( 2, 2 ); // not
-			//texture.offset = new THREE.Vector2( - 0.5, - 0.5 );// works but kind of useless without repeat or loop
-			//texture.transformUv = new THREE.Vector2( -2, 0.5 );
-			//texture.needsUpdate = true;
-
-		};
+		video.play();
 
 		video.onerror = () => console.log("Error " + video.error.code + "; details: " + video.error.message);
 

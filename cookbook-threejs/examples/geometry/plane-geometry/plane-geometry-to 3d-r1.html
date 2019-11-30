@@ -48,11 +48,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<p><button onclick=createPlane(); >create plane</button></p>
@@ -109,6 +109,8 @@
 
 // assets
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
+
+
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
 		mesh.position.set( 0, -21, 0 );
@@ -447,6 +449,11 @@
 
 		var material = new THREE.MeshNormalMaterial( { side: 2, wireframe: chkWire.checked } );
 		var material = new THREE.MeshPhongMaterial( { side: 2, color: 0x222222 * Math.random() + 0xcccccc, shading: THREE.FlatShading } ); // color: 0xffffff * Math.random()
+
+		const texture = new THREE.TextureLoader().load( 'https://threejs.org/examples/textures/land_ocean_ice_cloud_2048.jpg' )
+		material = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
+
+
 		scene.remove( obj );
 		obj = new THREE.Mesh( geometry, material );
 		scene.add( obj );

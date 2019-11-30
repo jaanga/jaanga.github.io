@@ -47,7 +47,7 @@
 
 	const urlGitHubAPIContents = 'https://api.github.com/repos/mrdoob/three.js/contents/examples';
 	const urlSourceCode = 'https://github.com/mrdoob/three.js/tree/dev/examples/';
-	const urlExamples = 'https://mrdoob.github.io/three.js/examples/';
+	const urlExamples = 'https://threejs.org/examples/';
 
 	var iframeContainers = [];
 	var iframesActive = [];
@@ -104,8 +104,8 @@
 							'<div class=divIframe id=' + id + ' ></div>' +
 						'</div>' +
 						'<h3>' +
-							'<a href=' + urlExamples + file.name + 
-							' title="' + file.size.toLocaleString() + ' bytes"  >' + 
+							'<a href=' + urlExamples + file.name +
+							' title="' + file.size.toLocaleString() + ' bytes"  >' +
 							 title + '</a> ' +
 							'<a href=' + urlSourceCode + file.name +
 							' title="Edit me" >&#x1f589;</a>' +
