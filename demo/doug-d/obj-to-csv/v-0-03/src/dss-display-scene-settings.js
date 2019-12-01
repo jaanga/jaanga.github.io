@@ -15,6 +15,7 @@ DSS.getMenu = function () {
 
 	<summary class="sumMenuTitle" >Display scene settings</summary>
 
+	<p>Update the appearance of the scene. Has no effect on exported data.</p>
 
 
 	Toggles

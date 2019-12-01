@@ -17,7 +17,7 @@ OVN.getMenu = function () {
 
 	<summary>OBJ viewer NASA files</summary>
 
-	<div id=OVNdivMessage >A list of OBJ files from NASA on GitHub. Some files are very large and take a long time to load. You may meed to zoom way in or way out to see the model.</div>
+	<div id=OVNdivMessage >Select an OBJ file to open from an automatically generated list of OBJ files from NASA on GitHub. Some files are very large and take a long time to load. You may meed to zoom way in or way out to see the model.</div>
 
 	<select id=OVNselObj onchange=OVN.loadObj(this.value) size=20 ></select>
 

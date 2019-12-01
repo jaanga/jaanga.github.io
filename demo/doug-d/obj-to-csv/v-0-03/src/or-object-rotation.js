@@ -13,6 +13,8 @@ OR.getMenu = function () {
 
 	<summary>Object rotation </summary>
 
+	<p>Rotate the model around the origin.</p>
+
 	<p title="rotation: -180 to 180" >
 		rotation x <output id=outRotationX >0</output><br>
 		<input type="range" id="rngRotatationX" min=-180 max=180 step=1 value=0

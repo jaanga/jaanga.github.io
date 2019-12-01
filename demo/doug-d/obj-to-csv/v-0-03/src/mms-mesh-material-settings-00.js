@@ -13,6 +13,8 @@ MMS.getMenu = function () {
 
 	<summary class="sumMenuTitle" >Mesh material settings</summary>
 
+	<p>Update the appearance of the OBJ model. Has no effect on exported data.</p>
+
 	<p>
 		<button onclick=MMS.applyMaterialNormal() >apply material normal</button>
 	</p>
@@ -48,9 +50,12 @@ MMS.getMenu = function () {
 MMS.applyMaterialNormal = function() {
 
 
-	mesh.traverse(child =>
-		child.material = new THREE.MeshNormalMaterial( { opacity: 0.85, side: 2, transparent: true } )
-	)
+	mesh.traverse(child => {
+
+		child.material = new THREE.MeshNormalMaterial({ opacity: 0.85, side: 2, transparent: true });
+		//child.material.needsUpdate = true;
+
+	} )
 
 }
 
@@ -58,7 +63,7 @@ MMS.applyMaterialNormal = function() {
 MMS.applyMaterialRandom = function() {
 
 	mesh.traverse( child =>
-			child.material = new THREE.MeshBasicMaterial( { color: 0xffffff * Math.random(), opacity: 0.85, side:2, transparent: true  } )
+		child.material = new THREE.MeshBasicMaterial( { color: 0xffffff * Math.random(), opacity: 0.85, side:2, transparent: true  } )
 	)
 
 }
@@ -71,9 +76,9 @@ MMS.applyMaterialTexture = function () {
 
 	texture = new THREE.TextureLoader().load(url);
 
-	mesh.traverse( child =>
-			child.material = new THREE.MeshBasicMaterial( { color: 0xdddddd, map: texture, opacity: 0.85, side:2, transparent: true  } )
-	)
+	mesh.traverse(child =>
+		child.material = new THREE.MeshBasicMaterial({ color: 0xdddddd, map: texture, opacity: 0.85, side: 2, transparent: true })
+	);
 
 }
 

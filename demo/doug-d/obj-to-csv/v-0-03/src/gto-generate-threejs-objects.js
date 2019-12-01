@@ -28,6 +28,8 @@ GTO.getMenu = function () {
 
 	<summary>Generate Three.js objects</summary>
 
+	<p>Create new geometries by algorithm</p>
+
 	<p>
 		<select onchange=GTO.drawGeometry(this.selectedIndex) size=8 >${ gto }</select>
 	</p>

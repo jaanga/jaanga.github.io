@@ -75,7 +75,7 @@ OVG.getMenu = function () {
 
 	<summary>OBJ viewer gallery</summary>
 
-	<div id=divMessage >A curated list of OBJ files from around the internet. Some files are very large and take a long time to load. You may meed to zoom way in or way out to see the model.</div>
+	<div id=divMessage >Select an OBF file to load from curated list of OBJ files from around the internet. Some files are very large and take a long time to load. You may meed to zoom way in or way out to see the model.</div>
 
 	<select id=selObj onchange=OVG.loadObj(this.value) size=30>${ options}</select>
 

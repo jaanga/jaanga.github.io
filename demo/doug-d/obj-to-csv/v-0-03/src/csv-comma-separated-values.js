@@ -13,6 +13,8 @@ CSV.getMenu = function () {
 
 			<summary>Export contour data</summary>
 
+			<p>Export contour data to CSV file as continuous lines or as individual two vertex segments.</p>
+
 			<p>
 				<button onclick=CSV.getCsvLines(); >get CSV lines</button>
 

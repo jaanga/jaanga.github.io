@@ -9,6 +9,8 @@ OFR.getMenu = function () {
 
 	<summary>File open OBJ file</summary>
 
+	<p>Open a file using the file dialog box</p>
+
 	<p><input type=file id=inpFile onchange=OFR.openFile(this); accept = '.mtl, .obj' multiple ></p>
 
 	<div id=OFRdivMessage ></div>

@@ -44,6 +44,8 @@ GCO.getMenu = function () {
 
 	<summary>Get contour points</summary>
 
+	<p>Adjust contour line parameters. Generate vertices. Draw points and lines.</p>
+
 	<p>
 		Toggles
 	</p>

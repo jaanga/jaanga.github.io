@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="Load and view 3D OBJ in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=description content="Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files." >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content = "2019-11-30" >
-<meta name = "version" content = "0.02.0" >
+<meta name="date" content = "2019-12-01" >
+<meta name = "version" content = "0.03.00" >
 
 <title></title>
 
@@ -41,9 +41,9 @@
 		<header id="hdrTitle" ></header>
 
 		<p>
-			<button onclick=controls.reset(); >reset view</button>
+			<button onclick=controls.reset(); title="Return to default view">reset view</button>
 
-			<button onclick=zoomObjectBoundingSphere(); >zoom all</button>
+			<button onclick=zoomObjectBoundingSphere(); title="zoom without shifting camera angle" >zoom all</button>
 		</p>
 
 		<div id=GTOdivMenuGenerateThreejsObjects ></div>
