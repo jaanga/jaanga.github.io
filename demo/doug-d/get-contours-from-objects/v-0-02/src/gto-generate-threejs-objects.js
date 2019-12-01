@@ -50,7 +50,7 @@ GTO.drawGeometry = function ( index ) {
 	const geometry = new THREE[ items.shift() + "Geometry" ]( ...items );
 	const material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
 
-	mesh = new THREE.Mesh(geometry, material);
+	mesh = new THREE.Mesh(geometry, material);z
 
 	scene.add(mesh);
 

@@ -95,37 +95,3 @@ ${ line.geometry.vertices[1].toArray()},${i}\n`;
 	a = null;
 
 }
-
-CSV.xxxgetCsv= function() {
-
-	pointFirst = pointsOfIntersection.vertices[ 0 ].toArray().join();
-	console.log( 'pf', pointFirst );
-
-	index = 0;
-	txt = contours.children.map( contour => {
-
-		const lines = contour.children;
-		//console.log( 'lines', index, lines );
-
-		vertices = lines.map( line => {
-
-			txt = line.geometry.vertices.filter( vertex => vertex.toArray().join() !== pointFirst ).map( vertex =>
-				`${ vertex.toArray() },${index}`
-
-			).join( "\n" );
-
-			index++;
-			return txt;
-
-		} ).join( "\n");
-
-
-		//console.log( 'vertices\n', vertices );
-
-		return vertices;
-
-	}).join( "\n" );
-
-	divCsv.innerText = txt;
-
-}
