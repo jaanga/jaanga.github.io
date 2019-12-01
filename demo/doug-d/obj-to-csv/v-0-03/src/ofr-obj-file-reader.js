@@ -45,6 +45,8 @@ OFR.openFile = function (files) {
 
 		//txtArea.innerHTML = reader.result;
 
+		window.dispatchEvent(eventResetAll);
+
 		OFRdivMessage.innerHTML =
 			'<p>name: ' + files.files[0].name + '<br>' +
 			'size: ' + files.files[0].size.toLocaleString() + ' bytes<br>' +
@@ -65,24 +67,76 @@ OFR.openFile = function (files) {
 
 OFR.drawMesh = function (object) {
 
-	window.dispatchEvent(eventResetAll);
 
-	scene.remove(mesh );
+	scene.remove(mesh);
 
-	mesh = new THREE.Group();
+	const geometryMerged = OFR.getMeshesMergeGeometry(object);
 
-	const meshes = object.children.map(obj => getObjMesh(obj))
+	const material = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide, transparent: true });
 
-	mesh.add(...meshes);
+	mesh = new THREE.Mesh(geometryMerged, material);
 
-	const bBox = new THREE.Box3().setFromObject(mesh);
-	const radius = bBox.getBoundingSphere(new THREE.Vector3()).radius;
-	const scale = 100 / radius;
-	mesh.scale.set(scale, scale, scale);
-	mesh.position.y = -50;
+	mesh.name = name;
 
 	scene.add(mesh);
 
 	controls.reset();
+
+	zoomObjectBoundingSphere();
+
+	//scene.remove(mesh );
+
+	// mesh = new THREE.Group();
+
+	// const meshes = object.children.map(obj => getObjMesh(obj))
+
+	// mesh.add(...meshes);
+
+	// const bBox = new THREE.Box3().setFromObject(mesh);
+	// const radius = bBox.getBoundingSphere(new THREE.Vector3()).radius;
+	// const scale = 100 / radius;
+	// mesh.scale.set(scale, scale, scale);
+	// mesh.position.y = -50;
+
+	// scene.add(mesh);
+
+	// controls.reset();
+
+};
+
+
+
+OFR.getMeshesMergeGeometry = function (object) {
+
+	const geometry = new THREE.Geometry();
+
+	object.children.forEach(child => {
+
+		child.geometry = child.geometry.type === "BufferGeometry" ?
+			new THREE.Geometry().fromBufferGeometry(child.geometry) : child.geometry;
+
+		if (!child.geometry) { console.log('child', child); }
+
+		const p = child.position.clone();
+
+		const clone = child.geometry.clone();
+		clone.applyMatrix(new THREE.Matrix4().makeTranslation(-p.x, -p.y, -p.z));
+		clone.applyMatrix(new THREE.Matrix4().makeRotationX(0.5 * Math.PI));
+
+		geometry.merge(clone);
+
+	});
+
+	geometry.center();
+
+	geometry.computeBoundingBox();
+
+	const size = geometry.boundingBox.getSize( new THREE.Vector3() );
+
+	const scale = 100 / size.z;
+
+	geometry.applyMatrix( new THREE.Matrix4().makeScale(scale, scale, scale ) );
+
+	return geometry;
 
 };
