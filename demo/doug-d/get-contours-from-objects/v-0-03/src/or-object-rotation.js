@@ -15,19 +15,19 @@ OR.getMenu = function () {
 
 	<p title="rotation: -180 to 180" >
 		rotation x <output id=outRotationX >0</output><br>
-		<input type="range" id="rngRotatationX" min=${ -Math.PI} max=${Math.PI} step=0.1 value=0
+		<input type="range" id="rngRotatationX" min=-180 max=180 step=1 value=0
 			oninput=OR.updateRotationX(this.value)>
 	</p>
 
 	<p title="rotation: -180 to 180" >
 		rotation y <output id=outRotationY class=floatRight >0</output><br>
-		<input type="range" id="rngRotatationY" min=${ -Math.PI} max=${Math.PI} step=0.1 value=0
+		<input type="range" id="rngRotatationY" min=-180 max=180 step=1  value=0
 			oninput=OR.updateRotationY(this.value)>
 	</p>
 
 	<p title="rotation: -180 to 180" >
 		rotation z <output id=outRotationZ class=floatRight >0</output><br>
-		<input type="range" id="rngRotatationZ" min=${ -Math.PI} max=${Math.PI} step=0.1 value=0
+		<input type="range" id="rngRotatationZ" min=-180 max=180 step=1  value=0
 			oninput=OR.updateRotationZ(this.value)>
 	</p>
 
@@ -42,10 +42,9 @@ OR.getMenu = function () {
 
 OR.updateRotationX = function (angle) {
 
-	mesh.rotation.x = angle;
+	mesh.rotation.x = angle * Math.PI / 180;
 
-	outRotationX.innerHTML = ((180 / Math.PI) * angle).toFixed();
-
+	outRotationX.innerHTML = angle;
 
 	mesh.updateMatrix();
 
@@ -55,13 +54,9 @@ OR.updateRotationX = function (angle) {
 
 OR.updateRotationY = function (angle) {
 
-	//console.log('a', angle );
+	mesh.rotation.y = angle * Math.PI / 180;
 
-	mesh.rotation.y = angle;
-
-	outRotationY.innerHTML = ((180 / Math.PI) * angle).toFixed();
-
-	//console.log('', mesh.rotation.z);
+	outRotationY.innerHTML = angle;
 
 	mesh.updateMatrix();
 
@@ -71,13 +66,9 @@ OR.updateRotationY = function (angle) {
 
 OR.updateRotationZ = function (angle) {
 
-	//console.log('a', angle );
+	mesh.rotation.z =  angle * Math.PI / 180;
 
-	mesh.rotation.z = angle;
-
-	outRotationZ.innerHTML = ((180 / Math.PI) * angle).toFixed();
-
-	//console.log('', mesh.rotation.z);
+	outRotationZ.innerHTML = angle;
 
 	mesh.updateMatrix();
 
