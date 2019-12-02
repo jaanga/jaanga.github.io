@@ -11,8 +11,23 @@ Read me link: https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d
 
 ## Wishlist
 
-* 2019-11-17 ~ Theo ~ save useful optionsin location hash
+* 2019-11-17 ~ Theo ~ save even more useful options in location hash
 * 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
+
+
+## Dev release [render-csv-file-0-07.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-07/render-csv-file.html )
+
+_Work-in-progress, much unfinished_
+
+* R: Code split out into modules
+* F: Add gather list of sample files from dashdotdotdashdotdot
+* F: Add gather list of sample files from Jaanga
+
+
+## [render-csv-file-0-06.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-06.html )
+
+* F: Add open file using OS file dialog box
+* R: Various fixes and cleanup
 
 
 ## [render-csv-file-0-05.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-05.html )
