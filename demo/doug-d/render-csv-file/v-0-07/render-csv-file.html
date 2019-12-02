@@ -152,9 +152,8 @@ function init() {
 
 function onHashChange() {
 
-	url = location.hash.match( /url=(.*?).csv/i );
+	const url = location.hash.match( /url=(.*?)\.csv/i );
 	url = url ? url[ 1 ] + ".csv": urlDefault;
-	//console.log( '', url  );
 
 	if ( url !== urlPrevious ) {
 
@@ -163,12 +162,9 @@ function onHashChange() {
 		.then( csv => CFR.getLines( csv ) )
 		.then( () => zoomObjectBoundingSphere() )
 
-
-
 		urlPrevious = url;
 
 	}
-
 
 }
 

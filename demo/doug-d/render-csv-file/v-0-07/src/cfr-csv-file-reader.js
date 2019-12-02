@@ -57,26 +57,25 @@ CFR.openFile = function (files) {
 
 
 
-CFR.getLines = function( csv ) {
+CFR.getLines = function (csv) {
 
-	const lines = csv.split( /\n/g ).map( line => line.split( ',' ) ).slice( 1, -1 );
+	const lines = csv.split(/\n/g).map(line => line.split(',')).slice(1, -1);
 	//console.log('lines', lines);
 
 	let elevationPrevious = -1;
 	const contours = [];
 	let contour = [];
 
-	for ( let i = 0; i < lines.length; i++ ) {
+	for (let i = 0; i < lines.length; i++) {
 
-		const line = lines[ i ];
-		elevation = line[ 3 ];
-		contour.push( line );
+		const line = lines[i];
+		contour.push(line);
 
-		if ( elevation !== elevationPrevious ) {
+		elevation = line[3];
 
-			//contour.push( lineStart );
+		if (elevation !== elevationPrevious) {
 
-			contours.push( contour );
+			contours.push(contour);
 			elevationPrevious = elevation;
 			contour = [];
 
@@ -84,29 +83,28 @@ CFR.getLines = function( csv ) {
 
 	}
 
-	//console.log({ contours });
+	CFR.renderLines(contours)
 
-	CFR.renderLines( contours )
-}
+};
 
 
 CFR.renderLines = function( contours ) {
 
-	scene.remove( mesh );
+	scene.remove(mesh);
 
-	CFR.geometry = new THREE.Geometry();
-	const geometry = new THREE.Geometry();
+	mesh = new THREE.Group();
 
 	for ( let contour of contours ) {
 
+		const geometry = new THREE.Geometry();
 		geometry.vertices = contour.map( vertex => new THREE.Vector3().fromArray( vertex.map( coor => parseFloat( coor ) ) ) );
 
-		CFR.geometry.merge(geometry);
+		const material = new THREE.LineBasicMaterial( { color: 0xffffff * Math.random() } );
+		const line = new THREE.Line(geometry, material);
+
+		mesh.add(line);
 
 	}
-
-	const material = new THREE.LineBasicMaterial( { color: 0xffffff * Math.random() } );
-	mesh = new THREE.Line( CFR.geometry, material );
 
 	scene.add(mesh);
 

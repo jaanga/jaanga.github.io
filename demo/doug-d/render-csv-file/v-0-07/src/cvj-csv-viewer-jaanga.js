@@ -2,7 +2,7 @@
 const CVJ = {};
 
 CVJ.url = "https://api.github.com/repos/jaanga/jaanga.github.io/git/trees/master?recursive=1";
-CVJ.prefix = "https://rawcdn.githack.com/jaanga/jaanga.github.io/master/demo/doug-d/csv-file-samples/";
+CVJ.prefix = "https://rawcdn.githack.com/jaanga/jaanga.github.io/master/";
 
 
 
@@ -44,7 +44,7 @@ CVJ.getFilesCsv = function () {
 		.then(response => response.json())
 		.then(json => {
 
-			CVJ.csvData = json.tree.filter(item => item.path.endsWith(".csv")).map(item => item.path)
+			CVJ.csvData = json.tree.filter(item => item.path.includes("csv-file-samples")).filter(item => item.path.endsWith(".csv")).map(item => item.path)
 
 			CVJselCsv.innerHTML = CVJ.getOptions();
 
