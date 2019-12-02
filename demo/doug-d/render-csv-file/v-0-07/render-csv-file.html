@@ -1,70 +1,116 @@
 <!doctype html>
-<html lang="en" >
+<html lang = "en" >
 <head>
-<meta charset="utf-8" >
+
+<meta charset = "utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=description content="Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2019-11-27" >
+<meta name="date" content = "2019-12-01" >
+<meta name = "version" content = "0.07.00" >
+
 <title></title>
-<style>
-	/* Copyright 2019 Theo Armour. MIT License */
 
-	:root { font: 11pt monospace; }
+<link href="src/style.css" rel="stylesheet" >
 
-	* { box-sizing: border-box; }
-
-	body { margin: 0; overflow: hidden; }
-
-	a { color: crimson; text-decoration: none; }
-	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
-
-	button { background-color: #ddd; border: none;  border-radius: 2px; color: #322; cursor: pointer; padding: 3px 5px; }
-	button:hover { background: #ccc; color: #fff }
-
-	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; border-radius: 2px; width: 100%; }
-	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
-	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 18px; width: 10px; }
-
-	#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
-
-</style>
 </head>
+
 <body>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
 
-	<nav id = "navMenu" >
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
 
-		<div id = "divTitle" ></div>
+	<script src="src/gto-generate-threejs-objects.js" ></script>
+	<script src="src/cfr-csv-file-reader.js"></script>
+	<script src="src/ofr-obj-file-reader.js"></script>
+
+	<script src="src/cvd-csv-viewer-dashdotdot.js"></script>
+	<script src="src/cvj-csv-viewer-jaanga.js"></script>
+	<script src="src/or-object-rotation.js"></script>
+
+
+	<script src="src/mms-mesh-material-settings-00.js" ></script>
+	<script src="src/dss-display-scene-settings.js" ></script>
+
+	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
+
+	<nav id="navMenu" >
+
+		<header id="hdrTitle" ></header>
 
 		<p>
-			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+			<button onclick=controls.reset(); title="Return to default view">reset view</button>
+
+			<button onclick=zoomObjectBoundingSphere(); title="zoom without shifting camera angle" >zoom all</button>
 		</p>
 
-		<p>
-			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
-		</p>
+		<div id=GTOdivMenuGenerateThreejsObjects ></div>
 
-		<div id = "divLog" ></div>
+		<div id=CFRdivMenuCsvFileReader ></div>
+
+
+
+		<div id=CVDdivCsvViewerDashDotDot ></div>
+
+		<div id=CVJdivCsvViewerJaanga ></div>
+
+		<div id=ORdivObjectRotation ></div>
+
+
+		<div id=MMSdivMeshMaterialSettings > </div>
+
+		<div id=DSSdivMenuDisplaySceneSettings ></div>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); > ❦ </a></center>
+
+		</footer>
 
 	</nav>
 
+	<main id=main >
+
+		<div id="divContent" ></div>
+
+	</main>
+
+
 <script>
 
-let mesh, meshGroup
+let urlDefault = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
+let urlPrevious = "";
 
-const urlSourceCode = "https://github.com/zzzzz/zzzzz.github.io/tree/master/xxxxx/";
+const urlSourceCode = `https://github.com/`;
+const urlSourceCodeIcon = "src/github-mark-32.png";
 
-let sceneRotation = 1;
+let mesh, material, geometry, edges, boxHelper;
+let axesHelper;
 let renderer, camera, controls, scene;
+let sceneRotation = 1;
+let eventResetAll;
 
 init();
 animate();
 
 function init() {
 
-	divTitle.innerHTML = getTitle();
+	hdrTitle.innerHTML = getTitle();
+
+	CFRdivMenuCsvFileReader.innerHTML = CFR.getMenu()
+
+	CVDdivCsvViewerDashDotDot.innerHTML = CVD.getMenu();
+
+	CVJdivCsvViewerJaanga.innerHTML = CVJ.getMenu();
+
+	ORdivObjectRotation.innerHTML = OR.getMenu();
+
+	MMSdivMeshMaterialSettings.innerHTML = MMS.getMenu();
+
+
+	DSSdivMenuDisplaySceneSettings.innerHTML = DSS.getMenu();
 
 	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -80,61 +126,114 @@ function init() {
 
 	scene = new THREE.Scene();
 
-	window.addEventListener( 'resize', onWindowResize, false );
-	window.addEventListener( 'orientationchange', onWindowResize, false );
-	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
-	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+	window.addEventListener( "resize", onWindowResize, false );
+	window.addEventListener( "orientationchange", onWindowResize, false );
+	window.addEventListener( "keyup", () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( "click", () => sceneRotation = 0, false );
 
-	const axesHelper = new THREE.AxesHelper( 100 );
+	axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	//addMesh();
-
-	addMeshes()
-
-}
-
-
-
-function addMeshes( count = 100 ) {
-
-	scene.remove.meshGroup;
-	meshGroup = new THREE.Group();
-
-	for (let i = 0; i < count; i++ ) { meshGroup.add( addMesh() ) };
-
-	meshGroup.children.forEach( mesh => mesh.position.set( Math.random() * 100 - 50, Math.random() * 100 - 50, Math.random() * 100 - 50 ) )
-
-	scene.add( meshGroup )
-
-}
-
-
-function addMesh( size = 20 ) {
-
-	const geometry = new THREE.BoxGeometry( size, size, size );
-	const material = new THREE.MeshNormalMaterial();
+	geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
 	mesh = new THREE.Mesh( geometry, material );
-	//scene.add( mesh );
+	scene.add( mesh );
 
-	return mesh;
+	//  {"bubbles": true, "cancelable": false, detail: true }
+
+	eventResetAll = new Event( "onresetall" );
+
+	window.addEventListener( "onresetall", DSS.reset, false );
+
+	window.addEventListener( 'hashchange', onHashChange, false );
 
 }
 
 
+function onHashChange() {
+
+	url = location.hash.match( /url=(.*?).csv/i );
+	url = url ? url[ 1 ] + ".csv": urlDefault;
+	//console.log( '', url  );
+
+	if ( url !== urlPrevious ) {
+
+		fetch( new Request( url ) )
+		.then( response => response.text() )
+		.then( csv => CFR.getLines( csv ) )
+		.then( () => zoomObjectBoundingSphere() )
+
+
+
+		urlPrevious = url;
+
+	}
+
+
+}
+
+
+
+function zoomObjectBoundingSphere( obj = mesh ) {
+	//console.log( "obj", obj );
+
+	const bbox = new THREE.Box3().setFromObject( obj );
+	//console.log( "bbox", bbox )
+
+	if ( bbox.isEmpty() === true ) { return; }
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	center = sphere.center;
+	radius = sphere.radius;
+
+	controls.target.copy( center ); // needed because model may be far from origin
+	controls.maxDistance = 5 * radius;
+
+	camera.position.copy( center.clone().add( new THREE.Vector3( - 1.5 * radius, - 1.5 * radius, 1.5 * radius ) ) );
+	camera.near = 0.001 * radius; //2 * camera.position.length();
+	camera.far = 10 * radius; //2 * camera.position.length();
+	camera.updateProjectionMatrix();
+
+	// if ( lightDirectional ) {
+
+	// 	lightDirectional.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
+	// 	lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+
+	// 	targetObject.position.copy( center );
+
+	// 	//scene.remove( cameraHelper );
+	// 	//cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+	// 	//scene.add( cameraHelper );
+
+	// }
+
+};
+
+
+// menus
+
+function toggleNavMenu() {
+
+	expandButton.classList.toggle( "collapsed" );
+	navMenu.classList.toggle( "collapsed" );
+	main.classList.toggle( "collapsed" );
+
+}
 
 
 function getTitle() {
 
-	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+	document.title = document.title ? document.title : location.href.split( "/" ).pop().slice( 0, - 5 ).replace( /-/g, " " );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+	const description = document.head.querySelector( "[ name=description ]" ).content;
 
 	const htm =
 	`
 		<h2>
 			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
-				<img src=https://github.com/fluidicon.png height=18 >
+				<img src="${ urlSourceCodeIcon }" alt="GitHub logo" height=18 style=opacity:0.5; >
 			</a>
-			<a href="" title="Click to reload this page" >${ document.title }</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
 		</h2>
 
 		<p>
@@ -147,6 +246,7 @@ function getTitle() {
 }
 
 
+// three.js
 
 function onWindowResize() {
 
@@ -157,7 +257,7 @@ function onWindowResize() {
 
 	controls.handleResize();
 
-	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+	//console.log( "onWindowResize  window.innerWidth", window.innerWidth );
 
 }
 
