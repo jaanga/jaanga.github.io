@@ -8,6 +8,26 @@ Canonical link: https://jaanga.github.io/demo/doug-d/render-csv-file/
 
 Read me link: https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file
 
+## Concept
+
+
+Features
+
+* Browse and open directories of CSV files that are lists of contour line vertices
+* Directories may be on line or on a computer
+* Display contour lines in interactive 3D
+* Provide a number of tools for manipulating and editing the output
+* Provide an API with permalinks
+
+### Mission
+
+* Provide an easy way of viewing CSV files of vertices in 3D
+
+
+### Vision
+
+* Reapproppriate and reimagine iconic works of art - and familiar objects - in highly accessible, manipulatable ways
+
 
 ## Wishlist
 
@@ -31,6 +51,9 @@ _Work-in-progress, much unfinished_
 
 
 ## [render-csv-file-0-05.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-05.html )
+
+
+<img src="../images/group-05-elefante-01.png" width=50% >
 
 * Bug: Narrower menu means menu can be toggled on iPhone5
 * Feature: Canonical link established
