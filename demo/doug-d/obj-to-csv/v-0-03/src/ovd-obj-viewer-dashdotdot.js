@@ -19,7 +19,8 @@ OVD.getMenu = function () {
 
 	<summary>OBJ viewer &mdash;.. &mdash;.. files</summary>
 
-	<div id=OVDdivMessage >Select an OBJ file to open from an automatically generated list of OBJ files from &mdash;.. &mdash;.. on GitHub.</div>
+	<div id=OVDdivMessage >Select an OBJ file to open from an automatically generated list of OBJ files from
+	<a href="https://github.com/dashdotdotdashdotdot/Lines" target="_blank">&mdash;.. &mdash;..</a>  on GitHub.</div>
 
 	<select id=OVDselObj onchange=OVD.loadObj(this.value) size=5 ></select>
 

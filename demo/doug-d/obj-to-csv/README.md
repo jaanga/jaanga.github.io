@@ -32,6 +32,10 @@ _basic-html.html_
 	- Export as stings of vertices
 	- Export as two vertex pairs of of segments
 
+### Credits
+
+* https://github.com/dashdotdotdashdotdot/Lines
+
 ### Mission
 
 * to be abl to create contours for any OBJ file
