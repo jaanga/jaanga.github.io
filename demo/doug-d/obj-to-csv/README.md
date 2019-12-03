@@ -70,6 +70,12 @@ These are the links that got me started
 <details open >
 <summary>Change log </summary>
 
+### 2019-12-02 ~ Theo
+
+OBJ to CSV 0.03.01
+
+* B: Fix link to read me
+
 ### 2019-12-01
 
 * C: Add text to modules

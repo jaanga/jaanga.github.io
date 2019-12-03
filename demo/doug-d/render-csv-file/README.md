@@ -26,7 +26,7 @@ Features
 
 ### Vision
 
-* Reapproppriate and reimagine iconic works of art - and familiar objects - in highly accessible, manipulatable ways
+* Reappropriate and re-imagine iconic works of art - and familiar objects - in highly accessible, manipulatable ways
 
 
 ## Wishlist
