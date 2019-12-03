@@ -9,6 +9,7 @@ OVG.objData = [
 
 	"dashdotdotdashdotdot",
 	"https://rawcdn.githack.com/dashdotdotdashdotdot/Lines/master/venus.obj",
+	"https://rawcdn.githack.com/dashdotdotdashdotdot/Lines/master/am-001_noblocks.obj",
 	"Mr.doob",
 	"https://rawcdn.githack.com/mrdoob/three.js/master/examples/models/obj/cerberus/Cerberus.obj",
 	"https://rawcdn.githack.com/mrdoob/three.js/master/examples/models/obj/emerald.obj",

@@ -6,8 +6,8 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content = "2019-12-01" >
-<meta name = "version" content = "0.07.00" >
+<meta name="date" content = "2019-12-02" >
+<meta name = "version" content = "0.07.01" >
 
 <title></title>
 
@@ -152,7 +152,7 @@ function init() {
 
 function onHashChange() {
 
-	const url = location.hash.match( /url=(.*?)\.csv/i );
+	let url = location.hash.match( /url=(.*?)\.csv/i );
 	url = url ? url[ 1 ] + ".csv": urlDefault;
 
 	if ( url !== urlPrevious ) {
