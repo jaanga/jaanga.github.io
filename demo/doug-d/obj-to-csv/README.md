@@ -67,7 +67,8 @@ _basic-html.html_
 
 #### [group-points-of-intersection read me]( https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html )
 
-* Covers the preliminary releases
+* Covers the details and links to five earlier releases
+* Includes the file from Paul West that that inspired
 
 
 </details>
