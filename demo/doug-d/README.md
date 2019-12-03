@@ -5,14 +5,14 @@
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 
-# [DougD Read Me] ( #README.md )
+# [DougD Read Me]( #README.md )
 
 * Intagram: [dashdotdotdashdotdot]( https://www.instagram.com/dashdotdotdashdotdot/ )
 * GitHub: https://github.com/dashdotdotdashdotdot/Lines
 
 ## [OBJ to CSV Read Me]( https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv )
 
-## [render csv file]( https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file )
+## [Render CSV file]( https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file )
 
 ***
 
