@@ -62,14 +62,13 @@ CFR.getLines = function (csv) {
 	const lines = csv.split(/\n/g).map(line => line.split(',')).slice(1, -1);
 	//console.log('lines', lines);
 
-	let elevationPrevious = -1;
+	let elevationPrevious = lines[0];
 	const contours = [];
 	let contour = [];
 
 	for (let i = 0; i < lines.length; i++) {
 
 		const line = lines[i];
-		contour.push(line);
 
 		elevation = line[3];
 
@@ -81,6 +80,7 @@ CFR.getLines = function (csv) {
 
 		}
 
+		contour.push(line);
 	}
 
 	CFR.renderLines(contours)
@@ -99,10 +99,18 @@ CFR.renderLines = function( contours ) {
 		const geometry = new THREE.Geometry();
 		geometry.vertices = contour.map( vertex => new THREE.Vector3().fromArray( vertex.map( coor => parseFloat( coor ) ) ) );
 
-		const material = new THREE.LineBasicMaterial( { color: 0xffffff * Math.random() } );
-		const line = new THREE.Line(geometry, material);
+		if (geometry.vertices.length > 1) {
 
-		mesh.add(line);
+			const material = new THREE.LineBasicMaterial( { color: 0xffffff * Math.random() } );
+			const line = new THREE.Line(geometry, material);
+
+			mesh.add(line);
+
+		} else {
+
+			console.log('contour', contour);
+
+		}
 
 	}
 
