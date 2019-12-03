@@ -45,6 +45,10 @@ _basic-html.html_
 
 
 
+[group-points-of-intersection read me]( https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html  )
+
+* Covers the preliminary releases
+
 
 </details>
 
@@ -54,8 +58,6 @@ _basic-html.html_
 * 2019-12-01 ~ Theo ~ Scale along three axis not just Z
 * 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
 * 2019-12-01 ~ Theo ~ Better use of original materials
-
-
 
 
 </details>

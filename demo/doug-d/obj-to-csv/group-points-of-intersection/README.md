@@ -1,7 +1,7 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/#cookbook-threejs/examples/0-templates/README.md "View file as a web page." ) </span>
 
 
-<div><input type=button onclick="window.location.href='https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html#README.md'";
+<div><input type=button onclick="window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv/group-points-of-intersection'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
 <br>
@@ -11,15 +11,42 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <!--
 <iframe src=https://jaanga.github.io/#cookbook/examples/xxxxxx/xxxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
-
-## Full Screen: [group-points-of-intersection]( https://jaanga.github.io/cookbook/examples/xxxxxx/xxxxxx.html )
 -->
+
+Deprecated. See [OBJ to CSV ]( https://jaanga.github.io/demo/doug-d/obj-to-csv/readme.html )
 
 
 ## Concept
 
 
+### Latest [ group-points-of-intersection-0-05 ]( group-points-of-intersection-0-05.html )
+
+* Code cleanup
+* Try to grok code and simplify - but fail
+
+### [ group-points-of-intersection-0-04 ]( group-points-of-intersection-0-04.html )
+
+* Add draw multiple contours
+* Add export data to CSV file
+
+### [ group-points-of-intersection-0-03 ]( group-points-of-intersection-0-03.html )
+
+* Add load 'Walt' and load 'venus'
+
+### [ group-points-of-intersection-0-02 ]( group-points-of-intersection-0-02.html )
+
+* Add menu, generate 3D objects
+
+### [ group-points-of-intersection-0-01 ]( group-points-of-intersection-0-01.html )
+
+* Somewhat 'prettified'
+
 ### [ group-points-of-intersection-0-00 ]( group-points-of-intersection-0-00.html )
+
+* Download and fix of [Paul West's jsFiddle]( https://jsfiddle.net/prisoner849/uqm6bk1k/ )
+* Click 'press me' at top left
+
+
 
 ## To Do / Wish List
 
