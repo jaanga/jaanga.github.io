@@ -1,4 +1,4 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/doug-d/obj-to-csv/ "View file as a web page." ) </span>
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/doug-d/obj-to-csv/readme.html "View file as a web page." ) </span>
 
 
 <div><input type=button onclick="window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv/README.md'";
@@ -10,13 +10,15 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <!--
 <iframe src=https://jaanga.github.io/demo/doug-d/obj-to-csv/ width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
+-->
 
 ### Full Screen: [OBJ to CSV]( https://jaanga.github.io/demo/doug-d/obj-to-csv/ )
 
--->
 
 <details open >
 <summary>Concept</summary>
+
+### Features
 
 - Load and view OBJ files in 3D
 	- Scale and center geometry
@@ -30,12 +32,26 @@ _basic-html.html_
 	- Export as stings of vertices
 	- Export as two vertex pairs of of segments
 
+### Mission
+
+* to be abl to create contours for any OBJ file
+* To be able to generate contours for any 3D file (STL etc ) or parametric
+
+### Vision
+
+* Augment 3D so as to supply it with even greater dimensionality
+
+### Releases
+
+
+
+
 </details>
 
 <details open >
 <summary>To do and wish list </summary>
 
-* 2019-12-01 ~ Theo ~ Scale along three axs not just Z
+* 2019-12-01 ~ Theo ~ Scale along three axis not just Z
 * 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
 * 2019-12-01 ~ Theo ~ Better use of original materials
 
