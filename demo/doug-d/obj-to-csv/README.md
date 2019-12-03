@@ -43,9 +43,29 @@ _basic-html.html_
 
 ### Releases
 
+[OBJ to CSV 0.03 ]( v-0-03/get-contours-from-objects.html )
+
+* Keep hacking at better contours
+
+[OBJ to CSV 0.02 ]( v-0-02/get-contours-from-objects.html )
+
+* Keep hacking at better contours
+
+[OBJ to CSV 0.01 ]( v-0-01/get-contours-from-objects.html )
+
+* Adds export to segments
+* Mesh material settings
+* Add contour points toggles
 
 
-[group-points-of-intersection read me]( https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html  )
+[OBJ to CSV 0.00 ]( v-0-00/get-contours-from-objects.html )
+
+* Complete remake of group-points-of-intersection
+* Code split up into modules
+
+
+
+#### [group-points-of-intersection read me]( https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html )
 
 * Covers the preliminary releases
 
