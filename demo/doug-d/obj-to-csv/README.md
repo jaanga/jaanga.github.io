@@ -76,6 +76,7 @@ _basic-html.html_
 <details open >
 <summary>To do and wish list </summary>
 
+* 2019-12-03 ~ Theo ~ Add [decimate function]( https://threejs.org/examples/webgl_modifier_simplifier.html ) to reduce number of faces to inspected
 * 2019-12-01 ~ Theo ~ Scale along three axis not just Z
 * 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
 * 2019-12-01 ~ Theo ~ Better use of original materials
@@ -111,11 +112,21 @@ These are the links that got me started
 
 ### 2019-12-02 ~ Theo
 
-OBJ to CSV 0.03.01
+OBJ to CSV 0.03.01.1
+
+* F: Add link to files from &mdash;.. &mdash;..
+* R: Lowers initial cutting plane elevation to -50
+
+
+### 2019-12-02 ~ Theo
+
+OBJ to CSV 0.03.01.01
 
 * B: Fix link to read me
 
 ### 2019-12-01
+
+OBJ to CSV 0.03.01
 
 * C: Add text to modules
 * C: Rename to 'obj-to-csv'
