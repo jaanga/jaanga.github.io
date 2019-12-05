@@ -9,7 +9,7 @@ DLB.getMenu = function () {
 
 	const htm =
 		`
-<details open>
+<details>
 
 	<summary class="sumMenuTitle" >Draw basic lines</summary>
 

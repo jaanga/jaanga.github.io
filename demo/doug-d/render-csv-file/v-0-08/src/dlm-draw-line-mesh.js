@@ -9,7 +9,7 @@ DLM.getMenu = function () {
 
 	const htm =
 		`
-<details open>
+<details>
 
 	<summary class="sumMenuTitle" >Draw mesh lines</summary>
 

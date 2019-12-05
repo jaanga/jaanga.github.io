@@ -11,7 +11,7 @@ DSS.getMenu = function () {
 
 	const htm =
 		`
-<details open>
+<details>
 
 	<summary class="sumMenuTitle" >Display scene settings</summary>
 
