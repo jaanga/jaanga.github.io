@@ -35,6 +35,20 @@ Features
 * 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
 
 
+## Dev release [render-csv-file-0-08.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-08/render-csv-file.html )
+
+
+<img src="https://jaanga.github.io/demo/doug-d/images/rtc-08-thinker.png" style=width:50% >
+
+2019-12-05
+
+* F: Add basic lines
+* F: Add fat lines
+* F: Add mesh lines
+
+All the above have a variety of parameters. But all are still at an early stage. Certain workflows can freeze the browser. So reload often and press the 'Render...' buttons before updating that line type's parameters.
+
+
 ## Dev release [render-csv-file-0-07.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-07/render-csv-file.html )
 
 _Work-in-progress, much unfinished_

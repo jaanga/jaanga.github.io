@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time 3D in your browser using the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2018-05-06" >
+<title></title>
+<style>
+
+	body { font: 11pt monospace; margin: 0; overflow: hidden; }
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	#divMenu { margin: 0 20px; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/OrbitControls.js" ></script>
+
+
+<!--
+
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/WireframeGeometry2.js" ></script>
+
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/Wireframe.js" ></script>
+-->
+
+
+
+
+	<div id = "divMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<div id = "divContents" >
+
+			<p>
+				<button onclick=setFatLineBoxEdges(); >setFatLineBoxEdges</button>
+			</p>
+
+			<p>
+				<button onclick=setLineRandomVertices() >setLineRandomVertices</button>
+			</p>
+			<p>
+				<button onclick=drawFatLines(); >drawFatLines</button>
+			</p>
+
+			<p>
+				<button onclick=setFatLineRandomVertices(); >setFatLineRandomVertices</button>
+			</p>
+
+
+			<p>
+				<button onclick=setFatLineRandomVerticesColors() >setFatLineRandomVerticesColors</button>
+			</p>
+			<p>
+				<button onclick=controls.autoRotate=!controls.autoRotate; >rotation</button>
+			</p>
+
+		</div>
+
+	</div>
+
+<script>
+
+	scripts = [
+
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineSegmentsGeometry.js",
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineGeometry.js",
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineMaterial.js",
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/LineSegments2.js",
+	"https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/lines/Line2.js"
+
+];
+
+	let scriptsLoaded;
+
+	let line;
+
+	const v = function ( x, y, z ){ return new THREE.Vector3( x, y, z ); };
+
+	var renderer, camera, controls, scene, axesHelper;
+	var geometry, material, mesh;
+
+	init();
+	animate();
+
+	function init() {
+
+		divTitle.innerHTML =
+		`<h1>
+			<a href="" >` + location.href.split( '/' ).pop().slice( 0, -5 ).replace( /-/g, ' ' ) +`</a>
+		</h1>`;
+
+		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		document.body.appendChild( renderer.domElement );
+
+		camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+		camera.position.set( -100, -100, 100 );
+		camera.up.set( 0, 0, 1 );
+
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+		scene = new THREE.Scene();
+
+		window.addEventListener( 'resize', onWindowResize, false );
+
+		window.addEventListener( 'orientationchange', onWindowResize, false );
+
+		axesHelper = new THREE.AxesHelper( 100 );
+		scene.add( axesHelper );
+
+		geometry = new THREE.BoxGeometry( 50, 50, 50 );
+		material = new THREE.MeshNormalMaterial();
+		mesh = new THREE.Mesh( geometry, material );
+		//scene.add( mesh );
+
+		loadScripts();
+
+	}
+
+
+	function loadScripts() {
+
+		if ( !scriptsLoaded ) {
+
+			scripts.forEach( script => {
+
+				const scr = document.body.appendChild( document.createElement( 'script' ) );
+				//editor.onload = setEditContents;
+				scr.src = script;
+
+			});
+
+			scriptsLoaded = true;
+
+		}
+
+	}
+
+
+
+	function setFatLineBoxEdges() {
+
+		var geomPavement = new THREE.BoxBufferGeometry( 50, 80, 50 );
+
+		var edgesPavement = new THREE.EdgesGeometry( geomPavement );
+
+		var lineGeometry = new THREE.LineSegmentsGeometry().setPositions( edgesPavement.attributes.position.array );
+
+		var lineMaterial = new THREE.LineMaterial( { color: 0xff0000, linewidth: 10 } );
+
+		lineMaterial.resolution.set( window.innerWidth, window.innerHeight ); // important, for now...
+
+		var linePavement = new THREE.LineSegments2( lineGeometry, lineMaterial );
+
+		scene.add( linePavement );
+
+	}
+
+
+
+	function setLineRandomVertices() {
+
+			points = Array( 100 ).fill().map( () =>  v( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) );
+
+			var line;
+			geometry = new THREE.Geometry();
+			geometry.vertices = points;
+			material = new THREE.LineBasicMaterial( { color: 'magenta' } );
+			line = new THREE.Line( geometry, material );
+			scene.add( line );
+
+	}
+
+
+
+
+	function setFatLineRandomVertices() {
+
+		var divisions = 300;
+
+		const points = Array( divisions ).fill().map( () => 100 * Math.random() - 50 );
+		//const colors =  Array( divisions ).fill().map( () => Math.random() );
+		//console.log( 'points', points );
+
+		drawFatLines( points, 0xffffff * Math.random(), 15 );
+
+
+	}
+
+
+	function setFatLineRandomVerticesColors() {
+
+		var divisions = 300;
+
+		const points = Array( divisions ).fill().map( () => 100 * Math.random() - 50 );
+		//const colors =  Array( divisions ).fill().map( () => Math.random() );
+		//console.log( 'points', points );
+
+
+
+		colors = [];
+		var color = new THREE.Color();
+
+		for ( var i = 0, l = divisions; i < l; i ++ ) {
+
+			color.setHSL( i / l, 1.0, 0.5 );
+			colors.push( color.r, color.g, color.b );
+
+		}
+
+		drawFatLinesVertexColors( points, colors, 15 );
+	}
+
+
+
+	function drawFatLines( pts, color = 0xff0000, lineWidth = 10 ) {
+
+		points = pts || [ 1,1,1,1, 10, 10, 10,10, 10, 10, 1, 10 ];
+
+		scene.remove( line )
+
+		const geometry = new THREE.LineGeometry();
+		geometry.setPositions( points );
+		//geometry.setColors( colors );
+
+		const lineMaterial = new THREE.LineMaterial( {
+
+			color: color,
+			linewidth: lineWidth, // in pixels
+			//vertexColors: THREE.VertexColors,
+			resolution:  new THREE.Vector2( window.innerWidth, window.innerHeight ), // to be set by renderer, eventually
+			//dashed: false
+
+		} );
+
+		//lineMaterial.resolution.set( window.innerWidth, window.innerHeight ); // important, for now...
+
+		line = new THREE.Line2( geometry, lineMaterial );
+		line.computeLineDistances();
+		line.scale.set( 1, 1, 1 );
+		scene.add( line );
+
+	}
+
+
+
+	function drawFatLinesVertexColors( pts, colors = [ 1, 0, 1 ], lineWidth = 10 ) {
+
+		points = pts || [ 1,1,1,1, 10, 10, 10,10, 10, 10, 1, 10 ];
+
+		scene.remove( line )
+
+		const geometry = new THREE.LineGeometry();
+		geometry.setPositions( points );
+		geometry.setColors( colors );
+
+		const lineMaterial = new THREE.LineMaterial( {
+
+			color: 0xffffff,
+			linewidth: lineWidth, // in pixels
+			vertexColors: THREE.VertexColors,
+			resolution:  new THREE.Vector2( window.innerWidth, window.innerHeight ), // to be set by renderer, eventually
+			//dashed: false
+
+		} );
+
+		//lineMaterial.resolution.set( window.innerWidth, window.innerHeight ); // important, for now...
+
+		line = new THREE.Line2( geometry, lineMaterial );
+		line.computeLineDistances();
+		line.scale.set( 1, 1, 1 );
+		scene.add( line );
+
+	}
+
+
+	function onWindowResize() {
+
+		camera.aspect = window.innerWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
+
+		renderer.setSize( window.innerWidth, window.innerHeight );
+
+		//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+	}
+
+
+
+	function animate() {
+
+		requestAnimationFrame( animate );
+		renderer.render( scene, camera );
+		controls.update();
+
+	}
+
+</script>
+</body>
+</html>
