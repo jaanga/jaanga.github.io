@@ -47,6 +47,13 @@ _basic-html.html_
 
 ### Releases
 
+[OBJ to CSV 0.04.00 ]( v-0-04/get-contours-from-objects.html )
+
+2019-12-06
+
+* Contours beginning to look good
+
+
 [OBJ to CSV 0.03 ]( v-0-03/get-contours-from-objects.html )
 
 * Keep hacking at better contours
@@ -83,7 +90,7 @@ _basic-html.html_
 * 2019-12-03 ~ Theo ~ Add [decimate function]( https://threejs.org/examples/webgl_modifier_simplifier.html ) to reduce number of faces to inspected
 * 2019-12-01 ~ Theo ~ Scale along three axis not just Z
 * 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
-* 2019-12-01 ~ Theo ~ Better use of original materials
+* 2019-12-01 ~ Theo ~ Better use of original materials in OBJ file
 
 
 </details>

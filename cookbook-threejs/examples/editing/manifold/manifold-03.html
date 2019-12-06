@@ -180,20 +180,6 @@ function checkEdges() {
 
 	mesh.geometry.faces.forEach(function (face, idx) {
 
-		// let a = new THREE.Vector3();
-		// let b = new THREE.Vector3();
-		// let c = new THREE.Vector3();
-
-		// mesh.localToWorld( a.copy( mesh.geometry.vertices[face.a] ));
-		// mesh.localToWorld( b.copy( mesh.geometry.vertices[face.b] ));
-		// mesh.localToWorld( c.copy( mesh.geometry.vertices[face.c] ));
-
-		// const lineAB = new THREE.Line3(a, b);
-		// const lineBC = new THREE.Line3(b, c);
-		// const lineCA = new THREE.Line3(c, a);
-
-		// lineAB.faceIndex = lineBC.faceIndex = lineCA.faceIndex = idx;
-
 		const edges = getEdges( face, idx )
 
 		lines.push( ...edges );
@@ -202,7 +188,6 @@ function checkEdges() {
 
 	//console.log( 'lines', lines );
 
-	count = 0;
 	pairs = [];
 
 	for ( let i = 0; i < lines.length; i++ ) {
@@ -226,7 +211,7 @@ function checkEdges() {
 
 	//console.log( 'pairs', pairs );
 
-	for ( let i = 0; i < pairs.length; i++ ) {
+	for ( let i = 0; i < lines.length; i++ ) {
 
 		if ( !pairs.includes( i ) ) {
 			//console.log( 'pair', i, lines[  i ], lines[  i ].faceIndex );
