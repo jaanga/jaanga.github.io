@@ -81,7 +81,9 @@ DLF.getScripts = function () {
 
 DLF.renderLinesFat = function (contours) {
 
-	if ( !contours ) { alert( "First please load a file")}
+	if (!contours) { alert("First please load a file") }
+
+	if (!DLF.scriptsLoaded) { alert("wait a second or two more for scripts to load") };
 
 	scene.remove(group);
 
@@ -142,7 +144,7 @@ DLF.drawFatLines = function( pts, col = 0xff0000, lineWidth = 10 ) {
 	const line = new THREE.Line2( geometry, lineMaterial );
 	//line.computeLineDistances();
 	//line.scale.set( 1, 1, 1 );
-	return line
+	return line;
 
 }
 

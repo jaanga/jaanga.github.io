@@ -69,8 +69,8 @@ DLM.renderLines = function (contours) {
 
 		width = 0.1 * parseFloat( DLMrngLineWidth.value );
 
-		vertices = contour.map( vertex => new THREE.Vector3().fromArray( vertex ) );
-		verticesHigh = contour.map( vertex => new THREE.Vector3( vertex[ 0 ], vertex[ 1 ], parseFloat( vertex[ 2 ] )+ width ) );
+		vertices = contour.map( vertex => new THREE.Vector3().fromArray( vertex.map( coord => parseFloat( coord) ) ) );
+		verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, vertex.y, vertex.z + width ) );
 
 		const verticesBoth = vertices.concat( verticesHigh );
 
@@ -79,7 +79,17 @@ DLM.renderLines = function (contours) {
 
 		if (geometry.vertices.length > 1) {
 
-			const material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), side: 2 });
+			//console.log('', child, geometry);
+			geometry.verticesNeedUpdate = true;
+			geometry.elementsNeedUpdate = true;
+			geometry.morphTargetsNeedUpdate = true;
+			geometry.uvsNeedUpdate = true;
+			geometry.normalsNeedUpdate = true;
+			geometry.colorsNeedUpdate = true;
+			geometry.tangentsNeedUpdate = true;
+
+			//const material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), side: 2 });
+			const material = new THREE.MeshNormalMaterial({ side: 2 });
 			const mesh = new THREE.Mesh(geometry, material);
 
 			group.add( mesh );
