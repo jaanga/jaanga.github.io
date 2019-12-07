@@ -51,7 +51,7 @@ _basic-html.html_
 
 2019-12-06
 
-* Contours beginning to look good
+* Exported contours beginning to look good
 
 
 [OBJ to CSV 0.03 ]( v-0-03/get-contours-from-objects.html )
