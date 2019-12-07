@@ -10,13 +10,28 @@ value='You are now in a GitHub web page view - Click this button to view this re
 <!--
 <iframe src=https://jaanga.github.io/cookbook/examples/xxxxxx/xxxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
-
 -->
-### Full Screen: [Manifold]( https://jaanga.github.io/cookbook/examples/editing/manifold/ )
 
+### Full Screen: [Manifold]( https://jaanga.github.io/cookbook/examples/editing/manifold/ )
 
 <details open >
 <summary>Concept</summary>
+
+
+### Define "Manifold"
+
+Manifold: a collection of points forming a certain kind of set, such as those of a topologically closed surface or an analog of this in three or more dimensions.
+
+https://en.wikipedia.org/wiki/Manifold
+
+"watertight"
+
+* closely sealed, fastened, or fitted so that no water enters or passes through.
+
+
+### Triangular faces check
+
+Three.js meshes are composed of triangular faces. This script checks the edges of every face and establish whether or not there is a duplicate edge occurring in another face. The absence of a duplicate indicates a non-manifold mesh.
 
 
 </details>
@@ -52,9 +67,9 @@ _basic-html.html_
 <details open >
 <summary>Change log </summary>
 
-### 123
+### 2019-12-06
 
-* First commit
+* First commit read me
 
 </details>
 

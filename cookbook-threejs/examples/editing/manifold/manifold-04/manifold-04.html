@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="Identify non-watertight surfaces. Highlight errant faces with red borders" >
+<meta name=description content="Load and view 3D OBJ in your browser using the WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name="date" content = "2019-12-06" >
-<meta name = "version" content = "0.00.00" >
+<meta name = "version" content = "0.00.02" >
 
 <title>Manifold 0.04.00</title>
 
@@ -43,7 +43,6 @@
 		<p>
 			<button onclick=checkEdges(mesh) >check edges </button>
 		</p>
-
 
 		<div id=divMessage > </div>
 
@@ -143,8 +142,8 @@ function addHole() {
 
 	//const vertex = mesh.geometry.vertices[ Math.floor( Math.random() * mesh.geometry.vertices.length ) ];
 
-	//scene.remove( mesh );
-
+	scene.remove( mesh );
+	//vertex.multiplyScalar( 3 );
 	const geometry = mesh.geometry
 
 	if ( mesh.geometry.type.includes( "BufferGeometry" ) === false ) {
@@ -158,11 +157,20 @@ function addHole() {
 	pos[ Math.floor( pos.length * Math.random() ) ] = -50;
 	pos[ 2 ] = -50;
 
-	geometry.attributes.position.needsUpdate = true;
-	// material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
-	// mesh = new THREE.Mesh(geometry, material);
+	console.log( '', pos );
+	geometry.verticesNeedUpdate = true;
+	geometry.elementsNeedUpdate = true;
+	geometry.morphTargetsNeedUpdate = true;
+	geometry.uvsNeedUpdate = true;
+	geometry.normalsNeedUpdate = true;
+	geometry.colorsNeedUpdate = true;
+	geometry.tangentsNeedUpdate = true;
 
-	// scene.add( mesh )
+	geometry.attributes.position.needsUpdate = true;
+	material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
+	mesh = new THREE.Mesh(geometry, material);
+
+	scene.add( mesh )
 }
 
 
