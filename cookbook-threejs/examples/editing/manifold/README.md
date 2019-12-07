@@ -12,7 +12,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _basic-html.html_
 -->
 
-### Full Screen: [Manifold]( https://jaanga.github.io/cookbook/examples/editing/manifold/ )
+### Full Screen: [Manifold]( https://jaanga.github.io/cookbook-threejs/examples/editing/manifold/ )
 
 <details open >
 <summary>Concept</summary>
