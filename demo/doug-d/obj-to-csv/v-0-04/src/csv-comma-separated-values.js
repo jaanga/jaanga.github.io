@@ -50,6 +50,7 @@ CSV.getCsvLines = function () {
 	CSV.type = "lines";
 
 	let txt = "";
+	
 	CSVdivCsv.innerText = "output will appear here";
 
 	for (let i = 0; i < GCO.contourLines.children.length; i++) {

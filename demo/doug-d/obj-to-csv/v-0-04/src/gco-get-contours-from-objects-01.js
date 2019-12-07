@@ -325,7 +325,7 @@ GCO.getNextVertex = function (vertex, contourVertices, segments) {
 
 		const line = GCO.addLine(contourVertices);
 
-		line.material = new THREE.LineBasicMaterial({color: 0x0000ff});
+		line.material = new THREE.LineBasicMaterial({color: 0xffffff * Math.random() });
 
 		GCO.contourLines.add(line);
 
