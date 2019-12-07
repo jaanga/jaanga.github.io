@@ -141,10 +141,6 @@ function init() {
 
 function addHole() {
 
-	//const vertex = mesh.geometry.vertices[ Math.floor( Math.random() * mesh.geometry.vertices.length ) ];
-
-	//scene.remove( mesh );
-
 	const geometry = mesh.geometry
 
 	if ( mesh.geometry.type.includes( "BufferGeometry" ) === false ) {
@@ -155,20 +151,17 @@ function addHole() {
 	}
 
 	const pos = geometry.attributes.position.array;
-	pos[ Math.floor( pos.length * Math.random() ) ] = -50;
+	//pos[ Math.floor( pos.length * Math.random() ) ] = -50;
 	pos[ 2 ] = -50;
 
 	geometry.attributes.position.needsUpdate = true;
-	// material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
-	// mesh = new THREE.Mesh(geometry, material);
 
-	// scene.add( mesh )
 }
 
 
 function checkEdges() {
 
-	lines = [];
+	const lines = [];
 
 	mesh.geometry = mesh.geometry.type.includes( "BufferGeometry" ) ?
 		new THREE.Geometry().fromBufferGeometry(mesh.geometry) : mesh.geometry;
@@ -183,7 +176,7 @@ function checkEdges() {
 
 	//console.log( 'lines', lines );
 
-	pairs = [];
+	const pairs = [];
 
 	for ( let i = 0; i < lines.length; i++ ) {
 
@@ -191,9 +184,6 @@ function checkEdges() {
 
 			const line1 = lines[ i ];
 			const line2 = lines[ j ];
-
-			//equality = line1.start.equals( line2.start, tolerance) && line1.end.equals( line2.end, tolerance ) ||
-			//	line1.start.equals( line2.end, tolerance) && line1.end.equals( line2.start, tolerance );
 
 			if ( line1.start.equals( line2.end, tolerance) && line1.end.equals( line2.start, tolerance ) ) {
 
