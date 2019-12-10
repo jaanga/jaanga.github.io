@@ -9,7 +9,7 @@ OR.getMenu = function () {
 
 	const htm =
 		`
-<details open >
+<details >
 
 	<summary>Object rotation </summary>
 

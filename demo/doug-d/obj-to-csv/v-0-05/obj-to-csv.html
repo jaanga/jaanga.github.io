@@ -4,10 +4,10 @@
 
 <meta charset = "utf-8" >
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
-<meta name=description content="Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=description content="Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files." >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content = "2019-12-05" >
-<meta name = "version" content = "0.08.00" >
+<meta name="date" content = "2019-12-08" >
+<meta name = "version" content = "0.05.00" >
 
 <title></title>
 
@@ -19,22 +19,22 @@
 
 	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
 	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
-<!--
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/loaders/OBJLoader.js"></script>
+
 	<script src="src/gto-generate-threejs-objects.js" ></script>
-	<script src="src/ofr-obj-file-reader.js"></script> -->
+	<script src="src/ofr-obj-file-reader.js"></script>
+	<script src="src/ovg-obj-viewer-gallery.js"></script>
+	<script src="src/ovn-obj-viewer-nasa.js"></script>
+	<script src="src/ovd-obj-viewer-dashdotdot.js"></script>
 
-	<script src="src/cfr-csv-file-reader.js"></script>
-
-	<script src="src/cvd-csv-viewer-dashdotdot.js"></script>
-	<script src="src/cvj-csv-viewer-jaanga.js"></script>
 	<script src="src/or-object-rotation.js"></script>
 
+	<script src="src/gco-get-contours-from-objects-00.js"></script>
+	<script src="src/csv-comma-separated-values-01.js"></script>
 
-	<script src="src/dlb-draw-line-basic.js" ></script>
-	<script src="src/dlf-draw-line-fat.js"></script>
-	<script src="src/dlm-draw-line-mesh.js"></script>
-
+	<script src="src/mms-mesh-material-settings-00.js" ></script>
 	<script src="src/dss-display-scene-settings.js" ></script>
+
 
 	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
 
@@ -42,7 +42,7 @@
 
 		<header id="hdrTitle" ></header>
 
-		<p>Create CSV files: <a href="https://jaanga.github.io/demo/doug-d/obj-to-csv/" target="_blank">OBJ to CSV</a></p>
+		<p>View CSV files: <a href="https://jaanga.github.io/demo/doug-d/render-csv-file/" target="_blank">Render CSV file</a></p>
 
 		<p>
 			<button onclick=controls.reset(); title="Return to default view">reset view</button>
@@ -50,21 +50,23 @@
 			<button onclick=zoomObjectBoundingSphere(); title="zoom without shifting camera angle" >zoom all</button>
 		</p>
 
-		<div id=CFRdivMenuCsvFileReader ></div>
+		<div id=GTOdivMenuGenerateThreejsObjects ></div>
 
+		<div id=OFRdivMenuObjFileReader ></div>
 
-		<div id=CVDdivCsvViewerDashDotDot ></div>
+		<div id=OVGdivObjectViewerGallery ></div>
 
-		<div id=CVJdivCsvViewerJaanga ></div>
+		<div id=OVNdivObjectViewerNasa ></div>
+
+		<div id=OVDdivObjectViewerDashdotdot ></div>
 
 		<div id=ORdivObjectRotation ></div>
 
+		<div id=GCOdivGetContoursFromObjects ></div>
 
-		<div id=DLBdivMenuDrawLineBasic > </div>
+		<div id=CSVdivCommaSeparatedValues ></div>
 
-		<div id=DLFdivMenuDrawLineFat > </div>
-
-		<div id=DLMdivMenuDrawLineMesh > </div>
+		<div id=MMSdivMeshMaterialSettings > </div>
 
 		<div id=DSSdivMenuDisplaySceneSettings ></div>
 
@@ -87,16 +89,14 @@
 
 <script>
 
-let urlDefault = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
-let urlPrevious = "";
 
-const urlSourceCode = `https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file`;
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv/";
 const urlSourceCodeIcon = "src/github-mark-32.png";
 
-let group, material, geometry, edges, boxHelper;
+let mesh, material, geometry, edges, boxHelper;
 let axesHelper;
 let renderer, camera, controls, scene;
-let sceneRotation = 1;
+let sceneRotation = 0;
 let eventResetAll;
 
 init();
@@ -106,19 +106,24 @@ function init() {
 
 	hdrTitle.innerHTML = getTitle();
 
-	CFRdivMenuCsvFileReader.innerHTML = CFR.getMenu()
+	GTOdivMenuGenerateThreejsObjects.innerHTML = GTO.getMenu();
 
-	CVDdivCsvViewerDashDotDot.innerHTML = CVD.getMenu();
+	OFRdivMenuObjFileReader.innerHTML = OFR.getMenu();
 
-	CVJdivCsvViewerJaanga.innerHTML = CVJ.getMenu();
+	OVGdivObjectViewerGallery.innerHTML = OVG.getMenu();
+
+	OVNdivObjectViewerNasa.innerHTML = OVN.getMenu();
+
+	OVDdivObjectViewerDashdotdot.innerHTML = OVD.getMenu();
 
 	ORdivObjectRotation.innerHTML = OR.getMenu();
 
-	DLBdivMenuDrawLineBasic.innerHTML = DLB.getMenu();
+	GCOdivGetContoursFromObjects.innerHTML = GCO.getMenu();
 
-	DLFdivMenuDrawLineFat.innerHTML = DLF.getMenu();
+	CSVdivCommaSeparatedValues.innerHTML = CSV.getMenu();
 
-	DLMdivMenuDrawLineMesh.innerHTML = DLM.getMenu();
+	MMSdivMeshMaterialSettings.innerHTML = MMS.getMenu();
+
 
 	DSSdivMenuDisplaySceneSettings.innerHTML = DSS.getMenu();
 
@@ -144,10 +149,18 @@ function init() {
 	axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	// geometry = new THREE.BoxGeometry( 50, 50, 50 );
-	// material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
-	// group = new THREE.Mesh( geometry, material );
-	// scene.add( group );
+	geometry = new THREE.TorusKnotGeometry( 50, 10, 50, 10 );
+	//geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+	const geometryPlane = new THREE.PlaneBufferGeometry( 100, 100 );
+	const materialPlane = new THREE.MeshBasicMaterial( { color: 0xdddddd, opacity: 0.95, side: 2, transparent: true });
+	meshPlane = new THREE.Mesh( geometryPlane, materialPlane );
+	meshPlane.position.z = 0;
+	scene.add( meshPlane );
+
 
 	//  {"bubbles": true, "cancelable": false, detail: true }
 
@@ -155,32 +168,14 @@ function init() {
 
 	window.addEventListener( "onresetall", DSS.reset, false );
 
-	window.addEventListener( 'hashchange', onHashChange, false );
+	//GCO.init();
+
+	//OVG.loadObj( 2 )
 
 }
 
 
-function onHashChange() {
-
-	let url = location.hash.match( /url=(.*?)\.csv/i );
-	url = url ? url[ 1 ] + ".csv": urlDefault;
-
-	if ( url !== urlPrevious ) {
-
-		fetch( new Request( url ) )
-		.then( response => response.text() )
-		.then( csv => CFR.getLines( csv ) )
-		.then( () => zoomObjectBoundingSphere() )
-
-		urlPrevious = url;
-
-	}
-
-}
-
-
-
-function zoomObjectBoundingSphere( obj = group ) {
+function zoomObjectBoundingSphere( obj = mesh ) {
 	//console.log( "obj", obj );
 
 	const bbox = new THREE.Box3().setFromObject( obj );

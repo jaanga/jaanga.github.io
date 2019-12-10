@@ -29,8 +29,8 @@ _basic-html.html_
 - Generate contour lines
 	- Choose one to many
 - Export vertices to CSV files
-	- Export as stings of vertices
-	- Export as two vertex pairs of of segments
+	- Export as strings of vertices
+	- XYZ coordinates plus a line index
 
 ### Credits
 
@@ -46,6 +46,15 @@ _basic-html.html_
 * Augment 3D so as to supply it with even greater dimensionality
 
 ### Releases
+
+[OBJ to CSV 0.04.02 ]( v-0-04/get-contours-from-objects.html )
+
+2019-12-07
+
+* Add link to Render CSV file
+* When ask for 72 contour levels you now get 72 contour levels (but each contour may have multiple lines)
+* Export CSV segments dropped
+
 
 [OBJ to CSV 0.04.00 ]( v-0-04/get-contours-from-objects.html )
 
@@ -115,6 +124,16 @@ These are the links that got me started
 * https://stackoverflow.com/questions/46661787/grouping-points-after-cut-plane-three-js/46811485#46811485
 * https://discourse.threejs.org/t/extract-vertices-in-edge-connection-order-from-buffergeometry-for-is-inside-polygon-check/5088/2
 * https://jsfiddle.net/prisoner849/uqm6bk1k/
+
+### Software to develop characters
+
+* https://www.mixamo.com/
+	* Animate 3D characters for games, film, and more.
+* https://www.zygote.com/
+	* Creators of the world's leading 3D human anatomy models for use in medical illustration, animation, engineering, simulation, and anatomy software products.
+* http://www.makehumancommunity.org/
+	* MakeHuman is an open source (AGPL3) tool designed to simplify the creation of virtual humans using a Graphical User Interface
+
 
 </details>
 

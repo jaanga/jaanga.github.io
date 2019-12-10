@@ -7,7 +7,7 @@
 
 const GCO = {};
 
-GCO.contoursLength = 3;
+GCO.contoursLength = 128;
 GCO.constant = 0;
 GCO.tolerance = 0.001;
 
@@ -63,6 +63,10 @@ GCO.getMenu = function () {
 	<div>
 		<input type=checkbox onchange="GCO.contourPoints.visible=!GCO.contourPoints.visible" checked >
 		contour points
+	</div>
+	<div>
+		<input type=checkbox onchange="mesh.visible=!mesh.visible" checked >
+		model
 	</div>
 
 
@@ -165,6 +169,7 @@ GCO.getContourPoints = function () {
 	GCO.contourPoints = new THREE.Group();
 	GCO.contourSegments = new THREE.Group();
 	GCO.contourLines = new THREE.Group();
+	GCO.contourVertices = [];
 
 	scene.add(GCO.contourPoints);
 	scene.add(GCO.contourSegments);
@@ -176,6 +181,7 @@ GCO.getContourPoints = function () {
 	const size = box3.getSize(new THREE.Vector3());
 	const delta = size.z / GCO.contoursLength;
 
+	GCO.elevations = [];
 
 	for (let i = 0; i <= GCO.contoursLength; i++) {
 
@@ -192,6 +198,8 @@ GCO.getContourPoints = function () {
 		}
 
 		meshPlane.position.z = GCO.constant;
+
+		GCO.elevations.push( [ GCO.constant, 0 ] )
 
 		//console.log('constant', GCO.constant);
 
@@ -266,9 +274,7 @@ GCO.getPoints = function () {
 
 
 GCO.setPointOfIntersection = function (line, plane, index ) {
-
 	//console.log('plane', plane);
-
 
 	const pointOfIntersection = plane.intersectLine(line, new THREE.Vector3());
 
@@ -277,12 +283,6 @@ GCO.setPointOfIntersection = function (line, plane, index ) {
 		GCO.pointsOfIntersection.vertices.push(pointOfIntersection.clone());
 		GCO.vertices.push(pointOfIntersection);
 
-	} else {
-
-		if (index < 10) {
-
-			//console.log('line', line, plane);
-		}
 	}
 
 };
@@ -305,68 +305,121 @@ GCO.addLine = function (vertices) {
 
 GCO.getContourVertices = function () {
 
-	for (let contourLine of GCO.contourSegments.children ) {
-		//contourLine = GCO.contourSegments.children[1];
+	console.log('segments', GCO.contourSegments.children.length);
 
-		const lines = contourLine.children;
-		//console.log('lines', lines);
+	GCO.contourSegments.children.forEach((contourSegments, index) => {
 
-		GCO.linesLength = lines.length;
+		const segments = contourSegments.children;
 
-		const line0 = lines[0];
+		const contourVertices = segments[0].geometry.vertices;
+		//console.log('contourVertices', contourVertices );
 
-		if (!line0) { continue; }
+		GCO.getNextVertex(contourVertices[1], contourVertices, segments.slice(1), index);
+	} );
 
-		const verticesContour = line0.geometry.vertices;
-		//console.log('verticesContour', verticesContour );
-
-		GCO.getNextVertex(verticesContour[1], verticesContour, lines.slice(1));
-
-	}
+	GCO.test();
 
 };
 
 
+GCO.test = function() {
 
-GCO.getNextVertex = function (vertex, vertices, lines) {
+	//console.log('GCO.contourVertices', GCO.contourVertices);
 
-	//console.log('vertex', vertex);
+	console.log('21', GCO.contourSegments.children[21]);
 
-	for (let line of lines) {
+	segments21 = GCO.contourSegments.children[21].children;
 
-		const verticesLine = line.geometry.vertices;
-		//console.log('verticesLine', verticesLine);
+	console.log('s21', segments21 );
 
-		const vertexFound = verticesLine.find(vertexLine => vertexLine.equals(vertex, GCO.tolerance));
+	segments21.forEach(line => {
+
+		vs = line.geometry.vertices;
+
+		dis = vs[0].distanceTo(vs[1]);
+		//console.log('dis', dis < GCO.tolerance, dis );
+
+	} )
+
+
+
+	// contourLines = GCO.contourLines.children;
+
+	// console.log('cl', contourLines.length);
+
+	// contourLines.forEach((line, index) => {
+
+	// 	vertices = line.geometry.vertices;
+
+	// 	const z = vertices[ 0 ].z
+
+	// 	elev = GCO.elevations.find(elev => Math.abs( elev[0] - z ) < 0.001 )
+
+	// 	if (elev) {
+
+	// 		elev[1] += vertices.length;
+	// 		idx = GCO.elevations.indexOf( elev )
+	// 		//console.log('l', idx, index, vertices.length, elev[ 0], elev[ 1 ]);
+
+	// 	} else {
+
+	// 		console.log('zzzzzzz', z);
+	// 	}
+
+
+	// });
+
+	//console.log('', GCO.elevations[66]);
+
+	issues = GCO.elevations.filter(elev =>  elev[ 1 ] < 5 )
+
+	//console.log('issues', issues);
+
+}
+
+GCO.getNextVertex = function (vertex, vertices, segments, count ) {
+
+	let vertexFound;
+	let vertexNext;
+	let index;
+
+	//if (count === 21) { console.log('ss', segments.length ); }
+
+	idx = 0;
+	for (let segment of segments) {
+
+		idx++;
+		const segmentVertices = segment.geometry.vertices;
+
+		vertexFound = segmentVertices.find(segmentVertex => segmentVertex.equals(vertex, GCO.tolerance));
 
 		if (vertexFound) {
 
-			//console.log("verticesLine", verticesLine);
-			//console.log("vertexFound", vertexFound);
+			vertexNext = segmentVertices.find(vertex => vertex !== vertexFound);
 
-			const vertexNext = verticesLine.find(vertex => vertex !== vertexFound);
-			//console.log('vertexNext', vertexNext);
-
-			const index = lines.indexOf(line);
-			//console.log({ index })
+			if (!vertexNext) { console.log('', 23);}
 
 			vertices.push(vertexNext);
-			//console.log('vertices', vertices);
 
-			lines.splice(index, 1);
+			index = segments.indexOf(segment);
 
-			//if (vertices.length <= GCO.linesLength) {
-				if ( lines.length ) {
+			segments.splice(index, 1);
 
-				GCO.getNextVertex(vertexNext, vertices, lines);
+			if (segments.length) {
+
+
+				GCO.getNextVertex(vertexNext, vertices, segments, count);
 
 			} else {
 
+				//console.log('idx', count, idx);
 				line = GCO.addLine(vertices);
 
 				line.material = new THREE.LineBasicMaterial({ color: 0xff0000 });
 
 				GCO.contourLines.add(line);
+
+				GCO.contourVertices.push( vertices )
 
 			}
 
@@ -374,9 +427,31 @@ GCO.getNextVertex = function (vertex, vertices, lines) {
 
 		} else {
 
+			if (count > 20 && count < 22) {
+
+				console.log('idx', count, idx, vertices.length, segments.length, idx === segments.length );
+
+				if ( 265 === segments.length) {
+
+
+					const line = GCO.addLine(vertices);
+
+					line.material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+
+					GCO.contourLines.add(line);
+
+					GCO.contourVertices.push(vertices);
+
+					console.log('', idx, segments.length, line  );
+					break;
+
+				}
+
+			}
+
 			if (vertex.equals(vertices[0], GCO.tolerance)) {
 
-				//console.log('', vertex, vertices[0], vertices.length, lines.length);
+				//console.log('', vertex, vertices[0], vertices.length, segments.length);
 
 				const line = GCO.addLine(vertices);
 
@@ -384,16 +459,46 @@ GCO.getNextVertex = function (vertex, vertices, lines) {
 
 				GCO.contourLines.add(line);
 
-				const line0 = lines[0];
+				GCO.contourVertices.push(vertices);
 
-				if (!line0) { continue; }
 
-				const verticesContour = line0.geometry.vertices;
+				const segment0 = segments[0];
+
+				//if (!segment0) { continue; }
+
+				const verticesContour = segment0.geometry.vertices;
 				//console.log('verticesContour', verticesContour );
 
-				GCO.getNextVertex(verticesContour[1], verticesContour, lines.slice(1));
+				GCO.getNextVertex(verticesContour[1], verticesContour, segments.slice(1), count );
+
+
 
 				break;
+
+			} else {
+
+				//console.log('oops1');
+
+				//if (count === 21) {
+
+					// index = segments.indexOf(segment);
+
+					// segments.splice(index, 1);
+
+					//const segment0 = segments[0];
+
+					// if ( segment0) {
+
+					// 	const verticesContour = segment0.geometry.vertices;
+					// 	//console.log('verticesContour', verticesContour );
+					// 	GCO.getNextVertex(verticesContour[1], verticesContour, segments.slice(1), count);
+
+					// }
+
+
+				// 	const vs = segment.geometry.vertices
+				// 	console.log('ss.len', segments.length, vertex, vs[ 0 ], vs[ 1 ]);
+				// }
 			}
 
 		}

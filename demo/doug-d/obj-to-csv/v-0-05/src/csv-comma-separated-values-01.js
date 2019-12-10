@@ -17,15 +17,13 @@ CSV.getMenu = function () {
 
 			<p>
 				<button onclick=CSV.getCsvLines(); >get CSV lines</button>
-
-				<button onclick=CSV.getCsvSegments(); >get CSV segments</button>
 			</p>
 
 			<p>
-				<button onclick=CSV.saveFile(); >Save File</button>
+				<button onclick=CSV.saveFile(); >Save to file</button>
 			</p>
 
-			<div id=CSVdivCsv style=max-height:50ch;overflow:auto; ></div>
+			<div id=CSVdivCsv style=font-size:1ch;max-height:50ch;overflow:auto; ></div>
 
 		</details>
 		`
@@ -43,71 +41,40 @@ CSV.reset = function () {
 
 CSV.getCsvLines = function () {
 
-
-
 	if (!GCO.contourLines.children.length ) {
 		alert("first click 'get points'") }
 
 	CSV.type = "lines";
 
 	let txt = "";
+
 	CSVdivCsv.innerText = "output will appear here";
+
+	index = 1;
 
 	for (let i = 0; i < GCO.contourLines.children.length; i++) {
 
-		vertices = GCO.contourLines.children[i].geometry.vertices;
+		contour = GCO.contourLines.children[i];
 
-		if (vertices.length > 3) {
+		console.log('contour', contour);
 
-			console.log('contour', vertices.length, vertices);
+		for ( let j = 0; j < contour.children.length; j++ ) {
 
-			for (let j = 0; j < vertices.length; j++) {
+			for (let k = 0; k < contour.children[ j ].geometry.vertices.length; k++) {
 
-				txt +=
-`${ vertices[j].toArray()},${i}\n`;
+				txt += `${ contour.children[ j ].geometry.vertices[ k ].toArray()},${ index }\n`;
 
 			}
 
-		}
-
-
-	}
-
-	CSVdivCsv.innerText = txt;
-
-};
-
-
-CSV.getCsvSegments = function () {
-
-	if (!GCO.contourSegments.children.length ) {
-		alert("first click 'get points'") }
-
-	CSV.type = "segments";
-
-	let txt = "";
-	CSVdivCsv.innerText = "output will appear here";
-	for (let i = 0; i < GCO.contourSegments.children.length; i++) {
-
-		contour = GCO.contourSegments.children[i];
-
-		console.log('cc', contour);
-
-		for (let j = 0; j < contour.children.length; j++) {
-
-			line = contour.children[j];
-
-			console.log('', line);
-			txt +=
-`${ line.geometry.vertices[0].toArray()},${i}
-${ line.geometry.vertices[1].toArray()},${i}\n`;
-
+			index++;
 		}
 	}
 
 	CSVdivCsv.innerText = txt;
 
 };
+
+
 
 
  CSV.saveFile = function() {

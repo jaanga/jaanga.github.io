@@ -44,33 +44,26 @@ CSV.reset = function () {
 CSV.getCsvLines = function () {
 
 
-
 	if (!GCO.contourLines.children.length ) {
 		alert("first click 'get points'") }
 
 	CSV.type = "lines";
 
 	let txt = "";
+	
 	CSVdivCsv.innerText = "output will appear here";
 
 	for (let i = 0; i < GCO.contourLines.children.length; i++) {
 
-		vertices = GCO.contourLines.children[i].geometry.vertices;
+		contour = GCO.contourLines.children[i];
 
-		if (vertices.length > 3) {
+		console.log('cc', contour);
 
-			console.log('contour', vertices.length, vertices);
+		for (let j = 0; j < contour.geometry.vertices.length; j++) {
 
-			for (let j = 0; j < vertices.length; j++) {
-
-				txt +=
-`${ vertices[j].toArray()},${i}\n`;
-
-			}
+			txt += `${ contour.geometry.vertices[j].toArray()},${i}\n`;
 
 		}
-
-
 	}
 
 	CSVdivCsv.innerText = txt;
