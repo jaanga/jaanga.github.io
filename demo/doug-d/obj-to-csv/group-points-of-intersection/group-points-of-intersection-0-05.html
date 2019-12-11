@@ -123,7 +123,7 @@ summary { font-weight: bold; }
 			<button id="pressMe" onclick=drawContours(5); ><b>draw 5 contour lines</b></button>
 		</p>
 		<p>
-			<button id="pressMe" onclick=drawContours(20); ><b>draw 20 contour lines</b></button>
+			<button id="pressMe" onclick=drawContours(12); ><b>draw 12 contour lines</b></button>
 		</p>
 
 		<p>
@@ -202,7 +202,7 @@ const geometries = [
 	["Icosahedron", 50, 0],
 	["Octahedron", 50, 0],
 	["Torus", 40, 10, 12, 32 ],
-	["TorusKnot", 50, 18, 64, 24 ]
+	["TorusKnot", 50, 10, 50, 10]
 ];
 
 let count = 0
@@ -410,14 +410,12 @@ function getCsv() {
 	txt = contours.children.map( contour => {
 
 		const lines = contour.children;
-		//console.log( 'lines', index, lines );
+		console.log( 'lines', index, lines );
 
 		vertices = lines.map( line => {
 
-			txt = line.geometry.vertices.filter( vertex => vertex.toArray().join() !== pointFirst ).map( vertex =>
-				`${ vertex.toArray() },${index}`
-
-			).join( "\n" );
+			txt = line.geometry.vertices.filter( vertex => vertex.toArray().join() !== pointFirst )
+			.map( vertex => `${ vertex.toArray() },${index}` ).join( "\n" );
 
 			index++;
 			return txt;

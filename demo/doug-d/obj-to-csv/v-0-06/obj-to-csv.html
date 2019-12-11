@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang = "en" >
+<head>
+
+<meta charset = "utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files." >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name="date" content = "2019-12-09" >
+<meta name = "version" content = "0.06.00" >
+
+<title></title>
+
+<link href="src/style.css" rel="stylesheet" >
+
+</head>
+
+<body>
+
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/loaders/OBJLoader.js"></script>
+
+	<script src="src/gto-generate-threejs-objects.js" ></script>
+	<script src="src/ofr-obj-file-reader.js"></script>
+	<script src="src/ovg-obj-viewer-gallery.js"></script>
+	<script src="src/ovn-obj-viewer-nasa.js"></script>
+	<script src="src/ovd-obj-viewer-dashdotdot.js"></script>
+
+	<script src="src/or-object-rotation.js"></script>
+
+	<script src="src/gco-get-contours-from-objects-02.js"></script>
+	<script src="src/csv-comma-separated-values-01.js"></script>
+
+	<script src="src/mms-mesh-material-settings-00.js" ></script>
+	<script src="src/dss-display-scene-settings.js" ></script>
+
+
+	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
+
+	<nav id="navMenu" >
+
+		<header id="hdrTitle" ></header>
+
+		<p>View CSV files: <a href="https://jaanga.github.io/demo/doug-d/render-csv-file/" target="_blank">Render CSV file</a></p>
+
+		<p>
+			<button onclick=controls.reset(); title="Return to default view">reset view</button>
+
+			<button onclick=zoomObjectBoundingSphere(); title="zoom without shifting camera angle" >zoom all</button>
+		</p>
+
+		<div id=GTOdivMenuGenerateThreejsObjects ></div>
+
+		<div id=OFRdivMenuObjFileReader ></div>
+
+		<div id=OVGdivObjectViewerGallery ></div>
+
+		<div id=OVNdivObjectViewerNasa ></div>
+
+		<div id=OVDdivObjectViewerDashdotdot ></div>
+
+		<div id=ORdivObjectRotation ></div>
+
+		<div id=GCOdivGetContoursFromObjects ></div>
+
+		<div id=CSVdivCommaSeparatedValues ></div>
+
+		<div id=MMSdivMeshMaterialSettings > </div>
+
+		<div id=DSSdivMenuDisplaySceneSettings ></div>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); > ❦ </a></center>
+
+		</footer>
+
+	</nav>
+
+	<main id=main >
+
+		<div id="divContent" ></div>
+
+	</main>
+
+
+<script>
+
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv/";
+const urlSourceCodeIcon = "src/github-mark-32.png";
+
+let mesh, material, geometry, edges, boxHelper;
+let axesHelper;
+let renderer, camera, controls, scene;
+let sceneRotation = 0;
+let eventResetAll;
+
+init();
+animate();
+
+function init() {
+
+	hdrTitle.innerHTML = getTitle();
+
+	GTOdivMenuGenerateThreejsObjects.innerHTML = GTO.getMenu();
+
+	OFRdivMenuObjFileReader.innerHTML = OFR.getMenu();
+
+	OVGdivObjectViewerGallery.innerHTML = OVG.getMenu();
+
+	OVNdivObjectViewerNasa.innerHTML = OVN.getMenu();
+
+	OVDdivObjectViewerDashdotdot.innerHTML = OVD.getMenu();
+
+	ORdivObjectRotation.innerHTML = OR.getMenu();
+
+	GCOdivGetContoursFromObjects.innerHTML = GCO.getMenu();
+
+	CSVdivCommaSeparatedValues.innerHTML = CSV.getMenu();
+
+	MMSdivMeshMaterialSettings.innerHTML = MMS.getMenu();
+
+
+	DSSdivMenuDisplaySceneSettings.innerHTML = DSS.getMenu();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( "resize", onWindowResize, false );
+	window.addEventListener( "orientationchange", onWindowResize, false );
+	window.addEventListener( "keyup", () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( "click", () => sceneRotation = 0, false );
+
+	axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	// //geometry = new THREE.SphereGeometry( 50, 50, 20 );
+	// geometry = new THREE.TorusKnotGeometry( 50, 10, 50, 10 );
+	geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
+	mesh = new THREE.Mesh( geometry, material );
+	// scene.add( mesh );
+
+	const geometryPlane = new THREE.PlaneGeometry( 100, 100 );
+	const materialPlane = new THREE.MeshBasicMaterial( { color: 0xdddddd, opacity: 0.85, side: 2, transparent: true });
+	meshPlane = new THREE.Mesh( geometryPlane, materialPlane );
+	meshPlane.position.z = 1;
+	scene.add( meshPlane );
+
+
+	//  {"bubbles": true, "cancelable": false, detail: true }
+
+	eventResetAll = new Event( "onresetall" );
+
+	window.addEventListener( "onresetall", DSS.reset, false );
+
+	OVG.loadObj( 2 );
+
+}
+
+
+function zoomObjectBoundingSphere( obj = mesh ) {
+	//console.log( "obj", obj );
+
+	const bbox = new THREE.Box3().setFromObject( obj );
+	//console.log( "bbox", bbox )
+
+	if ( bbox.isEmpty() === true ) { return; }
+
+	const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+	center = sphere.center;
+	radius = sphere.radius;
+
+	controls.target.copy( center ); // needed because model may be far from origin
+	controls.maxDistance = 5 * radius;
+
+	camera.position.copy( center.clone().add( new THREE.Vector3( - 1.5 * radius, - 1.5 * radius, 1.5 * radius ) ) );
+	camera.near = 0.001 * radius; //2 * camera.position.length();
+	camera.far = 10 * radius; //2 * camera.position.length();
+	camera.updateProjectionMatrix();
+
+	// if ( lightDirectional ) {
+
+	// 	lightDirectional.position.copy( center.clone().add( new THREE.Vector3( 1.5 * radius, -1.5 * radius, 1.5 * radius ) ) );
+	// 	lightDirectional.shadow.camera.scale.set( 0.2 * radius, 0.2 * radius, 0.01 * radius );
+
+	// 	targetObject.position.copy( center );
+
+	// 	//scene.remove( cameraHelper );
+	// 	//cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+	// 	//scene.add( cameraHelper );
+
+	// }
+
+};
+
+
+// menus
+
+function toggleNavMenu() {
+
+	expandButton.classList.toggle( "collapsed" );
+	navMenu.classList.toggle( "collapsed" );
+	main.classList.toggle( "collapsed" );
+
+}
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( "/" ).pop().slice( 0, - 5 ).replace( /-/g, " " );
+	const version = document.head.querySelector( "[ name=version ]" ).content;
+	const description = document.head.querySelector( "[ name=description ]" ).content;
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src="${ urlSourceCodeIcon }" alt="GitHub logo" height=18 style=opacity:0.5; >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title } ${ version }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+// three.js
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( "onWindowResize  window.innerWidth", window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

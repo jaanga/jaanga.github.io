@@ -19,7 +19,14 @@ Deprecated. See [OBJ to CSV ]( https://jaanga.github.io/demo/doug-d/obj-to-csv/r
 ## Concept
 
 
-### Latest [ group-points-of-intersection-0-05 ]( group-points-of-intersection-0-05.html )
+### Latest [ group-points-of-intersection-0-06 ]( group-points-of-intersection-0-06.html )
+
+2019-12-10
+
+contours as group > children as array > contour as group > children as array > line as line
+
+
+### [ group-points-of-intersection-0-05 ]( group-points-of-intersection-0-05.html )
 
 * Code cleanup
 * Try to grok code and simplify - but fail
