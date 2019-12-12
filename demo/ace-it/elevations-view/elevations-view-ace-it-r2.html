@@ -26,19 +26,19 @@
 <script src=../../elevations-core2/map-map/map-r1.js ></script>
 -->
 
-<script src=https://jaanga.github.io/terrain3/elevations-core2/cor-core/core-r1.js ></script>
-<script src=https://jaanga.github.io/terrain3/elevations-core2/sel-select/select-r1.js ></script>
-<script src=https://jaanga.github.io/terrain3/elevations-core2/ovr-overlay/overlay-r1.js ></script>
-<script src=https://jaanga.github.io/terrain3/elevations-core2/ter-terrain/terrain-r1.js ></script>
-<script src=https://jaanga.github.io/terrain3/elevations-core2/thr-threejs/threejs-r1.js ></script>
-<script src=https://jaanga.github.io/terrain3/elevations-core2/map-map/map-r1.js ></script>
+<script src=https://jaanga.github.io/terrain3/archive/elevations-core/elevations-core2/cor-core/core-r1.js ></script>
+<script src=https://jaanga.github.io/terrain3/archive/elevations-core/elevations-core2/sel-select/select-r1.js ></script>
+<script src=https://jaanga.github.io/terrain3/archive/elevations-core/elevations-core2/ovr-overlay/overlay-r1.js ></script>
+<script src=https://jaanga.github.io/terrain3/archive/elevations-core/elevations-core2/ter-terrain/terrain-r1.js ></script>
+<script src=https://jaanga.github.io/terrain3/archive/elevations-core/elevations-core2/thr-threejs/threejs-r1.js ></script>
+<script src=https://jaanga.github.io/terrain3/archive/elevations-core/elevations-core2/map-map/map-r1.js ></script>
 
 <script>
 
 	SEL.urlAPITreeContents = 'https://api.github.com/repos/jaanga/terrain3/git/trees/gh-pages?recursive=1';
 	SEL.searchInFolder = 'elevations-data-family+friends/';
 
-	SEL.urlBase = 'https://jaanga.github.io/terrain3/elevations/' + SEL.searchInFolder;
+	SEL.urlBase = 'https://jaanga.github.io/terrain3/elevations-data/elevations-data-family%2Bfriends/';
 //	SEL.urlBase = '../../elevations/' + SEL.searchInFolder;
 
 
@@ -62,7 +62,7 @@
 			THR.scene.add( THR.axisHelper );
 			THR.axisHelper.visible = false;
 
-			TERchkAxesHelper.checked  = false;
+			TERchkAxisHelper.checked  = false;
 			TERchkBoxHelper.checked = false;
 
 			TERchkRotate.click();
