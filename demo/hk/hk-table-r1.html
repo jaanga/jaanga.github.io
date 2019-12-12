@@ -88,7 +88,7 @@
 
 		scene = new THREE.Scene();
 
-		var axisHelper = new THREE.AxisHelper( 500 );
+		var axisHelper = new THREE.AxesHelper( 500 );
 		scene.add( axisHelper );
 
 // assets
@@ -104,7 +104,7 @@
 
 		var v = function( arr ){ return new THREE.Vector3().fromArray( arr ); };
 		material = new THREE.MeshNormalMaterial();
-		geometry = new THREE.Geometry(); 
+		geometry = new THREE.Geometry();
 
 		for ( var i = 0; i < faces.length; i++ ){
 
@@ -121,7 +121,7 @@
 		geometry.computeFaceNormals();
 		geometry.center();
 
-		mesh = new THREE.Mesh( geometry, material ); 
+		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
 	}

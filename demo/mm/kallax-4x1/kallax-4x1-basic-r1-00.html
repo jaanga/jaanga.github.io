@@ -129,7 +129,7 @@
 		gridHelper.position.set( 0, -1, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( height05 + 50 );
+		var axisHelper = new THREE.AxesHelper( height05 + 50 );
 		scene.add( axisHelper );
 
 		geometry = new THREE.BoxGeometry( height + 100, 2, width + 200 );
@@ -357,7 +357,7 @@
 		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
 		var offsetX = - height05 - 20;
 		var offsetZ =  width05 + 20;
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 10 );
 		var mud = mesh.userData;
 
@@ -384,7 +384,7 @@
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
 		var offsetX = height05 + 20;
 		var offsetZ =  - width05 - 20;
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 25 );
 		var mud = mesh.userData;
 

@@ -113,7 +113,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -126,13 +126,13 @@
 
 		scene.remove( all_shapes );
 		all_shapes = new THREE.Object3D();
-		var length = 10000; //inpLength.valueAsNumber; 
+		var length = 10000; //inpLength.valueAsNumber;
 		var material = new THREE.MeshPhongMaterial( { color: 0x888800, side: 2 } );
-		geometry = new THREE.Geometry(); 
+		geometry = new THREE.Geometry();
 
 		for ( var i = 0; i < length; i++ ){
 
-			var geometry2 = new THREE.Geometry(); 
+			var geometry2 = new THREE.Geometry();
 
 			geometry2.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
 			geometry2.vertices.push( new THREE.Vector3( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 ) );
@@ -143,7 +143,7 @@
 		}
 
 		geometry.computeFaceNormals();
-		mesh = new THREE.Mesh( geometry, material ); 
+		mesh = new THREE.Mesh( geometry, material );
 		all_shapes.add( mesh );
 		scene.add( all_shapes );
 

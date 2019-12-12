@@ -49,7 +49,7 @@
 		gridHelper.position.set( 0, 0, 0 );
 		helpers.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( length );
+		var axisHelper = new THREE.AxesHelper( length );
 		helpers.add( axisHelper );
 
 		scene.add( helpers );
@@ -402,7 +402,7 @@
 		var length = 10;
 		var length05 = 0.5 * length;
 		var lengthShaft = 0.3 * length;
-		
+
 		var pitch = radiusScrew;
 		var segments = 12;
 
@@ -841,7 +841,7 @@
 		for ( var i = 0; i < placards.length; i++ ) {
 
 			placards[ i ].visible = !placards[ i ].visible;
- 
+
 		}
 
 	}

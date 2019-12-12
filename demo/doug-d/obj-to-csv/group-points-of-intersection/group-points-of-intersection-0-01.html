@@ -56,7 +56,7 @@
 
 			var controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-			//scene.add(new THREE.AxisHelper(2));
+			//scene.add(new THREE.AxesHelper(2));
 
 			var planeGeom = new THREE.PlaneGeometry(30, 30);
 			planeGeom.rotateX(-Math.PI / 2);
@@ -272,7 +272,7 @@
 
 				requestAnimationFrame(render);
 				renderer.render(scene, camera);
-				
+
 			}
 
 

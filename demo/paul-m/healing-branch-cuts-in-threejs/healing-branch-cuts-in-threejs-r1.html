@@ -64,8 +64,8 @@ function init() {
 
     var controls = new THREE.OrbitControls( camera, views[n] );
     scene.userData.controls = controls;
-	
-    scene.add( new THREE.AxisHelper( 1 ) );
+
+    scene.add( new THREE.AxesHelper( 1 ) );
 
     scenes.push( scene );
 
@@ -103,7 +103,7 @@ function drawScene( scene ) {
   }
 
   function phase(x, y) {
-    var p = ( Math.atan2( y-y1, x-x1 ) + Math.atan2( y-y2, x-x2 ) )/2/Math.PI; 
+    var p = ( Math.atan2( y-y1, x-x1 ) + Math.atan2( y-y2, x-x2 ) )/2/Math.PI;
     if ( p < 0 ) p = p + 1;   // keep hue between zero and one
     return (p + sheet)/sheets;
   }

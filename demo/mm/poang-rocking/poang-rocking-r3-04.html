@@ -1204,8 +1204,8 @@
 
 		var points = [];
 
-		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ), 
-			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),  
+		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ),
+			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),
 			v2( radius, depthShaft2 - fillet), v2( radius - fillet, depthShaft2 ), v2( 0, depthShaft2 ),
 
 		];
@@ -1313,7 +1313,7 @@
 		helper.position.set( 50, -7.5, 0 );
 		scene.add( helper );
 
-		var axisHelper = new THREE.AxisHelper( 150 );
+		var axisHelper = new THREE.AxesHelper( 150 );
 		scene.add( axisHelper );
 
 

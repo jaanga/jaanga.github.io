@@ -65,14 +65,14 @@
 			'</h2>' +
 			'<p><input type=checkbox onchange=plate.material.wireframe=!plate.material.wireframe; > Wireframe</p>' +
 
-//			'<p>Slider X: <input type=range id=inpSlideX max=20 min=-20 step=1 value=00 oninput=outSlideX.value=inpSlideX.value;updateVertices(); title="0 to 10: OK" >' + 
+//			'<p>Slider X: <input type=range id=inpSlideX max=20 min=-20 step=1 value=00 oninput=outSlideX.value=inpSlideX.value;updateVertices(); title="0 to 10: OK" >' +
 //				'<output id=outSlideY >value</output></p>' +
 
-			'<p>Slider Y: <input type=range id=inpSlideY max=3 min=--3 step=0.1 value=0.45 oninput=outSlideY.value=inpSlideY.value;updateVertices(); title="0 to 10: OK" >' + 
+			'<p>Slider Y: <input type=range id=inpSlideY max=3 min=--3 step=0.1 value=0.45 oninput=outSlideY.value=inpSlideY.value;updateVertices(); title="0 to 10: OK" >' +
 				'<output id=outSlideY >value</output></p>' +
 			'<div id=info ></div>' +
 
-			'<p>Slider Z: <input type=range id=inpSlideZ max=20 min=-20 step=1 value=-10 oninput=outSlideZ.value=inpSlideZ.value;updateVertices(); title="0 to 10: OK" >' + 
+			'<p>Slider Z: <input type=range id=inpSlideZ max=20 min=-20 step=1 value=-10 oninput=outSlideZ.value=inpSlideZ.value;updateVertices(); title="0 to 10: OK" >' +
 				'<output id=outSlideZ >value</output></p>' +
 			'<div id=info ></div>' +
 
@@ -118,7 +118,7 @@
 		gridHelper.position.set( 0, -60, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets

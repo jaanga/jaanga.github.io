@@ -69,11 +69,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<p><button onclick=addSkyBox2(urlList[0][1]); >Bridge2</button></p>
@@ -118,7 +118,7 @@
 		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 80 );
+		var axisHelper = new THREE.AxesHelper( 80 );
 		scene.add( axisHelper );
 
 // assets
@@ -200,9 +200,9 @@
 
 			length = length ? length : 50;
 
-			axisHelper = new THREE.AxisHelper( length );
+			axisHelper = new THREE.AxesHelper( length );
 
-		} 
+		}
 
 		if ( scene.getObjectById( axisHelper.id )  ) {
 

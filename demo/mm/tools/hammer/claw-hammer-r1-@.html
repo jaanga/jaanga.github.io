@@ -41,7 +41,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -75,7 +75,7 @@
 
 // helpers
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -108,15 +108,15 @@
 		var pi = Math.PI;
 		var pi05 = 0.5 * pi;
 		var angle = - Math.PI / segments;
-	
+
 	for ( var i = 0; i < segments + 1; i++ ) {
 
-			points.push( v2 ( 0.75 * radius * Math.cos ( 1.57 - i * angle ) + radiusHead, 7.5 - 1.5 * radius * Math.sin ( 1.57 - i * angle ) ) ); 
+			points.push( v2 ( 0.75 * radius * Math.cos ( 1.57 - i * angle ) + radiusHead, 7.5 - 1.5 * radius * Math.sin ( 1.57 - i * angle ) ) );
 
 		}
 		pts = [ v2( radiusHead, faceHeight - fillet ), v2( radiusHead - fillet, faceHeight ), v2( 0, 20 )];
 
-		pt = points.concat( pts ); 
+		pt = points.concat( pts );
 
 		var geometry = new THREE.LatheGeometry( pt, 24, Math.PI, 2 * Math.PI );
 

@@ -62,7 +62,7 @@
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 				'<a href="" >' + document.title + '</a>' +
@@ -106,7 +106,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -145,8 +145,8 @@
 
 				vertex = geometry.vertices[ count++ ];
 
-				vertex.set( ( majorRadius + minorRadius * Math.cos( v ) ) * Math.cos( u ), 
-					( majorRadius + minorRadius * Math.cos( v )) * Math.sin( u ), minorRadius * Math.sin( v ) ); 
+				vertex.set( ( majorRadius + minorRadius * Math.cos( v ) ) * Math.cos( u ),
+					( majorRadius + minorRadius * Math.cos( v )) * Math.sin( u ), minorRadius * Math.sin( v ) );
 
 				verticesDonut.push( vertex );
 

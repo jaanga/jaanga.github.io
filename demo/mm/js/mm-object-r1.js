@@ -41,7 +41,7 @@
 		gridHelper.position.set( 0, 0, 0 );
 		helpers.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( length );
+		var axisHelper = new THREE.AxesHelper( length );
 		helpers.add( axisHelper );
 
 		scene.add( helpers );

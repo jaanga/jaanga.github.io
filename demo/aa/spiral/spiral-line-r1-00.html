@@ -46,7 +46,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -83,7 +83,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -118,7 +118,7 @@
 		for ( var i = 0; i < turns * segments + 2; i++ ) {
 			radius = i * 0.5;
 			angle = - delta * i;
-			pts.push( v( radius * cos( angle ), 0, radius * sin( angle ) ) ); 
+			pts.push( v( radius * cos( angle ), 0, radius * sin( angle ) ) );
 
 		}
 
@@ -144,7 +144,7 @@
 		for ( var i = 0; i < turns * segments + 1; i++ ) {
 
 			angle = - delta * i;
- 
+
 			if ( i < segments ) {
 
 				dr += sin( deltaRad );
@@ -159,7 +159,7 @@
 
 console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 
-			pts.push( v( x , 0, ( radius * ( 1 + dr ) ) * sin( angle ) ) ); 
+			pts.push( v( x , 0, ( radius * ( 1 + dr ) ) * sin( angle ) ) );
 
 			radius += 0.5;
 
@@ -187,7 +187,7 @@ console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 		for ( var i = 0; i < turns * segments + 1; i++ ) {
 
 			angle = - delta * i;
- 
+
 //			dr = 0.5 * sin( deltaRad * i);
 			dr = Math.log( 1 + sin( deltaRad * i) );
 
@@ -195,7 +195,7 @@ console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 
 console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 
-			pts.push( v( x , 0, ( radius * ( 1 + dr ) ) * sin( angle ) ) ); 
+			pts.push( v( x , 0, ( radius * ( 1 + dr ) ) * sin( angle ) ) );
 
 			radius += 0.5;
 		}
@@ -222,7 +222,7 @@ console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 		for ( var i = 0; i < turns * segments + 1; i++ ) {
 
 			angle = - delta * i;
- 
+
 //			dr = 0.5 * sin( deltaRad * i);
 			dr = sin( deltaRad * i );
 
@@ -230,7 +230,7 @@ console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 
 console.log( x.toFixed( 2 ), dr.toFixed( 2 ) );
 
-			pts.push( v( x , 0, ( radius * ( 1 + dr ) ) * sin( angle ) ) ); 
+			pts.push( v( x , 0, ( radius * ( 1 + dr ) ) * sin( angle ) ) );
 
 			radius += 0.5;
 		}

@@ -41,7 +41,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -72,7 +72,7 @@
 
 		scene = new THREE.Scene();
 
-		var axisHelper = new THREE.AxisHelper( 5000 );
+		var axisHelper = new THREE.AxesHelper( 5000 );
 		scene.add( axisHelper );
 
 
@@ -106,7 +106,7 @@
 
 		var textureLoader = new THREE.TextureLoader();
 		textureLoader.crossOrigin = 'anonymous';
-		textureLoader.load( 'bill.png', function( texture ){ 
+		textureLoader.load( 'bill.png', function( texture ){
 
 			var billMaterial = new THREE.MeshBasicMaterial( { map: texture, side: 2 } );
 			var geometry = new THREE.PlaneBufferGeometry( 2, 2 );

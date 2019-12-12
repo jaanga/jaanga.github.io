@@ -59,11 +59,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 
@@ -103,7 +103,7 @@
 
 // helpers
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -131,7 +131,7 @@
 //		for ( i = turns * segments; i > 0; i-- ) {
 			angle = i * deltaAngle;
 			rad = i * radius * ( 1 - inside * deltaRadius );
-			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) ); 
+			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) );
 
 		}
 		pts2 = [];
@@ -139,7 +139,7 @@
 
 			angle = i * deltaAngle;
 			rad = i * radius * ( 1 + ( outside * deltaRadius ) );
-			pts2.push( v2( rad * cos( angle ), rad * sin( angle ) ) ); 
+			pts2.push( v2( rad * cos( angle ), rad * sin( angle ) ) );
 
 		}
 

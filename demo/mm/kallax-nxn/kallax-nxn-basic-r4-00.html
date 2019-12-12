@@ -265,7 +265,7 @@ tweenAllToLocation()
 		camera.userData.places = [];
 		camera.userData.tween = tweenCamera;
 
-		var p = camera.position.clone(); 
+		var p = camera.position.clone();
 		var t = controls.target.clone();
 		var p2 = 0.05 * Math.pow( height + width, 1.4 ) + 50;
 
@@ -289,7 +289,7 @@ tweenAllToLocation()
 
 			[ [ caseRight, 2, 2000 ] ],
 			[ [ caseTop, 1, 2000 ] ],
-			[ [ caseRight, 1, 2000 ], [ camera, 4, 3000 ] ],// 
+			[ [ caseRight, 1, 2000 ], [ camera, 4, 3000 ] ],//
 
 		];
 
@@ -338,7 +338,7 @@ tweenAllToLocation()
 
 		playList.push( [ [ caseLeft, 2, 2000 ] ]);
 		playList.push( [ [ caseLeft, 1, 2000 ] ]);
-		playList.push( [ [ caseBottom, 1, 2000 ], [ camera, 5, 3000 ]] ); 
+		playList.push( [ [ caseBottom, 1, 2000 ], [ camera, 5, 3000 ]] );
 		playList.push( [ [ kallax, 1, 5000 ] ]);
 
 		drawHelpers();
@@ -525,7 +525,7 @@ tweenAllToLocation()
 
 		w = height > width ? height05 : width05;
 
-		var axisHelper = new THREE.AxisHelper( w + 50 );
+		var axisHelper = new THREE.AxesHelper( w + 50 );
 		helpers.add( axisHelper );
 
 		geometry = new THREE.BoxGeometry( height + 100, 2, width + 100 );

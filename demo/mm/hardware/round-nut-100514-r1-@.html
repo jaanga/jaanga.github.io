@@ -39,7 +39,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 			'	<a href="" >' + document.title + '</a>' +
@@ -84,7 +84,7 @@
 		gridHelper.position.set( 0, -50, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -205,7 +205,7 @@
 				var vertices = geometry.vertices;
 				var count = 0;
 
-				var angleStart = Math.atan2( chordRadius, radiusBase ); 
+				var angleStart = Math.atan2( chordRadius, radiusBase );
 				var chordLength = radiusBase * Math.cos( angleStart );
 				var chordAngle = Math.atan2( chordRadius, chordLength );
 				var startX = radiusBase * Math.cos( chordAngle );
@@ -220,7 +220,7 @@
 
 				}
 
-				angleStart = Math.atan2( chordRadius, radiusBase ); 
+				angleStart = Math.atan2( chordRadius, radiusBase );
 				chordLength = radiusBase * Math.cos( angleStart );
 				chordAngle = Math.atan2( chordRadius, chordLength );
 				delta = ( pi - 2 * chordAngle ) / columns;
@@ -243,7 +243,7 @@
 
 				}
 
-				angleStart = Math.atan2( chordRadius, radiusTop ); 
+				angleStart = Math.atan2( chordRadius, radiusTop );
 				chordLength = radiusTop * Math.cos( angleStart );
 				chordAngle = Math.atan2( chordRadius, chordLength );
 				delta = ( pi - 2 * chordAngle ) / columns;
@@ -365,7 +365,7 @@
 				var segments = 6;
 
 				columns = segments * ( points.length );
-		 
+
 				geometry = new THREE.PlaneGeometry(  1, 1, columns - 1, rows);
 
 				vertices = geometry.vertices;
@@ -378,7 +378,7 @@
 
 						delta = k / segments;
 
-						if ( j < points.length - 1 ) { 
+						if ( j < points.length - 1 ) {
 
 							x = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
 							y = 0;
@@ -420,7 +420,7 @@
 
 						delta = k / segments;
 
-						if ( j < points.length - 1 ) { 
+						if ( j < points.length - 1 ) {
 
 							x = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
 							y = height;
@@ -467,7 +467,7 @@
 		var segments = 6;
 
 		columns = segments * ( points.length );
- 
+
 		geometry = new THREE.PlaneBufferGeometry(  1, 1, columns - 1, rows);
 
 		vertices = geometry.attributes.position.array;
@@ -480,7 +480,7 @@
 
 				delta = k / segments;
 
-				if ( j < points.length - 1 ) { 
+				if ( j < points.length - 1 ) {
 
 					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
 					vertices[ count++ ] = 0;
@@ -518,7 +518,7 @@
 
 				delta = k / segments;
 
-				if ( j < points.length - 1 ) { 
+				if ( j < points.length - 1 ) {
 
 					vertices[ count++ ] = points[ j ].x + delta * ( points[ j + 1 ].x  - points[ j ].x );
 					vertices[ count++ ] = height;

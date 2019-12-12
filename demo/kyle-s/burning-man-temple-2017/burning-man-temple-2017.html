@@ -51,7 +51,7 @@
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
-		let axisHelper = new THREE.AxisHelper( 50 );
+		let axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 		controls.maxDistance = 800;
@@ -482,7 +482,7 @@
 
 		scene.add( ground );
 
-		axisHelper = new THREE.AxisHelper( 100 );
+		axisHelper = new THREE.AxesHelper( 100 );
 		scene.add( axisHelper );
 
 		gridHelper = new THREE.GridHelper( 200, 50 );

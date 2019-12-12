@@ -46,7 +46,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -93,7 +93,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -121,8 +121,8 @@
 
 		var points = [];
 
-		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ), 
-			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),  
+		points = [ v2( radius - fillet, 0 ) , v2( radius, fillet ), v2( radius, depthShaft1 ),
+			v2( radiusSpacer, depthShaft1 ), v2( radiusSpacer, depthSpacer ), v2( radius, depthSpacer ),
 			v2( radius, depthShaft2 - fillet), v2( radius - fillet, depthShaft2 ), v2( 0, depthShaft2 ),
 
 		];

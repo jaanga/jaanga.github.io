@@ -40,7 +40,7 @@
 
 		w = height > width ? height05 : width05;
 
-		var axisHelper = new THREE.AxisHelper( w + 50 );
+		var axisHelper = new THREE.AxesHelper( w + 50 );
 		helpers.add( axisHelper );
 
 		geometry = new THREE.BoxGeometry( height + 100, 2, width + 100 );
@@ -61,7 +61,7 @@
 		gridHelper.position.set( 0, 0, 0 );
 		helpers.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( length );
+		var axisHelper = new THREE.AxesHelper( length );
 		helpers.add( axisHelper );
 
 		scene.add( helpers );
@@ -98,7 +98,7 @@
 		var mesh = new THREE.Mesh( geometryScrew, materialScrew );
 		var offsetX = - height05 - 10;
 		var offsetZ =  width05 + 10;
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 10 );
 		var mud = mesh.userData;
 
@@ -123,7 +123,7 @@
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
 		var offsetX = height05 + 20;
 		var offsetZ =  - width05 - 20;
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 25 );
 		var mud = mesh.userData;
 
@@ -334,7 +334,7 @@ console.log( '', obj.name );
 
 		function itemDispatch() {
 
-			if ( checkbox.checked === true ) { 
+			if ( checkbox.checked === true ) {
 
 				if ( frameIndex < clip.length && itemCount < clip[ frameIndex ].length ) {
 

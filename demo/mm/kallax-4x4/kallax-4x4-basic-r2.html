@@ -151,7 +151,7 @@
 		gridHelper.position.set( 0, -1, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 120 );
+		var axisHelper = new THREE.AxesHelper( 120 );
 		scene.add( axisHelper );
 
 		geometry = new THREE.BoxGeometry( 240, 2, 300 );
@@ -567,7 +567,7 @@
 
 	function buildPeg( hole ) {
 
-		var a = ran( pi2 ); 
+		var a = ran( pi2 );
 		var r = ran( 25 );
 
 		var mesh = new THREE.Mesh( geometryPeg, materialPeg );
@@ -683,7 +683,7 @@
 
 				switchParent( screws, child.name.substr( 14 ) );
 
-			} 
+			}
 
 			if ( child.name.substr( 0, 7 ) === 'peg loc') {
 
@@ -709,7 +709,7 @@
 
 				send2location( screw, screw.userData.places[ 0 ][ 0 ], screw.userData.places[ 0 ][ 1 ], 2000 );
 
-			} 
+			}
 
 			if ( child.name.substr( 0, 7 ) === 'peg loc') {
 
@@ -837,7 +837,7 @@
 
 			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
 
-				switchParent( screws, [ i ] ) 
+				switchParent( screws, [ i ] )
 
 			}
 
@@ -850,7 +850,7 @@
 
 			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
 
-				switchParent( pegs, [ i ] ) 
+				switchParent( pegs, [ i ] )
 
 			}
 
@@ -983,7 +983,7 @@
 
 				switchParent( screws, child.name.substr( 14 ) );
 
-			} 
+			}
 
 			if ( child.name.substr( 0, 7 ) === 'peg loc') {
 
@@ -1009,7 +1009,7 @@
 
 				send2location( screw, screw.userData.places[ 0 ][ 0 ], screw.userData.places[ 0 ][ 1 ], 2000 );
 
-			} 
+			}
 
 			if ( child.name.substr( 0, 7 ) === 'peg loc') {
 
@@ -1137,7 +1137,7 @@
 
 			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
 
-				switchParent( screws, [ i ] ) 
+				switchParent( screws, [ i ] )
 
 			}
 
@@ -1150,7 +1150,7 @@
 
 			if ( obj.position.distanceTo( ohp.position.clone() ) !== 0 ) {
 
-				switchParent( pegs, [ i ] ) 
+				switchParent( pegs, [ i ] )
 
 			}
 

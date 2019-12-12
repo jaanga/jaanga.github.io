@@ -153,7 +153,7 @@ console.time( 'timer 0' );
 // helpers
 
 
-		axisHelper = new THREE.AxisHelper( 10000 );
+		axisHelper = new THREE.AxesHelper( 10000 );
 		scene.add( axisHelper );
 
 // assets
@@ -170,7 +170,7 @@ console.time( 'timer 0' );
 
 		hk = convertPosition( 22.3964, 114.1095, 9000  );
 
-		placard = drawPlacard( 'howdy', 10, 120, hk.x, hk.y , hk.z ) 
+		placard = drawPlacard( 'howdy', 10, 120, hk.x, hk.y , hk.z )
 		scene.add( placard );
 
 	}

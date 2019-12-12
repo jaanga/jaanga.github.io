@@ -42,7 +42,7 @@
 //	SEL.urlBase = '../../elevations/' + SEL.searchInFolder;
 
 
-	init() 
+	init()
 	THR.animate();
 
 	function init() {
@@ -58,11 +58,11 @@
 			THR.renderer.setClearColor( 0x7ec0ee );
 			THR.updateCamera = true;
 
-			THR.axisHelper = new THREE.AxisHelper( 50 );
+			THR.axisHelper = new THREE.AxesHelper( 50 );
 			THR.scene.add( THR.axisHelper );
 			THR.axisHelper.visible = false;
 
-			TERchkAxisHelper.checked  = false;
+			TERchkAxesHelper.checked  = false;
 			TERchkBoxHelper.checked = false;
 
 			TERchkRotate.click();

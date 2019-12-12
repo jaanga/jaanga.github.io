@@ -52,7 +52,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -89,7 +89,7 @@
 		gridHelper.position.set( 0, -20, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -138,16 +138,16 @@
 		var segments = 18;
 
 		material = new THREE.MeshNormalMaterial( { side: 2 } );
-		points = [ 
+		points = [
 
-			v( 0, 0, height05 + 2) , 
-			v( delta, 0, height05 + 2 ), 
-			v( delta, 0, height05 + delta + 1), 
-			v( width05 + delta, 0, height05 + delta + 1 ), 
+			v( 0, 0, height05 + 2) ,
+			v( delta, 0, height05 + 2 ),
+			v( delta, 0, height05 + delta + 1),
+			v( width05 + delta, 0, height05 + delta + 1 ),
 			v( width05, 0, height05 ),
 
 			v( width05, 0, -height05 ),
-			v( 0, 0, -height05 - delta ) 
+			v( 0, 0, -height05 - delta )
 
 		];
 
@@ -239,8 +239,8 @@
 		radius2 = 3.5;
 		radius3 = 1;
 
-		pts = [ 
-			v2( startX, startY ), 
+		pts = [
+			v2( startX, startY ),
 			v2( startX + rectWidth, startY ),
 			v2( startX + rectWidth, startY + rectHeight ),
 			v2( startX, startY + rectHeight ),

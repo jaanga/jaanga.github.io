@@ -152,7 +152,7 @@
 		gridHelper.position.set( 0, -20, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 120 );
+		var axisHelper = new THREE.AxesHelper( 120 );
 		scene.add( axisHelper );
 
 		geometry = new THREE.BoxGeometry( 240, 2, 300 );
@@ -195,7 +195,7 @@
 //		.position.copy( .userData.places[ 0 ][ 0 ] );
 //		.rotation.setFromVector3( .userData.places[ 0 ][ 1 ] );
 		caseTop = buildCaseHorizontal();
-//		drawObject( caseTop, 0, v( 0, 0 + thicknessCase05, -100 ), v( 0, depth05, -height05 + thicknessCase05 ), 
+//		drawObject( caseTop, 0, v( 0, 0 + thicknessCase05, -100 ), v( 0, depth05, -height05 + thicknessCase05 ),
 //			v( 0, ran( 0.2 ) - 0.1, 0 ), v( pi05, 0, 0 ) );
 		caseTop.userData.places.push( [ v( 0, 0 + thicknessCase05, -100 ), v( 0, ran( 0.2 ) - 0.1, 0 ) ] );
 		caseTop.userData.places.push( [ v( 0, depth05, -height05 + thicknessCase05 ), v( pi05, 0, 0 ) ] );
@@ -319,7 +319,7 @@
 
 		var obj = new THREE.Object3D();
 		obj.userData.places = [];
-		obj.add( mesh);	
+		obj.add( mesh);
 
 		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
@@ -369,7 +369,7 @@
 
 		var obj = new THREE.Object3D();
 		obj.userData.places = [];
-		obj.add( mesh);	
+		obj.add( mesh);
 
 		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
@@ -420,7 +420,7 @@
 
 		var obj = new THREE.Object3D();
 		obj.userData.places = [];
-		obj.add( mesh);	
+		obj.add( mesh);
 
 		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );
@@ -451,7 +451,7 @@
 
 		var obj = new THREE.Object3D();
 		obj.userData.places = [];
-		obj.add( mesh);	
+		obj.add( mesh);
 
 		var edge = new THREE.EdgesHelper( mesh, 0xff0000 );
 		edges.add( edge );

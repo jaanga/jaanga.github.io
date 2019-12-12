@@ -108,9 +108,9 @@
 
 	}
 
-	function updateHash() { 
+	function updateHash() {
 
-		location.hash = 
+		location.hash =
 
 			'lat=' + lat +
 			'#lon=' + lon +
@@ -122,8 +122,8 @@
 			'#ctx=' + controls.target.x.toFixed(1) +
 			'#cty=' + controls.target.y.toFixed(1) +
 			'#ctz=' + controls.target.z.toFixed(1) +
- 
-		''; 
+
+		'';
 
 		outLat.value = lat;
 		outLon.value = lon;
@@ -203,7 +203,7 @@
 		helper.material.color.setRGB( 1, 0, 1 );
 		scene.add( helper );
 
-		var axisHelper = new THREE.AxisHelper( 5 );
+		var axisHelper = new THREE.AxesHelper( 5 );
 		scene.add( axisHelper );
 
 		var helper = new THREE.GridHelper( 5, 1 );

@@ -77,11 +77,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/demo/aa/ >🛈</a>
 			</h2>
 			<div id=info ></div>
@@ -115,7 +115,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -201,7 +201,7 @@
 //		for ( i = turns * segments; i > 0; i-- ) {
 			angle = i * deltaAngle;
 			rad = i * radius * ( 1 + ( inside * sin( i * deltaRadius ) ) );
-			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) ); 
+			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) );
 
 		}
 
@@ -210,7 +210,7 @@
 
 			angle = i * deltaAngle;
 			rad = i * radius * ( 1 + ( outside * sin( i * deltaRadius ) ) );
-			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) ); 
+			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) );
 
 		}
 
@@ -259,7 +259,7 @@
 
 
 		var holePath = new THREE.Path();
-		holePath.fromPoints( [ v2( -widthNiche05, heightDoorTop - heightNiche ), v2( widthNiche05, heightDoorTop - heightNiche  ), 
+		holePath.fromPoints( [ v2( -widthNiche05, heightDoorTop - heightNiche ), v2( widthNiche05, heightDoorTop - heightNiche  ),
 			v2( widthNiche05, heightDoorTop ), v2( -widthNiche05, heightDoorTop ) ] );
 
 		shape.holes.push( holePath );
@@ -278,13 +278,13 @@
 	function drawWindowSurround() {
 
 		shape = new THREE.Shape();
-		shape.fromPoints( [ v2( -widthNiche05 - widthSurround, heightDoorTop - heightNiche - widthSurround ), 
-			v2( widthNiche05 + widthSurround, heightDoorTop - heightNiche - widthSurround ), 
-			v2( widthNiche05 + widthSurround, heightDoorTop + widthSurround ), 
+		shape.fromPoints( [ v2( -widthNiche05 - widthSurround, heightDoorTop - heightNiche - widthSurround ),
+			v2( widthNiche05 + widthSurround, heightDoorTop - heightNiche - widthSurround ),
+			v2( widthNiche05 + widthSurround, heightDoorTop + widthSurround ),
 			v2( -widthNiche05 - widthSurround, heightDoorTop + widthSurround) ] );
 
 		var holePath = new THREE.Path();
-		holePath.fromPoints( [ v2( -widthNiche05, heightDoorTop - heightNiche ), v2( widthNiche05, heightDoorTop - heightNiche  ), 
+		holePath.fromPoints( [ v2( -widthNiche05, heightDoorTop - heightNiche ), v2( widthNiche05, heightDoorTop - heightNiche  ),
 			v2( widthNiche05, heightDoorTop ), v2( -widthNiche05, heightDoorTop ) ] );
 
 		shape.holes.push( holePath );
@@ -328,10 +328,10 @@
 			p.push( pt );
 		}
 
-		pt = v( pt.x - 1, 0, pt.z ) 
+		pt = v( pt.x - 1, 0, pt.z )
 		p.push( pt );
 
-		pt = v( pt.x, 0, pt.z + 1 ) 
+		pt = v( pt.x, 0, pt.z + 1 )
 		p.push( pt );
 		x = pt.x
 		z = pt.z + 2;
@@ -436,7 +436,7 @@
 
 		var geometry = new THREE.LatheGeometry( p, 30 );
 		geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -Math.PI / 2 ) );
-		material = new THREE.MeshNormalMaterial(  { side: 2, wireframe: false } ); 
+		material = new THREE.MeshNormalMaterial(  { side: 2, wireframe: false } );
 		mesh = new THREE.Mesh( geometry, material ) ;
 		verona.add( mesh );
 
