@@ -15,7 +15,7 @@
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
 	var spiral;
@@ -58,7 +58,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -125,7 +125,7 @@
 //		for ( i = turns * segments; i > 0; i-- ) {
 			angle = i * deltaAngle;
 			rad = i * radius * ( 1 + ( inside * sin( i * deltaRadius ) ) );
-			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) ); 
+			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) );
 
 		}
 
@@ -134,7 +134,7 @@
 
 			angle = i * deltaAngle;
 			rad = i * radius * ( 1 + ( outside * sin( i * deltaRadius ) ) );
-			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) ); 
+			pts.push( v2( rad * cos( angle ), rad * sin( angle ) ) );
 
 		}
 
@@ -168,7 +168,7 @@
 			angle = deltaAngle * i;
 			rad = i * 0.5 * ( 1 + ( -0.35 * sin( i * deltaRadius ) ));
 			pt = v2( rad * cos( angle ), rad * sin( angle ) );
-			pts.push( pt ); 
+			pts.push( pt );
 
 		}
 
@@ -204,7 +204,7 @@
 			angle = deltaAngle * i;
 			rad = i * 0.5 * ( 1 + ( -0.35 * sin( i * deltaRadius ) ));
 			pt = v2( rad * cos( angle ), rad * sin( angle ) );
-			pts.push( pt ); 
+			pts.push( pt );
 
 		}
 

@@ -10,7 +10,7 @@
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
 	var petals;
@@ -58,9 +58,9 @@
 				<a href="" > ${ document.title } </a>
 				<a id=aa href=http://jaanga.github.io/demo/aa/sphere-slicer/ >🛈</a>
 			</h2>
-			<p>radius: <input type=range id=inpRadiusIn max=10 min=0.1 step=0.1 value=${ radiusIn } oninput=drawPetals(); title="0 to 10: OK" > 
+			<p>radius: <input type=range id=inpRadiusIn max=10 min=0.1 step=0.1 value=${ radiusIn } oninput=drawPetals(); title="0 to 10: OK" >
 				<output id=outRadiusIn >value</output></p>
-			<p>thickness: <input type=range id=inpThickness max=10 min=1 step=0.05 value=${ thickness } oninput=drawPetals(); title="0 to 10: OK" > 
+			<p>thickness: <input type=range id=inpThickness max=10 min=1 step=0.05 value=${ thickness } oninput=drawPetals(); title="0 to 10: OK" >
 			<output id=outThickness >value</output></p>
 			<p>petals: <input type=range id=inpPetal max=30 min=2 step=1 value=${ petalCount } oninput=drawPetals(); title="0 to 10: OK" > <output id=outPetal >value</output></p>
 			<p>split: <input type=range id=inpSplit max=1 min=0.05 step=0.05 value=${ split } oninput=drawPetals(); title="0 to 10: OK" > <output id=outSplit >value</output></p>

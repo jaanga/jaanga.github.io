@@ -11,7 +11,7 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=http://mrdoob.github.com/three.js/examples/js/libs/tween.min.js ></script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <!--
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
@@ -60,7 +60,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -74,12 +74,12 @@
 			 <output id=outWidth >${ width }</output></p>
 			<p>height: <input type=range id=inpHeight max=100 min=30 step=1 value=${ height } oninput=drawKallax(); title="30 to 100: OK" >
 			 <output id=outHeight >${ height }</output></p>
-			<p>depth: <input type=range id=inpDepth max=60 min=20 step=1 value=${ depth } oninput=drawKallax(); title="1 to 25: OK" > 
+			<p>depth: <input type=range id=inpDepth max=60 min=20 step=1 value=${ depth } oninput=drawKallax(); title="1 to 25: OK" >
 			 <output id=outDepth >${ depth }</output></p>
 
 			<p>thickness case: <input type=range id=inpThicknessCase max=10 min=3 step=0.5 value=${ thicknessCase } oninput=drawKallax() title="3 to 10: OK" >
 			 <output id=outThicknessCase >${ thicknessCase }</output></p>
-			<p>thickness shelf: <input type=range id=inpThicknessShelf max=5 min=1 step=0.5 value=${ thicknessShelf } oninput=drawKallax(); title="0.5 to 5: OK" > 
+			<p>thickness shelf: <input type=range id=inpThicknessShelf max=5 min=1 step=0.5 value=${ thicknessShelf } oninput=drawKallax(); title="0.5 to 5: OK" >
 			 <output id=outThicknessShelf >${ thicknessShelf }</output></p>
 
 			<p>rotation: <input type=checkbox id=inpRotation onchange=toggleAutoRotate(); checked ></p>

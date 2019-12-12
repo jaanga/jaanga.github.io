@@ -15,7 +15,7 @@
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
 	var pi = Math.PI, pi2 = 2 * Math.PI, pi05 = 0.5 * Math.PI;
@@ -48,11 +48,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/demo/aa/ >🛈</a>
 			</h2>
 			<p><input type=checkbox onchange=toggleAxis() checked> Axis</p>
@@ -132,13 +132,13 @@
 
 			}
 
-			pts.push( pt ); 
+			pts.push( pt );
 
 		}
 
 		shape.splineThru( pts );
 
-		pts2 = []; 
+		pts2 = [];
 //		shape.moveTo( 23, 0 );
 		shape.moveTo( pt.x, 0);
 
@@ -148,11 +148,11 @@
 			angle = delta * i;
 			pt = v2( radius * cos( angle ), radius * sin( angle ) );
 			if ( i ===  turns * segments ) { shape.moveTo( pt.x, pt.y ); }
-			pts2.push( pt ); 
+			pts2.push( pt );
 
 		}
 
-//		pts2.push( v2( 0.25, 0.5 ) ); 
+//		pts2.push( v2( 0.25, 0.5 ) );
 pts2.shift();
 		shape.splineThru( pts2 );
 

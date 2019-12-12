@@ -15,7 +15,7 @@
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
-<script src=http://jaanga.github.io/cookbook-threejs/templates/jaanga-assets-for-threejs/jaanga-assets-for-threejs.js ></script>
+<script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
 	var segments = 30;
@@ -53,7 +53,7 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
@@ -118,7 +118,7 @@
 		for ( var i = 0; i < turns * segments; i++ ) {
 			radius = i * 0.5;
 			angle = delta * i;
-			pts.push( v2( radius * cos( angle ), radius * sin( angle ) ) ); 
+			pts.push( v2( radius * cos( angle ), radius * sin( angle ) ) );
 
 		}
 
@@ -153,7 +153,7 @@
 			angle = deltaAngle * i;
 			radius = i * 0.5 * ( 1 + ( -0.35 * sin( i * deltaRadius ) ));
 			pt = v2( radius * cos( angle ), radius * sin( angle ) );
-			pts.push( pt ); 
+			pts.push( pt );
 
 		}
 
