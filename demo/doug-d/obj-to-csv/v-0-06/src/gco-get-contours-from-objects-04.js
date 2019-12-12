@@ -279,6 +279,8 @@ GCO.drawContour = function() {
 
 		GCOdivMessage.innerHTML = `<p>index ${GCO.index}</p>`;
 
+		console.log('index', GCO.index, elevation, );
+
 		GCO.drawIntersectionPoints();
 
 	} else {
