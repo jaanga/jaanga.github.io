@@ -26,11 +26,18 @@ _basic-html.html_
 - Update mesh
 	- Rotate around XYZ
 	- Select material
+	- Update opacity
+	- Toggle edges, box helper and wireframe
 - Generate contour lines
 	- Choose one to many
+	- Select elevation of a single contor line
+	- Menu displays a number of stats
+	- Toggle view of objecy, contours and points
 - Export vertices to CSV files
 	- Export as strings of vertices
 	- XYZ coordinates plus a line index
+- Display settings
+	- Update a variety of scene display settings
 
 ### Credits
 
@@ -38,14 +45,22 @@ _basic-html.html_
 
 ### Mission
 
-* to be abl to create contours for any OBJ file
-* To be able to generate contours for any 3D file (STL etc ) or parametric
+- To be able to create contours for any OBJ file
+- To be able to generate contours for any 3D file (STL etc ) or parametric
 
 ### Vision
 
-* Augment 3D so as to supply it with even greater dimensionality
+- Augment 3D so as to supply it with even greater dimensionality
 
-### Releases
+### Versions
+
+
+[OBJ to CSV 0.06.01 ]( v-0-06/get-contours-from-objects.html )
+
+2019-12-11
+
+- Looking OK
+- Too many new things to list
 
 [OBJ to CSV 0.04.02 ]( v-0-04/get-contours-from-objects.html )
 
@@ -94,8 +109,18 @@ _basic-html.html_
 </details>
 
 <details open >
+<summary>Issues </summary>
+
+- 2019-12-11 ~ Theo ~ Some extra lines are drawn
+- 2019-12-11 ~ Theo ~ Some gaps appear in contours
+- 2019-12-11 ~ Theo ~ Some contour lines are drawn as multiple line segments instead of one
+
+</details>
+
+<details open >
 <summary>To do and wish list </summary>
 
+* 2019-12-11 ~ Theo ~ Add some memoization to main contour generating routine
 * 2019-12-03 ~ Theo ~ Add [decimate function]( https://threejs.org/examples/webgl_modifier_simplifier.html ) to reduce number of faces to inspected
 * 2019-12-01 ~ Theo ~ Scale along three axis not just Z
 * 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
@@ -117,6 +142,14 @@ _basic-html.html_
 
 <details open >
 <summary>Links of interest</summary>
+
+
+### Contours and isolines
+* https://en.wikipedia.org/wiki/Polygonal_chain
+
+* https://en.wikipedia.org/wiki/Contour_line
+
+### Algorithms
 
 These are the links that got me started
 
@@ -141,6 +174,8 @@ These are the links that got me started
 <summary>Change log </summary>
 
 ### 2019-12-02 ~ Theo
+
+_Deprecated. See version history above_
 
 OBJ to CSV 0.03.01.1
 

@@ -160,7 +160,7 @@ CSV.getCsvLines = function() {
 	const name = mesh.name || "test";
 	let a = document.body.appendChild( document.createElement( 'a' ) );
 	a.href = window.URL.createObjectURL( blob );
-	a.download = `${ name }-${ CSV.type }-${ GCO.contoursLength }.csv`;
+	a.download = `${ name }-lines-${ GCO.contoursLength }.csv`;
 	a.click();
 	//		delete a;
 	a = null;
