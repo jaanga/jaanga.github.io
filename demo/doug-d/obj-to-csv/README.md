@@ -12,7 +12,7 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _basic-html.html_
 -->
 
-### Full Screen: [OBJ to CSV]( https://jaanga.github.io/demo/doug-d/obj-to-csv/ )
+### Full Screen demo and best link: [OBJ to CSV]( https://jaanga.github.io/demo/doug-d/obj-to-csv/ )
 
 
 <details open >
@@ -55,14 +55,21 @@ _basic-html.html_
 ### Versions
 
 
-[OBJ to CSV 0.06.01 ]( v-0-06/get-contours-from-objects.html )
+[OBJ to CSV 0.06.01 ]( v-0-06/obj-to-csv.html )
 
 2019-12-11
 
 - Looking OK
 - Too many new things to list
 
-[OBJ to CSV 0.04.02 ]( v-0-04/get-contours-from-objects.html )
+[OBJ to CSV 0.05.00 ]( v-0-05/obj-to-csv.html )
+
+* Mostly broken
+* Gets Uncaught RangeError: Maximum call stack size exceeded
+
+
+
+[OBJ to CSV 0.04.02 ]( v-0-04/obj-to-csv.html )
 
 2019-12-07
 
@@ -71,14 +78,14 @@ _basic-html.html_
 * Export CSV segments dropped
 
 
-[OBJ to CSV 0.04.00 ]( v-0-04/get-contours-from-objects.html )
+[OBJ to CSV 0.04.00 ]( v-0-04/obj-to-csv.html )
 
 2019-12-06
 
 * Exported contours beginning to look good
 
 
-[OBJ to CSV 0.03 ]( v-0-03/get-contours-from-objects.html )
+[OBJ to CSV 0.03 ]( v-0-03/obj-to-csv-01.html )
 
 * Keep hacking at better contours
 
