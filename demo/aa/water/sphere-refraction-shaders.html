@@ -6,36 +6,36 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/js/libs/stats.min.js ></script>
 <script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
 	var urlList = [];
 
-	var p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Bridge2/';
+	var p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/Bridge2/';
 	urlList.push( [ 'Bridge2', [ p + 'posx.jpg', p + 'negx.jpg', p + 'posy.jpg', p + 'negy.jpg',p + 'posz.jpg',p +'negz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Escher/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/Escher/';
 	urlList.push( [ 'escher', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/MilkyWay/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/MilkyWay/';
 	urlList.push( [ 'MilkyWay', [ p + 'dark-s_px.jpg', p + 'dark-s_nx.jpg', p + 'dark-s_py.jpg', p + 'dark-s_ny.jpg',p + 'dark-s_pz.jpg', p +'dark-s_nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Park2/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/Park2/';
 	urlList.push( [ 'Park2', [ p + 'posx.jpg', p + 'negx.jpg', p + 'posy.jpg', p + 'negy.jpg',p + 'posz.jpg',p +'negz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/Park3Med/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/Park3Med/';
 	urlList.push( [ 'Park3Med', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/pisa/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/pisa/';
 	urlList.push( [ 'pisa', [ p + 'px.png', p + 'nx.png', p + 'py.png', p + 'ny.png',p + 'pz.png',p +'nz.png' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/skybox/';
 	urlList.push( [ 'skyboxX', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
-	p = 'http://mrdoob.github.io/three.js/examples/textures/cube/SwedishRoyalCastle/';
+	p = 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/textures/cube/SwedishRoyalCastle/';
 	urlList.push( [ 'SwedishRoyalCastle', [ p + 'px.jpg', p + 'nx.jpg', p + 'py.jpg', p + 'ny.jpg',p + 'pz.jpg',p +'nz.jpg' ] ] );
 
 	var skybox;
@@ -200,7 +200,7 @@
 
 			length = length ? length : 50;
 
-			axisHelper = new THREE.AxesHelper( length );
+			axisHelper = new THREE.AxisHelper( length );
 
 		}
 
