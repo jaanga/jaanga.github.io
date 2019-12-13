@@ -16,6 +16,8 @@ CFR.getMenu = function () {
 
 	<div id=CFRdivMessage ></div>
 
+	<div id=CFRdivStatisticsModel ></div>
+
 </details>
 	`;
 
@@ -43,6 +45,7 @@ CFR.openFile = function (files) {
 				type: ${ files.files[0].type }<br>
 				modified: ${ files.files[0].lastModifiedDate.toLocaleDateString() }
 			</p>
+
 		`;
 
 		CFR.getLines( reader.result );
@@ -84,7 +87,26 @@ CFR.getLines = function (csv) {
 	}
 
 	CFR.contours = contours;
-	DLB.renderLines(contours)
+
+	DLB.renderLines(contours);
+
+	CFR.getStats()
+
+};
+
+
+CFR.getStats = function() {
+
+	vertices = group.children.reduce( ( acc, line ) => acc += line.geometry.vertices.length, 0 )
+	const htm =
+`
+<p>
+contour segments: ${ CFR.contours.length }<br>
+vertices: ${ vertices.toLocaleString() }
+</p>
+`;
+
+	CFRdivStatisticsModel.innerHTML = htm;
 
 };
 

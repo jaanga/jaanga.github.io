@@ -18,6 +18,8 @@ _basic-html.html_
 <details open >
 <summary>Concept</summary>
 
+Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files.
+
 ### Features
 
 - Load and view OBJ files in 3D
@@ -30,9 +32,9 @@ _basic-html.html_
 	- Toggle edges, box helper and wireframe
 - Generate contour lines
 	- Choose one to many
-	- Select elevation of a single contor line
+	- Select elevation of a single contour line
 	- Menu displays a number of stats
-	- Toggle view of objecy, contours and points
+	- Toggle view of mesh, contours and points
 - Export vertices to CSV files
 	- Export as strings of vertices
 	- XYZ coordinates plus a line index

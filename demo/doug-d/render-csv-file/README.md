@@ -40,6 +40,10 @@ Features
 
 <img src="https://jaanga.github.io/demo/doug-d/images/rtc-08-thinker.png" style=width:50% >
 
+2019-12-12 v0.08.02
+
+* Add basic model statistics
+
 2019-12-05
 
 * F: Add basic lines
@@ -48,6 +52,7 @@ Features
 
 All the above have a variety of parameters. But all are still at an early stage. Certain workflows can freeze the browser. So reload often and press the 'Render...' buttons before updating that line type's parameters.
 
+No loction.hash support yet
 
 ## Dev release [render-csv-file-0-07.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-07/render-csv-file.html )
 
