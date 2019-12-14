@@ -135,7 +135,7 @@
 		gridHelper.position.set( 0, -30, 0 );
 		scene.add( gridHelper );
 
-		axisHelper = new THREE.AxisHelper( 50 );
+		axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
@@ -149,7 +149,7 @@
 
 //		var segments;
 
-		segments = 20;
+		segments = 30;
 		var sizeX = 50;
 		var sizeY = 30;
 		var sizeZ = 80;
@@ -166,8 +166,8 @@
 
 			vertex = v(
 
-				Math.sin( i * 7 / segments ) * sizeX, 
-				Math.cos( i * 3 / segments ) * sizeY, 
+				Math.sin( i * 7 / segments ) * sizeX,
+				Math.cos( i * 3 / segments ) * sizeY,
 				Math.sin( i * 2 / segments ) * sizeZ
 
 			);

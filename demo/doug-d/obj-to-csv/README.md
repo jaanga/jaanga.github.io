@@ -60,8 +60,8 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 2019-12-12
 
-- Add delete segents of three vertices or less that are all very close together
-- Add if last vertex is lose to first vertex then close the polygon
+- Deletes segments of three vertices or less that are all very close together
+- Add if last vertex is close to first vertex then close the polygon
 - Update the statistics display
 
 [OBJ to CSV 0.06.01 ]( v-0-06/obj-to-csv.html )
