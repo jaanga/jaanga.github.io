@@ -56,6 +56,18 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 ### Versions
 
+[OBJ to CSV 0.06.03 ]( v-0-06/obj-to-csv.html )
+
+- Add 'Remove short segments' button
+	- Button must be pushed in order to intiate a second pass on the data
+	- Does better job of finding and deleting
+	- Provides report on how many segments deleted
+- Add contour line labels checkbox toggle
+	- Will help with identifying and reporting contours with issues
+- Add contours are drawn in real-time as they are being calculated
+	- Makes for a more attractive user experience
+
+
 [OBJ to CSV 0.06.02 ]( v-0-06/obj-to-csv.html )
 
 2019-12-12

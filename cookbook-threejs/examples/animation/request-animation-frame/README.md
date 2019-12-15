@@ -28,9 +28,16 @@ _<small>Request Animation Frame</small>_
 
 ## Links of Interest
 
+
+
+* https://threejs.org/docs/#api/en/renderers/WebGLRenderer.setAnimationLoop
+* https://github.com/mrdoob/three.js/issues/15233
+* https://flavio-requestanimationframe-example.glitch.me/
+* https://discoverthreejs.com/book/first-steps/resize/
 * http://www.ianww.com/blog/2012/11/04/optimizing-three-dot-js-performance-simulating-tens-of-thousands-of-independent-moving-objects/
 
 Animating a million letters
+
 * https://www.html5rocks.com/en/tutorials/webgl/million_letters/
 * https://github.com/html5rocks/www.html5rocks.com/issues/1264
 	* http://jsfiddle.net/ebeit303/b90z2erg/
