@@ -1,5 +1,6 @@
 // copyright 2019 Theo Armour. MIT license.
-// 2019-12-10 v0.00.00
+// See pushme-pullyou/templates-01/threejs-hamburger/v-0-01/src/dss-display-scene-settings-01.js
+// 2019-12-17 v0.00.01
 /* global THREE, zoomObjectBoundingSphere, divMessage, eventResetAll, scene, mesh, meshPlane, controls */
 // jshint esversion: 6
 // jshint loopfunc: true
@@ -11,7 +12,7 @@ DSS.wireframe = undefined;
 
 DSS.getMenu = function () {
 
-//	window.addEventListener("onresetall", DDS.reset, false);
+	window.addEventListener("onresetall", DSS.reset );
 
 	const htm =
 		`
@@ -31,12 +32,9 @@ DSS.getMenu = function () {
 		<input type=checkbox onchange=axesHelper.visible=!axesHelper.visible; checked > axes
 	<div>
 
-
 	<div>
 		<input type=checkbox onchange=controls.staticMoving=!controls.staticMoving; checked > rotation damping
 	</div>
-
-
 
 	<p>
 		rotation speed
@@ -57,11 +55,10 @@ DSS.getMenu = function () {
 };
 
 
-
-
 DSS.reset = function () {
 
-
 	axesHelper.visible = true;
+
+	console.log('DSS.reset');
 
 };

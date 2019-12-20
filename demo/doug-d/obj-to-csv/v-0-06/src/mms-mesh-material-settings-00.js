@@ -53,7 +53,12 @@ MMS.getMenu = function () {
 
 MMS.setOpacity = function (opacity = MMSrngOpacity.value ) {
 
-	mesh.material.opacity = 0.01 * opacity;
+	if ( mesh && mesh.material) {
+
+		mesh.material.opacity = 0.01 * opacity;
+
+	}
+
 	MMSoutOpacity.innerHTML = opacity
 
 };
@@ -136,6 +141,7 @@ MMS.toggleEdges = function () {
 	}
 
 	mesh.traverse(child => {
+		
 		if (child.userData === "edgeLines") {
 
 			child.visible = !child.visible

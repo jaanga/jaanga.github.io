@@ -50,9 +50,22 @@ Harmonagraph
 * https://web.archive.org/web/20100904003022/http://hernan.amiune.com/labs/harmonograph/animated-harmonograph.html
 	* has JavaScript
 * https://www.codeproject.com/Articles/76878/Spirograph-Shapes-WPF-Bezier-Shapes-from-Math-Form
-Knots
+* http://hackingmathclass.blogspot.com/2013/
+* http://paulbourke.net/geometry/harmonograph/
 
+
+Knots
 * http://katlas.org/wiki/7_4
+
+JavaScript
+
+* https://alexmacy.github.io/
+* https://ttencate.github.io/harmonograph/
+* http://www.walkingrandomly.com/?p=151
+* http://typethinker.blogspot.com/2010/03/harmonograph-in-javascript.html
+* https://codepen.io/SJF/pen/XNENVz?editors=1010
+* https://prettymathpics.com/online-3d-spectral-harmonograph/
+* https://github.com/cx20/webgl-parametric-surface-examples
 
 
 

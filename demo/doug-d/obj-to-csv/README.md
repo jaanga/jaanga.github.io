@@ -1,19 +1,16 @@
-<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/demo/doug-d/obj-to-csv/readme.html "View file as a web page." ) </span>
-
+<span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page](https://jaanga.github.io/demo/doug-d/obj-to-csv/readme.html "View file as a web page.") </span>
 
 <div><input type=button onclick="window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
-
-# [OBJ to CSV Read Me]( #demo/doug-d/obj-to-csv/README.md )
+# [OBJ to CSV Read Me](#demo/doug-d/obj-to-csv/README.md)
 
 <!--
 <iframe src=https://jaanga.github.io/demo/doug-d/obj-to-csv/ width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
 -->
 
-### Full Screen demo and best link: [OBJ to CSV]( https://jaanga.github.io/demo/doug-d/obj-to-csv/ )
-
+### Full Screen demo and best link: [OBJ to CSV](https://jaanga.github.io/demo/doug-d/obj-to-csv/)
 
 <details open >
 <summary>Concept</summary>
@@ -22,28 +19,15 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 ### Features
 
-- Load and view OBJ files in 3D
-	- Scale and center geometry
-	- Combine multiple geometries into one
-- Update mesh
-	- Rotate around XYZ
-	- Select material
-	- Update opacity
-	- Toggle edges, box helper and wireframe
-- Generate contour lines
-	- Choose one to many
-	- Select elevation of a single contour line
-	- Menu displays a number of stats
-	- Toggle view of mesh, contours and points
-- Export vertices to CSV files
-	- Export as strings of vertices
-	- XYZ coordinates plus a line index
-- Display settings
-	- Update a variety of scene display settings
+- Load and view OBJ files in 3D - Scale and center geometry - Combine multiple geometries into one
+- Update mesh - Rotate around XYZ - Select material - Update opacity - Toggle edges, box helper and wireframe
+- Generate contour lines - Choose one to many - Select elevation of a single contour line - Menu displays a number of stats - Toggle view of mesh, contours and points
+- Export vertices to CSV files - Export as strings of vertices - XYZ coordinates plus a line index
+- Display settings - Update a variety of scene display settings
 
 ### Credits
 
-* https://github.com/dashdotdotdashdotdot/Lines
+- https://github.com/dashdotdotdashdotdot/Lines
 
 ### Mission
 
@@ -56,19 +40,33 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 ### Versions
 
-[OBJ to CSV 0.06.03 ]( v-0-06/obj-to-csv.html )
+[OBJ to CSV 0.07.00 ](v-0-07/obj-to-csv.html)
 
-- Add 'Remove short segments' button
-	- Button must be pushed in order to intiate a second pass on the data
-	- Does better job of finding and deleting
-	- Provides report on how many segments deleted
-- Add contour line labels checkbox toggle
-	- Will help with identifying and reporting contours with issues
-- Add contours are drawn in real-time as they are being calculated
-	- Makes for a more attractive user experience
+2019-12-19
+
+- Getting closer
+- Still some very short sedments showing up
+* Need to work on standardizing all the normals and connecting adjoing segments
 
 
-[OBJ to CSV 0.06.02 ]( v-0-06/obj-to-csv.html )
+[OBJ to CSV 0.06.05 ](v-0-06/obj-to-csv.html)
+
+2019-12-16
+
+- Code cleanup and rejig menu a bit
+
+[OBJ to CSV 0.06.04 ](v-0-06/obj-to-csv.html)
+
+- Start the contouring process from the top - More funner that way
+- Add 'join adjacent segments' button - Not fully functioning yet
+
+[OBJ to CSV 0.06.03 ](v-0-06/obj-to-csv.html)
+
+- Add 'Remove short segments' button - Button must be pushed in order to intiate a second pass on the data - Does better job of finding and deleting - Provides report on how many segments deleted
+- Add contour line labels checkbox toggle - Will help with identifying and reporting contours with issues
+- Add contours are drawn in real-time as they are being calculated - Makes for a more attractive user experience
+
+[OBJ to CSV 0.06.02 ](v-0-06/obj-to-csv.html)
 
 2019-12-12
 
@@ -76,63 +74,55 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 - Add if last vertex is close to first vertex then close the polygon
 - Update the statistics display
 
-[OBJ to CSV 0.06.01 ]( v-0-06/obj-to-csv.html )
+[OBJ to CSV 0.06.01 ](v-0-06/obj-to-csv.html)
 
 2019-12-11
 
 - Looking OK
 - Too many new things to list
 
-[OBJ to CSV 0.05.00 ]( v-0-05/obj-to-csv.html )
+[OBJ to CSV 0.05.00 ](v-0-05/obj-to-csv.html)
 
-* Mostly broken
-* Gets Uncaught RangeError: Maximum call stack size exceeded
+- Mostly broken
+- Gets Uncaught RangeError: Maximum call stack size exceeded
 
-
-
-[OBJ to CSV 0.04.02 ]( v-0-04/obj-to-csv.html )
+[OBJ to CSV 0.04.02 ](v-0-04/obj-to-csv.html)
 
 2019-12-07
 
-* Add link to Render CSV file
-* When ask for 72 contour levels you now get 72 contour levels (but each contour may have multiple lines)
-* Export CSV segments dropped
+- Add link to Render CSV file
+- When ask for 72 contour levels you now get 72 contour levels (but each contour may have multiple lines)
+- Export CSV segments dropped
 
-
-[OBJ to CSV 0.04.00 ]( v-0-04/obj-to-csv.html )
+[OBJ to CSV 0.04.00 ](v-0-04/obj-to-csv.html)
 
 2019-12-06
 
-* Exported contours beginning to look good
+- Exported contours beginning to look good
 
+[OBJ to CSV 0.03 ](v-0-03/obj-to-csv-01.html)
 
-[OBJ to CSV 0.03 ]( v-0-03/obj-to-csv-01.html )
+- Keep hacking at better contours
 
-* Keep hacking at better contours
+[OBJ to CSV 0.02 ](v-0-02/get-contours-from-objects.html)
 
-[OBJ to CSV 0.02 ]( v-0-02/get-contours-from-objects.html )
+- Keep hacking at better contours
 
-* Keep hacking at better contours
+[OBJ to CSV 0.01 ](v-0-01/get-contours-from-objects.html)
 
-[OBJ to CSV 0.01 ]( v-0-01/get-contours-from-objects.html )
+- Adds export to segments
+- Mesh material settings
+- Add contour points toggles
 
-* Adds export to segments
-* Mesh material settings
-* Add contour points toggles
+[OBJ to CSV 0.00 ](v-0-00/get-contours-from-objects.html)
 
+- Complete remake of group-points-of-intersection
+- Code split up into modules
 
-[OBJ to CSV 0.00 ]( v-0-00/get-contours-from-objects.html )
+#### [group-points-of-intersection read me](https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html)
 
-* Complete remake of group-points-of-intersection
-* Code split up into modules
-
-
-
-#### [group-points-of-intersection read me]( https://jaanga.github.io/demo/doug-d/obj-to-csv/group-points-of-intersection/readme.html )
-
-* Covers the details and links to five earlier releases
-* Includes the file from Paul West that that inspired
-
+- Covers the details and links to five earlier releases
+- Includes the file from Paul West that that inspired
 
 </details>
 
@@ -148,85 +138,87 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 <details open >
 <summary>To do and wish list </summary>
 
-* 2019-12-11 ~ Theo ~ Add some memoization to main contour generating routine
-* 2019-12-03 ~ Theo ~ Add [decimate function]( https://threejs.org/examples/webgl_modifier_simplifier.html ) to reduce number of faces to inspected
-* 2019-12-01 ~ Theo ~ Scale along three axis not just Z
-* 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
-* 2019-12-01 ~ Theo ~ Better use of original materials in OBJ file
-
+- 2019-12-16 ~ Theo ~ Add translate contour line data into a continuous spiral data
+- 2019-12-16 ~ Theo ~ Add ability to cut sections
+- 2019-12-11 ~ Theo ~ Add some memoization to main contour generating routine
+- 2019-12-03 ~ Theo ~ Add [decimate function](https://threejs.org/examples/webgl_modifier_simplifier.html) to reduce number of faces to inspected
+- 2019-12-01 ~ Theo ~ Scale along three axis not just Z
+- 2019-12-01 ~ Theo ~ Animate the generation of points to do away with long pauses
+- 2019-12-01 ~ Theo ~ Better use of original materials in OBJ file
 
 </details>
 
 <details open >
 <summary> Things you can do using this script</summary>
 
-* Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
-* Click the GitHub Octocat icon to view or edit the source code on GitHub
-* Click on title to reload te page
-* Press Control-U/Command-Option-U to view the source code
-* Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
+- Click the three bars( 'hamburger menu icon' ) to slide the menu in and out
+- Click the GitHub Octocat icon to view or edit the source code on GitHub
+- Click on title to reload te page
+- Press Control-U/Command-Option-U to view the source code
+- Press Control-Shift-J/Command-Option-J to see if the JavaScript console reports any errors
 
 </details>
 
 <details open >
 <summary>Links of interest</summary>
 
-
 ### Contours and isolines
-* https://en.wikipedia.org/wiki/Polygonal_chain
 
-* https://en.wikipedia.org/wiki/Contour_line
+- https://en.wikipedia.org/wiki/Polygonal_chain
+
+- https://en.wikipedia.org/wiki/Contour_line
 
 ### Algorithms
 
 These are the links that got me started
 
-* https://stackoverflow.com/questions/42348495/three-js-find-all-points-where-a-mesh-intersects-a-plane/42353447#42353447
-* https://stackoverflow.com/questions/46661787/grouping-points-after-cut-plane-three-js/46811485#46811485
-* https://discourse.threejs.org/t/extract-vertices-in-edge-connection-order-from-buffergeometry-for-is-inside-polygon-check/5088/2
-* https://jsfiddle.net/prisoner849/uqm6bk1k/
+- https://stackoverflow.com/questions/42348495/three-js-find-all-points-where-a-mesh-intersects-a-plane/42353447#42353447
+- https://stackoverflow.com/questions/46661787/grouping-points-after-cut-plane-three-js/46811485#46811485
+- https://discourse.threejs.org/t/extract-vertices-in-edge-connection-order-from-buffergeometry-for-is-inside-polygon-check/5088/2
+- https://jsfiddle.net/prisoner849/uqm6bk1k/
 
 ### Software to develop characters
 
-* https://www.mixamo.com/
-	* Animate 3D characters for games, film, and more.
-* https://www.zygote.com/
-	* Creators of the world's leading 3D human anatomy models for use in medical illustration, animation, engineering, simulation, and anatomy software products.
-* http://www.makehumancommunity.org/
-	* MakeHuman is an open source (AGPL3) tool designed to simplify the creation of virtual humans using a Graphical User Interface
-
+- https://www.mixamo.com/ \* Animate 3D characters for games, film, and more.
+- https://www.zygote.com/ \* Creators of the world's leading 3D human anatomy models for use in medical illustration, animation, engineering, simulation, and anatomy software products.
+- http://www.makehumancommunity.org/ \* MakeHuman is an open source (AGPL3) tool designed to simplify the creation of virtual humans using a Graphical User Interface
 
 </details>
 
 <details open >
 <summary>Change log </summary>
 
+Change log _Apart from occasional comments: Deprecated. See version history above_
+
+### 2019-12-17
+
+
+It looks like some of my "improvements"  to the code by Paul West are the cause of the addition of the many small segments. Must rejig my code.
+
 ### 2019-12-02 ~ Theo
 
-_Deprecated. See version history above_
 
 OBJ to CSV 0.03.01.1
 
-* F: Add link to files from &mdash;.. &mdash;..
-* R: Lowers initial cutting plane elevation to -50
-
+- F: Add link to files from &mdash;.. &mdash;..
+- R: Lowers initial cutting plane elevation to -50
 
 ### 2019-12-02 ~ Theo
 
 OBJ to CSV 0.03.01.01
 
-* B: Fix link to read me
+- B: Fix link to read me
 
 ### 2019-12-01
 
 OBJ to CSV 0.03.01
 
-* C: Add text to modules
-* C: Rename to 'obj-to-csv'
-* C: First commit read me
+- C: Add text to modules
+- C: Rename to 'obj-to-csv'
+- C: First commit read me
 
 </details>
 
-***
+---
 
 # <center title="hello!" ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; > ❦ </a></center>

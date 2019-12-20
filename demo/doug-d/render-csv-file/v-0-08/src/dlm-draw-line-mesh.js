@@ -67,10 +67,10 @@ DLM.renderLines = function (contours) {
 
 	for (let contour of contours) {
 
-		width = 0.1 * parseFloat( DLMrngLineWidth.value );
+		width = 0.3 * parseFloat( DLMrngLineWidth.value );
 
 		vertices = contour.map( vertex => new THREE.Vector3().fromArray( vertex.map( coord => parseFloat( coord) ) ) );
-		verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, vertex.y, vertex.z + width ) );
+		verticesHigh = vertices.map( vertex => new THREE.Vector3( vertex.x, vertex.y + width, vertex.z ) );
 
 		const verticesBoth = vertices.concat( verticesHigh );
 
@@ -130,7 +130,7 @@ DLM.applyMaterialNormal = function () {
 
 
 		if (child.type === "Mesh") {
-			child.material = new THREE.MeshNormalMaterial();
+			child.material = new THREE.MeshNormalMaterial( { side: 2 });
 			child.material.needsUpdate = true;
 
 		}

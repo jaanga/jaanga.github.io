@@ -31,7 +31,7 @@ GTO.getMenu = function () {
 	<p>Create new geometries by algorithm</p>
 
 	<p>
-		<select onchange=GTO.drawGeometry(this.selectedIndex) size=8 >${ gto }</select>
+		<select onchange=GTO.drawGeometry(this.selectedIndex) size=10 >${ gto }</select>
 	</p>
 
 </details>

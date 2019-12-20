@@ -6,8 +6,8 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files." >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content = "2019-12-12" >
-<meta name = "version" content = "0.06.03" >
+<meta name="date" content = "2019-12-17" >
+<meta name = "version" content = "0.06.06" >
 
 <title></title>
 
@@ -21,7 +21,7 @@
 	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
 	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/loaders/OBJLoader.js"></script>
 
-	<script src="src/gto-generate-threejs-objects.js" ></script>
+	<script src="src/gto-generate-threejs-objects-02.js" ></script>
 	<script src="src/ofr-obj-file-reader.js"></script>
 	<script src="src/ovg-obj-viewer-gallery.js"></script>
 	<script src="src/ovn-obj-viewer-nasa.js"></script>
@@ -29,11 +29,11 @@
 
 	<script src="src/or-object-rotation.js"></script>
 
-	<script src="src/gco-get-contours-from-objects-06.js"></script>
+	<script src="src/gco-get-contours-from-objects-09.js"></script>
 	<script src="src/csv-comma-separated-values-01.js"></script>
 
-	<script src="src/mms-mesh-material-settings-00.js" ></script>
-	<script src="src/dss-display-scene-settings.js" ></script>
+	<script src="src/mms-mesh-material-settings-01.js" ></script>
+	<script src="src/dss-display-scene-settings-01.js" ></script>
 
 
 	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
@@ -150,11 +150,11 @@ function init() {
 	scene.add( axesHelper );
 
 	// //geometry = new THREE.SphereGeometry( 50, 50, 20 );
-	// geometry = new THREE.TorusKnotGeometry( 50, 10, 50, 10 );
-	geometry = new THREE.BoxGeometry( 50, 50, 50 );
-	material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
-	mesh = new THREE.Mesh( geometry, material );
-	// scene.add( mesh );
+	//geometry = new THREE.TorusKnotGeometry( 50, 10, 50, 10 );
+	// geometry = new THREE.BoxGeometry( 50, 50, 50 );
+	// material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
+	// mesh = new THREE.Mesh( geometry, material );
+	// scene.add( mesh ); // for testing
 
 	const geometryPlane = new THREE.PlaneGeometry( 100, 100 );
 	const materialPlane = new THREE.MeshBasicMaterial( { color: 0xdddddd, opacity: 0.85, side: 2, transparent: true });
@@ -166,7 +166,7 @@ function init() {
 
 	window.addEventListener( "onresetall", DSS.reset, false );
 
-	OVG.loadObj( 2 );
+	OVG.loadObj( 1 ); // load helga
 
 }
 
