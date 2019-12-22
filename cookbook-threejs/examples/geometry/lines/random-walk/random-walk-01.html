@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang=en >
 <head>
-<title>line-add-vertices</title>
+<title>Random Walk R2</title>
 <meta charset=utf-8 />
 <meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 />
 </head>
@@ -10,6 +10,8 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script>
+
+	
 	var info, stats, renderer, scene, camera, controls;
 		var geometry, material, mesh, line;
 
@@ -47,7 +49,7 @@
 		scene = new THREE.Scene();
 
 // axes
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 		geometry = new THREE.Geometry();
@@ -59,18 +61,27 @@
 
 	function addVertex() {
 
-		for ( var i = 0; i < 1000; i++ ) {
-			vertex = vertices[ count++ ].clone(); 
+		if ( count > 10000000 ) { return; }
+
+		geometry = new THREE.Geometry();
+		geometry.vertices.push( vertices[ vertices.length - 1 ] );
+		vertices = geometry.vertices;
+
+		for ( var i = 0; i < 90000; i++ ) {
+
+			vertex = vertices[ i ].clone();
 			vertex.add( v( 2 * Math.random() - 1, 2 * Math.random() - 1,  2 * Math.random() - 1) );
 			vertices.push( vertex );
+
 		}
 
 		geometry = new THREE.Geometry();
 		geometry.vertices = vertices;
-		scene.remove( line );
+
 		line = new THREE.Line( geometry, material );
 		scene.add( line );
 
+		count += 90000;
 		msg.innerHTML = 'count = ' + count;
 
 	}
