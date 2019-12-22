@@ -26,7 +26,7 @@
 	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
 	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 18px; width: 10px; }
 
-	#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+	#navMenu { margin: 0 20px; max-width: 20rem; position: absolute; }
 
 </style>
 </head>
@@ -34,14 +34,13 @@
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
 <script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
 
+<script src="gtl-generate-threejs-lines-00.js"></script>
+
 	<nav id = "navMenu" >
 
 		<div id = "divTitle" ></div>
 
-		<p>
-			<button onclick="addMeshes()" >add meshes</button>
-		</p>
-
+		<div id=GTLdivGenerateThreejsLines ></div>
 		<p>
 			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
 		</p>
@@ -56,9 +55,11 @@
 
 <script>
 
-let mesh, meshGroup;
+let lines;
 
-const urlSourceCode = "https://github.com/zzzzz/zzzzz.github.io/tree/master/xxxxx/";
+const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+
+const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-threejs/";
 
 let sceneRotation = 1;
 let renderer, camera, controls, scene;
@@ -69,6 +70,8 @@ animate();
 function init() {
 
 	divTitle.innerHTML = getTitle();
+
+	GTLdivGenerateThreejsLines.innerHTML = GTL.getMenu();
 
 	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -92,11 +95,13 @@ function init() {
 	const axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	addMesh();
+	GTL.addSquare();
 
 	//addMeshes();
 
 }
+
+
 
 
 function addMesh( size = 20 ) {
@@ -148,7 +153,7 @@ function getTitle() {
 	`
 		<h2>
 			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
-				<img src=assets/github-mark-32.png height=18 >
+				<img src=../../../../github-mark-32.png height=18 >
 			</a>
 			<a href="" title="Click to reload this page" >${ document.title }</a>
 		</h2>

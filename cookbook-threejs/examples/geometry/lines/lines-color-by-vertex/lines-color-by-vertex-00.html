@@ -126,7 +126,7 @@
 
 		for ( var i = 0; i < geometry.vertices.length; i += 2 ) {
 
-//			geometry.colors[ i ] = new THREE.Color( THREE.ColorKeywords[ 'red' ] );
+			geometry.colors[ i ] = new THREE.Color( 0xffffff * Math.random() );
 //			geometry.colors[ i ] = THREE.ColorKeywords[ 'green' ];
 			geometry.colors[ i + 1 ] = geometry.colors[ i ];
 
@@ -135,7 +135,6 @@
 		var material = new THREE.LineBasicMaterial({
 
 			linewidth: 10,
-			color: 'violet',
 			vertexColors: THREE.VertexColors
 
 		});

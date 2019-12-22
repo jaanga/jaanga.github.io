@@ -26,6 +26,7 @@ _basic-html.html_
 
 * 2019-12-21 ~ Theo ~ Multiple lines at once
 * 2019-12-21 ~ Theo ~ Draw shapes at each point
+* 2019-12-21 ~ Theo ~ normalize the segment length;
 
 </details>
 
