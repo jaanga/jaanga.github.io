@@ -7,7 +7,7 @@
 <meta name=description content="Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
 <meta name="date" content = "2019-12-21" >
-<meta name = "version" content = "0.08.01" >
+<meta name = "version" content = "0.08.03" >
 
 <title></title>
 
@@ -87,7 +87,8 @@
 
 <script>
 
-let urlDefault = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
+//let urlDefault = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
+let urlDefault = "https://rawcdn.githack.com/jaanga/jaanga.github.io/master/demo/doug-d/csv-file-samples/venus-lines-128.csv"
 let urlPrevious = "";
 
 const urlSourceCode = `https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file`;
@@ -156,6 +157,8 @@ function init() {
 	window.addEventListener( "onresetall", DSS.reset, false );
 
 	window.addEventListener( 'hashchange', onHashChange, false );
+
+	onHashChange();
 
 }
 

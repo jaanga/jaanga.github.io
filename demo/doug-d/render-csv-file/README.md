@@ -40,6 +40,12 @@ Features
 
 <img src="https://jaanga.github.io/demo/doug-d/images/rtc-08-thinker.png" style=width:50% >
 
+
+2019-12-21 v0.08.03
+
+* B: DLM Rejig- Fix issues with normal material
+* F: DLM add select front, back or both sides to render
+
 2019-12-12 v0.08.02
 
 * Add basic model statistics

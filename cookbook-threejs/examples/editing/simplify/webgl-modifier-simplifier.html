@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en" >
+<head>
+<meta charset="utf-8" >
+<meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
+<meta name=description content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
+<meta name = "date" content = "2019-12-21" >
+<title></title>
+<style>
+	/* Copyright 2019 Theo Armour. MIT License */
+
+	:root { font: 11pt monospace; }
+
+	* { box-sizing: border-box; }
+
+	body { margin: 0; overflow: hidden; }
+
+	a { color: crimson; text-decoration: none; }
+	a:hover, a:focus { background-color: yellow; color: #aaa; text-decoration: underline }
+
+	button { background-color: #ddd; border: none;  border-radius: 2px; color: #322; cursor: pointer; padding: 3px 5px; }
+	button:hover { background: #ccc; color: #fff }
+
+	input[ type = range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; border-radius: 2px; width: 100%; }
+	input[ type = range ]::-moz-range-thumb { background-color: #888; border-radius: 0; width: 10px; }
+	input[ type = range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 18px; width: 10px; }
+
+	#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+</head>
+<body>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r111/examples/js/controls/TrackballControls.js" ></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r111/examples/js/loaders/GLTFLoader.js" ></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r111/examples/js/modifiers/SimplifyModifier.js"></script>
+
+	<nav id = "navMenu" >
+
+		<div id = "divTitle" ></div>
+
+		<p>
+			<button onclick="addMeshes()" >add meshes</button>
+		</p>
+
+		<p>
+			<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;" >rotation</button>
+		</p>
+
+		<p>
+			<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+		</p>
+
+		<div id = "divLog" ></div>
+
+	</nav>
+
+<script>
+
+let mesh, meshGroup;
+
+const urlSourceCode = "https://github.com/zzzzz/zzzzz.github.io/tree/master/xxxxx/";
+
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+function init() {
+
+	divTitle.innerHTML = getTitle();
+
+	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( 10, 10, 10 );
+	//camera.up.set( 0, 0, 1 );
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 4;
+
+	scene = new THREE.Scene();
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	scene.add( new THREE.AmbientLight( 0xffffff, 0.2 ) );
+
+	var light = new THREE.PointLight( 0xffffff, 0.7 );
+	camera.add( light );
+	scene.add( camera );
+
+	path = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r111/examples/models/gltf/";
+	//url = path + "LeePerrySmith/LeePerrySmith.glb"
+	//url = path + "Stork.glb";
+	url = path + "Horse.glb";
+	url = path + "Nefertiti/Nefertiti.glb";
+
+	loadGltf( url );
+
+
+	//addMesh();
+
+	//addMeshes();
+
+}
+
+
+
+function loadGltf( url ) {
+
+	new THREE.GLTFLoader().load( url, function ( gltf ) {
+
+		var mesh = gltf.scene.children[ 0 ];
+		onLoadMesh( mesh );
+
+	} );
+
+}
+
+
+function onLoadMesh( mesh ) {
+
+	mesh.position.x = 10;
+	mesh.rotation.y = Math.PI / 2;
+	scene.add( mesh );
+
+	var modifier = new THREE.SimplifyModifier();
+
+	var simplified = mesh.clone();
+	simplified.material = simplified.material.clone();
+	simplified.material.flatShading = true;
+
+	var count = Math.floor( simplified.geometry.attributes.position.count * 0.875 ); // number of vertices to remove
+	simplified.geometry = modifier.modify( simplified.geometry, count );
+
+	simplified.position.x = -10;
+	simplified.rotation.y = - Math.PI / 2;
+	scene.add( simplified );
+
+}
+
+
+
+
+function addMesh( size = 20 ) {
+
+	// CylinderGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded )
+	// SphereGeometry( radius, segmentsWidth, segmentsHeight, phiStart, phiLength, thetaStart, thetaLength )
+	// TorusGeometry( radius, tube, radialSegments, tubularSegments, arc )
+
+	const geometry = new THREE.BoxGeometry( size, size, size );
+
+	geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+	geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, 1 ) );
+	geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 0 ) );
+
+	const material = new THREE.MeshNormalMaterial();
+	mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+	return mesh;
+
+}
+
+
+function addMeshes( count = 100 ) {
+
+	scene.remove( meshGroup );
+
+	meshGroup = new THREE.Group();
+
+	for (let i = 0; i < count; i++ ) { meshGroup.add( addMesh() ) };
+
+	meshGroup.children.forEach( mesh => mesh.position.set( Math.random() * 100 - 50, Math.random() * 100 - 50, Math.random() * 100 - 50 ) )
+
+	scene.add( meshGroup );
+
+}
+
+
+
+
+
+
+
+function getTitle() {
+
+	document.title = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+
+	const htm =
+	`
+		<h2>
+			<a href=${ urlSourceCode } target=_top title="Source code on GitHub" >
+				<img src=../../../github-mark-32.png height=18 >
+			</a>
+			<a href="" title="Click to reload this page" >${ document.title }</a>
+		</h2>
+
+		<p>
+			${ document.head.querySelector( "[ name=description ]" ).content }
+		</p>
+	`;
+
+	return htm;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>

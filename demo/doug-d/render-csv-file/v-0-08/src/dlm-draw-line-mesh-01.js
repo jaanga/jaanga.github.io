@@ -25,11 +25,12 @@ DLM.getMenu = function () {
 	</p>
 
 	<p>
-	<select id=DLMselSides oninput=DLM.renderLines(CFR.contours); size=3>
-		<option selected>front side</option>
-		<option>back side</option>
-		<option>both sides</option>
-	</select></p>
+		<select id=DLMselSides oninput=DLM.renderLines(CFR.contours); size=3>
+			<option >back side</option>
+			<option>front side</option>
+			<option selected>both sides</option>
+		</select>
+	</p>
 	<p>
 		<button onclick=DLM.applyMaterialNormal() >apply material normal</button>
 	</p>
@@ -74,16 +75,34 @@ DLM.renderLines = function (contours) {
 	group = new THREE.Group();
 
 	DLMoutLineWidth.value = DLMrngLineWidth.value
+	const material = new THREE.MeshNormalMaterial( { side: DLMselSides.selectedIndex } );
 
 	for (let contour of contours) {
 
+		//console.log('contour', contour);
 		width = 0.3 * parseFloat( DLMrngLineWidth.value );
 
 		vertices = contour.map( vertex => new THREE.Vector3().fromArray( vertex.map( coord => parseFloat( coord) ) ) );
+		//console.log('vertices', vertices);
+		//console.log('', box3);
+
+		if (vertices.length > 2) {
+
+			box3 = new THREE.Box3().setFromPoints(vertices);
+			center = box3.getCenter( new THREE.Vector3() )
+			plane = new THREE.Plane().setFromCoplanarPoints(vertices[0], center, vertices[vertices.length - 2 ])
+
+			if (plane.normal.z > 0) {
+
+				console.log('plane', plane);
+				vertices.reverse();
+			}
+
+		}
 
 		const geometry = new THREE.PlaneGeometry( 10, 10, 1, vertices.length - 1 );
-		const material = new THREE.MeshNormalMaterial( { side: DLMselSides.selectedIndex } );
-		const mesh = new THREE.Mesh( geometry, material );
+		const mesh = new THREE.Mesh(geometry, material);
+		//console.log('mesh', mesh);
 		group.add(mesh);
 
 		let j = 0;
