@@ -40,6 +40,17 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 ### Versions
 
+[OBJ to CSV 0.09.00 ](v-0-09/obj-to-csv.html)
+
+2019-12-23
+
+* Adds Geometry simplify
+* Files an menu items moved around
+* Obect roration and Mesh material settings get more features
+
+
+[OBJ to CSV 0.08.00 ](v-0-08/obj-to-csv.html)
+
 [OBJ to CSV 0.07.00 ](v-0-07/obj-to-csv.html)
 
 2019-12-19
