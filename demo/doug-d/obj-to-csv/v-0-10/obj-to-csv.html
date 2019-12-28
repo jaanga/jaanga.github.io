@@ -6,20 +6,25 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files." >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name="date" content = "2019-12-22" >
-<meta name = "version" content = "0.09.00" >
+<meta name="date" content = "2019-12-26" >
+<meta name = "version" content = "0.10.00" >
 
 <title></title>
 
-<link href="src/style.css" rel="stylesheet" >
+<link href="assets/style.css" rel="stylesheet" >
 
 </head>
 
 <body>
 
-	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
-	<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/build/three.min.js" ></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/controls/TrackballControls.js" ></script>
 	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/examples/js/loaders/OBJLoader.js"></script>
+<!--
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/src/extras/Earcut.js"></script>
+		<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r110/src/extras/ShapeUtils.js"></script>>
+-->
 
 	<script src="browse-files/gto-generate-threejs-objects-02.js" ></script>
 	<script src="browse-files/gte-generate-threejs-extrusions-01.js" ></script>
@@ -29,8 +34,10 @@
 	<script src="browse-files/ovn-obj-viewer-nasa.js"></script>
 	<script src="browse-files/ovd-obj-viewer-dashdotdot.js"></script>
 
-	<script src="src/gco-get-contours-from-objects-1-02.js"></script>
-	<script src="src/gcp-get-contour-points-02.js"></script>
+	<script src="src/gco-get-contours-from-objects-2-00.js"></script>
+	<script src="src/gcp-get-contour-points-05.js"></script>
+	<script src="src/gcl-get-countours-lines-02.js"></script>
+	<script src="src/gct-get-contours-toggles-00.js"></script>
 	<script src="src/gms-geometry-modifier-simplifier-00.js"></script>
 
 	<script src="src/csv-comma-separated-values-01.js"></script>
@@ -80,6 +87,10 @@
 
 			<div id=GCOdivGetContoursFromObjects ></div>
 
+			<div id=GCLdivGetContoursLines ></div>
+
+			<div id=GCTdivGetContoursToggles ></div>
+
 			<div id=GMSdivGeometryModifierSimplifier ></div>
 
 			<div id=CSVdivCommaSeparatedValues ></div>
@@ -119,7 +130,7 @@
 
 
 const urlSourceCode = "https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/obj-to-csv/";
-const urlSourceCodeIcon = "src/github-mark-32.png";
+const urlSourceCodeIcon = "assets/github-mark-32.png";
 
 let mesh, material, geometry, edges, boxHelper;
 let axesHelper;
@@ -148,18 +159,24 @@ function init() {
 
 	OVDdivObjectViewerDashdotdot.innerHTML = OVD.getMenu();
 
-	ORdivObjectRotation.innerHTML = OR.getMenu();
 
 	GCOdivGetContoursFromObjects.innerHTML = GCO.getMenu();
+
+	GCLdivGetContoursLines.innerHTML = GCL.getMenu();
+
+	GCTdivGetContoursToggles.innerHTML = GCT.getMenu();
 
 	GMSdivGeometryModifierSimplifier.innerHTML = GMS.getMenu();
 
 	CSVdivCommaSeparatedValues.innerHTML = CSV.getMenu();
 
+
+	ORdivObjectRotation.innerHTML = OR.getMenu();
+
 	MMSdivMeshMaterialSettings.innerHTML = MMS.getMenu();
 
-
 	DSSdivMenuDisplaySceneSettings.innerHTML = DSS.getMenu();
+
 
 	renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -193,7 +210,7 @@ function init() {
 	const geometryPlane = new THREE.PlaneGeometry( 100, 100 );
 	const materialPlane = new THREE.MeshBasicMaterial( { color: 0xdddddd, opacity: 0.85, side: 2, transparent: true });
 	meshPlane = new THREE.Mesh( geometryPlane, materialPlane );
-	meshPlane.position.z = 1;
+	meshPlane.position.z = 1; //8.5;
 	scene.add( meshPlane );
 
 	eventResetAll = new Event( "onresetall" );

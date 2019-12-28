@@ -11,9 +11,6 @@ GCP.constant = 1;
 GCP.tolerance = 0.0005;
 
 GCP.contours = [];
-GCP.pointOfIntersection = new THREE.Vector3();
-GCP.pointsOfIntersection = new THREE.Geometry();
-
 
 THREE.Vector3.prototype.equals = function (v, tolerance) {
 
@@ -26,6 +23,7 @@ THREE.Vector3.prototype.equals = function (v, tolerance) {
 			Math.abs(v.z - this.z) < tolerance
 		);
 	}
+
 };
 
 
@@ -42,7 +40,7 @@ GCP.getIntersectionPoints = function () {
 
 	const meshes = mesh.geometry ? [mesh] : mesh.children;
 
-	GCP.pointsOfIntersection = new THREE.Geometry();
+	GCP.verticesIsoline = new THREE.Geometry();
 
 	for (let mesh of meshes) {
 
@@ -74,15 +72,20 @@ GCP.getIntersectionPoints = function () {
 
 	}
 
-	GCO.points.push(...GCP.pointsOfIntersection.vertices);
+	GCO.verticesIsolines.push( GCP.verticesIsoline.vertices);
+
+	//GCP.addPointsIsoline(GCP.verticesIsoline.vertices);
+
+	requestAnimationFrame(  GCP.addPointsIsoline );
+
 	// var pointsMaterial = new THREE.PointsMaterial({
 	//   size: .5,
 	//   color: 0x00ff00
 	// });
-	// var points = new THREE.Points(GCP.pointsOfIntersection, pointsMaterial);
+	// var points = new THREE.Points(GCP.pointsIsoline, pointsMaterial);
 	// scene.add(points);
 
-	contours = GCP.getContours(GCP.pointsOfIntersection.vertices, [], true);
+	//contours = GCP.getContours(GCP.pointsIsoline.vertices, [], true);
 	//console.log("contours", GCP.contours);
 
 	//requestAnimationFrame(GCO.drawLines);
@@ -90,14 +93,28 @@ GCP.getIntersectionPoints = function () {
 
 	//GCO.contourLines.add(contour);
 
-	return contours;
+	//return contours;
 
-
-
-	GCO.drawContour();
+	//GCO.drawContour();
 
 }
 
+GCP.addPointsIsoline = function () {
+
+	const geometry = new THREE.Geometry();
+	geometry.vertices = GCP.verticesIsoline.vertices;
+
+	const pointsMaterial = new THREE.PointsMaterial({ size: 1, color: 0x00ff00 });
+
+	const points = new THREE.Points(geometry, pointsMaterial);
+	// //console.log('points', points);
+
+	GCP.pointsIsolines.add(points);
+
+
+
+
+}
 
 GCP.setPointOfIntersection = function (line, plane, faceIdx) {
 
@@ -110,7 +127,7 @@ GCP.setPointOfIntersection = function (line, plane, faceIdx) {
 		let p = GCP.pointOfIntersection.clone();
 		p.faceIndex = faceIdx;
 		p.checked = false;
-		GCP.pointsOfIntersection.vertices.push(p);
+		GCP.verticesIsoline.vertices.push(p);
 
 	}
 

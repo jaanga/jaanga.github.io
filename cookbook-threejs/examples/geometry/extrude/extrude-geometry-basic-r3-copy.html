@@ -5,7 +5,7 @@
 <meta name="viewport" content = "width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0" >
 <meta name=description content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library" >
 <meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM" >
-<meta name = "date" content = "2019-12-21" >
+<meta name = "date" content = "2019-11-27" >
 <title></title>
 <style>
 	/* Copyright 2019 Theo Armour. MIT License */
@@ -39,7 +39,7 @@
 		<div id = "divTitle" ></div>
 
 		<p>
-			<button onclick="addMeshes()" >add meshes</button>
+			<button onclick=extrudeGeometry() >extrude geometry</button>
 		</p>
 
 		<p>
@@ -56,7 +56,7 @@
 
 <script>
 
-let mesh, meshGroup;
+let mesh, meshGroup
 
 const urlSourceCode = "https://github.com/zzzzz/zzzzz.github.io/tree/master/xxxxx/";
 
@@ -98,40 +98,15 @@ function init() {
 
 	extrudeGeometry();
 
-	//drawBox();
-
 }
 
 
-function drawBox() {
-
-
-	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-	const length = 50, width = 50;
-	vertices = [v( 0,0,0 ), v( 0,width,0), v( length, width, 0 ), v( length, 0, 0 ) ]
-
-	shape = new THREE.Shape().setFromPoints( vertices );
-
-	extrudeSettings =  {
-		steps: 2,
-		depth: 50,
-		bevelEnabled: false,
-		bevelThickness: 1,
-		bevelSize: 1,
-		bevelOffset: 20,
-		bevelSegments: 1
-	};
-
-	extrudeGeometry( shape, extrudeSettings  )
-
-}
-
-function extrudeGeometry( shape, extrudeSettings ) {
+function extrudeGeometry( shape ) {
 
 	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
 	const length = 120, width = 80;
 
-	shape = shape ? shape : new THREE.Shape( [v( 0,0,0 ), v( 0,width,0), v( length, width, 0 ), v( length, 0, 0 ) ] );
+	shape = shape ? shape : new THREE.Shape().setFromPoints( [v( 0,0,0 ), v( 0,width,0), v( length, width, 0 ), v( length, 0, 0 ) ] );
 
 	// shape.moveTo( 0,0 );
 	// shape.lineTo( 0, width );
@@ -140,7 +115,7 @@ function extrudeGeometry( shape, extrudeSettings ) {
 	// shape.lineTo( 0, 0 );
 
 
-	extrudeSettings = extrudeSettings || {
+	var extrudeSettings = {
 		steps: 2,
 		depth: 16,
 		bevelEnabled: true,
@@ -152,7 +127,7 @@ function extrudeGeometry( shape, extrudeSettings ) {
 
 	scene.remove( mesh )
 	var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
-	var material = new THREE.MeshNormalMaterial( { wireframe: true });
+	var material = new THREE.MeshNormalMaterial( );
 	mesh = new THREE.Mesh( geometry, material ) ;
 	scene.add( mesh );
 
@@ -160,44 +135,30 @@ function extrudeGeometry( shape, extrudeSettings ) {
 }
 
 
-
-function addMesh( size = 20 ) {
-
-	// CylinderGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded )
-	// SphereGeometry( radius, segmentsWidth, segmentsHeight, phiStart, phiLength, thetaStart, thetaLength )
-	// TorusGeometry( radius, tube, radialSegments, tubularSegments, arc )
-
-	const geometry = new THREE.BoxGeometry( size, size, size );
-
-	geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
-	geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, 1 ) );
-	geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 0 ) );
-
-	const material = new THREE.MeshNormalMaterial();
-	mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
-
-	return mesh;
-
-}
-
-
 function addMeshes( count = 100 ) {
 
-	scene.remove( meshGroup );
-
+	scene.remove.meshGroup;
 	meshGroup = new THREE.Group();
 
 	for (let i = 0; i < count; i++ ) { meshGroup.add( addMesh() ) };
 
 	meshGroup.children.forEach( mesh => mesh.position.set( Math.random() * 100 - 50, Math.random() * 100 - 50, Math.random() * 100 - 50 ) )
 
-	scene.add( meshGroup );
+	scene.add( meshGroup )
 
 }
 
 
+function addMesh( size = 20 ) {
 
+	const geometry = new THREE.BoxGeometry( size, size, size );
+	const material = new THREE.MeshNormalMaterial();
+	mesh = new THREE.Mesh( geometry, material );
+	//scene.add( mesh );
+
+	return mesh;
+
+}
 
 
 

@@ -194,6 +194,13 @@ These are the links that got me started
 - https://www.zygote.com/ \* Creators of the world's leading 3D human anatomy models for use in medical illustration, animation, engineering, simulation, and anatomy software products.
 - http://www.makehumancommunity.org/ \* MakeHuman is an open source (AGPL3) tool designed to simplify the creation of virtual humans using a Graphical User Interface
 
+
+### clockwise
+
+* https://stackoverflow.com/questions/1165647/how-to-determine-if-a-list-of-polygon-points-are-in-clockwise-order
+* https://stackoverflow.com/questions/14505565/detect-if-a-set-of-points-in-an-array-that-are-the-vertices-of-a-complex-polygon
+
+
 </details>
 
 <details open >

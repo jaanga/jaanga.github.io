@@ -63,15 +63,15 @@ GTL.getMenu = function () {
 
 
 
-GTL.reset = function() {
+GTL.reset = function () {
 
-	scene.remove( GTL.lines );
+	scene.remove(GTL.lines);
 
 	GTL.lines = new THREE.Group();
 
-	scene.add( GTL.lines );
+	scene.add(GTL.lines);
 
-}
+};
 
 
 
@@ -240,6 +240,7 @@ GTL.getNormal = function() {
 	console.log('plane', plane, '\nnormal', normal);
 
 };
+
 
 GTL.reverseNormal = function() {
 
