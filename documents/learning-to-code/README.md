@@ -51,7 +51,7 @@ Google
 <details open >
 <summary>To do and wish list </summary>
 
-[Learning to Program]( https://docs.google.com/document/d/1qSn_HibbOF-giNUv9OHf4eeUSo9rU2bRSTATQEL8Y0M/edit#heading=h.cn31rmtp8hb )
+Google document: [Learning to Program]( https://docs.google.com/document/d/1qSn_HibbOF-giNUv9OHf4eeUSo9rU2bRSTATQEL8Y0M/edit#heading=h.cn31rmtp8hb )
 
 I plan to update the data from this document and copy it here
 
@@ -61,7 +61,11 @@ I plan to update the data from this document and copy it here
 <details open >
 <summary>Links of interest</summary>
 
-* https://archive.org/ << on 19th Ave
+Publishing
+
+* https://archive.org/ 
+ * on 19th Ave
+ * Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.
 * https://kdp.amazon.com/ 
   * Self-publish eBooks and paperbacks for free with Kindle Direct Publishing, and reach millions of readers on Amazon.
 
