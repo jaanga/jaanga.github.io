@@ -62,6 +62,8 @@ I plan to update the data from this document and copy it here
 <summary>Links of interest</summary>
 
 * https://archive.org/ << on 19th Ave
+* https://kdp.amazon.com/ 
+  * Self-publish eBooks and paperbacks for free with Kindle Direct Publishing, and reach millions of readers on Amazon.
 
 </details>
 
