@@ -43,9 +43,6 @@ Google
 * https://learndigital.withgoogle.com/digitalgarage
 
 
- 
-
-
 </details>
 
 <details open >
@@ -60,14 +57,20 @@ I plan to update the data from this document and copy it here
 
 <details open >
 <summary>Links of interest</summary>
+	
+Learning Tips
+
+* Medium: [Learn to Code: 13 Tips that Could Save You Years of Effort]( https://medium.com/javascript-scene/learn-to-code-13-tips-that-could-save-you-years-of-effort-92ce799a3e1 )
+* Medium: [Learn JavaScript Essentials]( https://medium.com/javascript-scene/learn-javascript-b631a4af11f2 )
+
 
 Publishing
 
 * https://archive.org/ 
- * on 19th Ave
- * Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.
+	* on 19th Ave
+	* Internet Archive is a non-profit library of millions of free books, movies, software, music, websites, and more.
 * https://kdp.amazon.com/ 
-  * Self-publish eBooks and paperbacks for free with Kindle Direct Publishing, and reach millions of readers on Amazon.
+	* Self-publish eBooks and paperbacks for free with Kindle Direct Publishing, and reach millions of readers on Amazon.
 
 </details>
 
