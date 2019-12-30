@@ -7,6 +7,8 @@ value='You are now in a GitHub web page view - Click this button to view this re
 
 # [Learning to Code Read Me]( #README.md )
 
+Keep this link: https://jaanga.github.io/documents/learning-to-code/ 
+
 <!--
 <iframe src=https://jaanga.github.io/cookbook/examples/xxxxxx/xxxxxx.html width=100% height=500px >Iframes are not viewable in GitHub source code view</iframe>
 _basic-html.html_
