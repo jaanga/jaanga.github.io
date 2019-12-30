@@ -127,16 +127,21 @@ GCL.getNextObj = function ( line ) {
 		GCL.vertices.push( lineNext.intersection);
 		//GCL.index.push( lineNext.index);
 
+		const cw =  THREE.ShapeUtils.isClockWise(GCL.vertices )
+		console.log('cw', cw);
+
+		if ( cw === true ) { GCL.vertices.reverse() }
+
 		GCL.getNextObj( lineNext);
 
 	} else {
 
 		//console.log('GCL.vertices.len', GCL.vertices.length);
 
-		cw =  THREE.ShapeUtils.isClockWise(GCL.vertices )
-		console.log('cw', cw);
+		//cw =  THREE.ShapeUtils.isClockWise(GCL.vertices )
+		//console.log('cw', cw);
 
-		if ( cw === true ) { GCL.vertices.reverse() }
+		//if ( cw === true ) { GCL.vertices.reverse() }
 
 		//if (GCL.contourLines.children.length < 1) {
 			GCL.addLine(GCL.vertices);

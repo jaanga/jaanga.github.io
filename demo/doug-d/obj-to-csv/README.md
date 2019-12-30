@@ -19,11 +19,24 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 ### Features
 
-- Load and view OBJ files in 3D - Scale and center geometry - Combine multiple geometries into one
-- Update mesh - Rotate around XYZ - Select material - Update opacity - Toggle edges, box helper and wireframe
-- Generate contour lines - Choose one to many - Select elevation of a single contour line - Menu displays a number of stats - Toggle view of mesh, contours and points
-- Export vertices to CSV files - Export as strings of vertices - XYZ coordinates plus a line index
-- Display settings - Update a variety of scene display settings
+- Load and view OBJ files in 3D
+	- Scale and center geometry
+	- Combine multiple geometries into one
+- Update mesh
+	- Rotate around XYZ
+	- Select material
+	- Update opacity
+	- Toggle edges, box helper and wireframe
+- Generate contour lines
+	- Choose one to many
+	- Select elevation of a single contour line
+	- Menu displays a number of stats
+	- Toggle view of mesh, contours and points
+- Export vertices to CSV files
+	- Export as strings of vertices
+	- XYZ coordinates plus a line index
+- Display settings
+	- Update a variety of scene display settings
 
 ### Credits
 
@@ -190,9 +203,12 @@ These are the links that got me started
 
 ### Software to develop characters
 
-- https://www.mixamo.com/ \* Animate 3D characters for games, film, and more.
-- https://www.zygote.com/ \* Creators of the world's leading 3D human anatomy models for use in medical illustration, animation, engineering, simulation, and anatomy software products.
-- http://www.makehumancommunity.org/ \* MakeHuman is an open source (AGPL3) tool designed to simplify the creation of virtual humans using a Graphical User Interface
+- https://www.mixamo.com/
+	* Animate 3D characters for games, film, and more.
+- https://www.zygote.com/
+	* Creators of the world's leading 3D human anatomy models for use in medical illustration, animation, engineering, simulation, and anatomy software products.
+- http://www.makehumancommunity.org/
+	* MakeHuman is an open source (AGPL3) tool designed to simplify the creation of virtual humans using a Graphical User Interface
 
 
 ### clockwise

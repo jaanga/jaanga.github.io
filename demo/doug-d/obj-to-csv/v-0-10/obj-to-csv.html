@@ -36,7 +36,7 @@
 
 	<script src="src/gco-get-contours-from-objects-2-00.js"></script>
 	<script src="src/gcp-get-contour-points-05.js"></script>
-	<script src="src/gcl-get-countours-lines-02.js"></script>
+	<script src="src/gcl-get-countours-lines-03.js"></script>
 	<script src="src/gct-get-contours-toggles-00.js"></script>
 	<script src="src/gms-geometry-modifier-simplifier-00.js"></script>
 
@@ -200,8 +200,8 @@ function init() {
 	axesHelper = new THREE.AxesHelper( 100 );
 	scene.add( axesHelper );
 
-	// //geometry = new THREE.SphereGeometry( 50, 50, 20 );
-	//geometry = new THREE.TorusKnotGeometry( 50, 10, 50, 10 );
+	// geometry = new THREE.SphereGeometry( 50, 50, 20 );
+	// geometry = new THREE.TorusKnotGeometry( 50, 10, 50, 10 );
 	// geometry = new THREE.BoxGeometry( 50, 50, 50 );
 	// material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
 	// mesh = new THREE.Mesh( geometry, material );
@@ -217,7 +217,7 @@ function init() {
 
 	window.addEventListener( "onresetall", DSS.reset, false );
 
-	OVG.loadObj( 9 ); // load helga
+	OVG.loadObj( 9 ); // load walt
 
 }
 

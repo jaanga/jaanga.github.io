@@ -88,15 +88,23 @@ DLM.renderLines = function (contours) {
 
 		if (vertices.length > 2) {
 
-			box3 = new THREE.Box3().setFromPoints(vertices);
-			center = box3.getCenter( new THREE.Vector3() )
-			plane = new THREE.Plane().setFromCoplanarPoints(vertices[0], center, vertices[vertices.length - 2 ])
+			// box3 = new THREE.Box3().setFromPoints(vertices);
+			// center = box3.getCenter( new THREE.Vector3() )
+			// plane = new THREE.Plane().setFromCoplanarPoints(vertices[0], center, vertices[vertices.length - 2 ])
 
-			if (plane.normal.z > 0) {
+			// if (plane.normal.z > 0) {
 
-				console.log('plane', plane);
-				vertices.reverse();
-			}
+			// 	console.log('plane', plane);
+			// 	vertices.reverse();
+			// }
+
+			const cw = THREE.ShapeUtils.isClockWise(vertices);
+			//console.log('cw', cw);
+
+			if ( cw === false ) { vertices.reverse() }
+
+			const cw2 = THREE.ShapeUtils.isClockWise(vertices);
+			console.log('cw', cw, cw2 );
 
 		}
 
@@ -149,7 +157,7 @@ DLM.applyMaterialNormal = function () {
 
 		if (child.type === "Mesh") {
 
-			child.material = new THREE.MeshNormalMaterial( { side: 2 });
+			child.material = new THREE.MeshNormalMaterial( { side: DLMselSides.selectedIndex });
 			child.material.needsUpdate = true;
 
 		}
@@ -165,7 +173,7 @@ DLM.applyMaterialRandom = function () {
 
 		if (child.type === "Mesh") {
 
-			child.material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), opacity: 0.85, side: 2, transparent: true })
+			child.material = new THREE.MeshBasicMaterial({ color: 0xffffff * Math.random(), opacity: 0.85, side: DLMselSides.selectedIndex, transparent: true })
 		}
 
 	} )
@@ -183,7 +191,7 @@ DLM.applyMaterialTexture = function () {
 
 	group.traverse(child => {
 		if (child.type === "Mesh") {
-			child.material = new THREE.MeshBasicMaterial({ color: 0xdddddd, map: texture, opacity: 0.85, side: 2, transparent: true })
+			child.material = new THREE.MeshBasicMaterial({ color: 0xdddddd, map: texture, opacity: 0.85, side: DLMselSides.selectedIndex, transparent: true })
 
 		}
 	});

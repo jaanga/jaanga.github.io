@@ -41,32 +41,21 @@ CSV.reset = function () {
 
 CSV.getCsvLines = function() {
 
-	//const pointFirst = GCO.pointsOfIntersection.vertices[ 0 ].toArray().join();
-	//console.log( 'pf', pointFirst );
 
 	let index = 0;
-	const txt = GCO.contourLines.children.map( contour => {
 
-		const lines = contour.children;
-		console.log( 'lines', index, lines );
+	const lines = GCL.contourLines.children.map( contour => {
 
-		vertices = lines.map( line => {
+		vertices = contour.geometry.vertices;
 
-			const txt = line.geometry.vertices//.filter( vertex => vertex.toArray().join() !== pointFirst )
-			.map( vertex => `${ vertex.toArray() },${index}` ).join( "\n" );
+		const txt = vertices.map( vertex => `${ vertex.toArray() },${index}` ).join( "\n" );
 
 			index++;
 			return txt;
 
-		} ).join( "\n");
+	}).join("\n");
 
-		//console.log( 'vertices\n', vertices );
-
-		return vertices;
-
-	}).join( "\n" );
-
-	CSVdivCsv.innerText = txt;
+	CSVdivCsv.innerText = lines;
 
 }
 
