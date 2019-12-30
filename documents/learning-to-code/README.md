@@ -20,9 +20,31 @@ _basic-html.html_
 
 To get going
 
-* Wikipedia
-* Stackoverflow
-* GitHub
+* [Wikipedia]( https://en.wikipedia.org/ )
+  * The definitions and backstory for every computer term you can think of
+* [Stackoverflow]( https://stackoverflow.com/ )
+  * Stack Overflow is the largest, most trusted online community for developers to learn, share their programming knowledge, and build their careers.
+* [GitHub]( https://github.com/ )
+  * The sociall network for programmers
+  * The essential work for finding, forking and sharing code
+  
+  
+Web pages of interest
+
+* https://www.freecodecamp.org/
+  * Our mission: to help people learn to code for free. We accomplish this by creating thousands of videos, articles, and interactive coding lessons - all freely available to the public. We also have thousands of freeCodeCamp study groups around the world.
+
+
+
+
+
+Google
+
+* https://grow.google/developers/
+* https://learndigital.withgoogle.com/digitalgarage
+
+
+ 
 
 
 </details>
@@ -40,6 +62,7 @@ I plan to update the data from this document and copy it here
 <details open >
 <summary>Links of interest</summary>
 
+* https://archive.org/ << on 19th Ave
 
 </details>
 
