@@ -25,17 +25,14 @@ To get going
 * [Stackoverflow]( https://stackoverflow.com/ )
   * Stack Overflow is the largest, most trusted online community for developers to learn, share their programming knowledge, and build their careers.
 * [GitHub]( https://github.com/ )
-  * The sociall network for programmers
-  * The essential work for finding, forking and sharing code
+  * The social network for programmers
+  * The essential hosting service for finding, forking and sharing code
   
   
 Web pages of interest
 
 * https://www.freecodecamp.org/
   * Our mission: to help people learn to code for free. We accomplish this by creating thousands of videos, articles, and interactive coding lessons - all freely available to the public. We also have thousands of freeCodeCamp study groups around the world.
-
-
-
 
 
 Google
@@ -72,6 +69,7 @@ I plan to update the data from this document and copy it here
 ### 2019-12-29
 
 * First commit
+* Prepared for CioC
 
 </details>
 
