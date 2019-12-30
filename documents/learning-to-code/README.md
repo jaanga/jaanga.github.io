@@ -35,6 +35,10 @@ Web pages of interest
 
 * https://www.freecodecamp.org/
   * Our mission: to help people learn to code for free. We accomplish this by creating thousands of videos, articles, and interactive coding lessons - all freely available to the public. We also have thousands of freeCodeCamp study groups around the world.
+ * https://code.visualstudio.com/
+ 	* Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications
+	* By far and away the currently most popular "[interactive development environment"( IDE )]( https://en.wikipedia.org/wiki/Integrated_development_environment ) 
+  
 
 
 Google
@@ -43,6 +47,15 @@ Google
 * https://learndigital.withgoogle.com/digitalgarage
 
 
+Browser keyboard shortcuts
+
+* Control-u or Command-u: display the source code of any and all web pages
+* Function key 12 or control-shift-j or command-shift-j: Display the JavaScript console
+	* The "console" and "elements" tabs are very useful
+	
+	
+	
+	
 </details>
 
 <details open >
