@@ -155,7 +155,7 @@ OVG.loadObj = function (index) {
 
 		function (object) {
 
-			console.log('obj', object);
+			//console.log('obj', object);
 
 			window.dispatchEvent(eventResetAll);
 
@@ -176,7 +176,6 @@ OVG.loadObj = function (index) {
 			controls.reset();
 
 			zoomObjectBoundingSphere();
-
 
 			OVGdivMessage.innerHTML =
 				`

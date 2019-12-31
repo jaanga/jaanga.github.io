@@ -87,7 +87,7 @@ GCO.getMessage = function () {
 
 	const points = GCP.pointsIsolines.children.reduce((acc, child) => {
 
-	acc += child.geometry.vertices.length;
+		acc += child.geometry.vertices.length;
 
 		return acc;
 
@@ -107,7 +107,7 @@ Vertices: ${ GCO.countVertices.toLocaleString()}<br>
 <br>
 Contours<br>
 Count: ${ GCP.isolines.length}</br>
-Points: ${ points.toLocaleString()}</br>
+Points of intersection: ${ points.toLocaleString()}</br>
 <p>
 Time: ${ GCO.timeTaken.toLocaleString()} milliseconds
 </p>

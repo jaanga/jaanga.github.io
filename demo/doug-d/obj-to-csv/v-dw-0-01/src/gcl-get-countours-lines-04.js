@@ -34,30 +34,15 @@ GCL.getMenu = function () {
 		`
 <details id-getGCL open>
 
-	<summary>Get contour lines </summary>
+	<summary>Get contour lines PW</summary>
 
-	<p>Connect the contour points in a correct sequence of points. Not Easy.</p>
+	<p>Connect the contour points in a correct sequence of points. Not Easy. Algoritm based on Paul West's code.</p>
 
 	<p>
 		<button onclick=GCL.getContourLines(); >get contour lines </button>
 	</p>
 
 	<div id=GCLdivMessage >Statistics will appear here"</div>
-
-	<hr>
-
-	<p>
-		<button onclick=GCL.removeShortSegments(); >remove very short polylines</button><br>
-		Click until number removed is 0
-	</p>
-
-	<div id=GCLdivStatsNew ></div>
-
-	<p>
-		<button onclick=GCL.joinAdjacentSegments(); >join adjacent polylines</button>
-	</p>
-
-	<div id=GCLdivJoinSegments > </div>
 
 	<hr>
 
@@ -98,7 +83,13 @@ GCL.getMessage = function () {
 
 	}, 0);
 
-	const polylines = GCL.contourLines.children.length;
+	const polylinesCount = GCL.contourLines.children.length;
+
+	const vertexArrays = GCL.contourLines.children.map(line => line.geometry.vertices);
+	//console.log('test vertexArrays', vertexArrays );
+
+	const verticesCount = vertexArrays.reduce((acc, arr) => acc += arr.length, 0);
+	//console.log(' vertices', vertices);
 
 	GCO.timeTaken = 23; // performance.now() - GCO.timeStart;
 
@@ -106,7 +97,8 @@ GCL.getMessage = function () {
 		`
 
 Contours<br>
-Polylines: ${ polylines.toLocaleString()}</br>
+Polylines: ${ polylinesCount.toLocaleString()}</br>
+Vertices: ${ verticesCount.toLocaleString() }<br>
 <p>
 Time: ${ GCO.timeTaken.toLocaleString()} milliseconds
 </p>
@@ -143,6 +135,8 @@ GCL.getContourLines = function () {
 
 	GCLdivMessage.innerHTML = GCL.getMessage();
 
+
+	RSL.reset();
 
 };
 
@@ -300,170 +294,3 @@ GCL.addLine = function (vertices, color = "red") {
 
 
 
-
-////////// Edit model
-
-
-GCL.removeShortSegments = function () {
-
-	const vertexArrays = GCL.contourLines.children.map(line => line.geometry.vertices);
-	console.log('test vertexArrays', vertexArrays );
-
-	const segmentsStart = GCL.contourLines.children.reduce((acc, child) => acc += child.geometry.vertices.length, 0);
-
-	let count = 0;
-
-	for (let i = 0; i < GCL.contourLines.children.length; i++) {
-
-		const lines = GCL.contourLines.children[i];
-
-		console.log('short lines', lines.children.length);
-
-		for (let j = 0; j < lines.children.length; j++) {
-
-			const line = lines.children[j];
-
-			const length = GCL.getLength(line);
-
-			if (length < 0.09) {
-
-				console.log('j', j, 'length', length, "line", line);
-
-				GCL.contourLines.children[i].children.splice(j, 1);
-
-				count++;
-
-			}
-		}
-
-	}
-
-	console.log('short line count', count);
-
-	const segmentsEnd = GCL.contourLines.children.reduce((acc, child) => acc += child.children.length, 0);
-
-	GCLdivStatsNew.innerHTML = `<p>segments removed: ${segmentsStart - segmentsEnd}<br>segments now: ${segmentsEnd}</p>`;
-
-};
-
-
-
-GCL.getLength = function (line) {
-
-	line.computeLineDistances();
-
-	const length = line.geometry.lineDistances.reduce((acc, distance) => acc += distance, 0);
-
-	return length;
-
-
-};
-
-
-
-GCL.joinAdjacentSegments = function () {
-
-	scene.remove(GCL.telltales);
-
-	GCL.telltales = new THREE.Group();
-
-	const segmentsStart = GCL.contourLines.children.reduce((acc, child) => acc += child.children.length, 0);
-
-	let count = 0;
-
-	for (let i = 0; i < GCL.contourLines.children.length; i++) {
-
-		lines = GCL.contourLines.children[i];
-
-		console.log("\n\nindex", i);
-		console.log('extra lines length', lines.children.length);
-
-		if (lines.children.length === 1) { continue; }
-
-		for (let j = 0; j < lines.children.length; j++) {
-
-			let line = lines.children[j];
-
-
-			console.log('extra line vertices ', line.geometry.vertices.length);
-
-			if (line.geometry.vertices.length < 4) {
-
-				length = GCL.getLength(line);
-
-				console.log('j', j, 'length', length);
-
-			} else if (j < lines.children.length - 1) {
-
-				point = line.geometry.vertices[line.geometry.vertices.length - 1]
-
-				points = lines.children[j + 1].geometry.vertices
-
-				//pt = GCL.getNearestPointIndex(point, points)
-
-				let index = 999;
-
-				for (let i = 0; i < points.length; i++) {
-
-					const p = points[i];
-					if (p.equals(point, 0.01)) {
-
-						index = i;
-						break;
-					}
-				}
-
-				if (index !== 999) {
-
-					console.log('index nearest', index, point, points[index]);
-
-					console.log('v1', line.geometry.vertices, points);
-
-					lines.remove(lines.children[j]);
-
-					geometry = line.geometry;
-					geometry.vertices.push(...points);
-
-					material = new THREE.LineBasicMaterial({ color: "magenta" });
-					lineNew = new THREE.Line(geometry, material);
-
-					lines.add(lineNew);
-
-					console.log('v2', line.geometry.vertices, points);
-
-					//lines.children.splice(j + 1, 1)
-
-					lines.remove(lines.children[j + 1])
-
-					const pointFirst = line.geometry.vertices[0];
-					//console.log('test pointFirst', pointFirst);
-
-					let geometryTT = new THREE.BoxGeometry(0.3, 0.3, 2);
-					let materialTT = new THREE.MeshBasicMaterial({ color: "red" });
-					const telltale = new THREE.Mesh(geometryTT, materialTT);
-					telltale.position.copy(pointFirst);
-					GCL.telltales.add(telltale);
-
-
-				}
-
-			}
-
-			count++;
-
-		}
-
-		count = count - 1;
-
-		scene.add(GCL.telltales);
-		//count += lines.children.length - 1;
-
-	}
-
-	console.log('extra line total count', count);
-
-	const segmentsEnd = GCL.contourLines.children.reduce((acc, child) => acc += child.children.length, 0);
-
-	GCLdivJoinSegments.innerHTML = `<p>segments removed: ${segmentsStart - segmentsEnd}<br>segments now: ${segmentsEnd}</p>`;
-
-};

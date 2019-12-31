@@ -200,6 +200,14 @@ These are the links that got me started
 - https://stackoverflow.com/questions/46661787/grouping-points-after-cut-plane-three-js/46811485#46811485
 - https://discourse.threejs.org/t/extract-vertices-in-edge-connection-order-from-buffergeometry-for-is-inside-polygon-check/5088/2
 - https://jsfiddle.net/prisoner849/uqm6bk1k/
+* https://jsfiddle.net/prisoner849/8uxw667m/
+* https://stackoverflow.com/questions/217578/how-can-i-determine-whether-a-2d-point-is-within-a-polygon/2922778#2922778
+
+Paul West
+
+* https://jsfiddle.net/user/prisoner849/fiddles/
+* https://github.com/Prisoner849
+* https://discourse.threejs.org/u/prisoner849/summary
 
 ### Software to develop characters
 
