@@ -62,6 +62,9 @@ GCL.getContourLines = function () {
 
 		console.log('index', index);
 		GCL.isoline = isoline;
+
+
+
 		GCL.getIsoline(isoline);
 
 	});

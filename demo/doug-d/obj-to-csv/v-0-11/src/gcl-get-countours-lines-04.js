@@ -1,3 +1,7 @@
+// copyright Theo Armour. MIT license.
+/* global THREE, scene, GCP */
+// jshint esversion: 6
+// jshint loopfunc: true
 
 
 const GCL = {};
@@ -29,13 +33,26 @@ GCL.getMenu = function () {
 		`
 <details id-getGCL open>
 
-<summary>Get contour lines </summary>
+	<summary>Get contour lines </summary>
 
-<p>
-<button onclick=GCL.getContourLines(); >get contour lines </button>
+	<p>
+		<button onclick=GCL.getContourLines(); >get contour lines </button>
+	</p>
+	<p>
+		<button onclick=GCL.removeShortSegments(); >remove very short polylines</button><br>
+		Click until number removed is 0
+	</p>
 
+	<div id=GCLdivStatsNew ></div>
 
-</p>
+	<p>
+		<button onclick=GCL.joinAdjacentSegments(); >join adjacent polylines</button>
+	</p>
+
+	<div id=GCLdivJoinSegments > </div>
+
+	<hr>
+
 </details>
 
 `;
@@ -46,7 +63,7 @@ GCL.getMenu = function () {
 
 GCL.reset = function () {
 
-	scene.remove(GCL.contourLines)
+	scene.remove(GCL.contourLines);
 
 	GCL.contourLines = new THREE.Group();
 
@@ -62,19 +79,21 @@ GCL.getContourLines = function () {
 
 		console.log('index', index);
 		GCL.isoline = isoline;
-		GCL.getIsoline(isoline);
+
+		GCL.points = isoline.map(line => line.intersection);
+
+		const contours = GCL.getContours( GCL.points, [], true);
+
+		//console.log('con', contours);
+
+		contours.forEach(contour => GCL.addLine(contour ));
 
 	});
 
 };
 
 
-
-
-
-
-
-GCP.getContours = function (points, contours, firstRun) {
+GCL.getContours = function (points, contours, firstRun) {
 
 	//console.log("firstRun:", firstRun);
 
@@ -92,7 +111,7 @@ GCP.getContours = function (points, contours, firstRun) {
 		firstPoint.checked = true;
 		//console.log('firstPointIndex', i);
 
-		secondPointIndex = GCP.getPairIndex(firstPoint, firstPointIndex, points);
+		secondPointIndex = GCL.getPairIndex(firstPoint, firstPointIndex, points);
 		secondPoint = points[secondPointIndex];
 		secondPoint.checked = true;
 		//console.log('secondPointIndex', secondPointIndex);
@@ -102,9 +121,9 @@ GCP.getContours = function (points, contours, firstRun) {
 
 		break;
 
-	};
+	}
 
-	contour = GCP.getContour(secondPoint, points, contour);
+	contour = GCL.getContour(secondPoint, points, contour);
 
 	if (contour) {
 
@@ -118,7 +137,7 @@ GCP.getContours = function (points, contours, firstRun) {
 
 		if (points.length - allChecked > 2) {
 
-			return GCP.getContours(points, contours, false);
+			return GCL.getContours(points, contours, false);
 
 		} else {
 
@@ -132,26 +151,26 @@ GCP.getContours = function (points, contours, firstRun) {
 };
 
 
-GCP.getContour = function (currentPoint, points, contour) {
+GCL.getContour = function (currentPoint, points, contour) {
 
-	const p1Index = GCP.getNearestPointIndex(currentPoint, points);
+	const p1Index = GCL.getNearestPointIndex(currentPoint, points);
 	let p1 = points[p1Index];
 
-	if (!p1) { console.log('gc', p1, p1Index, currentPoint, points, contour); }
+	// (!p1) { console.log('gc', p1, p1Index, currentPoint, points, contour); }
 	if (!p1) { return contour; }
 
 	p1.checked = true;
 
-	const p2Index = GCP.getPairIndex(p1, p1Index, points);
+	const p2Index = GCL.getPairIndex(p1, p1Index, points);
 	let p2 = points[p2Index];
 	p2.checked = true;
 
-	const isClosed = p2.equals(contour[0], GCP.tolerance);
+	const isClosed = p2.equals(contour[0], GCL.tolerance);
 
 	if (!isClosed) {
 
 		contour.push(p2.clone());
-		return GCP.getContour(p2, points, contour);
+		return GCL.getContour(p2, points, contour);
 
 	} else {
 
@@ -164,13 +183,13 @@ GCP.getContour = function (currentPoint, points, contour) {
 };
 
 
-GCP.getNearestPointIndex = function (currentPoint, points) {
+GCL.getNearestPointIndex = function (currentPoint, points) {
 
 	let index = 0;
 
 	for (let point of points) {
 
-		if (point.checked === false && point.equals(currentPoint, GCP.tolerance)) { break; }
+		if (point.checked === false && point.equals(currentPoint, GCL.tolerance)) { break; }
 		index++;
 
 	}
@@ -180,7 +199,7 @@ GCP.getNearestPointIndex = function (currentPoint, points) {
 };
 
 
-GCP.getPairIndex = function (currentPoint, pointIndex, points) {
+GCL.getPairIndex = function (currentPoint, pointIndex, points) {
 
 	let index = 0;
 

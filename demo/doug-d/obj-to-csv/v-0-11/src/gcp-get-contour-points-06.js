@@ -97,6 +97,9 @@ GCP.setPointOfIntersection = function (idx1, idx2, plane, indexFace) {
 
 		let intersection = GCP.pointOfIntersection.clone();
 
+		intersection.checked = false;
+		intersection.faceIndex = indexFace;
+
 		GCP.verticesIsoline.vertices.push(intersection);
 
 		GCP.intersections.push(intersection);
