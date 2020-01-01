@@ -10,33 +10,41 @@ value='You are now in a GitHub web page view - Click this button to view this re
 _basic-html.html_
 -->
 
-### Full Screen demo and best link: [OBJ to CSV](https://jaanga.github.io/demo/doug-d/obj-to-csv/)
+### Full Screen demo and best link - OBJ to CSV: https://jaanga.github.io/demo/doug-d/obj-to-csv/
 
 <details open >
+
 <summary>Concept</summary>
 
-Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV files.
+* List, select, open and view [OBJ files]( https://en.wikipedia.org/wiki/Wavefront_.obj_file ) in 3D
+* Generate contour points and lines
+* Export contour line vertices to [CSV files]( https://en.wikipedia.org/wiki/Comma-separated_values )
 
 ### Features
 
-- Load and view OBJ files in 3D
-	- Scale and center geometry
-	- Combine multiple geometries into one
-- Update mesh
-	- Rotate around XYZ
-	- Select material
-	- Update opacity
-	- Toggle edges, box helper and wireframe
-- Generate contour lines
+_In order of appearance on the menu_
+
+- Browse, open and view OBJ files in 3D
+	- Open OBJ files using file dialog box
+	- Browse libraries of pre-selected OBJ files on the web
+	- Geometry is automatically scaled, centered and zoomed
+	- Combine multiple geometries into a single Three.js mesh
+	- A variety of geometries created by algorithm are available for testing
+- Generate contour points
 	- Choose one to many
 	- Select elevation of a single contour line
+- Generate contour lines
 	- Menu displays a number of stats
 	- Toggle view of mesh, contours and points
 - Export vertices to CSV files
 	- Export as strings of vertices
 	- XYZ coordinates plus a line index
-- Display settings
+- Settings
 	- Update a variety of scene display settings
+	- Rotate around XYZ
+	- Select material
+	- Update opacity
+	- Toggle edges, box helper and wireframe
 
 ### Credits
 
@@ -53,13 +61,37 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 ### Versions
 
+
+[OBJ to CSV v-pw0.01.00 ](v-pw-0-01/obj-to-csv-pw.html)
+
+* Built on Paul West's point to line sequencing algorithm
+* Frequently creates lines with only a few vertices
+
+***
+
+Both Paul West's and Theo Armour's algorithms for sequencing point into polylines have issues. We will continue to work on both - in separate forks: v-pw and v-ta
+
+Currently the Paul West algorithm produces the better results and is set as the default version.
+
+***
+
+[OBJ to CSV 0.11.00 ](v-0-11/obj-to-csv.html)
+
+* Built on Paul West's point to line sequencing algorithm
+
+[OBJ to CSV 0.10.00 ](v-0-10/obj-to-csv.html)
+
+* Built on Theo Armour's point to line sequencing algorithm
+* Generates on a single polyline per contour level
+* Fails to complete if a polyline is not closed
+
 [OBJ to CSV 0.09.00 ](v-0-09/obj-to-csv.html)
 
 2019-12-23
 
 * Adds Geometry simplify
 * Files an menu items moved around
-* Obect roration and Mesh material settings get more features
+* Object rotation and mesh material settings get more features
 
 
 [OBJ to CSV 0.08.00 ](v-0-08/obj-to-csv.html)
@@ -69,7 +101,7 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 2019-12-19
 
 - Getting closer
-- Still some very short sedments showing up
+- Still some very short segments showing up
 * Need to work on standardizing all the normals and connecting adjoing segments
 
 
@@ -126,6 +158,7 @@ Load and view OBJ files in 3D. Generate contour lines. Export vertices to CSV fi
 
 [OBJ to CSV 0.03 ](v-0-03/obj-to-csv-01.html)
 
+- Based on Theo Armour's first point to line sequencing algorithm
 - Keep hacking at better contours
 
 [OBJ to CSV 0.02 ](v-0-02/get-contours-from-objects.html)
