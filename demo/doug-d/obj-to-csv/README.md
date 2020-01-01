@@ -73,6 +73,8 @@ Both Paul West's and Theo Armour's algorithms for sequencing point into polyline
 
 Currently the Paul West algorithm produces the better results and is set as the default version.
 
+Because of the two algorithms the generation of contour points and contour lines is split into two separate operations. Once one of the algorithms begins to operate fully as desired the operations may be recombined.
+
 ***
 
 [OBJ to CSV 0.11.00 ](v-0-11/obj-to-csv.html)
