@@ -68,6 +68,7 @@ Web pages of interest
 
 Google
 
+* https://experiments.withgoogle.com/experiments
 * https://grow.google/developers/
 * https://learndigital.withgoogle.com/digitalgarage
 
@@ -79,6 +80,11 @@ Browser keyboard shortcuts
 	* The "console" and "elements" tabs are very useful
 
 
+When you have a moment
+
+* https://dev.to/valentinogagliardi/21-web-development-terms-you-should-absolutely-know-about-368j
+* https://www-searchenginejournal-com.cdn.ampproject.org/v/s/www.searchenginejournal.com/technical-seo/javascript-fundamentals-cheat-sheet/
+* https://dev.to/vladimir_dev/my-5-favorite-resources-for-learning-javascript-56k0
 
 
 </details>
