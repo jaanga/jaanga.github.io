@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+	<meta name=description
+		content="Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library">
+	<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+	<meta name="date" content="2020-01-03">
+
+	<title>render csv file 0.09.01</title>
+
+	<link href="assets/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/examples/js/controls/OrbitControls.js"></script>
+
+	<script src="src/dlb-draw-line-basic.js"></script>
+	<script src="src/dlf-draw-line-fat.js"></script>
+	<script src="src/dlm-draw-line-mesh-01.js"></script>
+
+	<script src="settings/or-object-rotation-02.js"></script>
+	<script src="settings/dss-display-scene-settings-03.js"></script>
+
+	<button id="expandButton" onclick="toggleNavMenu();">☰</button>
+
+	<nav id="navMenu">
+
+		<header id="hdrTitle">
+
+			<h2 style=margin-bottom:0; >
+				<a href="https://github.com/jaanga/jaanga.github.io/tree/master/demo/doug-d/render-csv-file/" target=_top title="Source code on GitHub" >
+					<img src="assets/github-mark-32.png" alt="GitHub logo" height=18 style=opacity:0.5; >
+				</a>
+
+				<a href="" title="Click to reload this page" >Render CSV file 0.09.01</a>
+
+				<span onmouseover=pDescription.hidden=false ><b>?</b></span>
+			</h2>
+
+			<p id=pDescription onmouseout=pDescription.hidden=true hidden >
+
+				Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library
+
+			</p>
+
+		</header>
+
+		<p>
+			Create CSV files: <a href="https://jaanga.github.io/demo/doug-d/obj-to-csv/" target="_blank">OBJ to CSV</a>
+		</p>
+
+		<p>
+			<button onclick=controls.reset(); title="Return to default view">reset view</button>
+
+			<button onclick=zoomObjectBoundingSphere(); title="zoom without shifting camera angle">zoom all</button>
+		</p>
+
+		<p>
+			<button onclick=updateHash(); title="Create a link to load current model and view" >set permalink</button>
+
+			<span onmouseover="pPermalink.hidden=false;" ><b>?</b></span>
+		</p>
+
+		<p id=pPermalink onmouseout=pPermalink.hidden=true hidden >
+			A <a href="https://en.wikipedia.org/wiki/Permalink" target="_blank">permalink</a> is a permanent static hyperlink to a particular web page or entry in a blog.
+		<br><br>
+
+			In this script, the permalink is used to load the current file ( from a URL only) along with the current camera posiion annd target.
+
+		</p>
+
+
+		<details open>
+
+			<summary class=sumMenuTitle>Browse models</summary>
+
+			<div id=divBrowseModels></div>
+
+			<div id=CVDdivCsvViewerDashDotDot></div>
+
+			<div id=CVJdivCsvViewerJaanga></div>
+
+
+		</details>
+
+
+		<div id=DLBdivMenuDrawLineBasic> </div>
+
+		<div id=DLFdivMenuDrawLineFat> </div>
+
+		<div id=DLMdivMenuDrawLineMesh> </div>
+
+
+		<details open>
+
+			<summary class=sumMenuTitle>Scene settings</summary>
+
+			<div id=divSceneSettings></div>
+
+			<div id=ORdivObjectRotation></div>
+
+			<div id=MMSdivMeshMaterialSettings> </div>
+
+			<div id=DSSdivMenuDisplaySceneSettings></div>
+
+		</details>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top">
+				<a href=javascript:navMenu.scrollTo(0,0);> ❦ </a>
+			</center>
+
+		</footer>
+
+	</nav>
+
+	<main id=main>
+
+		<div id="divContent"></div>
+
+	</main>
+
+
+	<script src="browse-files/csv-comma-separated-values.js"></script>
+	<script src="browse-files/cfr-csv-file-reader.js"></script>
+	<script src="browse-files/cvj-csv-viewer-jaanga.js"></script>
+	<script src="browse-files/cvd-csv-viewer-dashdotdot.js"></script>
+
+	<script src=main.js></script>
+
+</body>
+
+</html>

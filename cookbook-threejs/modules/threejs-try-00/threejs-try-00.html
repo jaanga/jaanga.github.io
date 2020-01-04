@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+	<meta name=description
+		content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library">
+	<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+	<meta name="date" content="2020-01-01">
+	<title></title>
+
+	<link href="assets/style.css" rel="stylesheet" >
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/examples/js/controls/TrackballControls.js"></script>
+
+</head>
+
+<body>
+
+	<button id="expandButton" onclick="toggleNavMenu();" >☰</button>
+
+	<nav id="navMenu" >
+
+		<header id="hdrTitle" ></header>
+
+		<details open >
+
+			<summary class=sumMenuTitle >View controls</summary>
+
+			<div id=divViewControls ></div>
+
+		</details>
+
+		<details id=detBrowseModels open>
+
+			<summary class=sumMenuTitle >Browse models</summary>
+
+			<did id=divBrowseModels ></did>
+
+		</details>
+
+		<details open >
+
+			<summary class=sumMenuTitle >Edit settings</summary>
+
+			<div id=ESdivEditSettings ></div>
+
+		</details>
+
+		<footer>
+
+			<hr>
+
+			<center title="hello! click me to go up to the top"><a href=javascript:navMenu.scrollTo(0,0); > ❦ </a></center>
+
+		</footer>
+
+	</nav>
+
+	<main id=main >
+
+		<div id="divContent" ></div>
+
+	</main>
+
+	<script src="main-00.js"></script>
+	<script src="src/vc-view-controls-00.js"></script>
+
+	<!-- browse models -->
+	<script src="browse-models/gto-generate-threejs-objects-03.js"></script>
+	<script src="browse-models/gtl-generate-threejs-lines-03.js"></script>
+	<script src="browse-models/gte-generate-threejs-extrusions-02.js"></script>
+
+</body>
+
+</html>

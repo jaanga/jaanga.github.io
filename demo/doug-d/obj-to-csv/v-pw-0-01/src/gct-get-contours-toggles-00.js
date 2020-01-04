@@ -35,6 +35,7 @@ GCT.getMenu = function() {
 		<input type=checkbox id=GCTchkPoints onchange=GCT.toggleContourPoints() checked >
 		contour points
 	</div>
+<!--
 	<div title="Display start (red) and end (blue) of each polyline" >
 		<input type=checkbox id=GCTchkClosed onchange=GCT.toggleClosed() checked >
 		polylines start and end
@@ -57,7 +58,7 @@ GCT.getMenu = function() {
 		<input type=checkbox id=GCTchkClockwise onchange="GCT.toggleClockwise();" checked >
 		clockwise or not<span id=GCTspnClockwise ></span>
 	</div>
-
+-->
 	<div title="Display tags with the elevation of each contour" >
 		<input type=checkbox id=GCTchkLabels onchange="GCT.toggleLabels()" >
 		level labels
@@ -88,12 +89,12 @@ GCT.reset = function () {
 	checkBoxes.forEach(box => box.checked = true);
 
 	//GCTchkPoints.checked = false;
-	GCTchkLabels.checked = false;
-	GCTchkClosed.checked = false;
-	GCTchkShortPolylines.checked = false;
-	GCTchkMultiplePolylines.checked = false;
-	GCTchkClosedPolylines.checked = false;
-	GCTchkClockwise.checked = false;
+	//GCTchkLabels.checked = false;
+	//GCTchkClosed.checked = false;
+	//GCTchkShortPolylines.checked = false;
+	//GCTchkMultiplePolylines.checked = false;
+	//GCTchkClosedPolylines.checked = false;
+	//GCTchkClockwise.checked = false;
 
 
 }
