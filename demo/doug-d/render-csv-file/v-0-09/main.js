@@ -282,7 +282,7 @@ function addLights() {
 	pointLight.position.copy( camera.position );
 	camera.add( pointLight );
 
-	const light = new THREE.DirectionalLight( 0xdfebff, 0.5 );
+	light = new THREE.DirectionalLight( 0xdfebff, 0.5 );
 	light.position.set( -50, -200, 100 );
 	light.castShadow = true;
 	light.shadow.mapSize.width = 1024;

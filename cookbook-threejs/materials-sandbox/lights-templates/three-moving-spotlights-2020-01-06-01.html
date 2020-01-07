@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+<meta name=description
+	content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library">
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+
+<title></title>
+
+<style>
+
+/* Copyright 2020 Theo Armour. MIT License */
+
+:root { font: 100% monospace; }
+
+* { box-sizing: border-box; }
+
+body { margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline; }
+
+button { background-color: #ddd; border: none; border-radius: 2px; color: #322;cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+input[ type=range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; border-radius: 2px; height: 1.7ch; width: 100%; }
+input[ type=range ]::-moz-range-thumb { background-color: #888; border-radius: 2; width: 10px; }
+input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 18px; width: 10px; }
+
+.help { float: right; }
+
+#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/examples/js/controls/OrbitControls.js"></script>
+
+<nav id="navMenu">
+
+	<div id="divTitle">
+
+
+		<h2>
+			<a id=aSource target=_top title="Source code on GitHub" >
+				<img id=imgIcon height=18 style=opacity:0.5; >
+			</a>
+
+			<a id=aTitle href="" title="Click to reload this page" ></a>
+
+			<span class=help onmouseover=divDescription.hidden=false >?</span>
+
+		</h2>
+
+		<div id=divDescription onmouseout=divDescription.hidden=true hidden ></div>
+
+	</div>
+
+	<p>
+		<button onclick="addMeshes()">add meshes</button>
+	</p>
+
+	<p>
+		<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;">rotation</button>
+	</p>
+
+	<p>
+		<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+	</p>
+
+	<div id="divLog"></div>
+
+</nav>
+
+<script>
+
+aSource = "https://github.com/zzzzz/xxxxx.html";
+imgIcon.src = "https://pushme-pullyou.github.io/github-mark-32.png";
+aTitle.innerHTML= document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+divDescription.innerHTML = document.head.querySelector( "[ name=description ]" ).content;
+
+
+let mesh, meshGroup;
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+
+
+const TML = {}
+
+TML.getMenu = function() {
+
+	const htm =
+	`
+	<details>
+
+		<summary>Three moving lights</summary>
+
+		<p>
+			<button onclick=TML.letsDance() >let's dance</button>
+		</p>
+
+	</details>
+	`;
+
+	return htm;
+}
+
+
+TML.letsDance = function() {
+
+	light.intensity = 0.1;
+	spotLight1 = createSpotlight( 0xFF7F00 );
+	spotLight2 = createSpotlight( 0x00FF7F );
+	spotLight3 = createSpotlight( 0x7F00FF );
+	//lightHelper1, lightHelper2, lightHelper3;
+
+	spotLight1.position.set( 15, 40, 45 );
+	spotLight2.position.set( 0, 40, 35 );
+	spotLight3.position.set( - 15, 40, 45 );
+
+	lightHelper1 = new THREE.SpotLightHelper( spotLight1 );
+	lightHelper2 = new THREE.SpotLightHelper( spotLight2 );
+	lightHelper3 = new THREE.SpotLightHelper( spotLight3 );
+
+	scene.add( spotLight1, spotLight2, spotLight3 );
+	scene.add( lightHelper1, lightHelper2, lightHelper3 );
+
+
+	function createSpotlight( color ) {
+		var newObj = new THREE.SpotLight( color, 2 );
+		newObj.castShadow = true;
+		newObj.angle = 0.3;
+		newObj.penumbra = 0.2;
+		newObj.decay = 2;
+		newObj.distance = 0;
+		return newObj;
+	}
+
+	function animate2() {
+		// tween( spotLight1 );
+		// tween( spotLight2 );
+		// tween( spotLight3 );
+		// setTimeout( animate2, 5000 );
+		// // console.log( '',23 );
+		var time = Date.now() * 0.0005;
+		xx = 2
+		spotLight1.position.x = Math.sin( time * 0.7 ) * 30 * xx;
+		spotLight1.position.y = Math.cos( time * 0.5 ) * 40 * xx;
+		spotLight1.position.z = Math.cos( time * 0.3 ) * 30 * xx;
+
+		spotLight2.position.x = Math.cos( time * 0.3 ) * 30 * xx;
+		spotLight2.position.y = Math.sin( time * 0.5 ) * 40 * xx;
+		spotLight2.position.z = Math.sin( time * 0.7 ) * 30 * xx;
+
+		spotLight3.position.x = Math.sin( time * 0.7 ) * 30 * xx;
+		spotLight3.position.y = Math.cos( time * 0.3 ) * 40 * xx;
+		spotLight3.position.z = Math.sin( time * 0.5 ) * 30 * xx;
+
+		if ( lightHelper1 ) lightHelper1.update();
+		if ( lightHelper2 ) lightHelper2.update();
+		if ( lightHelper3 ) lightHelper3.update();
+
+		requestAnimationFrame( animate2 );
+	}
+	animate2();
+
+
+}
+
+
+
+
+
+init();
+animate();
+
+function init() {
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color( 0xcce0ff );
+	scene.fog = new THREE.Fog( 0xcce0ff, 550, 800 );
+	scene.add( camera )
+
+	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+	renderer.outputEncoding = THREE.sRGBEncoding;
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls.maxDistance = 500;
+	controls.rotateSpeed = 2;
+	//controls.maxPolarAngle = Math.PI * 0.5;
+
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	addLights();
+
+	const axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	addGround();
+
+	addMesh();
+
+	//addMeshes();
+
+	divLog.innerHTML = TML.getMenu();
+
+
+}
+
+
+
+
+function addLights() {
+
+	scene.add( new THREE.AmbientLight( 0x404040 ) );
+	//scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+	const pointLight = new THREE.PointLight( 0xffffff, 0.1 );
+	pointLight.position.copy( camera.position );
+	camera.add( pointLight );
+
+	light = new THREE.DirectionalLight( 0xdfebff, 0.5 );
+	light.position.set( -50, -200, 100 );
+	light.castShadow = true;
+	light.shadow.mapSize.width = 1024;
+	light.shadow.mapSize.height = 1024;
+
+	var d = 100;
+	light.shadow.camera.left = - d;
+	light.shadow.camera.right = d;
+	light.shadow.camera.top = d;
+	light.shadow.camera.bottom = - d;
+	light.shadow.camera.far = 500;
+	scene.add( light );
+
+	//scene.add( new THREE.CameraHelper( light.shadow.camera ) );
+
+}
+
+
+
+function addGround() {
+
+	const geometry = new THREE.PlaneBufferGeometry( 2000, 2000 );
+	const material = new THREE.MeshPhongMaterial( { color: 0xaaaaaa, depthWrite: false, side: 2 } );
+	const mesh = new THREE.Mesh( geometry, material );
+	mesh.position.z = -50;
+	mesh.receiveShadow = true;
+	scene.add( mesh );
+
+}
+
+
+function addMesh( size = 20 ) {
+
+	// CylinderGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded )
+	// SphereGeometry( radius, segmentsWidth, segmentsHeight, phiStart, phiLength, thetaStart, thetaLength )
+	// TorusGeometry( radius, tube, radialSegments, tubularSegments, arc )
+
+	const geometry = new THREE.BoxGeometry( size, size, size );
+
+	geometry.applyMatrix( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+	geometry.applyMatrix( new THREE.Matrix4().makeScale( 1, 1, 1 ) );
+	geometry.applyMatrix( new THREE.Matrix4().makeTranslation( 0, 0, 0 ) );
+
+	//const material = new THREE.MeshNormalMaterial();
+	const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), specular: 0xffffff } );
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.receiveShadow = true;
+	mesh.castShadow = true;
+	scene.add( mesh );
+
+	return mesh;
+
+}
+
+
+
+function addMeshes( count = 100 ) {
+
+	scene.remove( meshGroup );
+
+	meshGroup = new THREE.Group();
+
+	for ( let i = 0; i < count; i++ ) { meshGroup.add( addMesh() ) };
+
+	meshGroup.children.forEach( mesh => {
+		mesh.position.set( Math.random() * 100 - 50, Math.random() * 100 - 50, Math.random() * 100 - 50 )
+		mesh.rotation.set( 0.2 * Math.random(), 0.2 * Math.random(), 0.2 * Math.random() )
+	} );
+
+	scene.add( meshGroup );
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	scene.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>
