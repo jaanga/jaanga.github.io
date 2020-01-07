@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>JSON VIEW</title>
+	<link rel="stylesheet" type="text/css" href="jsonview.css">
+	<script type="text/javascript" src="jsonview.js"></script>
+</head>
+
+<body>
+	<div id="divJsonView"></div>
+
+	<script type="text/javascript">
+
+
+		url = "example.json";
+		//url = "https://rawcdn.githack.com/ladybug-tools-in2/honeybee-model-schema/master/honeybee_model_schema/samples/model_complete_single_zone_office_detailed_loads.json";
+
+		xhr = new XMLHttpRequest();
+		xhr.open( 'GET', url, true );
+		xhr.onerror = ( xhr ) => console.log( 'error:', xhr );
+		//xhr.onprogress = ( xhr ) => console.log( 'bytes loaded:', xhr.loaded );
+		xhr.onload = ( xhr ) => {
+
+			json = JSON.parse( xhr.target.response );
+			console.log( 'json', json );
+
+			jsonView.format( json, '#divJsonView' );
+
+		};
+
+		xhr.send( null );
+
+	</script>
+
+</body>
+
+</html>
