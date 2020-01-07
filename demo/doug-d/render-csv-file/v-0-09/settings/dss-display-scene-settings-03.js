@@ -36,14 +36,14 @@ DSS.getMenu = function () {
 	</p>
 
 	<p>
-		<input type=checkbox onchange="sceneRotation = sceneRotation === 1 ? 0 : 1;" checked > rotation
+		<input type=checkbox id=ChkRotate onchange="controls.autoRotate=!controls.autoRotate" checked > rotation
 	</p>
 	<p>
 		rotation speed
-		<input type="range" id="inpSpeed" onclick="sceneRotation=0.03 * this.value;" />
+		<input type="range" id="inpSpeed" onchange="controls.rotateSpeed=+this.value;" />
 	</p>
 
-
+<!--
 	<div>
 		<input type=checkbox onchange=controls.staticMoving=!controls.staticMoving; checked > rotation damping
 	</div>
@@ -51,6 +51,7 @@ DSS.getMenu = function () {
 		dynamic damping factor
 		<input type="range" id="inpSpeed" onclick="controls.dynamicDampingFactor=0.01 * this.value;" />
 	</p>
+-->
 
 </details>
 

@@ -56,7 +56,8 @@ function init () {
 
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.maxDistance = 500;
-	//controls.rotateSpeed = 2;
+	controls.autoRotate = true;
+	controls.rotateSpeed = 0.1;
 	//controls.maxPolarAngle = Math.PI * 0.5;
 
 	axesHelper = new THREE.AxesHelper( 100 );
@@ -69,8 +70,8 @@ function init () {
 
 	window.addEventListener( "resize", onWindowResize, false );
 	window.addEventListener( "orientationchange", onWindowResize, false );
-	window.addEventListener( "keyup", () => sceneRotation = 0, false );
-	renderer.domElement.addEventListener( "click", () => sceneRotation = 0, false );
+	window.addEventListener( "keyup", () => ChkRotate.checked=controls.autoRotate=false, false );
+	renderer.domElement.addEventListener( "click", () => ChkRotate.checked=controls.autoRotate=false, false );
 
 	// geometry = new THREE.BoxGeometry( 50, 50, 50 );
 	// material = new THREE.MeshNormalMaterial( { opacity: 0.85, side:2, transparent: true });
