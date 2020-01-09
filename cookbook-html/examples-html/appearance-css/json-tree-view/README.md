@@ -3,7 +3,7 @@
 <div><input type=button onclick="window.location.href='https://github.com/pushme-pullyou/pushme-pullyou.github.io/blob/master/tootoo-templates/README.md'";
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' ></div>
 
-# [Template Short Read Me]( #README.md )
+# [JSON tree view Read Me]( #README.md )
 
 <!--
 <iframe src=https://jaanga.github.io/tootoo-templates/basic-html.html width=100% height=500px >Iframes are not viewable in GitHub source code views</iframe>
@@ -32,6 +32,17 @@ JSON Tree viewers
 * https://stackoverflow.com/questions/8560960/how-to-generate-treeview-from-json-data-using-javascript
 * https://stackoverflow.com/questions/49845748/convert-a-flat-json-file-to-tree-structure-in-javascript
 * https://stackoverflow.com/questions/54786653/parent-child-treeview-in-javascript-from-json-file
+
+
+JSON sample files
+
+* https://catalog.data.gov/dataset?res_format=JSON
+* https://www.sitepoint.com/10-example-json-files/
+* https://github.com/ozlerhakan/mongodb-json-files
+
+replace url
+
+* https://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
 
 ## Change Log
 
