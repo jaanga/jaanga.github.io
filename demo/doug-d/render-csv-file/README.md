@@ -26,11 +26,12 @@ Features
 
 ### Vision
 
-* Reappropriate and re-imagine iconic works of art - and familiar objects - in highly accessible, manipulatable ways
+* Re-appropriate and re-imagine iconic works of art - and familiar objects - in highly accessible, manipulatable ways
 
 
 ## Wishlist
 
+* 2020-01-11 ~ Theo ~ Put models in a resizable room that adjust to phone orientation
 * 2019-11-17 ~ Theo ~ save even more useful options in location hash
 * 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
 
@@ -81,7 +82,7 @@ _Work-in-progress, much unfinished_
 * R: Various fixes and cleanup
 
 
-## [render-csv-file-0-05.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-05.html )
+## [render-csv-file-0-05.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-##/render-csv-file-0-05.html )
 
 
 <img src="../images/group-05-elefante-01.png" width=50% >
@@ -92,7 +93,7 @@ _Work-in-progress, much unfinished_
 	* Done: * 2019-11-17 ~ Theo ~ save csv file url in location hash.
 
 
-## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-04.html )
+## [render-csv-file-0-04.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-##/render-csv-file-0-04.html )
 
 <img src="https://jaanga.github.io/demo/doug-d/images/dove-01.jpg" style=width:50% >
 
@@ -107,7 +108,7 @@ _Work-in-progress, much unfinished_
 Click menu title to clear location.hash. Edit numbers directly in URL and press enter to update
 
 
-## [render-csv-file-0-03.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-03.html )
+## [render-csv-file-0-03.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-##/render-csv-file-0-03.html )
 
 <img src="https://jaanga.github.io/demo/doug-d/images/helga-by-dougd-01.jpg" style=width:50% >
 
@@ -121,7 +122,7 @@ Click menu title to clear location.hash. Edit numbers directly in URL and press 
 Interaction between all the controls is not well tested - so reload frequently
 
 
-## [render-csv-file-0-02.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-02.html )
+## [render-csv-file-0-02.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-##/render-csv-file-0-02.html )
 
 * Refactor from Three.js lines to Three.js meshes
 	* Allows for geometry with width and height
@@ -129,7 +130,7 @@ Interaction between all the controls is not well tested - so reload frequently
 	* Will work better with shade and shadow and other features
 
 
-## [render-csv-file-0-01.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/render-csv-file-0-01.html )
+## [render-csv-file-0-01.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-##/render-csv-file-0-01.html )
 
 From Doug
 
