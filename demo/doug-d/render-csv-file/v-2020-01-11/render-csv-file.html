@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+<meta name=description
+content="Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library">
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+<meta name=version content="2020-01-11-00">
+
+<title></title>
+
+<link href="assets/style-2020-01-11.css" rel="stylesheet">
+
+<style>
+
+</style>
+</head>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r112/examples/js/controls/OrbitControls.js"></script>
+
+<script src="three/thr-three-2020-01-11-00.js"></script>
+<script src="three/thra-three-add-2020-01-11-00.js"></script>
+
+<script src="materials/dlb-draw-line-basic-2020-01-11.js"></script>
+<script src="materials/dlf-draw-line-fat-2020-01-11.js"></script>
+<script src="materials/dlm-draw-line-mesh-2020-01-11.js"></script>
+
+<script src="settings/or-object-rotation-2020-01-11.js"></script>
+<script src="settings/dss-display-scene-settings-2020-01-11.js"></script>
+
+
+
+	<button id="expandButton" onclick="toggleNavMenu();">☰</button>
+
+	<nav id="navMenu">
+
+		<header id="hdrTitle">
+
+			<h2>
+				<a id=aSource target=_top title="Source code on GitHub" >
+					<img id=imgIcon height=18 style=opacity:0.5; >
+				</a>
+
+				<a id=aTitle href="" title="Click to reload this page" ></a>
+				<span id=sVersion ></span>
+
+				<span class="couponcode" >??<span id=divDescription class="coupontooltip" >
+					Load and view CSV contour lines in your browser using the WebGL and the Three.js JavaScript library
+				</span></span>
+
+			</h2>
+
+		</header>
+		<p>
+			Create CSV files: <a href="https://jaanga.github.io/demo/doug-d/obj-to-csv/" target="_blank">OBJ to CSV</a>
+		</p>
+
+		<p>
+			<button onclick=updateHash(); title="Create a link to load current model and view" >set permalink</button>
+
+			<span class="couponcode" >??
+				<span class=coupontooltip >
+					A <a href="https://en.wikipedia.org/wiki/Permalink" target="_blank">permalink</a>
+					is a permanent static hyperlink to a particular web page or entry in a blog.
+					<br><br>
+					In this script, the permalinks you create may be used to load the current file ( from a URL only)
+					along with the current camera position and target.
+					<br><br>
+					1. set up your view.<br>
+					2. click the 'set permalink' button.<br>
+					3. copy and save the long URL that appears in the address bar.
+				</span>
+			</span>
+		</p>
+
+		<details open>
+
+			<summary class=sumMenuTitle>View</summary>
+		<p>
+			<button onclick=THR.controls.reset(); title="Return to default view">reset view</button>
+
+			<button onclick=THR.zoomObjectBoundingSphere(group); title="zoom without shifting camera angle">zoom all</button>
+		</p>
+
+		<p>
+			<button onclick="THR.controls.autoRotate=!THR.controls.autoRotate">rotation</button>
+		</p>
+
+		<p>
+			<input type="range" id="inpSpeed" value=20 onclick="THR.controls.autoRotateSpeed=0.2*this.value;" title="Rotation speed" />
+		</p>
+
+		</details>
+
+		<details open>
+
+			<summary class=sumMenuTitle>Browse models</summary>
+
+			<div id=divBrowseModels></div>
+
+			<div id=CVDdivCsvViewerDashDotDot></div>
+
+			<div id=CVJdivCsvViewerJaanga></div>
+
+		</details>
+
+		<details open>
+
+			<summary class=sumMenuTitle>Edit model </summary>
+
+			<div id=DLMdivMenuDrawLineMesh> </div>
+
+			<div id=DLBdivMenuDrawLineBasic> </div>
+
+			<div id=DLFdivMenuDrawLineFat> </div>
+
+			<div id=ORdivObjectRotation></div>
+
+		</details>
+
+		<details open>
+
+			<summary class=sumMenuTitle >Settings</summary>
+
+			<div id=THRTdivToggles ></div>
+
+			<div id=divSceneSettings></div>
+
+			<div id=DSSdivMenuDisplaySceneSettings></div>
+
+		</details>
+
+		<div id="divLog"></div>
+
+		<footer style=position:relative >
+
+			<br>
+
+			<hr>
+
+			<center title=go to top of menu ><a href=javascript:window.scrollTo(0,0); style=text-decoration:none; >
+			❦</a>
+			</center>
+
+		</footer>
+
+	</nav>
+
+	<main id=main>
+
+		<div id="divContent"></div>
+
+	</main>
+
+	<button onclick=DLM.letsDance() style=position:fixed;right:1rem;top:1rem; >let's dance</button>
+<script src="three/thrt-three-toggles-2020-01-11-00.js"></script>
+
+<script src="browse-files/csv-comma-separated-values.js"></script>
+<script src="browse-files/cfr-csv-file-reader.js"></script>
+<script src="browse-files/cvj-csv-viewer-jaanga.js"></script>
+<script src="browse-files/cvd-csv-viewer-dashdotdot.js"></script>
+<!--
+	<script src="browse-files/gfl-github-file-list-2020-01-10-00.js"></script>
+	<script src="json-view/jtv-json-tree-view-2020-01-10-00.js"></script>
+	<script src="json-view/jte-json-tree-edit-2020-01-09-00.js"></script>
+	<script src="parse/phj-parse-honeybee-json-2020-01-10.js"></script>
+-->
+
+<script>
+
+aSource.href = "https://github.com/pushme-pullyou/templates-01/tree/master//threejs-hamburger";
+imgIcon.src = "assets/github-mark-32.png";
+aTitle.innerHTML = document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+const version = document.head.querySelector( "[ name=version ]" );
+sVersion.innerHTML = version ? version.content : "";
+//divDescription.innerHTML = document.head.querySelector( "[ name=description ]" ).content;
+
+
+//let urlDefault = "https://raw.githack.com/dashdotdotdashdotdot/Lines/master/venus.csv";
+let urlDefault = "https://rawcdn.githack.com/jaanga/jaanga.github.io/master/demo/doug-d/csv-file-samples/venus-lines-128.csv";
+let urlPrevious = "";
+
+
+let group;
+
+
+
+
+
+THR.init();
+THR.animate();
+
+
+init();
+
+
+function init() {
+
+	if ( window.innerWidth < 640 || window.innerHeight < 640 ) {
+		toggleNavMenu();
+	}
+
+	DLBdivMenuDrawLineBasic.innerHTML = DLB.getMenu();
+
+	DLFdivMenuDrawLineFat.innerHTML = DLF.getMenu();
+
+	DLMdivMenuDrawLineMesh.innerHTML = DLM.getMenu();
+
+	ORdivObjectRotation.innerHTML = OR.getMenu();
+
+
+	window.addEventListener( 'hashchange', onHashChange, false );
+
+	onHashChange();
+
+}
+
+
+function onHashChange() {
+
+	lh = location.hash || "";
+
+	let camx = lh.match( /camx=(.*?)&/i );
+	camx = camx ? camx[ 1 ] : -100;
+	//inpCamx.value = camx;
+
+	let camy = lh.match( /camy=(.*?)&/i )
+	camy = camy ? camy[ 1 ] : 100;
+	//inpCamy.value = camy;
+
+	let camz= lh.match( /camz=(.*?)&/i )
+	camz = camz ? camz[ 1 ] : 100;
+	//inpCamz.value = camz;
+
+	//console.log( '', camx, camy, camz );
+
+	THR.camera.position.set( camx, camy, camz );
+
+	let tarx = lh.match( /tarx=(.*?)&/i )
+	tarx = tarx ? tarx[ 1 ] : 0;
+	//inpTarx.value = tarx;
+
+	let tary = lh.match( /tary=(.*?)&/i )
+	tary = tary ? tary[ 1 ] : 0;
+	//inpTary.value = tary;
+
+	let tarz= lh.match( /tarz=(.*?)&/i )
+	tarz = tarz ? tarz[ 1 ] : 0;
+	//inpTarz.value = tarz;
+
+	//console.log( '', tarx, tary, tarz );
+
+	fetchCsv();
+
+	THR.controls.target.set( Number( tarx ), Number( tary ), Number( tarz ) );
+
+}
+
+function updateHash () {
+
+	if ( !url ) { alert( "Cannot create the permalink.\nThe model must be available via a UrL" ); return; }
+
+	const camx = `camx=${ THR.camera.position.x }&`;
+	const camy = `camy=${ THR.camera.position.y }&`;
+	const camz = `camz=${ THR.camera.position.z }&`;
+
+	const tarx = `tarx=${ THR.controls.target.x }&`;
+	const tary = `tary=${ THR.controls.target.y }&`;
+	const tarz = `tarz=${ THR.controls.target.z }&`;
+
+	location.hash = camx + camy + camz + tarx + tary + tarz + `url=${ encodeURI( url ) }`;
+
+}
+
+function fetchCsv () {
+
+	url = location.hash.match( /url=(.*?)\.csv/i );
+	url = url ? url[ 1 ] + ".csv" : urlDefault;
+
+	CSVdivOnLoad.innerHTML = "";
+
+	if ( url !== urlPrevious ) {
+
+		// fetch( new Request( url ) )
+		// 	.then( response => response.text() )
+		// 	.then( csv => CSV.parseCsvText( csv ) )
+		// 	//.then( () => window.dispatchEvent( eventOnloadFile ) )
+		// 	//.then( () => zoomObjectBoundingSphere() );
+
+		xhr = new XMLHttpRequest();
+		xhr.crossOrigin = 'anonymous';
+		xhr.open( 'GET', url, true );
+		xhr.onerror = function( xhr ) { console.log( 'error:', xhr  ); };
+		xhr.onprogress = ( xhr ) => {
+		CSVdivOnProgress.innerHTML =
+			`<p>bytes loaded: ${ xhr.loaded.toLocaleString() }</p>`;
+		}; /// or something
+		xhr.onload = callback;
+		xhr.send( null );
+
+		function callback( xhr ) {
+
+			const response = xhr.target.response;
+			//console.log( 'response', response );
+
+			CSV.parseCsvText( response )
+
+		}
+
+		urlPrevious = url;
+
+	}
+
+}
+
+
+
+function toggleNavMenu() {
+
+	expandButton.classList.toggle( 'collapsed' );
+	navMenu.classList.toggle( 'collapsed' );
+	divContent.classList.toggle( 'collapsed' );
+
+}
+
+
+</script>
+</body>
+</html>
