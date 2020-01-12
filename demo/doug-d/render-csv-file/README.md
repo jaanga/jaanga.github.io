@@ -36,13 +36,17 @@ Features
 * 2019-11-17 ~ Theo ~ Add capture mouse or finger interactions - not just text input - to update location hash
 
 
-## Dev release [render-csv-file-0-09.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-09/render-csv-file.html )
+## [render-csv-file-2020-01-11.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-2020-01-11/render-csv-file.html )
+
+* Rebuild everything
+
+## [render-csv-file-0-09.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-09/render-csv-file.html )
 
 2020-01-07 v0.09.02
 
 * Adds a "let's dance' button to "Draw mesh lines" panel
 
-## Dev release [render-csv-file-0-08.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-08/render-csv-file.html )
+## [render-csv-file-0-08.html]( https://jaanga.github.io/demo/doug-d/render-csv-file/v-0-08/render-csv-file.html )
 
 
 <img src="https://jaanga.github.io/demo/doug-d/images/rtc-08-thinker.png" style=width:50% >
