@@ -14,7 +14,6 @@ Keep this link: https://jaanga.github.io/documents/learning-to-code/
 _basic-html.html_
 
 ### Full Screen: [ZZZZZ]( https://jaanga.github.io/cookbook/examples/xxxxxx/xxxxxx.html )
-
 -->
 
 <details open >
@@ -24,12 +23,12 @@ If you want to get on the web, there are a ton of fast, free and easy ways to do
 
 * If you want to write: [medium]( https://medium.com)
 * If you want to sell: [shopify]( https://www.shopify.com/ ), [squarespace]( https://squarespace.com)
-* If you want to blog: [wordpress]( https://wordpress.com ), blogger
-* If you want to do a bunch of things: weebly, wix
+* If you want to blog: [wordpress]( https://wordpress.com ), [blogger]( https://www.blogger.com/ )
+* If you want to do a bunch of things: [weebly]( https://www.weebly.com/ ), [wix]( https://www.wix.com/ )
 
 But what if none of these are exactly what you are looking for? What if you just want to learn to make your own web presence from scratch by yourself?
 
-And, let's say you are not going to build something for a big bank and have little interest in being a "full stack developer" and - as much as you like the web - there are other things you do that are more important than programming.
+And, let's say you are not going to build something for a big bank and have little interest in being a "[full stack developer]( https://skillcrush.com/2017/02/27/front-end-back-end-full-stack/ )" and - as much as you like the web - there are other things you do that are more important than programming.
 
 Well, you have come to the right place. This page is about building stuff for the web using the equivalent of pliers, hammers and screwdrivers. It's about getting your web feet wet without drowning. It's about showing you how to be dangerous but without hurting anything.
 
@@ -45,15 +44,15 @@ So get in touch and let's do it!
 
 ***
 
-To get going
+# Who to talk to
 
 * [Wikipedia]( https://en.wikipedia.org/ )
-  * The definitions and backstory for every computer term you can think of
+  * The definitions and backstory for every computer term you can think of edited by tens of thousands of people most of whome are nor computer experts byt who care about communicating the essence of a difficult term
 * [Stackoverflow]( https://stackoverflow.com/ )
-  * Stack Overflow is the largest, most trusted online community for developers to learn, share their programming knowledge, and build their careers.
+  * Stack Overflow is the largest, most trusted online community for developers to learn, share their programming knowledge, and build their careers. This is where experst find other experts - and we beginnes can listen in
 * [GitHub]( https://github.com/ )
   * The social network for programmers
-  * The essential hosting service for finding, forking and sharing code
+  * The essential hosting service for finding, forking and sharing code. Thi is where the best programmers in the world share theit efforts with the public
 
 
 Web pages of interest
@@ -73,11 +72,6 @@ Google
 * https://learndigital.withgoogle.com/digitalgarage
 
 
-Browser keyboard shortcuts
-
-* Control-u or Command-u: display the source code of any and all web pages
-* Function key 12 or control-shift-j or command-shift-j: Display the JavaScript console
-	* The "console" and "elements" tabs are very useful
 
 
 When you have a moment
@@ -85,6 +79,14 @@ When you have a moment
 * https://dev.to/valentinogagliardi/21-web-development-terms-you-should-absolutely-know-about-368j
 * https://www-searchenginejournal-com.cdn.ampproject.org/v/s/www.searchenginejournal.com/technical-seo/javascript-fundamentals-cheat-sheet/
 * https://dev.to/vladimir_dev/my-5-favorite-resources-for-learning-javascript-56k0
+* [27 Web Development Terms You Should Absolutely Know About]( https://dev.to/valentinogagliardi/21-web-development-terms-you-should-absolutely-know-about-368j )
+
+
+Browser keyboard shortcuts
+
+* Control-u or Command-u: display the source code of any and all web pages
+* Function key 12 or control-shift-j or command-shift-j: Display the JavaScript console
+	* The "console" and "elements" tabs are very useful
 
 
 </details>
