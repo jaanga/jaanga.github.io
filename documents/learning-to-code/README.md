@@ -44,7 +44,7 @@ So get in touch and let's do it!
 
 ***
 
-# Who to talk to
+## Who to talk to
 
 * [Wikipedia]( https://en.wikipedia.org/ )
   * The definitions and backstory for every computer term you can think of edited by tens of thousands of people most of whome are nor computer experts byt who care about communicating the essence of a difficult term
@@ -55,7 +55,7 @@ So get in touch and let's do it!
   * The essential hosting service for finding, forking and sharing code. Thi is where the best programmers in the world share theit efforts with the public
 
 
-Web pages of interest
+## Web pages of interest
 
 * https://www.freecodecamp.org/
   * Our mission: to help people learn to code for free. We accomplish this by creating thousands of videos, articles, and interactive coding lessons - all freely available to the public. We also have thousands of freeCodeCamp study groups around the world
