@@ -94,7 +94,7 @@ Browser keyboard shortcuts
 <details open >
 <summary>To do and wish list </summary>
 
-Google document: [Learning to Program]( https://docs.google.com/document/d/1qSn_HibbOF-giNUv9OHf4eeUSo9rU2bRSTATQEL8Y0M/edit#heading=h.cn31rmtp8hb )
+Google document written by me: [Learning to Program]( https://docs.google.com/document/d/1qSn_HibbOF-giNUv9OHf4eeUSo9rU2bRSTATQEL8Y0M/edit#heading=h.cn31rmtp8hb )
 
 There are a good number of really good links in this paper. Of particular importance is the section titled "Why Should You Learn to Program?"
 
