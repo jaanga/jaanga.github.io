@@ -96,7 +96,9 @@ Browser keyboard shortcuts
 
 Google document: [Learning to Program]( https://docs.google.com/document/d/1qSn_HibbOF-giNUv9OHf4eeUSo9rU2bRSTATQEL8Y0M/edit#heading=h.cn31rmtp8hb )
 
-I plan to update the data from this document and copy it here
+There are a good number of really good links in this paper. Of particular importance is the section titled "Why Should You Learn to Program?"
+
+I plan to update the data from this document and copy it here.
 
 </details>
 
