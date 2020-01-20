@@ -11,6 +11,9 @@ value='You are now in a GitHub web page view - Click this button to view this re
 ## Full Screen: []( .html )
 -->
 
+Deprecated. See /pushme-pullyou/templates-01
+
+
 
 ## Concept
 
