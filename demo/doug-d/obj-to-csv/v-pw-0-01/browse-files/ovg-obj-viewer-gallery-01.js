@@ -234,9 +234,13 @@ OVG.getMeshesMergeGeometry = function (object) {
 
 	geometry.computeBoundingBox();
 
-	const size = geometry.boundingBox.getSize( new THREE.Vector3() );
+	size = geometry.boundingBox.getSize( new THREE.Vector3() );
 
-	const scale = 100 / size.z;
+	console.log( '', size );
+
+	max = Math.max( ...size.toArray() );
+	
+	const scale = 100 / max;
 
 	geometry.applyMatrix(new THREE.Matrix4().makeScale(scale, scale, scale));
 

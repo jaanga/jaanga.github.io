@@ -16,6 +16,7 @@
 	let info, renderer, scene, camera, controls, stats, light;
 
 	let objects = [];
+	
 	let mouse = new THREE.Vector2();
 	let raycaster;
 	let intersection;
@@ -50,7 +51,7 @@
 		camera.position.set( 100, 100, 100 );
 
 // controls
-		controls = new THREE.OrbitControls( camera );
+		controls = new THREE.OrbitControls( camera, renderer.domElement );
 		controls.minDistance = 10;
 		controls.maxDistance = 1000;
 
@@ -75,7 +76,7 @@
 		edges = new THREE.LineSegments( edgesGeometry, edgesMaterial );
 		mesh.add( edges );
 
-		let axisHelper = new THREE.AxisHelper( 50 );
+		let axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 		raycaster = new THREE.Raycaster();

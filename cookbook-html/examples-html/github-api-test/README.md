@@ -19,6 +19,8 @@ See: spider/sandbox/honeybee model
 
 ## Links of Interest
 
+* // https://stackoverflow.com/questions/43842793/basic-authentication-with-fetch
+
 JSON Tree viewers
 * https://www.cssscript.com/json-data-tree-view/
 	* https://github.com/pgrabovets/json-view
