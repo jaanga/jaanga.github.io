@@ -1,17 +1,17 @@
 <span style=display:none; >[You are now in a GitHub source code view - click this link to view Read Me file as a web page]
-( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/#readme.md "View file as a web page." ) </span>
-<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples/github-api-rss/github-api-users-events/'; 
+( https://jaanga.github.io/cookbook-html/examples-html/github-api-rss/github-api-users-events/#readme.md "View file as a web page." ) </span>
+<input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/cookbook-html/examples-html/github-api-rss/github-api-users-events/';
 value='You are now in a GitHub web page view - Click this button to view this read me file as source code' >
 
 
 [GitHub API Users Events Read Me]( index.html#readme.md )
 ===
 
-## Full Screen: [GitHub API Users Events]( https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/index.html )
+## Full Screen: [GitHub API Users Events]( https://jaanga.github.io/cookbook-html/examples-html/github-api-rss/github-api-users-events/index.html )
 
 <img src="https://cloud.githubusercontent.com/assets/547626/15981300/44210bbe-2f28-11e6-9419-4efbbc01c525.png" style=display:none; width=800 >
 
-<iframe src=https://jaanga.github.io/cookbook-html/examples/github-api-rss/github-api-users-events/index.html width=100% height=600px ></iframe>
+<iframe src=https://jaanga.github.io/cookbook-html/examples-html/github-api-rss/github-api-users-events/index.html width=100% height=600px ></iframe>
 
 _GitHub API Users Events_
 
@@ -55,7 +55,7 @@ _GitHub API Users Events_
 * Center on page
 * Make menu and content scroll independently??
 * Add an issues as blog posts capability
-* Add scaled thumbnails to repos and orgs 
+* Add scaled thumbnails to repos and orgs
 * Put the scale div inside a fixed height container << no help
 
 
@@ -105,7 +105,7 @@ value='Source code listing' >
 * Code clean up
 * Reorder menu. Open repositories details
 * Add to user list
-* Add 'fork - if forked - to repos 
+* Add 'fork - if forked - to repos
 * Update read me
 
 ### 2016-06-13 R5
@@ -140,7 +140,7 @@ value='Source code listing' >
 * R2
 * Add hamburger menu
 * Select user from drop-down list of user names
-* Work on prettifying display of output 
+* Work on prettifying display of output
 * Add user orgs
 * Add user repos
 
