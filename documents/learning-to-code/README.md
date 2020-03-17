@@ -19,6 +19,19 @@ _basic-html.html_
 <details open >
 <summary>Concept</summary>
 
+### Learning about the Internet
+
+* https://en.wikipedia.org/wiki/Internet
+	* The **Internet** (portmanteau of interconnected network) is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP) to link devices worldwide. It is a network of networks that consists of private, public, academic, business, and government networks of local to global scope, linked by a broad array of electronic, wireless, and optical networking technologies. The Internet carries a vast range of information resources and services, such as the inter-linked hypertext documents and applications of the World Wide Web (WWW), electronic mail, telephony, and file sharing.
+* https://www.khanacademy.org/computing/computer-science/internet-intro
+	* 7 videos
+	* **How the internet works** The Internet is part of nearly everything we do on a daily basis. But do you know how it all works? From WiFi to IP addresses to HTML to keeping information safe online, there’s a lot of important stuff going on that most of us don’t have the opportunity to learn more about. In six short, introductory videos, you’ll get an inside look into foundational concepts of everything from wires to websites, taught by guest lecturers including the actual “Father of the Internet” Vint Cerf, Tumblr founder David Karp, and creators on teams at Google, Spotify, XBox, Symantec, and more.
+* https://edu.gcfglobal.org/en/internetbasics/
+	* 12 web pages with text and videos
+	* The Internet is an increasingly important part of everyday life for people around the world. But if you've never used the Internet before, all of this new information might feel a bit confusing at first.
+
+### Getting on the Web
+
 If you want to get on the web, there are a ton of fast, free and easy ways to do so. Good examples include the following.
 
 * If you want to write: [medium]( https://medium.com)
@@ -43,6 +56,44 @@ But the actual steps depend on what you want to do.
 So get in touch and let's do it!
 
 ***
+
+## Why you should learn to program
+
+_The links I offer here go to lengthy, major efforts. I’m still looking for some short snappy web pages that offer really convincing reasons as to why you should learn to code._
+
+There are many valid reasons why it is a good thing to learn how to write computer software. Here are a few of them.
+
+See also:
+
+https://www.google.com/search?q=why+you+should+learn+to+program
+
+### Rushkoff
+
+[Douglas Rushkoff]( https://rushkoff.com/ ) is the author of [Program or Be Programmed]( https://rushkoff.com/books/program-or-be-programmed/ ), in which he makes the case for learning about programming. He says that the difference between programmers and non-programmers isn't like the difference between drivers and mechanics. It's more like the difference between drivers and passengers.
+
+http://www.readwriteweb.com/hack/2011/06/video-douglas-rushkoff.php
+http://www.readwriteweb.com/hack/2011/05/douglas-rushkoff-interview.php
+
+
+### Lessig
+
+Lawrence Lessig is an American academic and political activist. He is best known as a proponent of reduced legal restrictions on copyright, trademark, and radio frequency spectrum, particularly in technology applications. He says we can - we must - choose what kind of cyberspace we want and what freedoms we will guarantee. These choices are all about architecture: about what kind of code will govern cyberspace, and who will control it. In this realm, code is the most significant form of law, and it is up to lawyers, policymakers, and especially citizens to decide what values that code embodies.
+
+http://codev2.cc/download+remix/Lessig-Codev2.pdf
+http://www.amazon.com/Code-Other-Laws-Cyberspace-Version/dp/0465039146
+
+
+### Vacanti
+
+Kevin Adler recommends having a look at and taking in Vinicius Vacanti’s post - and I agree:
+
+http://viniciusvacanti.com/2010/11/01/6-things-you-need-to-learn-to-build-your-own-prototype/
+
+### Theo
+
+My reason for programming is quite different. For me, programming is simply a very pleasurable and engaging activity...
+
+
 
 ## Who to talk to
 
@@ -104,12 +155,37 @@ I plan to update the data from this document and copy it here.
 
 
 <details open >
+
 <summary>Links of interest</summary>
+
+https://www.amazon.com/Best-Sellers-Books-JavaScript-Programming/zgbs/books/3617
+
+
+GitHub
+
+* https://medium.com/better-programming/github-repos-that-should-be-starred-by-every-web-developer-e9eaa244810e
+* https://medium.com/better-programming/10-awesome-github-repos-every-web-developer-should-know-15288c8533f1
+
+Internet ethics and governance
+
+* https://cyber.harvard.edu/
+* https://ec.europa.eu/digital-single-market/en
+
+JavaScript
+
+* https://www.digitalcrafts.com/blog/5-best-books-learn-javascript
+* https://hackr.io/blog/javascript-books
+
 
 Learning Tips
 
 * Medium: [Learn to Code: 13 Tips that Could Save You Years of Effort]( https://medium.com/javascript-scene/learn-to-code-13-tips-that-could-save-you-years-of-effort-92ce799a3e1 )
 * Medium: [Learn JavaScript Essentials]( https://medium.com/javascript-scene/learn-javascript-b631a4af11f2 )
+
+Programming
+
+* https://medium.com/better-programming/10-must-read-books-for-software-engineers-edfac373821b
+* https://btholt.github.io/intro-to-web-dev-v2/
 
 
 Publishing
@@ -124,6 +200,10 @@ Publishing
 
 <details open >
 <summary>Change log </summary>
+
+### 2020-03-01
+
+* Update for Dan
 
 ### 2019-12-29
 
