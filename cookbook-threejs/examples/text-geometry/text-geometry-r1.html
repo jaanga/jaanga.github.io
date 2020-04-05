@@ -14,9 +14,9 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@114/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@114/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@114/examples/js/libs/stats.min.js ></script>
 
 <script>
 
@@ -97,9 +97,11 @@
 
 // assets
 
+		src = "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/fonts/gentilis_regular.typeface.json"
+		//src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@114/examples/fonts/gentilis_regular.typeface.json"
 		var loader = new THREE.FontLoader();
 		loader.crossOrigin = 'anonymous';
-		loader.load( 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/fonts/gentilis_regular.typeface.js', function ( font ) {
+		loader.load( src, function ( font ) {
 
 			addLabel( "+roughness", new THREE.Vector3( -95, 10, 0 ), font );
 			addLabel( "-roughness", new THREE.Vector3( 45, 0, 0 ), font );

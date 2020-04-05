@@ -1,0 +1,72 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>HTML DOM</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<style>
+		.draggable {
+			cursor: move;
+			position: absolute;
+			user-select: none;
+		}
+
+	</style>
+</head>
+
+<body class="font-sans w-full">
+
+
+	<div  min-height: 32rem;">
+		<div style="border: 1px solid red;" class="draggable" id="divDragMe">Drag me</div>
+	</div>
+
+	<script>
+
+		// https://htmldom.dev/make-a-draggable-element
+
+		init()
+
+		function init() {
+
+			
+			let x = 0;
+			let y = 0;
+
+			const mouseDownHandler = function ( e ) {
+				// Get the current mouse position
+				x = e.clientX;
+				y = e.clientY;
+
+				document.addEventListener( 'mousemove', mouseMoveHandler );
+				document.addEventListener( 'mouseup', mouseUpHandler );
+			};
+
+			const mouseMoveHandler = function ( e ) {
+
+				const dx = e.clientX - x;
+				const dy = e.clientY - y;
+
+				divDragMe.style.top = `${ divDragMe.offsetTop + dy }px`;
+				divDragMe.style.left = `${ divDragMe.offsetLeft + dx }px`;
+
+				x = e.clientX;
+				y = e.clientY;
+			};
+
+			const mouseUpHandler = function () {
+				// Remove the handlers of `mousemove` and `mouseup`
+				document.removeEventListener( 'mousemove', mouseMoveHandler );
+				document.removeEventListener( 'mouseup', mouseUpHandler );
+			};
+
+			divDragMe.addEventListener( 'mousedown', mouseDownHandler );
+
+		}
+
+
+	</script>
+</body>
+
+</html>

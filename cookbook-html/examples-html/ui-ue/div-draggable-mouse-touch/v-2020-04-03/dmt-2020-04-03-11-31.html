@@ -1,0 +1,141 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>HTML DOM</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<style>
+		:root {
+			font: 100% monospace;
+		}
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			font: 100% monospace;
+		}
+		#divDragParent {
+
+			border: 1px solid#444;
+			border-radius: 1rem;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+			height: 20ch;
+			overflow: hidden;
+			position: absolute;
+			left: 50%;
+			resize: both;
+			top: 50%;
+			transform: translate(-50% , -50%);
+			width: 20ch;
+		}
+		#divDragHeader {
+			background-color: #ccc;
+			cursor: move;
+			padding: 1ch;
+			user-select: none;
+		}
+		#divDragMe {}
+		#divDragContent {
+			height: 98%;
+			overflow: auto;
+			padding: 1ch;
+		}
+	</style>
+</head>
+
+<body>
+
+
+	<div id=divDragParent>
+
+		<div id=divDragMe>
+			<div id=divDragHeader>Drag me</div>
+		</div>
+
+		<div id=divDragContent>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius
+			modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis
+			nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis
+			autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel
+			illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+		</div>
+
+	</div>
+
+	<script>
+
+		// https://htmldom.dev/make-a-draggable-element
+		// https://redstapler.co/4-ways-to-center-div-css/
+
+		let x = 0;
+		let y = 0;
+
+
+
+		function init() {
+
+			divDragMe.addEventListener( "touchstart", mouseDownHandler );
+			divDragMe.addEventListener( 'mousedown', mouseDownHandler );
+
+		}
+
+
+		const mouseDownHandler = function ( e ) {
+
+			x = e.clientX;
+			y = e.clientY;
+
+			document.addEventListener( "touchend", mouseUpHandler, false );
+			document.addEventListener( 'mouseup', mouseUpHandler );
+			document.addEventListener( "touchmove", mouseMoveHandler, false );
+			document.addEventListener( 'mousemove', mouseMoveHandler );
+
+		};
+
+
+
+		const mouseMoveHandler = function ( e ) {
+
+			let dx, dy;
+
+			if ( e.type === "touchmove" ) {
+
+				dx = e.touches[ 0 ].clientX - x;
+				dy = e.touches[ 0 ].clientY - y;
+
+				x = e.touches[ 0 ].clientX;
+				y = e.touches[ 0 ].clientY;
+
+			} else {
+
+				dx = e.clientX - x;
+				dy = e.clientY - y;
+
+				x = e.clientX;
+				y = e.clientY;
+
+			}
+
+			divDragMe.parentNode.style.top = divDragMe.parentNode.offsetTop + dy + "px";
+			divDragMe.parentNode.style.left = divDragMe.parentNode.offsetLeft + dx + "px";
+
+		};
+
+
+
+		const mouseUpHandler = function () {
+
+			document.removeEventListener( 'mousemove', mouseMoveHandler );
+			document.removeEventListener( "touchmove", mouseMoveHandler );
+			document.removeEventListener( 'mouseup', mouseUpHandler );
+			document.removeEventListener( "touchend", mouseUpHandler );
+
+		};
+
+
+		init();
+
+	</script>
+</body>
+
+</html>

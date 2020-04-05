@@ -1,0 +1,180 @@
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title>HTML DOM</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<style>
+		:root {
+			font: 100% monospace;
+		}
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			font: 100% monospace;
+		}
+		#divDragParent {
+
+			border: 1px solid#444;
+			border-radius: 1rem;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+			height: 20ch;
+			overflow: hidden;
+			position: absolute;
+			left: 50%;
+			resize: both;
+			top: 50%;
+			transform: translate(-50% , -50%);
+			width: 20ch;
+		}
+		#divDragHeader {
+			background-color: #ccc;
+			cursor: move;
+			padding: 1ch;
+			user-select: none;
+		}
+		#divDragMe {}
+
+		#divDragContent {
+			height: 98%;
+			overflow: auto;
+			padding: 1ch;
+		}
+
+		#divMouseOver {
+
+			background-color: #ccc;
+			height: 50ch;
+			left: 10ch;
+			width: 50ch;
+			top: 10ch;
+
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id=divMouseOver >ccc</div>
+
+	<div id=divDragParent>
+
+		<div id=divDragMe>
+			<div id=divDragHeader>Drag me</div>
+		</div>
+
+		<div id=divDragContent>lorem ipsum, quia dolor sit, amet, consectetur, adipisci velit, sed quia non numquam eius
+			modi tempora incidunt, ut labore et dolore magnam aliquam quaerat voluptatem. ut enim ad minima veniam, quis
+			nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? quis
+			autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel
+			illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+		</div>
+
+	</div>
+
+	<script>
+
+		// https://htmldom.dev/make-a-draggable-element
+		// https://redstapler.co/4-ways-to-center-div-css/
+
+
+		const DMT = {}
+
+		DMT.x = 0;
+		DMT.y = 0;
+
+
+		function init() {
+
+			divMouseOver.addEventListener( "mouseover", DMT.onMouseOver );
+
+			divDragMe.addEventListener( "touchstart", DMT.onMouseDown );
+			divDragMe.addEventListener( 'mousedown', DMT.onMouseDown );
+
+		}
+
+		DMT.onMouseOver = function( e ) {
+
+			document.addEventListener( 'mousemove', DMT.onMouseOverMove );
+			document.addEventListener( 'mouseout', DMT.onMouseOverOut );
+
+		}
+
+
+		DMT.onMouseOverMove = function( e ) {
+
+			divMouseOver.innerHTML = `${ e.clientX } ${ e.clientX }`;
+
+		}
+
+
+		DMT.onMouseOverOut = function () {
+
+			document.removeEventListener( 'mousemove', DMT.onMouseOverMove );
+			document.removeEventListener( 'mouseup', DMT.onMouseOverOut );
+
+		};
+
+
+
+		DMT.onMouseDown = function ( e ) {
+
+			DMT.x = e.clientX;
+			DMT.y = e.clientY;
+
+			document.addEventListener( "touchmove", DMT.onMouseMove, false );
+			document.addEventListener( 'mousemove', DMT.onMouseMove );
+			document.addEventListener( "touchend", DMT.onMouseUp, false );
+			document.addEventListener( 'mouseup', DMT.onMouseUp );
+
+		};
+
+
+
+		DMT.onMouseMove = function ( e ) {
+
+			let dx, dy;
+
+			if ( e.type === "touchmove" ) {
+
+				dx = e.touches[ 0 ].clientX - DMT.x;
+				dy = e.touches[ 0 ].clientY - DMT.y;
+
+				DMT.x = e.touches[ 0 ].clientX;
+				DMT.y = e.touches[ 0 ].clientY;
+
+			} else {
+
+				dx = e.clientX - DMT.x;
+				dy = e.clientY - DMT.y;
+
+				DMT.x = e.clientX;
+				DMT.y = e.clientY;
+
+			}
+
+			divDragMe.parentNode.style.left = divDragMe.parentNode.offsetLeft + dx + "px";
+			divDragMe.parentNode.style.top = divDragMe.parentNode.offsetTop + dy + "px";
+
+		};
+
+
+
+		DMT.onMouseUp = function () {
+
+			document.removeEventListener( 'mousemove', DMT.onMouseMove );
+			document.removeEventListener( "touchmove", DMT.onMouseMove );
+			document.removeEventListener( 'mouseup', DMT.onMouseUp );
+			document.removeEventListener( "touchend", DMT.onMouseUp );
+
+		};
+
+
+		init();
+
+	</script>
+</body>
+
+</html>
