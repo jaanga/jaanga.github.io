@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>three.js webgl - simple text from json</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+
+</head>
+
+<body style=font-family:monospace;margin:0;overflow:hidden;>
+
+	<div style=left:5ch;position:absolute;z-index:10;>
+
+		<h1><a href="" >text simple</a></h1>
+
+		<p>
+			<button onclick=drawTextMultiple(mesh);>drawTextMultiple</button>
+		</p>
+
+		<p>
+			<button onclick=drawTextGlobeSurround(mesh);>drawTextGlobeSurround</button>
+		</p>
+
+		<hr>
+
+		<p>
+			latitude <output id=outLat >0</output>
+			<input type="range" id="inpLat" oninput="updatePosition();outLat.innerHTML= Math.round( ( 180 / 100 ) * this.value -90 );" />
+		</p>
+
+		<p>
+			longitude <output id=outLon >0</output>
+			<input type="range" id="inpLon" oninput="updatePosition();outLon.innerHTML= Math.round( ( 360 / 100 ) * this.value -180 );" />
+		</p>
+
+
+	</div>
+
+
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r115/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r115/examples/js/controls/OrbitControls.js"></script>
+
+
+	<script>
+		var camera, scene, renderer;
+
+		let loader;
+		let group;
+
+		init();
+		animate();
+
+		function init() {
+
+			camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 2000 );
+			camera.position.set( 0, - 400, 600 );
+
+			scene = new THREE.Scene();
+			scene.background = new THREE.Color( 0xf0f0f0 );
+
+			renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setPixelRatio( window.devicePixelRatio );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var controls = new THREE.OrbitControls( camera, renderer.domElement );
+			controls.target.set( 0, 0, 0 );
+			controls.update();
+
+			window.addEventListener( 'resize', onWindowResize, false );
+
+
+			getFont();
+
+
+
+		} // end init
+
+
+
+		function getFont( text = "Hello, World!" ) {
+
+			loader = loader ? loader : new THREE.FontLoader();
+
+			const url = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r115/examples/fonts/helvetiker_regular.typeface.json";
+
+			loader.text = text;
+
+			loader.load( url, ( fnt ) => { font = fnt; getSimpleText(); } );
+
+		}
+
+
+
+		function getSimpleText( text = "Hello, World!", size = 20, color = 0x006699 ) {
+
+			const shapes = font.generateShapes( text, size );
+
+			const geometry = new THREE.ShapeBufferGeometry( shapes );
+
+
+			const material = new THREE.MeshBasicMaterial( { color: color, opacity: 0.5, side: 2, transparent: true } );
+
+			mesh = new THREE.Mesh( geometry, material );
+
+			scene.add( mesh );
+
+			updatePosition();
+
+			return mesh;
+
+		}
+
+
+
+		function drawTextMultiple( source ) {
+
+			scene.remove( group );
+
+			group = new THREE.Group();
+
+			for ( let i = 0; i < 500; i++ ) {
+
+				mesh = source.clone();
+
+				mesh.position.set( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 );
+
+				group.add( mesh )
+
+			}
+
+			scene.add( group );
+
+		}
+
+
+
+		function drawTextGlobeSurround( source ) {
+
+			scene.remove( group );
+
+			group = new THREE.Group();
+
+			text = "Hello, World!\nThree.js\nabc 123";
+
+			const shapes = font.generateShapes( text, size = 10 );
+
+			const geometry = new THREE.ShapeBufferGeometry( shapes );
+
+			geometry.applyMatrix4( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
+
+			const material = new THREE.MeshBasicMaterial( { color: 0x006699, opacity: 0.2, side: 0, transparent: true } );
+
+
+			for ( let i = 0; i < 50; i++ ) {
+
+				//const mesh = source.clone();
+
+				const side = Math.round( Math.random() );
+				const lat = 180 * Math.random() - 90;
+				const lon = 360 * Math.random() - 180;
+
+				const p1 = latLonToXYZ( 400, lat, lon );
+				const p2 = latLonToXYZ( 300, lat, lon );
+				const p3 = latLonToXYZ( 500, lat, lon );
+
+				let geometry = new THREE.ShapeBufferGeometry( shapes );
+
+				geometry.computeBoundingBox();
+
+				let xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+
+				geometry.translate( xMid, 0, 0 );
+
+				geometry.applyMatrix4( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
+
+				let material = new THREE.MeshBasicMaterial( { color: 0x006699, opacity: 0.2, side: 0, transparent: true } );
+
+				mesh = new THREE.Mesh( geometry, material );
+				mesh.position.copy( p1 );
+				mesh.lookAt( p2 );
+				group.add( mesh );
+
+				geometry = new THREE.ShapeBufferGeometry( shapes );
+
+				geometry.computeBoundingBox();
+
+				xMid = + 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+
+				geometry.translate( xMid, 0, 0 );
+
+				geometry.applyMatrix4( new THREE.Matrix4().makeRotationY( -0.5 * Math.PI ) );
+
+				material = new THREE.MeshBasicMaterial( { color: 0x990066, opacity: 0.2, side: 0, transparent: true } );
+
+				const mesh2 = new THREE.Mesh( geometry, material );
+				mesh2.position.copy( p2 );
+				mesh2.lookAt( p3 );
+				group.add( mesh2 );
+
+			}
+
+			scene.add( group );
+
+		}
+
+
+		function updatePosition( radius = 80 ) {
+
+			const lat = ( 180 / 100 ) * Number( inpLat.value ) - 90;
+			const lon = ( 360 / 100 ) * Number( inpLon.value ) - 180;
+
+			mesh.position.copy( latLonToXYZ( radius, lat, lon ) );
+			mesh.lookAt( new THREE.Vector3() );
+			mesh.up.set( 0, 0, 1 );
+
+		}
+
+
+		function latLonToXYZ( radius, lat, lon ) {
+
+			const pi2 = Math.PI / 2;
+
+			const theta = Number( lat ) * Math.PI / 180;
+			const phi = Number( lon ) * Math.PI / 180;
+			//console.log( "lat/lon", theta, phi, index);
+
+			const x = radius * Math.sin( theta + pi2 ) * Math.cos( phi );
+			const y = radius * Math.sin( theta + pi2 ) * Math.sin( phi );
+			const z = radius * Math.cos( theta - pi2 );
+
+			return new THREE.Vector3( x, y, z );
+
+		};
+
+
+		function onWindowResize() {
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+		}
+
+		function animate() {
+
+			requestAnimationFrame( animate );
+
+			renderer.render( scene, camera );
+
+		}
+
+	</script>
+
+</body>
+
+</html>

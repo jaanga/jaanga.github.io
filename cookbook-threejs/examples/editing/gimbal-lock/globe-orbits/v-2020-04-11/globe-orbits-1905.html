@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+<meta name=description
+	content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library">
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+<meta name=version content="2020-03-03">
+
+
+<title></title>
+
+<style>
+
+/* Copyright 2020 Theo Armour. MIT License */
+
+:root { font: 100% monospace; }
+
+* { box-sizing: border-box; }
+
+body { margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline; }
+
+button { background-color: #ddd; border: none; border-radius: 2px; color: #322;cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+input[ type=range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; border-radius: 2px; height: 1.7ch; width: 100%; }
+input[ type=range ]::-moz-range-thumb { background-color: #888; border-radius: 2; width: 10px; }
+input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 18px; width: 10px; }
+
+.help { float: right; }
+
+.couponcode { float: right }
+
+.couponcode:hover>.coupontooltip { display: block; }
+
+.coupontooltip { border: 0.8ch double #888; background: white; display: none;
+	font: 100% monospace; font-size: 1rem; font-weight: normal; /* unset summary settings */
+	margin-left: -20ch; padding: 10px; position: absolute; z-index: 1000; }
+
+#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+</style>
+
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r115/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r115/examples/js/controls/OrbitControls.js"></script>
+
+
+
+<nav id="navMenu">
+
+	<header id="hdrTitle">
+
+		<h2>
+			<a id=aSource target=_top title="Source code on GitHub" >
+				<img id=imgIcon height=18 style=opacity:0.5; >
+			</a>
+
+			<a href="" title="Click to reload this page" >
+				<span id=sTitle ></span>
+				<span id=sVersion ></span>
+			</a>
+
+			<span class="couponcode" >??<span id=divDescription class="coupontooltip" ></span></span>
+
+		</h2>
+
+	</header>
+
+	<p>
+		<button onclick="addMeshes()">add meshes</button>
+	</p>
+
+
+	<p>
+		<button onclick=controls.reset()>reset view</button>
+		<button onclick="controls.autoRotate=!controls.autoRotate">rotation</button>
+	</p>
+
+	<p>
+		<output id=outSpeed>50</output>
+		<input type="range" id="inpSpeed" onclick="controls.autoRotateSpeed=0.05 * this.value;outSpeed.innerHTML=this.value;" />
+	</p>
+
+	<hr>
+
+	<p>
+		latitude <output id=outLat >0</output>
+		<input type="range" id="inpLat" oninput="updatePosition();outLat.innerHTML= Math.round( ( 180 / 100 ) * this.value -90 );" />
+	</p>
+
+	<p>
+		longitude <output id=outLon >0</output>
+		<input type="range" id="inpLon" oninput="updatePosition();outLon.innerHTML= Math.round( ( 360 / 100 ) * this.value -180 );" />
+	</p>
+
+	<div id="divLog"></div>
+
+</nav>
+
+<script>
+
+
+
+aSource.href = "https://github.com/jaanga/jaanga.github.io";
+imgIcon.src = "https://pushme-pullyou.github.io/github-mark-32.png";
+
+sTitle.innerHTML= document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+const version = document.head.querySelector( "[ name=version ]" );
+sVersion.innerHTML = version ? version.content : "";
+divDescription.innerHTML = document.head.querySelector( "[ name=description ]" ).content;
+
+
+let group = new THREE.Group();
+
+let globe;
+
+
+let mesh, axesHelper, lightDirectional, cameraHelper;
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+const THR = {};
+
+init();
+animate();
+
+
+
+function init() {
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.up.set( 0, 0, 1 );
+	camera.position.set( 200, -30, 80 );
+
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color( 0xcce0ff );
+	scene.add( camera )
+
+	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+	renderer.outputEncoding = THREE.sRGBEncoding;
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
+	controls.minDistance = 60;
+	controls.maxDistance = 500;
+	//controls.autoRotate = true;
+	controls.enablePan = false;
+	controls.rotateSpeed = 2;
+
+	THR.controls = controls; THR.scene = scene; THREE.camera = camera;
+
+	axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => controls.autoRotate = false, false );
+	renderer.domElement.addEventListener( 'click', () => controls.autoRotate = false, false );
+
+	addGlobe();
+
+	scene.add( group );
+
+	addBox();
+
+	getFont();
+
+	updatePosition();
+
+}
+
+
+
+
+function addGlobe() {
+
+	scene.remove( globe );
+
+	const size = 50
+	const geometry = new THREE.SphereGeometry( size, 50, 25 );
+	geometry.applyMatrix4( new THREE.Matrix4().makeRotationX( 0.5 * Math.PI ) );
+	//geometry.applyMatrix4( new THREE.Matrix4().makeRotationZ( Math.PI ) );
+
+	const material = new THREE.MeshNormalMaterial();
+
+	globe = new THREE.Mesh( geometry, material );
+
+	globe.name = "globe";
+	scene.add( globe );
+
+}
+
+
+function addBox( size = 10 ) {
+
+	const geometry = new THREE.BoxGeometry( 1, 2, 40 );
+
+	const material = new THREE.MeshNormalMaterial();
+
+	box = new THREE.Mesh( geometry, material );
+
+	group.add( box );
+
+	updatePosition( group );
+
+}
+
+
+function getFont( text = "Hello, World!" ) {
+
+	const loader = new THREE.FontLoader();
+
+	const url = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r115/examples/fonts/helvetiker_regular.typeface.json";
+
+	loader.load( url, ( fnt ) => { font = fnt; getSimpleText(); } );
+
+}
+
+
+function getSimpleText( text = "Hello, World!\nThree.js\nabc 123", size = 10, color = 0x006699 ) {
+
+	const shapes = font.generateShapes( text, size );
+
+	const geometry = new THREE.ShapeBufferGeometry( shapes );
+	geometry.computeBoundingBox();
+	const xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+	geometry.translate( xMid, 0, 0 );
+	geometry.applyMatrix4( new THREE.Matrix4().makeRotationY( 0.5 * Math.PI ) );
+
+	const material = new THREE.MeshBasicMaterial( { color: color, opacity: 0.5, side: 0, transparent: true } );
+
+	const mesh = new THREE.Mesh( geometry, material );
+
+	group.add( mesh );
+
+	const geometry2 = geometry.clone();
+	geometry.applyMatrix4( new THREE.Matrix4().makeRotationY( Math.PI ) );
+
+	material2 = new THREE.MeshBasicMaterial( { color: "red", opacity: 0.5, side: 0, transparent: true } );
+
+	const mesh2 = new THREE.Mesh( geometry2, material2 );
+
+	group.add( mesh2 );
+
+}
+
+
+function updatePosition( obj3D = group, radius = 100 ) {
+
+	const lat = ( 180 / 100 ) * Number( inpLat.value ) - 90;
+	const lon = ( 360 / 100 ) * Number( inpLon.value ) - 180;
+
+	obj3D.position.copy( latLonToXYZ( radius, lat, lon ) );
+	obj3D.lookAt( new THREE.Vector3() );
+	obj3D.up.set( 0, 0, 1 );
+
+}
+
+
+
+
+
+// from thr-three.js
+
+function latLonToXYZ ( radius = 50, lat = 0, lon = 0 ) {
+
+	const pi2 = Math.PI / 2;
+
+	const theta = Number( lat ) * Math.PI / 180;
+	const phi = Number( lon ) * Math.PI / 180;
+
+	const x = radius * Math.sin( theta + pi2 ) * Math.cos( phi );
+	const y = radius * Math.sin( theta + pi2 ) * Math.sin( phi );
+	const z = radius * Math.cos( theta - pi2 );
+
+	return new THREE.Vector3( x, y, z );
+
+};
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+
+}
+
+</script>
+</body>
+</html>
