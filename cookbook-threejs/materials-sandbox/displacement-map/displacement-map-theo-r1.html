@@ -156,7 +156,7 @@ console.time( 'timer 0' );
 		heightmap = loader.load( '../../../terrain3/bitmaps/bathymetry_bw_composite_2k.png' );
 		texture = loader.load( '../../../terrain3/bitmaps/2_no_clouds_4k.jpg' );
 
-		geometry = new THREE.SphereBufferGeometry( 6371, 2048, 1024 );
+		geometry = new THREE.SphereBufferGeometry( 6378, 2048, 1024 );
 
 		material = new THREE.MeshPhongMaterial( {
 

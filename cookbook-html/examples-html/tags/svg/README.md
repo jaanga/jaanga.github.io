@@ -21,6 +21,10 @@ value='You are now in a GitHub web page view - Click this button to view this re
 * https://developer.mozilla.org/en-US/docs/Web/SVG
 * https://www.w3schools.com/graphics/svg_intro.asp
 
+Use svg multiple times
+
+* https://stackoverflow.com/questions/50124658/is-it-possible-to-reference-a-svg-file-once-and-then-use-it-multiple-times
+* https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use
 
 ## Change Log
 
