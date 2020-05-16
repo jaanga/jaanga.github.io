@@ -1,0 +1,733 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+<meta name=description
+	content="Real-time interactive 3D graphics in your browser using the WebGL and the Three.js JavaScript library">
+<meta name=keywords content="Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+<meta name=version content="2020-03-03">
+
+
+<title></title>
+
+<style>
+
+/* Copyright 2020 Theo Armour. MIT License */
+
+:root { font: 100% monospace; }
+
+* { box-sizing: border-box; }
+
+body { margin: 0; overflow: hidden; }
+
+a { color: crimson; text-decoration: none; }
+a:hover, a:focus, a:active { background-color: yellow; color: #aaa; text-decoration: underline; }
+
+button { background-color: #ddd; border: none; border-radius: 2px; color: #322;cursor: pointer; padding: 3px 5px; }
+button:hover { background: #ccc; color: #fff }
+
+input[ type=range ] { -webkit-appearance: none; -moz-appearance: none; background-color: #ddd; border-radius: 2px; height: 1.7ch; width: 100%; }
+input[ type=range ]::-moz-range-thumb { background-color: #888; border-radius: 2; width: 10px; }
+input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background-color: #888; height: 18px; width: 10px; }
+
+.info { float: right }
+
+.info:hover>.infotooltip { display: block; }
+
+.infotooltip { border: 0.8ch double #888; background: white; display: none;
+	font: 100% monospace; font-size: 1rem; font-weight: normal; /* unset summary settings */
+	margin-left: -28ch; padding: 10px; position: absolute; z-index: 1000; }
+
+.navText { background-color: white; margin: 1ch 0; padding: 1ch; }
+
+#navMenu { margin: 0 20px; max-width: 15rem; position: absolute; }
+
+
+</style>
+
+</head>
+
+<body>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r116/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r116/examples/js/controls/TrackballControls.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r116/examples/js/utils/BufferGeometryUtils.js"></script>
+<script src="ray-raycaster-2020-05-15.js"></script>
+<nav id="navMenu" >
+
+	<header id="hdrTitle" >
+
+		<h2>
+			<a id=aSource target=_top title="Source code on GitHub" >&xcirc;</a>
+
+			<a href="" title="Click to reload this page" >
+				<span id=sTitle ></span>
+				<span id=sVersion ></span>
+			</a>
+
+			<span class="info" >&#x24d8;<span id=divDescription class="infotooltip" ></span></span>
+
+		</h2>
+
+	</header>
+
+	<p><button onclick=clearGroup() >clearGroup</button></p>
+
+
+	<p>
+		<button onclick="addMeshesBox()" >addMeshesBox</button>
+	</p>
+	<p>
+		<button onclick="addMeshesBoxBuffer()" >addMeshesBoxBuffer</button>
+	</p>
+	<p>
+		<button onclick="addMeshesBufferFromGeometry()">addMeshesBufferFromGeometry</button>
+	</p>
+	<p>
+		<button onclick="addMeshesBufferMergeBuffer()" >addMeshesBufferMergeBuffer</button>
+	</p>
+	<p>
+		<button onclick="addMeshesBufferMergeBufferTest()" >addMeshesBufferMergeBufferTest</button>
+	</p>
+
+	<p>
+		<button onclick="getMeshesVertices()" >getMeshesVertices</button>
+	</p>
+
+	<p>
+		<button onclick=controls.reset() >reset view</button>
+		<button onclick="sceneRotation = sceneRotation === 1 ? 0 : 1;">rotation</button>
+	</p>
+
+	<p>
+		<output id=outSpeed>50</output>
+		<input type="range" id="inpSpeed" onclick="sceneRotation=0.05 * this.value;outSpeed.innerHTML=this.value;" />
+	</p>
+
+
+	<p
+		title="View the number of objects that need rendering and the total number of triangles used to create the objects">
+		<button onclick="setStats()">setStats</button>
+	</p>
+
+
+	<div id="divLog"></div>
+
+</nav>
+
+<script>
+
+let size = 1;
+let count = 1000;
+
+let tellTale;
+let line = new THREE.Line();
+
+
+aSource.href = "https://github.com/jaanga/cookbook/";
+
+svgOcticon = `<svg height="18" class="octicon" viewBox="0 0 16 16" version="1.1" width="18" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>`;
+aSource.innerHTML = svgOcticon;
+
+
+sTitle.innerHTML= document.title ? document.title : location.href.split( '/' ).pop().slice( 0, - 5 ).replace( /-/g, ' ' );
+const version = document.head.querySelector( "[ name=version ]" );
+sVersion.innerHTML = version ? version.content : "";
+divDescription.innerHTML = document.head.querySelector( "[ name=description ]" ).content;
+
+
+let mesh, group, axesHelper, lightDirectional, cameraHelper;
+let sceneRotation = 1;
+let renderer, camera, controls, scene;
+
+init();
+animate();
+
+
+
+function init() {
+
+	camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 1000 );
+	camera.position.set( - 100, - 100, 100 );
+	camera.up.set( 0, 0, 1 );
+
+	scene = new THREE.Scene();
+	scene.background = new THREE.Color( 0xcce0ff );
+	//scene.fog = new THREE.Fog( 0xcce0ff, 550, 800 );
+	scene.add( camera )
+
+	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.setPixelRatio( window.devicePixelRatio );
+	renderer.setSize( window.innerWidth, window.innerHeight );
+	document.body.appendChild( renderer.domElement );
+	renderer.outputEncoding = THREE.sRGBEncoding;
+	renderer.shadowMap.enabled = true;
+	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.maxDistance = 500;
+	controls.rotateSpeed = 5;
+	//controls.maxPolarAngle = Math.PI * 0.5;
+
+
+	window.addEventListener( 'resize', onWindowResize, false );
+	window.addEventListener( 'orientationchange', onWindowResize, false );
+	window.addEventListener( 'keyup', () => sceneRotation = 0, false );
+	renderer.domElement.addEventListener( 'click', () => sceneRotation = 0, false );
+
+	addLights();
+
+	axesHelper = new THREE.AxesHelper( 100 );
+	scene.add( axesHelper );
+
+	addGround();
+
+	clearGroup();
+
+	//addMeshesBufferMergeBufferTest();
+
+	//addMeshesBox();
+
+	addMeshesBufferFromGeometry();
+
+	//addMeshesBufferMergeBuffer();
+
+	//zoomObjectBoundingSphere();
+
+	RAY.init();
+
+	addTellTale();
+	scene.add( line );
+
+}
+
+
+
+function clearGroup() {
+
+	scene.remove( group );
+
+	group = new THREE.Group();
+
+	scene.add( group );
+
+}
+
+
+
+function addMeshesBox() {
+
+	const timeStart = performance.now();
+
+	count = 1000;
+
+	for ( let i = 0; i < count; i++ ) {
+
+		const geometry = new THREE.BoxGeometry( size, size, size );
+		geometry.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) );
+
+		const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), specular: 0xffffff } );
+		const mesh = new THREE.Mesh( geometry, material );
+		mesh.receiveShadow = true;
+		mesh.castShadow = true;
+		group.add( mesh );
+
+	};
+
+	console.log( "msBox ",  performance.now() - timeStart);
+
+}
+
+
+
+function addMeshesBoxBuffer() {
+
+	const timeStart = performance.now();
+
+	for ( let i = 0; i < count; i++ ) {
+
+		const geometry = new THREE.BoxBufferGeometry( size, size, size );
+
+		geometry.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) );
+
+		const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), specular: 0xffffff } );
+		const mesh = new THREE.Mesh( geometry, material );
+		mesh.receiveShadow = true;
+		mesh.castShadow = true;
+		group.add( mesh );
+
+	};
+
+	console.log( "msBoxBuffer ",  performance.now() - timeStart);
+
+}
+
+
+
+function addMeshesBufferFromGeometry() {
+
+	const timeStart = performance.now();
+
+	geometryParent = new THREE.Geometry();
+	geometryArray = []
+
+	for ( let i = 0; i < count; i++ ) {
+
+		const geometry = new THREE.BoxGeometry( size, size, size );
+
+		geometry.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) );
+
+		geometryParent.merge( geometry );
+
+		geometryArray.push( geometry )
+
+	};
+
+	bufferGeometry =  new THREE.BufferGeometry().fromGeometry( geometryParent );
+	//bufferGeometry.clearGroups();
+
+	const material = new THREE.MeshPhongMaterial( { side: 2, vertexColors: THREE.FaceColors, specular: 0xffffff } );
+	const mesh = new THREE.Mesh( bufferGeometry, material );
+	mesh.receiveShadow = true;
+	mesh.castShadow = true;
+	group.add( mesh );
+
+	RAY.intersectObjects = group.children;
+
+	bytes = THREE.BufferGeometryUtils.estimateBytesUsed ( bufferGeometry )
+	console.log( "bytesBfG", bytes );
+
+	console.log( "msBfG ",  performance.now() - timeStart);
+
+}
+
+
+
+function addMeshesBufferMergeBuffer() {
+
+	const timeStart = performance.now();
+
+	const material = new THREE.MeshPhongMaterial( { side: 2, vertexColors: THREE.FaceColors, specular: 0xffffff } );
+
+	geometries = Array( count).fill().map( ( item, i  ) =>
+
+		geometry = ( new THREE.BoxBufferGeometry( size, size, size ) )
+
+		.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) )
+		.applyMatrix4( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) )
+		.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) )
+
+	);
+
+	bufferGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries( geometries );
+
+	const mesh = new THREE.Mesh( bufferGeometry, material );
+	mesh.receiveShadow = true;
+	mesh.castShadow = true;
+	group.add( mesh );
+
+	console.log( "ms ",  performance.now() - timeStart);
+
+	//console.log( "geometries", geometries );
+
+	//console.log( "bufferGeometry", bufferGeometry );
+
+	RAY.intersectObjects = group.children;
+
+	bytes = THREE.BufferGeometryUtils.estimateBytesUsed ( bufferGeometry )
+	console.log( "bytes", bytes );
+
+}
+
+
+
+function addMeshesBufferMergeBufferTest() {
+
+	count = 3000;
+
+	size = 10;
+
+	const timeStart = performance.now();
+
+	const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), specular: 0xffffff } );
+
+	geometries = Array( count).fill().map( ( item, i  ) =>
+
+		geometry = ( new THREE.BoxBufferGeometry( size, size, size ) )
+
+		//.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) )
+		.applyMatrix4( new THREE.Matrix4().makeTranslation( i * 50, 0, 0  ) )
+		//.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) )
+
+	);
+
+	bufferGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries( geometries );
+
+	bytes = THREE.BufferGeometryUtils.estimateBytesUsed ( bufferGeometry )
+	console.log( "bytes1", bytes );
+
+	bufferGeometry2 = THREE.BufferGeometryUtils.mergeVertices( bufferGeometry );
+
+	bytes = THREE.BufferGeometryUtils.estimateBytesUsed ( bufferGeometry2 )
+	console.log( "bytes2", bytes );
+
+	const mesh = new THREE.Mesh( bufferGeometry, material );
+	mesh.receiveShadow = true;
+	mesh.castShadow = true;
+	group.add( mesh );
+
+	console.log( "ms ",  performance.now() - timeStart);
+
+	console.log( "geometries", geometries );
+
+	console.log( "bufferGeometry", bufferGeometry );
+
+	RAY.intersectObjects = group.children;
+
+	bytes = THREE.BufferGeometryUtils.estimateBytesUsed ( bufferGeometry )
+	console.log( "bytes", bytes );
+
+}
+
+
+
+RAY.getHtm = function ( intersected ) {
+
+	//scene.updateMatrixWorld();
+
+	console.log( "intersected", intersected );
+
+	faceA = intersected.face.a;
+	faceB = intersected.face.b;
+	faceC = intersected.face.c;
+	objGeo = intersected.object.geometry;
+	// fIdxA = objGeo.index.array[ 3 * faceA ];
+	// fIdxB = objGeo.index.array[ 3 * faceB ];
+	// fIdxC = objGeo.index.array[ 3 * faceC ];
+	pos = objGeo.attributes.position.array;
+
+	const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
+
+	vertices = [
+		v( pos[ 3 * faceA ], pos[ 3 * faceA + 1 ], pos[ 3 * faceA + 2 ] ),
+		v( pos[ 3 * faceB ], pos[ 3 * faceB + 1 ], pos[ 3 * faceB + 2 ] ),
+		v( pos[ 3 * faceC ], pos[ 3 * faceC + 1 ], pos[ 3 * faceC + 2 ] ),
+		v( pos[ 3 * faceA ], pos[ 3 * faceA + 1 ], pos[ 3 * faceA + 2 ] )
+	]
+
+	addLine( vertices );
+
+	tellTale.position.copy( vertices[ 0 ] );
+// 	fIdx.abc: ${ fIdxA } ${ fIdxB } ${ fIdxC }<br>
+
+	vv = geometryParent.vertices.filter( vertex =>
+
+		Math.abs( vertices[ 0 ].x - vertex.x ) < 0.00001
+		&& Math.abs( vertices[ 0 ].y - vertex.y ) < 0.00001
+		&& Math.abs( vertices[ 0 ].z - vertex.z ) < 0.00001);
+
+	//console.log( "vv", vv );
+
+
+	htm = `
+	faceIndex: ${ intersected.faceIndex }<br>
+	face.a: ${ faceA } ${ faceB } ${ faceC }<br>
+
+	vtxA: ${ vertices[ 0 ].toArray().map( num => num.toLocaleString() ) }<br>
+	vtxB: ${ vertices[ 1 ].toArray().map( num => num.toLocaleString() ) }<br>
+	vtxC: ${ vertices[ 2 ].toArray().map( num => num.toLocaleString() ) }<br>
+	<br>
+	original: ${ vv[ 0 ].toArray().map( num => num.toLocaleString() ) }<br>
+	`;
+
+	return htm;
+
+};
+
+
+
+function addLine( vertices ) {
+
+	scene.remove( line );
+	const geometry = new THREE.Geometry();
+	geometry.vertices = vertices;
+	const material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+	line = new THREE.Line( geometry, material );
+
+	scene.add( line );
+
+}
+
+
+
+function getMeshesVertices() {
+
+	scene.updateMatrixWorld();
+
+	group.position.y = 300
+	group.position.x = 300;
+
+
+	//obj = new THREE.Object3D();
+	//obj.updateMatrixWorld();
+
+	vertices = group.children.flatMap( child => child.geometry.vertices )
+
+	positions = vertices.flatMap( vertex => vertex.toArray() );
+
+	positions = new Float32Array( [... positions ])
+
+	console.log( "vertices", vertices, positions );
+
+	//uvs = group.children.flatMap( child => child.geometry.faceVertexUvs )
+	//group.children[ 0 ].localToWorld( group.children[ 0 ].geometry.vertices[ 0 ] )
+
+	// indexes = Array( 800 )
+
+	// delta = 0;
+	// for ( let i = 0; i < indexes.length; i++ ) {
+
+	// 	if ( i % 8 === 0 ) { ++delta; }
+
+	// 	indexes[ i ] = delta;
+	// }
+
+	// console.log( "", indexes );
+
+
+	bufferGeometry =  new THREE.BufferGeometry();
+	bufferGeometry.setAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+
+	//bufferGeometry.setAttribute( 'normals', new THREE.Float32BufferAttribute( uvs, 3 ) );
+
+	var material = new THREE.MeshBasicMaterial( { color: "red", side: 2 } );
+
+	var mesh = new THREE.Mesh( bufferGeometry, material );
+	scene.add( mesh );
+
+}
+
+
+
+function addLights() {
+
+	//scene.add( new THREE.AmbientLight( 0x404040 ) );
+	scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+	const pointLight = new THREE.PointLight( 0xffffff, 0.2 );
+	pointLight.position.copy( camera.position );
+	camera.add( pointLight );
+
+	lightDirectional = new THREE.DirectionalLight( 0xdffffff, 0.5 );
+	lightDirectional.position.set( -50, -200, 100 );
+	lightDirectional.castShadow = true;
+	lightDirectional.shadow.mapSize.width = 1024;
+	lightDirectional.shadow.mapSize.height = 1024;
+
+	var d = 100;
+	lightDirectional.shadow.camera.left = - d;
+	lightDirectional.shadow.camera.right = d;
+	lightDirectional.shadow.camera.top = d;
+	lightDirectional.shadow.camera.bottom = - d;
+	lightDirectional.shadow.camera.far = 500;
+	scene.add( lightDirectional );
+
+	scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+}
+
+
+
+function addGround() {
+
+	const geometry = new THREE.PlaneBufferGeometry( 2000, 2000 );
+	const material = new THREE.MeshPhongMaterial( { color: 0xaaaaaa, depthWrite: false, side: 2 } );
+	const mesh = new THREE.Mesh( geometry, material );
+	mesh.position.z = -50;
+	mesh.receiveShadow = true;
+	scene.add( mesh );
+
+}
+
+
+
+function addTellTale( siz = 0.5 / size) {
+
+	const geometry = new THREE.BoxBufferGeometry( siz, siz, siz );
+	const material = new THREE.MeshNormalMaterial();
+	tellTale = new THREE.Mesh( geometry, material );
+	scene.add( tellTale );
+
+}
+
+
+
+function zoomObjectBoundingSphere( obj = group ) {
+	//console.log( "obj", obj );
+
+	center = new THREE.Vector3( 0, 0, 0 );
+	radius=  50;
+
+	const bbox = new THREE.Box3().setFromObject( obj );
+	//console.log( 'bbox', bbox );
+
+	if ( bbox.max.x !== Infinity ) {
+
+		const sphere = bbox.getBoundingSphere( new THREE.Sphere() );
+
+		center = sphere.center;
+		radius = sphere.radius;
+		//console.log( "sphere", sphere )
+	}
+
+	controls.target.copy( center ); // needed because model may be far from origin
+	controls.maxDistance = 50 * radius;
+
+	delta = camera.position.clone().sub( controls.target ).normalize();
+	//console.log( 'delta', delta );
+
+	position = controls.target.clone().add( delta.multiplyScalar( 2 * radius ) );
+	//console.log( 'position', position );
+
+	distance = controls.target.distanceTo( camera.position );
+
+	//camera.zoom = distance / (  * radius ) ;
+
+	camera.position.copy( center.clone().add( new THREE.Vector3( -2 * radius, 2 * radius, 1.0 * radius ) ) );
+	camera.near = 0.001 * radius; //2 * camera.position.length();
+	camera.far = 50 * radius; //2 * camera.position.length();
+	camera.updateProjectionMatrix();
+
+	axesHelper.position.copy( center );
+
+	if ( lightDirectional ) {
+
+		lightDirectional.position.copy( center.clone().add( new THREE.Vector3( -1.5 * radius, 1.5 * radius, 1.5 * radius ) ) );
+		lightDirectional.shadow.camera.scale.set( 0.02 * radius, 0.02 * radius, 0.2 * radius );
+
+		//targetObject.position.copy( center );
+
+		scene.remove( cameraHelper );
+		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera );
+		scene.add( cameraHelper );
+
+	}
+
+	let event = new Event( "onresetthree", {"bubbles": true, "cancelable": false, detail: true } );
+
+	//window.addEventListener( "onrresetthree", doThings, false );
+
+	// listening: or-object-rotation-xx.js
+	// listening: dss-display-scene-settings-xx.js
+
+	window.dispatchEvent( event );
+
+};
+
+
+
+function addMesh( size = 20 ) {
+
+	// CylinderGeometry( radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded )
+	// SphereGeometry( radius, segmentsWidth, segmentsHeight, phiStart, phiLength, thetaStart, thetaLength )
+	// TorusGeometry( radius, tube, radialSegments, tubularSegments, arc )
+
+	const geometry = new THREE.BoxGeometry( size, size, size );
+
+	geometry.applyMatrix4( new THREE.Matrix4().makeRotationX( -0.5 * Math.PI ) );
+	geometry.applyMatrix4( new THREE.Matrix4().makeScale( 1, 1, 1 ) );
+	geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 0, 0, 0 ) );
+
+	//const material = new THREE.MeshNormalMaterial();
+	const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), specular: 0xffffff } );
+	mesh = new THREE.Mesh( geometry, material );
+	mesh.receiveShadow = true;
+	mesh.castShadow = true;
+	scene.add( mesh );
+
+	return mesh;
+
+}
+
+
+function requestFile( url, callback ) {
+
+	const xhr = new XMLHttpRequest();
+	xhr.open( 'GET', url, true );
+	xhr.onerror = ( xhr ) => console.log( 'error:', xhr  );
+	//xhr.onprogress = ( xhr ) => console.log( 'bytes loaded:', xhr.loaded );
+	xhr.onload = ( xhr ) => callback( xhr.target.response );
+	xhr.send( null );
+
+}
+
+
+
+
+function setStats () {
+
+	const script = document.head.appendChild( document.createElement( "script" ) );
+	script.onload = () => {
+
+		const stats = new Stats();
+		const sts = document.body.appendChild( stats.dom );
+		sts.style.left = "";
+		sts.style.right = "0px";
+		requestAnimationFrame( function loop () {
+
+			stats.update(); requestAnimationFrame( loop );
+
+		} );
+
+	};
+
+	script.src = "https://raw.githack.com/mrdoob/stats.js/master/build/stats.min.js";
+
+
+	const render = renderer.info.render;
+	const divRendererInfo = navMenu.appendChild( document.createElement( "div" ) );
+	divRendererInfo.innerHTML = `
+	Renderer Info<br>
+	Calls: ${render.calls }<br>
+	Lines: ${ render.lines }<br>
+	Triangles: ${render.triangles.toLocaleString() }<br>
+	`;
+
+}
+
+
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+	controls.handleResize();
+
+	//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+}
+
+
+
+function animate() {
+
+	requestAnimationFrame( animate );
+	renderer.render( scene, camera );
+	controls.update();
+	//group.rotation.z += sceneRotation / 1000;
+
+}
+
+</script>
+</body>
+</html>
