@@ -65,7 +65,12 @@ input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background
 				<span id=sVersion ></span>
 			</a>
 
-			<span class="info" >&#x24d8;<span id=divDescription class="infotooltip" ></span></span>
+			<span class="info" >&#x24d8;<span id=divDescription class="infotooltip" >
+
+				Three.js BufferGeometry is very fast not so flexible when it comes to adding user data.
+				This script explores linking BufferGeometry to other JavaScript where user data may be stored and retrieved.
+
+			</span></span>
 
 		</h2>
 
@@ -82,6 +87,10 @@ input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background
 	</p>
 	<p>
 		<button onclick="addMeshesBufferFromGeometry()">addMeshesBufferFromGeometry</button>
+	</p>
+
+	<p>
+		<button onclick="addMeshesBufferFromAttributes()" >addMeshesBufferFromAttributes</button>
 	</p>
 	<p>
 		<button onclick="addMeshesBufferMergeBuffer()" >addMeshesBufferMergeBuffer</button>
@@ -111,14 +120,14 @@ input[ type=range ]::-webkit-slider-thumb { -webkit-appearance: none; background
 	</p>
 
 
-	<div id="divLog"></div>
+	<div id="divLog">Move the pointer over the boxes at the front to see their twins at the back become invisible</div>
 
 </nav>
 
 <script>
 
 let size = 5;
-let count = 5000;
+let count = 1000;
 
 let tellTale;
 let line = new THREE.Line();
@@ -190,7 +199,9 @@ function init() {
 
 	//addMeshesBox();
 
-	addMeshesBufferFromGeometry();
+	//addMeshesBufferFromGeometry();
+
+	addMeshesBufferFromAttributes();
 
 	//addMeshesBufferMergeBuffer();
 
@@ -207,13 +218,17 @@ function init() {
 
 function clearGroup() {
 
-	scene.remove( group, groupBuffer, groupGeometry );
+	RAY.intersectObjects = [];
+
+	scene.remove( group, groupBuffer, groupGeometry, line );
 
 	group = new THREE.Group();
 	groupBuffer = new THREE.Group();
 	groupGeometry = new THREE.Group();
 
 	scene.add( group, groupBuffer, groupGeometry );
+
+	if ( window.RAYdivPopUp ) { RAYdivPopUp.hidden = true; }
 
 }
 
@@ -319,6 +334,115 @@ function addMeshesBufferFromGeometry() {
 	console.log( "msBfG ",  performance.now() - timeStart);
 
 }
+
+
+function addMeshesBufferFromAttributes() {
+
+	const timeStart = performance.now();
+
+	//scene.remove( group, groupGeometry, line );
+
+	geometryParent = new THREE.Geometry();
+	geometryArray = []
+
+	for ( let i = 0; i < count; i++ ) {
+
+		const geometry = new THREE.BoxGeometry( size, size, size );
+
+		geometry.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) );
+		geometry.applyMatrix4( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) );
+
+		const material = new THREE.MeshPhongMaterial( { color: 0xffffff * Math.random(), depthWrite: false, side: 2 } );
+		const mesh = new THREE.Mesh( geometry, material );
+		//mesh.receiveShadow = true;
+		//mesh.castShadow = true;
+		groupGeometry.add( mesh );
+
+	};
+
+	groupGeometry.position.set( 150, 0, 0 );
+
+	const positions = [];
+	const normals = [];
+	const colors = [];
+	const color = new THREE.Color( 0xffffff );
+	const indexes = [];
+
+
+	let index = 0;
+
+	for ( let mesh of groupGeometry.children ) {
+
+		color.copy( mesh.material.color );
+
+		for( let face of mesh.geometry.faces  ) {
+
+			const geometry = mesh.geometry;
+
+			positions.push( geometry.vertices[ face.a ].x );
+			positions.push( geometry.vertices[ face.a ].y );
+			positions.push( geometry.vertices[ face.a ].z );
+			positions.push( geometry.vertices[ face.b ].x );
+			positions.push( geometry.vertices[ face.b ].y );
+			positions.push( geometry.vertices[ face.b ].z );
+			positions.push( geometry.vertices[ face.c ].x );
+			positions.push( geometry.vertices[ face.c ].y );
+			positions.push( geometry.vertices[ face.c ].z );
+
+			normals.push( face.normal.x );
+			normals.push( face.normal.y );
+			normals.push( face.normal.z );
+			normals.push( face.normal.x );
+			normals.push( face.normal.y );
+			normals.push( face.normal.z );
+			normals.push( face.normal.x );
+			normals.push( face.normal.y );
+			normals.push( face.normal.z );
+
+			colors.push( color.r );
+			colors.push( color.g );
+			colors.push( color.b );
+			colors.push( color.r );
+			colors.push( color.g );
+			colors.push( color.b );
+			colors.push( color.r );
+			colors.push( color.g );
+			colors.push( color.b );
+
+			indexes.push(  index );
+
+		}
+
+		index ++;
+
+	}
+
+	const bufferGeometry = new THREE.BufferGeometry();
+	bufferGeometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+	bufferGeometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
+	bufferGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+	//bufferGeometry.setAttribute( 'index', new THREE.Float32BufferAttribute( indexes, 1 ) );
+	bufferGeometry.clearGroups();
+
+	bufferGeometry.computeBoundingSphere();
+
+	const material = new THREE.MeshPhongMaterial( { shininess: 80, vertexColors: THREE.VertexColors } );
+
+	const meshBuffer = new THREE.Mesh( bufferGeometry, material );
+	meshBuffer.receiveShadow = true;
+	meshBuffer.castShadow = true;
+	groupBuffer.add( meshBuffer );
+
+	RAY.intersectObjects = groupBuffer.children;
+
+	const bytes = THREE.BufferGeometryUtils.estimateBytesUsed ( bufferGeometry )
+	console.log( "bytesBfA", bytes );
+
+	console.log( "msBfA ",  performance.now() - timeStart);
+
+}
+
 
 
 
@@ -489,6 +613,16 @@ function addLine( vertices ) {
 
 
 
+function addTellTale( siz = 0.5 / size) {
+
+	const geometry = new THREE.BoxBufferGeometry( siz, siz, siz );
+	const material = new THREE.MeshNormalMaterial();
+	tellTale = new THREE.Mesh( geometry, material );
+	scene.add( tellTale );
+
+}
+
+
 function getMeshesVertices() {
 
 	scene.updateMatrixWorld();
@@ -580,14 +714,6 @@ function addGround() {
 
 
 
-function addTellTale( siz = 0.5 / size) {
-
-	const geometry = new THREE.BoxBufferGeometry( siz, siz, siz );
-	const material = new THREE.MeshNormalMaterial();
-	tellTale = new THREE.Mesh( geometry, material );
-	scene.add( tellTale );
-
-}
 
 
 
@@ -692,7 +818,6 @@ function requestFile( url, callback ) {
 
 
 
-
 function setStats () {
 
 	const script = document.head.appendChild( document.createElement( "script" ) );
@@ -714,7 +839,12 @@ function setStats () {
 
 
 	const render = renderer.info.render;
-	const divRendererInfo = navMenu.appendChild( document.createElement( "div" ) );
+
+	if ( !window.divRendererInfo ) {
+
+		divRendererInfo = navMenu.appendChild( document.createElement( "div" ) );
+
+	}
 	divRendererInfo.innerHTML = `
 	Renderer Info<br>
 	Calls: ${render.calls }<br>
