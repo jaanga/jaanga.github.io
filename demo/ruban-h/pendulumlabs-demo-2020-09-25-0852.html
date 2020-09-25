@@ -1,0 +1,360 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="theme-color" content="#0dea8d">
+	<meta name="application-name" content="Pendulum Effect">
+	<meta name="description" content="Playing with Threejs and Sine Waves">
+	<meta name="keywords" content="Pendulum Effect, Threejs, Javascript, Ion Drimba Filho, Visualizer">
+	<meta name="subject" content="Playing with Threejs and Sine Waves">
+	<meta name="copyright" content="Ion Drimba Filho">
+	<meta name="robots" content="index,follow">
+	<meta name="topic" content="">
+	<meta name="summary" content="Playing with Threejs and Sine Waves">
+	<meta name="author" content="Ion Drimba Filho">
+	<meta name="url" content="http://iondrimba.github.io/pendulum/public/index.html">
+	<meta name="pagename" content="Pendulum Effect">
+	<meta name="category" content="">
+	<meta name="coverage" content="Worldwide">
+	<meta name="distribution" content="Global">
+	<meta name="rating" content="General">
+	<meta name="subtitle" content="Playing with Threejs and Sine Waves">
+	<meta name="target" content="all">
+	<meta http-equiv="cleartype" content="on">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="http://iondrimba.github.io/pendulum/public/index.html">
+	<meta name="twitter:creator" content="Ion Drimba Filho">
+	<meta name="twitter:title" content="Pendulum Effect">
+	<meta name="twitter:description" content="Playing with Threejs and Sine Waves">
+	<meta name="twitter:image:src" content="https://raw.githubusercontent.com/iondrimba/images/master/pendulum.png">
+	<meta property="og:url" content="http://iondrimba.github.io/pendulum/public/index.html">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Pendulum Effect">
+	<meta property="og:image" content="https://raw.githubusercontent.com/iondrimba/images/master/pendulum.png">
+	<meta property="og:description" content="Playing with Threejs and Sine Waves">
+	<meta property="og:site_name" content="Pendulum Effect">
+	<meta property="article:author" content="https://iondrimbafilho.me/">
+	<meta property="article:publisher" content="https://iondrimbafilho.me/">
+	<meta itemprop="name" content="Pendulum Effect">
+	<meta itemprop="description" content="Playing with Threejs and Sine Waves">
+	<meta itemprop="image" content="https://raw.githubusercontent.com/iondrimba/images/master/pendulum.png">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link href="https://fonts.googleapis.com/css?family=Ropa+Sans&display=swap" rel="stylesheet">
+	<title>Pendulum Effect</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+	<script src="https://Threejs.org/examples/js/controls/OrbitControls.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.2/dat.gui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+</head>
+
+<body>
+	<main>
+		<div class="stats"></div>
+	</main>
+
+<script>
+
+	const radians = ( degrees ) => {
+			return degrees * Math.PI / 180;
+		}
+
+		const distance = ( x1, y1, x2, y2 ) => {
+			return Math.sqrt( Math.pow( ( x1 - x2 ), 2 ) + Math.pow( ( y1 - y2 ), 2 ) );
+		}
+
+		const map = ( value, istart, istop, ostart, ostop ) => {
+			return ostart + ( ostop - ostart ) * ( ( value - istart ) / ( istop - istart ) );
+		}
+
+		const hexToRgbTreeJs = ( hex ) => {
+			const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec( hex );
+
+			return result ? {
+				r: parseInt( result[ 1 ], 16 ) / 255,
+				g: parseInt( result[ 2 ], 16 ) / 255,
+				b: parseInt( result[ 3 ], 16 ) / 255
+			} : null;
+		}
+
+		class App {
+			setup() {
+				this.stats = new Stats();
+				this.stats.showPanel( 0 );
+				document.body.querySelector( '.stats' ).appendChild( this.stats.domElement );
+
+				this.gui = new dat.GUI();
+				this.raycaster = new THREE.Raycaster();
+				this.pendulum = {
+					length: 18,
+					angle: 90,
+					angleVelocity: 0,
+					angleAcceleration: 0,
+					origin: {
+						x: 0,
+						y: 10,
+					},
+					current: {
+						x: 0,
+						y: 0,
+					}
+				};
+
+				this.backgroundColor = '#0dea8d';
+				this.gutter = { size: .1 };
+				this.meshes = [];
+				this.grid = { cols: 28, rows: 12 };
+				this.width = window.innerWidth;
+				this.height = window.innerHeight;
+				this.mouse3D = new THREE.Vector2();
+
+				const gui = this.gui.addFolder( 'Background' );
+
+				gui.addColor( this, 'backgroundColor' ).onChange( ( color ) => {
+					document.body.style.backgroundColor = color;
+				} );
+
+				window.addEventListener( 'resize', this.onResize.bind( this ), { passive: true } );
+			}
+
+			createScene() {
+				this.scene = new THREE.Scene();
+
+				this.renderer = new THREE.WebGLRenderer( { antialias: true, alpha: true } );
+				this.renderer.setSize( window.innerWidth, window.innerHeight );
+
+				this.renderer.shadowMap.enabled = true;
+				this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+				document.body.appendChild( this.renderer.domElement );
+			}
+
+			createCamera() {
+				const width = window.innerWidth;
+				const height = window.innerHeight;
+
+				this.camera = new THREE.PerspectiveCamera( 45, width / height );
+				this.camera.position.set( -28.15292047581049, 38.68633769613105, 30.980321888960155 );
+
+				this.scene.add( this.camera );
+			}
+
+			addAmbientLight() {
+				const obj = { color: '#c4c4c4' };
+				const light = new THREE.AmbientLight( obj.color, 1 );
+
+				this.scene.add( light );
+
+				const gui = this.gui.addFolder( 'Ambient Light' );
+				gui.addColor( obj, 'color' ).onChange( ( color ) => {
+					light.color = hexToRgbTreeJs( color );
+				} );
+			}
+
+			addSphere() {
+				const meshParams = {
+					color: '#f90c53',
+					metalness: .41,
+					emissive: '#000000',
+					roughness: 0,
+				};
+
+				const geometry = new THREE.SphereGeometry( 3, 32, 32 );
+				const material = new THREE.MeshStandardMaterial( meshParams );
+
+				this.sphere = new THREE.Mesh( geometry, material );
+				this.sphere.position.set( 0, 0, 0 );
+
+				const gui = this.gui.addFolder( 'Sphere Material' );
+
+				gui.addColor( meshParams, 'color' ).onChange( ( color ) => {
+					material.color = hexToRgbTreeJs( color );
+				} );
+				gui.add( meshParams, 'metalness', 0.1, 1 ).onChange( ( val ) => {
+					material.metalness = val;
+				} );
+				gui.add( meshParams, 'roughness', 0.1, 1 ).onChange( ( val ) => {
+					material.roughness = val;
+				} );
+
+				this.scene.add( this.sphere );
+			}
+
+			createGrid() {
+				this.groupMesh = new THREE.Object3D();
+
+				const meshParams = {
+					color: '#fff',
+					metalness: .3,
+					emissive: '#000000',
+					roughness: 1,
+				};
+
+				const material = new THREE.MeshLambertMaterial( meshParams );
+				const geometry = new THREE.BoxBufferGeometry( 1, 1, 1 );
+				geometry.translate( 0, 3, 0 );
+
+				this.mesh = this.getMesh( geometry, material, this.grid.rows * this.grid.cols );
+				this.scene.add( this.mesh );
+
+				let ii = 0;
+				this.centerX = ( ( this.grid.cols ) + ( ( this.grid.cols ) * this.gutter.size ) ) * .46;
+				this.centerZ = ( ( this.grid.rows ) + ( ( this.grid.rows ) * this.gutter.size ) ) * .46;
+
+				for ( let row = 0; row < this.grid.rows; row++ ) {
+					this.meshes[ row ] = [];
+
+					for ( let col = 0; col < this.grid.cols; col++ ) {
+						const pivot = new THREE.Object3D();
+						pivot.scale.set( 1, 1, 1 );
+						pivot.position.set( col + ( col * this.gutter.size ) - this.centerX, 0, row + ( row * this.gutter.size ) - this.centerZ );
+
+						this.meshes[ row ][ col ] = pivot;
+
+						pivot.updateMatrix();
+
+						this.mesh.setMatrixAt( ii++, pivot.matrix );
+					}
+				}
+
+				this.mesh.instanceMatrix.needsUpdate = true;
+			}
+
+			getMesh( geometry, material, count ) {
+				const mesh = new THREE.InstancedMesh( geometry, material, count );
+				mesh.instanceMatrix.setUsage( THREE.DynamicDrawUsage );
+				mesh.castShadow = true;
+				mesh.receiveShadow = true;
+
+				return mesh;
+			}
+
+			addCameraControls() {
+				this.controls = new THREE.OrbitControls( this.camera, this.renderer.domElement );
+			}
+
+			addDirectionalLight() {
+				this.directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+				this.directionalLight.castShadow = true;
+				this.directionalLight.position.set( 0, 1, 0 );
+
+				this.directionalLight.shadow.camera.far = 1000;
+				this.directionalLight.shadow.camera.near = -200;
+
+				this.directionalLight.shadow.camera.left = -40;
+				this.directionalLight.shadow.camera.right = 40;
+				this.directionalLight.shadow.camera.top = 20;
+				this.directionalLight.shadow.camera.bottom = -20;
+				this.directionalLight.shadow.camera.zoom = 1;
+				this.directionalLight.shadow.camera.needsUpdate = true;
+
+				const targetObject = new THREE.Object3D();
+				targetObject.position.set( -50, -82, 40 );
+				this.directionalLight.target = targetObject;
+
+				this.scene.add( this.directionalLight );
+				this.scene.add( this.directionalLight.target );
+			}
+
+			addFloor() {
+				const geometry = new THREE.PlaneGeometry( 300, 300 );
+				const material = new THREE.ShadowMaterial( { opacity: .1 } );
+
+				this.floor = new THREE.Mesh( geometry, material );
+				this.floor.position.y = -1;
+				this.floor.rotateX( - Math.PI / 2 );
+				this.floor.receiveShadow = true;
+
+				this.scene.add( this.floor );
+			}
+
+			init() {
+				this.setup();
+
+				this.createScene();
+
+				this.createCamera();
+
+				this.addAmbientLight();
+
+				this.addSphere();
+
+				this.createGrid();
+
+				this.addDirectionalLight();
+
+				this.addCameraControls();
+
+				this.addFloor();
+
+				this.animate();
+			}
+
+			onResize() {
+				this.width = window.innerWidth;
+				this.height = window.innerHeight;
+
+				this.camera.aspect = this.width / this.height;
+				this.camera.updateProjectionMatrix();
+				this.renderer.setSize( this.width, this.height );
+			}
+
+			draw() {
+				this.pendulum.current.x = this.pendulum.origin.x + this.pendulum.length * Math.sin( this.pendulum.angle );
+				this.pendulum.current.y = this.pendulum.origin.y + this.pendulum.length * Math.cos( this.pendulum.angle );
+				this.pendulum.angleAcceleration = 2 * .001 * Math.sin( this.pendulum.angle );
+				this.pendulum.angleVelocity += this.pendulum.angleAcceleration;
+				this.pendulum.angle += this.pendulum.angleVelocity;
+
+				this.sphere.position.set( this.pendulum.current.x, this.pendulum.current.y + 10.5, 0 );
+
+				const { x, z } = this.sphere.position;
+
+				let ii = 0;
+
+				for ( let row = 0; row < this.grid.rows; row++ ) {
+					for ( let col = 0; col < this.grid.cols; col++ ) {
+
+						const pivot = this.meshes[ row ][ col ];
+						const mouseDistance = distance( x, z, pivot.position.x, pivot.position.z );
+						const y = map( mouseDistance, 4.5, 1, 0, -1.5 );
+						const scale = y > 1 ? 1 : y < 0.01 ? 0.01 : y;
+
+						pivot.updateMatrix();
+
+						this.mesh.setMatrixAt( ii++, pivot.matrix );
+
+						TweenMax.to( pivot.scale, .3, {
+							ease: Expo.easeOut,
+							y: scale,
+						} );
+					}
+				}
+
+				this.mesh.instanceMatrix.needsUpdate = true;
+			}
+
+			animate() {
+				this.stats.begin();
+
+				this.controls.update();
+
+				this.draw();
+
+				this.renderer.render( this.scene, this.camera );
+
+				this.stats.end();
+
+				requestAnimationFrame( this.animate.bind( this ) );
+			}
+		}
+
+		new App().init();
+
+</script>
+</body>
+
+</html>

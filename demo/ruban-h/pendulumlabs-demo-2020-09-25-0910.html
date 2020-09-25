@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Basic HTML template">
+	<meta name="keywords" content="JavaScript,GitHub,FOSS">
+	<meta name=version content="2020-07-17">
+	<!-- Copyright 2020 Theo Armour. MIT License -->
+
+	<title></title>
+
+	<style>
+		body {
+			margin: 0;
+			overflow: hidden;
+		}
+	</style>
+</head>
+
+<body>
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/controls/OrbitControls.js"></script>
+
+	<script src="./thr-threejs-2020-08-02.js"></script>
+
+	<script>
+
+		THR.init();
+
+		THR.animate();
+
+		THR.group = THR.setSceneNew();
+
+		THR.axesHelper.visible = false;
+
+		THR.addGround();
+
+		THR.addLights();
+
+		const geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		const material = new THREE.MeshNormalMaterial();
+		const mesh = new THREE.Mesh( geometry, material );
+		mesh.castShadow = true;
+		THR.group.add( mesh );
+
+		THR.updateScene();
+
+	</script>
+</body>
+
+</html>
