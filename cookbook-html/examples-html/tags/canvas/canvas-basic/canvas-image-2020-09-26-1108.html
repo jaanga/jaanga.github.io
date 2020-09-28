@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+
+	<h1><a href="" >Canvas</a></h1>
+
+	<canvas id="canvas" width="240" height="297" style="border:1px solid #d3d3d3;"></canvas>
+
+	<script>
+
+		image = document.createElement( 'img' );
+		// image.onload = init();
+		image.src = "../img_the_scream.jpg";
+		image.onload = function () {
+			//var canvas = document.getElementById( "myCanvas" );
+			var ctx = canvas.getContext( "2d" );
+			//var img = document.getElementById( "scream" );
+			ctx.drawImage( image, 10, 10, 220, 267, 30, 50, 200, 200 );
+		};
+	</script>
+	</script>
+
+</body>
+
+</html>
