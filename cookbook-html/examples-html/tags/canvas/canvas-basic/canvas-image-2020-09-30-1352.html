@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+
+	<h1><a href="">Canvas</a></h1>
+
+
+	<div style=float:left;>
+
+		<p>left, top, width, height</p>
+		<label title="hi there">X
+			<output id=out>50</output>
+			<input type="range" id=inpX oninput=updateImg();out.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">Y
+			<output id=outTop>50</output>
+			<input type="range" id=inpY oninput=updateImg();outTop.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">width %
+			<output id=out>100</output>
+			<input type="range" id=inpW value=100 oninput=updateImg();out.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">height %
+			<output id=outTop>100</output>
+			<input type="range" id=inpH value=100 oninput=updateImg();outTop.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<hr>
+
+		<p>sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight</p>
+
+		<label title="hi there">sourceX
+			<output id=outSX>0</output>
+			<input type="range" id=inpSX value=0 oninput=updateImgSource();outSX.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">source Y
+			<output id=outTopSY>0</output>
+			<input type="range" id=inpSY value=0 oninput=updateImgSource();outTopSY.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">source width
+			<output id=outSW>100</output>
+			<input type="range" id=inpSW value=100 oninput=updateImgSource();outSW.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">source height
+			<output id=outTop>100</output>
+			<input type="range" id=inpSH value=100 oninput=updateImgSource();outTop.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">destination X
+			<output id=outDX>0</output>
+			<input type="range" id=inpDX value=0 oninput=updateImgSource();outDX.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">destination Y
+			<output id=outDY>50</output>
+			<input type="range" id=inpDY value=0 oninput=updateImgSource();outDY.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">destination width
+			<output id=outDW>100</output>
+			<input type="range" id=inpDW value=100 oninput=updateImgSource();outDW.value=value style=width:300px>
+		</label>
+
+		<br>
+
+		<label title="hi there">destination height
+			<output id=outDH>100</output>
+			<input type="range" id=inpDH value=100 oninput=updateImgSource();outDH.value=value style=width:300px>
+		</label>
+
+		<br>
+	</div>
+
+
+
+	<canvas id="canvas" width="500" height="500" style="border:1px solid #d3d3d3;float:left "></canvas>
+
+	<script>
+
+		image = document.createElement( 'img' );
+		image.src = "../img_the_scream.jpg";
+		image.onload = function () {
+			ctx = canvas.getContext( "2d" );
+			ctx.drawImage( image, 50, 50 );
+
+			console.log( "ctx", ctx );
+		};
+
+
+		function updateImg() {
+
+			ctx.clearRect( 0, 0, canvas.width, canvas.height );
+			ctx.drawImage( image, inpX.value, inpY.value,
+				image.width * inpW.value / 100,
+				image.height * inpH.value / 100 );
+		}
+
+
+		function updateImgSource() {
+
+			ctx.clearRect( 0, 0, canvas.width, canvas.height );
+			ctx.drawImage( image,
+				inpSX.value,
+				inpSY.value,
+				image.width * inpSW.value / 100,
+				image.height * inpSH.value / 100,
+
+				inpDX.value,
+				inpDY.value,
+				image.width * inpDW.value / 100,
+				image.height * inpDH.value / 100
+
+			);
+		}
+	</script>
+
+</body>
+
+</html>
