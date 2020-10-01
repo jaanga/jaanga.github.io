@@ -250,10 +250,9 @@
 				v( -x, -x, -2 * x ),
 			];
 			bufferGeometry = new THREE.BufferGeometry().fromGeometry( geometry )
-			const material = new THREE.MeshPhongMaterial( { color: 0xaaaaaa } );
+			const material = new THREE.ShadowMaterial( { color: 0xaaaaaa } );
 
 			const sides = new THREE.Mesh( geometry, material );
-			sides.castShadow = true
 			sides.receiveShadow = true;
 			return sides;
 

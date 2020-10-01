@@ -14,7 +14,7 @@
 
 		body,
 		html {
-			background-color: #ffffff;
+			background-color:#ffffff;
 			font: 12pt monospace;
 			height: 100%;
 			margin: 0;
@@ -24,8 +24,8 @@
 </head>
 
 <body>
-	<script src="https://cdn.rawgit.com/mrdoob/three.js/r121/build/three.min.js"></script>
-	<script src="https://cdn.rawgit.com/mrdoob/three.js/r121/examples/js/controls/OrbitControls.js"></script>
+	<script src="https://cdn.rawgit.com/mrdoob/three.js/r120/build/three.min.js"></script>
+	<script src="https://cdn.rawgit.com/mrdoob/three.js/r120/examples/js/controls/OrbitControls.js"></script>
 
 	<script>
 
@@ -73,39 +73,28 @@
 			//axesHelper = new THREE.AxesHelper( 50 );
 			//scene.add( axesHelper );
 
-			geometry = new THREE.SphereBufferGeometry( 30, 50, 50 );
+			geometry = new THREE.SphereBufferGeometry( 60, 50, 50 );
 
 			texture = new THREE.TextureLoader().load( "./FI_logo_horizontal-2.png" );
 			material = new THREE.MeshStandardMaterial( {
 				color: 0xfffffff,
-				displacementMap: texture,
-				displacementScale: 5,
 				metalness: .41,
 				emissive: 0x000000,
 				roughness: 0,
+				side: 2,
 				map: texture
 			} );
 			sphere = new THREE.Mesh( geometry, material );
 			sphere.rotation.x = Math.PI / 2;
 			sphere.name = "sphere";
-			sphere.castShadow = true;
+			//sphere.castShadow = true;
 			sphere.receiveShadow = true;
-
-			geometryBig = new THREE.SphereBufferGeometry( 60 );
-			materialBig = new THREE.MeshBasicMaterial( { opacity: 0.0, transparent: true } );
-			sphereBig = new THREE.Mesh( geometryBig, materialBig );
-
-			sphere.add( sphereBig )
 
 			scene.add( sphere );
 
 			group = new THREE.Group();
 
-			//addMeshes();
-
-			sides = getSides();
-
-			loadTexture();
+			addMeshes();
 
 			scene.add( group );
 
@@ -128,7 +117,7 @@
 			// lightDirectional.shadow.mapSize.width = 1024;
 			// lightDirectional.shadow.mapSize.height = 1024;
 
-			let d = 220;
+			let d = 200;
 			lightDirectional.shadow.camera.left = -d;
 			lightDirectional.shadow.camera.right = d;
 			lightDirectional.shadow.camera.top = d;
@@ -148,7 +137,7 @@
 				for ( let y = 0; y < gridY; y++ ) {
 
 					const geometry = new THREE.BoxBufferGeometry( size, size, size );
-					const material = new THREE.MeshPhongMaterial( {
+					const material = new THREE.MeshStandardMaterial( {
 						color: '#fff',
 						metalness: .3,
 						emissive: '#000000',
@@ -166,99 +155,10 @@
 
 			}
 
+
 			//console.log( meshes );
 
 		}
-
-
-
-		function loadTexture() {
-
-			const lenX = 20;
-			const lenY = 10;
-			const size = 10;
-
-			const image = document.createElement( "img" );
-			image.src = "./FI_logo_horizontal-2.png";
-			image.onload = function () {
-
-				canvas = document.createElement( "canvas" );
-				canvas.height = image.height;
-				canvas.width = image.width;
-
-				const repX = ( canvas.width / lenX ) / canvas.width;
-				const repY = ( canvas.height / lenY ) / canvas.height;
-
-				const ctx = canvas.getContext( "2d" );
-				ctx.drawImage( image, 0, 0 );
-
-				const geometry = new THREE.PlaneGeometry( size, size );
-
-				for ( let x = 0; x < lenX; x++ ) {
-
-					for ( let y = 0; y < lenY; y++ ) {
-
-						const texture = new THREE.Texture( canvas );
-						texture.repeat.x = repX;
-						texture.repeat.y = repY;
-						texture.offset.x = ( x * size / size ) * repX;
-						texture.offset.y = ( y * size / size ) * repY;
-						texture.needsUpdate = true;
-
-						const material = new THREE.MeshPhongMaterial( {
-							color: 0x888888,
-							displacementMap: texture,
-							displacementScale: 5,
-							map: texture,
-						} );
-
-						const mesh = new THREE.Mesh( geometry, material );
-						mesh.position.x = 1.1 * x * size - 0.55 * ( lenX - 1 ) * size;
-						mesh.position.y = 1.1 * y * size - 0.55 * ( lenY - 1 ) * size;
-						mesh.position.z = -60;
-
-						mesh.add( sides.clone() );
-						mesh.receiveShadow = true;
-						mesh.castShadow = true;
-
-						group.add( mesh );
-
-					}
-				}
-			};
-
-		}
-
-
-
-
-		function getSides( x = 5 ) {
-
-			const v = ( x, y, z ) => new THREE.Vector3( x, y, z );
-
-			const geometry = new THREE.PlaneGeometry( 1, 1, 4, 1 );
-			geometry.vertices = [
-				v( -x, -x, 0 ),
-				v( x, -x, 0 ),
-				v( x, x, 0 ),
-				v( -x, x, 0 ),
-				v( -x, -x, 0 ),
-				v( -x, -x, -2 * x ),
-				v( x, -x, -2 * x ),
-				v( x, x, -2 * x ),
-				v( -x, x, -2 * x ),
-				v( -x, -x, -2 * x ),
-			];
-			bufferGeometry = new THREE.BufferGeometry().fromGeometry( geometry )
-			const material = new THREE.MeshPhongMaterial( { color: 0xaaaaaa } );
-
-			const sides = new THREE.Mesh( geometry, material );
-			sides.castShadow = true
-			sides.receiveShadow = true;
-			return sides;
-
-		}
-
 
 
 		function addFloor() {
@@ -307,7 +207,7 @@
 
 				raycaster.set( mesh.position, new THREE.Vector3( 0, 0, 1 ), );
 
-				const intersects = raycaster.intersectObjects( sphere.children );
+				const intersects = raycaster.intersectObjects( [ sphere ] );
 
 				mesh.position.z = intersects.length ? -120 + 0.8 * intersects[ 0 ].distance : -60;
 
