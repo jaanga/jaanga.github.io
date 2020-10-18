@@ -1,7 +1,7 @@
 ﻿Ray Marching Achieved
 ===
 
-<iframe src=http://http://webmath.github.io/algesurf/ray-marching/r3/algesurf-ray-marching-r3.html width=800 height=600 ><img src=http://jaanga.github.io/algesurf/ray-marching/ray-marching-r3.jpg width=800 height=600 ></iframe>
+<iframe src=https://webmath.github.io/algesurf/ray-marching/r3/algesurf-ray-marching-r3.html width=800 height=600 ><img src=http://jaanga.github.io/algesurf/ray-marching/ray-marching-r3.jpg width=800 height=600 ></iframe>
 
 
 Displaying math equations in 3D is a great way to make math more accessible to more people, 
