@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+	<title></title>
+	<meta charset=utf-8 />
+	<style>
+		body {
+			font: bold 12pt monospace;
+		}
+	</style>
+</head>
+
+<body>
+
+	<a href="">XHR Authorization</a>
+	<label>
+		Access token
+		<input id=inpToken onclick=this.select(); onblur=setGitHubAccessToken();
+			title="Obtain API Access Token" size=45 >
+	</label>
+
+	<button onclick=requestFile() >request file</button>
+
+	<button onClick=fetchFile() >fetch file</button>
+
+	<div id=divContent ></div>
+
+
+	<script>
+
+		//const url = "https://raw.githack.com/jaanga/jaanga.github.io/master/README.md";
+		//const url = "https://raw.githack.com/theo-armour/qdata/README.md";
+		//const url = "https://github.com/theo-armour/qdata/blob/master/README.md"
+
+		url = "https://api.github.com/repos/theo-armour/qdata/contents/README.md";
+
+		const userName = "theo-armour"
+		let accessToken = localStorage.getItem( 'githubAccessToken' ) || '';
+		inpToken.value = accessToken;
+
+		let timeStart;
+
+		//requestFile( url );
+
+		function requestFile() {
+
+			timeStart = performance.now();
+			const xhr = new XMLHttpRequest();
+			xhr.open( "GET", url, true );
+			//xhr.setRequestHeader( "Authorization", "Basic " + btoa( userName + ":" + accessToken ) );
+			xhr.setRequestHeader( "Authorization", "token " + accessToken );
+			xhr.responseType = "json";
+			xhr.onerror = ( xhr ) => console.log( 'error:', xhr );
+			xhr.onprogress = ( xhr ) => console.log( 'bytes loaded:', xhr.loaded, performance.now() - timeStart );
+			xhr.onload = ( xhr ) => divContent.innerText = atob( xhr.target.response.content );
+			xhr.send( null );
+
+		}
+
+		//fetchFile( url )
+
+		function fetchFile() {
+
+			//const request = new Request( url );
+			timeStart = performance.now();
+			let headers = new Headers();
+
+			headers.append( "Authorization", "token " + accessToken );
+
+			fetch( url, { method: 'GET', headers: headers } )
+				.then( response => response.json() )
+				.then( json => parseJson( json ) )
+
+
+		}
+
+
+		function parseJson( tmp ) {
+
+			const json = tmp;
+			//console.log( 'json', json );
+			//console.log( '', atob( json.content ) );
+
+			contentSource = atob( json.content );
+			//logFileSha = json.sha;
+			divContent.innerText = contentSource;
+			console.log( "", performance.now() - timeStart )
+
+		}
+
+
+	function setGitHubAccessToken() {
+
+		console.log( 'accessToken', inpToken.value );
+
+		localStorage.setItem( "githubAccessToken", inpToken.value );
+
+	};
+	
+	</script>
+
+
+
+</body>
+
+</html>
