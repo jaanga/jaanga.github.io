@@ -309,7 +309,7 @@ function addMeshesBufferFromGeometry() {
 	const meshBuffer = new THREE.Mesh( bufferGeometry, materialBuffer );
 	meshBuffer.receiveShadow = true;
 	meshBuffer.castShadow = true;
-	groupBuffer.add( meshBuffer );
+	//groupBuffer.add( meshBuffer );
 
 	RAY.intersectObjects = groupBuffer.children;
 

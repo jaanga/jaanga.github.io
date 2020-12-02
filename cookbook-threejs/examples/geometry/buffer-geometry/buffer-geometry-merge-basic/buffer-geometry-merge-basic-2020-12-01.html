@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0">
+	<meta name=description content="Real-time 3D in your browser with menu sliding">
+	<meta name=keywords content="Ladybug Toools,Three.js,WebGL,JavaScript,GitHub,FOSS,3D,STEM">
+	<meta name="date" content="2018-01-18">
+	<title></title>
+	<style>
+		/* Copyright 2020 Theo Armour. MIT License */
+
+		body {
+			font: 100% monospace;
+			margin: 0;
+			overflow: hidden;
+		}
+
+		#menu {
+			position: absolute;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id=menu>
+
+
+		<h1><a href="" id=aTitle></a></h1>
+
+		<p
+			title="View the number of objects that need rendering and the total number of triangles used to create the objects">
+			<button onclick="setStats()">setStats</button>
+
+			<br>
+
+		<nav id=navMenu></nav>
+
+		</p>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r122/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r122/examples/js/controls/OrbitControls.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r123/examples/js/utils/BufferGeometryUtils.js"></script>
+
+	<script src="ray-raycaster-2020-05-15.js"></script>
+
+	<script>
+		let size = 1;
+		let count = 5000;
+		let geo;
+
+		let tellTale;
+		let line = new THREE.Line();
+
+		let group, groupBuffer, groupGeometry;
+
+		var renderer, camera, controls, scene;
+		var geometry, material, mesh, axesHelper;
+
+		init();
+		animate();
+
+		function init() {
+
+			aTitle.innerHTML = document.title = location.href.split( "/" ).pop();
+
+			renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true } );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			renderer.outputEncoding = THREE.sRGBEncoding;
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+			document.body.appendChild( renderer.domElement );
+
+			camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 12000 );
+			camera.position.set( 300, 200, 200 );
+			camera.up.set( 0, 0, 1 );
+
+			controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+			scene = new THREE.Scene();
+
+			window.addEventListener( 'resize', onWindowResize, false );
+			window.addEventListener( 'orientationchange', onWindowResize, false );
+			window.addEventListener( 'keyup', function () { controls.autoRotate = false; }, false );
+			renderer.domElement.addEventListener( 'click', function () { controls.autoRotate = false; }, false );
+
+			axesHelper = new THREE.AxesHelper( 50 );
+			scene.add( axesHelper );
+
+			addLights();
+
+			// geometry = new THREE.BoxGeometry( 50, 50, 50 );
+			// material = new THREE.MeshNormalMaterial();
+			// mesh = new THREE.Mesh( geometry, material );
+			// scene.add( mesh );
+
+
+			addGround();
+
+			group = new THREE.Group();
+
+			scene.add( group )
+
+			addMeshesMergeBuffer();
+
+			RAY.init();
+
+
+		}
+
+
+		function addMeshesMergeBuffer() {
+
+			const timeStart = performance.now();
+
+			const material = new THREE.MeshPhongMaterial( { side: 2, color: 0xff0000, specular: 0xffffff } );
+
+			const geometries = Array( count ).fill().map( ( item, i ) =>
+
+				geometry = ( new THREE.BoxBufferGeometry( size, size, size ) )
+
+					.applyMatrix4( new THREE.Matrix4().makeRotationX( Math.random() * Math.PI ) )
+					.applyMatrix4( new THREE.Matrix4().makeTranslation( 100 * Math.random() - 50, 100 * Math.random() - 50, 100 * Math.random() - 50 ) )
+					.applyMatrix4( new THREE.Matrix4().makeScale( 1 + Math.random(), 1 + Math.random(), 1 + Math.random() ) )
+
+			);
+
+			bufferGeometry = THREE.BufferGeometryUtils.mergeBufferGeometries( geometries );
+
+			const mesh = new THREE.Mesh( bufferGeometry, material );
+			mesh.receiveShadow = true;
+			mesh.castShadow = true;
+			group.add( mesh );
+
+			console.log( "ms ", performance.now() - timeStart );
+
+			//console.log( "geometries", geometries );
+
+			//console.log( "bufferGeometry", bufferGeometry );
+
+			RAY.intersectObjects = group.children;
+
+			const bytes = THREE.BufferGeometryUtils.estimateBytesUsed( bufferGeometry )
+			console.log( "bytes", bytes );
+
+		}
+
+
+		RAY.getHtm = function ( intersected ) {
+			//console.log( "intersected", intersected );
+
+			if ( !geo ) { geo = new THREE.Geometry().fromBufferGeometry( intersected.object.geometry ); }
+			//console.log( "geo", geo );
+
+			let item;
+			let index = intersected.faceIndex;
+
+			for ( item = 0; item <= count; item++ ) {
+
+				const limit = item * 12;
+
+				if ( index < limit ) { break; }
+
+			}
+
+			htm = `
+faceIndex: ${ intersected.faceIndex + 1 }<br>
+item: ${ item }<br>
+`;
+
+			return htm;
+
+		};
+
+
+		function addLights() {
+
+			//scene.add( new THREE.AmbientLight( 0x404040 ) );
+			scene.add( new THREE.AmbientLight( 0x666666 ) );
+
+			const pointLight = new THREE.PointLight( 0xffffff, 0.2 );
+			pointLight.position.copy( camera.position );
+			camera.add( pointLight );
+
+			lightDirectional = new THREE.DirectionalLight( 0xdffffff, 0.5 );
+			lightDirectional.position.set( 200, -200, 200 );
+			lightDirectional.castShadow = true;
+			lightDirectional.shadow.mapSize.width = 1024;
+			lightDirectional.shadow.mapSize.height = 1024;
+
+			var d = 200;
+			lightDirectional.shadow.camera.left = - d;
+			lightDirectional.shadow.camera.right = d;
+			lightDirectional.shadow.camera.top = d;
+			lightDirectional.shadow.camera.bottom = - d;
+			lightDirectional.shadow.camera.far = 1000;
+			scene.add( lightDirectional );
+
+			scene.add( new THREE.CameraHelper( lightDirectional.shadow.camera ) );
+
+		}
+
+
+
+		function addGround() {
+
+			const geometry = new THREE.PlaneBufferGeometry( 2000, 2000 );
+			const material = new THREE.MeshPhongMaterial( { color: 0xaaaaaa, depthWrite: false, side: 2 } );
+			const mesh = new THREE.Mesh( geometry, material );
+			mesh.position.z = -100;
+			mesh.receiveShadow = true;
+			scene.add( mesh );
+
+		}
+
+
+
+		function setStats() {
+
+			const script = document.head.appendChild( document.createElement( "script" ) );
+			script.onload = () => {
+
+				const stats = new Stats();
+				const sts = document.body.appendChild( stats.dom );
+				sts.style.left = "";
+				sts.style.right = "0px";
+				requestAnimationFrame( function loop() {
+
+					stats.update(); requestAnimationFrame( loop );
+
+				} );
+
+			};
+
+			script.src = "https://raw.githack.com/mrdoob/stats.js/master/build/stats.min.js";
+
+
+			const render = renderer.info.render;
+
+			if ( !window.divRendererInfo ) {
+
+				divRendererInfo = navMenu.appendChild( document.createElement( "div" ) );
+
+			}
+			divRendererInfo.innerHTML = `
+Renderer Info<br>
+Calls: ${ render.calls }<br>
+Lines: ${ render.lines }<br>
+Triangles: ${ render.triangles.toLocaleString() }<br>
+`;
+
+		}
+
+
+
+		function onWindowResize() {
+
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+
+			renderer.setSize( window.innerWidth, window.innerHeight );
+
+			//console.log( 'onWindowResize  window.innerWidth', window.innerWidth );
+
+		}
+
+
+
+		function animate() {
+
+			requestAnimationFrame( animate );
+			renderer.render( scene, camera );
+			controls.update();
+
+		}
+
+	</script>
+</body>
+
+</html>
