@@ -1,7 +1,7 @@
-﻿[Jaanga]( http://jaanga.github.io/ ) &raquo; [Outer Space]( http://jaanga.github.io/outer-space ) &raquo; 
-[NASA 3D Objects Viewer v0.1.1]( ./dev/index.html ) [🛈]( http://jaanga.github.io/outer-space/nasa-3d-objects-viewer/ )
+﻿[Jaanga]( https://jaanga.github.io/ ) &raquo; [Outer Space]( https://jaanga.github.io/outer-space ) &raquo;
+[NASA 3D Objects Viewer v0.1.1]( ./dev/index.html ) [🛈]( https://jaanga.github.io/outer-space/nasa-3d-objects-viewer/ )
 ===
- 
+
 [Read Me]( #readme.md )
 
 The following files are made available via the [NASA presence]( https://github.com/nasa/NASA-3D-Resources ) on GitHub.

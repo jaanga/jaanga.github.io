@@ -1,22 +1,38 @@
 <!doctype html>
-<html lang=en >
+<html lang=en>
+
 <head>
-<title></title>
-<meta charset=utf-8 />
-<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
-<style>
+	<title></title>
+	<meta charset=utf-8 />
+	<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' />
+	<style>
+		body {
+			font: 12pt monospace;
+			margin: 0;
+		}
 
-	body { font: 12pt monospace; margin: 0; }
-	h1 { margin: 0; }
-	h1 a { text-decoration: none; }
-	#bars, #i { text-decoration: none; }
-	#bars { color: #fcf; }
+		h1 {
+			margin: 0;
+		}
 
-</style>
+		h1 a {
+			text-decoration: none;
+		}
+
+		#bars,
+		#i {
+			text-decoration: none;
+		}
+
+		#bars {
+			color: #fcf;
+		}
+	</style>
 </head>
+
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.2/showdown.min.js ></script>
-<script>
+	<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.2/showdown.min.js></script>
+	<script>
 
 	var menuFile = 'nasa-3d-objects-viewer-v-0-1-0.md';
 	var openingFile = './readme.md';
@@ -83,7 +99,7 @@
 
 			divFrame.innerHTML = '';
 
-			iFrame.src = '#http://exploratoria.github.io/cookbook/viewers/view-stl-light/r1/view-stl-light-r1.html#' + fileName;
+			iFrame.src = '#https://exploratoria.github.io/cookbook/viewers/view-stl-light/r1/view-stl-light-r1.html#' + fileName;
 
 			document.body.style.overflow = 'hidden';
 
@@ -111,6 +127,7 @@
 
 	}
 
-</script>
+	</script>
 </body>
+
 </html>

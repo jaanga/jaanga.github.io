@@ -1,125 +1,128 @@
 <!doctype html>
 <html>
+
 <head>
-<meta charset=utf-8 >
-<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0' >
+	<meta charset=utf-8>
+	<meta name=viewport content='width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0'>
 </head>
+
 <body>
-<script src=http://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js ></script>
-<script>
+	<script src=https://cdnjs.cloudflare.com/ajax/libs/showdown/1.2.3/showdown.min.js></script>
+	<script>
 
 
-	var converter = new showdown.Converter();
+		var converter = new showdown.Converter();
 
-	init();
+		init();
 
-	function init() {
+		function init() {
 
-		var css = document.body.appendChild( document.createElement('style') );
-		css.innerHTML = 'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }' +
-			'h2, a { margin: 0; }' +
-			'h1 a, #i { text-decoration: none; }' +
-		'';
+			var css = document.body.appendChild( document.createElement( 'style' ) );
+			css.innerHTML = 'body { font: 12pt monospace; left: 0; margin: 0 auto; max-width: 800px; right: 0; }' +
+				'h2, a { margin: 0; }' +
+				'h1 a, #i { text-decoration: none; }' +
+				'';
 
-		content = document.body.appendChild( document.createElement( 'div' ) );
+			content = document.body.appendChild( document.createElement( 'div' ) );
 
-		content.innerHTML = '<h1>' +
+			content.innerHTML = '<h1>' +
 				'<a href="" >Outer Space Blog</a> ' +
 				'<a id=i href=https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/blog >&#x24D8;</a>' +
-			'</h1>' +
-			'<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>' +
-			'<p>' +
-				'<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/blog/ "View file as a web page." ) </span>' +
+				'</h1>' +
+				'<p><i>Reports on fast, cheap and good ways into science, technology, engineering and math (STEM)</i></p>' +
+				'<p>' +
+				'<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/outer-space/blog/ "View file as a web page." ) </span>' +
 				'<input type=button onclick=window.location.href="https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/blog"; value="You are now in GitHub web page view - Click this button to view Blog Read Me file as source code" />' +
 
 
-			'</p>' +
-			'<hr>' +
-			'<div id=posts ></div>' +
-		'';
+				'</p>' +
+				'<hr>' +
+				'<div id=posts ></div>' +
+				'';
 
-		if ( location.hash !== '' ) {
+			if ( location.hash !== '' ) {
 
-			requestFile( location.hash.substr( 1 ) );
+				requestFile( location.hash.substr( 1 ) );
 
-		} else {
+			} else {
 
-			getBlogPosts();
+				getBlogPosts();
+
+			}
 
 		}
 
-	}
+		function getBlogPosts() {
 
-	function getBlogPosts() {
+			var link = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/outer-space/blog';
+			arr = [];
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( 'GET', link, true );
 
-		var link = 'https://api.github.com/repos/jaanga/jaanga.github.io/contents/outer-space/blog';
-		arr = [];
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', link, true );
+			xmlHttp.onreadystatechange = function () {
 
-		xmlHttp.onreadystatechange = function() {
+				if ( xmlHttp.readyState !== 4 ) { return; }
 
-			if ( xmlHttp.readyState !== 4 ) { return; }
+				response = xmlHttp.responseText;
 
-			response =  xmlHttp.responseText;
+				var lines = response.split( /\r\n|\n/ );
+				var txt = '';
 
-			var lines = response.split(/\r\n|\n/);
-			var txt = '';
+				for ( var i = 0; i < lines.length; i++ ) {
 
-			for ( var i = 0; i < lines.length; i++ ) {
+					if ( lines[ i ].indexOf( '"name"' ) > -1 && lines[ i ].substr( 13, 3 ) === '201' ) {
 
-				if ( lines[ i ].indexOf( '"name"' ) > -1 && lines[ i ].substr( 13, 3 ) === '201' ) {
+						line = lines[ i ];
 
-					line = lines[ i ];
+						// console.log( line );
 
-// console.log( line );
+						items = line.substr( 0, 8 ).split( '_' );
+						fname = line.substr( 13 ).replace( '",', '' );
+						arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
+						txt += fname + '<br>';
 
-					items = line.substr( 0, 8 ).split( '_' );
-					fname =  line.substr( 13 ).replace( '",', '' );
-					arr.push( { date: fname.substr( 0, 10 ).replace( /-/g, '' ), name: fname } );
-					txt += fname + '<br>';
+					}
+
+				}
+
+				arr.sort( function ( a, b ) { return b.date - a.date } );
+
+				for ( var i = 0; i < arr.length; i++ ) {
+
+					requestFile( arr[ i ].name );
 
 				}
 
 			}
 
-			arr.sort( function( a, b ){return b.date - a.date } );
-
-			for ( var i = 0; i < arr.length; i++ ) {
-
-				requestFile ( arr[ i ].name );
-
-			}
+			xmlHttp.send( null );
 
 		}
 
-		xmlHttp.send( null );
+		function requestFile( fileName ) {
 
-	}
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( 'GET', fileName, true );
+			xmlHttp.onreadystatechange = function () {
 
-	function requestFile ( fileName ) {
+				if ( xmlHttp.readyState !== 4 ) { return; }
 
-		var xmlHttp = new XMLHttpRequest();
-		xmlHttp.open( 'GET', fileName, true );
-		xmlHttp.onreadystatechange = function() {
+				items = fileName.split( '_' );
 
-			if ( xmlHttp.readyState !== 4 ) { return; }
+				//console.log( 'fn', fileName );
 
-			items = fileName.split( '_' );
+				txt = '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' +
+					converter.makeHtml( xmlHttp.responseText ) +
+					'<hr>';
 
-//console.log( 'fn', fileName );
+				posts.innerHTML += txt;
+			};
 
-			txt = '<div><i>' + items[ 0 ] + ' - tags: ' + items[ 2 ].replace( '.md', '' ) + '</i></div>' + 
-				converter.makeHtml( xmlHttp.responseText ) +
-			'<hr>';
+			xmlHttp.send( null );
 
-			posts.innerHTML += txt;
-		};
+		}
 
-		xmlHttp.send( null );
-
-	}
-
-</script>
+	</script>
 </body>
+
 </html>

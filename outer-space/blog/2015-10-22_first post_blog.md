@@ -9,7 +9,7 @@ Of course, most of the examples in Outer Space will relate to astronomy, physics
 There are, however, many things that need to be done to manage a web site that go beyond the sciences.
 For example, a blog is a nice thing to have on a site. So the issue is: is it possible to host a blog on GitHub with just a few lines of code?
 
-The inspiration for the validity of this thought comes from the brilliant English 'professor' [Remy Sharp]( http://remysharp.com ). 
+The inspiration for the validity of this thought comes from the brilliant English 'professor' [Remy Sharp]( https://remysharp.com ).
 Remy has been hosting a blog with posts written in MarkDown and hosted on GitHub for years.
 
 [Remy's code]( https://github.com/remy/remysharp.com ) is sophisticated and well beyond the scope of Outer Space.
@@ -17,4 +17,3 @@ We are starting with a very simple JavaScript [cookbook example]( https://github
 
 
 
- 

@@ -1,16 +1,16 @@
-[Jaanga]( http://jaanga.github.io ) &raquo; [Outer Space]( http://jaanga.github.io/outer-space/ ) &raquo; 
+[Jaanga]( https://jaanga.github.io ) &raquo; [Outer Space]( https://jaanga.github.io/outer-space/ ) &raquo;
 
 Outer Space Blog Read Me
 ===
 
-<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( http://jaanga.github.io/outer-space/blog/index.html#readme.md "View file as a web page." ) </span>
+<span style=display:none; >[You are now in GitHub source code view - click this link to view Read Me file as a web page]( https://jaanga.github.io/outer-space/blog/index.html#readme.md "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/outer-space/blog'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code'  />
 
 
-[Outer Space Blog]( http://jaanga.github.io/outer-space/blog/index.html )
+[Outer Space Blog]( https://jaanga.github.io/outer-space/blog/index.html )
 
 
-<iframe src=http://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#http://jaanga.github.io/outer-space/blog/index.html width=100% height=500px></iframe>
+<iframe src=https://exploratoria.github.io/lib/code-edit-view/code-edit-view.html#https://jaanga.github.io/outer-space/blog/index.html width=100% height=500px></iframe>
 
 
 ## Things to Do
@@ -20,7 +20,7 @@ Outer Space Blog Read Me
 
 ## Features
 
-* Everything free and open source and hosted on GitHub 
+* Everything free and open source and hosted on GitHub
 * Simple blogging tool anybody could use
 * Text is written in Markdown format
 * Upload posts using GitHub Desktop of by creating, editing files on GitHub.com

@@ -1,10 +1,10 @@
 The End of the Beginning?
 ===
 
-![star-spotter-screen-stars-1024x768.jpg]( http://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =640x480 )  
+![star-spotter-screen-stars-1024x768.jpg]( https://jaanga.github.io/outer-space/star-spotter/images/star-spotter-screen-stars-1024x768.jpg =640x480 )
 _Star Spotter Stars_
 
-One of our favorite quotes is: 'This is not the end, not even the beginning of the end, but it is, perhaps, the end of the beginning.' 
+One of our favorite quotes is: 'This is not the end, not even the beginning of the end, but it is, perhaps, the end of the beginning.'
 It's a [quote from Winston Churchill]( https://en.wikiquote.org/wiki/Winston_Churchill#The_Second_World_War_ ) made midway during the Second World War.
 
 With reference to the Outer Space project it is say that a good body of work has been accomplished, but there is much more to do.
@@ -23,7 +23,7 @@ The main thing is that we a basis of simple, easy to modify code that could be u
 For example, have a look at the many ways the Moon Voyager Gamer code has been re-mashed to satisfy a variety of needs.
 
 
-Even with all this work, the bulk of te work is in the future. For the time being there is no math. 
+Even with all this work, the bulk of te work is in the future. For the time being there is no math.
 There are no orbits or trajectories bing calculated.
 And there is no indication as to the optics and sensors used to capture the data we have. But one day will recreate Galileo's telescope and look through it and see how he say the Moon and Mars.
 We will recreate the trajectories of the heavenly bpdies according to Kepler's rules and to all the subsequent enhancements.

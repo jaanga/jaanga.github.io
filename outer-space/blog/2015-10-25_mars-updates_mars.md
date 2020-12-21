@@ -1,12 +1,12 @@
-[Mars Updates]( http://jaanga.github.io/outer-space/blog/index.html#2015-10-25_mars-updates_mars.md )
+[Mars Updates]( https://jaanga.github.io/outer-space/blog/index.html#2015-10-25_mars-updates_mars.md )
 ===
 
-![mars-heightmap-2d-1440x720.jpg]( http://jaanga.github.io/mars/images/mars-heightmap-2d-512x512.jpg =640x640 )  
+![mars-heightmap-2d-1440x720.jpg]( https://jaanga.github.io/mars/images/mars-heightmap-2d-512x512.jpg =640x640 )
 _Mars Heightmap Detail_
 
-[Mars Voyager Gamer]( http://jaanga.github.io/mars/voyager/gamer/dev/ ) made a lot of progress today.
+[Mars Voyager Gamer]( https://jaanga.github.io/mars/voyager/gamer/dev/ ) made a lot of progress today.
 The code is becoming fairly clean and effective. Placards line up with their relevant geography.
-Clicking on the dropdown list takes you to the designated location. 
+Clicking on the dropdown list takes you to the designated location.
 If the location is too small - smaller than 50 kn radius - to have a default placard then a placard is created on the fly,
 The nice thing is that the translation from 'big endian' binary data to PNG files and then back to integers has been really cleaned up ans streamlined.
 All of this will help the data to load faster.
