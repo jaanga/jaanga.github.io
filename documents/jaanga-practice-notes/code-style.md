@@ -162,12 +162,12 @@ No black boxes. Nothing hidden away in remote places.
 * [Is there an excuse for short variable names?]( http://programmers.stackexchange.com/questions/176582/is-there-an-excuse-for-short-variable-names )
 * [15 Ways to Write Self-documenting JavaScript]( https://www.sitepoint.com/self-documenting-javascript/ ) !!!
 
+## Naming things
 
-
-
-
-
-
+* https://en.wikipedia.org/wiki/Naming_convention_(programming)
+* https://www.crockford.com/code.html
+* https://medium.com/better-programming/a-useful-framework-for-naming-your-classes-functions-and-variables-e7d186e3189f
+* https://github.com/kettanaito/naming-cheatsheet
 
 ***
 
