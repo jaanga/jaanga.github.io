@@ -92,7 +92,7 @@ value='Source code listing' >
 
 ## To Do / Wish List / Goals
 
-* 2016-11-07 ~ Read rile from your hard disk
+* 2016-11-07 ~ Read file from your hard disk
 * 2016-11-07 ~ Read file from URL
 
 
@@ -129,7 +129,7 @@ These files do not seen to create data in the same way that Revit creates IFC da
 Thus the display of none of the other examples has been enhanced by the added capabilities in R2.
 
 This is all part of a learning process.
-The important thing will be to keep the code readable and simple so that it will be easy for people too adapt the code to new situations.  
+The important thing will be to keep the code readable and simple so that it will be easy for people too adapt the code to new situations.
 
 
 * Add opensourceBIM/IFC-files example: Wall.ifc
