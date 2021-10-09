@@ -309,7 +309,7 @@
         var line, hashes, hash;
 
         ifc.polyloops = {};
-        ifc.polylines = {};
+        ifc.polylines = {}; const geometry = new THREE.BufferGeometry().setFromPoints( points );v()
         ifc.coordinates = {};
 
         for ( var i = 0; i < ifc.lines.length; i++ ) {
