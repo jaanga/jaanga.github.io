@@ -14,9 +14,9 @@
 <script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r122/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r122/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r122/examples/js/libs/stats.min.js ></script>
 
 <script>
 
@@ -25,7 +25,7 @@
 
 	var vertices;
 	var segments;
-	var target; 
+	var target;
 	var cameraInside = false;
 
 	var motion = true;
@@ -201,7 +201,7 @@
 
 	function setMenuDetailsCameraActions() {
 
-		menuDetailsCameraActions.innerHTML = 
+		menuDetailsCameraActions.innerHTML =
 
 			'<details open>' +
 
@@ -247,7 +247,7 @@
 
 //		cube.remove( camera );
 //		camera.position.copy( cube.position );
-//		target = new THREE.Vector3( 0, 0, 0 ); 
+//		target = new THREE.Vector3( 0, 0, 0 );
 
 	}
 
@@ -256,7 +256,7 @@
 		cameraInside = false;
 		cube.remove( camera );
 		camera.position.set( 100, 100, 100 );
-		target = new THREE.Vector3( 0, 0, 0 ); 
+		target = new THREE.Vector3( 0, 0, 0 );
 
 	}
 

@@ -6,7 +6,7 @@
 ( http://jaanga.github.io/documents/jaanga-practice-notes/ "View file as a web page." ) </span>
 <input type=button onclick=window.location.href='https://github.com/jaanga/jaanga.github.io/tree/master/documents/jaanga-practice-notes/'; value='You are now in GitHub web page view - Click this button to view Read Me file as source code' />
 
-[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/documents/  ) » 
+[Jaanga]( http://jaanga.github.io ) » [Cookbook HTML]( http://jaanga.github.io/documents/  ) »
 
 [Read Me Cheat Sheet]( ./index.html#readme-cheat-sheet.md )
 ===
@@ -102,7 +102,7 @@ Thing Details Details Details Details Details
 
 #### External Link icon file
 
-![External Link Icon]( ../files/Icon_External_Link.png )  
+![External Link Icon]( ../files/Icon_External_Link.png )
 
 <img src=../files/Icon_External_Link.png width="50" height="50" >
 
@@ -133,7 +133,7 @@ githubmarkdownreadmerepositorycenter
 
 	![ text ]( http://lorempixel.com/800/300 | width=100 )
 
- 
+
 ### Horizontal rules
 
 #### What you type
@@ -230,12 +230,12 @@ _italics_
 
 ```
 	line of code with 3 backquote characters
-	line of code 
+	line of code
 	line of code
 ```
 
 	line of code
-	line of code 
+	line of code
 	line of code
 
 text with `back quote` characters
@@ -262,18 +262,17 @@ text text text
 
 * https://help.github.com/articles/basic-writing-and-formatting-syntax/
 * https://guides.github.com/features/mastering-markdown/
-* https://github.com/showdownjs/showdown  
+* https://github.com/showdownjs/showdown
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
-* https://help.github.com/articles/github-flavored-markdown  
+* https://help.github.com/articles/github-flavored-markdown
 * http://daringfireball.net/projects/markdown/syntax
 * https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
 * http://www.reddit.com/wiki/commenting
-
 * https://stackedit.io/
 
 ## Alternatives
 
-<https://github.com/evilstreak/markdown-js>  
+<https://github.com/evilstreak/markdown-js>
 <https://github.com/chjj/marked>
 
 * require node
