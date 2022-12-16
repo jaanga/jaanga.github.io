@@ -24,8 +24,8 @@
 </style>
 </head>
 <body>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js" ></script>
-<script src = "https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js" ></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r100/build/three.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r100/examples/js/controls/OrbitControls.js"></script>
 
 	<div id = "divMenu" >
 
@@ -76,8 +76,8 @@
 
 	function init() {
 
-		divTitle.innerHTML = 
-			'<h3><a  href = "" >' + document.title + '</a> &nbsp; ' + 
+		divTitle.innerHTML =
+			'<h3><a  href = "" >' + document.title + '</a> &nbsp; ' +
 			'<a href=' + infoURI + ' target="top" >&#x24D8</a></h3>';
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
@@ -227,7 +227,7 @@ console.log( 'key', event.keyCode );
 
 	function addHelpers() {
 
-		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera ) 
+		cameraHelper = new THREE.CameraHelper( lightDirectional.shadow.camera )
 		scene.add( cameraHelper );
 
 		axesHelper = new THREE.AxesHelper( 500 );
