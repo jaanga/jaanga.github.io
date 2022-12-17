@@ -1,18 +1,18 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang=en >
 <head>
 <meta charset=utf-8 >
-<title>Spherical Spiral R2</title>
-<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' >
+<title>Bouncing Balls R1</title>
+<meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 <meta name=description content='' >
-<meta name=keywords content='WebGL,Three.js,JavaScript,GitHub,FOSS,3D,STEM' >
+<meta name=keywords content='WebGL,Three.js,Tween.js,JavaScript,GitHub,FOSS,3D,STEM' >
 <meta name=date content='' >
 </head>
 <body>
 <!--
-<script src=https://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
-<script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
@@ -23,15 +23,18 @@
 
 <script>
 
+	var spheres = [];
+
 	var stats, renderer, scene, camera, controls;
+
 
 	init();
 	animate();
 
 	function init() {
 
-		var geometry, material, mesh;
 		var css, hamburger, menu;
+		var geometry, material, mesh;
 
 		css = document.head.appendChild( document.createElement( 'style' ) );
 		css.innerHTML =
@@ -40,7 +43,7 @@
 			'a {text-decoration: none; }' +
 			'h2 { margin: 0 }' +
 
-			'button { background-color: #ccc; border: 2px #ccc solid; color: #555; }' +
+			'button { background-color: #eee; border: 2px #eee solid; color: #888; }' +
 
 /*			'input[type=range] { -webkit-appearance: none; -moz-appearance: none; background-color: silver; height: 20px; width: 180px; }' +
 			'input[type=range]::-moz-range-thumb { -moz-appearance: none; background-color: #888; height: 20px; width: 10px; }' +
@@ -52,9 +55,10 @@
 				'opacity: 0.85; overflow: auto; padding: 0 10px; position: absolute; top: -20px; transition: left 1s; width: 300px; }' +
 
 		'';
+
 		hamburger = document.body.appendChild( document.createElement( 'div' ) );
 		hamburger.id = 'hamburger';
-		hamburger.innerHTML = '<div id=bars > &#9776; </div>';
+		hamburger.innerHTML = '<div id=bars >☰</div>';
 		bars.onclick = function() { hamburger.style.left = hamburger.style.left === "0px" ? "325px" : 0; };
 
 		menu = hamburger.appendChild( document.createElement( 'div' ) );
@@ -62,22 +66,19 @@
 		menu.innerHTML =
 
 			'<h2>' +
-				'<a href="" >' + document.title + '</a>' +
-				'<a href=index.html#readme.md > &#x24D8; </a>' +
+			'	<a href="" >' + document.title + '</a>' +
+			'	 <a href=http://jaanga.github.io/ >&#x24D8;</a>' +
 			'</h2>' +
-			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
-
-/*			'<p><button onclick=doIt(); >do it</button></p>' +
+/*			'<p><input type=checkbox onchange=mesh.material.wireframe=!mesh.material.wireframe; > Wireframe</p>' +
+			'<p><button onclick=doIt(); >do it</button></p>' +
 			'<p>Zoom: <input type=range id=inp max=10 min=0 step=1 value=5 oninput=out.value=inp.value; title="0 to 10: OK" > <output id=out >value</output></p>' +
-*/
-
-			'<div id=info ></div>' +
+*/			'<div id=info ></div>' +
 
 		'';
 
-		//stats = new Stats();
-		//stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
-		//document.body.appendChild( stats.domElement );
+		// stats = new Stats();
+		// stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;' ;
+		// document.body.appendChild( stats.domElement );
 
 		window.addEventListener( 'resize', onWindowResize, false );
 
@@ -100,62 +101,42 @@
 		geometry = new THREE.BoxGeometry( 100, 2, 100 );
 		material = new THREE.MeshNormalMaterial();
 		mesh = new THREE.Mesh( geometry, material );
-		mesh.position.set( 0, -61, 0 );
+		mesh.position.set( 0, -11, 0 );
 		scene.add( mesh );
 
 		var gridHelper = new THREE.GridHelper( 50, 10 );
-		gridHelper.position.set( 0, -60, 0 );
+		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxesHelper( 50 );
-		scene.add( axisHelper );
+		// var axisHelper = new THREE.AxisHelper( 50 );
+		// scene.add( axisHelper );
 
 // assets
 
-
-		//keys = Object.keys( THREE.ColorKeywords );
-
-		addBoxes();
+		drawSpheres();
 
 	}
 
 
-	function addBoxes() {
+	function drawSpheres() {
 
-		var radius = 50;
-		var lon = 0;
-		var lat = 0.0;
-		var segments = 10;
-		deltaLon = Math.PI * 2 / segments
-		deltaLat = 0.02;
+		var geometry, material, mesh;
+		geometry = new THREE.SphereGeometry( 1, 50, 25 );
 
-		geometry = new THREE.BoxGeometry( 10, 10, 10 );
+		for (var i = 0; i < 50; i++) {
 
+			material = new THREE.MeshNormalMaterial();
 
-		for ( var i = 0; i < 147; i++ ) {
-
-			pt = latLonToXYZ( radius, lat + i * deltaLat, lon + i * deltaLon );
-			material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-		//	material.color = new THREE.Color(  THREE.ColorKeywords[ keys[ i ] ] );
 			mesh = new THREE.Mesh( geometry, material );
-			mesh.position.copy( pt );
+			mesh.position.set( 100 * Math.random() - 50, 100 * Math.random(), 100 * Math.random() - 50 );
+			mesh.scale.multiplyScalar( Math.random() * 3 + 8 );
+			spheres.push( mesh );
+
 			scene.add( mesh );
 
 		}
 
 	}
-
-
-	function latLonToXYZ( radius, latitude, longitude ) {
-
-		x = radius * Math.sin( latitude ) * Math.cos( longitude )
-		y = radius * Math.sin( latitude ) * Math.sin( longitude )
-		z = radius * Math.cos( latitude )
-
-		return new THREE.Vector3( x, y, z );
-
-	}
-
 
 	function onWindowResize() {
 
@@ -168,10 +149,21 @@
 
 	function animate() {
 
-		requestAnimationFrame( animate );
+		var timer = 0.001 * Date.now();
+
+		for ( var i = 0; i < spheres.length; i ++ ) {
+
+			var sphere = spheres[ i ];
+
+			sphere.position.x = 50 * Math.cos( timer + i );
+			sphere.position.y = 50 * Math.sin( timer + i * 1.1 );
+
+		}
+
 //		controls.update();
 		//stats.update();
 		renderer.render( scene, camera );
+		requestAnimationFrame( animate );
 
 	}
 
