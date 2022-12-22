@@ -298,8 +298,8 @@ console.log( '',backgroundGradient);
 
 					stonehenge.add( mesh );
 
-					helper = new THREE.EdgesHelper( mesh );
-					stonehengeHelpers.add( helper );
+					//helper = new THREE.EdgesHelper( mesh );
+					//stonehengeHelpers.add( helper );
 
 			}
 
@@ -321,8 +321,8 @@ console.log( '',backgroundGradient);
 
 				stonehenge.add( mesh );
 
-				helper = new THREE.EdgesHelper( mesh );
-				stonehengeHelpers.add( helper );
+				//helper = new THREE.EdgesHelper( mesh );
+				//stonehengeHelpers.add( helper );
 
 			}
 
@@ -375,8 +375,8 @@ console.log( '',backgroundGradient);
 
 				randomGeometry.add( mesh );
 
-				helper = new THREE.EdgesHelper( mesh );
-				randomGeometryHelpers.add( helper );
+				//helper = new THREE.EdgesHelper( mesh );
+				//randomGeometryHelpers.add( helper );
 
 			}
 

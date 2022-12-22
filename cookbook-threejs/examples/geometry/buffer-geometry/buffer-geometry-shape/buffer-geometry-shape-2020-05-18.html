@@ -146,7 +146,7 @@ function init() {
 	controls.enablePan = true;
 	controls.dampingFactor = 0.08;
 	controls.minDistance = 1;
-	controls.maxDistance = 500;
+	controls.maxDistance = 5000;
 
 	window.addEventListener( "resize", onWindowResize, false );
 	window.addEventListener( "orientationchange", onWindowResize, false );
@@ -192,7 +192,7 @@ function addShapes() {
 
 	const geometry = new THREE.Geometry();
 
-	const shapeGeometries = Array( 1000 ).fill().forEach( (item, i ) => {
+	const shapeGeometries = Array( 100 ).fill().forEach( (item, i ) => {
 
 		const vertices = [
 			v2( i, i ),

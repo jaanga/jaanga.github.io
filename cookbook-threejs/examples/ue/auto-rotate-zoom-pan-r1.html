@@ -14,16 +14,16 @@
 <script src=https://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=https://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r147/examples/js/libs/stats.min.js ></script>
 
 <script>
 
 	var stats, renderer, scene, camera, controls, mesh;
 
 var fov, zoom = 1.0, inc = -0.01;
- 
+
 var rotation = 0;
 var rotInc = 0.001;
 
@@ -149,8 +149,8 @@ var rotInc = 0.001;
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		axisHelper = new THREE.AxisHelper( 50 );
-		scene.add( axisHelper );
+		//axisHelper = new THREE.AxisHelper( 50 );
+		//scene.add( axisHelper );
 
 // assets
 

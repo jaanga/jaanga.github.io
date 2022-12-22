@@ -6,9 +6,9 @@
 <meta name=viewport content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui' >
 </head>
 <body>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/libs/stats.min.js ></script>
 <script>
 
 	var css, menu, stats, renderer, scene, camera, controls;
@@ -38,11 +38,11 @@
 
 		menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.id = 'menu';
-		menu.innerHTML = 
+		menu.innerHTML =
 		`
 
 			<h2>
-				<a href="" > ${ document.title }</a> 
+				<a href="" > ${ document.title }</a>
 				<a id=aa href=http://jaanga.github.io/ >🛈</a>
 			</h2>
 			<div id=info ></div>
@@ -79,7 +79,7 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets

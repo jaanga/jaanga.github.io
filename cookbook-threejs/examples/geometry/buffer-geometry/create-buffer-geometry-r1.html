@@ -14,9 +14,9 @@
 <script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
 <script src=http://mrdoob.github.io/three.js/examples/js/libs/stats.min.js ></script>
 -->
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r120/examples/js/libs/stats.min.js ></script>
 
 <script>
 
@@ -45,7 +45,7 @@
 
 		var menu = document.body.appendChild( document.createElement( 'div' ) );
 		menu.style.cssText = `margin: 0 20px; position: absolute; `;
-		menu.innerHTML = 
+		menu.innerHTML =
 
 			'<h2>' +
 			'	<a href="" >' + document.title + '</a>' +
@@ -90,45 +90,45 @@
 		gridHelper.position.set( 0, -10, 0 );
 		scene.add( gridHelper );
 
-		var axisHelper = new THREE.AxisHelper( 50 );
+		var axisHelper = new THREE.AxesHelper( 50 );
 		scene.add( axisHelper );
 
 // assets
 
 		geometry = new THREE.BufferGeometry();
 
-// create a simple square shape. We duplicate the top left and bottom right 
+// create a simple square shape. We duplicate the top left and bottom right
 // vertices because each vertex needs to appear once per triangle.
 
-		var vertexPositions = [ 
+		var vertexPositions = [
 
-			[-10.0, -10.0, 10.0], 
-			[ 10.0, -10.0, 10.0], 
-			[ 10.0, 10.0, 10.0], 
-			[ 10.0, 10.0, 10.0], 
-			[-10.0, 10.0, 10.0], 
-			[-10.0, -10.0, 10.0] 
+			[-10.0, -10.0, 10.0],
+			[ 10.0, -10.0, 10.0],
+			[ 10.0, 10.0, 10.0],
+			[ 10.0, 10.0, 10.0],
+			[-10.0, 10.0, 10.0],
+			[-10.0, -10.0, 10.0]
 
 		];
- 
-		var vertices = new Float32Array( vertexPositions.length * 3 ); 
+
+		var vertices = new Float32Array( vertexPositions.length * 3 );
 
 // three components per vertex
 // components of the position vector for each vertex are stored
-// contiguously in the buffer. 
+// contiguously in the buffer.
 
-		for ( var i = 0; i < vertexPositions.length; i++ ) { 
+		for ( var i = 0; i < vertexPositions.length; i++ ) {
 
-			vertices[ i * 3 + 0 ] = vertexPositions[ i ][ 0 ]; 
-			vertices[ i * 3 + 1 ] = vertexPositions[ i ][ 1 ]; 
-			vertices[ i * 3 + 2 ] = vertexPositions[ i ][ 2 ]; 
+			vertices[ i * 3 + 0 ] = vertexPositions[ i ][ 0 ];
+			vertices[ i * 3 + 1 ] = vertexPositions[ i ][ 1 ];
+			vertices[ i * 3 + 2 ] = vertexPositions[ i ][ 2 ];
 
-		} 
+		}
 
-// itemSize = 3 because there are 3 values (components) per vertex 
+// itemSize = 3 because there are 3 values (components) per vertex
 		geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 
-		material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } ); 
+		material = new THREE.MeshBasicMaterial( { color: 0xff0000, side: 2 } );
 		mesh = new THREE.Mesh( geometry, material );
 		scene.add( mesh );
 
