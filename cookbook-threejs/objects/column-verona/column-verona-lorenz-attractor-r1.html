@@ -6,8 +6,12 @@
 <meta name=viewport content=width=device-width,user-scalable=no,minimum-scale=1.0,maximum-scale=1.0 >
 </head>
 <body>
-<script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
-<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script>
+<!-- <script src=http://mrdoob.github.io/three.js/build/three.min.js ></script>
+<script src=http://mrdoob.github.io/three.js/examples/js/controls/OrbitControls.js ></script> -->
+
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r85/build/three.min.js></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r85/examples/js/controls/OrbitControls.js></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r85/examples/js/libs/stats.min.js></script>
 <script>
 // http://obscureapps.com/test/lorentz.htm
 // http://en.wikipedia.org/wiki/List_of_chaotic_maps
@@ -66,7 +70,7 @@
 			vertex = addStep( x, y, z )
 			geometry.vertices.push( vertex );
 			x = vertex.x; y = vertex.y; z = vertex.z;
-			
+
 		}
 
 		material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
@@ -83,14 +87,14 @@
 			mesh = new THREE.Mesh( geometry, material );
 			mesh.position.set( x, y, z );
 
-			chair = buildChair();
+			//chair = buildChair();
 
 			sprite = drawSprite( '' + i, 0.05, 0xff0000, 0, 7, 0 )
 			mesh.add( sprite );
 
-			mesh.add( chair )
+			//mesh.add( chair )
 
-			chairs.push( mesh );
+			//chairs.push( mesh );
 			scene.add( mesh );
 
 		}
@@ -173,7 +177,7 @@
 		dx = sigma * ( y - x ) * dt;
 		dy = ( x * ( rho - z ) - y ) * dt;
 		dz = ( x * y - beta * z ) * dt;
-		
+
 		x += dx;
 		y += dy;
 		z += dz;

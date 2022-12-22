@@ -7,9 +7,9 @@
 </head>
 <body>
 
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
-<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/build/three.min.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/js/controls/OrbitControls.js ></script>
+<script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@r80/examples/js/libs/stats.min.js ></script>
 <script src=http://jaanga.github.io/cookbook-threejs/0-things-threejs/jaanga-assets-for-threejs/jaanga-assets-for-threejs-r3.js ></script>
 <script>
 
@@ -81,7 +81,8 @@
 
 		THREE.ImageUtils.crossOrigin = 'anonymous';
 		material = new THREE.MeshBasicMaterial();
-		var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skybox/';
+		//var r = 'http://mrdoob.github.io/three.js/examples/textures/cube/skyboxsun25deg/';
+		var r = '../../../cookbook-threejs/textures/cube/skybox/';
 		var urls = [ r + 'px.jpg', r + 'nx.jpg', r + 'py.jpg', r + 'ny.jpg', r + 'pz.jpg', r + 'nz.jpg' ];
 
 		textureCube = THREE.ImageUtils.loadTextureCube( urls );
