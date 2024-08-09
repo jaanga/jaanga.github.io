@@ -16,8 +16,9 @@
 -->
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
+	<!--
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
-
+-->
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/exporters/STLExporter.js ></script>
 
 <script>
@@ -429,7 +430,7 @@
 	function animate() {
 
 		controls.update();
-		stats.update();
+		//stats.update();
 		renderer.render( scene, camera );
 		requestAnimationFrame( animate );
 	}
