@@ -16,8 +16,9 @@
 -->
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/build/three.min.js ></script>
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/controls/OrbitControls.js ></script>
+	<!--
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/libs/stats.min.js ></script>
-
+-->
 <script src=https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/js/exporters/STLExporter.js ></script>
 
 <script>
@@ -133,10 +134,10 @@
 
 		'';
 
-		stats = new Stats();
-		stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;' ;
-		document.body.appendChild( stats.domElement );
-		stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
+		// stats = new Stats();
+		// stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0;' ;
+		// document.body.appendChild( stats.domElement );
+		// stats.domElement.style.display = window.innerWidth < 500 ? 'none' : '';
 
 
 		renderer = new THREE.WebGLRenderer( { alpha: 1, antialias: true }  );
@@ -429,7 +430,7 @@
 	function animate() {
 
 		controls.update();
-		stats.update();
+		//stats.update();
 		renderer.render( scene, camera );
 		requestAnimationFrame( animate );
 	}
